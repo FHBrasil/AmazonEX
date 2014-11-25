@@ -1,0 +1,6 @@
+<ANSWER>
+   <ORDER_ID>$$$orders_id$$$</ORDER_ID> 
+   <STATUS>$$$status$$$</STATUS> 
+   <sessionID>$$$session_id$$$</sessionID> 
+   <DESCRIPTION>$$$description$$$</DESCRIPTION> 
+</ANSWER>
