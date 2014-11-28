@@ -21,7 +21,7 @@ public final class EmptyConstants extends GeneratedEmptyConstants
 	public static final String EXTENSIONNAME = "empty";
 
 	private EmptyConstants()
-	{
+	{ 
 		//empty to avoid instantiating this constant class
 	}
 
