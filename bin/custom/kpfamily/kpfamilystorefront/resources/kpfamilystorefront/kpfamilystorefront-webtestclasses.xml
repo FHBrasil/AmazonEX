@@ -14,13 +14,13 @@
     <testclass>de.kpfamily.storefront.interceptors.i18n.SetLanguageBeforeControllerHandlerTest</testclass>
     <testclass>de.kpfamily.storefront.controllers.cms.ProductReferencesComponentControllerTest</testclass>
     <testclass>de.kpfamily.storefront.filters.AnonymousCheckoutFilterTest</testclass>
-    <testclass>de.kpfamily.storefront.security.impl.CartUsurpProtectionUnitTest</testclass>
     <testclass>de.kpfamily.storefront.filters.CustomerLocationRestorationFilterTest</testclass>
+    <testclass>de.kpfamily.storefront.security.impl.CartUsurpProtectionUnitTest</testclass>
     <testclass>de.kpfamily.storefront.filters.CommonResourcesAddOnFilterTest</testclass>
     <testclass>de.kpfamily.storefront.security.cookie.EnhancedCookieGeneratorTest</testclass>
     <testclass>de.kpfamily.storefront.controllers.cms.DefaultCMSComponentControllerTest</testclass>
-    <testclass>de.kpfamily.storefront.controllers.cms.ProductCarouselComponentControllerTest</testclass>
     <testclass>de.kpfamily.storefront.controllers.pages.CartPageControllerTest</testclass>
+    <testclass>de.kpfamily.storefront.controllers.cms.ProductCarouselComponentControllerTest</testclass>
     <testclass>de.kpfamily.storefront.interceptors.CSRFHandlerInterceptorTest</testclass>
     <testclass>de.kpfamily.storefront.controllers.pages.SearchPageControllerUnitTest</testclass>
     <testclass>de.kpfamily.storefront.interceptors.beforeview.CartRestorationBeforeViewHandlerTest</testclass>
