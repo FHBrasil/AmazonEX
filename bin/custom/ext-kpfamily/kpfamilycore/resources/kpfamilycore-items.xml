@@ -20,31 +20,25 @@
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
 	<itemtypes>
-<!--
-		<itemtype generate="true"
-		   code="MyProduct"
-		   jaloclass="de.kpfamily.jalo.MyProduct"
-		   extends="Product"
-		   autocreate="true"
-	   >
-			<attributes>
-				<attribute qualifier="myExampleInitialStringField" type="java.lang.String">
-					<description>My Example Initial String Value</description>
-					<modifiers initial="true"/>
-					<persistence type="property"/>
-				</attribute>
+		<typegroup name="Babyartikel">
+			<itemtype code="BabyartikelProduct" extends="Product"
+			          autocreate="true" generate="true"
+			          jaloclass="de.kpfamily.core.jalo.BabyartikelProduct">
+				<description>Base babyartikel product extension that contains additional attributes.</description>
+			</itemtype>
 
-				<attribute qualifier="myExampleBooleanField" type="java.lang.Boolean">
-					<description>Example Initial Boolean Field</description>
-               <persistence type="property"/>
-				</attribute>
-
-				<attribute qualifier="media" type="Media">
-					<persistence type="property"/>
-				</attribute>
-
-			</attributes>
-		</itemtype>
--->
+			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
+			          autocreate="true" generate="true"
+			          jaloclass="de.kpfamily.core.jalo.BabyartikelSizeVariantProduct">
+				<description>Babyartikel size variant type that contains additional attribute describing variant size.</description>
+				<attributes>
+					<attribute qualifier="size" type="localized:java.lang.String" metatype="VariantAttributeDescriptor">
+						<description>Size of the product.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
 	</itemtypes>
 </items>
