@@ -1,4 +1,4 @@
-package de.flieger.controller;
+package com.pixi.controller;
 
 import java.util.UUID;
 

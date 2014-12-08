@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.flieger.dto;
+package com.pixi.dto;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

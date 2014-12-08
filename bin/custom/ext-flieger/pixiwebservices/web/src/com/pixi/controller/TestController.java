@@ -1,4 +1,4 @@
-package de.flieger.controller;
+package com.pixi.controller;
 
 import java.io.StringReader;
 import java.math.BigDecimal;
@@ -43,8 +43,8 @@ import xml.product.export.Header;
 import xml.product.export.Mime;
 import xml.product.export.Supplier;
 
-import de.flieger.dto.SampleRequest;
-import de.flieger.dto.SampleResponse;
+import com.pixi.dto.SampleRequest;
+import com.pixi.dto.SampleResponse;
 
 
 @Controller

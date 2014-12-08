@@ -94,6 +94,7 @@
       
       <!-- flieger extensions -->
 		<extension name="pixiwebservices" />
+		<!-- <extension name="empty" /> -->
 
 		<!-- ext-accelerator -->
 		<extension name="acceleratorservices" />
