@@ -90,7 +90,7 @@ public class LoginPageController extends AbstractLoginPageController
 
 	protected void storeReferer(final String referer, final HttpServletRequest request, final HttpServletResponse response)
 	{
-		if (StringUtils.isNotBlank(referer) && !StringUtils.endsWith(referer, "/login"))
+		if (StringUtils.isNotBlank(referer) && !StringUtils.endsWith(referer, "/login") && StringUtils.contains(referer, request.getServerName()))
 		{
 			httpSessionRequestCache.saveRequest(request, response);
 		}

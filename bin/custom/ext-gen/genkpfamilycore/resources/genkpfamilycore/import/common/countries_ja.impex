@@ -246,7 +246,7 @@ UPDATE Country;isocode[unique=true];name[lang=$lang]
  ;VC;"セントビンセントおよびグレナディーン諸島"
  ;VE;"ベネズエラ"
  ;VG;"英領ヴァージン諸島"
- ;VI;"米領ヴァージン諸島"
+ ;VI;"米領ヴァージン諸島."
  ;VN;"ベトナム"
  ;VU;"バヌアツ"
  ;WF;"ウォリス・フトゥーナ諸島"

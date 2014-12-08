@@ -19,14 +19,11 @@
 	</div>
 	
 	<div class="column last searchPOSContent">
-		
-			<form:form name="pickupInStoreForm" action="#" method="post" class="searchPOSForm clearfix">
-				
+			<form:form name="pickupInStoreForm" action="${actionUrl}" method="post" class="searchPOSForm clearfix">
 				<table>
 					<tr>
 						<td>
 						   <div class="control-group left">
-							  <label for="locationForSearch" class="skip"><spring:theme code="pickup.search.message" /></label>
 							   <div class="controls">
 								   <input type="text" name="locationQuery" data-id="locationForSearch" class="left" placeholder="<spring:theme code="pickup.search.message" />" />
 							   </div>

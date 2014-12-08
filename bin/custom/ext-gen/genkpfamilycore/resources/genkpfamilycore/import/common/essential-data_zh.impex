@@ -81,3 +81,10 @@ UPDATE Tax;code[unique=true];name[lang=$lang]
 
 # Consginment statuses
 UPDATE ConsignmentStatus;code[unique=true];name[lang=$lang]
+ ;CANCELLED;"已取消"
+ ;PICKPACK;"拣配出货"
+ ;PICKUP_COMPLETE;"拣货完成"
+ ;READY;"准备就绪"
+ ;READY_FOR_PICKUP;"准备拣货"
+ ;SHIPPED;"已发货"
+ ;WAITING;"正在等待"

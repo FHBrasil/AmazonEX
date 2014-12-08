@@ -160,11 +160,11 @@
 		<property name="uiExperienceService" ref="uiExperienceService"/>
 		<property name="uiExperienceViewPrefix">
 			<map>
-				<entry key="DESKTOP" value="desktop/"/>
+				<entry key="DESKTOP" value="${commerceservices.default.desktop.ui.experience:desktop}/"/>
 				<entry key="MOBILE" value="mobile/"/>
 			</map>
 		</property>
-		<property name="unknownUiExperiencePrefix" value="desktop/"/>
+		<property name="unknownUiExperiencePrefix" value="${commerceservices.default.desktop.ui.experience:desktop}/"/>
 	</bean>
 
 	<!-- Localization -->
@@ -192,7 +192,7 @@
 		<property name="sitePrefix" value="site" />
 		<property name="themePrefix" value="theme" />
 		<property name="parentMessageSource" ref="messageSource" />
-		<property name="requiredAddOnsNameProvider" ref="requiredAddOnsNameProvider" />
+		<property name="requiredAddOnsNameProvider" ref="reqAddOnsNameProvider" />
 		<!-- The number of seconds to cache loaded properties files. Set to -1 (never) for production. -->
 		<property name="cacheSeconds" value="#{configurationService.configuration.getProperty('storefront.resourceBundle.cacheSeconds')}"/>
 		<property name="defaultEncoding" value="UTF-8"/>

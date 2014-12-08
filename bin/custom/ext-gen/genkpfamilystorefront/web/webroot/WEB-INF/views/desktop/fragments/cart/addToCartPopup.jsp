@@ -29,6 +29,8 @@
 </c:forEach>
 ]
 },
+"cartAnalyticsData":{"cartCode" : "${cartCode}","productPostPrice":"${entry.basePrice.value}","productName":"${product.name}"}
+,
 "addToCartLayer":"<spring:escapeBody javaScriptEscape="true">
 <spring:theme code="text.addToCart" var="addToCartText"/>
 <c:url value="/cart" var="cartUrl"/>
@@ -41,7 +43,6 @@
 	<div class="itemDesc">
 		<div class="itemName"><c:out value="${product.name}" /></div>
 		<div class="itemQuantity"><span class="label"><spring:theme code="popup.cart.quantity.added"/></span>${quantity}</div>
-
 			<c:forEach items="${product.baseOptions}" var="baseOptions">
 				<c:forEach items="${baseOptions.selected.variantOptionQualifiers}" var="baseOptionQualifier">
 					<c:if test="${baseOptionQualifier.qualifier eq 'style' and not empty baseOptionQualifier.image.url}">
@@ -58,7 +59,6 @@
 					</c:if>
 				</c:forEach>
 			</c:forEach>
-		
 		<div class="itemPrice"><format:price priceData="${entry.basePrice}"/></div>
 	</div>
 </div>	

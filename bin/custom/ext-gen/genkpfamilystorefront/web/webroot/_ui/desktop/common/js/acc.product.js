@@ -11,6 +11,11 @@ ACC.product = {
 		$('#addToCartButton').removeAttr("disabled");
 	},
 
+	enableVariantSelectors: function ()
+	{
+		$('.variant-select').removeAttr("disabled");
+	},
+	
 	bindToAddToCartForm: function ()
 	{
 		var addToCartForm = $('.add_to_cart_form');
@@ -20,9 +25,8 @@ ACC.product = {
 	bindToAddToCartStorePickUpForm: function ()
 	{
 		var addToCartStorePickUpForm = $('#pickup_store_results .add_to_cart_storepickup_form');
-		addToCartStorePickUpForm.ajaxForm({
-			success: ACC.product.displayAddToCartPopup
-		});
+
+		addToCartStorePickUpForm.ajaxForm({success: ACC.product.displayAddToCartPopup});
 	},
 	
 	
@@ -62,15 +66,21 @@ ACC.product = {
 		
 		var productCode = $('[name=productCodePost]', formElement).val();
 		var quantityField = $('[name=qty]', formElement).val();
-
+		
 		var quantity = 1;
 		if (quantityField != undefined)
 		{
 			quantity = quantityField;
 		}
 
-		ACC.track.trackAddToCart(productCode, quantity, cartResult.cartData);
-		
+		var cartAnalyticsData = cartResult.cartAnalyticsData;
+
+		var cartData = {"cartCode": cartAnalyticsData.cartCode,
+				"productCode": productCode, "quantity": quantity,
+				"productPrice":cartAnalyticsData.productPostPrice,
+				"productName":cartAnalyticsData.productName} ;
+
+		ACC.track.trackAddToCart(productCode, quantity, cartData);
 	}
 
 };
@@ -83,6 +93,7 @@ $(document).ready(function ()
 		bindToAddToCartStorePickUpForm();
 		enableStorePickupButton();
 		enableAddToCartButton();
+		enableVariantSelectors();
 	}
 });
 

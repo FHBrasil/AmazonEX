@@ -7,7 +7,7 @@
 <a class="button" href="${continueShoppingUrl}">
 	<spring:theme text="Continue Shopping" code="cart.page.continue"/>
 </a>
-<button id="checkoutButtonBottom" class="doCheckoutBut positive right" type="button" data-checkout-url="${checkoutUrl}">
+<button id="checkoutButtonBottom" class="doCheckoutBut positive right continueCheckout" type="button" data-checkout-url="${checkoutUrl}">
 	<spring:theme code="checkout.checkout" />
 </button>
 
@@ -24,7 +24,6 @@
 			<select id="selectPciOption" style="margin-left: 10px; display: none;">
 				<option value=""><spring:theme code="checkout.checkout.multi.pci.select"/></option>
 				<c:if test="${!isOmsEnabled}">
-					<option value="default"><spring:theme code="checkout.checkout.multi.pci-ws"/></option>
 					<option value="hop"><spring:theme code="checkout.checkout.multi.pci-hop"/></option>
 				</c:if>
 				<option value="sop"><spring:theme code="checkout.checkout.multi.pci-sop" text="PCI-SOP" /></option>

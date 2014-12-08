@@ -14,17 +14,6 @@
 --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
 
    <extension abstractclassprefix="Generated" classprefix="Kpfamilycore" managername="KpfamilycoreManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="kpfamilycore">
-               
-      <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
-      <!-- <requires-extension name="cms"/> -->         
-      
-
-      <coremodule generated="true" manager="de.kpfamily.jalo.KpfamilycoreManager" packageroot="de.kpfamily"/>
-
-      <webmodule jspcompile="false" webroot="/kpfamilycore"/>
-					
-	
-
+      <coremodule generated="true" manager="de.kpfamily.core.jalo.KpfamilycoreManager" packageroot="de.kpfamily"/>
    </extension>
-      
 </extensioninfo>

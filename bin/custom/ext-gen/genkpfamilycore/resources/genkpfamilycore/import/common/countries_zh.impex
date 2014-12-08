@@ -246,7 +246,7 @@ UPDATE Country;isocode[unique=true];name[lang=$lang]
  ;VC;"圣文森特和格林纳丁斯"
  ;VE;"委内瑞拉"
  ;VG;"英属维京群岛"
- ;VI;"美属维京群岛"
+ ;VI;"美属维京群岛."
  ;VN;"越南"
  ;VU;"瓦努阿图"
  ;WF;"瓦利斯群岛和富图纳群岛"

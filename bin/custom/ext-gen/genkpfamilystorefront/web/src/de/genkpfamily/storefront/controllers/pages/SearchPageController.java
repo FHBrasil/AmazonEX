@@ -115,11 +115,13 @@ public class SearchPageController extends AbstractSearchPageController
 			}
 			model.addAttribute("userLocation", customerLocationService.getUserLocation());
 			getRequestContextData(request).setSearch(searchPageData);
-            if(searchPageData != null)
-            {
-			    model.addAttribute(WebConstants.BREADCRUMBS_KEY,
-					searchBreadcrumbBuilder.getBreadcrumbs(null, searchText, CollectionUtils.isEmpty(searchPageData.getBreadcrumbs())));
-            }
+			if (searchPageData != null)
+			{
+				model.addAttribute(
+						WebConstants.BREADCRUMBS_KEY,
+						searchBreadcrumbBuilder.getBreadcrumbs(null, searchText,
+								CollectionUtils.isEmpty(searchPageData.getBreadcrumbs())));
+			}
 		}
 		else
 		{

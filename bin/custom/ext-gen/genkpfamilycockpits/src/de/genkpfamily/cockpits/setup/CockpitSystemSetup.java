@@ -80,7 +80,10 @@ public class CockpitSystemSetup extends AbstractSystemSetup
 				{
 					prefix = "sqlserver";
 				}
-				importImpexFile(context, "/genkpfamilycockpits/reportcockpit/import/" + prefix + "_jasperreports.impex");
+				
+				if (prefix != null){
+					importImpexFile(context, "/genkpfamilycockpits/reportcockpit/import/" + prefix + "_jasperreports.impex");
+				}
 			}
 			catch (final Exception e)
 			{

@@ -20,7 +20,7 @@
 	<!--
 		Example Data POJO
 	
-	<bean class="de.kpfamily.data.MyPojo">
+	<bean class="de.kpfamily.facades.data.MyPojo">
 		<property name="id" type="String"/>
 		<property name="flag" type="boolean"/>
 	</bean>

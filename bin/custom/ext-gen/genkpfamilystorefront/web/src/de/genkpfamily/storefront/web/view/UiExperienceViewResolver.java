@@ -13,9 +13,9 @@
  */
 package de.genkpfamily.storefront.web.view;
 
-import de.hybris.platform.commerceservices.enums.UiExperienceLevel;
 import de.hybris.platform.acceleratorservices.uiexperience.UiExperienceService;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
+import de.hybris.platform.commerceservices.enums.UiExperienceLevel;
 
 import java.util.Locale;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class UiExperienceViewResolver extends InternalResourceViewResolver
 	private static final Logger LOG = Logger.getLogger(UiExperienceViewResolver.class);
 
 	private UiExperienceService uiExperienceService;
-	private Map<UiExperienceLevel, String> uiExperienceViewPrefix;
+	public Map<UiExperienceLevel, String> uiExperienceViewPrefix;
 	private String unknownUiExperiencePrefix;
 	private String addOnPrefix;
 
@@ -51,7 +51,7 @@ public class UiExperienceViewResolver extends InternalResourceViewResolver
 		this.uiExperienceService = uiExperienceService;
 	}
 
-	protected Map<UiExperienceLevel, String> getUiExperienceViewPrefix()
+	public Map<UiExperienceLevel, String> getUiExperienceViewPrefix()
 	{
 		return uiExperienceViewPrefix;
 	}

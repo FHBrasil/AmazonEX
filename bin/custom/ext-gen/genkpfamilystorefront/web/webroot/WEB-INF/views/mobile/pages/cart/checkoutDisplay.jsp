@@ -12,7 +12,7 @@
 		</a>
 	</div>
 	<div class="ui-block-b">
-		<a href="${checkoutUrl}" id="checkoutButton" data-role="button" data-theme="b" data-icon="arrow-r" data-iconpos="right" class>
+		<a href="${checkoutUrl}" id="checkoutButton" data-role="button" data-theme="b" data-icon="arrow-r" data-iconpos="right" class="continueCheckout">
 			<spring:theme code="checkout.checkout" />
 		</a>
 	</div>

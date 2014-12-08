@@ -368,3 +368,25 @@ ul.jcarousel-skin li{
 .doCheckoutBut{
 	margin-right:0;
 }
+
+
+
+
+
+.disp-img{
+	clear:both;
+
+
+}
+
+.disp-img .title{
+	display: block;
+	
+}
+
+.disp-img .thumb{
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	
+}

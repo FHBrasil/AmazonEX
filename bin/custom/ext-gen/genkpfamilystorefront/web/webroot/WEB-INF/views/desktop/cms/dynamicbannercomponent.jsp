@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${not empty media}">
-<div class="dynamic_disp-img">
+<div class="dynamic_disp-img simple-banner">
 	<div class="title">${title}	</div>
    	<div class="thumb">
    		<img title="${media.altText}" alt="${media.altText}" src="${media.url}">

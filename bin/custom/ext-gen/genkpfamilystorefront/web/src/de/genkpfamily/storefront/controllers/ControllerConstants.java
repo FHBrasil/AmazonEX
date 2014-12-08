@@ -9,7 +9,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
  *
- *  
+ *
  */
 package de.genkpfamily.storefront.controllers;
 
@@ -21,6 +21,7 @@ import de.hybris.platform.acceleratorcms.model.components.NavigationBarComponent
 import de.hybris.platform.acceleratorcms.model.components.ProductFeatureComponentModel;
 import de.hybris.platform.acceleratorcms.model.components.ProductReferencesComponentModel;
 import de.hybris.platform.acceleratorcms.model.components.PurchasedCategorySuggestionComponentModel;
+import de.hybris.platform.acceleratorcms.model.components.SimpleResponsiveBannerComponentModel;
 import de.hybris.platform.acceleratorcms.model.components.SubCategoryListComponentModel;
 import de.hybris.platform.cms2.model.contents.components.CMSLinkComponentModel;
 import de.hybris.platform.cms2lib.model.components.ProductCarouselComponentModel;
@@ -59,6 +60,7 @@ public interface ControllerConstants
 			String CMSLinkComponent = _Prefix + CMSLinkComponentModel._TYPECODE + _Suffix;
 			String DynamicBannerComponent = _Prefix + DynamicBannerComponentModel._TYPECODE + _Suffix;
 			String SubCategoryListComponent = _Prefix + SubCategoryListComponentModel._TYPECODE + _Suffix;
+			String SimpleResponsiveBannerComponent = _Prefix + SimpleResponsiveBannerComponentModel._TYPECODE + _Suffix;
 		}
 	}
 
@@ -94,7 +96,7 @@ public interface ControllerConstants
 			{
 				String CheckoutRegisterPage = "pages/checkout/checkoutRegisterPage";
 				String CheckoutConfirmationPage = "pages/checkout/checkoutConfirmationPage";
-				String CheckoutLoginPage =  "pages/checkout/checkoutLoginPage";
+				String CheckoutLoginPage = "pages/checkout/checkoutLoginPage";
 			}
 
 			interface Password
@@ -153,7 +155,7 @@ public interface ControllerConstants
 			{
 				String CountryAddressForm = "fragments/address/countryAddressForm";
 			}
-			
+
 			interface Checkout
 			{
 				String TermsAndConditionsPopup = "acceleratoraddon/web/webroot/WEB-INF/views/mobile/fragments/checkout/termsAndConditionsPopup";

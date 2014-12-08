@@ -10,7 +10,7 @@ $lang=en
 
 # Content Pages
 UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
- ;;account;"Your Account"
+ ;;account;"My Account"
  ;;add-edit-address;"Add/Edit Address"
  ;;address-book;"Address Book"
  ;;cartPage;"Your Shopping Cart"

@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags" %>
 
-<div class="slider_component">
+<div class="slider_component simple-banner">
 	<div id="homepage_slider" class="svw">
 		<ul>
 			<c:forEach items="${banners}" var="banner" varStatus="status">

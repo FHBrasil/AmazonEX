@@ -40,7 +40,7 @@ ACC.checkout = {
 				else
 				{
 					var flow = $('#selectAltCheckoutFlow').attr('value');
-					if ('' == flow)
+					if (undefined == flow || flow == '')
 					{
 						// No alternate flow specified, fallback to default behaviour
 						window.location = checkoutUrl;

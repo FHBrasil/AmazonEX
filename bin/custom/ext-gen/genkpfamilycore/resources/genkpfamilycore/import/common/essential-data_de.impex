@@ -25,7 +25,7 @@ UPDATE Title;code[unique=true];name[lang=$lang]
  ;miss;"Fräulein"
  ;mr;"Herr"
  ;mrs;"Frau"
- ;ms;"Ms"
+ ;ms;"Ms."
  ;rev;"Rev."
 
 # Credit / Debit Cards
@@ -81,3 +81,10 @@ UPDATE Tax;code[unique=true];name[lang=$lang]
 
 # Consginment statuses
 UPDATE ConsignmentStatus;code[unique=true];name[lang=$lang]
+ ;CANCELLED;"Storniert"
+ ;PICKPACK;"Pickpack"
+ ;PICKUP_COMPLETE;"Abholung abgeschlossen"
+ ;READY;"Bereit"
+ ;READY_FOR_PICKUP;"Abholbereit"
+ ;SHIPPED;"Geliefert"
+ ;WAITING;"Wartet"

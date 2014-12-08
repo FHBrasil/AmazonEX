@@ -360,7 +360,7 @@ public class AccountPageController extends AbstractSearchPageController
 	@RequestMapping(value = "/update-email", method = RequestMethod.POST)
 	@RequireHardLogIn
 	public String updateEmail(final UpdateEmailForm updateEmailForm, final BindingResult bindingResult, final Model model,
-			final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException
+			final RedirectAttributes redirectAttributes, final HttpServletRequest request) throws CMSItemNotFoundException
 	{
 		getEmailValidator().validate(updateEmailForm, bindingResult);
 

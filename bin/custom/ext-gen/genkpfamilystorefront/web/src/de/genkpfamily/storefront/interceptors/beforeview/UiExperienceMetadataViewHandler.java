@@ -13,9 +13,10 @@
  */
 package de.genkpfamily.storefront.interceptors.beforeview;
 
-import de.hybris.platform.commerceservices.enums.UiExperienceLevel;
 import de.hybris.platform.acceleratorservices.storefront.data.MetaElementData;
 import de.hybris.platform.acceleratorservices.uiexperience.UiExperienceService;
+import de.hybris.platform.commerceservices.enums.UiExperienceLevel;
+import de.hybris.platform.commerceservices.util.ResponsiveUtils;
 import de.genkpfamily.storefront.interceptors.BeforeViewHandler;
 
 import java.util.List;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class UiExperienceMetadataViewHandler implements BeforeViewHandler
 {
+
 	@Resource(name = "uiExperienceService")
 	private UiExperienceService uiExperienceService;
 
@@ -53,11 +55,13 @@ public class UiExperienceMetadataViewHandler implements BeforeViewHandler
 			final UiExperienceLevel currentUiExperienceLevel = uiExperienceService.getUiExperienceLevel();
 			if (UiExperienceLevel.DESKTOP.equals(currentUiExperienceLevel))
 			{
-
-				// Provide some hints to mobile browser even though this is not the mobile site -->
-				metaelements.add(createMetaElement("HandheldFriendly", "True"));
-				metaelements.add(createMetaElement("MobileOptimized", "970"));
-				metaelements.add(createMetaElement("viewport", "width=970, target-densitydpi=160, maximum-scale=1.0"));
+				if (!ResponsiveUtils.isResponsive())
+				{
+					// Provide some hints to mobile browser even though this is not the mobile site -->
+					metaelements.add(createMetaElement("HandheldFriendly", "True"));
+					metaelements.add(createMetaElement("MobileOptimized", "970"));
+					metaelements.add(createMetaElement("viewport", "width=970, target-densitydpi=160, maximum-scale=1.0"));
+				}
 			}
 			else if (UiExperienceLevel.MOBILE.equals(currentUiExperienceLevel))
 			{

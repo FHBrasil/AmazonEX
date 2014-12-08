@@ -23,9 +23,9 @@ UPDATE Currency;isocode[unique=true];name[lang=$lang]
 UPDATE Title;code[unique=true];name[lang=$lang]
  ;dr;"Dr."
  ;miss;"Miss"
- ;mr;"Mr"
- ;mrs;"Mrs"
- ;ms;"Ms"
+ ;mr;"Mr."
+ ;mrs;"Mrs."
+ ;ms;"Ms."
  ;rev;"Rev."
 
 # Credit / Debit Cards

@@ -110,6 +110,7 @@
 	<bean id="acceleratorProductGalleryImagesPopulator" parent="defaultProductGalleryImagesPopulator">
 		<property name="imageFormats">
 			<list>
+				<value>superZoom</value>
 				<value>zoom</value>
 				<value>product</value>
 				<value>thumbnail</value>

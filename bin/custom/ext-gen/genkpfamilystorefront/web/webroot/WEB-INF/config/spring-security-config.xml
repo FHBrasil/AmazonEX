@@ -28,6 +28,7 @@
 		<security:access-denied-handler error-page="/login"/>
 
 		<security:session-management session-authentication-strategy-ref="fixation" />
+		<security:intercept-url pattern="/events" requires-channel="https" />
 
 		<!-- SSL / AUTHENTICATED pages -->
 
@@ -71,6 +72,8 @@
 	<alias name="antPathMatcher" alias="defaultPathMatcher" />
 	<bean id="antPathMatcher" class="org.springframework.util.AntPathMatcher" />
 
+
+
 	<!-- Default security config -->
 	<security:http disable-url-rewriting="true"  request-matcher-ref="excludeUrlRequestMatcher" use-expressions="true">
 		<security:anonymous username="anonymous" granted-authority="ROLE_ANONYMOUS" />
@@ -79,6 +82,8 @@
 		<security:session-management session-authentication-strategy-ref="fixation" />
 
 		<!-- RememberMe -->
+
+		<security:intercept-url pattern="/events" requires-channel="https" />
 		<security:remember-me key="genkpfamilystorefront" services-ref="rememberMeServices"/>
 
 		<!-- SSL / AUTHENTICATED pages -->
@@ -288,7 +293,9 @@
 		<property name="authenticationManager" ref="authenticationManager"/>
 	</bean>
 
-	<bean id="rememberMeServices" class="de.genkpfamily.storefront.security.AcceleratorRememberMeServices" >
+	
+	<alias name="defaultRememberMeServices" alias="rememberMeServices"/>
+	<bean id="defaultRememberMeServices" class="de.genkpfamily.storefront.security.AcceleratorRememberMeServices" >
 		<property name="userDetailsService" ref="originalUidUserDetailsService" />
 		<property name="key" value="genkpfamilystorefront" />
 		<property name="cookieName" value="genkpfamilystorefrontRememberMe" />

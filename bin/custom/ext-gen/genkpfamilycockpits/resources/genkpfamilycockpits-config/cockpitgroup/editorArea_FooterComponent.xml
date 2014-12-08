@@ -17,6 +17,7 @@
 		</property>
 		<property qualifier="FooterComponent.notice"/>
 		<property qualifier="FooterComponent.wrapAfter"/>
+		<property qualifier="FooterComponent.showLanguageCurrency"/>
 	</group>
 
 	<group qualifier="visibility" visible="true" initially-opened="false">

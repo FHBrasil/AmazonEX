@@ -23,7 +23,7 @@
 <!--
 		<itemtype generate="true"
 		   code="MyProduct"
-		   jaloclass="de.kpfamily.jalo.MyProduct"
+		   jaloclass="de.kpfamily.facades.jalo.MyProduct"
 		   extends="Product"
 		   autocreate="true"
 	   >

@@ -6,11 +6,13 @@
 <%@ attribute name="pageScripts" required="false" fragment="true" %>
 
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template" %>
+<%@ taglib prefix="addonScripts" tagdir="/WEB-INF/tags/desktop/common/header" %>
 <%@ taglib prefix="analytics" tagdir="/WEB-INF/tags/shared/analytics" %>
 <%@ taglib prefix="debug" tagdir="/WEB-INF/tags/shared/debug" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="htmlmeta" uri="http://hybris.com/tld/htmlmeta" %>
+
 
 
 <!DOCTYPE html>
@@ -38,9 +40,9 @@
 	<jsp:invoke fragment="pageCss"/>
 	<analytics:analytics/>
 
-<c:if test="${!empty googleApiVersion}">
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=${googleApiVersion}&amp;key=${googleApiKey}&amp;sensor=false"></script>
-</c:if>
+	<c:if test="${!empty googleApiVersion}">
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=${googleApiVersion}&amp;key=${googleApiKey}&amp;sensor=false"></script>
+	</c:if>
 
 
 </head>
@@ -59,11 +61,12 @@
 	<template:javaScript/>
 	
 	<%-- Inject any additional JavaScript required by the page --%>
-	<jsp:invoke fragment="pageScripts"/>	
+	<jsp:invoke fragment="pageScripts"/>
 
+	<addonScripts:addonScripts/>
 
 </body>
 
 <debug:debugFooter/>
 
-</html>
+</ html>

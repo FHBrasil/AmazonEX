@@ -243,10 +243,18 @@ ACCMOB.product = {
 
 		var quantity = quantityField || 1;
 
-		ACCMOB.product.trackAddToCart(productCode, quantity, cartResult.cartData);
+		var cartAnalyticsData = cartResult.cartAnalyticsData;
+
+		var cartData = {"cartCode": cartAnalyticsData.cartCode,
+			"productCode": productCode, "quantity": quantity,
+			"productPrice":cartAnalyticsData.productPostPrice,
+			"productName":cartAnalyticsData.productName} ;
+
+		ACCMOB.product.trackAddToCart(productCode, quantity, cartData);
 
 		var addToCartPopup = cartResult.cartPopupHtml;
 		var addToCartDialog = ACCMOB.product.createDialog($(addToCartPopup).first('h2').data('dialogheader'), addToCartPopup);
+
 		ACCMOB.common.hidePageLoadingMsg();
 	},
 

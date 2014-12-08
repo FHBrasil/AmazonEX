@@ -17,10 +17,11 @@
 				<c:url value="/my-account/update-email" var="updateEmailUrl" />
 				<form:form action="${updateEmailUrl}" method="post" commandName="updateEmailForm" data-ajax="false">
 					<common:errors />
-					<ul class="mFormList" data-inset="true">
+					<ul id="updateEmailFormList" class="mFormList" data-inset="true">
 						<li><formElement:formInputBox idKey="profile.email" labelKey="profile.email" path="email" inputCSS="text" mandatory="true" /></li>
 						<li><formElement:formInputBox idKey="profile.checkEmail" labelKey="profile.checkEmail" path="chkEmail" inputCSS="text" mandatory="true" /></li>
 						<li><formElement:formPasswordBox idKey="profile.pwd" labelKey="profile.pwd" path="password" inputCSS="text" mandatory="true" /></li>
+						<input type="hidden" id="recaptchaChallangeAnswered" value="${requestScope.recaptchaChallangeAnswered}"/>
 						<li>
 							<fieldset class="ui-grid-a doubleButton">
 								<div class="ui-block-a">

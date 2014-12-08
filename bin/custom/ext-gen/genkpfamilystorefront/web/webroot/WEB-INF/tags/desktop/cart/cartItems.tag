@@ -117,7 +117,8 @@
 					
 					<td headers="header4" class="quantity">
 						<c:url value="/cart/update" var="cartUpdateFormAction" />
-						<form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" method="post" commandName="updateQuantityForm${entry.entryNumber}">
+						<form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" method="post" commandName="updateQuantityForm${entry.entryNumber}"
+						           data-cart='{"cartCode" : "${cartData.code}","productPostPrice":"${entry.basePrice.value}","productName":"${entry.product.name}"}'>
 							<input type="hidden" name="entryNumber" value="${entry.entryNumber}"/>
 							<input type="hidden" name="productCode" value="${entry.product.code}"/>
 							<input type="hidden" name="initialQuantity" value="${entry.quantity}"/>

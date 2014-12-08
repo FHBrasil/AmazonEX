@@ -38,21 +38,21 @@
 	
 	<!--  Example how to override a manager -->
 	<!--
-	<bean id="core.productManager"   class="de.kpfamily.jalo.KpfamilyfacadesProductManager" 	init-method="init"	destroy-method="destroy" />
+	<bean id="core.productManager"   class="de.kpfamily.facades.jalo.KpfamilyfacadesProductManager" 	init-method="init"	destroy-method="destroy" />
 	-->
 	
 	
  	<!--  Example how to configure the class to use for jalo session creation -->
 	<!--
 	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
-		<property name="targetClassName" value="de.kpfamily.jalo.KpfamilyfacadesJaloSession"/>
+		<property name="targetClassName" value="de.kpfamily.facades.jalo.KpfamilyfacadesJaloSession"/>
 	</bean>
 	-->
 
 	
 	<!--  Example how to override an item  -->
 	<!-- 
-	<bean id="de.hybris.platform.jalo.product.Product" class="de.kpfamily.jalo.KpfamilyfacadesProduct" scope="prototype" />		
+	<bean id="de.hybris.platform.jalo.product.Product" class="de.kpfamily.facades.jalo.KpfamilyfacadesProduct" scope="prototype" />		
  	-->
 
 	<!--  
@@ -61,7 +61,7 @@
      -->
 	
 	<!-- 
-	<bean id="kpfamilyfacadesProfBean" class="de.kpfamily.aop.KpfamilyfacadesProfilingAspect"/>
+	<bean id="kpfamilyfacadesProfBean" class="de.kpfamily.facades.aop.KpfamilyfacadesProfilingAspect"/>
 	<aop:config proxy-target-class="true">
   		<aop:aspect id="kpfamilyfacadesProfAspect" ref="kpfamilyfacadesProfBean" >
     	  <aop:pointcut id="profiledMethods" 

@@ -27,6 +27,7 @@ import de.hybris.platform.commerceservices.i18n.CommerceCommonI18NService;
 import de.hybris.platform.core.model.c2l.LanguageModel;
 import de.genkpfamily.storefront.interceptors.BeforeViewHandler;
 import de.genkpfamily.storefront.util.CSRFTokenManager;
+import de.genkpfamily.storefront.web.view.UiExperienceViewResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,24 +69,16 @@ public class UiThemeResourceBeforeViewHandler implements BeforeViewHandler
 	@Resource(name = "siteConfigService")
 	private SiteConfigService siteConfigService;
 
-	@Resource(name = "requiredAddOnsNameProvider")
+	@Resource(name = "reqAddOnsNameProvider")
 	private RequiredAddOnsNameProvider requiredAddOnsNameProvider;
 
 	@Resource(name = "commerceCommonI18NService")
 	private CommerceCommonI18NService commerceCommonI18NService;
 
+	@Resource(name = "viewResolver")
+	private UiExperienceViewResolver uiExperienceViewResolver;
+
 	private String defaultThemeName;
-
-	protected String getDefaultThemeName()
-	{
-		return defaultThemeName;
-	}
-
-	@Required
-	public void setDefaultThemeName(final String defaultThemeName)
-	{
-		this.defaultThemeName = defaultThemeName;
-	}
 
 	@Override
 	public void beforeView(final HttpServletRequest request, final HttpServletResponse response, final ModelAndView modelAndView)
@@ -95,7 +88,9 @@ public class UiThemeResourceBeforeViewHandler implements BeforeViewHandler
 		final String siteName = currentSite.getUid();
 		final String themeName = getThemeNameForSite(currentSite);
 		final String uiExperienceCode = uiExperienceService.getUiExperienceLevel().getCode();
-		final String uiExperienceCodeLower = uiExperienceCode.toLowerCase();
+		final String uiExperienceCodeLower = uiExperienceViewResolver.getUiExperienceViewPrefix().isEmpty() ? uiExperienceCode
+				.toLowerCase() : StringUtils.remove(
+				uiExperienceViewResolver.getUiExperienceViewPrefix().get(uiExperienceService.getUiExperienceLevel()), "/");
 		final Object urlEncodingAttributes = request.getAttribute(WebConstants.URL_ENCODING_ATTRIBUTES);
 		final String contextPath = StringUtils.remove(request.getContextPath(),
 				(urlEncodingAttributes != null) ? urlEncodingAttributes.toString() : "");
@@ -214,4 +209,16 @@ public class UiThemeResourceBeforeViewHandler implements BeforeViewHandler
 		}
 		return getDefaultThemeName();
 	}
+
+	protected String getDefaultThemeName()
+	{
+		return defaultThemeName;
+	}
+
+	@Required
+	public void setDefaultThemeName(final String defaultThemeName)
+	{
+		this.defaultThemeName = defaultThemeName;
+	}
+
 }

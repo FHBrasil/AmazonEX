@@ -9,7 +9,7 @@
 
 <div class="span-12 last" data-theme="b">
 
-	<div id="homepage_slider" class="owl-carousel owl-theme">
+	<div id="homepage_slider" class="owl-carousel owl-theme simple-banner">
 		<c:forEach items="${banners}" var="banner">
 			<c:if test="${ycommerce:evaluateRestrictions(banner)}">
 				<c:url value="${banner.urlLink}" var="encodedUrl" />

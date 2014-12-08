@@ -6,7 +6,7 @@
 
 <%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData" %>
 
-
+		<c:set var="showAddToCart"  value="" scope="session" />
 
 <%-- Determine if product is one of apparel style or size variant --%>
 		<c:if test="${product.variantType eq 'ApparelStyleVariantProduct'}">
@@ -75,7 +75,7 @@
 						<form>
 							<label for="Size"><spring:theme code="product.variants.size"/></label>
 							
-									<select id="Size">
+									<select id="Size" class="variant-select" disabled="disabled" >
 										<c:if test="${empty variantSizes}">
 											<option selected="selected"><spring:theme code="product.variants.select.style"/></option>
 										</c:if>
@@ -122,7 +122,7 @@
 		<c:if test="${not empty variantOptions}">
 			<div class="variant_options">
 				<div class="size">
-					<select id="variant">
+					<select id="variant" class="variant-select" disabled="disabled">
 						<option selected="selected" disabled="disabled"><spring:theme code="product.variants.select.variant"/></option>
 						<c:forEach items="${variantOptions}" var="variantOption">
 							<c:set var="optionsString" value="" />

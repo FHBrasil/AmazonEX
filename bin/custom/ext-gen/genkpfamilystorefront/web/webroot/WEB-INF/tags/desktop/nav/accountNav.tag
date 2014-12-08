@@ -8,7 +8,7 @@
 
 <div class="accountNav">
 	
-		<div class="headline"><spring:theme code="text.account.yourAccount" text="Your Account"/></div>
+		<div class="headline"><spring:theme code="text.account.yourAccount" text="My Account"/></div>
 
 			<ul>
 				<li class='${selected eq 'profile' ? 'active' : ''}'>

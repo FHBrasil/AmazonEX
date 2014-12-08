@@ -9,7 +9,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
  *
- *  
+ *
  */
 package de.genkpfamily.storefront.controllers.pages;
 
@@ -71,6 +71,7 @@ public class CheckoutController extends AbstractCheckoutController
 	private static final String ORDER_CODE_PATH_VARIABLE_PATTERN = "{orderCode:.*}";
 
 	private static final String CHECKOUT_ORDER_CONFIRMATION_CMS_PAGE_LABEL = "orderConfirmation";
+	private static final String CONTINUE_URL_KEY = "continueUrl";
 
 	@Resource(name = "productFacade")
 	private ProductFacade productFacade;
@@ -137,7 +138,7 @@ public class CheckoutController extends AbstractCheckoutController
 
 	/**
 	 * Method used to determine the checkout redirect URL that will handle the checkout process.
-	 * 
+	 *
 	 * @return A <code>String</code> object of the URL to redirect to.
 	 */
 	protected String getCheckoutRedirectUrl()
@@ -228,6 +229,9 @@ public class CheckoutController extends AbstractCheckoutController
 			uid = orderDetails.getUser().getUid();
 		}
 		model.addAttribute("email", uid);
+
+		final String continueUrl = (String) getSessionService().getAttribute(WebConstants.CONTINUE_URL);
+		model.addAttribute(CONTINUE_URL_KEY, (continueUrl != null && !continueUrl.isEmpty()) ? continueUrl : ROOT);
 
 		final AbstractPageModel cmsPage = getContentPageForLabelOrId(CHECKOUT_ORDER_CONFIRMATION_CMS_PAGE_LABEL);
 		storeCmsPageInModel(model, cmsPage);

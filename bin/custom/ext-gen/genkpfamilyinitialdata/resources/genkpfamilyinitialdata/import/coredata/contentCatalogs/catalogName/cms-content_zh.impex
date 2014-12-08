@@ -10,7 +10,7 @@ $lang=zh
 
 # Content Pages
 UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
- ;;account;"您的账户"
+ ;;account;"我的账户"
  ;;add-edit-address;"添加/编辑地址"
  ;;address-book;"地址簿"
  ;;cartPage;"您的购物篮"

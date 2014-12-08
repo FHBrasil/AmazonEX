@@ -72,6 +72,79 @@
 		 <macrodef name="genkpfamilystorefront_after_dist_copy"/>
 
 --><project name="genkpfamilystorefront_buildcallbacks">
+	<property location="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/lib/less-rhino-1.7.3.js" name="tool.less"/>
+	<property location="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/lib/lessc-rhino-1.7.3.js" name="tool.lessc"/>
+	<property location="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/lib/rhino1_7R4.jar" name="tool.rhino"/>
+
+
+	<macrodef name="lesscss">
+		<sequential>
+			<apply dir="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/" executable="java" failonerror="true" parallel="false">
+				<!-- Give the input bundle of less files-->
+				<fileset dir="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/">
+					<include name="**/style.less"/>
+				</fileset>
+				<arg value="-jar"/>
+				<arg path="${tool.rhino}"/>
+				<arg value="-f"/>
+				<arg path="${tool.less}"/>
+				<arg path="${tool.lessc}"/>
+				<srcfile/>
+				<!-- Output the compiled css file with corresponding name -->
+				<mapper from="(.*)/less/(.*)\.less$$" to="${ext.genkpfamilystorefront.path}/web/webroot/_ui/responsive/theme-\1/css/\2.css" type="regexp"/>
+				<targetfile/>
+			</apply>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="movelibs">
+		<sequential>
+			<copy todir="${ext.genkpfamilystorefront.path}/web/webroot/_ui/responsive/common/bootstrap">
+				<fileset dir="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/lib/bootstrap-3.2.0" includes="**"/>
+			</copy>
+			<copy todir="${ext.genkpfamilystorefront.path}/web/webroot/_ui/responsive/common/js">
+				<fileset dir="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/lib/ybase-0.1.0/js" includes="**"/>
+			</copy>
+			<copy todir="${ext.genkpfamilystorefront.path}/web/webroot/_ui/responsive/">
+				<fileset dir="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/" includes="themes/**/fonts/*"/>
+				<mapper from="themes/(.*)/fonts/(.*)" to="theme-\1/fonts/\2" type="regexp"/>
+			</copy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="generatevariables">
+		<sequential>
+			<uptodate property="updates" targetfile="${ext.genkpfamilystorefront.path}/resources/generateVariables.properties" value="true">
+				<srcfiles file="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/tags/shared/variables/generatedVariables.tag"/>
+				<srcfiles file="${ext.genkpfamilystorefront.path}/web/webroot/_ui/shared/js/generatedVariables.js"/>
+				<srcfiles file="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/shared/less/generatedVariables.less"/>
+			</uptodate>
+			<if>
+				<equals arg1="${updates}" arg2="true"/>
+				<then>
+					<concat destfile="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/tags/shared/variables/generatedVariables.tag" overwrite="no">
+						<string>&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;
+</string>
+						<filelist dir="${ext.genkpfamilystorefront.path}/resources" files="generateVariables.properties"/>
+					</concat>
+
+					<replaceregexp byline="true" file="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/tags/shared/variables/generatedVariables.tag" match="^(?!&lt;%@)(.*)=(.*)" replace="&lt;c:set var=&quot;\1&quot; value=&quot;\2&quot; scope=&quot;session&quot;/&gt;"/>
+
+					<concat destfile="${ext.genkpfamilystorefront.path}/web/webroot/_ui/shared/js/generatedVariables.js" overwrite="yes">
+						<filelist dir="${ext.genkpfamilystorefront.path}/resources" files="generateVariables.properties"/>
+					</concat>
+
+					<replaceregexp byline="true" file="${ext.genkpfamilystorefront.path}/web/webroot/_ui/shared/js/generatedVariables.js" match="(.*)=(.*)" replace="var \1=&quot;\2&quot;;"/>
+
+					<concat destfile="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/shared/less/generatedVariables.less" overwrite="no">
+						<filelist dir="${ext.genkpfamilystorefront.path}/resources" files="generateVariables.properties"/>
+					</concat>
+					
+					<replaceregexp byline="true" file="${ext.genkpfamilystorefront.path}/web/webroot/WEB-INF/_ui-src/shared/less/generatedVariables.less" match="(.*)=(.*)" replace="@\1:\2;"/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
 
 	<macrodef name="genkpfamilystorefront_after_build">
 		<sequential>
@@ -101,8 +174,8 @@
 
 	<macrodef name="genkpfamilystorefront_before_build">
 		<sequential>
-			<echo message="genkpfamilystorefront_after_build"/>
-
+			<echo message="genkpfamilystorefront_before_build"/>
+			<generatevariables/>
 			<foreachext>
 				<do>
 					<if>
@@ -114,7 +187,6 @@
 					</if>
 				</do>
 			</foreachext>
-
 		</sequential>
 
 
@@ -134,4 +206,9 @@
 		</sequential>
 	</macrodef>
 
+
+	<target description="compile the _ui-src folder in _ui" name="compileuisrc">
+		<lesscss/>
+		<movelibs/>
+	</target>
 </project>

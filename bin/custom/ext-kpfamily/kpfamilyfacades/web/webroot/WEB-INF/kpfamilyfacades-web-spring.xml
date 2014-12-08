@@ -29,7 +29,7 @@
     
 	<!--  Configure the class to use for jalo session creation -->
 	<!-- <bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
-		<property name="targetClassName" value="de.kpfamily.jalo.KpfamilyfacadesJaloSession"/>
+		<property name="targetClassName" value="de.kpfamily.facades.jalo.KpfamilyfacadesJaloSession"/>
 	</bean>-->
 
 	<!-- Spring managed FilterChain for hybris Filter stack -->

@@ -44,15 +44,15 @@ ACC.autocomplete = {
 				}
 				else if (item.type == "productResult"){
 
-					var renderHtml = "<a href='" + ACC.config.contextPath + item.url + "' class='product clearfix'>";
+					var renderHtml = "<a href='" + ACC.config.encodedContextPath + item.url + "' class='product clearfix'>";
 
 					if (item.image != null){
 						renderHtml += "<span class='thumb'><img src='" + item.image + "' /></span>";
 					}
-					renderHtml += 	"<span class='desc clearfix'>"
+					renderHtml += 	"<span class='desc clearfix'>";
 					renderHtml += 	"<span class='title'>" + item.value +"</span>";
 					renderHtml += 	"<span class='price'>" + item.price + "</span>";
-					renderHtml += 	"</span>"
+					renderHtml += 	"</span>";
 					renderHtml += 	"</a>";
 
 					return $("<li class='product'>").data("item.autocomplete", item).append(renderHtml).appendTo(ul);
@@ -75,7 +75,7 @@ ACC.autocomplete = {
 						{
 							autoSearchData.push({
 								value: obj.term,
-								url: ACC.config.contextPath + "/search?text=" + obj.term,
+								url: ACC.config.encodedContextPath + "/search?text=" + obj.term,
 								type: "autoSuggestion"
 							});
 						});
@@ -88,7 +88,7 @@ ACC.autocomplete = {
 								code: obj.code,
 								desc: obj.description,
 								manufacturer: obj.manufacturer,
-								url: ACC.config.contextPath + obj.url,
+								url: ACC.config.encodedContextPath + obj.url,
 								price: obj.price.formattedValue,
 								type: "productResult",
 								image: (obj.images!=null && self.options.displayProductImages) ? obj.images[0].url : null // prevent errors if obj.images = null

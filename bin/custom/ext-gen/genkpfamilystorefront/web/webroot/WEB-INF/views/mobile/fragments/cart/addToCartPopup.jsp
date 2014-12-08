@@ -22,7 +22,8 @@
 			</c:forEach>
 			]
 	},
-
+	"cartAnalyticsData":{"cartCode" : "${cartCode}","productPostPrice":"${entry.basePrice.value}","productName":"${product.name}"}
+	,
 	"cartPopupHtml":	"<spring:escapeBody javaScriptEscape="true">
 							<spring:theme code="text.addToCart" var="addToCartText"/>
 							<c:url value="/cart" var="cartUrl"/>

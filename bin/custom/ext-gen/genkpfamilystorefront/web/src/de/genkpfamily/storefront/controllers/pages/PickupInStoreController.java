@@ -15,6 +15,7 @@ package de.genkpfamily.storefront.controllers.pages;
 
 import de.hybris.platform.acceleratorfacades.customerlocation.CustomerLocationFacade;
 import de.hybris.platform.acceleratorservices.store.data.UserLocationData;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.PickupInStoreForm;
 import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.order.data.CartModificationData;
@@ -28,13 +29,13 @@ import de.hybris.platform.commerceservices.order.CommerceCartModificationExcepti
 import de.hybris.platform.commerceservices.order.CommerceCartModificationStatus;
 import de.hybris.platform.commerceservices.store.data.GeoPoint;
 import de.genkpfamily.storefront.controllers.ControllerConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.genkpfamily.storefront.security.cookie.CustomerLocationCookieGenerator;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -45,6 +46,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,6 +67,7 @@ public class PickupInStoreController extends AbstractSearchPageController
 	protected static final Logger LOG = Logger.getLogger(PickupInStoreController.class);
 
 	private static final String PRODUCT_CODE_PATH_VARIABLE_PATTERN = "/{productCode:.*}";
+	private static final String GOOGLE_EMBED_API_KEY_ID = "googleEmbedApiKey";
 
 	@Resource(name = "cartFacade")
 	private CartFacade cartFacade;
@@ -80,6 +83,18 @@ public class PickupInStoreController extends AbstractSearchPageController
 
 	@Resource(name = "customerLocationCookieGenerator")
 	private CustomerLocationCookieGenerator cookieGenerator;
+
+
+	@ModelAttribute("googleEmbedApiKey")
+	public String getGoogleEmbedApiKey(final HttpServletRequest request)
+	{
+		final String googleEmbedApiKey = getHostConfigService().getProperty(GOOGLE_EMBED_API_KEY_ID, request.getServerName());
+		if (StringUtils.isEmpty(googleEmbedApiKey))
+		{
+			LOG.warn("No Google Embed API key found for server: " + request.getServerName());
+		}
+		return googleEmbedApiKey;
+	}
 
 	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/pointOfServices", method = RequestMethod.POST)
 	public String getPointOfServiceForStorePickupSubmit(@PathVariable("productCode") final String productCode,
@@ -332,7 +347,8 @@ public class PickupInStoreController extends AbstractSearchPageController
 		return REDIRECT_PREFIX + "/cart";
 	}
 
-	@RequestMapping(value = "/cart/update/delivery", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/cart/update/delivery", method =
+	{ RequestMethod.GET, RequestMethod.POST })
 	public String updateToDelivery(@RequestParam("entryNumber") final long entryNumber, final RedirectAttributes redirectModel)
 			throws CommerceCartModificationException
 	{

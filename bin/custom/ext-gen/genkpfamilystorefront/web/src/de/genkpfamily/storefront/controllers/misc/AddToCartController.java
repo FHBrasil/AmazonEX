@@ -9,7 +9,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
  *
- *  
+ *
  */
 package de.genkpfamily.storefront.controllers.misc;
 
@@ -80,6 +80,7 @@ public class AddToCartController extends AbstractController
 				final CartModificationData cartModification = cartFacade.addToCart(code, qty);
 				model.addAttribute("quantity", Long.valueOf(cartModification.getQuantityAdded()));
 				model.addAttribute("entry", cartModification.getEntry());
+				model.addAttribute("cartCode", cartModification.getCartCode());
 
 				if (cartModification.getQuantityAdded() == 0L)
 				{

@@ -12,6 +12,7 @@
 			<property qualifier="FooterComponent.navigationNodes"/>
 			<property qualifier="FooterComponent.notice"/>
 			<property qualifier="FooterComponent.wrapAfter"/>
+			<property qualifier="FooterComponent.showLanguageCurrency"/>			
 		</group>
 	</displayed-properties>
 </wizard-config>

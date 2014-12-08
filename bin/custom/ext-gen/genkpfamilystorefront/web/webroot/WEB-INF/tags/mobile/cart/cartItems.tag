@@ -64,7 +64,8 @@
                                data-ajax="false"
                                action="${updateCartFormAction}cart/update"
                                method="post"
-                               commandName="updateQuantityForm${entry.entryNumber}">
+                               commandName="updateQuantityForm${entry.entryNumber}"
+                               data-cart='{"cartCode" : "${cartData.code}","productPostPrice":"${entry.basePrice.value}","productName":"${entry.product.name}"}'>
                         <input type="hidden" name="entryNumber" value="${entry.entryNumber}"/>
                         <input type="hidden" name="productCode" value="${entry.product.code}"/>
                         <ycommerce:testId code="cart_product_quantity">

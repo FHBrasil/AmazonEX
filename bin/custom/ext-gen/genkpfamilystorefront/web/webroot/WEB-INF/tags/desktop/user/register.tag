@@ -15,7 +15,7 @@
 
 
 	<form:form method="post" commandName="registerForm" action="${action}">
-		<div class="form_field-elements">
+		<div class="form_field-elements js-recaptcha-captchaaddon">
 			<formElement:formSelectBox idKey="register.title" labelKey="register.title" path="titleCode" mandatory="true" skipBlank="false" skipBlankMessageKey="form.select.empty" items="${titles}"/>
 			<formElement:formInputBox idKey="register.firstName" labelKey="register.firstName" path="firstName" inputCSS="text" mandatory="true"/>
 			<formElement:formInputBox idKey="register.lastName" labelKey="register.lastName" path="lastName" inputCSS="text" mandatory="true"/>
