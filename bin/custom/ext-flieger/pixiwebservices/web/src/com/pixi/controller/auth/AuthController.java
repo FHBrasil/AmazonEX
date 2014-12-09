@@ -1,4 +1,4 @@
-package com.pixi.controller;
+package com.pixi.controller.auth;
 
 import java.util.UUID;
 
@@ -9,22 +9,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pixi.controller.AbstractPixiController;
+
 import xml.auth.AuthenticationResponse;
 
 
 @Controller
-public class AuthController
+public class AuthController extends AbstractPixiController
 {
-	@RequestMapping(value = "/pixi", method = RequestMethod.GET, produces = "text/xml")
+	private static final String ACTION = "session_start";
+	
+	@RequestMapping(method = RequestMethod.GET, produces = "text/xml", params="action=" + ACTION)
 	@ResponseBody
-	public AuthenticationResponse testXMLParam(@RequestParam final String action, @RequestParam final String user,
+	public AuthenticationResponse testXMLParam(@RequestParam final String user,
 			@RequestParam final String pass)
 	{
-		if (!StringUtils.equals(action, "session_start"))
-		{
-			return getUnknownActionResponse();
-		}
-
 		if (validateCredentials(user, pass))
 		{
 			return getAuthResponse();
@@ -52,15 +51,6 @@ public class AuthController
 		final AuthenticationResponse response = new AuthenticationResponse();
 		response.setSTATUS("Error");
 		response.setDESCRIPTION("Incorrect Credentials");
-
-		return response;
-	}
-
-	private AuthenticationResponse getUnknownActionResponse()
-	{
-		final AuthenticationResponse response = new AuthenticationResponse();
-		response.setSTATUS("Error");
-		response.setDESCRIPTION("unknown action defined");
 
 		return response;
 	}

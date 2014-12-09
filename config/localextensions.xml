@@ -93,6 +93,7 @@
         
       
       <!-- flieger extensions -->
+      	<extension name="pixicore" />
 		<extension name="pixiwebservices" />
 		<!-- <extension name="empty" /> -->
 

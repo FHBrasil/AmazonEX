@@ -25,6 +25,17 @@
 			          autocreate="true" generate="true"
 			          jaloclass="de.kpfamily.core.jalo.BabyartikelProduct">
 				<description>Base babyartikel product extension that contains additional attributes.</description>
+				<attributes>
+					<attribute qualifier="shortDescription" type="localized:java.lang.String" generate="true">
+						<description> A short description of the product. </description>
+						<persistence type="property">
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
 			</itemtype>
 
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
