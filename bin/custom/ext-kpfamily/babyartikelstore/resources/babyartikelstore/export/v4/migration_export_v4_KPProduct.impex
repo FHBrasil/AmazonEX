@@ -1,18 +1,15 @@
-# ---- Instructions ----
-# *** Before doing any instructions, verify if it hasn't already done  ***
-#
-# Before importing:
-# Change "insert_update" command to "insert"
-# Insert new  catalogVersion variable in the beginning of importing file, like this: 
-#    $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
-# Change "KPProduct" type to "BabyartikelProduct" type
-# Insert the $catalogVersion variable in the empty column, between "code" and "name" properties;
-#
+#Antes de realizar a IMPORTAÇÃO os seguintes passos devem ser realizados: 
+#- adicionar a variável abaixo no cabeçalho do arquivo de importação:
+#- $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])
+#- [unique=true,default=babyartikelProductCatalog:Staged]
+#-
+#- Colocar a variável $catalogVersion no espaço em branco entre os dois ponto-e-vírgula ";;"  
 
 $catalog=babyartikel
 $version=Staged
 
 # ---- Extension: kpfamilydata ---- Type: KPProduct ----
 "#% impex.setTargetFile( ""KPProduct.csv"" );"
-insert_update KPProduct;code[unique=true];;name[lang=de];approvalStatus(code);description[lang=de];shortDescription[lang=de];ean
+insert_update KPProduct;code[unique=true];;name[lang=de];approvalStatus(code);description[lang=de];shortDescription[lang=de];ean;unit(code)[default='pieces']
 "#% impex.exportItems( ""SELECT {p:pk} FROM {KPProduct as p}, {CatalogVersion as cv}, {Catalog as c} WHERE {p:catalogVersion}={cv:pk} AND {c:id}='$catalog' AND {cv:version}='$version'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
+
