@@ -1,4 +1,4 @@
-insert_update KPProduct;code[unique=true];pixiStockQuantity;pixiOpenSuppliersOrders
+INSERT_UPDATE StockLevel;productCode[unique=true];available;reserved;warehouse(code)[unique=true,default='default'];
 ;051001000489;0;0
 ;051001000490;4;0
 ;051001000491;0;0

@@ -1,7 +1,6 @@
-#Antes de realizar a IMPORTAÇÃO os seguintes passos devem ser realizados: 
-#- trocar o INSERT por INSERT_UPDATE
-#- mudar a coluna product(code) para productId(code)[unique=true]
-#- substituir todos os . (ponto) por , (virgula)
+#- Para importar o 'KPProduct' para o StockLevel é preciso mudar o header de importação para:
+#-
+#- INSERT_UPDATE StockLevel;productCode[unique=true];available;reserved;warehouse(code)[unique=true,default='default'];
 
 $catalog=babyartikel
 $version=Staged
@@ -10,4 +9,3 @@ $version=Staged
 "#% impex.setTargetFile( ""KPProduct.csv"" );"
 insert_update KPProduct;code[unique=true];pixiStockQuantity;pixiOpenSuppliersOrders
 "#% impex.exportItems( ""SELECT {p:pk} FROM {KPProduct as p}, {CatalogVersion as cv}, {Catalog as c} WHERE {p:catalogVersion}={cv:pk} AND {c:id}='$catalog' AND {cv:version}='$version'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
-
