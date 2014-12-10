@@ -1,4 +1,0 @@
-# ---- Extension: kpfamilydata ---- Type: KPCustomer ----
-"#% impex.setTargetFile( ""Customer.csv"" );"
-insert_update KPCustomer;@password[translator=de.hybris.platform.impex.jalo.translators.UserPasswordTranslator];customerID[unique=true];description;loginDisabled[allownull=true];name;password;passwordAnswer;passwordQuestion;defaultPaymentAddress(email)[unique=true]
-"#% impex.exportItems( ""SELECT {c:pk} FROM {KPCustomer AS c} WHERE {c:password}  NOT LIKE '%anonymousPassword%'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
