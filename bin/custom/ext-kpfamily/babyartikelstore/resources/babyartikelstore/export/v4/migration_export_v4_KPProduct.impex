@@ -1,9 +1,14 @@
-#Antes de realizar a IMPORTAÇÃO os seguintes passos devem ser realizados: 
-#- adicionar a variável abaixo no cabeçalho do arquivo de importação:
-#- $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])
-#- [unique=true,default=babyartikelProductCatalog:Staged]
-#-
-#- Colocar a variável $catalogVersion no espaço em branco entre os dois ponto-e-vírgula ";;"  
+# ---- Instructions ----
+# *** Before doing any instructions, verify if it hasn't already done  ***
+#
+# Before importing:
+# 
+# Add the following variable below, before the import file header: 
+#
+# $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])
+# [unique=true,default=babyartikelProductCatalog:Staged]
+#
+# Add the $catalogVersion variable on the empty space in the header
 
 $catalog=babyartikel
 $version=Staged
