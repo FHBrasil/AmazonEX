@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?com.pixi.webservices.jaxb version="1.0" encoding="ISO-8859-1"?>
 <ORDER version="1.0" type="standard">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -20,10 +20,10 @@
 							<SAL>Herr</SAL>
 							<NAME>mad geniuses GmbH</NAME>
 							<NAME2>Hans</NAME2>
-							<NAME3>Müller</NAME3>
+							<NAME3>MÃ¼ller</NAME3>
 							<STREET>Goethestr. 8</STREET>
 							<ZIP>80336</ZIP>
-							<CITY>München</CITY>
+							<CITY>MÃ¼nchen</CITY>
 							<COUNTRY>Deutschland</COUNTRY>
 							<VAT_ID>
 							</VAT_ID>
@@ -45,10 +45,10 @@
 							<SAL>Herr</SAL>
 							<NAME>mad geniuses GmbH</NAME>
 							<NAME2>Hanns</NAME2>
-							<NAME3>Müller</NAME3>
+							<NAME3>MÃ¼ller</NAME3>
 							<STREET>Goethestr. 8</STREET>
 							<ZIP>80336</ZIP>
-							<CITY>München</CITY>
+							<CITY>MÃ¼nchen</CITY>
 							<COUNTRY>Deutschland</COUNTRY>
 							<VAT_ID>
 							</VAT_ID>
@@ -68,7 +68,7 @@
 								<NAME3>Walter</NAME3>
 								<STREET>Gablingerstr. 14</STREET>
 								<ZIP>86456</ZIP>
-								<CITY>Lützelburg</CITY>
+								<CITY>LÃ¼tzelburg</CITY>
 								<COUNTRY>Deutschland</COUNTRY>
 								<ADDRESS_REMARKS>Wenn nicht da, beim Nachbarn klingeln!	</ADDRESS_REMARKS>
 								<VAT_ID></VAT_ID>
@@ -95,7 +95,7 @@
 	<ORDER_ITEM_LIST>
 		<ORDER_ITEM>
 			<LINE_ITEM_ID>123456-1</LINE_ITEM_ID>
-			<DESCRIPTION_SHORT> Matratze Comfort Plus, Größe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
+			<DESCRIPTION_SHORT> Matratze Comfort Plus, GrÃ¶ÃŸe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
 			<ARTICLE_ID>
 				<SUPPLIER_AID>18201-180160-bl</SUPPLIER_AID>
 				<ITEM_NOTE>sample note</ITEM_NOTE>
@@ -111,7 +111,7 @@
 		</ORDER_ITEM>
 		<ORDER_ITEM>
 			<LINE_ITEM_ID>123456-2</LINE_ITEM_ID>
-			<DESCRIPTION_SHORT> Matratze Comfort Luxus, Größe: 180 x 180 cm, Farbe: weiß</DESCRIPTION_SHORT>
+			<DESCRIPTION_SHORT> Matratze Comfort Luxus, GrÃ¶ÃŸe: 180 x 180 cm, Farbe: weiÃŸ</DESCRIPTION_SHORT>
 			<ARTICLE_ID>
 				<SUPPLIER_AID>19301-180180-we</SUPPLIER_AID>
 				<ITEM_NOTE>sample note</ITEM_NOTE>

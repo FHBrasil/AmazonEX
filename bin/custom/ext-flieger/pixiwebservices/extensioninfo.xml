@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?com.pixi.webservices.jaxb version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
  [y] hybris Platform
 
@@ -15,11 +15,10 @@
 
    <extension abstractclassprefix="Generated" classprefix="Pixiwebservices" managername="PixiwebservicesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="pixiwebservices">
                
-      <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
-      <!-- <requires-extension name="cms"/> -->         
-      
+	<requires-extension name="pixicore"/>
+	<requires-extension name="basecommerce"/>      
 
-      <coremodule generated="true" manager="com.pixi.jalo.PixiwebservicesManager" packageroot="com.pixi"/>
+      <coremodule generated="true" manager="com.pixi.webservices.jalo.PixiwebservicesManager" packageroot="com.pixi.webservices"/>
 
       <webmodule jspcompile="false" webroot="/pixiwebservices"/>
 					
