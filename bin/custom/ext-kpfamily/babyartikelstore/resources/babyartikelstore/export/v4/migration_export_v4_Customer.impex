@@ -1,0 +1,33 @@
+# ---- Instructions ----
+# *** Before doing any instructions, verify if it hasn't already done  ***
+#
+# Before exporting data:
+# Generate export file as *.csv, NOT as *.zip
+#
+# After exporting, Before importing data, do the following in IMPORTING file:
+# Change "insert_update" command to "insert"
+# Change "KPCustomer" type to "Customer"
+# 
+# On Customer impex header:
+#	Change "pk" property to "&customerPK"
+# 	Change "defaultPaymentAddress(pk)[unique=true]" property to "defaultPaymentAddress(&addressPK)[unique=true]"
+#	Change "defaultShipmentAddress(pk)" property to "defaultShipmentAddress(&addressPK)"
+#	Change "email" property to "uid[unique=true]"
+#
+# On Address impex header:
+# 	Change "pk" property to "&addressPK"
+#	Change "original(pk)" property to "original(&addressPK)"
+#	Change "owner(pk)[allownull=true]" property to "owner(&customerPK)[allownull=true]"
+# 
+# On importing data:
+# On importing Customer and Address data, create a new *.zip file with these files inside: 
+#	migration_import_Customer_Address_header.impex
+# 	migration_import_Customer_data.csv
+#	migration_import_Address_data.csv
+#
+#
+
+# ---- Extension: kpfamilydata ---- Type: KPCustomer ----
+"#% impex.setTargetFile( ""Customer.csv"" );"
+insert_update KPCustomer;pk;@password[translator=de.hybris.platform.impex.jalo.translators.UserPasswordTranslator];customerID[unique=true];description;loginDisabled[allownull=true];name;password;passwordAnswer;passwordQuestion;defaultPaymentAddress(pk)[unique=true];defaultShipmentAddress(pk);email
+"#% impex.exportItems( ""SELECT {c:pk} FROM {KPCustomer AS c} WHERE {c:password}  NOT LIKE '%anonymousPassword%'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
