@@ -9,15 +9,15 @@
 # Change "KPCustomer" type to "Customer"
 # 
 # On Customer impex header:
-#	Change "pk" property to "&customerPK"
-# 	Change "defaultPaymentAddress(pk)[unique=true]" property to "defaultPaymentAddress(&addressPK)[unique=true]"
-#	Change "defaultShipmentAddress(pk)" property to "defaultShipmentAddress(&addressPK)"
-#	Change "email" property to "uid[unique=true]"
+#	Change "pk" property to "&pk"
+# 	Change "defaultPaymentAddress(pk)[unique=true]" property to "defaultPaymentAddress(&pk)[unique=true]"
+#	Change "defaultShipmentAddress(pk)" property to "defaultShipmentAddress(&pk)"
+#	Change "defaultPaymentAddress(email)" property to "uid[unique=true]"
 #
 # On Address impex header:
 # 	Change "pk" property to "&addressPK"
-#	Change "original(pk)" property to "original(&addressPK)"
-#	Change "owner(pk)[allownull=true]" property to "owner(&customerPK)[allownull=true]"
+#	Change "original(pk)" property to "original(&pk)"
+#	Change "owner(pk)[allownull=true]" property to "owner(Customer.uid)[allownull=true]"
 # 
 # On importing data:
 # On importing Customer and Address data, create a new *.zip file with these files inside: 
@@ -29,5 +29,5 @@
 
 # ---- Extension: kpfamilydata ---- Type: KPCustomer ----
 "#% impex.setTargetFile( ""Customer.csv"" );"
-insert_update KPCustomer;pk;@password[translator=de.hybris.platform.impex.jalo.translators.UserPasswordTranslator];customerID[unique=true];description;loginDisabled[allownull=true];name;password;passwordAnswer;passwordQuestion;defaultPaymentAddress(pk)[unique=true];defaultShipmentAddress(pk);email
+insert_update KPCustomer;pk;@password[translator=de.hybris.platform.impex.jalo.translators.UserPasswordTranslator];customerID[unique=true];description;loginDisabled[allownull=true];name;password;passwordAnswer;passwordQuestion;defaultPaymentAddress(pk)[unique=true];defaultShipmentAddress(pk);defaultPaymentAddress(email)
 "#% impex.exportItems( ""SELECT {c:pk} FROM {KPCustomer AS c} WHERE {c:password}  NOT LIKE '%anonymousPassword%'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
