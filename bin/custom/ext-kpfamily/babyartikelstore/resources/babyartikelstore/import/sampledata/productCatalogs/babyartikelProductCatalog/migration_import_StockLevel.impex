@@ -1,4 +1,4 @@
-INSERT_UPDATE StockLevel;productCode[unique=true];available;reserved;warehouse(code)[unique=true,default='default'];
+INSERT_UPDATE StockLevel;productCode[unique=true];available[default=0];reserved[default=0];warehouse(code)[unique=true,default='default'];
 ;051001000489;0;0
 ;051001000490;4;0
 ;051001000491;0;0
@@ -1384,12 +1384,6 @@ INSERT_UPDATE StockLevel;productCode[unique=true];available;reserved;warehouse(c
 ;095001000011bas;0;
 ;095001000015bas;0;
 ;094505000023bas;0;
-KPVoucherProduct;999999990004;10;0
-KPVoucherProduct;999999990005;10;0
-KPVoucherProduct;999999990006;10;0
-KPVoucherProduct;999999990007;10;0
-KPVoucherProduct;999999990008;8;0
-KPVoucherProduct;999999990009;10;0
 ;015002000117;0;0
 ;015002000118;0;0
 ;015002000119;0;0
