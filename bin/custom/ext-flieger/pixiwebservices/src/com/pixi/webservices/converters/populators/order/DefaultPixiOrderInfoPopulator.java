@@ -35,7 +35,7 @@ public class DefaultPixiOrderInfoPopulator implements Populator<OrderModel, Orde
 		target.setORDERDATE(source.getDate());
 		target.setORDERID(source.getCode());
 		target.setORDERSHIPLOCK("N");
-		target.setPRICECURRENCY("EUR");
+		target.setPRICECURRENCY(source.getCurrency().getIsocode());
 		target.setSHOPID(Config.getParameter("pixiwebservices.pixi.shop.id"));
 		target.setORDERPARTIES(getOrderParties(source));
 	}

@@ -18,7 +18,8 @@ public class DefaultPixiOrderShopNotePopulator implements Populator<OrderModel, 
 		LOG.info("populating");
 		
 		target.setSHOPNOTE("");
-		//TODO check serial voucher API
+		//TODO integrate serial voucher PRODUCTS API
+		
 //		try {
 //			Collection<KPSerialVoucher> soldSerialVouchers = Webfoundation.getInstance().getServices().getVoucherService().getAllKPSerialVouchersFromOrder(orderToExport);				
 //			

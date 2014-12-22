@@ -30,7 +30,7 @@ public class DefaultPixiAddressPopulator implements Populator<AddressModel, Addr
 		target.setCOUNTRY(source.getCountry().getName());
 		target.setEMAIL(source.getEmail());
 		target.setFAX(source.getFax());
-		target.setNAME("");
+		target.setNAME(source.getFirstname());
 		target.setNAME2(getFullName(source));
 		target.setNAME3(source.getLastname());
 		target.setPHONE(source.getPhone1());
@@ -42,10 +42,15 @@ public class DefaultPixiAddressPopulator implements Populator<AddressModel, Addr
 	
 	private String getStreetAddress(AddressModel address) 
 	{
-		String name = address.getStreetname();
-		String number = address.getStreetnumber();
+		String name = StringUtils.defaultIfBlank(address.getStreetname(), "").trim();
+		String number = StringUtils.defaultIfBlank(address.getStreetnumber(), "").trim();
 		
-		return name.concat(" ").concat(number).trim();
+		StringBuilder streetAddress = new StringBuilder();
+		streetAddress.append(name);
+		streetAddress.append(" ");
+		streetAddress.append(number);
+		
+		return streetAddress.toString().trim();
 	}
 
 	private String getFullName(AddressModel address) 

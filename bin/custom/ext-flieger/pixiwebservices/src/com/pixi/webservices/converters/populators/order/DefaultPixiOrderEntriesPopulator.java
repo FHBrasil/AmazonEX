@@ -2,9 +2,7 @@ package com.pixi.webservices.converters.populators.order;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -13,13 +11,13 @@ import com.pixi.webservices.jaxb.order.export.Order;
 import com.pixi.webservices.jaxb.order.export.OrderEntryPrice;
 import com.pixi.webservices.jaxb.order.export.OrderItem;
 
-import de.hybris.platform.catalog.enums.ArticleStatus;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.util.Config;
+import de.kpfamily.core.model.BabyartikelProductModel;
 
 public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, Order>
 {
@@ -47,22 +45,28 @@ public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, O
 		}
 	}
 	
-	private String getItemNote(ProductModel product) 
+	private String getItemNote(final ProductModel product) 
 	{
-		StringBuilder note = new StringBuilder(product.getCode());
+		final StringBuilder note = new StringBuilder();
 		
-		Map<ArticleStatus, String> articleStatus = product.getArticleStatus();
-		
-		if(MapUtils.isNotEmpty(articleStatus))
+		if(product instanceof BabyartikelProductModel)
 		{
-			note.append("-").append(StringUtils.join(articleStatus.values(), "-"));
+			final BabyartikelProductModel babyProduct = (BabyartikelProductModel) product;
+			final String shippingMethod = babyProduct.getShippingMethodInternalCode();
+			final String articleState = babyProduct.getArticleStateInternalCode();
+			
+			note.append(product.getCode());
+
+			if(StringUtils.isNotBlank(articleState))
+			{
+				note.append("-").append(articleState);
+			}
+			
+			if(StringUtils.isNotBlank(shippingMethod))
+			{
+				note.append("-").append(shippingMethod);
+			}
 		}
-		
-		//TODO integrate shipping method in the future
-//		String dfVerfahren = (String)entry.getProduct().getAttribute("shippingMethod");
-//		if (dfVerfahren != null && !"".equals(dfVerfahren)) {
-//			infoModified += "-" + dfVerfahren;
-//		}
 		
 		return note.toString();
 	}
@@ -85,7 +89,7 @@ public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, O
 		{
 			return BigDecimal.ZERO;
 		}
-		
+
 		return new BigDecimal(entry.getBasePrice().toString());
 	}	
 

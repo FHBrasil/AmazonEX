@@ -15,6 +15,7 @@ public class DefaultPixiOrderPaymentInfoPopulator implements Populator<OrderMode
 	@Override
 	public void populate(OrderModel source, OrderInfo target) throws ConversionException 
 	{
+		//TODO  INTEGRAR CADA MODO DE PAGAMENTO AQUI
 		LOG.info("populating");
 		
 		final Payment payment = new Payment();
