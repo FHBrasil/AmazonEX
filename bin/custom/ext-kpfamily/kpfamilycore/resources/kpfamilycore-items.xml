@@ -35,12 +35,88 @@
 			<value code="WHITE"/>
 			<value code="YELLOW"/>
 		</enumtype>
+		<enumtype generate="true" code="ArticleState" autocreate="true">
+			<value code="current"/>
+			<value code="deprecated"/>
+			<value code="old"/>
+		</enumtype>
+		<enumtype generate="true" code="ShippingMethod" autocreate="true">
+			<value code="warehouse"/>
+			<value code="dropshipping"/>
+		</enumtype>
 	</enumtypes>
 
 	<itemtypes>
 
 		<!-- Add your item definitions here -->
-
+		<typegroup name="Babyartikel">
+			<itemtype code="BabyartikelProduct" extends="Product"
+			          autocreate="true" generate="true"
+			          jaloclass="de.kpfamily.core.jalo.BabyartikelProduct">
+				<description>Base babyartikel product extension that contains additional attributes.</description>
+				<attributes>
+					<attribute qualifier="shortDescription" type="localized:java.lang.String" generate="true">
+						<description> A short description of the product. </description>
+						<persistence type="property">
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="articleState" type="ArticleState">
+						<description>Defines the current state of the product within it's collection</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="articleStateInternalCode" type="java.lang.String">
+						<description>Dynamic attribute to retrieve the article state internal code</description>
+						<modifiers read="true" write="false" />
+						<persistence type="dynamic" attributeHandler="articleStateInternalCodeHandler"/>
+					</attribute>
+					<attribute qualifier="shippingMethod" type="ShippingMethod">
+						<description>Defines the way that the product is shipped</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="shippingMethodInternalCode" type="java.lang.String">
+						<description>Dynamic attribute to retrieve the shipping method internal code</description>
+						<modifiers read="true" write="false" />
+						<persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
+			          autocreate="true" generate="true"
+			          jaloclass="de.kpfamily.core.jalo.BabyartikelSizeVariantProduct">
+				<description>Babyartikel size variant type that contains additional attribute describing variant size.</description>
+				<attributes>
+					<attribute qualifier="size" type="localized:java.lang.String" metatype="VariantAttributeDescriptor">
+						<description>Size of the product.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ArticleState" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="internalCode" type="java.lang.String" generate="false">
+						<description>The internal code used to identify the Article state, used by the company team to daily maintain the product data.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ShippingMethod" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="internalCode" type="java.lang.String" generate="false">
+						<description>The internal code used to identify the Shipping method, used by the company team to daily maintain the product data.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
 
 		<!-- TypeGroups are for structure of this file only -->
 

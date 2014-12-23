@@ -455,4 +455,8 @@
 		<property name="rootCategoryCode" value="categories"/>
 	</bean>
 	
+	<!-- Dynamic attribute handlers -->
+	<bean id="articleStateInternalCodeHandler" class="de.kpfamily.core.model.ArticleStateDynamicInternalCode"/>
+	<bean id="shippingMethodInternalCodeHandler" class="de.kpfamily.core.model.ShippingMethodDynamicInternalCode"/>
+	
 </beans>
