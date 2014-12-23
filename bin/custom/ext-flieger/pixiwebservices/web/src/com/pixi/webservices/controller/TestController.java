@@ -200,6 +200,10 @@ public class TestController
 		buyer.setBUYERID("buyer id");
 		buyer.setBUYERNAME("buyer name");
 
+		final Supplier supplier = new Supplier();
+		supplier.setADDRESS(address);
+		supplier.setSUPPLIERNAME("supplier name");
+		
 		final Catalog catalog = new Catalog();
 		catalog.setCATALOGID("catalogID");
 		catalog.setCATALOGNAME("catalogName");
@@ -211,9 +215,6 @@ public class TestController
 		catalog.setLANGUAGE("de-DE");
 		catalog.setSHOPID("shop id");
 
-		final Supplier supplier = new Supplier();
-		supplier.setADDRESS(address);
-		supplier.setSUPPLIERNAME("supplier name");
 
 		final Header header = new Header();
 		header.setBUYER(buyer);

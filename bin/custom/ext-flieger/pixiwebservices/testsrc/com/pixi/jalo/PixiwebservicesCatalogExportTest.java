@@ -11,64 +11,38 @@ import javax.xml.bind.Marshaller;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.pixi.core.services.PixiOrderService;
+import com.pixi.core.services.PixiProductService;
 import com.pixi.webservices.jaxb.adapter.DateAdapter;
 import com.pixi.webservices.jaxb.adapter.StringAdapter;
 import com.pixi.webservices.jaxb.factory.MoxyJaxbContextFactoryImpl;
-import com.pixi.webservices.jaxb.order.export.Order;
+import com.pixi.webservices.jaxb.product.export.BMECAT;
 
 import de.hybris.bootstrap.annotations.IntegrationTest;
-import de.hybris.platform.catalog.CatalogVersionService;
-import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.catalog.model.CatalogModel;
+import de.hybris.platform.catalog.model.CatalogVersionModel;
+import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.impex.jalo.ImpExException;
-import de.hybris.platform.order.DiscountService;
 import de.hybris.platform.servicelayer.ServicelayerTransactionalTest;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
-import de.hybris.platform.servicelayer.i18n.CommonI18NService;
-import de.hybris.platform.servicelayer.i18n.I18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
-import de.hybris.platform.servicelayer.user.UserService;
-import de.hybris.platform.site.BaseSiteService;
 
 @IntegrationTest
-@Ignore
-public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTest
+public class PixiwebservicesCatalogExportTest extends ServicelayerTransactionalTest 
 {
-	private static final Logger LOG = Logger.getLogger(PixiwebservicesOrderExportTest.class.getName());
-	
-	//private final ExportOrdersController controller = Mockito.spy(new ExportOrdersController());
-	
-	@Resource
-	private Converter<OrderModel, Order> pixiOrderConverter;
-	
-	private PixiOrderService pixiOrderService;
-	
-	@Resource
-	private UserService userService;
-	
-	@Resource
-	private CommonI18NService commonI18NService;
-	
-	@Resource
-	private I18NService i18nService;
+	private static final Logger LOG = Logger.getLogger(PixiwebservicesCatalogExportTest.class.getName());
 
+	private MoxyJaxbContextFactoryImpl jaxbContextFactory;
+	
+	private PixiProductService pixiProductService;
+	
+	@Resource
+	private Converter<List<ProductModel>, BMECAT> pixiBMEcatConverter;
+	
 	@Resource
 	private ModelService modelService;
-
-	@Resource
-	private CatalogVersionService catalogVersionService;
-	
-	@Resource
-	private BaseSiteService baseSiteService;
-	
-	@Resource
-	private DiscountService discountService;
-	
-	private MoxyJaxbContextFactoryImpl jaxbContextFactory;
 	
 	@Before
 	public void setUp() throws Exception
@@ -85,23 +59,31 @@ public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTes
 		jaxbContextFactory.setWrapCollections(false);
 		jaxbContextFactory.setTypeAdapters(typeAdapters );
 	}
-
+	
 	private void mock() 
 	{
-		pixiOrderService = Mockito.mock(PixiOrderService.class);
+		pixiProductService = Mockito.mock(PixiProductService.class);
 		
-		List<OrderModel> orders = new ArrayList<OrderModel>();
+		List<ProductModel> products = new ArrayList<ProductModel>();
 		
-		OrderModel sample = new OrderModel();
-		sample.setCode("acceptanceTestOrder1");
-		
-		OrderModel result = modelService.getByExample(sample);
-		
-		orders.add(result);
-		
-		Mockito.when(pixiOrderService.findNotExportedOrders()).thenReturn(orders);
-	}
+		CatalogModel catalog = new CatalogModel();
+		catalog.setId("apparelProductCatalog");
 
+		CatalogVersionModel catalogVersion = new CatalogVersionModel();
+		catalogVersion.setCatalog(modelService.getByExample(catalog));
+		catalogVersion.setVersion("Online");
+
+		ProductModel sample = new ProductModel();
+		sample.setCode("300020465");
+		sample.setCatalogVersion(modelService.getByExample(catalogVersion));
+		
+		ProductModel result = modelService.getByExample(sample);
+		
+		products.add(result);
+		
+		Mockito.when(pixiProductService.findProductsToExport()).thenReturn(products);
+	}
+	
 	private void createTestEnvironment() throws ImpExException 
 	{
 //		final BaseSiteModel baseSiteForUID = baseSiteService.getBaseSiteForUID("babyartikel");
@@ -113,9 +95,9 @@ public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTes
 		
 		//catalogVersionService.setSessionCatalogVersion("apparelProductCatalog", "Online");
 		
-		importCsv("/pixiwebservices/test/testOrderEnvironment.csv", "windows-1252");
+		//importCsv("/pixiwebservices/test/testProductEnvironment.csv", "windows-1252");
 	}
-
+	
 	private void printXML(Object obj) throws JAXBException
 	{
 		final JAXBContext jaxbContext = jaxbContextFactory.createJaxbContext(obj.getClass());
@@ -123,20 +105,18 @@ public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTes
 		
 		marshaller.marshal(obj, System.out);
 	}
-
+	
 	@Test
 	public void testPixiwebservices() throws JAXBException
 	{
-		LOG.info("testando o service de pedidos");
-		//Order order = controller.handle("fake_session");
+		LOG.info("testando o service de produtos");
 		
-		List<OrderModel> orders = pixiOrderService.findNotExportedOrders();
+		List<ProductModel> products = pixiProductService.findProductsToExport();
 		
-		OrderModel orderToExport = orders.iterator().next();
-		Order wsOrder = pixiOrderConverter.convert(orderToExport);
+		BMECAT wsBmeCat = pixiBMEcatConverter.convert(products);
 		
-		printXML(wsOrder);
+		printXML(wsBmeCat);
 		
-		Assert.assertNotNull("retorno nulo", wsOrder);
+		Assert.assertNotNull("retorno nulo", wsBmeCat);
 	}
 }

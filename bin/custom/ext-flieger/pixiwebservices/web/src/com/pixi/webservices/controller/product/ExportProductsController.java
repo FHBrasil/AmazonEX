@@ -1,9 +1,5 @@
 package com.pixi.webservices.controller.product;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,17 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pixi.core.services.PixiProductService;
 import com.pixi.webservices.controller.AbstractPixiController;
 import com.pixi.webservices.jaxb.product.export.Article;
-import com.pixi.webservices.jaxb.product.export.ArticleAddress;
-import com.pixi.webservices.jaxb.product.export.ArticleDetails;
-import com.pixi.webservices.jaxb.product.export.ArticleFeatures;
-import com.pixi.webservices.jaxb.product.export.ArticlePrice;
 import com.pixi.webservices.jaxb.product.export.BMECAT;
-import com.pixi.webservices.jaxb.product.export.Buyer;
-import com.pixi.webservices.jaxb.product.export.Catalog;
-import com.pixi.webservices.jaxb.product.export.Feature;
-import com.pixi.webservices.jaxb.product.export.Header;
-import com.pixi.webservices.jaxb.product.export.Mime;
-import com.pixi.webservices.jaxb.product.export.Supplier;
 
 import de.hybris.platform.catalog.model.CatalogModel;
 import de.hybris.platform.core.model.product.ProductModel;
@@ -43,10 +29,7 @@ public class ExportProductsController extends AbstractPixiController
 	private PixiProductService pixiProductService;
 	
 	@Resource
-	private Converter<CatalogModel, BMECAT> pixiCatalogConverter;
-	
-	@Resource
-	private Converter<ProductModel, Article> pixiProductConverter;
+	private Converter<List<ProductModel>, BMECAT> pixiBMEcatConverter;
 	
 	@Resource
 	private BaseSiteService siteService;
@@ -58,11 +41,7 @@ public class ExportProductsController extends AbstractPixiController
 		
 		List<ProductModel> products = pixiProductService.findProductsToExport();
 		
-		ProductModel product = products.iterator().next();
-		CatalogModel catalog = product.getCatalogVersion().getCatalog();
-		
-		BMECAT bmeCat = pixiCatalogConverter.convert(catalog);
-		Article convert = pixiProductConverter.convert(product);
+		BMECAT bmeCat = pixiBMEcatConverter.convert(products);
 		
 		return bmeCat;
 		
@@ -185,7 +164,7 @@ public class ExportProductsController extends AbstractPixiController
 //		bmeCat.setHEADER(header);
 //		bmeCat.setVersion(BigDecimal.ONE);
 //		bmeCat.getARTICLE().addAll(articles);
-
+//
 //		return bmeCat;
 	}
 }

@@ -8,13 +8,16 @@ import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 
-public class DefaultPixiProductDetailsPopulator implements Populator<ProductModel, Article>
+public class DefaultPixiBMEcatProductPopulator implements Populator<ProductModel, Article>
 {
-	private Logger LOG = Logger.getLogger(DefaultPixiProductDetailsPopulator.class);
+	private Logger LOG = Logger.getLogger(DefaultPixiBMEcatProductPopulator.class);
 	
 	@Override
 	public void populate(ProductModel source, Article target) throws ConversionException 
 	{
 		LOG.info("populating");
+		
+		target.setORDERUNIT("pieces" + 1);
+		target.setSUPPLIERAID("AID" + 1);
 	}
 }
