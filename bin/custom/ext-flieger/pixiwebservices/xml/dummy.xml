@@ -2,7 +2,7 @@
 	<ORDER_HEADER>
 		<CONTROL_INFO>
 			<GENERATOR_INFO>KP-Family, Babyartikel.de</GENERATOR_INFO>
-			<GENERATION_DATE>2014-12-18T18:10:09-0200</GENERATION_DATE>
+			<GENERATION_DATE>2014-12-23T00:47:02-0200</GENERATION_DATE>
 		</CONTROL_INFO>
 		<ORDER_INFO>
 			<ORDER_ID>acceptanceTestOrder1</ORDER_ID>
@@ -17,7 +17,7 @@
 						<PARTY_ID type="buyer_specific"></PARTY_ID>
 						<ADDRESS>
 							<SAL>Herr</SAL>
-							<NAME></NAME>
+							<NAME>Test1</NAME>
 							<NAME2>Test1 Abroba 1 middle2 1</NAME2>
 							<NAME3>User</NAME3>
 							<STREET>11 Test Street 1</STREET>
@@ -38,7 +38,7 @@
 						<PARTY_ID type="buyer_specific"></PARTY_ID>
 						<ADDRESS>
 							<SAL>Herr</SAL>
-							<NAME></NAME>
+							<NAME>Test1</NAME>
 							<NAME2>Test1 Abroba 1 middle2 1</NAME2>
 							<NAME3>User</NAME3>
 							<STREET>11 Test Street 1</STREET>
@@ -59,7 +59,7 @@
 						<PARTY_ID type="buyer_specific"></PARTY_ID>
 						<ADDRESS>
 							<SAL>Herr</SAL>
-							<NAME></NAME>
+							<NAME>Test1</NAME>
 							<NAME2>Test1 Abroba 1 middle2 1</NAME2>
 							<NAME3>User</NAME3>
 							<STREET>11 Test Street 1</STREET>
@@ -81,7 +81,7 @@
 							<PARTY_ID type="buyer_specific"></PARTY_ID>
 							<ADDRESS>
 								<SAL>Herr</SAL>
-								<NAME></NAME>
+								<NAME>Test1</NAME>
 								<NAME2>Test1 Abroba 1 middle2 1</NAME2>
 								<NAME3>User</NAME3>
 								<STREET>11 Test Street 1</STREET>
@@ -105,21 +105,21 @@
 					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string">pagamento
 					temporario</PAGAMENTO_TEMP>
 			</PAYMENT>
-			<TRANSPORT_REMARKS>we have no transport remarks</TRANSPORT_REMARKS>
+			<TRANSPORT_REMARKS>DHL;;;|||23.12.2014</TRANSPORT_REMARKS>
 			<GIFT_MESSAGE></GIFT_MESSAGE>
-			<REMARK type="discount">0.00</REMARK>
-			<REMARK type="shipping">0.00</REMARK>
-			<REMARK type="shippingvendor"></REMARK>
+			<REMARK type="discount">10.50</REMARK>
+			<REMARK type="shipping">10.00</REMARK>
+			<REMARK type="shippingvendor">PREMIUM-GROSS</REMARK>
 			<REMARK type="VoucherCode"></REMARK>
 		</ORDER_INFO>
 	</ORDER_HEADER>
 	<ORDER_ITEM_LIST>
 		<ORDER_ITEM>
-			<LINE_ITEM_ID>8796584575022</LINE_ITEM_ID>
-			<DESCRIPTION_SHORT></DESCRIPTION_SHORT>
+			<LINE_ITEM_ID>8796453503022</LINE_ITEM_ID>
+			<DESCRIPTION_SHORT>abroba</DESCRIPTION_SHORT>
 			<ARTICLE_ID>
-				<SUPPLIER_AID>300147490</SUPPLIER_AID>
-				<ITEM_NOTE>300147490</ITEM_NOTE>
+				<SUPPLIER_AID>666</SUPPLIER_AID>
+				<ITEM_NOTE>666-X-DV</ITEM_NOTE>
 			</ARTICLE_ID>
 			<QUANTITY>4</QUANTITY>
 			<ORDER_UNIT>Stück</ORDER_UNIT>
@@ -131,11 +131,11 @@
 			</ARTICLE_PRICE>
 		</ORDER_ITEM>
 		<ORDER_ITEM>
-			<LINE_ITEM_ID>8796584607790</LINE_ITEM_ID>
+			<LINE_ITEM_ID>8796453535790</LINE_ITEM_ID>
 			<DESCRIPTION_SHORT></DESCRIPTION_SHORT>
 			<ARTICLE_ID>
 				<SUPPLIER_AID>300020465</SUPPLIER_AID>
-				<ITEM_NOTE>300020465</ITEM_NOTE>
+				<ITEM_NOTE></ITEM_NOTE>
 			</ARTICLE_ID>
 			<QUANTITY>1</QUANTITY>
 			<ORDER_UNIT>Stück</ORDER_UNIT>
@@ -147,12 +147,12 @@
 			</ARTICLE_PRICE>
 		</ORDER_ITEM>
 		<ORDER_ITEM>
-			<LINE_ITEM_ID>8796584640558</LINE_ITEM_ID>
+			<LINE_ITEM_ID>8796453568558</LINE_ITEM_ID>
 			<DESCRIPTION_SHORT>Protektor Pro Tec IPS Back Pads black/red XL
 			</DESCRIPTION_SHORT>
 			<ARTICLE_ID>
 				<SUPPLIER_AID>300060401</SUPPLIER_AID>
-				<ITEM_NOTE>300060401</ITEM_NOTE>
+				<ITEM_NOTE></ITEM_NOTE>
 			</ARTICLE_ID>
 			<QUANTITY>2</QUANTITY>
 			<ORDER_UNIT>Stück</ORDER_UNIT>
@@ -168,4 +168,3 @@
 		<TOTAL_ITEM_NUM>3</TOTAL_ITEM_NUM>
 	</ORDER_SUMMARY>
 </ORDER>
-WARN

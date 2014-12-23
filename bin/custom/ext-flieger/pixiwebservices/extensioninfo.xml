@@ -16,6 +16,7 @@
    <extension abstractclassprefix="Generated" classprefix="Pixiwebservices" managername="PixiwebservicesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="pixiwebservices">
                
      <requires-extension name="kpfamilyservices"/>
+      <requires-extension name="kpfamilycore"/>
 	<requires-extension name="pixicore"/>
 	<requires-extension name="basecommerce"/>      
 

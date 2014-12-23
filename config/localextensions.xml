@@ -85,13 +85,12 @@
        <extension name="kpfamilyservices"/>
       
       <!-- store-->
-      <!-- <extension name="babyartikelstore"/> -->
+      <extension name="babyartikelstore"/>
         
       
       <!-- flieger extensions -->
-      <!-- 	<extension name="pixicore" />
-		<extension name="pixiwebservices" /> -->
-		<!-- <extension name="empty" /> -->
+      	<extension name="pixicore" />
+		<extension name="pixiwebservices" />
 
 		<!-- ext-accelerator -->
 		<extension name="acceleratorservices" />

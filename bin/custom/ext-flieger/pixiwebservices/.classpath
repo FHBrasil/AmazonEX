@@ -20,5 +20,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/pixicore"/>
 	<classpathentry kind="src" path="/basecommerce"/>
 	<classpathentry kind="src" path="/kpfamilyservices"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/kpfamilycore"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
