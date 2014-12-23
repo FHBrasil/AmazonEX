@@ -13,9 +13,9 @@ $image=image(code, $contentCV);
 $media=media(code, $contentCV);
 $page=page(uid, $contentCV);
 $contentPage=contentPage(uid, $contentCV);
-$siteResource=jar:de.genkpfamily.initialdata.setup.InitialDataSystemSetup&/genkpfamilyinitialdata/import/contentCatalogs/$contentCatalog
-$productResource=jar:de.genkpfamily.initialdata.setup.InitialDataSystemSetup&/genkpfamilyinitialdata/import/productCatalogs/$productCatalog
-$jarResourceCms=jar:de.genkpfamily.initialdata.setup.InitialDataSystemSetup&/genkpfamilyinitialdata/import/cockpits/cmscockpit
+$siteResource=jar:de.kpfamily.initialdata.setup.InitialDataSystemSetup&/kpfamilyinitialdata/import/contentCatalogs/$contentCatalog
+$productResource=jar:de.kpfamily.initialdata.setup.InitialDataSystemSetup&/kpfamilyinitialdata/import/productCatalogs/$productCatalog
+$jarResourceCms=jar:de.kpfamily.initialdata.setup.InitialDataSystemSetup&/kpfamilyinitialdata/import/cockpits/cmscockpit
 
 
 # CMS Site Settings

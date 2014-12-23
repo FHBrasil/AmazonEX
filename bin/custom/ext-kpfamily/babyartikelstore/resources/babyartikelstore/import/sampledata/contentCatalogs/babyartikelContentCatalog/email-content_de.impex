@@ -7,8 +7,8 @@ $contentCatalog=babyartikelContentCatalog
 $contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
 $picture=media(code, $contentCV);
 $wideContent=CMSImageComponent,BannerComponent
-$jarResource=jar:de.genkpfamily.initialdata.setup.InitialDataSystemSetup&/genkpfamilyinitialdata/import
-$siteResource=jar:de.genkpfamily.initialdata.setup.InitialDataSystemSetup&/genkpfamilyinitialdata/import/contentCatalogs/$contentCatalog
+$jarResource=jar:de.kpfamily.initialdata.setup.InitialDataSystemSetup&/kpfamilyinitialdata/import
+$siteResource=jar:de.kpfamily.initialdata.setup.InitialDataSystemSetup&/kpfamilyinitialdata/import/contentCatalogs/$contentCatalog
 
 # Language
 $lang=de
