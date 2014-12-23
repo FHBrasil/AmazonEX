@@ -30,92 +30,19 @@
 #
 # ---- Export script -----------------------------------------------------------
 "#% impex.setTargetFile( ""Address.csv"" );"
-insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country(isocode);dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(&customerPK)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;shippingAddress[allownull=true];streetname;streetnumber;town;unloadingAddress[allownull=true];url
+insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country(isocode);dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(&customerPK)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;;streetname;streetnumber;town;unloadingAddress[allownull=true];url;
 "#% impex.exportItems( ""SELECT {a:pk} FROM {KPCustomer AS c JOIN Address AS a ON ({a:pk} = {c:defaultPaymentAddress} OR {a:pk} = {c:defaultShipmentAddress}) AND {a:owner} = {c:pk} } WHERE {c:password} NOT LIKE '%anonymousPassword%'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
 # 
 "#% impex.setTargetFile( ""Customer.csv"" );"
-insert KPCustomer;&customerPK;defaultPaymentAddress(email)[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];addresses(&addressPK);defaultPaymentAddress(&addressPK);defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
+insert KPCustomer;&customerPK;defaultPaymentAddress(email)[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];defaultPaymentAddress(&addressPK);defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
 "#% impex.exportItems( ""SELECT DISTINCT {c:pk} FROM {KPCustomer AS c JOIN Address AS a ON ({a:pk} = {c:defaultPaymentAddress} OR {a:pk} = {c:defaultShipmentAddress}) AND {a:owner} = {c:pk} } WHERE {c:password} NOT LIKE '%anonymousPassword%'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
 # ------------------------------------------------------------------------------
 # 
 #
 # ---- Import script #1 --------------------------------------------------------
-insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country[translator=de.kpfamily.core.translators.KPUppercaseTranslator];dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(&customerPK)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;shippingAddress[allownull=true];streetname;streetnumber;town;unloadingAddress[allownull=true];url
+insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country[translator=de.kpfamily.core.translators.KPCountryTypeTranslator];dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(&customerPK)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;shippingAddress[default=true];streetname;streetnumber;town;unloadingAddress[allownull=true];url;shippingAddress[default=true]
 "#% impex.includeExternalDataMedia( ""Address.csv"" , ""UTF-8"", ';',  1 , -1 );"
-insert Customer;&customerPK;uid[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];addresses(&addressPK);defaultPaymentAddress(&addressPK);defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
+insert Customer;&customerPK;uid[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];defaultPaymentAddress(&addressPK);defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
 "#% impex.includeExternalDataMedia( ""Customer.csv"" , ""UTF-8"", ';',  1 , -1 );"
 # ------------------------------------------------------------------------------
 #
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ---- Import script #2 --------------------------------------------------------
-update Customer;;uid[unique=true];;;;;;;;;defaultPaymentAddress(&addressPK)[unique=true];defaultShipmentAddress(&addressPK);;
-"#% impex.includeExternalDataMedia( ""Customer.csv"" , ""UTF-8"", ';',  1 , -1 );"
-update Address;&addressPK[unique=true];;billingAddress[allownull=true];;;;;;dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss][unique=true];;;duplicate;email[unique=true];;;;;;;;;;;;;;;;shippingAddress[allownull=true][unique=true];;;;;
-"#% impex.includeExternalDataMedia( ""Address.csv"" , ""UTF-8"", ';',  1 , -1 );"
-# ------------------------------------------------------------------------------ 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ---- Export script -----------------------------------------------------------
-"#% impex.setTargetFile( ""Address.csv"" );"
-insert_update Address;pk[unique=true];&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country(isocode);dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(&customerPK)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;shippingAddress[allownull=true];streetname;streetnumber;town;unloadingAddress[allownull=true];url
-"#% impex.exportItems( ""SELECT {a:pk} FROM {KPCustomer AS c JOIN Address AS a ON {a:pk} = {c:defaultPaymentAddress} AND LOWER({c:uid}) = LOWER({a:email}) } WHERE {c:password} NOT LIKE '%anonymousPassword%'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
-# 
-"#% impex.setTargetFile( ""Customer.csv"" );"
-insert_update KPCustomer;pk[unique=true];&customerPK;uid[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];addresses(&addressPK);defaultPaymentAddress(&addressPK)[unique=true];defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
-"#% impex.exportItems( ""SELECT {c:pk} FROM {KPCustomer AS c JOIN Address AS a ON {a:pk} = {c:defaultPaymentAddress} AND LOWER({c:uid}) = LOWER({a:email}) } WHERE {c:password} NOT LIKE '%anonymousPassword%'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
-# ------------------------------------------------------------------------------
