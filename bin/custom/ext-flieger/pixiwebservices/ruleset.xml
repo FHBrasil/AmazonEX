@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?com.pixi.webservices.jaxb version="1.0" encoding="UTF-8"?>
 <ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          name="pmd-eclipse"
@@ -750,6 +750,6 @@ starts-with(.//PrimarySuffix/@Image,'Mockito.verify')
    <rule ref="rulesets/jsp/basic.xml/JspEncoding"/>     
    <rule ref="rulesets/jsp/basic.xml/NoInlineScript"/>   
    
-   <rule ref="rulesets/xml/basic.xml/MistypedCDATASection"/> 
+   <rule ref="rulesets/com.pixi.webservices.jaxb/basic.xml/MistypedCDATASection"/> 
    
 </ruleset>   

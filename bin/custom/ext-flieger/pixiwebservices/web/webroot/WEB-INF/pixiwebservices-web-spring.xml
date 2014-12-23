@@ -37,12 +37,12 @@
       >
 
     
-	<context:component-scan base-package="com.pixi.controller" />
+	<context:component-scan base-package="com.pixi.webservices.controller" />
 
   <mvc:annotation-driven ignoreDefaultModelOnRedirect="true">
       <mvc:message-converters>
          <!-- <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/> -->
-         <bean class="xml.factory.Jaxb2HttpMessageConverter">
+         <bean class="com.pixi.webservices.jaxb.factory.Jaxb2HttpMessageConverter">
 		      <property name="jaxbContextFactory" ref="jaxbContextFactory" />
 		      <property name="marshallerProperties">
 		         <map>
@@ -69,12 +69,12 @@
       </mvc:message-converters>
    </mvc:annotation-driven>
 
-   <bean id="jaxbContextFactory" class="xml.factory.MoxyJaxbContextFactoryImpl">
+   <bean id="jaxbContextFactory" class="com.pixi.webservices.jaxb.factory.MoxyJaxbContextFactoryImpl">
       <property name="wrapCollections" value="false" />
       <property name="typeAdapters">
          <list>
-            <value>xml.adapter.DateAdapter</value>
-            <value>xml.adapter.StringAdapter</value>
+            <value>com.pixi.webservices.jaxb.adapter.DateAdapter</value>
+            <value>com.pixi.webservices.jaxb.adapter.StringAdapter</value>
          </list>
       </property>
    </bean>
@@ -82,7 +82,7 @@
  <!--   <bean id="jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
 	  <constructor-arg>
 	    <list>
-	       <value>xml.factory.MoxyJaxbContextFactoryImpl</value>
+	       <value>com.pixi.webservices.jaxb.factory.MoxyJaxbContextFactoryImpl</value>
 	    </list>
 	  </constructor-arg>
 	</bean> -->

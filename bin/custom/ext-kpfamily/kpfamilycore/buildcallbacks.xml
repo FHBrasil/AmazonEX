@@ -2,7 +2,7 @@
 <!--
  [y] hybris Platform
 
- Copyright (c) 2000-2013 hybris AG
+ Copyright (c) 2000-2014 hybris AG
  All rights reserved.
 
  This software is the confidential and proprietary information of hybris
@@ -10,7 +10,6 @@
  Information and shall use it only in accordance with the terms of the
  license agreement you entered into with hybris.
 
-  
 --><!--
  All hybris buildcallbacks.xml macrodefinitions:
  
@@ -19,19 +18,19 @@
 	 before/after ant macro "clean"
 		 <macrodef name="kpfamilycore_before_clean"/>
 		 <macrodef name="kpfamilycore_after_clean"/>
-	 
+
 	 before/after ant macro "build"
 		 <macrodef name="kpfamilycore_before_build"/>
 		 <macrodef name="kpfamilycore_after_build"/>
-		 
+
 	 before/after ant macro "compile_core" - the core module of the extension
 		 <macrodef name="kpfamilycore_before_compile_core">
 		 <macrodef name="kpfamilycore_after_compile_core">
-	 
+
 	 before/after ant macro "compile_web" - the web module of the extension
 		 <macrodef name="kpfamilycore_before_compile_web" />
 		 <macrodef name="kpfamilycore_after_compile_web" />
-	 
+
 	 before/after ant macro "compile_hmc" - the hmc module of the extension
 		 <macrodef name="kpfamilycore_before_compile_hmc" />
 		 <macrodef name="kpfamilycore_after_compile_hmc" />
@@ -39,7 +38,7 @@
  Preparing extension
  
 	 will be called in the beginning of the ant call and only once (also when using multiple 
-	 ant targets e.g. ant build yunittest)	
+	 ant targets e.g. ant build yunittest)
 		 <macrodef name="kpfamilycore_only_once_prepare"/>
  
  Creating ear module/production
@@ -57,42 +56,32 @@
 	 before/after ant macro "yunitinit" 
 		 <macrodef name="kpfamilycore_before_yunitinit" />
 		 <macrodef name="kpfamilycore_after_yunitinit" />
-	 
+
 	 before/after ant macro "yunit"
 		 <macrodef name="kpfamilycore_before_yunit" />
 		 <macrodef name="kpfamilycore_after_yunit" /> 
-		 
+
  Distribution package
  
  	 before/after ant macro "dist" - internal target; only for use when platform is available in source code
 		 <macrodef name="kpfamilycore_after_dist"/>
 		 <macrodef name="kpfamilycore_before_dist"/>
-	 
+
 	 before/after ant macro "dist_copy" - internal target; only for use when platform is available in source code
 		 <macrodef name="kpfamilycore_before_dist_copy"/>
 		 <macrodef name="kpfamilycore_after_dist_copy"/>
-		  
- 	 With these filters you can override the default extension filters defined in platform/resources/ant/dist/filtersets.xml
- 	  	 <patternset id="extension.kpfamilycore.binary.filter">
- 	  	  	 <patternset refid="extension.filter" />
- 	  	  	 <exclude name="**/*-source.jar" />
- 	  	 </patternset>
- 	  	 <patternset id="extension.kpfamilycore.source.filter">
- 	  	  	 <exclude name="**/bin/**" />
- 	  	 </patternset>
- 
+
 --><project name="kpfamilycore_buildcallbacks">
 
-	<!-- 
-	    Called whenever 'ant ear' is used. this callback can be used to modify the content of the ear file
-	
-	     ${ear.path}: 			path to ear
-	 -->
-	<macrodef name="kpfamilycore_before_ear">
+	<macrodef name="kpfamilycore_after_build">
 		<sequential>
+			<impexGenerate extname="kpfamilycore"/>
+		</sequential>
+	</macrodef>
 
-			<!-- you can do anything before the EAR file is being packed -->
-
+	<macrodef name="kpfamilycore_after_clean">
+		<sequential>
+			<delete failonerror="false" file="${ext.kpfamilycore.path}/resources-lang/touch_impexgen"/>
 		</sequential>
 	</macrodef>
 

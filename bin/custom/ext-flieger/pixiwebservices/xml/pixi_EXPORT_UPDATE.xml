@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?com.pixi.webservices.jaxb version="1.0" encoding="ISO-8859-1"?>
 <BMECAT version="1.2">
 	<HEADER>
 		<GENERATOR_INFO>Name Ihres Shop-Systems - BMEcat Export</GENERATOR_INFO>
@@ -41,7 +41,7 @@
 		<ARTICLE>
 			<SUPPLIER_AID>18201-180160-bl</SUPPLIER_AID>
 			<ARTICLE_DETAILS>
-				<DESCRIPTION_SHORT>Matratze Comfort Plus, Größe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
+				<DESCRIPTION_SHORT>Matratze Comfort Plus, GrÃ¶ÃŸe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
 				<EAN>4000053269821</EAN>
 				<MANUFACTURER_NAME>Comfort</MANUFACTURER_NAME>
 				<SEGMENT>Matratzen</SEGMENT>
@@ -104,7 +104,7 @@
 		<ARTICLE>
          <SUPPLIER_AID>18201-180160-bl</SUPPLIER_AID>
          <ARTICLE_DETAILS>
-            <DESCRIPTION_SHORT>Matratze Comfort Plus, Größe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
+            <DESCRIPTION_SHORT>Matratze Comfort Plus, GrÃ¶ÃŸe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
             <EAN>4000053269821</EAN>
             <MANUFACTURER_NAME>Comfort</MANUFACTURER_NAME>
             <SEGMENT>Matratzen</SEGMENT>

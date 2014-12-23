@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?com.pixi.webservices.jaxb version="1.0" encoding="UTF-8"?>
 <!--
  [y] hybris Platform
 
@@ -19,67 +19,129 @@
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<!--
-	The hybris platform provides one single Spring application context for beans located at the jalo layer.
-	Each extension can add beans to this context by specifying them at this configuration file.
-	 
-	You can use and/or redefine beans defined at configuration files of other extensions as well as
-	adding new one.
-		
-	If you want to locate this file at a different location or want to use several files for better,
-	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
-	There you can specify a comma separated list of files where first is tried to find a file per classpath and
-	then per file system.
+	<!-- Pixi Converters, used to transform Hybris Model objects into Pixi WS objects -->
+	<alias name="defaultPixiOrderConverter" alias="pixiOrderConverter"/>
+	<alias name="defaultPixiOrderInfoConverter" alias="pixiOrderInfoConverter"/>
+	<alias name="defaultPixiCatalogConverter" alias="pixiCatalogConverter"/>
+	<alias name="defaultPixiProductConverter" alias="pixiProductConverter"/>
+	<alias name="defaultPixiAddressConverter" alias="pixiAddressConverter"/>
+	
+	<!-- end of Pixi Converters -->
+	
+	<!-- Pixi populators, used during the model convert phase to populate the target instance-->
+	<!-- Order populators -->
+	<alias name="defaultPixiOrderPaymentInfoPopulator" alias="pixiOrderPaymentInfoPopulator"/>
+	<alias name="defaultPixiOrderInfoPopulator" alias="pixiOrderInfoPopulator"/>
+	<alias name="defaultPixiOrderRemarksPopulator" alias="pixiOrderRemarksPopulator"/>
+	<alias name="defaultPixiOrderHeaderPopulator" alias="pixiOrderHeaderPopulator"/>
+	<alias name="defaultPixiOrderEntriesPopulator" alias="pixiOrderEntriesPopulator"/>
+	<alias name="defaultPixiOrderShopNotePopulator" alias="pixiOrderShopNotePopulator"/>
+	<alias name="defaultPixiAddressPopulator" alias="pixiAddressPopulator"/>
+	
+	
+	<!-- BMECAT populators -->
+	<alias name="defaultPixiBMEcatBuyerPopulator" alias="pixiBMEcatBuyerPopulator"/>
+	<alias name="defaultPixiBMEcatSupplierPopulator" alias="pixiBMEcatSupplierPopulator"/>
+	<alias name="defaultPixiBMEcatCatalogPopulator" alias="pixiBMEcatCatalogPopulator"/>
+	<alias name="defaultPixiBMEcatHeaderPopulator" alias="pixiBMEcatHeaderPopulator"/>
+	<alias name="defaultPixiBMEcatPopulator" alias="pixiBMEcatPopulator"/>
 
+	<!-- Product populators -->
+	<alias name="defaultPixiProductDetailsPopulator" alias="pixiProductDetailsPopulator"/>
+	<alias name="defaultPixiProductFeaturesPopulator" alias="pixiProductFeaturesPopulator"/>
+	<alias name="defaultPixiProductPicturePopulator" alias="pixiProductPicturePopulator"/>
+	<alias name="defaultPixiProductPopulator" alias="pixiProductPopulator"/>
+	<alias name="defaultPixiProductPricePopulator" alias="pixiProductPricePopulator"/>
+	<alias name="defaultPixiProductTagPopulator" alias="pixiProductTagPopulator"/>
+	<!-- end of Pixi populators -->
 	
-	If you want to configure beans for your web module please have a look at
-	your web/webroot/WEB-INF/<extname>-web-spring.xml.
-	-->
 	
-	<!--  Example how to override a manager -->
-	<!--
-	<bean id="core.productManager"   class="com.pixi.jalo.PixiwebservicesProductManager" 	init-method="init"	destroy-method="destroy" />
-	-->
+	<!-- Populators definitions -->
+	<!-- Order populators definition -->
+	<bean id="defaultPixiOrderPaymentInfoPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderPaymentInfoPopulator"/>
+	<bean id="defaultPixiOrderInfoPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderInfoPopulator"/>
+	<bean id="defaultPixiOrderRemarksPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderRemarksPopulator"/>
+	<bean id="defaultPixiOrderEntriesPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderEntriesPopulator"/>
+	<bean id="defaultPixiOrderShopNotePopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderShopNotePopulator"/>
+	<bean id="defaultPixiOrderHeaderPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderHeaderPopulator"/>
+
+	<!--  -->
+	<bean id="defaultPixiAddressPopulator" class="com.pixi.webservices.converters.populators.order.address.DefaultPixiAddressPopulator"/>
+
+	<!-- BMECAT populators definition -->
+	<bean id="defaultPixiBMEcatBuyerPopulator" class="com.pixi.webservices.converters.populators.bmecat.DefaultPixiBMEcatBuyerPopulator"/>
+	<bean id="defaultPixiBMEcatSupplierPopulator" class="com.pixi.webservices.converters.populators.bmecat.DefaultPixiBMEcatSupplierPopulator"/>
+	<bean id="defaultPixiBMEcatCatalogPopulator" class="com.pixi.webservices.converters.populators.bmecat.DefaultPixiBMEcatCatalogPopulator"/>
+	<bean id="defaultPixiBMEcatHeaderPopulator" class="com.pixi.webservices.converters.populators.bmecat.DefaultPixiBMEcatHeaderPopulator"/>
+	<bean id="defaultPixiBMEcatPopulator" class="com.pixi.webservices.converters.populators.bmecat.DefaultPixiBMEcatPopulator"/>
+
+	<!-- Product populators definitions -->
+	<bean id="defaultPixiProductDetailsPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiProductDetailsPopulator"/>
+	<bean id="defaultPixiProductFeaturesPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiProductFeaturesPopulator"/>
+	<bean id="defaultPixiProductPicturePopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiProductPicturePopulator"/>
+	<bean id="defaultPixiProductPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiProductPopulator"/>
+	<bean id="defaultPixiProductPricePopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiProductPricePopulator"/>
+	<bean id="defaultPixiProductTagPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiProductTagPopulator"/>
+	<!-- end of Populators definitions -->
 	
-	
- 	<!--  Example how to configure the class to use for jalo session creation -->
-	<!--
-	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
-		<property name="targetClassName" value="com.pixi.jalo.PixiwebservicesJaloSession"/>
+	<!-- Converters definitions -->
+	<bean id="defaultPixiOrderConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.order.export.Order"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiOrderHeaderPopulator" />
+				<ref bean="pixiOrderEntriesPopulator" />
+			</list>
+		</property>
 	</bean>
-	-->
-
 	
-	<!--  Example how to override an item  -->
-	<!-- 
-	<bean id="de.hybris.platform.jalo.product.Product" class="com.pixi.jalo.PixiwebservicesProduct" scope="prototype" />		
- 	-->
-
-	<!--  
-	 Example how to register and use an AOP aspect 
-     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html	
-     -->
+	<bean id="defaultPixiOrderInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.order.export.OrderInfo"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiOrderInfoPopulator" />
+				<ref bean="pixiOrderShopNotePopulator" />
+				<ref bean="pixiOrderPaymentInfoPopulator" />
+				<ref bean="pixiOrderRemarksPopulator" />
+			</list>
+		</property>
+	</bean>
 	
-	<!-- 
-	<bean id="pixiwebservicesProfBean" class="com.pixi.aop.PixiwebservicesProfilingAspect"/>
-	<aop:config proxy-target-class="true">
-  		<aop:aspect id="pixiwebservicesProfAspect" ref="pixiwebservicesProfBean" >
-    	  <aop:pointcut id="profiledMethods" 
-	      	expression="execution(* getModificationTime(..))" />  	            
-	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
-  		</aop:aspect>
-	</aop:config>
-	 -->
-
+	<bean id="defaultPixiAddressConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.order.export.Address"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiAddressPopulator" />
+			</list>
+		</property>
+	</bean>
 	
-	<!-- some other examples of a pointcut that matches everything:
-
-    	  <aop:pointcut id="profiledMethods" 
-	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp; 
-	      	            !execution(* getPK(..))" />  	            
-	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
-	  -->
 	
-			
-			
+	<bean id="defaultPixiCatalogConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.product.export.BMECAT"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiBMEcatBuyerPopulator" />
+				<ref bean="pixiBMEcatSupplierPopulator" />
+				<ref bean="pixiBMEcatCatalogPopulator" />
+				<ref bean="pixiBMEcatHeaderPopulator" />
+				<ref bean="pixiBMEcatPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="defaultPixiProductConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.product.export.Article"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiProductDetailsPopulator" />
+				<ref bean="pixiProductFeaturesPopulator" />
+				<ref bean="pixiProductPicturePopulator" />
+				<ref bean="pixiProductPopulator" />
+				<ref bean="pixiProductPricePopulator" />
+				<ref bean="pixiProductTagPopulator" />
+			</list>
+		</property>
+	</bean>
+	<!-- end of Converters definitions -->
 </beans>

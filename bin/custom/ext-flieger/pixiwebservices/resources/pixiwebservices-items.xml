@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?com.pixi.webservices.jaxb version="1.0" encoding="ISO-8859-1"?>
 <!--
  [y] hybris Platform
 
@@ -23,7 +23,7 @@
 <!--
 		<itemtype generate="true"
 		   code="MyProduct"
-		   jaloclass="com.pixi.jalo.MyProduct"
+		   jaloclass="com.pixi.webservices.jalo.MyProduct"
 		   extends="Product"
 		   autocreate="true"
 	   >

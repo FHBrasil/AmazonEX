@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?com.pixi.webservices.jaxb version="1.0" encoding="ISO-8859-1"?>
 <!--
  [y] hybris Platform
 
@@ -20,7 +20,7 @@
 	<!--
 		Example Data POJO
 	
-	<bean class="com.pixi.data.MyPojo">
+	<bean class="com.pixi.webservices.data.MyPojo">
 		<property name="id" type="String"/>
 		<property name="flag" type="boolean"/>
 	</bean>
