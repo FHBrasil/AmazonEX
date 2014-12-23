@@ -82,11 +82,7 @@
      <extension name="kpfamilytest"/>
       <extension name="kpfamilystorefront"/>
       <extension name="kpfamilycockpits"/>
-      
-      	<!-- kp-family customizations -->
-<!--       <extension name="kpfamilycore"/>
-      <extension name="kpfamilyfacades"/>
-      <extension name="kpfamilyservices"/> -->
+       <extension name="kpfamilyservices"/>
       
       <!-- store-->
       <!-- <extension name="babyartikelstore"/> -->
