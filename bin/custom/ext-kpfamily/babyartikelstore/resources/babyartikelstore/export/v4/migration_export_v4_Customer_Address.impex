@@ -31,11 +31,11 @@
 # ---- Export script -----------------------------------------------------------
 "#% impex.setTargetFile( ""Address.csv"" );"
 insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country(isocode);dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(&customerPK)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;;streetname;streetnumber;town;unloadingAddress[allownull=true];url
-"#% impex.exportItems( ""SELECT MIN({c:pk}) FROM {KPCustomer AS c JOIN Address AS a ON ({a:pk} = {c:defaultPaymentAddress} OR {a:pk} = {c:defaultShipmentAddress}) AND {a:owner} = {c:pk} } WHERE {c:password} NOT LIKE '%anonymousPassword%' GROUP BY {a:email}"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
+"#% impex.exportItems(""SELECT {a:pk} FROM {KPCustomer AS c JOIN Address AS a ON ({a:pk} = {c:defaultPaymentAddress} OR {a:pk} = {c:defaultShipmentAddress}) AND {a:owner} = {c:pk} } WHERE {c:password} NOT LIKE '%anonymousPassword%' GROUP BY {a:email}"", Collections.EMPTY_MAP, Collections.singletonList(Address.class), true, true, -1, -1);"
 # 
 "#% impex.setTargetFile( ""Customer.csv"" );"
 insert KPCustomer;&customerPK;defaultPaymentAddress(email)[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];defaultPaymentAddress(&addressPK);defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
-"#% impex.exportItems( ""SELECT MIN({c:pk}) FROM {KPCustomer AS c JOIN Address AS a ON ({a:pk} = {c:defaultPaymentAddress} OR {a:pk} = {c:defaultShipmentAddress}) AND {a:owner} = {c:pk} } WHERE {c:password} NOT LIKE '%anonymousPassword%' GROUP BY {a:email}"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
+"#% impex.exportItems( ""SELECT MIN({c:pk}) FROM {KPCustomer AS c JOIN Address AS a ON ({a:pk} = {c:defaultPaymentAddress} OR {a:pk} = {c:defaultShipmentAddress}) AND {a:owner} = {c:pk} } WHERE {c:password} NOT LIKE '%anonymousPassword%' GROUP BY {a:email}"", Collections.EMPTY_MAP, Collections.singletonList(KPCustomer.class), true, true, -1, -1  );"
 # ------------------------------------------------------------------------------
 # 
 #
