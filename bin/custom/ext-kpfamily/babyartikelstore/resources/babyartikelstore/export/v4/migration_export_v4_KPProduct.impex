@@ -14,7 +14,7 @@ $catalog=babyartikel
 $version=Staged
 
 # ---- Extension: kpfamilydata ---- Type: KPProduct ----
-"#% impex.setTargetFile( ""KPProduct.csv"" );"
-insert_update KPProduct;code[unique=true];;name[lang=de];approvalStatus(code);description[lang=de];shortDescription[lang=de];ean;unit(code)[default='pieces']
+"#% impex.setTargetFile( ""Product.csv"" );"
+insert_update KPProduct;code[unique=true];name[lang=de];$catalogVersion;approvalStatus(code);description[lang=de];shortDescription[lang=de];ean;unit(code)[default='pieces']
 "#% impex.exportItems( ""SELECT {p:pk} FROM {KPProduct as p}, {CatalogVersion as cv}, {Catalog as c} WHERE {p:catalogVersion}={cv:pk} AND {c:id}='$catalog' AND {cv:version}='$version'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
 
