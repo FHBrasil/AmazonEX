@@ -14,6 +14,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.eclipse.persistence.oxm.annotations.XmlCDATA;
+
 
 /**
  * <p>
@@ -43,9 +45,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "FEATURE")
 public class Feature
 {
+	@XmlCDATA
 	@XmlElement(name = "FNAME", required = true)
 	protected String fname;
 
+	@XmlCDATA
 	@XmlElement(name = "FVALUE", required = true)
 	protected String fvalue;
 

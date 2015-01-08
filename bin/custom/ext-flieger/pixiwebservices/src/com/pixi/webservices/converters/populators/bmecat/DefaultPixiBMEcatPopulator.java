@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
+import com.pixi.webservices.constants.PixiwebservicesConstants;
 import com.pixi.webservices.jaxb.product.export.Article;
 import com.pixi.webservices.jaxb.product.export.BMECAT;
 import com.pixi.webservices.jaxb.product.export.Header;
@@ -32,10 +33,10 @@ public class DefaultPixiBMEcatPopulator implements Populator<List<ProductModel>,
 	{
 		LOG.info("populating");
 		
-		CatalogModel catalog = new CatalogModel();
-
-		target.setVersion(BigDecimal.ONE);
-		target.setHEADER(pixiBMEcatHeaderConverter.convert(catalog));//TODO converter
+		double version = PixiwebservicesConstants.Product.VERSION;
+		
+		target.setVersion(BigDecimal.valueOf(version)); 
+		target.setHEADER(pixiBMEcatHeaderConverter.convert(getCatalog(source)));
 		
 		List<Article> articles = target.getARTICLE();
 		
@@ -43,5 +44,17 @@ public class DefaultPixiBMEcatPopulator implements Populator<List<ProductModel>,
 		{
 			articles.add(pixiBMEcatProductConverter.convert(product));
 		}
+	}
+
+	/**
+	 * Retrieves the catalog from the list of products, basically we extract it from the first product.
+	 * @param source
+	 * @return
+	 */
+	private CatalogModel getCatalog(final List<ProductModel> source) 
+	{
+		final ProductModel firstProduct = source.iterator().next();
+		
+		return firstProduct.getCatalogVersion().getCatalog();
 	}
 }

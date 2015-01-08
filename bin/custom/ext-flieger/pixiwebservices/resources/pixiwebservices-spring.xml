@@ -139,7 +139,7 @@
 				<ref bean="pixiBMEcatHeaderPopulator" />
 				<ref bean="pixiBMEcatHeaderCatalogPopulator" />
 				<ref bean="pixiBMEcatHeaderSupplierPopulator" />
-				<ref bean="pixiBMEcatHeaderBuyerPopulator" />
+				<!-- <ref bean="pixiBMEcatHeaderBuyerPopulator" /> -->
 			</list>
 		</property>
 	</bean>

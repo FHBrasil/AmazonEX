@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.eclipse.persistence.oxm.annotations.XmlCDATA;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 
@@ -52,6 +53,7 @@ public class OrderItem
 	@XmlElement(name = "LINE_ITEM_ID", required = true)
 	protected String lineitemid;
 
+	@XmlCDATA
 	@XmlElement(name = "DESCRIPTION_SHORT", required = true)
 	protected String descriptionshort;
 
@@ -64,6 +66,7 @@ public class OrderItem
 	@XmlElement(name = "QUANTITY")
 	protected int quantity;
 
+	@XmlCDATA
 	@XmlElement(name = "ORDER_UNIT", required = true)
 	protected String orderunit;
 

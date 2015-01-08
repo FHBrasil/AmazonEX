@@ -2,7 +2,7 @@ package com.pixi.webservices.converters.populators.bmecat.header;
 
 import org.apache.log4j.Logger;
 
-import com.pixi.webservices.jaxb.product.export.ArticleAddress;
+import com.pixi.webservices.constants.PixiwebservicesConstants;
 import com.pixi.webservices.jaxb.product.export.Header;
 import com.pixi.webservices.jaxb.product.export.Supplier;
 
@@ -19,18 +19,8 @@ public class DefaultPixiBMEcatHeaderSupplierPopulator implements Populator<Catal
 	{
 		LOG.info("populating");
 		
-		final ArticleAddress address = new ArticleAddress();
-		address.setCITY("city");
-		address.setCOUNTRY("country");
-		address.setNAME("name");
-		address.setNAME2("name 2");
-		address.setSTREET("street");
-		address.setType("type");
-		address.setZIP("zip");
-		
 		final Supplier supplier = new Supplier();
-		supplier.setADDRESS(address);
-		supplier.setSUPPLIERNAME("supplier name");
+		supplier.setSUPPLIERNAME(PixiwebservicesConstants.Pixi.COMPANY);
 		
 		target.setSUPPLIER(supplier);
 	}

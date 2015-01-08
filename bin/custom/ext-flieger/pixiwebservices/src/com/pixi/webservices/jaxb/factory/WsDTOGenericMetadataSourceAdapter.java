@@ -22,6 +22,9 @@ import org.eclipse.persistence.jaxb.xmlmodel.XmlJavaTypeAdapter;
 import org.eclipse.persistence.jaxb.xmlmodel.XmlJavaTypeAdapters;
 import org.eclipse.persistence.jaxb.xmlmodel.XmlRootElement;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.util.ClassUtils;
+
+import com.google.common.primitives.Primitives;
 
 
 /**
@@ -92,8 +95,8 @@ public class WsDTOGenericMetadataSourceAdapter<T> extends MetadataSourceAdapter
 			xjta.setValue(clazz.getName());
 
 			final Class<T> type = ((Class<T>) ((ParameterizedType) clazz.getGenericSuperclass()).getActualTypeArguments()[1]);
-			final String name = type.getName();
-			xjta.setType(name);
+
+			xjta.setType(type.getName());
 
 			xmlBindings.getXmlJavaTypeAdapters().getXmlJavaTypeAdapter().add(xjta);
 		}

@@ -53,7 +53,7 @@ public class ArticleFeatures
 	protected List<Feature> feature;
 
 	@XmlElement(name = "SerialNumberRequired", required = true)
-	protected String serialNumberRequired;
+	protected Boolean serialNumberRequired;
 
 	@XmlElement(name = "CustomsTariffNumber", required = true)
 	protected String customsTariffNumber;
@@ -97,10 +97,10 @@ public class ArticleFeatures
 	/**
 	 * Gets the value of the serialNumberRequired property.
 	 *
-	 * @return possible object is {@link String }
+	 * @return possible object is {@link boolean }
 	 *
 	 */
-	public String getSerialNumberRequired()
+	public boolean getSerialNumberRequired()
 	{
 		return serialNumberRequired;
 	}
@@ -109,10 +109,10 @@ public class ArticleFeatures
 	 * Sets the value of the serialNumberRequired property.
 	 *
 	 * @param value
-	 *           allowed object is {@link String }
+	 *           allowed object is {@link boolean }
 	 *
 	 */
-	public void setSerialNumberRequired(final String value)
+	public void setSerialNumberRequired(final boolean value)
 	{
 		this.serialNumberRequired = value;
 	}

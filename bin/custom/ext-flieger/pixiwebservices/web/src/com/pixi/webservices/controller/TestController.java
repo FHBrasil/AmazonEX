@@ -154,7 +154,7 @@ public class TestController
 		order.setORDERHEADER(header);
 		order.setTOTALITEMNUM(1);
 		order.setType("type");
-		order.setVersion(new BigDecimal("1.0"));
+		order.setVersion(BigDecimal.ONE);
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -210,7 +210,7 @@ public class TestController
 		catalog.setCATALOGVERSION("version");
 		catalog.setCURRENCY("EUR");
 		catalog.setDATABASE("database");
-		catalog.setDATEEXPORT(new Date());
+		catalog.setDATEEXPORT(System.currentTimeMillis()/1000L);
 		catalog.setEXPORTDATE(new Date());
 		catalog.setLANGUAGE("de-DE");
 		catalog.setSHOPID("shop id");
@@ -238,7 +238,7 @@ public class TestController
 			features.setCustomsCountryOfOrigin("country" + j);
 			features.setCustomsTariffNumber("tariff number" + j);
 			features.setCustomsTariffText("tariff text" + j);
-			features.setSerialNumberRequired("false" + j);
+			features.setSerialNumberRequired(false);
 
 			for (int i = 0; i < 3; i++)
 			{

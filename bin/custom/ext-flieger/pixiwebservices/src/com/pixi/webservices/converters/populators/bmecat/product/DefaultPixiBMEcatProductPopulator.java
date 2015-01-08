@@ -17,7 +17,14 @@ public class DefaultPixiBMEcatProductPopulator implements Populator<ProductModel
 	{
 		LOG.info("populating");
 		
-		target.setORDERUNIT("pieces" + 1);
-		target.setSUPPLIERAID("AID" + 1);
+		final Double unitDouble = source.getNumberContentUnits();
+
+		if(unitDouble == null || unitDouble == 0) {
+			target.setORDERUNIT("1");
+		} else {
+			target.setORDERUNIT(new Long(Math.round(unitDouble)).toString());
+		}
+		
+		target.setSUPPLIERAID(source.getCode());
 	}
 }

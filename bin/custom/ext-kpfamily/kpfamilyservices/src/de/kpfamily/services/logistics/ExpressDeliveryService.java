@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.kpfamily.services.delivery;
+package de.kpfamily.services.logistics;
 
 import de.hybris.platform.core.model.order.AbstractOrderModel;
 

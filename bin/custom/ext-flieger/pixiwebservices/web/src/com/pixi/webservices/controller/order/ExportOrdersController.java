@@ -167,7 +167,7 @@ public class ExportOrdersController extends AbstractPixiController
 		
 		order.setTOTALITEMNUM(1);
 		order.setType("type");
-		order.setVersion(new BigDecimal("1.0"));
+		order.setVersion(BigDecimal.ONE);
 
 //		PIXI ORDER ENTRIES POPULATOR
 		for (int i = 0; i < 5; i++)

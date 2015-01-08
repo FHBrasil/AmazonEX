@@ -1,11 +1,10 @@
 /**
  *
  */
-package de.kpfamily.services.delivery.impl;
+package de.kpfamily.services.logistics.impl;
 
 import de.hybris.platform.core.model.order.AbstractOrderModel;
-
-import de.kpfamily.services.delivery.ExpressDeliveryService;
+import de.kpfamily.services.logistics.ExpressDeliveryService;
 
 
 /**
@@ -18,7 +17,7 @@ public class DefaultExpressDeliveryService implements ExpressDeliveryService
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * de.kpfamily.services.delivery.ExpressDeliveryService#isApplicableForExpressDelivery(de.hybris.platform.core.model
+	 * de.kpfamily.services.logistics.ExpressDeliveryService#isApplicableForExpressDelivery(de.hybris.platform.core.model
 	 * .order.AbstractOrderModel)
 	 */
 	@Override

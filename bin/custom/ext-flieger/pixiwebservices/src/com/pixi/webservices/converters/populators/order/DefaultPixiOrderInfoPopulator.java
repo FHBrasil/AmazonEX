@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
+import com.pixi.webservices.constants.PixiwebservicesConstants;
 import com.pixi.webservices.jaxb.order.export.Address;
 import com.pixi.webservices.jaxb.order.export.OrderInfo;
 import com.pixi.webservices.jaxb.order.export.OrderParties;
@@ -30,13 +31,13 @@ public class DefaultPixiOrderInfoPopulator implements Populator<OrderModel, Orde
 	{
 		LOG.info("populating");
 		
-		target.setDATABASE(Config.getParameter("pixiwebservices.order.export.database"));
+		target.setDATABASE(PixiwebservicesConstants.Pixi.DATABASE);
 		target.setGIFTMESSAGE("");
 		target.setORDERDATE(source.getDate());
 		target.setORDERID(source.getCode());
 		target.setORDERSHIPLOCK("N");
 		target.setPRICECURRENCY(source.getCurrency().getIsocode());
-		target.setSHOPID(Config.getParameter("pixiwebservices.pixi.shop.id"));
+		target.setSHOPID(PixiwebservicesConstants.Pixi.SHOP_ID);
 		target.setORDERPARTIES(getOrderParties(source));
 	}
 
@@ -58,7 +59,7 @@ public class DefaultPixiOrderInfoPopulator implements Populator<OrderModel, Orde
 	private Party getPartyFromAddress(final AddressModel address, final CustomerModel owner) 
 	{
 		final PartyID paymentPartyId = new PartyID();
-		paymentPartyId.setType(Config.getParameter("pixiwebservices.order.address.party.type"));
+		paymentPartyId.setType(PixiwebservicesConstants.Order.ADRESS_TYPE);
 		paymentPartyId.setValue(owner.getCustomerID());
 		
 		final Party paymentParty = new Party();

@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.pixi.core.services.PixiOrderService;
+import com.pixi.webservices.jaxb.adapter.BooleanAdapter;
 import com.pixi.webservices.jaxb.adapter.DateAdapter;
 import com.pixi.webservices.jaxb.adapter.StringAdapter;
 import com.pixi.webservices.jaxb.factory.MoxyJaxbContextFactoryImpl;
@@ -35,7 +36,7 @@ import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.site.BaseSiteService;
 
 @IntegrationTest
-@Ignore
+//@Ignore
 public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTest
 {
 	private static final Logger LOG = Logger.getLogger(PixiwebservicesOrderExportTest.class.getName());
@@ -80,6 +81,7 @@ public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTes
 		List<Class> typeAdapters = new ArrayList<Class>();
 		typeAdapters.add(DateAdapter.class);
 		typeAdapters.add(StringAdapter.class);
+		typeAdapters.add(BooleanAdapter.class);
 		
 		jaxbContextFactory = new MoxyJaxbContextFactoryImpl();
 		jaxbContextFactory.setWrapCollections(false);

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import com.pixi.webservices.constants.PixiwebservicesConstants;
 import com.pixi.webservices.jaxb.product.export.Catalog;
 import com.pixi.webservices.jaxb.product.export.Header;
 
@@ -21,16 +22,26 @@ public class DefaultPixiBMEcatHeaderCatalogPopulator implements Populator<Catalo
 		LOG.info("populating");
 		
 		final Catalog catalog = new Catalog();
-		catalog.setCATALOGID("catalogID");
-		catalog.setCATALOGNAME("catalogName");
-		catalog.setCATALOGVERSION("version");
-		catalog.setCURRENCY("EUR");
-		catalog.setDATABASE("database");
-		catalog.setDATEEXPORT(new Date());
+
+		catalog.setLANGUAGE(source.getLanguages().iterator().next().getIsocode());
+		catalog.setCATALOGID(source.getId());
+		catalog.setCATALOGNAME(source.getName());
+		catalog.setCATALOGVERSION(source.getVersion());
+		
+		catalog.setCURRENCY(source.getActiveCatalogVersion().getDefaultCurrency().getIsocode());
+
 		catalog.setEXPORTDATE(new Date());
-		catalog.setLANGUAGE("de-DE");
-		catalog.setSHOPID("shop id");
+		
+		catalog.setDATEEXPORT(getUnixTimestamp());
+		
+		catalog.setDATABASE(PixiwebservicesConstants.Pixi.DATABASE);
+		catalog.setSHOPID(PixiwebservicesConstants.Pixi.SHOP_ID);
 		
 		target.setCATALOG(catalog);
+	}
+
+	private long getUnixTimestamp() 
+	{
+		return System.currentTimeMillis() / 1000L;
 	}
 }

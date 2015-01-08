@@ -2,6 +2,7 @@ package com.pixi.webservices.converters.populators.bmecat.header;
 
 import org.apache.log4j.Logger;
 
+import com.pixi.webservices.constants.PixiwebservicesConstants;
 import com.pixi.webservices.jaxb.product.export.Header;
 
 import de.hybris.platform.catalog.model.CatalogModel;
@@ -17,6 +18,8 @@ public class DefaultPixiBMEcatHeaderPopulator implements Populator<CatalogModel,
 	{
 		LOG.info("populating");
 		
-		target.setGENERATORINFO("generator info");
+		String generatorInfo = PixiwebservicesConstants.Product.GENERATOR_INFO;
+		
+		target.setGENERATORINFO(generatorInfo);
 	}
 }

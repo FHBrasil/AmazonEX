@@ -10,6 +10,7 @@ import com.pixi.webservices.jaxb.product.export.ArticleDetails;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
+import de.kpfamily.core.model.BabyartikelProductModel;
 
 public class DefaultPixiBMEcatProductDetailsPopulator implements Populator<ProductModel, Article>
 {
@@ -21,12 +22,18 @@ public class DefaultPixiBMEcatProductDetailsPopulator implements Populator<Produ
 		LOG.info("populating");
 		
 		final ArticleDetails details = new ArticleDetails();
-		details.setDESCRIPTIONSHORT("short");
-		details.setEAN("ean");
-		details.setINTERNALITEMNUMBER("itemNumber");
-		details.setMANUFACTURERNAME("manufacturer name");
-		details.setSEGMENT("segment");
-		details.setWEIGHT(BigDecimal.TEN.multiply(BigDecimal.valueOf(1)));
+		details.setDESCRIPTIONSHORT(source.getName());
+		details.setDESCRIPTIONLONG(source.getName());
+		details.setEAN(source.getEan());
+		details.setMANUFACTURERNAME(source.getManufacturerName());
+		details.setSEGMENT(source.getSupercategories().iterator().next().getCode());
+		details.setINTERNALITEMNUMBER(source.getCode());
+		
+		if(source instanceof BabyartikelProductModel)
+		{
+			double weight = ((BabyartikelProductModel) source).getWeight();
+			details.setWEIGHT(BigDecimal.valueOf(weight));
+		}
 		
 		target.setARTICLEDETAILS(details);
 	}

@@ -21,7 +21,6 @@ public class DateAdapter extends XmlAdapter<String, Date>
 	//because SimpleDateFormat is not thread safe, it is used in conjunction with ThreadLocal
 	private final ThreadLocal<DateFormat> dateFormat = new ThreadLocal<DateFormat>()
 	{
-
 		@Override
 		public DateFormat get()
 		{

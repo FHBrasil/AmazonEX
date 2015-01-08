@@ -1,209 +1,73 @@
-<BMECAT version="1">
+<BMECAT version="1.0">
 	<HEADER>
-		<GENERATOR_INFO>generator info</GENERATOR_INFO>
+		<GENERATOR_INFO>KPFamily GmbH</GENERATOR_INFO>
 		<CATALOG>
-			<LANGUAGE>de-DE</LANGUAGE>
-			<CATALOG_ID>catalogID</CATALOG_ID>
-			<CATALOG_VERSION>version</CATALOG_VERSION>
-			<CATALOG_NAME>catalogName</CATALOG_NAME>
-			<CURRENCY>EUR</CURRENCY>
-			<DATABASE>database</DATABASE>
-			<SHOPID>shop id</SHOPID>
-			<DATEEXPORT>2014-12-23T18:14:05-0200</DATEEXPORT>
-			<EXPORT_DATE>2014-12-23T18:14:05-0200</EXPORT_DATE>
+			<LANGUAGE>de</LANGUAGE>
+			<CATALOG_ID>Default</CATALOG_ID>
+			<CATALOG_VERSION>Online</CATALOG_VERSION>
 		</CATALOG>
 		<SUPPLIER>
-			<SUPPLIER_NAME>supplier name</SUPPLIER_NAME>
-			<ADDRESS type="type">
-				<NAME>name</NAME>
-				<NAME2>name 2</NAME2>
-				<STREET>street</STREET>
-				<ZIP>zip</ZIP>
-				<CITY>city</CITY>
-				<COUNTRY>country</COUNTRY>
-			</ADDRESS>
+			<SUPPLIER_ID>hybris</SUPPLIER_ID>
+			<SUPPLIER_NAME>KP-Family</SUPPLIER_NAME>
 		</SUPPLIER>
-		<BUYER>
-			<BUYER_ID>buyer id</BUYER_ID>
-			<BUYER_NAME>buyer name</BUYER_NAME>
-			<ADDRESS type="type">
-				<NAME>name</NAME>
-				<NAME2>name 2</NAME2>
-				<STREET>street</STREET>
-				<ZIP>zip</ZIP>
-				<CITY>city</CITY>
-				<COUNTRY>country</COUNTRY>
-			</ADDRESS>
-		</BUYER>
 	</HEADER>
 	<T_NEW_CATALOG>
 		<ARTICLE>
-			<SUPPLIER_AID>AID0</SUPPLIER_AID>
+			<SUPPLIER_AID>051501000090</SUPPLIER_AID>
 			<ARTICLE_DETAILS>
-				<DESCRIPTION_SHORT>short0</DESCRIPTION_SHORT>
-				<EAN>ean0</EAN>
-				<MANUFACTURER_NAME>manufacturer name0</MANUFACTURER_NAME>
-				<SEGMENT>segment0</SEGMENT>
-				<WEIGHT>0</WEIGHT>
-				<INTERNAL_ITEM_NUMBER>itemNumber0</INTERNAL_ITEM_NUMBER>
+				<DESCRIPTION_SHORT>
+<![CDATA[ Sonnensegel für Kinderwagen - Marine ]]>
+				</DESCRIPTION_SHORT>
+				<DESCRIPTION_LONG>
+<![CDATA[ Sonnensegel für Kinderwagen - Marine ]]>
+				</DESCRIPTION_LONG>
+				<EAN>4048813102265</EAN>
+				<MANUFACTURER_NAME>
+<![CDATA[ Euret ]]>
+				</MANUFACTURER_NAME>
+				<SEGMENT>051160</SEGMENT>
 			</ARTICLE_DETAILS>
 			<ARTICLE_FEATURES>
 				<FEATURE>
-					<FNAME>name0</FNAME>
-					<FVALUE>value0</FVALUE>
+					<FNAME>Europe1PriceFactory.PTG</FNAME>
+					<FVALUE>MwSt_High</FVALUE>
 				</FEATURE>
 				<FEATURE>
-					<FNAME>name0</FNAME>
-					<FVALUE>value0</FVALUE>
+					<FNAME>MIN_STOCK_QTY</FNAME>
+					<FVALUE>0</FVALUE>
 				</FEATURE>
 				<FEATURE>
-					<FNAME>name0</FNAME>
-					<FVALUE>value0</FVALUE>
+					<FNAME>ID EURE</FNAME>
+					<FVALUE>10226</FVALUE>
 				</FEATURE>
-				<SerialNumberRequired>false0</SerialNumberRequired>
-				<CustomsTariffNumber>tariff number0</CustomsTariffNumber>
-				<CustomsCountryOfOrigin>country0</CustomsCountryOfOrigin>
-				<CustomsTariffText>tariff text0</CustomsTariffText>
+				<SerialNumberRequired>0</SerialNumberRequired>
 			</ARTICLE_FEATURES>
-			<ARTICLE_PRICE_DETAILS>
-				<ARTICLE_PRICE price_type="type">
-					<PRICE_AMOUNT>0</PRICE_AMOUNT>
-					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
-					<SUPPLPRICE_AMOUNT>0</SUPPLPRICE_AMOUNT>
-				</ARTICLE_PRICE>
-				<ARTICLE_PRICE price_type="type">
-					<PRICE_AMOUNT>10</PRICE_AMOUNT>
-					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
-					<SUPPLPRICE_AMOUNT>10</SUPPLPRICE_AMOUNT>
-				</ARTICLE_PRICE>
-			</ARTICLE_PRICE_DETAILS>
 			<ITEMTAGS>
-				<ITEMTAG>itme tag 0</ITEMTAG>
-				<ITEMTAG>itme tag 0</ITEMTAG>
-				<ITEMTAG>itme tag 0</ITEMTAG>
+				<ITEMTAG>Kleines Produkt</ITEMTAG>
 			</ITEMTAGS>
 			<MIME_INFO>
 				<MIME>
-					<MIME_TYPE>type0</MIME_TYPE>
-					<MIME_SOURCE>source0</MIME_SOURCE>
-					<MIME_PURPOSE>purpose0</MIME_PURPOSE>
+					<MIME_TYPE>image/jpeg</MIME_TYPE>
+					<MIME_SOURCE>
+						http://88.198.78.166/medias/sys_master/media/2012-11/051501000090_sonnensegel-fuer-kinderwagen-marine_euret_t150.jpg
+					</MIME_SOURCE>
+					<MIME_PURPOSE>normal</MIME_PURPOSE>
 				</MIME>
 			</MIME_INFO>
 			<ARTICLE_ORDER_DETAILS>
-				<ORDER_UNIT>pieces0</ORDER_UNIT>
+				<ORDER_UNIT>48</ORDER_UNIT>
 			</ARTICLE_ORDER_DETAILS>
-		</ARTICLE>
-		<ARTICLE>
-			<SUPPLIER_AID>AID1</SUPPLIER_AID>
-			<ARTICLE_DETAILS>
-				<DESCRIPTION_SHORT>short1</DESCRIPTION_SHORT>
-				<EAN>ean1</EAN>
-				<MANUFACTURER_NAME>manufacturer name1</MANUFACTURER_NAME>
-				<SEGMENT>segment1</SEGMENT>
-				<WEIGHT>10</WEIGHT>
-				<INTERNAL_ITEM_NUMBER>itemNumber1</INTERNAL_ITEM_NUMBER>
-			</ARTICLE_DETAILS>
-			<ARTICLE_FEATURES>
-				<FEATURE>
-					<FNAME>name0</FNAME>
-					<FVALUE>value0</FVALUE>
-				</FEATURE>
-				<FEATURE>
-					<FNAME>name1</FNAME>
-					<FVALUE>value1</FVALUE>
-				</FEATURE>
-				<FEATURE>
-					<FNAME>name2</FNAME>
-					<FVALUE>value2</FVALUE>
-				</FEATURE>
-				<SerialNumberRequired>false1</SerialNumberRequired>
-				<CustomsTariffNumber>tariff number1</CustomsTariffNumber>
-				<CustomsCountryOfOrigin>country1</CustomsCountryOfOrigin>
-				<CustomsTariffText>tariff text1</CustomsTariffText>
-			</ARTICLE_FEATURES>
 			<ARTICLE_PRICE_DETAILS>
-				<ARTICLE_PRICE price_type="type">
-					<PRICE_AMOUNT>0</PRICE_AMOUNT>
+				<ARTICLE_PRICE price_type="gros_list">
+					<PRICE_AMOUNT>3.92</PRICE_AMOUNT>
 					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
-					<SUPPLPRICE_AMOUNT>0</SUPPLPRICE_AMOUNT>
-				</ARTICLE_PRICE>
-				<ARTICLE_PRICE price_type="type">
-					<PRICE_AMOUNT>10</PRICE_AMOUNT>
-					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
-					<SUPPLPRICE_AMOUNT>10</SUPPLPRICE_AMOUNT>
+					<SUPPLPRICE_AMOUNT>1.05</SUPPLPRICE_AMOUNT>
 				</ARTICLE_PRICE>
 			</ARTICLE_PRICE_DETAILS>
-			<ITEMTAGS>
-				<ITEMTAG>itme tag 0</ITEMTAG>
-				<ITEMTAG>itme tag 1</ITEMTAG>
-				<ITEMTAG>itme tag 2</ITEMTAG>
-			</ITEMTAGS>
-			<MIME_INFO>
-				<MIME>
-					<MIME_TYPE>type1</MIME_TYPE>
-					<MIME_SOURCE>source1</MIME_SOURCE>
-					<MIME_PURPOSE>purpose1</MIME_PURPOSE>
-				</MIME>
-			</MIME_INFO>
-			<ARTICLE_ORDER_DETAILS>
-				<ORDER_UNIT>pieces1</ORDER_UNIT>
-			</ARTICLE_ORDER_DETAILS>
-		</ARTICLE>
-		<ARTICLE>
-			<SUPPLIER_AID>AID2</SUPPLIER_AID>
-			<ARTICLE_DETAILS>
-				<DESCRIPTION_SHORT>short2</DESCRIPTION_SHORT>
-				<EAN>ean2</EAN>
-				<MANUFACTURER_NAME>manufacturer name2</MANUFACTURER_NAME>
-				<SEGMENT>segment2</SEGMENT>
-				<WEIGHT>20</WEIGHT>
-				<INTERNAL_ITEM_NUMBER>itemNumber2</INTERNAL_ITEM_NUMBER>
-			</ARTICLE_DETAILS>
-			<ARTICLE_FEATURES>
-				<FEATURE>
-					<FNAME>name0</FNAME>
-					<FVALUE>value0</FVALUE>
-				</FEATURE>
-				<FEATURE>
-					<FNAME>name2</FNAME>
-					<FVALUE>value2</FVALUE>
-				</FEATURE>
-				<FEATURE>
-					<FNAME>name4</FNAME>
-					<FVALUE>value4</FVALUE>
-				</FEATURE>
-				<SerialNumberRequired>false2</SerialNumberRequired>
-				<CustomsTariffNumber>tariff number2</CustomsTariffNumber>
-				<CustomsCountryOfOrigin>country2</CustomsCountryOfOrigin>
-				<CustomsTariffText>tariff text2</CustomsTariffText>
-			</ARTICLE_FEATURES>
-			<ARTICLE_PRICE_DETAILS>
-				<ARTICLE_PRICE price_type="type">
-					<PRICE_AMOUNT>0</PRICE_AMOUNT>
-					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
-					<SUPPLPRICE_AMOUNT>0</SUPPLPRICE_AMOUNT>
-				</ARTICLE_PRICE>
-				<ARTICLE_PRICE price_type="type">
-					<PRICE_AMOUNT>10</PRICE_AMOUNT>
-					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
-					<SUPPLPRICE_AMOUNT>10</SUPPLPRICE_AMOUNT>
-				</ARTICLE_PRICE>
-			</ARTICLE_PRICE_DETAILS>
-			<ITEMTAGS>
-				<ITEMTAG>itme tag 0</ITEMTAG>
-				<ITEMTAG>itme tag 2</ITEMTAG>
-				<ITEMTAG>itme tag 4</ITEMTAG>
-			</ITEMTAGS>
-			<MIME_INFO>
-				<MIME>
-					<MIME_TYPE>type2</MIME_TYPE>
-					<MIME_SOURCE>source2</MIME_SOURCE>
-					<MIME_PURPOSE>purpose2</MIME_PURPOSE>
-				</MIME>
-			</MIME_INFO>
-			<ARTICLE_ORDER_DETAILS>
-				<ORDER_UNIT>pieces2</ORDER_UNIT>
-			</ARTICLE_ORDER_DETAILS>
 		</ARTICLE>
 	</T_NEW_CATALOG>
+	<EXPORT_DATE>2015-01-08 16:20:56</EXPORT_DATE>
+	<DATEEXPORT>1420730456</DATEEXPORT>
+	<DATABASE>pixi_KPF</DATABASE>
+	<SHOPID>KPF</SHOPID>
 </BMECAT>

@@ -20,5 +20,8 @@
            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<alias name="defaultExpressDeliveryService" alias="expressDeliveryService"/>
-	<bean id="defaultExpressDeliveryService" class="de.kpfamily.services.delivery.impl.DefaultExpressDeliveryService" />
+	<bean id="defaultExpressDeliveryService" class="de.kpfamily.services.logistics.impl.DefaultExpressDeliveryService" />
+	
+	<alias name="defaultLogisticsService" alias="logisticsService"/>
+	<bean id="defaultLogisticsService" class="de.kpfamily.services.logistics.impl.DefaultLogisticsService" />
 </beans>

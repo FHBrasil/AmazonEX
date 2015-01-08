@@ -75,6 +75,7 @@
          <list>
             <value>com.pixi.webservices.jaxb.adapter.DateAdapter</value>
             <value>com.pixi.webservices.jaxb.adapter.StringAdapter</value>
+            <value>com.pixi.webservices.jaxb.adapter.BooleanAdapter</value>
          </list>
       </property>
    </bean>

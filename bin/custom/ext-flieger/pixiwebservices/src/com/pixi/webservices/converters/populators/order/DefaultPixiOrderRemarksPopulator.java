@@ -19,7 +19,7 @@ import com.pixi.webservices.jaxb.order.export.Remark;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
-import de.kpfamily.services.delivery.ExpressDeliveryService;
+import de.kpfamily.services.logistics.ExpressDeliveryService;
 
 public class DefaultPixiOrderRemarksPopulator implements Populator<OrderModel, OrderInfo>
 {
@@ -86,7 +86,8 @@ public class DefaultPixiOrderRemarksPopulator implements Populator<OrderModel, O
 
 	private Remark getDiscountsRemark(final OrderModel order) 
 	{
-		BigDecimal totalDiscounts = new BigDecimal(order.getTotalDiscounts().toString());
+		double discounts = order.getTotalDiscounts().doubleValue();
+		BigDecimal totalDiscounts = BigDecimal.valueOf(discounts);
 		
 		String discount = numberFormat.format(totalDiscounts);
 		
@@ -95,8 +96,11 @@ public class DefaultPixiOrderRemarksPopulator implements Populator<OrderModel, O
 
 	private Remark getShippingRemark(final OrderModel order) 
 	{
-		BigDecimal deliveryCost = new BigDecimal(order.getDeliveryCost().toString());
-		BigDecimal paymentCost =  new BigDecimal(order.getPaymentCost().toString());
+		double dc = order.getDeliveryCost().doubleValue();
+		double pc = order.getPaymentCost().doubleValue();
+
+		BigDecimal deliveryCost = BigDecimal.valueOf(dc);
+		BigDecimal paymentCost =  BigDecimal.valueOf(pc);
 		
 		String shipping = numberFormat.format(deliveryCost.add(paymentCost));
 		

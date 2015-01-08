@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.pixi.core.services.PixiProductService;
+import com.pixi.webservices.jaxb.adapter.BooleanAdapter;
 import com.pixi.webservices.jaxb.adapter.DateAdapter;
 import com.pixi.webservices.jaxb.adapter.StringAdapter;
 import com.pixi.webservices.jaxb.factory.MoxyJaxbContextFactoryImpl;
@@ -53,6 +54,7 @@ public class PixiwebservicesCatalogExportTest extends ServicelayerTransactionalT
 		
 		List<Class> typeAdapters = new ArrayList<Class>();
 		typeAdapters.add(DateAdapter.class);
+		typeAdapters.add(BooleanAdapter.class);
 		typeAdapters.add(StringAdapter.class);
 		
 		jaxbContextFactory = new MoxyJaxbContextFactoryImpl();
@@ -77,7 +79,9 @@ public class PixiwebservicesCatalogExportTest extends ServicelayerTransactionalT
 		sample.setCode("300020465");
 		sample.setCatalogVersion(modelService.getByExample(catalogVersion));
 		
-		ProductModel result = modelService.getByExample(sample);
+		ProductModel result = Mockito.spy(modelService.getByExample(sample));
+		
+		Mockito.stub(result.getName()).toReturn("Sonnensegel fur Kinderwagen - Marine");
 		
 		products.add(result);
 		
@@ -95,7 +99,7 @@ public class PixiwebservicesCatalogExportTest extends ServicelayerTransactionalT
 		
 		//catalogVersionService.setSessionCatalogVersion("apparelProductCatalog", "Online");
 		
-		//importCsv("/pixiwebservices/test/testProductEnvironment.csv", "windows-1252");
+		importCsv("/pixiwebservices/test/testProductEnvironment.csv", "windows-1252");
 	}
 	
 	private void printXML(Object obj) throws JAXBException
