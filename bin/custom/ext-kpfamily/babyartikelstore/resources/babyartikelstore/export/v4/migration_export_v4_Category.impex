@@ -28,8 +28,6 @@ insert KPCategory;pk;code[unique=true,allownull=true];detail(catalogVersion(cata
 
 
 # ---- Import script -----------------------------------------------------------
-"#% impex.setTargetFile( ""Category.csv"" );"
 insert Category;&categoryPK;code[unique=true,allownull=true];detail(catalogVersion(catalog(id),version),code);description[lang=de];description[lang=en];owner(&categoryPK);name[lang=de];name[lang=en];pageTitle[lang=de];pageTitle[lang=en];showOnCategoriesPage[allownull=true];url[unique=true]
-"#% impex.exportItems( ""Category"" , false );"
-
+"#% impex.includeExternalDataMedia(""Category.csv"", ""UTF-8"", ';', 1, -1);"
 ---- ---------------------------------------------------------------------- ----
