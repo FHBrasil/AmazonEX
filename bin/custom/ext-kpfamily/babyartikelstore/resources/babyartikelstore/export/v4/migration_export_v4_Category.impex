@@ -21,13 +21,22 @@
 # ------------------------------------------------------------------------------
 #
 # ---- Export script -----------------------------------------------------------
-# ---- Extension: category ---- Type: Category ----
-"#% impex.setTargetFile( ""Category.csv"" );"
-insert KPCategory;pk;code[unique=true,allownull=true];detail(catalogVersion(catalog(id),version),code);description[lang=de];description[lang=en];owner(pk);name[lang=de];name[lang=en];pageTitle[lang=de];pageTitle[lang=en];showOnCategoriesPage[allownull=true];url[unique=true]
-"#% impex.exportItems( ""KPCategory"" , false );"
+$catalog=babyartikel;
+$version=Staged;
+"#% impex.setTargetFile(""Category.csv"");"
+insert KPCategory;&categoryPK;code[unique=true,allownull=true];detail(catalogVersion(catalog(id),version),code);description[lang=de];description[lang=en];owner(&categoryPK);name[lang=de];name[lang=en]
+"#% impex.exportItems(""SELECT {c:pk} FROM {Category AS c JOIN CatalogVersion as cv ON {c:catalogVersion} = {cv:pk} JOIN Catalog as ct ON {ct:pk} = {cv:catalog} } WHERE {ct:id} = '$catalog' AND {cv:version} = '$version'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# 
+"#% impex.setTargetFile(""CategoryCategoryRelation.csv"");"
+insert CategoryCategoryRelation;source(code);target(code)
+"#% impex.exportItems(""SELECT {ccr:pk} FROM {CategoryCategoryRelation AS ccr JOIN Category AS c ON {c:pk} = {ccr:source} JOIN CatalogVersion as cv ON {c:catalogVersion} = {cv:pk} JOIN Catalog as ct ON {ct:pk} = {cv:catalog} } WHERE {ct:id} = '$catalog' AND {cv:version} = '$version'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# ---- -------------------------------------------------------------------------
 
 
 # ---- Import script -----------------------------------------------------------
-insert Category;&categoryPK;code[unique=true,allownull=true];detail(catalogVersion(catalog(id),version),code);description[lang=de];description[lang=en];owner(&categoryPK);name[lang=de];name[lang=en];pageTitle[lang=de];pageTitle[lang=en];showOnCategoriesPage[allownull=true];url[unique=true]
+insert Category;&categoryPK;code[unique=true,allownull=true];detail(catalogVersion(catalog(id),version),code);description[lang=de];description[lang=en];owner(&categoryPK);name[lang=de];name[lang=en]
 "#% impex.includeExternalDataMedia(""Category.csv"", ""UTF-8"", ';', 1, -1);"
----- ---------------------------------------------------------------------- ----
+# 
+insert CategoryCategoryRelation;source(code);target(code)
+"#% impex.includeExternalDataMedia(""CategoryCategoryRelation.csv"", ""UTF-8"", ';', 1, -1);"
+# ---- ---------------------------------------------------------------------- --
