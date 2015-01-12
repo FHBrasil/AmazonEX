@@ -10,11 +10,26 @@
 #
 # Add the $catalogVersion variable on the empty space in the header
 
-$catalog=babyartikel
-$version=Staged
 
-# ---- Extension: kpfamilydata ---- Type: KPProduct ----
-"#% impex.setTargetFile( ""Product.csv"" );"
-insert_update KPProduct;code[unique=true];name[lang=de];$catalogVersion;approvalStatus(code);description[lang=de];shortDescription[lang=de];ean;unit(code)[default='pieces']
-"#% impex.exportItems( ""SELECT {p:pk} FROM {KPProduct as p}, {CatalogVersion as cv}, {Catalog as c} WHERE {p:catalogVersion}={cv:pk} AND {c:id}='$catalog' AND {cv:version}='$version'"", Collections.EMPTY_MAP, Collections.singletonList( Item.class ), true, true, -1, -1  );"
+# ---- Export Script -----------------------------------------------------------
+$catalog=babyartikel;
+$version=Staged;
+# 
+"#% impex.setTargetFile(""Product.csv"");"
+insert KPProduct;code[unique=true];name[lang=de];;approvalStatus(code);description[lang=de];shortDescription[lang=de];ean;unit(code)[default='pieces'];length;width;height;weight
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct as p}, {CatalogVersion as cv}, {Catalog as c} WHERE {p:catalogVersion}={cv:pk} AND {c:id} = '$catalog' AND {cv:version} = '$version'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# 
+"#% impex.setTargetFile(""CategoryProductRelation.csv"");"
+insert CategoryProductRelation;source(code);target(code)
+"#% impex.exportItems(""SELECT {cpr:pk} FROM {KPProduct as p}, {CatalogVersion as cv}, {Catalog as c}, {CategoryProductRelation as cpr}, {Category as ca} WHERE {p:catalogVersion} = {cv:pk} AND {c:id} = '$catalog' AND {cv:version} = '$version' AND {cpr:target} = {p:pk} AND {cpr:source} = {ca:pk} AND {ca:catalogVersion} = {cv:pk}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# ---- -------------------------------------------------------------------------
+
+# ---- Import Script -----------------------------------------------------------
+$catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
+insert Product;code[unique=true];name[lang=de];$catalogVersion;approvalStatus(code);description[lang=de];shortDescription[lang=de];ean;unit(code)[default='pieces'];;;;
+"#% impex.includeExternalDataMedia(""Product.csv"" , ""UTF-8"", ';',  1 , -1);"
+# 
+insert CategoryProductRelation;source(code);target(code)
+"#% impex.includeExternalDataMedia(""CategoryProductRelation.csv"", ""UTF-8"", ';', 1 , -1);"
+# ---- -------------------------------------------------------------------------
 
