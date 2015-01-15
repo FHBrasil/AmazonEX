@@ -1,4 +1,4 @@
-package com.pixi.jalo;
+package com.pixi.webservices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +36,10 @@ import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.site.BaseSiteService;
 
 @IntegrationTest
-//@Ignore
-public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTest
+@Ignore
+public class ExportOrdersControllerTest extends ServicelayerTransactionalTest
 {
-	private static final Logger LOG = Logger.getLogger(PixiwebservicesOrderExportTest.class.getName());
-	
-	//private final ExportOrdersController controller = Mockito.spy(new ExportOrdersController());
+	private static final Logger LOG = Logger.getLogger(ExportOrdersControllerTest.class.getName());
 	
 	@Resource
 	private Converter<OrderModel, Order> pixiOrderConverter;
@@ -139,6 +137,7 @@ public class PixiwebservicesOrderExportTest extends ServicelayerTransactionalTes
 		
 		printXML(wsOrder);
 		
+		//TODO testar direito
 		Assert.assertNotNull("retorno nulo", wsOrder);
 	}
 }

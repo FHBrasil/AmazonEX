@@ -87,7 +87,7 @@
 						<persistence type="property"/>
 						<modifiers />
 					</attribute>
-					<attribute qualifier="weight" type="double">
+					<!-- <attribute qualifier="weight" type="double">
 						<description>Weight of the product, this attribute is dynamic to make it easier 
 						to get the value from the classification system</description>
 				    	<persistence type="dynamic"/>
@@ -110,7 +110,8 @@
 						to get the value from the classification system</description>
 				    	<persistence type="dynamic"/>
 				    	<modifiers write="false"/>
-				  	</attribute>
+				  	</attribute> -->
+				  	
 					<!-- <attribute qualifier="height" type="double">
 						<persistence type="property"/>
 						<modifiers />

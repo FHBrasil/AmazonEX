@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.Ignore;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,13 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pixi.core.services.PixiProductService;
 import com.pixi.webservices.controller.AbstractPixiController;
-import com.pixi.webservices.jaxb.product.export.Article;
 import com.pixi.webservices.jaxb.product.export.BMECAT;
 
-import de.hybris.platform.catalog.model.CatalogModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
-import de.hybris.platform.site.BaseSiteService;
 
 @Controller
 public class ExportProductsController extends AbstractPixiController
@@ -31,15 +29,12 @@ public class ExportProductsController extends AbstractPixiController
 	@Resource
 	private Converter<List<ProductModel>, BMECAT> pixiBMEcatConverter;
 	
-	@Resource
-	private BaseSiteService siteService;
-	
 	@RequestMapping(method = RequestMethod.GET, produces = "text/xml", params="action=" + ACTION)
 	public @ResponseBody BMECAT handle(@RequestParam final String onlynew, @RequestParam final String session)
 	{
-		siteService.setCurrentBaseSite("babyartikel", true);
+		getSiteService().setCurrentBaseSite("babyartikel", true);
 		
-		List<ProductModel> products = pixiProductService.findProductsToExport();
+		List<ProductModel> products = pixiProductService.findProductsToExport(null);
 		
 		BMECAT bmeCat = pixiBMEcatConverter.convert(products);
 		

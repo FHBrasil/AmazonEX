@@ -31,7 +31,8 @@ public class DefaultPixiBMEcatProductDetailsPopulator implements Populator<Produ
 		
 		if(source instanceof BabyartikelProductModel)
 		{
-			double weight = ((BabyartikelProductModel) source).getWeight();
+			//TODO integrar peso
+			double weight = 0;//((BabyartikelProductModel) source).getWeight();
 			details.setWEIGHT(BigDecimal.valueOf(weight));
 		}
 		
