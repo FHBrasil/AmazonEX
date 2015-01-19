@@ -1,5 +1,7 @@
 package de.kpfamily.core.translators;
 
+import com.google.common.base.Strings;
+
 import de.hybris.platform.core.Registry;
 import de.hybris.platform.core.model.c2l.CountryModel;
 import de.hybris.platform.impex.jalo.translators.AbstractValueTranslator;
@@ -13,13 +15,12 @@ import de.hybris.platform.servicelayer.i18n.CommonI18NService;
  * target system.
  * 
  * @author jfelipe
- * @version 1.0.0
  */
 public class KPCountryTypeTranslator extends AbstractValueTranslator {
 
 	
 	/**
-	 * Return the respective country as it is.
+	 * Return the respective country as it is, used for exporting data.
 	 * 
 	 * @param input country exported
 	 * @return value of input parameter as it is
@@ -40,15 +41,15 @@ public class KPCountryTypeTranslator extends AbstractValueTranslator {
 	 * @param item - not used
 	 * @return country object equivalent to given input parameter
 	 * 
-	 *  @author jfelipe
+	 * @author jfelipe
 	 */
 	@Override
 	public Object importValue(String input, Item item)
 			throws JaloInvalidParameterException {
 		final CommonI18NService commonI18NService = (CommonI18NService)
 				Registry.getApplicationContext().getBean("commonI18NService");
-		CountryModel country = commonI18NService.getCountry(input
-				.toUpperCase());
+		input = Strings.isNullOrEmpty(input) ? "de" : input; 
+		CountryModel country = commonI18NService.getCountry(input.toUpperCase());
 		return country.getPk();
 	}
 
