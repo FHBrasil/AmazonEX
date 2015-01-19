@@ -77,6 +77,5 @@ public class ConfirmOrderControllerTest
 		Assert.assertEquals("Unexpected sessionID", "sessionID", result.getSessionID());
 		Assert.assertEquals("Unexpected status", "ERROR", result.getSTATUS());
 		Assert.assertEquals("Internal Error while updating exported status", result.getDESCRIPTION());
-		Assert.assertEquals("Wrong order export status", ExportStatus.NOTEXPORTED, order.getExportStatus());
 	}
 }

@@ -37,7 +37,7 @@ public class ResetExportStatusController extends AbstractPixiController
 		
 		if(success)
 		{
-			pixiProductService.releaseProductsFromSession(session);
+			getPixiProductService().releaseProductsFromSession(session);
 		}
 		
 		return getResponse(session, exportDate, success);
@@ -47,10 +47,10 @@ public class ResetExportStatusController extends AbstractPixiController
 	{
 		if(exportDate == null)
 		{
-			return pixiProductService.findAllProductsByStore("babyartikel");
+			return getPixiProductService().findAllProductsByStore("babyartikel");
 		}
 		
-		return pixiProductService.findExportedProductsBySessionID(session);
+		return getPixiProductService().findExportedProductsBySessionID(session);
 	}
 
 	private boolean setExportDate(final List<String> products, final Date exportDate, final Date confirmationDate) 
@@ -64,7 +64,7 @@ public class ResetExportStatusController extends AbstractPixiController
 		
 		while(iterator.hasNext())
 		{
-			pixiProductService.saveExportConfirmationDate(iterator.next(), exportDate, confirmationDate);
+			getPixiProductService().saveExportConfirmationDate(iterator.next(), exportDate, confirmationDate);
 		}
 		
 		return true;
@@ -101,5 +101,13 @@ public class ResetExportStatusController extends AbstractPixiController
 		response.setSTATUS("SUCCESS");
 		
 		return response;
+	}
+
+	/**
+	 * @return the pixiProductService
+	 */
+	public PixiProductService getPixiProductService() 
+	{
+		return pixiProductService;
 	}
 }

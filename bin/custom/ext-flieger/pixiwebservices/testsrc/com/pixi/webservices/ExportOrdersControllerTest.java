@@ -11,7 +11,6 @@ import javax.xml.bind.Marshaller;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -36,7 +35,6 @@ import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.site.BaseSiteService;
 
 @IntegrationTest
-@Ignore
 public class ExportOrdersControllerTest extends ServicelayerTransactionalTest
 {
 	private static final Logger LOG = Logger.getLogger(ExportOrdersControllerTest.class.getName());
@@ -104,15 +102,6 @@ public class ExportOrdersControllerTest extends ServicelayerTransactionalTest
 
 	private void createTestEnvironment() throws ImpExException 
 	{
-//		final BaseSiteModel baseSiteForUID = baseSiteService.getBaseSiteForUID("babyartikel");
-//		baseSiteService.setCurrentBaseSite(baseSiteForUID, false);
-//		
-//		userService.setCurrentUser(userService.getAnonymousUser());
-//		commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("de"));
-//		commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("EUR"));
-		
-		//catalogVersionService.setSessionCatalogVersion("apparelProductCatalog", "Online");
-		
 		importCsv("/pixiwebservices/test/testOrderEnvironment.csv", "windows-1252");
 	}
 
@@ -128,7 +117,6 @@ public class ExportOrdersControllerTest extends ServicelayerTransactionalTest
 	public void testPixiwebservices() throws JAXBException
 	{
 		LOG.info("testando o service de pedidos");
-		//Order order = controller.handle("fake_session");
 		
 		List<OrderModel> orders = pixiOrderService.findNotExportedOrders();
 		

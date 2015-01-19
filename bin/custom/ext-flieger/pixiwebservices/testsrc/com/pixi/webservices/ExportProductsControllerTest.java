@@ -11,7 +11,6 @@ import javax.xml.bind.Marshaller;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -32,7 +31,6 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.model.ModelService;
 
 @IntegrationTest
-@Ignore
 public class ExportProductsControllerTest extends ServicelayerTransactionalTest 
 {
 	private static final Logger LOG = Logger.getLogger(ExportProductsControllerTest.class.getName());
@@ -94,15 +92,6 @@ public class ExportProductsControllerTest extends ServicelayerTransactionalTest
 	
 	private void createTestEnvironment() throws ImpExException 
 	{
-//		final BaseSiteModel baseSiteForUID = baseSiteService.getBaseSiteForUID("babyartikel");
-//		baseSiteService.setCurrentBaseSite(baseSiteForUID, false);
-//		
-//		userService.setCurrentUser(userService.getAnonymousUser());
-//		commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("de"));
-//		commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("EUR"));
-		
-		//catalogVersionService.setSessionCatalogVersion("apparelProductCatalog", "Online");
-		
 		importCsv("/pixiwebservices/test/testProductEnvironment.csv", "windows-1252");
 	}
 	
