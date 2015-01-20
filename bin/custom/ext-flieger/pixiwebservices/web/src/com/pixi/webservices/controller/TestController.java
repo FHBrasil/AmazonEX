@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,13 +47,77 @@ import com.pixi.webservices.jaxb.product.export.Header;
 import com.pixi.webservices.jaxb.product.export.Mime;
 import com.pixi.webservices.jaxb.product.export.Supplier;
 
+import de.hybris.platform.basecommerce.model.site.BaseSiteModel;
+import de.hybris.platform.catalog.CatalogVersionService;
+import de.hybris.platform.catalog.model.CatalogModel;
+import de.hybris.platform.catalog.model.CatalogVersionModel;
+import de.hybris.platform.site.BaseSiteService;
+import de.hybris.platform.store.BaseStoreModel;
+import de.hybris.platform.store.services.BaseStoreService;
+
 
 @Controller
-public class TestController
+public class TestController extends AbstractPixiSecuredController
 {
+	private static final String ACTION = "teste_site";
+	
 	@Resource
 	private JaxbContextFactory jaxbContextFactory;
+	
+	@Resource
+	private BaseStoreService baseStoreService;
+	
+	@Resource
+	private BaseSiteService baseSiteService;
+	
+	@Resource
+	private CatalogVersionService catalogVersionService;
 
+	@RequestMapping(method = RequestMethod.GET, produces = "text/xml", params="action=" + ACTION)
+	public @ResponseBody SampleResponse testeCurrentSite(@RequestParam final String action)
+	{
+		BaseStoreModel currentBaseStore = baseStoreService.getCurrentBaseStore();
+		
+		System.out.println("store: " + (currentBaseStore != null ? currentBaseStore.getUid() : null));
+		
+		BaseSiteModel currentBaseSite = baseSiteService.getCurrentBaseSite();
+		
+		System.out.println("site: " + (currentBaseSite != null ? currentBaseSite.getUid() : null));
+		
+		if(currentBaseSite != null) 
+		{
+			List<CatalogModel> productCatalogs = baseSiteService.getProductCatalogs(currentBaseSite);
+			
+			if(CollectionUtils.isNotEmpty(productCatalogs)) 
+			{
+				for(CatalogModel c : productCatalogs)
+				{
+					System.out.println("Catalog: " + c.getId());
+				}
+			}
+			else
+			{
+				System.out.println("Catalog: vazio");
+			}
+		}
+		
+		Collection<CatalogVersionModel> sessionCatalogVersions = catalogVersionService.getSessionCatalogVersions();
+		
+		if(CollectionUtils.isNotEmpty(sessionCatalogVersions))
+		{
+			for(CatalogVersionModel c : sessionCatalogVersions)
+			{
+				System.out.println("Version: " + c.getCatalog().getId() + " " + c.getVersion());
+			}
+		}
+		else
+		{
+			System.out.println("Version: vazio");
+		}
+		
+		return getResponse(action);
+	}
+	
 	@RequestMapping(value = "/import", method = RequestMethod.GET, produces = "text/xml")
 	@ResponseBody
 	public SampleResponse testXMLParam(@RequestParam final String action, @RequestParam final String data)

@@ -61,7 +61,7 @@ public class ResetExportStatusControllerTest
 		productsByStore.add("byStore_3");
 		productsByStore.add("byStore_4");
 		productsByStore.add("byStore_5");
-		Mockito.when(pixiProductService.findAllProductsByStore("babyartikel")).thenReturn(productsByStore);
+		Mockito.when(pixiProductService.findAllProducts()).thenReturn(productsByStore);
 		
 		ImportProductStockResponse result = controller.handle(0 , "sessionID");
 
@@ -76,7 +76,7 @@ public class ResetExportStatusControllerTest
 		//
 		InOrder reserByStoreOrder = Mockito.inOrder(pixiProductService);
 		
-		reserByStoreOrder.verify(pixiProductService).findAllProductsByStore("babyartikel");
+		reserByStoreOrder.verify(pixiProductService).findAllProducts();
 		
 		reserByStoreOrder.verify(pixiProductService).saveExportConfirmationDate("byStore_1", null, null);
 		reserByStoreOrder.verify(pixiProductService).saveExportConfirmationDate("byStore_2", null, null);
@@ -158,7 +158,7 @@ public class ResetExportStatusControllerTest
 		//
 		InOrder reserByStoreOrder = Mockito.inOrder(pixiProductService);
 		
-		reserByStoreOrder.verify(pixiProductService).findAllProductsByStore("babyartikel");
+		reserByStoreOrder.verify(pixiProductService).findAllProducts();
 		
 		reserByStoreOrder.verify(pixiProductService, Mockito.never()).saveExportConfirmationDate(Mockito.anyString(), Mockito.any(Date.class), Mockito.any(Date.class));
 		reserByStoreOrder.verify(pixiProductService, Mockito.never()).releaseProductsFromSession(Mockito.anyString());

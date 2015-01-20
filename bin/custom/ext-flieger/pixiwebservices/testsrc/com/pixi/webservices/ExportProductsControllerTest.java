@@ -87,7 +87,7 @@ public class ExportProductsControllerTest extends ServicelayerTransactionalTest
 		
 		products.add(result);
 		
-		Mockito.when(pixiProductService.findProductsToExport(cv)).thenReturn(products);
+		Mockito.when(pixiProductService.findProductsToExport()).thenReturn(products);
 	}
 	
 	private void createTestEnvironment() throws ImpExException 
@@ -117,7 +117,7 @@ public class ExportProductsControllerTest extends ServicelayerTransactionalTest
 
 		CatalogVersionModel cv = modelService.getByExample(catalogVersion);
 		
-		List<ProductModel> products = pixiProductService.findProductsToExport(cv);
+		List<ProductModel> products = pixiProductService.findProductsToExport();
 		
 		BMECAT wsBmeCat = pixiBMEcatConverter.convert(products);
 		

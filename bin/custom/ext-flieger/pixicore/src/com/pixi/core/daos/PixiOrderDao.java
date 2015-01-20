@@ -5,6 +5,7 @@ package com.pixi.core.daos;
 
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.internal.dao.Dao;
+import de.hybris.platform.store.BaseStoreModel;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ import java.util.List;
  */
 public interface PixiOrderDao extends Dao
 {
-	List<OrderModel> findOrdersToExport();
+	List<OrderModel> findOrdersToExport(BaseStoreModel store);
 }

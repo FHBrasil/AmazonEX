@@ -12,10 +12,6 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
-	<login-config>
-		<auth-method>BASIC</auth-method>
-	</login-config>
-
 	<filter>
    		<filter-name>XSSFilter</filter-name>
 		<filter-class>de.hybris.platform.servicelayer.web.XSSFilter</filter-class>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pixi.webservices.dto.SampleResponse;
 
 @Controller
-public class InvallidActionController extends AbstractPixiController 
+public class InvallidActionController extends AbstractPixiController
 {
 	@RequestMapping(method = RequestMethod.GET, produces = "text/xml", params="action={*}")
 	@ResponseBody

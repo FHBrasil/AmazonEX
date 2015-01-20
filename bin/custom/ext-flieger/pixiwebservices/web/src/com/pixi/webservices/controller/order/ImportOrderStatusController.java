@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pixi.webservices.controller.AbstractPixiController;
+import com.pixi.webservices.controller.AbstractPixiSecuredController;
 import com.pixi.webservices.jaxb.orderstatus.request.ImportOrderStatusRequest;
 import com.pixi.webservices.jaxb.response.GlobalResponse;
 
@@ -17,7 +17,7 @@ import de.hybris.platform.core.model.order.OrderEntryModel;
 import de.hybris.platform.core.model.order.OrderModel;
 
 @Controller
-public class ImportOrderStatusController extends AbstractPixiController
+public class ImportOrderStatusController extends AbstractPixiSecuredController
 {
 	private static final String ACTION = "import_order_status";
 

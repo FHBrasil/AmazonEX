@@ -32,11 +32,14 @@ public final class PixiwebservicesConstants extends GeneratedPixiwebservicesCons
 	public static interface Pixi
 	{
 		String SHOP_ID = Config.getParameter("pixiwebservices.pixi.shop.id");
-		String USERNAME = Config.getParameter("pixiwebservices.pixi.username");
-		String PASSWORD = Config.getParameter("pixiwebservices.pixi.password");
+		String USERNAME = Config.getParameter("pixiwebservices.pixi.auth.username");
+		String PASSWORD = Config.getParameter("pixiwebservices.pixi.auth.password");
+		String SECRET = Config.getParameter("pixiwebservices.pixi.auth.secret");
 		String DATABASE = Config.getParameter("pixiwebservices.pixi.database");
 		String COMPANY = Config.getParameter("pixiwebservices.pixi.user.company");
 		String BATCHSIZE = Config.getParameter("pixiwebservices.pixi.catalog.export.batchsize");
+		String GUEST_ROLE = Config.getParameter("pixiwebservices.pixi.guest.role");
+		String PIXI_ROLE = Config.getParameter("pixiwebservices.pixi.auth.role");
 	}
 
 	public static interface Product

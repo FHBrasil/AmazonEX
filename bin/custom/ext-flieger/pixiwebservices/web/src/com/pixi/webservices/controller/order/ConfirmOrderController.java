@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pixi.webservices.controller.AbstractPixiController;
+import com.pixi.webservices.controller.AbstractPixiSecuredController;
 import com.pixi.webservices.jaxb.orderstatus.response.ImportOrderStatusResponse;
 
 import de.hybris.platform.commerceservices.customer.CustomerAccountService;
@@ -18,7 +18,7 @@ import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.store.BaseStoreModel;
 
 @Controller
-public class ConfirmOrderController extends AbstractPixiController
+public class ConfirmOrderController extends AbstractPixiSecuredController
 {
 	private static final String ACTION = "confirm_order";
 

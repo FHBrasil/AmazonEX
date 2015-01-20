@@ -18,7 +18,9 @@
      <requires-extension name="kpfamilyservices"/>
       <requires-extension name="kpfamilycore"/>
 	<requires-extension name="pixicore"/>
-	<requires-extension name="basecommerce"/>      
+	<requires-extension name="basecommerce"/>   
+	<!-- <requires-extension name="acceleratorcms"/>    -->
+	   
 
       <coremodule generated="true" manager="com.pixi.webservices.jalo.PixiwebservicesManager" packageroot="com.pixi.webservices"/>
 

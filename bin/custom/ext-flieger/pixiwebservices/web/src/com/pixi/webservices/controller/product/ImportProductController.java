@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pixi.webservices.controller.AbstractPixiController;
+import com.pixi.webservices.controller.AbstractPixiSecuredController;
 import com.pixi.webservices.jaxb.response.GlobalResponse;
 import com.pixi.webservices.jaxb.stock.request.ImportProductStockRequest;
 
@@ -29,7 +29,7 @@ import de.hybris.platform.stock.StockService;
 import de.hybris.platform.stock.model.StockLevelHistoryEntryModel;
 
 @Controller
-public class ImportProductController extends AbstractPixiController
+public class ImportProductController extends AbstractPixiSecuredController
 {
 	private static final String ACTION = "import_stock";
 

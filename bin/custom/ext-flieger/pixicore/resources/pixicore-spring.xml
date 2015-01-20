@@ -32,6 +32,10 @@
 	<bean id="defaultPixiProductService" class="com.pixi.core.services.impl.DefaultPixiProductService" />
 	
 	<!-- Pixi Daos definition -->
-	<bean id="defaultPixiOrderDao" class="com.pixi.core.daos.impl.DefaultPixiOrderDao" parent="abstractItemDao" />
-	<bean id="defaultPixiProductDao" class="com.pixi.core.daos.impl.DefaultPixiProductDao" parent="abstractItemDao" />
+	<bean id="defaultPixiOrderDao" class="com.pixi.core.daos.impl.DefaultPixiOrderDao">
+		<constructor-arg value="Order"/>
+	</bean>
+	<bean id="defaultPixiProductDao" class="com.pixi.core.daos.impl.DefaultPixiProductDao">
+		<constructor-arg value="Product"/>
+	</bean>
 </beans>

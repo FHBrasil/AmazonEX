@@ -50,14 +50,16 @@ public class DefaultPixiProductService implements PixiProductService
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see com.pixi.core.services.PixiProductService#saveExportConfirmationDate(java.lang.String, java.util.Date,
 	 * java.util.Date)
 	 */
 	@Override
 	public void saveExportConfirmationDate(final String productCode, final Date exportDate, final Date confirmationDate)
 	{
-		final List<ProductModel> products = productDao.findProductsByCode(productCode);
+		final CatalogVersionModel stagedVersion = getStagedCatalogVersion();
+
+		final List<ProductModel> products = productDao.findProductsByCode(stagedVersion, productCode);
 
 		if (CollectionUtils.isEmpty(products))
 		{
@@ -77,19 +79,19 @@ public class DefaultPixiProductService implements PixiProductService
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.pixi.core.services.PixiProductService#findProductsToExport(de.hybris.platform.catalog.model.CatalogVersionModel
-	 * )
+	 * @see com.pixi.core.services.PixiProductService#findProductsToExport()
 	 */
 	@Override
-	public List<ProductModel> findProductsToExport(final CatalogVersionModel catalogVersion)
+	public List<ProductModel> findProductsToExport()
 	{
-		return pixiProductDao.findProductsToExport(catalogVersion);
+		final CatalogVersionModel stagedVersion = getStagedCatalogVersion();
+
+		return pixiProductDao.findProductsToExport(stagedVersion);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.pixi.core.services.PixiProductService#findExportedProductsBySessionID(java.lang.String)
 	 */
 	@Override
@@ -102,23 +104,20 @@ public class DefaultPixiProductService implements PixiProductService
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see com.pixi.core.services.PixiProductService#getAllProductsCode(java.lang.String)
+	 * 
+	 * @see com.pixi.core.services.PixiProductService#getAllProductsCode()
 	 */
 	@Override
-	public List<String> findAllProductsByStore(final String shopId)
+	public List<String> findAllProducts()
 	{
-		final BaseSiteModel baseSite = baseSiteService.getBaseSiteForUID(shopId);
-		final List<CatalogModel> productCatalogs = baseSiteService.getProductCatalogs(baseSite);
-		final CatalogModel catalog = productCatalogs.iterator().next();
-		final CatalogVersionModel stagedVersion = catalogVersionService.getCatalogVersion(catalog.getId(), "Staged");
+		final CatalogVersionModel stagedVersion = getStagedCatalogVersion();
 
 		return pixiProductDao.getAllProductsCode(stagedVersion);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see com.pixi.core.services.PixiProductService#saveSyncRecord(de.hybris.platform.core.model.product.ProductModel,
 	 * java.lang.String, java.util.Date)
 	 */
@@ -141,7 +140,7 @@ public class DefaultPixiProductService implements PixiProductService
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see com.pixi.core.services.PixiProductService#releaseProductsFromSession(java.lang.String)
 	 */
 	@Override
@@ -164,5 +163,15 @@ public class DefaultPixiProductService implements PixiProductService
 
 			modelService.save(syncRecord);
 		}
+	}
+
+	private CatalogVersionModel getStagedCatalogVersion()
+	{
+		final BaseSiteModel baseSite = baseSiteService.getCurrentBaseSite();
+		final List<CatalogModel> productCatalogs = baseSiteService.getProductCatalogs(baseSite);
+		final CatalogModel catalog = productCatalogs.iterator().next();
+		final CatalogVersionModel stagedVersion = catalogVersionService.getCatalogVersion(catalog.getId(), "Staged");
+
+		return stagedVersion;
 	}
 }

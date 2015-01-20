@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pixi.core.services.PixiProductService;
-import com.pixi.webservices.controller.AbstractPixiController;
+import com.pixi.webservices.controller.AbstractPixiSecuredController;
 import com.pixi.webservices.jaxb.stock.response.ImportProductStockResponse;
 
 @Controller
-public class ResetExportStatusController extends AbstractPixiController
+public class ResetExportStatusController extends AbstractPixiSecuredController
 {
 	private static final String ACTION = "reset_export_status";
 
@@ -47,7 +47,7 @@ public class ResetExportStatusController extends AbstractPixiController
 	{
 		if(exportDate == null)
 		{
-			return getPixiProductService().findAllProductsByStore("babyartikel");
+			return getPixiProductService().findAllProducts();
 		}
 		
 		return getPixiProductService().findExportedProductsBySessionID(session);

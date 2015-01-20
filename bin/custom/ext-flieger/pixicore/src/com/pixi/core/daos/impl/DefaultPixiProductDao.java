@@ -5,7 +5,7 @@ package com.pixi.core.daos.impl;
 
 import de.hybris.platform.catalog.model.CatalogVersionModel;
 import de.hybris.platform.core.model.product.ProductModel;
-import de.hybris.platform.servicelayer.internal.dao.AbstractItemDao;
+import de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
 
@@ -24,11 +24,19 @@ import de.kpfamily.core.model.BabyartikelProductModel;
  * @author franthescollymaneira
  *
  */
-public class DefaultPixiProductDao extends AbstractItemDao implements PixiProductDao
+public class DefaultPixiProductDao extends DefaultGenericDao<ProductModel> implements PixiProductDao
 {
+	/**
+	 * @param typecode
+	 */
+	public DefaultPixiProductDao(final String typecode)
+	{
+		super(typecode);
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.pixi.core.daos.PixiProductDao#findProductsToExport(de.hybris.platform.catalog.model.CatalogVersionModel)
 	 */
 	@Override
@@ -46,14 +54,14 @@ public class DefaultPixiProductDao extends AbstractItemDao implements PixiProduc
 
 		searchQuery.addQueryParameter("version", catalogVersion);
 
-		final SearchResult<ProductModel> search = search(searchQuery);
+		final SearchResult<ProductModel> search = getFlexibleSearchService().search(searchQuery);
 
 		return search.getResult();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.pixi.core.daos.PixiProductDao#getAllProductsCode(de.hybris.platform.catalog.model.CatalogVersionModel)
 	 */
 	@Override
@@ -64,7 +72,7 @@ public class DefaultPixiProductDao extends AbstractItemDao implements PixiProduc
 		final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query);
 		searchQuery.addQueryParameter("version", catalogVersion);
 
-		final SearchResult<String> search = search(searchQuery);
+		final SearchResult<String> search = getFlexibleSearchService().search(searchQuery);
 
 		return search.getResult();
 	}
@@ -77,14 +85,14 @@ public class DefaultPixiProductDao extends AbstractItemDao implements PixiProduc
 		final Map<String, Object> params = new HashMap<String, Object>();
 		params.put("session", sessionID);
 
-		final SearchResult<String> result = search(query, params);
+		final SearchResult<String> result = getFlexibleSearchService().search(query, params);
 
 		return result.getResult();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see com.pixi.core.daos.PixiProductDao#findSyncRecord(java.lang.String)
 	 */
 	@Override
@@ -95,6 +103,6 @@ public class DefaultPixiProductDao extends AbstractItemDao implements PixiProduc
 		final FlexibleSearchQuery fs = new FlexibleSearchQuery(query);
 		fs.addQueryParameter("code", productCode);
 
-		return searchUnique(fs);
+		return getFlexibleSearchService().searchUnique(fs);
 	}
 }
