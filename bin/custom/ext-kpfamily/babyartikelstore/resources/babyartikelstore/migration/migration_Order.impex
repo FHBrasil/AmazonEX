@@ -21,6 +21,10 @@
 insert Order;&orderPK;code[unique=true];currency(isocode)[allownull=true];date[dateformat=dd.MM.yyyy hh:mm:ss];deliveryAddress(&addressPK);deliveryCost;exportStatus(code);paymentAddress(&addressPK);paymentCost;status(code);statusInfo;subtotal;totalDiscounts;totalPrice;totalTax;user(uid)[allownull=true];
 "#% impex.exportItems(""SELECT DISTINCT {o:pk} FROM {Order AS o JOIN KPCustomer AS c ON {c:pk} = {o:user} JOIN Address AS a ON {a:owner} = {c:pk} AND ({a:pk} = {o:paymentAddress} OR {a:pk} = {o:deliveryAddress}) JOIN OrderStatus AS os ON {os:pk} = {o:status} JOIN PrincipalGroupRelation as pgr ON {pgr.source} = {c.pk} JOIN PrincipalGroup as ug ON {ug.pk} = {pgr.target} } WHERE {c:password} NOT LIKE '%anonymousPassword%' AND {c:uid} LIKE '%@%' AND {ug:uid} <> 'anonymousgroup' AND {os:code} != 'CREATED' AND {a:duplicate} = true"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # 
+"#% impex.setTargetFile(""OrderEntry.csv"");"
+insert OrderEntry;basePrice;calculated;discountValues;entryNumber;giveAway;info;order(code);product(code);quantity;rejected;totalPrice;unit(code);
+"#% impex.exportItems(""SELECT DISTINCT {oe:pk} FROM {OrderEntry AS oe JOIN Order AS o ON {o:pk} = {oe:order} JOIN KPCustomer AS c ON {c:pk} = {o:user} JOIN Address AS a ON {a:owner} = {c:pk} AND ({a:pk} = {o:paymentAddress} OR {a:pk} = {o:deliveryAddress}) JOIN OrderStatus AS os ON {os:pk} = {o:status} JOIN PrincipalGroupRelation as pgr ON {pgr.source} = {c.pk} JOIN PrincipalGroup as ug ON {ug.pk} = {pgr.target} } WHERE {c:password} NOT LIKE '%anonymousPassword%' AND {c:uid} LIKE '%@%' AND {ug:uid} <> 'anonymousgroup' AND {os:code} != 'CREATED' AND {a:duplicate} = true"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+#
 "#% impex.setTargetFile(""Address.csv"");"
 insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country(isocode);dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(Customer.uid);phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;streetname;streetnumber;town;unloadingAddress[allownull=true];url;
 "#% impex.exportItems(""SELECT {a:pk} FROM {Order AS o JOIN KPCustomer AS c ON {c:pk} = {o:user} JOIN Address AS a ON {a:owner} = {c:pk} AND ({a:pk} = {o:paymentAddress} OR {a:pk} = {o:deliveryAddress}) JOIN OrderStatus AS os ON {os:pk} = {o:status} JOIN PrincipalGroupRelation as pgr ON {pgr.source} = {c.pk} JOIN PrincipalGroup as ug ON {ug.pk} = {pgr.target} } WHERE {c:password} NOT LIKE '%anonymousPassword%' AND {c:uid} LIKE '%@%' AND {ug:uid} <> 'anonymousgroup' AND {os:code} != 'CREATED' AND {a:duplicate} = true"", Collections.EMPTY_MAP, Collections.singletonList(Address.class), true, true, -1, -1);"
@@ -28,9 +32,13 @@ insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cel
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
-insert Order;&orderPK;code[unique=true];currency(isocode)[allownull=true];date[dateformat=dd.MM.yyyy hh:mm:ss];deliveryAddress(&addressPK);deliveryCost;exportStatus(code);paymentAddress(&addressPK);paymentCost;status(code);statusInfo;subtotal;totalDiscounts;totalPrice;totalTax;user(uid)[allownull=true];
+$catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Online'])[unique=true,default=babyartikelProductCatalog:Online]
+insert_update Order;&orderPK;code[unique=true];currency(isocode)[allownull=true];date[dateformat=dd.MM.yyyy hh:mm:ss];deliveryAddress(&addressPK);deliveryCost;exportStatus(code);paymentAddress(&addressPK);paymentCost;status(code);statusInfo;subtotal;totalDiscounts;totalPrice;totalTax;user(uid)[allownull=true];
 "#% impex.includeExternalDataMedia(""Order.csv"", ""UTF-8"", ';', 1 , -1);"
-# 
+#
+insert OrderEntry;basePrice;calculated;discountValues;entryNumber;giveAway;info;order(code);product(code, $catalogVersion);quantity;rejected;totalPrice;unit(code);
+"#% impex.includeExternalDataMedia(""OrderEntry.csv"", ""UTF-8"", ';', 1, -1);"
+#  
 insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country[translator=de.kpfamily.core.translators.KPCountryTypeTranslator][default=de];dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate[default=true];email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(Customer.uid)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;streetname;streetnumber;town;unloadingAddress[allownull=true];url;shippingAddress[default=true]
 "#% impex.includeExternalDataMedia(""Address.csv"" , ""UTF-8"", ';',  1 , -1);"
 #-----------------------------------------------------------
