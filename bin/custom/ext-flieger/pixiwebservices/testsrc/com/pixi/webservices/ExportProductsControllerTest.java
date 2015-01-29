@@ -11,6 +11,7 @@ import javax.xml.bind.Marshaller;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -31,6 +32,7 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.model.ModelService;
 
 @IntegrationTest
+@Ignore
 public class ExportProductsControllerTest extends ServicelayerTransactionalTest 
 {
 	private static final Logger LOG = Logger.getLogger(ExportProductsControllerTest.class.getName());

@@ -1,9 +1,11 @@
 package com.pixi.webservices.controller.order;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,11 +35,30 @@ public class ExportOrdersController extends AbstractPixiSecuredController
 	{
 		List<OrderModel> orders = pixiOrderService.findNotExportedOrders();
 		
-		//TODO falta tratamento de exception
+		if(CollectionUtils.isEmpty(orders))
+		{
+			return null;
+		}
+
+		//we export only one order for each PIXI request
+		Iterator<OrderModel> iterator = orders.iterator();
+		while(iterator.hasNext())
+		{
+			OrderModel order = iterator.next();
+
+			try 
+			{
+				LOG.error("Exporting order: " + order.getCode());
+				
+				//converting the Hybris Order model to a webservice bean
+				return pixiOrderConverter.convert(order);
+			} 
+			catch (Exception e) 
+			{
+				LOG.error("Error exporting order: " + order.getCode(), e);
+			}
+		}
 		
-		OrderModel orderToExport = orders.iterator().next();
-		Order wsOrder = pixiOrderConverter.convert(orderToExport);
-	
-		return wsOrder;
+		return null;
 	}
 }

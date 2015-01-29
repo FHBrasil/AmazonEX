@@ -9,7 +9,7 @@ import de.hybris.platform.catalog.model.CatalogModel;
 import de.hybris.platform.catalog.model.CatalogVersionModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.product.daos.ProductDao;
-import de.hybris.platform.servicelayer.model.ModelService;
+import de.hybris.platform.servicelayer.internal.service.AbstractBusinessService;
 import de.hybris.platform.site.BaseSiteService;
 
 import java.util.Collection;
@@ -31,13 +31,10 @@ import com.pixi.core.services.PixiProductService;
  * @author franthescollymaneira
  *
  */
-public class DefaultPixiProductService implements PixiProductService
+public class DefaultPixiProductService extends AbstractBusinessService implements PixiProductService
 {
 	@Resource
 	private PixiProductDao pixiProductDao;
-
-	@Resource
-	private ModelService modelService;
 
 	@Resource
 	private ProductDao productDao;
@@ -128,14 +125,14 @@ public class DefaultPixiProductService implements PixiProductService
 
 		if (syncRecord == null)
 		{
-			syncRecord = modelService.create(PixiSyncRecordModel.class);
+			syncRecord = getModelService().create(PixiSyncRecordModel.class);
 			syncRecord.setProductCode(productCode);
 		}
 
 		syncRecord.setExportDate(exportDate);
 		syncRecord.setSessionID(sessionID);
 
-		modelService.save(syncRecord);
+		getModelService().save(syncRecord);
 	}
 
 	/*
@@ -161,7 +158,7 @@ public class DefaultPixiProductService implements PixiProductService
 			syncRecord = pixiProductDao.findSyncRecord(it.next());
 			syncRecord.setSessionID(null);
 
-			modelService.save(syncRecord);
+			getModelService().save(syncRecord);
 		}
 	}
 

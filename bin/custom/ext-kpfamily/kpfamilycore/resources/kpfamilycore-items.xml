@@ -34,19 +34,52 @@
 			<value code="YELLOW"/>
 		</enumtype>
 		<enumtype generate="true" code="ArticleState" autocreate="true">
-			<value code="current"/>
-			<value code="deprecated"/>
-			<value code="old"/>
+			<value code="CURRENT"/>
+			<value code="DEPRECATED"/>
+			<value code="OLD"/>
 		</enumtype>
 		<enumtype generate="true" code="ShippingMethod" autocreate="true">
-			<value code="warehouse"/>
-			<value code="dropshipping"/>
+			<value code="WAREHOUSE"/>
+			<value code="DROPSHIPPING"/>
+		</enumtype>
+		<enumtype code="OrderStatus" autocreate="false" generate="true" dynamic="true">
+			<value code="RETURNED"/>
+			<value code="CHARGEBACK"/>
+		</enumtype>
+		 <enumtype code="OrderEntryStatus" autocreate="false" generate="true" dynamic="false">
+			<value code="CHARGEBACK"/>
+			<value code="SHIPPED"/>
+			<value code="RETURNED"/>
+			<value code="AWAITING_PAYMENT"/>
+			<value code="AWAITING_SHIPPING"/>
+			<value code="PROCESSING"/>
+			<value code="NOT_AVAILABLE"/>
+			<value code="DIRECT_SHIPMENT"/>
+			<value code="DIRECT_SHIPMENT_PACKED"/>
+			<value code="EXCHANGE"/>
 		</enumtype>
 	</enumtypes>
 
 	<itemtypes>
-
-		<!-- Add your item definitions here -->
+		<typegroup name="Hybris">
+			 <itemtype code="AbstractOrderEntry" autocreate="false" generate="false">
+				<attributes>
+		            <attribute qualifier="status" type="OrderEntryStatus">
+						<modifiers />						
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="OrderEntryStatus" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="externalCode" type="java.lang.String" generate="false">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
 		<typegroup name="Babyartikel">
 			<itemtype code="BabyartikelProduct" extends="Product"
 			          autocreate="true" generate="true" 
@@ -256,5 +289,26 @@
 			</itemtype>
 		</typegroup>
 
+		<typegroup name="Processes">
+			<itemtype code="OrderEntryStatusProcess" extends="BusinessProcess"
+					autocreate="true" generate="true"
+					jaloclass="de.kpfamily.core.jalo.process.OrderEntryStatusProcess">
+					<description>It represents the business process that updates an order entry.</description>
+					<attributes>
+						<attribute qualifier="orderEntry" type="OrderEntry">
+							<persistence type="property" />
+							<description>Attribute contains the order entry object that will be used in the process.</description>
+						</attribute>
+						<attribute qualifier="oldStatus" type="OrderEntryStatus">
+							<persistence type="property" />
+							<description>Attribute contains the old status of the order entry that will be used in the process.</description>
+						</attribute>
+						<attribute qualifier="newStatus" type="OrderEntryStatus">
+							<persistence type="property" />
+							<description>Attribute contains the new status of the order entry that will be used in the process.</description>
+						</attribute>
+					</attributes>
+				</itemtype>
+		</typegroup>
 	</itemtypes>
 </items>

@@ -4,6 +4,7 @@
 package com.pixi.core.services.impl;
 
 import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.servicelayer.internal.service.AbstractBusinessService;
 import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.store.services.BaseStoreService;
 
@@ -19,7 +20,7 @@ import com.pixi.core.services.PixiOrderService;
  * @author franthescollymaneira
  *
  */
-public class DefaultPixiOrderService implements PixiOrderService
+public class DefaultPixiOrderService extends AbstractBusinessService implements PixiOrderService
 {
 	@Resource
 	private PixiOrderDao pixiOrderDao;
@@ -29,7 +30,7 @@ public class DefaultPixiOrderService implements PixiOrderService
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.pixi.core.services.PixiOrderService#findNotExportedOrders()
 	 */
 	@Override
@@ -37,6 +38,8 @@ public class DefaultPixiOrderService implements PixiOrderService
 	{
 		final BaseStoreModel store = baseStoreService.getCurrentBaseStore();
 
-		return pixiOrderDao.findOrdersToExport(store);
+		final List<OrderModel> orders = pixiOrderDao.findOrdersToExport(store);
+
+		return orders;
 	}
 }

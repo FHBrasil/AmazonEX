@@ -53,13 +53,17 @@
 	<bean id="consignmentProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
 		<property name="resource" value="classpath:/kpfamilyfulfilmentprocess/process/consignment-process.xml"/>
 	</bean>
+	
+	<bean id="orderEntryStatusProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/kpfamilyfulfilmentprocess/process/order-entry-status-process.xml"/>
+	</bean>
 
 	<!-- Process Actions -->
 
 	<import resource="/kpfamilyfulfilmentprocess/process/order-process-spring.xml"/>
 	<import resource="/kpfamilyfulfilmentprocess/process/consignment-process-spring.xml"/>
-
-
+	<import resource="/kpfamilyfulfilmentprocess/process/order-entry-status-process-spring.xml"/>
+	
 	<!-- Order Check Service -->
 	<!-- Performs some basic validation for the order as part of the first stage of the process. -->
 

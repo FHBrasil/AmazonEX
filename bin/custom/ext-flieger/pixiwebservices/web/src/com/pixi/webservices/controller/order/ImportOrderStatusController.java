@@ -1,5 +1,6 @@
 package com.pixi.webservices.controller.order;
 
+import javax.annotation.Resource;
 import javax.xml.bind.JAXBException;
 
 import org.springframework.stereotype.Controller;
@@ -8,19 +9,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pixi.core.services.PixiOrderEntryService;
 import com.pixi.webservices.controller.AbstractPixiSecuredController;
 import com.pixi.webservices.jaxb.orderstatus.request.ImportOrderStatusRequest;
 import com.pixi.webservices.jaxb.response.GlobalResponse;
 
 import de.hybris.platform.core.PK;
 import de.hybris.platform.core.model.order.OrderEntryModel;
-import de.hybris.platform.core.model.order.OrderModel;
 
 @Controller
 public class ImportOrderStatusController extends AbstractPixiSecuredController
 {
 	private static final String ACTION = "import_order_status";
 
+	@Resource
+	private PixiOrderEntryService pixiOrderEntryService;
+	
 	@RequestMapping(method = RequestMethod.GET, produces = "text/xml", params="action=" + ACTION)
 	public @ResponseBody GlobalResponse handle(@RequestParam String data, @RequestParam final String session) throws JAXBException
 	{
@@ -33,11 +37,7 @@ public class ImportOrderStatusController extends AbstractPixiSecuredController
 			return createGlobalResponse(false, "Entry not found for PK: " + request.getLINEITEMID());
 		}
 		
-		updateOrderEntryStatus(request, entry);
-
-		updateOrderStatus(entry.getOrder());
-		
-		updateBonusSystem(request, entry);
+		getPixiOrderEntryService().updateOrderEntryStatus(entry, request.getSTATUS());
 		
 		return createGlobalResponse(true, null);
 	}
@@ -49,25 +49,14 @@ public class ImportOrderStatusController extends AbstractPixiSecuredController
 		return getModelService().get(entryPK);
 	}
 
-	private void updateOrderStatus(OrderModel orderModel) 
+	/**
+	 * @return the pixiOrderEntryService
+	 */
+	public PixiOrderEntryService getPixiOrderEntryService() 
 	{
-		//TODO falta model de entry status
-		//TODO chamar service que atualiza status o pedido geral
+		return pixiOrderEntryService;
 	}
 
-	private void updateOrderEntryStatus(ImportOrderStatusRequest request, OrderEntryModel entry) 
-	{
-		//TODO falta model de entry status
-		//TODO obter o status do entry com match entre kp e pixi
-		//TODO setar status no entry
-	}
-	
-	private void updateBonusSystem(ImportOrderStatusRequest request, OrderEntryModel entry) 
-	{
-		//TODO falta model de BS
-		//TODO calcular BS do pedido
-	}
-	
 //	private String actionImportOrderStatus(String data, String sessionUrl) {
 //		PixiTransFlexOrderImportBean orderImport = parseImportOrderStatusData(data);
 //		OrderService orderService = Webfoundation.getInstance().getServices().getOrderService();

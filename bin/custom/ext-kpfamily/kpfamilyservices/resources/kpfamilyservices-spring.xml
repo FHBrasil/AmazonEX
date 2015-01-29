@@ -19,9 +19,20 @@
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+	<!-- Services  -->
 	<alias name="defaultExpressDeliveryService" alias="expressDeliveryService"/>
-	<bean id="defaultExpressDeliveryService" class="de.kpfamily.services.logistics.impl.DefaultExpressDeliveryService" />
+	<bean id="defaultExpressDeliveryService" class="de.kpfamily.services.logistics.impl.DefaultExpressDeliveryService" parent="abstractBusinessService"/>
 	
 	<alias name="defaultLogisticsService" alias="logisticsService"/>
-	<bean id="defaultLogisticsService" class="de.kpfamily.services.logistics.impl.DefaultLogisticsService" />
+	<bean id="defaultLogisticsService" class="de.kpfamily.services.logistics.impl.DefaultLogisticsService" parent="abstractBusinessService"/>
+	
+	<alias name="defaultPixiOrderEntryService" alias="pixiOrderEntryService"/>
+	<bean id="defaultPixiOrderEntryService" class="de.kpfamily.services.pixi.impl.DefaultPixiOrderEntryService" parent="abstractBusinessService"/>
+	
+	<alias name="defaultKPOrderEntryService" alias="orderEntryService"/>
+	<bean id="defaultKPOrderEntryService" class="de.kpfamily.services.order.impl.DefaultKPOrderEntryService" parent="defaultOrderEntryService" />
+	
+	<!-- Strategies -->
+	<alias name="defaultOrderEntryStatusProcessUIDGeneratorStrategy" alias="orderEntryStatusProcessUIDGeneratorStrategy"/>
+	<bean id="defaultOrderEntryStatusProcessUIDGeneratorStrategy" class="de.kpfamily.services.strategies.impl.DefaultOrderEntryStatusProcessUIDGeneratorStrategy"/>
 </beans>
