@@ -30,6 +30,3 @@ insert PriceRow;product(code);price;unit(code[unique=true,default=pieces]);curre
 insert PriceRow;productId(code)[unique=true];price;unit(code[unique=true,default=pieces]);currency(isocode)[unique=true,default=EUR];minqtd[default=1];unitFactor[default=1];net[default=false]
 "#% impex.includeExternalDataMedia(""PriceRow.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ---- -------------------------------------------------------------------------
-
-
-
