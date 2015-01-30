@@ -16,17 +16,21 @@
 #	
 #	Make sure that the "Unit" type data was already imported
 # ------------------------------------------------------------------------------
-#
+# 
 # ---- Export Script -----------------------------------------------------------
 $catalog=babyartikel;
 $version=Staged;
-# ---- ----
+# 
 "#% impex.setTargetFile(""Product.csv"");"
 update Product;code[unique=true];manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);shippingMethod;deliveryTime;sale30;sale120;sale356;oldPrice;oldPriceCurrency(isocode);
-"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct as p JOIN CatalogVersion as cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
-# ---- -------------------------------------------------------------------------
-
+"#% impex.exportItems(""SELECT {p:pk} FROM {Product as p JOIN CatalogVersion as cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# ------------------------------------------------------------------------------
+# 
+# 
 # ---- Import Script -----------------------------------------------------------
-update Product;code[unique=true];manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);shippingMethod;deliveryTime;sale30;sale120;sale356;oldPrice;oldPriceCurrency(isocode);
+$catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
+# 
+update Product;code[unique=true];manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);shippingMethod;deliveryTime;;;;;;
 "#% impex.includeExternalDataMedia(""Product.csv"" , ""UTF-8"", ';',  1 , -1);"
-# ---- -------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 

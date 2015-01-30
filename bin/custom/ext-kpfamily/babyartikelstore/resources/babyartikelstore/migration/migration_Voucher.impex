@@ -33,6 +33,7 @@ insert ProductRestriction;&productRestrictionPK;description;positive;violationMe
 "#% impex.exportItems(""ProductRestriction"", false);"
 # ------------------------------------------------------------------------------
 # 
+# 
 # ---- Import script -----------------------------------------------------------
 insert SerialVoucher;code[unique=true];name;description;priority;value;valueString;freeShipping;global;orders(code);discountstring;currency(isocode);absolute
 "#% impex.includeExternalDataMedia( ""SerialVoucher.csv"" , ""UTF-8"", ';',  1 , -1 );"
@@ -46,3 +47,4 @@ insert OrderRestriction;&orderRestrictionPK;currency(isocode);description;positi
 insert ProductRestriction;&productRestrictionPK;description;positive;violationMessage;voucher(code)
 "#% impex.includeExternalDataMedia( ""ProductRestriction.csv"" , ""UTF-8"", ';',  1 , -1 );"
 # ------------------------------------------------------------------------------
+# 
