@@ -28,7 +28,7 @@ insert KPVoucherProduct;code[unique=true];name[lang=de];;approvalStatus(code);de
 # ---- Import Script -----------------------------------------------------------
 $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
 # 
-insert KPVoucherProduct;code[unique=true];name[lang=de];$catalogVersion;approvalStatus(code)[default='unapproved'];description[lang=de];shortDescription[lang=de];unit(code)[default='pieces'];;;;;
+insert BabyartikelSerialVoucherProduct;code[unique=true];name[lang=de];$catalogVersion;approvalStatus(code)[default='unapproved'];description[lang=de];shortDescription[lang=de];unit(code)[default='pieces'];height;length;width;weight;
 "#% impex.includeExternalDataMedia(""KPVoucherProduct.csv"", ""UTF-8"", ';', 1 , -1);"
 # ---- -------------------------------------------------------------------------
 # 
