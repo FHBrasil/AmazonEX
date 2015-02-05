@@ -75,9 +75,8 @@ public class Catalog
 	@XmlElement(name = "SHOPID", required = true)
 	protected String shopid;
 
-	@XmlElement(name = "DATEEXPORT", required = true)
-	@XmlSchemaType(name = "date")
-	protected Date dateexport;
+    @XmlElement(name = "DATEEXPORT", required = true)
+    protected long dateexport;
 
 	@XmlElement(name = "EXPORT_DATE", required = true)
 	@XmlSchemaType(name = "date")
@@ -245,27 +244,22 @@ public class Catalog
 	}
 
 	/**
-	 * Gets the value of the dateexport property.
-	 *
-	 * @return possible object is {@link XMLGregorianCalendar }
-	 *
-	 */
-	public Date getDATEEXPORT()
-	{
-		return dateexport;
-	}
+     * Gets the value of the dateexport property.
+     * 
+     */
+    public long getDATEEXPORT() 
+    {
+        return dateexport;
+    }
 
-	/**
-	 * Sets the value of the dateexport property.
-	 *
-	 * @param value
-	 *           allowed object is {@link XMLGregorianCalendar }
-	 *
-	 */
-	public void setDATEEXPORT(final Date value)
-	{
-		this.dateexport = value;
-	}
+    /**
+     * Sets the value of the dateexport property.
+     * 
+     */
+    public void setDATEEXPORT(long value) 
+    {
+        this.dateexport = value;
+    }
 
 	/**
 	 * Gets the value of the exportdate property.

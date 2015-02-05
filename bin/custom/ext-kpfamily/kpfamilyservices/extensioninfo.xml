@@ -13,6 +13,7 @@
   
 --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
    <extension abstractclassprefix="Generated" classprefix="Kpfamilyservices" managername="KpfamilyservicesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="kpfamilyservices">
-      <coremodule generated="true" manager="de.kpfamily.services.jalo.KpfamilyservicesManager" packageroot="de.kpfamily.services"/>
+  		<requires-extension name="pixicore"/>
+      	<coremodule generated="true" manager="de.kpfamily.services.jalo.KpfamilyservicesManager" packageroot="de.kpfamily.services"/>
    </extension>
 </extensioninfo>

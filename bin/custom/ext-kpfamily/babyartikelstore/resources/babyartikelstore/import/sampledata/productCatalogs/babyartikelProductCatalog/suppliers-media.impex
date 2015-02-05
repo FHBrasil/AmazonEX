@@ -6,7 +6,7 @@ $productCatalogName=babyartikelProductCatalog
 
 $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
 $thumbnail=thumbnail(code, $catalogVersion)
-$siteResource=jar:de.genkpfamily.initialdata.setup.InitialDataSystemSetup&/genkpfamilyinitialdata/import/productCatalogs/$productCatalog
+$siteResource=jar:de.kpfamily.initialdata.setup.InitialDataSystemSetup&/kpfamilyinitialdata/import/productCatalogs/$productCatalog
 
 INSERT_UPDATE Media;code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/jpeg'];$catalogVersion
 

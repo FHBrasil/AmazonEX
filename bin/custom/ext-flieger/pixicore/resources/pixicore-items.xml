@@ -18,33 +18,32 @@
 
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
-
 	<itemtypes>
-<!--
-		<itemtype generate="true"
-		   code="MyProduct"
-		   jaloclass="com.pixi.core.jalo.MyProduct"
-		   extends="Product"
-		   autocreate="true"
-	   >
+		<itemtype code="PixiSyncRecord" extends="GenericItem" jaloclass="com.pixi.core.jalo.PixiSyncRecord">
+			<description>Contains the record of the last time that a given product was exported to PIXI</description>
+			<deployment table="PixiSyncRecord" typecode="11000"/>
 			<attributes>
-				<attribute qualifier="myExampleInitialStringField" type="java.lang.String">
-					<description>My Example Initial String Value</description>
-					<modifiers initial="true"/>
+				<attribute qualifier="productCode" type="java.lang.String">
+					<description>The code of the product that this history belongs to</description>
+					<persistence type="property" />
+					<modifiers optional="false" />
+				</attribute>
+				<attribute qualifier="sessionID" type="java.lang.String">
+					<description>The session ID of the last time that this product was exported to PIXI</description>
 					<persistence type="property"/>
+					<modifiers />
 				</attribute>
-
-				<attribute qualifier="myExampleBooleanField" type="java.lang.Boolean">
-					<description>Example Initial Boolean Field</description>
-               <persistence type="property"/>
-				</attribute>
-
-				<attribute qualifier="media" type="Media">
+				<attribute qualifier="exportDate" type="java.util.Date">
+					<description>The date of the last time that this product was exported to PIXI</description>
 					<persistence type="property"/>
+					<modifiers />
 				</attribute>
-
 			</attributes>
+			<indexes>
+				<index name="productCodeIdx">
+					<key attribute="productCode" />
+				</index>
+			</indexes>
 		</itemtype>
--->
 	</itemtypes>
 </items>

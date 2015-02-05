@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process xmlns="http://www.hybris.de/xsd/processdefinition" 
+	name="order-entry-status-process" 
+	start="updateOrderEntryStatus" 
+	processClass="de.kpfamily.core.model.process.OrderEntryStatusProcessModel">
+
+
+<!--  
+- Se o status da entry mudou, entao temos que atualizar o status do pedido
+- se oldStatus != null, entao temos que atualizar bonus points
+-->
+
+	<action id="updateOrderEntryStatus" bean="updateOrderEntryStatusAction">
+		<transition name="OK" to="updateOrderEntryBonus"/>
+		<transition name="NOK" to="sendUpdateOrderEntryStatusFailedNotification"/>
+	</action>
+
+	<action id="updateOrderEntryBonus" bean="updateOrderEntryBonusAction">
+		<transition name="OK" to="updateOrderStatus"/>
+		<transition name="NOK" to="sendUpdateOrderEntryBonusFailedNotification"/>
+	</action>
+	
+	<action id="updateOrderStatus" bean="updateOrderStatusAction">
+		<transition name="OK" to="success"/>
+		<transition name="NOK" to="sendUpdateOrderStatusFailedNotification"/>
+	</action>
+	
+	<action id="sendUpdateOrderEntryStatusFailedNotification" bean="sendUpdateOrderEntryStatusFailedNotificationAction">
+		<transition name="OK" to="error"/>
+	</action>
+	<action id="sendUpdateOrderEntryBonusFailedNotification" bean="sendUpdateOrderEntryBonusFailedNotificationAction">
+		<transition name="OK" to="updateOrderStatus"/>
+	</action>
+	<action id="sendUpdateOrderStatusFailedNotification" bean="sendUpdateOrderStatusFailedNotificationAction">
+		<transition name="OK" to="success"/>
+		<transition name="NOK" to="failed"/>
+	</action>
+	
+	<end id="error" state="ERROR">All went wrong.</end>
+	<end id="failed" state="FAILED">Something went wrong.</end>
+	<end id="success" state="SUCCEEDED">Process finished with success.</end>
+
+</process>

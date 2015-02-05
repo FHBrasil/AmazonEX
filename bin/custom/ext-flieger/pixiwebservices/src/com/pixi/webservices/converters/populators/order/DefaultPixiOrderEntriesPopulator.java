@@ -7,6 +7,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.pixi.webservices.constants.PixiwebservicesConstants;
 import com.pixi.webservices.jaxb.order.export.Order;
 import com.pixi.webservices.jaxb.order.export.OrderEntryPrice;
 import com.pixi.webservices.jaxb.order.export.OrderItem;
@@ -16,7 +17,6 @@ import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
-import de.hybris.platform.util.Config;
 import de.kpfamily.core.model.BabyartikelProductModel;
 
 public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, Order>
@@ -78,7 +78,7 @@ public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, O
 		articlePrice.setDISCOUNTVALUE(BigDecimal.ZERO);
 		articlePrice.setFULLPRICE(getFullPrice(entry));
 		articlePrice.setPRICEAMOUNT(getBasePrice(entry));
-		articlePrice.setType(Config.getParameter("pixiwebservices.order.item.price.type"));
+		articlePrice.setType(PixiwebservicesConstants.Order.PRICE_TYPE);
 		
 		return articlePrice;
 	}
@@ -90,7 +90,9 @@ public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, O
 			return BigDecimal.ZERO;
 		}
 
-		return new BigDecimal(entry.getBasePrice().toString());
+		double price = entry.getBasePrice().doubleValue();
+		
+		return BigDecimal.valueOf(price);
 	}	
 
 	private BigDecimal getFullPrice(AbstractOrderEntryModel entry) 
@@ -100,6 +102,7 @@ public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, O
 			return BigDecimal.ZERO;
 		}
 		
-		return new BigDecimal(entry.getTotalPrice().toString());
+		double price = Double.valueOf(entry.getTotalPrice().toString());
+		return BigDecimal.valueOf(price);
 	}	
 }

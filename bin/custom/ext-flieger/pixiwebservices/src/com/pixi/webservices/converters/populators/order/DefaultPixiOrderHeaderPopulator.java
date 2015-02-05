@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 
+import com.pixi.webservices.constants.PixiwebservicesConstants;
 import com.pixi.webservices.jaxb.order.export.Order;
 import com.pixi.webservices.jaxb.order.export.OrderHeader;
 import com.pixi.webservices.jaxb.order.export.OrderInfo;
@@ -16,7 +17,6 @@ import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
-import de.hybris.platform.util.Config;
 
 public class DefaultPixiOrderHeaderPopulator implements Populator<OrderModel, Order>
 {
@@ -32,12 +32,12 @@ public class DefaultPixiOrderHeaderPopulator implements Populator<OrderModel, Or
 
 		final OrderHeader orderHeader = new OrderHeader();
 		orderHeader.setGENERATIONDATE(new Date());
-		orderHeader.setGENERATORINFO(Config.getParameter("pixiwebservices.order.export.generator.info"));
+		orderHeader.setGENERATORINFO(PixiwebservicesConstants.Order.GENERATOR_INFO);
 		orderHeader.setORDERINFO(pixiOrderInfoConverter.convert(source));
 
 		target.setORDERHEADER(orderHeader);
 		target.setTOTALITEMNUM(CollectionUtils.size(source.getEntries()));
-		target.setType(Config.getParameter("pixiwebservices.order.type"));
-		target.setVersion(new BigDecimal(Config.getParameter("pixiwebservices.order.version")));
+		target.setType(PixiwebservicesConstants.Order.TYPE);
+		target.setVersion(BigDecimal.valueOf(PixiwebservicesConstants.Order.VERSION));
 	}	
 }

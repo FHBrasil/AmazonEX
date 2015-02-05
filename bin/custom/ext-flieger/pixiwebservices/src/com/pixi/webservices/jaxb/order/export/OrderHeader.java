@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
+import org.eclipse.persistence.oxm.annotations.XmlCDATA;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 
@@ -48,6 +49,7 @@ import org.eclipse.persistence.oxm.annotations.XmlPath;
 @XmlRootElement(name = "ORDER_HEADER")
 public class OrderHeader
 {
+	@XmlCDATA
 	@XmlPath("CONTROL_INFO/GENERATOR_INFO/text()")
 	protected String generatorinfo;
 

@@ -28,10 +28,14 @@
 	<alias alias="pixiProductDao" name="defaultPixiProductDao"/>
 
 	<!-- Pixi services definition -->
-	<bean id="defaultPixiOrderService" class="com.pixi.core.services.impl.DefaultPixiOrderService" />
-	<bean id="defaultPixiProductService" class="com.pixi.core.services.impl.DefaultPixiProductService" />
+	<bean id="defaultPixiOrderService" class="com.pixi.core.services.impl.DefaultPixiOrderService" parent="abstractBusinessService" />
+	<bean id="defaultPixiProductService" class="com.pixi.core.services.impl.DefaultPixiProductService" parent="abstractBusinessService" />
 	
 	<!-- Pixi Daos definition -->
-	<bean id="defaultPixiOrderDao" class="com.pixi.core.daos.impl.DefaultPixiOrderDao" parent="abstractItemDao" />
-	<bean id="defaultPixiProductDao" class="com.pixi.core.daos.impl.DefaultPixiProductDao" parent="abstractItemDao" />
+	<bean id="defaultPixiOrderDao" class="com.pixi.core.daos.impl.DefaultPixiOrderDao">
+		<constructor-arg value="Order"/>
+	</bean>
+	<bean id="defaultPixiProductDao" class="com.pixi.core.daos.impl.DefaultPixiProductDao">
+		<constructor-arg value="Product"/>
+	</bean>
 </beans>

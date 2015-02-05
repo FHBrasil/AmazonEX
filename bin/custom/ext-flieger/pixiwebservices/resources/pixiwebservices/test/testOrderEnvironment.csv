@@ -166,3 +166,15 @@ INSERT_UPDATE CreditCardPaymentInfo;code[unique=true];user(uid)[unique=true];ccO
 ;ccid11;testuser3@test.com;John Acceptance;4012888888881832;visa;11;2010;12;2013;12311;
 ;ccid12;testuser3@test.com;John Acceptance;4012888888881854;visa;12;2010;12;2013;12312;
 
+UPDATE OrderEntryStatus;code[unique=true];externalCode;
+;CHARGEBACK;STO;
+;SHIPPED;AUS;
+;RETURNED;RET;
+;AWAITING_PAYMENT;HAL;
+;AWAITING_SHIPPING;ANG;
+;PROCESSING;EIN;
+;NOT_AVAILABLE;NLB;
+;DIRECT_SHIPMENT;FUT;
+;DIRECT_SHIPMENT_PACKED;FUS;
+;EXCHANGE;MIN;
+

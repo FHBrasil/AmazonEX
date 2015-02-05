@@ -16,6 +16,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.eclipse.persistence.oxm.annotations.XmlCDATA;
+
 
 /**
  * <p>
@@ -30,6 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element ref="{}DESCRIPTION_SHORT"/>
+ *         &lt;element ref="{}DESCRIPTION_LONG"/>
  *         &lt;element ref="{}EAN"/>
  *         &lt;element ref="{}MANUFACTURER_NAME"/>
  *         &lt;element ref="{}SEGMENT"/>
@@ -45,16 +48,22 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder =
-{ "descriptionshort", "ean", "manufacturername", "segment", "weight", "internalitemnumber" })
+{ "descriptionshort", "descriptionlong", "ean", "manufacturername", "segment", "weight", "internalitemnumber" })
 @XmlRootElement(name = "ARTICLE_DETAILS")
 public class ArticleDetails
 {
+	@XmlCDATA
 	@XmlElement(name = "DESCRIPTION_SHORT", required = true)
 	protected String descriptionshort;
+	
+	@XmlCDATA
+	@XmlElement(name = "DESCRIPTION_LONG", required = false)
+	protected String descriptionlong;
 
 	@XmlElement(name = "EAN", required = true)
 	protected String ean;
 
+	@XmlCDATA
 	@XmlElement(name = "MANUFACTURER_NAME", required = true)
 	protected String manufacturername;
 
@@ -88,6 +97,29 @@ public class ArticleDetails
 	public void setDESCRIPTIONSHORT(final String value)
 	{
 		this.descriptionshort = value;
+	}
+	
+	/**
+	 * Gets the value of the descriptionlong property.
+	 *
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getDESCRIPTIONLONG()
+	{
+		return descriptionlong;
+	}
+
+	/**
+	 * Sets the value of the descriptionlong property.
+	 *
+	 * @param value
+	 *           allowed object is {@link String }
+	 *
+	 */
+	public void setDESCRIPTIONLONG(final String value)
+	{
+		this.descriptionlong = value;
 	}
 
 	/**

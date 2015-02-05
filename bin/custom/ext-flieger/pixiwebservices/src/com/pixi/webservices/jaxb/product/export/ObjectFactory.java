@@ -52,6 +52,7 @@ public class ObjectFactory
 	private final static QName _LANGUAGE_QNAME = new QName("", "LANGUAGE");
 	private final static QName _DATABASE_QNAME = new QName("", "DATABASE");
 	private final static QName _DESCRIPTIONSHORT_QNAME = new QName("", "DESCRIPTION_SHORT");
+	private final static QName _DESCRIPTIONLONG_QNAME = new QName("", "DESCRIPTION_LONG");
 	private final static QName _COUNTRY_QNAME = new QName("", "COUNTRY");
 	private final static QName _SUPPLIERAID_QNAME = new QName("", "SUPPLIER_AID");
 	private final static QName _EXPORTDATE_QNAME = new QName("", "EXPORT_DATE");
@@ -397,6 +398,16 @@ public class ObjectFactory
 	{
 		return new JAXBElement<String>(_DESCRIPTIONSHORT_QNAME, String.class, null, value);
 	}
+	
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}
+	 *
+	 */
+	@XmlElementDecl(namespace = "", name = "DESCRIPTION_LONG")
+	public JAXBElement<String> createDESCRIPTIONLONG(final String value)
+	{
+		return new JAXBElement<String>(_DESCRIPTIONLONG_QNAME, String.class, null, value);
+	}
 
 	/**
 	 * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}
@@ -473,9 +484,9 @@ public class ObjectFactory
 	 *
 	 */
 	@XmlElementDecl(namespace = "", name = "SerialNumberRequired")
-	public JAXBElement<String> createSerialNumberRequired(final String value)
+	public JAXBElement<Boolean> createSerialNumberRequired(final Boolean value)
 	{
-		return new JAXBElement<String>(_SerialNumberRequired_QNAME, String.class, null, value);
+		return new JAXBElement<Boolean>(_SerialNumberRequired_QNAME, Boolean.class, null, value);
 	}
 
 	/**

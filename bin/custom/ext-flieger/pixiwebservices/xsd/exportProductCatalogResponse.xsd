@@ -42,7 +42,7 @@
   <xs:element name="CURRENCY" type="xs:string"/>
   <xs:element name="DATABASE" type="xs:string"/>
   <xs:element name="SHOPID" type="xs:string"/>
-  <xs:element name="DATEEXPORT" type="xs:date"/>
+  <xs:element name="DATEEXPORT" type="xs:long"/>
   <xs:element name="EXPORT_DATE" type="xs:date"/>
   <xs:element name="SUPPLIER">
     <xs:complexType>
@@ -88,6 +88,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="DESCRIPTION_SHORT"/>
+        <xs:element ref="DESCRIPTION_LONG"/>
         <xs:element ref="EAN"/>
         <xs:element ref="MANUFACTURER_NAME"/>
         <xs:element ref="SEGMENT"/>
@@ -97,6 +98,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="DESCRIPTION_SHORT" type="xs:string"/>
+  <xs:element name="DESCRIPTION_LONG" type="xs:string"/>
   <xs:element name="EAN" type="xs:string"/>
   <xs:element name="MANUFACTURER_NAME" type="xs:string"/>
   <xs:element name="SEGMENT" type="xs:string"/>
@@ -123,7 +125,7 @@
   </xs:element>
   <xs:element name="FNAME" type="xs:string"/>
   <xs:element name="FVALUE" type="xs:string"/>
-  <xs:element name="SerialNumberRequired" type="xs:string"/>
+  <xs:element name="SerialNumberRequired" type="xs:boolean"/>
   <xs:element name="CustomsTariffNumber" type="xs:string"/>
   <xs:element name="CustomsCountryOfOrigin" type="xs:string"/>
   <xs:element name="CustomsTariffText" type="xs:string"/>
