@@ -69,7 +69,7 @@ public class ImportOrderStatusControllerTest
 	
 	public void testOrderStatus()
 	{
-		//TODO falta testar se o status mudou mesmo, tem q considerar TODOS os possiveis status
+		//TODO falta testar, inclui pixi api
 	}
 	
 	public void testBonusSystem()

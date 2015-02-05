@@ -17,7 +17,7 @@
 		<collectiontype code="GenderList" elementtype="Gender" autocreate="true" generate="true" type="list"/>
 		<collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum" autocreate="true" generate="true" type="set"/>
 	</collectiontypes>
-
+	
 	<enumtypes>
 		<enumtype generate="true" code="SwatchColorEnum" autocreate="true" dynamic="true">
 			<value code="BLACK"/>
@@ -59,6 +59,14 @@
 			<value code="EXCHANGE"/>
 		</enumtype>
 	</enumtypes>
+	
+	<relations>
+		<relation code="Product2ProductSupplierRelation" autocreate="true" generate="false" localized="false">
+			<deployment table="Product2SupplierRel" typecode="10002" />
+			<sourceElement type="BabyartikelProduct" cardinality="many" navigable="false" />
+			<targetElement type="ProductSupplier" qualifier="suppliers" collectiontype="list" cardinality="many"/>
+		</relation>
+	</relations>
 
 	<itemtypes>
 		<typegroup name="Hybris">
@@ -73,6 +81,14 @@
 			<itemtype code="OrderEntryStatus" generate="false" autocreate="false">
 				<attributes>
 					<attribute qualifier="externalCode" type="java.lang.String" generate="false">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="StockLevel" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="minimumStockLevel" type="int">
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
@@ -120,7 +136,12 @@
 						<persistence type="property"/>
 						<modifiers />
 					</attribute>
-					<!-- <attribute qualifier="weight" type="double">
+					<attribute qualifier="nextDeliveryDate" type="java.util.Date">
+						<description>delivery date that comes from PIXI</description>
+						<persistence type="property"/>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="weight" type="double">
 						<description>Weight of the product, this attribute is dynamic to make it easier 
 						to get the value from the classification system</description>
 				    	<persistence type="dynamic"/>
@@ -143,21 +164,7 @@
 						to get the value from the classification system</description>
 				    	<persistence type="dynamic"/>
 				    	<modifiers write="false"/>
-				  	</attribute> -->
-				  	
-					<!-- <attribute qualifier="height" type="double">
-						<persistence type="property"/>
-						<modifiers />
-					</attribute>
-					<attribute qualifier="width" type="double">
-						<persistence type="property"/>
-						<modifiers />
-					</attribute>
-					<attribute qualifier="length" type="double">
-						<persistence type="property"/>
-						<modifiers />
-					</attribute>
-					-->
+				  	</attribute>
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
@@ -169,6 +176,32 @@
 						<description>Size of the product.</description>
 						<modifiers/>
 						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="BabyartikelSerialVoucherProduct" extends="BabyartikelProduct" 
+				jaloclass="de.kpfamily.core.jalo.BabyartikelSerialVoucherProduct">
+				<attributes>
+					<attribute qualifier="serialVoucher" type="SerialVoucher" generate="true">
+						<description>serial voucher from voucher extension</description>
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="BabyartikelSerialVoucherProductSellingHistory" 
+				jaloclass="de.kpfamily.core.jalo.BabyartikelSerialVoucherProductSellingHistory">
+				<deployment table="SVProductSellingHistory" typecode="10003"/>
+				<attributes>
+					<attribute qualifier="serialVoucherCode" type="java.lang.String">
+						<description>serial voucher code that was generated for a given order entry</description>
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="orderEntry" type="OrderEntry">
+						<description>the order entry that the serial voucher was generated for</description>
+						<persistence type="property"/>
+						<modifiers optional="false"/>
 					</attribute>
 				</attributes>
 			</itemtype>
@@ -214,6 +247,37 @@
 						<persistence type="property"/>
 					</attribute>
 				</attributes>
+			</itemtype>
+			<itemtype code="ProductSupplier">
+				<description>Products supplier</description>
+				<deployment table="ProductSupplier" typecode="10001"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<modifiers optional="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="orderFrequency">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="warehouseDeliveryDays">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="dropShippingDeliveryDays">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="supplierCodeIdx">
+						<key attribute="code" />
+					</index>
+				</indexes>
 			</itemtype>
 		</typegroup>
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pixi.core.strategies.PixiProductUpdateNextDeliveryDateStrategy;
 import com.pixi.webservices.controller.AbstractPixiSecuredController;
 import com.pixi.webservices.jaxb.response.GlobalResponse;
 import com.pixi.webservices.jaxb.stock.request.ImportProductStockRequest;
@@ -42,6 +43,9 @@ public class ImportProductController extends AbstractPixiSecuredController
 	@Resource
 	private WarehouseService warehouseService;
 	
+	@Resource
+	private PixiProductUpdateNextDeliveryDateStrategy pixiProductUpdateNextDeliveryDateStrategy; 
+	
 	@RequestMapping(method = RequestMethod.GET, produces = "text/xml", params="action=" + ACTION)
 	public @ResponseBody GlobalResponse handle(@RequestParam final String data, @RequestParam final String session) throws JAXBException
 	{
@@ -59,8 +63,6 @@ public class ImportProductController extends AbstractPixiSecuredController
 		updateProductEAN(request, product);
 		
 		updateDeliverySchedule(request, product);
-		
-		updateOpenSupplierOrders(request, product);
 		
 		return createGlobalResponse(true, null);
 	}
@@ -97,7 +99,7 @@ public class ImportProductController extends AbstractPixiSecuredController
 		{
 			return;
 		}
-
+		
 		product.setEan(ean);
 		
 		getModelService().save(product);
@@ -108,20 +110,9 @@ public class ImportProductController extends AbstractPixiSecuredController
 	 * @param request
 	 * @param product
 	 */
-	private void updateOpenSupplierOrders(ImportProductStockRequest request, ProductModel product) 
-	{
-		//TODO implementar model para pixiOpenSuppliersOrders - request.getOPENSUPPLORDERS();
-		
-	}
-
-	/**
-	 * 
-	 * @param request
-	 * @param product
-	 */
 	private void updateDeliverySchedule(ImportProductStockRequest request, ProductModel product) 
 	{
-		//TODO implementar model de delivery schedule - request.getDELIVERYDATE()
+		pixiProductUpdateNextDeliveryDateStrategy.updateNextDeliveryDate(product, request.getDELIVERYDATE());
 	}
 
 	/**

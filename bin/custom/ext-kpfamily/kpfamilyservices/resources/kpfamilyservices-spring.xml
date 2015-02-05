@@ -18,7 +18,6 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
-
 	<!-- Services  -->
 	<alias name="defaultExpressDeliveryService" alias="expressDeliveryService"/>
 	<bean id="defaultExpressDeliveryService" class="de.kpfamily.services.logistics.impl.DefaultExpressDeliveryService" parent="abstractBusinessService"/>
@@ -32,7 +31,26 @@
 	<alias name="defaultKPOrderEntryService" alias="orderEntryService"/>
 	<bean id="defaultKPOrderEntryService" class="de.kpfamily.services.order.impl.DefaultKPOrderEntryService" parent="defaultOrderEntryService" />
 	
+	<alias name="defaultSerialVoucherProductService" alias="serialVoucherProductService"/>
+	<bean id="defaultSerialVoucherProductService" class="de.kpfamily.services.products.impl.DefaultSerialVoucherProductService" parent="abstractBusinessService" />
+	
+	
 	<!-- Strategies -->
 	<alias name="defaultOrderEntryStatusProcessUIDGeneratorStrategy" alias="orderEntryStatusProcessUIDGeneratorStrategy"/>
 	<bean id="defaultOrderEntryStatusProcessUIDGeneratorStrategy" class="de.kpfamily.services.strategies.impl.DefaultOrderEntryStatusProcessUIDGeneratorStrategy"/>
+	
+	<alias name="defaultPixiProductUpdateNextDeliveryDateStrategy" alias="pixiProductUpdateNextDeliveryDateStrategy"/>
+	<bean id="defaultPixiProductUpdateNextDeliveryDateStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductUpdateNextDeliveryDateStrategy"/>
+	
+	<alias name="defaultPixiProductGetWeightStrategy" alias="pixiProductGetWeightStrategy"/>
+	<bean id="defaultPixiProductGetWeightStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetWeightStrategy"/>
+	
+	<alias name="defaultPixiProductGetMinimumStockLevelStrategy" alias="pixiProductGetMinimumStockLevelStrategy"/>
+	<bean id="defaultPixiProductGetMinimumStockLevelStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetMinimumStockLevelStrategy"/>
+	
+	<alias name="defaultPixiProductGetSuppliersCodeStrategy" alias="pixiProductGetSuppliersCodeStrategy"/>
+	<bean id="defaultPixiProductGetSuppliersCodeStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetSuppliersCodeStrategy"/>
+	
+	<alias name="defaultPixiOrderGetShopNoteStrategy" alias="pixiOrderGetShopNoteStrategy"/>
+	<bean id="defaultPixiOrderGetShopNoteStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiOrderGetShopNoteStrategy"/>
 </beans>

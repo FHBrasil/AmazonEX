@@ -1,11 +1,16 @@
 package com.pixi.webservices.converters.populators.bmecat.product;
 
 import java.util.Collection;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.pixi.core.strategies.PixiProductGetMinimumStockLevelStrategy;
+import com.pixi.core.strategies.PixiProductGetSuppliersCodeStrategy;
 import com.pixi.webservices.jaxb.product.export.Article;
 import com.pixi.webservices.jaxb.product.export.ArticleFeatures;
 import com.pixi.webservices.jaxb.product.export.Feature;
@@ -18,6 +23,12 @@ import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 public class DefaultPixiBMEcatProductFeaturesPopulator implements Populator<ProductModel, Article>
 {
 	private Logger LOG = Logger.getLogger(DefaultPixiBMEcatProductFeaturesPopulator.class);
+	
+	@Resource
+	private PixiProductGetMinimumStockLevelStrategy pixiProductGetMinimumStockLevelStrategy;
+	
+	@Resource
+	private PixiProductGetSuppliersCodeStrategy pixiProductGetSuppliersCodeStrategy;
 	
 	@Override
 	public void populate(ProductModel source, Article target) throws ConversionException 
@@ -34,35 +45,22 @@ public class DefaultPixiBMEcatProductFeaturesPopulator implements Populator<Prod
 		
 		addSuppliers(source, features);
 		
-		//TODO integrar min stock
-//		Integer minStock = (Integer) product.getAttribute(Attributes.Product.MINDESTBESTAND);
-//		articleBean.addFeature("MIN_STOCK_QTY", String.valueOf(minStock == null ? 0 : minStock));
-
-		features.getFEATURE().add(getFeature("MIN_STOCK_QTY", "666"));
+		int minStock = pixiProductGetMinimumStockLevelStrategy.getMinimumStockLevel(source);
+		features.getFEATURE().add(getFeature("MIN_STOCK_QTY", minStock));
 		
 		target.setARTICLEFEATURES(features);
 	}
 
 	private void addSuppliers(ProductModel source, ArticleFeatures features) 
 	{
-		//TODO integrar suppliers
-//		boolean newSuppliersAvalible = false;
-//		try {
-//			List<Supplier> suppliers = (List<Supplier>) product.getAttribute("kpsuppliers");
-//			for (Supplier supplier : suppliers) {
-//				articleBean.addFeature("ID " + supplier.getPixiSupplierCode(), (String) product.getAttribute("manufacturerAID"));
-//			}
-//			newSuppliersAvalible = CollectionUtils.isNotEmpty(suppliers);
-//		} catch(Exception e) {
-//			newSuppliersAvalible = false;
-//			log.error(e);
-//		}
-//		
-//		// get old supplier code if new not set
-//		KPBrand kpBrand = (KPBrand) product.getAttribute(Attributes.Product.BRAND);
-//		if (!newSuppliersAvalible && kpBrand != null) {
-//			articleBean.addFeature(addCData("ID " + kpBrand.getPixiSupplierCode()), addCData((String)product.getAttribute("manufacturerAID")));
-//		}
+		final List<String> suppliersCode = pixiProductGetSuppliersCodeStrategy.getSuppliersCode(source);
+		
+		final String manufacturerAID = source.getManufacturerAID();
+		
+		for(String code : suppliersCode)
+		{
+			features.getFEATURE().add(getFeature("ID " + code, manufacturerAID));
+		}
 	}
 	
 	private void addTaxes(ProductModel source, final ArticleFeatures features) 
@@ -107,12 +105,46 @@ public class DefaultPixiBMEcatProductFeaturesPopulator implements Populator<Prod
 //		features.setCustomsTariffText("tariff text");
 	}
 
-	private Feature getFeature(final String name, final String value) 
+	private Feature getFeature(final String name, final Object value) 
 	{
 		final Feature feature = new Feature();
 		feature.setFNAME(name);
-		feature.setFVALUE(value);
+		feature.setFVALUE(String.valueOf(value));
 		
 		return feature;
+	}
+
+	/**
+	 * @return the pixiProductGetMinimumStockLevelStrategy
+	 */
+	public PixiProductGetMinimumStockLevelStrategy getPixiProductGetMinimumStockLevelStrategy() 
+	{
+		return pixiProductGetMinimumStockLevelStrategy;
+	}
+
+	/**
+	 * @param pixiProductGetMinimumStockLevelStrategy the pixiProductGetMinimumStockLevelStrategy to set
+	 */
+	public void setPixiProductGetMinimumStockLevelStrategy(
+			PixiProductGetMinimumStockLevelStrategy pixiProductGetMinimumStockLevelStrategy) 
+	{
+		this.pixiProductGetMinimumStockLevelStrategy = pixiProductGetMinimumStockLevelStrategy;
+	}
+
+	/**
+	 * @return the pixiProductGetSuppliersCodeStrategy
+	 */
+	public PixiProductGetSuppliersCodeStrategy getPixiProductGetSuppliersCodeStrategy() 
+	{
+		return pixiProductGetSuppliersCodeStrategy;
+	}
+
+	/**
+	 * @param pixiProductGetSuppliersCodeStrategy the pixiProductGetSuppliersCodeStrategy to set
+	 */
+	public void setPixiProductGetSuppliersCodeStrategy(
+			PixiProductGetSuppliersCodeStrategy pixiProductGetSuppliersCodeStrategy) 
+	{
+		this.pixiProductGetSuppliersCodeStrategy = pixiProductGetSuppliersCodeStrategy;
 	}
 }

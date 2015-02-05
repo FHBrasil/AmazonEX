@@ -36,7 +36,7 @@ public class UpdateOrderStatusAction extends AbstractSimpleDecisionAction<OrderE
 		try
 		{
 			final OrderModel order = process.getOrderEntry().getOrder();
-			LOG.info("updating order: " + order.getCode());
+			LOG.info("FAKE - updating order: " + order.getCode());
 			return Transition.OK;
 		}
 		catch (final Exception e)

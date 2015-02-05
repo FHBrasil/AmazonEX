@@ -25,6 +25,7 @@
 		<!-- <extension name="commercesearchbackoffice" />
 		<extension name="commercesearchhmc" />
  -->		
+ <extension name="voucher" />
  		<extension name="commerceservices" />
 		<extension name="basecommerce" />
 		<!-- <extension name="payment" /> -->
