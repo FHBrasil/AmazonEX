@@ -16,16 +16,19 @@
 # ---- -------------------------------------------------------------------------
 # 
 # ---- Export Script -----------------------------------------------------------
-"#% impex.setTargetFile(""KPSerialVoucher.csv"");"
-remove KPSerialVoucher;order(code);serial;sold;voucher(voucherCode);
-"#% impex.exportItems(""KPSerialVoucher"", false);"
+$catalog=babyartikel;
+$version=Staged;
+# 
+"#% impex.setTargetFile(""KPVoucherProduct.csv"");"
+insert KPVoucherProduct;code[unique=true];name[lang=de];;approvalStatus(code);description[lang=de];shortDescription[lang=de];unit(code)[default='pieces'];height;length;width;weight;
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPVoucherProduct as p JOIN CatalogVersion as cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
 $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
 # 
-remove KPVoucherProduct;code[unique=true];$catalogVersion;
+insert KPVoucherProduct;code[unique=true];name[lang=de];$catalogVersion;approvalStatus(code)[default='unapproved'];description[lang=de];shortDescription[lang=de];unit(code)[default='pieces'];;;;;
 "#% impex.includeExternalDataMedia(""KPVoucherProduct.csv"", ""UTF-8"", ';', 1 , -1);"
 # ---- -------------------------------------------------------------------------
 # 
