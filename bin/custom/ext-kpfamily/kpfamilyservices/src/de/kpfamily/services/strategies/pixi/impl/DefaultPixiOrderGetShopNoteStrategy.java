@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import com.pixi.core.strategies.PixiOrderGetShopNoteStrategy;
 
 import de.hybris.platform.core.model.order.OrderModel;
-import de.kpfamily.services.products.SerialVoucherProductService;
+import de.kpfamily.services.product.SerialVoucherProductService;
 
 public class DefaultPixiOrderGetShopNoteStrategy implements PixiOrderGetShopNoteStrategy 
 {
@@ -19,7 +19,7 @@ public class DefaultPixiOrderGetShopNoteStrategy implements PixiOrderGetShopNote
 	@Override
 	public String getShopNote(OrderModel order) 
 	{
-		final List<String> soldSerialvouchers = serialVoucherProductService.findSerialVouchersByOrder(order);
+		final List<String> soldSerialvouchers = getSerialVoucherProductService().findSoldSerialVoucherCodesByOrder(order);
 		
 		if(CollectionUtils.isEmpty(soldSerialvouchers))
 		{
@@ -34,5 +34,21 @@ public class DefaultPixiOrderGetShopNoteStrategy implements PixiOrderGetShopNote
 		}
 		
 		return note.toString().trim();
+	}
+
+	/**
+	 * @return the serialVoucherProductService
+	 */
+	public SerialVoucherProductService getSerialVoucherProductService() 
+	{
+		return serialVoucherProductService;
+	}
+
+	/**
+	 * @param serialVoucherProductService the serialVoucherProductService to set
+	 */
+	public void setSerialVoucherProductService(SerialVoucherProductService serialVoucherProductService) 
+	{
+		this.serialVoucherProductService = serialVoucherProductService;
 	}
 }

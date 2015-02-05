@@ -458,5 +458,9 @@
 	<!-- Dynamic attribute handlers -->
 	<bean id="articleStateInternalCodeHandler" class="de.kpfamily.core.model.ArticleStateDynamicInternalCode"/>
 	<bean id="shippingMethodInternalCodeHandler" class="de.kpfamily.core.model.ShippingMethodDynamicInternalCode"/>
+	<bean id="babyartikelProductWeightHandler" class="de.kpfamily.core.model.BabyartikelProductDynamicWeight" />
+	<bean id="babyartikelProductLengthHandler" class="de.kpfamily.core.model.BabyartikelProductDynamicLength" />
+	<bean id="babyartikelProductHeightHandler" class="de.kpfamily.core.model.BabyartikelProductDynamicHeight" />
+	<bean id="babyartikelProductWidthHandler" class="de.kpfamily.core.model.BabyartikelProductDynamicWidth" />
 	
 </beans>

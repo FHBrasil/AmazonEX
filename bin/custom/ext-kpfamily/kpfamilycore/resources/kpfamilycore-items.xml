@@ -144,25 +144,25 @@
 					<attribute qualifier="weight" type="double">
 						<description>Weight of the product, this attribute is dynamic to make it easier 
 						to get the value from the classification system</description>
-				    	<persistence type="dynamic"/>
+				    	<persistence type="dynamic" attributeHandler="babyartikelProductWeightHandler"/>
 				    	<modifiers write="false"/>
 				  	</attribute>
 				  	<attribute qualifier="length" type="double">
 				  		<description>Length of the product, this attribute is dynamic to make it easier 
 						to get the value from the classification system</description>
-				    	<persistence type="dynamic"/>
+				    	<persistence type="dynamic" attributeHandler="babyartikelProductLengthHandler"/>
 				    	<modifiers write="false"/>
 				  	</attribute>
 				  	<attribute qualifier="height" type="double">
 				  		<description>Height of the product, this attribute is dynamic to make it easier 
 						to get the value from the classification system</description>
-				    	<persistence type="dynamic"/>
+				    	<persistence type="dynamic" attributeHandler="babyartikelProductHeightHandler"/>
 				    	<modifiers write="false"/>
 				  	</attribute>
 				  	<attribute qualifier="width" type="double">
 				  		<description>Width of the product, this attribute is dynamic to make it easier 
 						to get the value from the classification system</description>
-				    	<persistence type="dynamic"/>
+				    	<persistence type="dynamic" attributeHandler="babyartikelProductWidthHandler"/>
 				    	<modifiers write="false"/>
 				  	</attribute>
 				</attributes>
