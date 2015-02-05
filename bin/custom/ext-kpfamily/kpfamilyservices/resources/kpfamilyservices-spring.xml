@@ -32,8 +32,13 @@
 	<bean id="defaultKPOrderEntryService" class="de.kpfamily.services.order.impl.DefaultKPOrderEntryService" parent="defaultOrderEntryService" />
 	
 	<alias name="defaultSerialVoucherProductService" alias="serialVoucherProductService"/>
-	<bean id="defaultSerialVoucherProductService" class="de.kpfamily.services.products.impl.DefaultSerialVoucherProductService" parent="abstractBusinessService" />
+	<bean id="defaultSerialVoucherProductService" class="de.kpfamily.services.product.impl.DefaultSerialVoucherProductService" parent="abstractBusinessService" />
 	
+	<!-- Daos -->
+	<alias name="defaultSerialVoucherProductDao" alias="serialVoucherProductDao"/>
+	<bean id="defaultSerialVoucherProductDao" class="de.kpfamily.services.daos.product.impl.DefaultSerialVoucherProductDao">
+		<constructor-arg value="BabyartikelSerialVoucherProductModel"/>
+	</bean>
 	
 	<!-- Strategies -->
 	<alias name="defaultOrderEntryStatusProcessUIDGeneratorStrategy" alias="orderEntryStatusProcessUIDGeneratorStrategy"/>
