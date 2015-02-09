@@ -130,7 +130,7 @@
 						<persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler"/>
 					</attribute>
 					<attribute qualifier="supplierPrice" type="double">
-						<description>The price that the product was bought from the supplier</description>
+						<description>The price that the product was bought from the supplier - old manufacturerPurchasePrice</description>
 						<persistence type="property"/>
 						<modifiers />
 					</attribute>
@@ -181,6 +181,20 @@
 					</attribute>
 					<attribute qualifier="suggestedRetailPrice" type="double">
 						<modifiers />
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="dailySalesFrequency">
+						<description>old daily sales.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="warehouseDeliveryDays">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="dropShippingDeliveryDays">
+						<description>old dvDeliveryDate.</description>
+						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
 				</attributes>
@@ -276,18 +290,6 @@
 					</attribute>
 					<attribute type="localized:java.lang.String" qualifier="name">
 						<modifiers optional="false" />
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="int" qualifier="orderFrequency">
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="int" qualifier="warehouseDeliveryDays">
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="int" qualifier="dropShippingDeliveryDays">
-						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
 				</attributes>
