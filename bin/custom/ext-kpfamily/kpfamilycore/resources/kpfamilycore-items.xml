@@ -97,9 +97,7 @@
 		</typegroup>
 		
 		<typegroup name="Babyartikel">
-			<itemtype code="BabyartikelProduct" extends="Product"
-			          autocreate="true" generate="true" 
-			          jaloclass="de.kpfamily.core.jalo.BabyartikelProduct">
+			<itemtype code="BabyartikelProduct" extends="Product">
 				<description>Base babyartikel product extension that contains additional attributes.</description>
 				<attributes>
 					<attribute qualifier="shortDescription" type="localized:java.lang.String">
@@ -165,6 +163,26 @@
 				    	<persistence type="dynamic" attributeHandler="babyartikelProductWidthHandler"/>
 				    	<modifiers write="false"/>
 				  	</attribute>
+				  	<attribute qualifier="seoPageTitle" type="localized:java.lang.String">
+						<modifiers />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="reviewsAverageRating" type="double">
+						<modifiers />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="reviewsTotalCount" type="int">
+						<modifiers />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="previousPrice" type="double">
+						<modifiers />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="suggestedRetailPrice" type="double">
+						<modifiers />
+						<persistence type="property"/>
+					</attribute>
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
