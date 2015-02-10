@@ -46,7 +46,7 @@
 			<value code="RETURNED"/>
 			<value code="CHARGEBACK"/>
 		</enumtype>
-		 <enumtype code="OrderEntryStatus" autocreate="false" generate="true" dynamic="false">
+		<enumtype code="OrderEntryStatus" autocreate="false" generate="true" dynamic="false">
 			<value code="CHARGEBACK"/>
 			<value code="SHIPPED"/>
 			<value code="RETURNED"/>
@@ -65,6 +65,14 @@
 			<deployment table="Product2SupplierRel" typecode="10002" />
 			<sourceElement type="BabyartikelProduct" cardinality="many" navigable="false" />
 			<targetElement type="ProductSupplier" qualifier="suppliers" collectiontype="list" cardinality="many"/>
+		</relation>
+		<relation code="Product2SupplierPriceHistoryRelation" localized="false">
+			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
+			<targetElement type="PriceHistoryEntry" qualifier="supplierPriceHistory" cardinality="many"/>
+		</relation>
+		<relation code="Product2SellingPriceHistoryRelation" localized="false">
+			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
+			<targetElement type="PriceHistoryEntry" qualifier="sellingPriceHistory" cardinality="many"/>
 		</relation>
 	</relations>
 
@@ -119,23 +127,8 @@
 						<modifiers read="true" write="false" />
 						<persistence type="dynamic" attributeHandler="articleStateInternalCodeHandler"/>
 					</attribute>
-					<attribute qualifier="shippingMethod" type="ShippingMethod">
-						<description>Defines the way that the product is shipped</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="shippingMethodInternalCode" type="java.lang.String">
-						<description>Dynamic attribute to retrieve the shipping method internal code</description>
-						<modifiers read="true" write="false" />
-						<persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler"/>
-					</attribute>
 					<attribute qualifier="supplierPrice" type="double">
 						<description>The price that the product was bought from the supplier - old manufacturerPurchasePrice</description>
-						<persistence type="property"/>
-						<modifiers />
-					</attribute>
-					<attribute qualifier="nextDeliveryDate" type="java.util.Date">
-						<description>delivery date that comes from PIXI</description>
 						<persistence type="property"/>
 						<modifiers />
 					</attribute>
@@ -188,6 +181,27 @@
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
+					<attribute qualifier="tradingGroup" type="TradingGroup">
+						<modifiers />
+						<persistence type="property"/>
+					</attribute>
+					<!-- acho q vou jogar tudo isso pra tabela de dados de logistica -->
+					<!--  -->
+					<attribute qualifier="nextDeliveryDate" type="java.util.Date">
+						<description>delivery date that comes from PIXI</description>
+						<persistence type="property"/>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="shippingMethod" type="ShippingMethod">
+						<description>Defines the way that the product is shipped</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="shippingMethodInternalCode" type="java.lang.String">
+						<description>Dynamic attribute to retrieve the shipping method internal code</description>
+						<modifiers read="true" write="false" />
+						<persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler"/>
+					</attribute>
 					<attribute type="int" qualifier="warehouseDeliveryDays">
 						<modifiers/>
 						<persistence type="property"/>
@@ -197,10 +211,7 @@
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
-					<attribute qualifier="tradingGroup" type="TradingGroup">
-						<modifiers />
-						<persistence type="property"/>
-					</attribute>
+					<!--  -->
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
@@ -320,6 +331,19 @@
 						<key attribute="code"/>
 					</index>
 				</indexes>
+			</itemtype>
+			<itemtype code="PriceHistoryEntry">
+				<deployment table="PriceHistoryEntry" typecode="10005"/>
+				<attributes>
+					<attribute qualifier="price" type="double">
+						<persistence type="property"/>
+						<modifiers optional="false" initial="true" write="false" />
+					</attribute>
+					<attribute qualifier="date" type="java.util.Date" >
+						<persistence type="property"/>
+						<modifiers optional="false" initial="true" write="false" />
+					</attribute>
+				</attributes>
 			</itemtype>
 		</typegroup>
 
