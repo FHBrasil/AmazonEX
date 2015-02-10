@@ -9,13 +9,13 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
  *
- *  
+ *
  */
 package de.kpfamily.core.checkout.pci.impl;
 
 import de.hybris.platform.acceleratorservices.config.SiteConfigService;
-import de.hybris.platform.acceleratorservices.payment.constants.PaymentConstants;
 import de.hybris.platform.acceleratorservices.enums.CheckoutPciOptionEnum;
+import de.hybris.platform.acceleratorservices.payment.constants.PaymentConstants;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Required;
@@ -67,7 +67,7 @@ public class ConfiguredCheckoutPciStrategy extends AbstractCheckoutPciStrategy
 	{
 		//Check if there is any site specific and ui experience specific PCI configuration
 		final String pciOption = getSiteConfigService().getProperty(PaymentConstants.PaymentProperties.SITE_PCI_STRATEGY);
-		if(StringUtils.isNotBlank(pciOption))
+		if (StringUtils.isNotBlank(pciOption))
 		{
 			return CheckoutPciOptionEnum.valueOf(pciOption);
 		}
