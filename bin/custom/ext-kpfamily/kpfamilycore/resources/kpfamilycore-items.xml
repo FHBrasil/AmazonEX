@@ -197,6 +197,10 @@
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
+					<attribute qualifier="tradingGroup" type="TradingGroup">
+						<modifiers />
+						<persistence type="property"/>
+					</attribute>
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
@@ -296,6 +300,24 @@
 				<indexes>
 					<index name="supplierCodeIdx">
 						<key attribute="code" />
+					</index>
+				</indexes>
+			</itemtype>
+			<itemtype code="TradingGroup">
+				<deployment table="TradingGroup" typecode="10004"/>
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="tradingGroupCodeIDX" unique="true">
+						<key attribute="code"/>
 					</index>
 				</indexes>
 			</itemtype>
