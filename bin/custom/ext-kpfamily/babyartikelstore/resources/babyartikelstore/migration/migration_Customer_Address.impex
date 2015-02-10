@@ -1,4 +1,4 @@
-# ---- Instructions ------------------------------------------------------------- -------
+# ---- Instructions ------------------------------------------------------------
 # *** Before doing any instructions, verify if it hasn't already done  ***
 #
 # Before exporting data:
@@ -29,7 +29,7 @@ insert KPCustomer;&customerPK;uid[unique=true];customerID[unique=true];descripti
 # ------------------------------------------------------------------------------
 # 
 # 
-# ---- Import script #1 --------------------------------------------------------
+# ---- Import script -----------------------------------------------------------
 insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country[translator=de.kpfamily.core.translators.KPCountryTypeTranslator][default=de];dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(Customer.uid)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;streetname;streetnumber;town;unloadingAddress[allownull=true];url;shippingAddress[default=true]
 "#% impex.includeExternalDataMedia(""Address.csv"" , ""UTF-8"", ';',  1 , -1);"
 #
