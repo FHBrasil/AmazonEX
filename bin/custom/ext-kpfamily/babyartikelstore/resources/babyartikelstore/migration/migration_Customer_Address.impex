@@ -20,7 +20,7 @@
 # 
 # ---- Export script -----------------------------------------------------------
 "#% impex.setTargetFile(""Address.csv"");"
-insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country(isocode);dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(Customer.uid);phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;streetname;streetnumber;town;unloadingAddress[allownull=true];url;
+insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country(isocode)                                                                    ;dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(Customer.uid)                ;phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;streetname;streetnumber;town;unloadingAddress[allownull=true];url;                             ;
 "#% impex.exportItems(""SELECT DISTINCT {a:pk} FROM {Address AS a JOIN KPCustomer AS c ON {c:pk} = {a:owner} AND ({a:pk} = {c:defaultPaymentAddress} OR {a:pk} = {c:defaultShipmentAddress}) JOIN PrincipalGroupRelation as pgr ON {pgr.source} = {c.pk} JOIN PrincipalGroup as ug ON {ug.pk} = {pgr.target} } WHERE {ug.uid} <> 'anonymousgroup' AND {c:password} NOT LIKE '%anonymousPassword%' AND {c:uid} LIKE '%@%'"", Collections.EMPTY_MAP, Collections.singletonList(Address.class), true, true, -1, -1);"
 #
 "#% impex.setTargetFile(""Customer.csv"");"
@@ -30,10 +30,10 @@ insert KPCustomer;&customerPK;uid[unique=true];customerID[unique=true];descripti
 # 
 # 
 # ---- Import script -----------------------------------------------------------
-insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country[translator=de.kpfamily.core.translators.KPCountryTypeTranslator][default=de];dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(Customer.uid)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;streetname;streetnumber;town;unloadingAddress[allownull=true];url;shippingAddress[default=true]
+insert Address;&addressPK;appartment;billingAddress[allownull=true];building;cellphone;company;contactAddress[allownull=true];country[translator=de.kpfamily.core.translators.KPCountryTypeTranslator][default=de];dateofbirth[dateformat=dd.MM.yyyy hh:mm:ss];department;district;duplicate;email;fax;firstname;gender(code,itemtype(code));lastname;middlename;middlename2;original(&addressPK);owner(Customer.uid)[allownull=true];phone1;phone2;pobox;postalcode;publicKey;region(isocode);remarks;streetname;streetnumber;town;unloadingAddress[allownull=true];url;shippingAddress[default=true];
 "#% impex.includeExternalDataMedia(""Address.csv"" , ""UTF-8"", ';',  1 , -1);"
 #
-insert Customer;&customerPK;uid[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];defaultPaymentAddress(&addressPK);defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
+insert Customer  ;&customerPK;uid[unique=true];customerID[unique=true];description[allownull=true];loginDisabled[allownull=true];name;password[allownull=true];passwordAnswer[allownull=true];passwordQuestion[allownull=true];defaultPaymentAddress(&addressPK);defaultShipmentAddress(&addressPK);sessionLanguage(isocode);sessionCurrency(isocode)
 "#% impex.includeExternalDataMedia(""Customer.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ------------------------------------------------------------------------------
 #

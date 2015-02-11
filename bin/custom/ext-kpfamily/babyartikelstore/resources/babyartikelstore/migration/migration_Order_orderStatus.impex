@@ -17,13 +17,13 @@
 # 
 # ---- Export script -----------------------------------------------------------
 "#% impex.setTargetFile(""OrderStatus.csv"");"
-insert OrderStatus;code[unique=true];name
+insert OrderStatus;code[unique=true];name;
 "#% impex.exportItems(""OrderStatus"", false);"
 # ------------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
-insert OrderStatus;code[unique=true];name
+insert OrderStatus;code[unique=true];name;
 "#% impex.includeExternalDataMedia(""OrderStatus.csv"", ""UTF-8"", ';', 1 , -1);"
 #-------------------------------------------------------------------------------
 # 

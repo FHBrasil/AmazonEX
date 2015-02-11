@@ -35,16 +35,16 @@ insert ProductRestriction;&productRestrictionPK;description;positive;violationMe
 # 
 # 
 # ---- Import script -----------------------------------------------------------
-insert SerialVoucher;code[unique=true];name;description;priority;value;valueString;freeShipping;global;orders(code);discountstring;currency(isocode);absolute
+insert SerialVoucher;code[unique=true];name;description;priority;value;valueString;freeShipping;global;orders(code);discountstring;currency(isocode);absolute;
 "#% impex.includeExternalDataMedia( ""SerialVoucher.csv"" , ""UTF-8"", ';',  1 , -1 );"
 # 
-insert PromotionVoucher;code[unique=true];voucherCode[unique=true];name;description;priority;value;valueString;freeShipping;global;orders(code);discountstring;currency(isocode);absolute
+insert PromotionVoucher;code[unique=true];voucherCode[unique=true];name;description;priority;value;valueString;freeShipping;global;orders(code);discountstring;currency(isocode);absolute;
 "#% impex.includeExternalDataMedia( ""PromotionVoucher.csv"" , ""UTF-8"", ';',  1 , -1 );"
 # 
-insert OrderRestriction;&orderRestrictionPK;currency(isocode);description;positive;total;valueOfGoodsOnly;violationMessage;voucher(code)
+insert OrderRestriction;&orderRestrictionPK;currency(isocode);description;positive;total;valueOfGoodsOnly;violationMessage;voucher(code);
 "#% impex.includeExternalDataMedia( ""OrderRestriction.csv"" , ""UTF-8"", ';',  1 , -1 );"
 # 
-insert ProductRestriction;&productRestrictionPK;description;positive;violationMessage;voucher(code)
+insert ProductRestriction;&productRestrictionPK;description;positive;violationMessage;voucher(code);
 "#% impex.includeExternalDataMedia( ""ProductRestriction.csv"" , ""UTF-8"", ';',  1 , -1 );"
 # ------------------------------------------------------------------------------
 # 

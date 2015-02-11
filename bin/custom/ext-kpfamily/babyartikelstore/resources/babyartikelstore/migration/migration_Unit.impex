@@ -19,13 +19,13 @@
 # 
 # ---- Export Script -----------------------------------------------------------
 "#% impex.setTargetFile(""Unit.csv"");"
-insert Unit;code;name;conversion;unitType
+insert Unit;code;name;conversion;unitType;
 "#% impex.exportItems(""Unit"", false);"
 # ------------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
-insert Unit;code;name;conversion;unitType
+insert Unit;code;name;conversion;unitType;
 "#% impex.includeExternalDataMedia(""Unit.csv"", ""UTF-8"", ';', 1 , -1);"
 # ------------------------------------------------------------------------------
 # 

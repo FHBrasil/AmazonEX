@@ -20,13 +20,13 @@ $catalog=babyartikel
 $version=Staged
 # 
 "#% impex.setTargetFile(""StockLevel.csv"");"
-insert_update Product;code[unique=true];pixiStockQuantity;pixiOpenSuppliersOrders;mindestbestand;
+insert_update Product   ;code[unique=true]       ;pixiStockQuantity   ;                   ;                                              ;mindestbestand   ;
 "#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog' }"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
-insert StockLevel;productCode[unique=true];available[default=0];reserved[default=0];warehouse(code)[unique=true,default='default'];minimumStockLevel;
+insert_update StockLevel;productCode[unique=true];available[default=0];reserved[default=0];warehouse(code)[unique=true,default='default'];minimumStockLevel;
 "#% impex.includeExternalDataMedia(""StockLevel.csv"", ""UTF-8"", ';', 1 , -1);"
 # ---- -------------------------------------------------------------------------
 # 

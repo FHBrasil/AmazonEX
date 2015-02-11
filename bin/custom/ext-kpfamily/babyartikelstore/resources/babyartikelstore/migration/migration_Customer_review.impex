@@ -30,7 +30,7 @@ insert CustomerReview;blocked;comment;headline;product(code, catalogVersion(cata
 # ---- Import script #1 --------------------------------------------------------
 $catalogVersion=catalogVersion(catalog(id[default=babyartikelProductCatalog]),version[default='Online'])[unique=true,default=babyartikelProductCatalog:Online]
 # 
-insert CustomerReview;blocked;comment;headline;product(code, $catalogVersion;rating(value);reviewDate[dateformat=dd.MM.yyyy hh:mm:ss];user(uid);
+insert CustomerReview;blocked;comment;headline;product(code, $catalogVersion                      ;rating(value);reviewDate[dateformat=dd.MM.yyyy hh:mm:ss];user(uid);
 "#% impex.includeExternalDataMedia(""CustomerReview.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ------------------------------------------------------------------------------
 # 
