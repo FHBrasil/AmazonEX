@@ -189,6 +189,14 @@
 						<modifiers />
 						<persistence type="property"/>
 					</attribute>
+					<attribute qualifier="family" type="java.lang.String">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="designFamily" type="java.lang.String">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
 					<!-- acho q vou jogar tudo isso pra tabela de dados de logistica -->
 					<!--  -->
 					<attribute qualifier="nextDeliveryDate" type="java.util.Date">

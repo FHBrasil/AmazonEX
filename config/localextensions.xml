@@ -15,17 +15,16 @@
 		<extension name="hmc" />
 		<!-- <extension name="mcc" /> -->
 		<extension name="platformhmc" />
-
 										
 		<!-- ext-commerce -->
-       <<extension name="assistedservicefacades" />
+       <extension name="assistedservicefacades" />
 		<extension name="btg" />
-		<extension name="btgcockpit" /> -->
-		<extension name="commercesearch" /> -->
+		<extension name="btgcockpit" />
+		<extension name="commercesearch" />
 		<extension name="commercesearchbackoffice" />
 		<extension name="commercesearchhmc" />
  	
- <extension name="voucher" />
+ 		<extension name="voucher" />
  		<extension name="commerceservices" />
 		<extension name="basecommerce" />
 		 <extension name="payment" />
@@ -84,6 +83,5 @@
 		<extension name="acceleratorfacades" />
 		<extension name="acceleratorcms" />
 		<extension name="acceleratorstorefrontcommons" />
-				
 	</extensions>
 </hybrisconfig>
