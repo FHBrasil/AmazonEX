@@ -74,6 +74,10 @@
 			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
 			<targetElement type="PriceHistoryEntry" qualifier="sellingPriceHistory" cardinality="many"/>
 		</relation>
+		<relation code="Product2ProductSalesBreakdownRecordRelation" localized="false">
+			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
+			<targetElement type="ProductSalesBreakdownRecord" qualifier="salesBreakdown" cardinality="many"/>
+		</relation>
 	</relations>
 
 	<itemtypes>
@@ -342,6 +346,23 @@
 					<attribute qualifier="date" type="java.util.Date" >
 						<persistence type="property"/>
 						<modifiers optional="false" initial="true" write="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ProductSalesBreakdownRecord">
+				<deployment table="ProductSalesBreakdown" typecode="10006"/>
+				<attributes>
+					<attribute qualifier="timePeriodInDays" type="int">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="quantity" type="int">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="source" type="java.lang.String" >
+						<persistence type="property"/>
+						<modifiers optional="false" />
 					</attribute>
 				</attributes>
 			</itemtype>
