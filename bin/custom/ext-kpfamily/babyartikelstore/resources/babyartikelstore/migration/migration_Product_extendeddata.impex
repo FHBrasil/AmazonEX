@@ -22,7 +22,7 @@ $catalog=babyartikel;
 $version=Staged;
 # 
 "#% impex.setTargetFile(""Product.csv"");"
-update Product;code[unique=true];               ;manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);shippingMethod;deliveryTime;height;length;width;weight;numberContentUnits(value);Europe1PriceFactory_PTG(code);manufacturerPurchasePrice(value);pageTitle[lang=de]   ;pageTitle[lang=en]   ;averageOverallRating(value)                 ;numberOfCustomerReviews;deliverySchedule[dateformat=dd.MM.yyyy];dailySales         ;remarks;dvDeliveryDate[dateformat=dd.MM.yyyy]          ;oldPrice(value)     ;manufacturerPurchasePrice(value);UVP(value)                 ;
+update Product;code[unique=true];               ;manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);shippingMethod;deliveryTime;height;length;width;weight;numberContentUnits(value);Europe1PriceFactory_PTG(code);pageTitle[lang=de]   ;pageTitle[lang=en]   ;averageOverallRating(value)                 ;numberOfCustomerReviews;deliverySchedule[dateformat=dd.MM.yyyy];dailySales         ;remarks;dvDeliveryDate[dateformat=dd.MM.yyyy]          ;oldPrice(value)     ;manufacturerPurchasePrice(value);UVP(value)                 ;purchaseCategory(code);
 "#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct as p JOIN CatalogVersion as cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ------------------------------------------------------------------------------
 # 
@@ -30,7 +30,7 @@ update Product;code[unique=true];               ;manufacturerAID;manufacturerNam
 # ---- Import Script -----------------------------------------------------------
 $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
 # 
-update Product;code[unique=true];$catalogVersion;manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);shippingMethod;deliveryTime;height;length;width;weight;numberContentUnits(value);Europe1PriceFactory_PTG(code);manufacturerPurchasePrice(value);seoPageTitle[lang=de];seoPageTitle[lang=en];reviewsAverageRating(value)[forceWrite=true];reviewsTotalCount      ;nextDeliveryDate                       ;dailySalesFrequency;remarks;dropShippingDeliveryDays[dateformat=dd.MM.yyyy];previousPrice(value);supplierPrice(value)            ;suggestedRetailPrice(value);
+update Product;code[unique=true];$catalogVersion;manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);shippingMethod;deliveryTime;height;length;width;weight;numberContentUnits(value);Europe1PriceFactory_PTG(code);seoPageTitle[lang=de];seoPageTitle[lang=en];reviewsAverageRating(value)[forceWrite=true];reviewsTotalCount      ;nextDeliveryDate                       ;dailySalesFrequency;remarks;dropShippingDeliveryDays[dateformat=dd.MM.yyyy];previousPrice(value);supplierPrice(value)            ;suggestedRetailPrice(value);tradingGroup(code)    ;
 "#% impex.includeExternalDataMedia(""Product.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ------------------------------------------------------------------------------
 # 
