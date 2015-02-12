@@ -28,7 +28,7 @@ insert Product;code[unique=true];               ;name[lang=de];name[lang=en];app
 # ---- Import Script -----------------------------------------------------------
 $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
 # 
-insert_update Product;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];approvalStatus(code)[default='unapproved'];description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
+insert_update BabyartikelProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];approvalStatus(code)[default='unapproved'];description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1 , -1);"
 # ---- -------------------------------------------------------------------------
 # 
