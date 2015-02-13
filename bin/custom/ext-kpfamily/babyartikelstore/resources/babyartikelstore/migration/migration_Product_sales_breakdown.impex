@@ -19,16 +19,30 @@
 $catalog=babyartikel;
 $version=Staged;
 # 
-"#% impex.setTargetFile(""Product.csv"");"
-update Product           ;code[unique=true];               ;sale30;sale120;sale356;
-"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+"#% impex.setTargetFile(""Product_sale30.csv"");"
+insert Product                           ;code[unique=true]                          ;code  ;sale30  ;                                          ;
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }}) AND {p:sale30} IS NOT NULL"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# 
+"#% impex.setTargetFile(""Product_sale120.csv"");"
+insert Product                           ;code[unique=true]                          ;code  ;sale120 ;                                          ;
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }}) AND {p:sale120} IS NOT NULL"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# 
+"#% impex.setTargetFile(""Product_sale365.csv"");"
+insert Product                           ;code[unique=true]                          ;code  ;sale356 ;                                          ;
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }}) AND {p:sale356} IS NOT NULL"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
 $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
 # 
-insert BabyartikelProduct;code[unique=true];$catalogVersion;sale30;sale120;sale365;
-"#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1 , -1);"
+insert_update ProductSalesBreakdownRecord;product(code, $catalogVersion)[unique=true];source;quantity;timePeriodInDays[default=30][unique=true] ;
+"#% impex.includeExternalDataMedia(""Product_sale30.csv"", ""UTF-8"", ';', 1, -1);"
+# 
+insert_update ProductSalesBreakdownRecord;product(code, $catalogVersion)[unique=true];source;quantity;timePeriodInDays[default=120][unique=true];
+"#% impex.includeExternalDataMedia(""Product_sale120.csv"", ""UTF-8"", ';', 1, -1);"
+# 
+insert_update ProductSalesBreakdownRecord;product(code, $catalogVersion)[unique=true];source;quantity;timePeriodInDays[default=365][unique=true];
+"#% impex.includeExternalDataMedia(""Product_sale365.csv"", ""UTF-8"", ';', 1, -1);"
 # ---- -------------------------------------------------------------------------
 # 

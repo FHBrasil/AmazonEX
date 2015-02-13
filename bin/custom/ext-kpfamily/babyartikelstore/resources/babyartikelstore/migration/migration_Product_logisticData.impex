@@ -22,7 +22,7 @@ $catalog=babyartikel;
 $version=Staged;
 # 
 "#% impex.setTargetFile(""Product.csv"");"
-update Product           ;code[unique=true];               ;manufacturerAID;manufacturerName;ean;contentUnit(code);articleStatus(code);deliveryTime[dateformat=dd.MM.yyyy hh:mm:ss];height;length;width;weight;numberContentUnits(value);Europe1PriceFactory_PTG(code)                                                                       ;pageTitle[lang=de]   ;pageTitle[lang=en]   ;averageOverallRating(value)                 ;numberOfCustomerReviews;dailySales         ;remarks;dvDeliveryDate[dateformat=dd.MM.yyyy]          ;oldPrice(value)     ;manufacturerPurchasePrice(value);UVP(value)                 ;purchaseCategory(code);productFamily;designFamilie;gaPageViews;dutyFare(value)           ;forwardingShipping        ;
+update Product            ;code[unique=true]         ;               ;shippingMethod(code);shippingMethod(internalCode);
 "#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ------------------------------------------------------------------------------
 # 
@@ -30,7 +30,7 @@ update Product           ;code[unique=true];               ;manufacturerAID;manu
 # ---- Import Script -----------------------------------------------------------
 $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
 # 
-update BabyartikelProduct;code[unique=true];$catalogVersion;manufacturerAID;manufacturerName;ean;contentUnit(code);                   ;deliveryTime[dateformat=dd.MM.yyyy hh:mm:ss];      ;      ;     ;      ;numberContentUnits(value);Europe1PriceFactory_PTG(code)[cellDecorator=de.kpfamily.core.translators.KPProductTaxGroupDecorator];seoPageTitle[lang=de];seoPageTitle[lang=en];reviewsAverageRating(value)[forceWrite=true];reviewsTotalCount      ;dailySalesFrequency;remarks;dropShippingDeliveryDays[dateformat=dd.MM.yyyy];previousPrice(value);supplierPrice(value)            ;suggestedRetailPrice(Value);tradingGroup(code)    ;family       ;designFamily ;gaPageViews;customsTariffNumber(value);dispatchViaForwardingAgent;
+update ProductLogisticData;product(code)[unique=true];$catalogVersion;shippingMethod(code);                            ;
 "#% impex.includeExternalDataMedia(""Product.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ------------------------------------------------------------------------------
 # 
