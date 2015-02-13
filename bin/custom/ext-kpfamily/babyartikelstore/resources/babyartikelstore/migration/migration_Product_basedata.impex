@@ -21,7 +21,7 @@ $version=Staged;
 # 
 "#% impex.setTargetFile(""Product.csv"");"
 insert Product;code[unique=true];               ;name[lang=de];name[lang=en];approvalStatus(code)                      ;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
-"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct as p JOIN CatalogVersion as cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 

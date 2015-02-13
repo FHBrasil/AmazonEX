@@ -21,7 +21,7 @@ $version=Staged;
 # 
 "#% impex.setTargetFile(""PriceHistoryEntry.csv"");"
 insert ProductPurchasePriceHistoryRelation;source(code)                  ;target(date)                           ;target(value)[numberformat=##.##];
-"#% impex.exportItemsFlexibleSearch(""SELECT {pppr:pk} AS price FROM {ProductPurchasePriceHistoryRelation AS pppr JOIN PriceHistoryEntry AS phe ON {phe:pk} = {pppr:target} JOIN KPProduct AS p ON {p:pk} = {pppr:source} JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = 'Staged' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = 'babyartikel' } WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"");"
+"#% impex.exportItemsFlexibleSearch(""SELECT {pppr:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog' JOIN ProductPurchasePriceHistoryRelation AS pppr ON {pppr:source} = {p:pk} JOIN PriceHistoryEntry AS phe ON {phe:pk} = {pppr:target} } WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 
