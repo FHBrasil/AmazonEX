@@ -30,7 +30,7 @@ public class DefaultPixiProductUpdateNextDeliveryDateStrategy implements PixiPro
 		
 		LOG.debug("Updating " + product.getCode() + " nextDeliveryDate to " + nextDeliveryDate);
 		
-		babyartikelProduct.setNextDeliveryDate(nextDeliveryDate);
+		//TODO corrigir aqui babyartikelProduct.setNextDeliveryDate(nextDeliveryDate);
 		
 		getModelService().save(product);
 		

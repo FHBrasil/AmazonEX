@@ -52,7 +52,7 @@ public class DefaultPixiOrderEntriesPopulator implements Populator<OrderModel, O
 		if(product instanceof BabyartikelProductModel)
 		{
 			final BabyartikelProductModel babyProduct = (BabyartikelProductModel) product;
-			final String shippingMethod = babyProduct.getShippingMethodInternalCode();
+			final String shippingMethod = null;//TODO babyProduct.getShippingMethodInternalCode();
 			final String articleState = babyProduct.getArticleStateInternalCode();
 			
 			note.append(product.getCode());

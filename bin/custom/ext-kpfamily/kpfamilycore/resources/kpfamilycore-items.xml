@@ -104,6 +104,11 @@
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
+					<attribute qualifier="warehouseArrivalDate" type="java.util.Date">
+						<description>Only for out of stock items: this date indicates when new items will arrive at the warehouse</description>
+						<persistence type="property"/>
+						<modifiers />
+					</attribute>
 				</attributes>
 			</itemtype>
 		</typegroup>
@@ -201,33 +206,6 @@
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
-					<!-- acho q vou jogar tudo isso pra tabela de dados de logistica -->
-					<!--  -->
-					<attribute qualifier="nextDeliveryDate" type="java.util.Date">
-						<description>delivery date that comes from PIXI</description>
-						<persistence type="property"/>
-						<modifiers />
-					</attribute>
-					<attribute qualifier="shippingMethod" type="ShippingMethod">
-						<description>Defines the way that the product is shipped</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="shippingMethodInternalCode" type="java.lang.String">
-						<description>Dynamic attribute to retrieve the shipping method internal code</description>
-						<modifiers read="true" write="false" />
-						<persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler"/>
-					</attribute>
-					<attribute type="int" qualifier="warehouseDeliveryDays">
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="int" qualifier="dropShippingDeliveryDays">
-						<description>old dvDeliveryDate.</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<!--  -->
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
@@ -323,6 +301,19 @@
 						<modifiers optional="false" />
 						<persistence type="property"/>
 					</attribute>
+					<attribute type="int" qualifier="warehouseDeliveryDays">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="dropShippingDeliveryDays">
+						<description>old dvDeliveryDate.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="orderFrequency" type="int">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
 				</attributes>
 				<indexes>
 					<index name="supplierCodeIdx">
@@ -378,6 +369,40 @@
 					</attribute>
 				</attributes>
 			</itemtype>
+			<itemtype code="ProductLogisticData">
+				<deployment table="ProductLogisticData" typecode="10007"/>
+				<attributes>
+					<attribute type="double" qualifier="customsTariffNumber">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="Country" qualifier="countryOfOrigin">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="boolean" qualifier="dispatchViaForwardingAgent">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute qualifier="shippingMethod" type="ShippingMethod">
+						<description>Defines the way that the product is shipped</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="shippingMethodInternalCode" type="java.lang.String">
+						<description>Dynamic attribute to retrieve the shipping method internal code</description>
+						<modifiers read="true" write="false" />
+						<persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+<!-- 				
+					lengthPackage1,2,3 etc...
+					widthPackage1,2,3 etc...
+					heightPackage1,2,3 etc...
+					weightPackage1,2,3 etc...
+					bulkyGoodsPackage1,2,3 etc... -->
 		</typegroup>
 
 		<!-- TypeGroups are for structure of this file only -->
