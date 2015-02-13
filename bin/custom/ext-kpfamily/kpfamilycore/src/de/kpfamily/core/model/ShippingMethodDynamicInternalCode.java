@@ -25,7 +25,7 @@ public class ShippingMethodDynamicInternalCode implements DynamicAttributeHandle
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#get(de.hybris.platform.servicelayer.model
 	 * .AbstractItemModel)
@@ -33,7 +33,7 @@ public class ShippingMethodDynamicInternalCode implements DynamicAttributeHandle
 	@Override
 	public String get(final BabyartikelProductModel product)
 	{
-		final ShippingMethod shippingMethod = product.getShippingMethod();
+		final ShippingMethod shippingMethod = null;//TODO product.getShippingMethod();
 		final Item item = modelService.getSource(shippingMethod);
 
 		return JaloUtils.getAttributeSilently(item, KpfamilyCoreConstants.Attributes.ShippingMethod.INTERNALCODE);
@@ -41,7 +41,7 @@ public class ShippingMethodDynamicInternalCode implements DynamicAttributeHandle
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#set(de.hybris.platform.servicelayer.model
 	 * .AbstractItemModel, java.lang.Object)
