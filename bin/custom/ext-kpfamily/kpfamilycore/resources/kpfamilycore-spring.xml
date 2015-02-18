@@ -462,5 +462,7 @@
 	<bean id="babyartikelProductLengthHandler" class="de.kpfamily.core.model.BabyartikelProductDynamicLength" />
 	<bean id="babyartikelProductHeightHandler" class="de.kpfamily.core.model.BabyartikelProductDynamicHeight" />
 	<bean id="babyartikelProductWidthHandler" class="de.kpfamily.core.model.BabyartikelProductDynamicWidth" />
+	<bean id="productPackageTagCodeHandler" class="de.kpfamily.core.model.ProductPackageDynamicTagCode" />
+	<bean id="productPackageBulkyHandler" class="de.kpfamily.core.model.ProductPackageDynamicBulky" />
 	
 </beans>
