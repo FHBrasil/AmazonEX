@@ -22,7 +22,7 @@ $catalog=babyartikel;
 $version=Staged;
 # 
 "#% impex.setTargetFile(""Product.csv"");"
-update Product            ;code[unique=true]         ;               ;shippingMethod(code);shippingMethod(internalCode);
+update Product            ;code[unique=true]         ;               ;shippingMethod(code);shippingMethod(internalCode);dutyFare(value)           ;forwardingShipping        ;
 "#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ------------------------------------------------------------------------------
 # 
@@ -30,7 +30,7 @@ update Product            ;code[unique=true]         ;               ;shippingMe
 # ---- Import Script -----------------------------------------------------------
 $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
 # 
-update ProductLogisticData;product(code)[unique=true];$catalogVersion;shippingMethod(code);                            ;
+update ProductLogisticData;product(code)[unique=true];$catalogVersion;shippingMethod(code);                            ;customsTariffNumber(value);dispatchViaForwardingAgent;
 "#% impex.includeExternalDataMedia(""Product.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ------------------------------------------------------------------------------
 # 
