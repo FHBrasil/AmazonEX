@@ -78,6 +78,10 @@
 			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
 			<targetElement type="ProductSalesBreakdownRecord" qualifier="salesBreakdown" cardinality="many"/>
 		</relation>
+		<relation code="ProductLogisticData2ProductPackageRelation" localized="false">
+			<sourceElement type="ProductLogisticData" qualifier="logisticData" cardinality="one"/>
+			<targetElement type="ProductPackage" qualifier="packages" cardinality="many"/>
+		</relation>
 	</relations>
 
 	<itemtypes>
@@ -206,6 +210,10 @@
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
+					<attribute type="ProductLogisticData" qualifier="logisticData">
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
@@ -264,27 +272,37 @@
 					</attribute>
 				</attributes>
 			</itemtype>
-			<itemtype code="PackageSize">
-				<deployment table="PackageSize" typecode="10000"/>
+			<itemtype code="ProductPackage">
+				<deployment table="ProductPackage" typecode="10008"/>
 				<attributes>
 					<attribute qualifier="tagCode" type="java.lang.String">
 						<description>Tag code used to identify the package</description>
-						<modifiers unique="true"/>
+						<modifiers read="true" write="false" />
+						<persistence type="dynamic" attributeHandler="productPackageTagCodeHandler"/>
+					</attribute>
+					<attribute qualifier="bulky" type="boolean">
+						<description>Defines if the product is bulky</description>
+						<modifiers read="true" write="false" />
+						<persistence type="dynamic" attributeHandler="productPackageBulkyHandler"/>
+					</attribute>
+					<attribute qualifier="length" type="int">
+						<description>Length that this package supports in cm</description>
+						<modifiers optional="false"/>
 						<persistence type="property"/>
 					</attribute>
-					<attribute qualifier="maxLength" type="int">
-						<description>Max length that this package supports in cm</description>
-						<modifiers/>
+					<attribute qualifier="width" type="int">
+						<description>Width that this package supports in cm</description>
+						<modifiers optional="false"/>
 						<persistence type="property"/>
 					</attribute>
-					<attribute qualifier="maxWidth" type="int">
-						<description>Max width that this package supports in cm</description>
-						<modifiers/>
+					<attribute qualifier="height" type="int">
+						<description>Height that this package supports in cm</description>
+						<modifiers optional="false"/>
 						<persistence type="property"/>
 					</attribute>
-					<attribute qualifier="maxHeight" type="int">
-						<description>Max height that this package supports in cm</description>
-						<modifiers/>
+					<attribute qualifier="weight" type="double">
+						<description>Weight that this package supports</description>
+						<modifiers optional="false"/>
 						<persistence type="property"/>
 					</attribute>
 				</attributes>
@@ -372,6 +390,10 @@
 			<itemtype code="ProductLogisticData">
 				<deployment table="ProductLogisticData" typecode="10007"/>
 				<attributes>
+					 <attribute qualifier="productCode" type="java.lang.String">
+					      <modifiers optional="false" unique="true" initial="true" write="false"/>
+					      <persistence type="property"/>
+					 </attribute>
 					<attribute type="double" qualifier="customsTariffNumber">
 						<modifiers/>
 						<persistence type="property"/>
@@ -396,13 +418,12 @@
 						<persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler"/>
 					</attribute>
 				</attributes>
+				<indexes>
+					<index name="productLogisticDataProductCodeIDX" unique="true">
+						<key attribute="productCode"/>
+					</index>
+				</indexes>
 			</itemtype>
-<!-- 				
-					lengthPackage1,2,3 etc...
-					widthPackage1,2,3 etc...
-					heightPackage1,2,3 etc...
-					weightPackage1,2,3 etc...
-					bulkyGoodsPackage1,2,3 etc... -->
 		</typegroup>
 
 		<!-- TypeGroups are for structure of this file only -->
