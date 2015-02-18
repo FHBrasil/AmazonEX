@@ -20,13 +20,15 @@ $catalog=babyartikel;
 $version=Staged;
 # 
 "#% impex.setTargetFile(""PriceRow.csv"");"
-insert PriceRow;product(code)               ;price;unit(code[unique=true,default=pieces]);currency(isocode)[unique=true,default=EUR];minqtd[default=1];unitFactor[default=1];net[default=false];
+insert_update PriceRow;product(code)[unique=true]                 ;product(code)[unique=true]  ;               ;price(value);unit(code[default=pieces])            ;currency(isocode)[unique=true,default=EUR];minqtd[default=1];unitFactor[default=1];net[default=false];
 "#% impex.exportItems(""SELECT {pr:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogversion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog' JOIN PriceRow AS pr ON {pr:product} = {p:pk} }"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ------------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
-insert PriceRow;productId(code)[unique=true];price;unit(code[unique=true,default=pieces]);currency(isocode)[unique=true,default=EUR];minqtd[default=1];unitFactor[default=1];net[default=false];
+$catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
+# 
+insert_update PriceRow;product(code, $catalogVersion)[unique=true];productId(code)[unique=true];$catalogVersion;price(value);unit(code)[unique=true,default=pieces];currency(isocode)[unique=true,default=EUR];minqtd[default=1];unitFactor[default=1];net[default=false];
 "#% impex.includeExternalDataMedia(""PriceRow.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ------------------------------------------------------------------------------
 # 

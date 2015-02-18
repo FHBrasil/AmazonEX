@@ -19,13 +19,13 @@
 # 
 # ---- Export Script -----------------------------------------------------------
 "#% impex.setTargetFile(""PurchaseCategory.csv"");"
-insert PurchaseCategory;code[unique=true];name;
+insert_update PurchaseCategory;code[unique=true];name;
 "#% impex.exportItems(""PurchaseCategory"", false);" 
 # ------------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
-insert TradingGroup;code[unique=true];name;
+insert_update TradingGroup;code[unique=true];name;
 "#% impex.includeExternalDataMedia(""PurchaseCategory.csv"", ""UTF-8"", ';', 1, -1);"
 # ------------------------------------------------------------------------------
 # 

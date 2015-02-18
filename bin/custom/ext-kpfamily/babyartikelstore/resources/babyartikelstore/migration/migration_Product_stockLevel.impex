@@ -21,7 +21,7 @@ $version=Staged
 # 
 "#% impex.setTargetFile(""StockLevel.csv"");"
 insert_update Product   ;code[unique=true]       ;pixiStockQuantity   ;                   ;                                              ;mindestbestand   ;deliverySchedule[dateformat=dd.MM.yyyy hh:mm:ss]    ;
-"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = 'Staged' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = 'babyartikel'} WHERE {p:code} NOT LIKE '%bas'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 
