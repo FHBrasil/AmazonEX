@@ -112,7 +112,7 @@ public class ImportProductController extends AbstractPixiSecuredController
 	 */
 	private void updateDeliverySchedule(ImportProductStockRequest request, ProductModel product) 
 	{
-		pixiProductUpdateNextDeliveryDateStrategy.updateNextDeliveryDate(product, request.getDELIVERYDATE());
+		getPixiProductUpdateNextDeliveryDateStrategy().updateNextDeliveryDate(product, request.getDELIVERYDATE());
 	}
 
 	/**
@@ -215,5 +215,20 @@ public class ImportProductController extends AbstractPixiSecuredController
 	public WarehouseService getWarehouseService() 
 	{
 		return warehouseService;
+	}
+
+	/**
+	 * @return the pixiProductUpdateNextDeliveryDateStrategy
+	 */
+	public PixiProductUpdateNextDeliveryDateStrategy getPixiProductUpdateNextDeliveryDateStrategy() {
+		return pixiProductUpdateNextDeliveryDateStrategy;
+	}
+
+	/**
+	 * @param pixiProductUpdateNextDeliveryDateStrategy the pixiProductUpdateNextDeliveryDateStrategy to set
+	 */
+	public void setPixiProductUpdateNextDeliveryDateStrategy(
+			PixiProductUpdateNextDeliveryDateStrategy pixiProductUpdateNextDeliveryDateStrategy) {
+		this.pixiProductUpdateNextDeliveryDateStrategy = pixiProductUpdateNextDeliveryDateStrategy;
 	}
 }

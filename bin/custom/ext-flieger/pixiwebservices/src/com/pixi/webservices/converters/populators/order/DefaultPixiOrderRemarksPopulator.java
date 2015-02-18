@@ -2,9 +2,6 @@ package com.pixi.webservices.converters.populators.order;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,21 +10,21 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.pixi.core.strategies.PixiOrderGetTransportRemarksStrategy;
 import com.pixi.webservices.jaxb.order.export.OrderInfo;
 import com.pixi.webservices.jaxb.order.export.Remark;
 
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
-import de.kpfamily.services.logistics.ExpressDeliveryService;
 
 public class DefaultPixiOrderRemarksPopulator implements Populator<OrderModel, OrderInfo>
 {
 	private Logger LOG = Logger.getLogger(DefaultPixiOrderRemarksPopulator.class);
 	
 	@Resource
-	private ExpressDeliveryService expressDeliveryService;
-	
+	private PixiOrderGetTransportRemarksStrategy pixiOrderGetTransportRemarksStrategy;
+
 	private final NumberFormat numberFormat;
 	
 	{
@@ -57,33 +54,16 @@ public class DefaultPixiOrderRemarksPopulator implements Populator<OrderModel, O
 			return "we have no transport remarks";
 		}
 		
-		if(expressDeliveryService.isApplicableForExpressDelivery(order)) 
+		final String remarks = pixiOrderGetTransportRemarksStrategy.getTransportRemarks(order);
+		
+		if(StringUtils.isNotBlank(remarks))
 		{
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-			
-			String formatedDate = dateFormat.format(getExpressDeliverySuitableDate(order));
-			
-			return "DHL;;;|||" + formatedDate;
+			return remarks;
 		}
-
+		
 		return "we have no transport remarks";
 	}
 	
-	private Date getExpressDeliverySuitableDate(final OrderModel order) 
-	{
-		final Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 15);
-		calendar.set(Calendar.MINUTE, 00);
-		calendar.set(Calendar.SECOND, 00);
-		calendar.set(Calendar.MILLISECOND, 00);
-		
-		if(order.getDate().after(calendar.getTime())) {
-			calendar.add(Calendar.DAY_OF_MONTH, 1);
-		}
-		
-		return calendar.getTime();
-	}
-
 	private Remark getDiscountsRemark(final OrderModel order) 
 	{
 		double discounts = order.getTotalDiscounts().doubleValue();
@@ -121,5 +101,21 @@ public class DefaultPixiOrderRemarksPopulator implements Populator<OrderModel, O
 		String mode = StringUtils.defaultIfBlank(order.getDeliveryMode().getCode(), "");
 		
 		return createRemark("shippingvendor", mode.toUpperCase());
+	}
+
+	/**
+	 * @return the pixiOrderGetTransportRemarksStrategy
+	 */
+	public PixiOrderGetTransportRemarksStrategy getPixiOrderGetTransportRemarksStrategy() 
+	{
+		return pixiOrderGetTransportRemarksStrategy;
+	}
+
+	/**
+	 * @param pixiOrderGetTransportRemarksStrategy the pixiOrderGetTransportRemarksStrategy to set
+	 */
+	public void setPixiOrderGetTransportRemarksStrategy(PixiOrderGetTransportRemarksStrategy pixiOrderGetTransportRemarksStrategy) 
+	{
+		this.pixiOrderGetTransportRemarksStrategy = pixiOrderGetTransportRemarksStrategy;
 	}
 }

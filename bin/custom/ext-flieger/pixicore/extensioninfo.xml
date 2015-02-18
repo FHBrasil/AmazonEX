@@ -15,13 +15,8 @@
 
    <extension abstractclassprefix="Generated" classprefix="Pixicore" managername="PixicoreManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="pixicore">
                
-		<requires-extension name="basecommerce"/>
+	<requires-extension name="basecommerce"/>
       <coremodule generated="true" manager="com.pixi.core.jalo.PixicoreManager" packageroot="com.pixi.core"/>
-
-      <webmodule jspcompile="false" webroot="/pixicore"/>
-					
-	
-
    </extension>
       
 </extensioninfo>
