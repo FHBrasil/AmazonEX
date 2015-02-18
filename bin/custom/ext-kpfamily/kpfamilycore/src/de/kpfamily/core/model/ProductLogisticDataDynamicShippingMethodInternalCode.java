@@ -18,22 +18,22 @@ import de.kpfamily.core.util.JaloUtils;
  * @author franthescollymaneira
  *
  */
-public class ShippingMethodDynamicInternalCode implements DynamicAttributeHandler<String, BabyartikelProductModel>
+public class ProductLogisticDataDynamicShippingMethodInternalCode implements DynamicAttributeHandler<String, ProductLogisticDataModel>
 {
 	@Resource
 	private ModelService modelService;
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#get(de.hybris.platform.servicelayer.model
 	 * .AbstractItemModel)
 	 */
 	@Override
-	public String get(final BabyartikelProductModel product)
+	public String get(final ProductLogisticDataModel logisticData)
 	{
-		final ShippingMethod shippingMethod = null;//TODO product.getShippingMethod();
+		final ShippingMethod shippingMethod = logisticData.getShippingMethod();
 		final Item item = modelService.getSource(shippingMethod);
 
 		return JaloUtils.getAttributeSilently(item, KpfamilyCoreConstants.Attributes.ShippingMethod.INTERNALCODE);
@@ -41,13 +41,13 @@ public class ShippingMethodDynamicInternalCode implements DynamicAttributeHandle
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#set(de.hybris.platform.servicelayer.model
 	 * .AbstractItemModel, java.lang.Object)
 	 */
 	@Override
-	public void set(final BabyartikelProductModel product, final String value)
+	public void set(final ProductLogisticDataModel logisticData, final String value)
 	{
 		throw new UnsupportedOperationException();
 	}
