@@ -34,6 +34,9 @@
 					ACC.${jsVar.qualifier} = '${jsVar.value}';
 				</c:if>
 			</c:forEach>
+			
+			/* Babyartikel variables */
+			KP = { page : { product : {} } };
 		/*]]>*/
 	</script>
 	<template:javaScriptAddOnsVariables/>

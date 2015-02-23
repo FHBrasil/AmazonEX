@@ -1,7 +1,6 @@
 <%@ tag body-content="empty" trimDirectiveWhitespaces="true"%>
 <%@ attribute name="product" required="true"
     type="de.hybris.platform.commercefacades.product.data.ProductData"%>
-<%@ attribute name="galleryImages" required="true" type="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -12,13 +11,18 @@
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
+
 <spring:theme code="text.addToCart" var="addToCartText" />
-<div class="productDetailsPanel container">
-    <div class="margin-top">
-        <product:productImagePanel product="${product}" galleryImages="${galleryImages}" />
-        <product:productDetailsInfoPanel product="${product}"/>
-    </div>
-</div>        
+
+<div class="col-sm-6 v-bottom margin-top">
+    
+    <product:productPricePanel product="${product}"/>
+    <product:productDetailsShipping product="${product}"/>
+    <product:productDetailsShortDescription product="${product}"/>
+    <product:productVariantSelector productVariants="${product.variantOptions}"/>
+  
+    
+</div>
 <!--         <div class="span-10 productDescription last"> -->
 <%--             <ycommerce:testId code="productDetails_productNamePrice_label_${product.code}"> --%>
 <%--                 <product:productPricePanel product="${product}" /> --%>
@@ -41,3 +45,5 @@
 <%--             class="span-8 section2 cms_disp-img_slot last"> --%>
 <%--             <cms:component component="${feature}" /> --%>
 <%--         </cms:pageSlot> --%>
+<!--     </div> -->
+<!-- </div> -->

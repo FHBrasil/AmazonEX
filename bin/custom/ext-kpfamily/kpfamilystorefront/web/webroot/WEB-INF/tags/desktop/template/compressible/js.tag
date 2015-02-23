@@ -84,3 +84,12 @@
 
 <%-- Fix for Webkit Browsers (Needs to be loaded last)  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/acc.skiplinks.js"></script>
+
+<%-- Bootstrap --%>
+<script type="text/javascript" src="${commonResourcePath}/js/bootstrap.min.js"></script>
+
+<%-- Babyartikel Customs --%>
+<script type="text/javascript" src="${commonResourcePath}/js/pages/kp.page.product.js"></script>
+
+
+
