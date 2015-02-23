@@ -214,6 +214,10 @@
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
+				  	<attribute qualifier="defaultStockLevel" type="StockLevel">
+				    	<persistence type="dynamic" attributeHandler="babyartikelProductDefaultStockLevelHandler"/>
+				    	<modifiers write="false"/>
+				  	</attribute>
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"

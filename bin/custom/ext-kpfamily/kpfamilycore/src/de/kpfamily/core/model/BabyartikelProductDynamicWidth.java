@@ -3,19 +3,18 @@
  */
 package de.kpfamily.core.model;
 
-import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
+import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
 
 
 /**
  * @author franthescollymaneira
  *
  */
-public class BabyartikelProductDynamicWidth implements DynamicAttributeHandler<String, BabyartikelProductModel>
+public class BabyartikelProductDynamicWidth extends AbstractDynamicAttributeHandler<String, BabyartikelProductModel>
 {
-
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#get(de.hybris.platform.servicelayer.model
 	 * .AbstractItemModel)
@@ -25,18 +24,5 @@ public class BabyartikelProductDynamicWidth implements DynamicAttributeHandler<S
 	{
 		//TODO implementar classification system
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#set(de.hybris.platform.servicelayer.model
-	 * .AbstractItemModel, java.lang.Object)
-	 */
-	@Override
-	public void set(final BabyartikelProductModel product, final String value)
-	{
-		throw new UnsupportedOperationException();
 	}
 }

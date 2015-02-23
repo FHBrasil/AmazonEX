@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import com.pixi.core.strategies.PixiProductUpdateNextDeliveryDateStrategy;
 
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.ordersplitting.model.StockLevelModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.kpfamily.core.model.BabyartikelProductModel;
 
@@ -21,18 +22,21 @@ public class DefaultPixiProductUpdateNextDeliveryDateStrategy implements PixiPro
 	private ModelService modelService;
 	
 	@Override
-	public boolean updateNextDeliveryDate(final ProductModel product, final Date nextDeliveryDate) 
+	public boolean updateNextDeliveryDate(final ProductModel product, final Date arrivalDate) 
 	{
 		Assert.notNull(product);
 		Assert.isInstanceOf(BabyartikelProductModel.class, product);
 		
-		BabyartikelProductModel babyartikelProduct = (BabyartikelProductModel) product;
+		LOG.debug("Updating " + product.getCode() + " nextDeliveryDate to " + arrivalDate);
+
+		final BabyartikelProductModel babyartikelProduct = (BabyartikelProductModel) product;
+		final StockLevelModel defaultStockLevel = babyartikelProduct.getDefaultStockLevel();
 		
-		LOG.debug("Updating " + product.getCode() + " nextDeliveryDate to " + nextDeliveryDate);
-		
-		//TODO corrigir aqui babyartikelProduct.setNextDeliveryDate(nextDeliveryDate);
-		
-		getModelService().save(product);
+		if(defaultStockLevel != null)
+		{
+			defaultStockLevel.setWarehouseArrivalDate(arrivalDate);
+			getModelService().save(defaultStockLevel);
+		}
 		
 		return true;
 	}

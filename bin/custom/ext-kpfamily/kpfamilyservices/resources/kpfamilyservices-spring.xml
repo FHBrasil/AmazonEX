@@ -56,6 +56,18 @@
 	<alias name="defaultPixiProductGetSuppliersCodeStrategy" alias="pixiProductGetSuppliersCodeStrategy"/>
 	<bean id="defaultPixiProductGetSuppliersCodeStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetSuppliersCodeStrategy"/>
 	
+	<alias name="defaultPixiProductGetItemTagsStrategy" alias="pixiProductGetItemTagsStrategy"/>
+	<bean id="defaultPixiProductGetItemTagsStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetItemTagsStrategy"/>
+	
+	<alias name="defaultPixiProductGetSupplierPriceStrategy" alias="pixiProductGetSupplierPriceStrategy"/>
+	<bean id="defaultPixiProductGetSupplierPriceStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetSupplierPriceStrategy"/>
+	
 	<alias name="defaultPixiOrderGetShopNoteStrategy" alias="pixiOrderGetShopNoteStrategy"/>
 	<bean id="defaultPixiOrderGetShopNoteStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiOrderGetShopNoteStrategy"/>
+	
+	<alias name="defaultPixiOrderGetItemNoteStrategy" alias="pixiOrderGetItemNoteStrategy"/>
+	<bean id="defaultPixiOrderGetItemNoteStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiOrderGetItemNoteStrategy"/>
+	
+	<alias name="defaultPixiOrderGetTransportRemarksStrategy" alias="pixiOrderGetTransportRemarksStrategy"/>
+	<bean id="defaultPixiOrderGetTransportRemarksStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiOrderGetTransportRemarksStrategy"/>
 </beans>

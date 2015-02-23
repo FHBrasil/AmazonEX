@@ -9,15 +9,12 @@ import de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.pixi.core.daos.PixiProductDao;
 import com.pixi.core.model.PixiSyncRecordModel;
-
-import de.kpfamily.core.model.BabyartikelProductModel;
 
 
 /**
@@ -44,14 +41,9 @@ public class DefaultPixiProductDao extends DefaultGenericDao<ProductModel> imple
 	{
 		//TODO falta implementar aqui
 
-		final String query = "SELECT {p:PK} FROM {BabyartikelProduct as p} WHERE {p:catalogVersion} = ?version";
+		final String query = "SELECT {p:PK} FROM {Product as p} WHERE {p:catalogVersion} = ?version";
 
 		final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query);
-		searchQuery.setResultClassList(Arrays.asList(BabyartikelProductModel.class));
-		searchQuery.setStart(0);
-		searchQuery.setCount(1);
-		searchQuery.setNeedTotal(true);
-
 		searchQuery.addQueryParameter("version", catalogVersion);
 
 		final SearchResult<ProductModel> search = getFlexibleSearchService().search(searchQuery);

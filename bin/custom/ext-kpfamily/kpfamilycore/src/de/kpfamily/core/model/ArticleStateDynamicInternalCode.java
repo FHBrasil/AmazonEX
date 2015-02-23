@@ -5,7 +5,7 @@ package de.kpfamily.core.model;
 
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.servicelayer.model.ModelService;
-import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
+import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
 
 import javax.annotation.Resource;
 
@@ -18,7 +18,7 @@ import de.kpfamily.core.util.JaloUtils;
  * @author franthescollymaneira
  *
  */
-public class ArticleStateDynamicInternalCode implements DynamicAttributeHandler<String, BabyartikelProductModel>
+public class ArticleStateDynamicInternalCode extends AbstractDynamicAttributeHandler<String, BabyartikelProductModel>
 {
 	@Resource
 	private ModelService modelService;
@@ -37,18 +37,5 @@ public class ArticleStateDynamicInternalCode implements DynamicAttributeHandler<
 		final Item item = modelService.getSource(articleState);
 
 		return JaloUtils.getAttributeSilently(item, KpfamilyCoreConstants.Attributes.ArticleState.INTERNALCODE);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#set(de.hybris.platform.servicelayer.model
-	 * .AbstractItemModel, java.lang.Object)
-	 */
-	@Override
-	public void set(final BabyartikelProductModel product, final String value)
-	{
-		throw new UnsupportedOperationException();
 	}
 }
