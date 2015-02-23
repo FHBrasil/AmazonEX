@@ -328,7 +328,7 @@
 						<persistence type="property"/>
 					</attribute>
 					<attribute type="int" qualifier="dropShippingDeliveryDays">
-						<description>old dvDeliveryDate.</description>
+						<description>old dvDeliveryDays.</description>
 						<modifiers/>
 						<persistence type="property"/>
 					</attribute>
@@ -407,6 +407,13 @@
 						<persistence type="property"/>
 					</attribute>
 					<attribute type="boolean" qualifier="dispatchViaForwardingAgent">
+						<description>defines if the product is so big that we cannot dispatch it via package, but via 'truck', old name: forwardingShipping</description>
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute type="boolean" qualifier="dispatchViaSupplier">
+						<description>defines if the product will be delivered directly from the Supplier to the final Customer, old name: dfMethod</description>
 						<modifiers optional="false"/>
 						<persistence type="property"/>
 						<defaultvalue>false</defaultvalue>
