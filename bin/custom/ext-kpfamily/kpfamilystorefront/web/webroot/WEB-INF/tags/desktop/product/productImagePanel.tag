@@ -7,16 +7,21 @@
 <%@ attribute name="product" required="true"
     type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 <%@ attribute name="galleryImages" required="true" type="java.util.List"%>
-<%-- remove this inline style after tests --%>
-<div class="col-xs-12 col-sm-6 v-bottom" style="float:left;">
-    <c:if test="${fn:contains(product.url, '?sku=')}">
-        <c:url value="${fn:substringBefore(product.url, '?sku=')}/zoomImages"
-            var="productZoomImagesUrl" />
-    </c:if>
-    <c:if test="${not fn:contains(product.url, '?sku=')}">
-        <c:url value="${product.url}/zoomImages" var="productZoomImagesUrl" />
-    </c:if>
-    <product:productPrimaryImage product="${product}" format="zoom" />
+
+<c:if test="${fn:contains(product.url, '?sku=')}">
+    <c:url value="${fn:substringBefore(product.url, '?sku=')}/zoomImages"
+        var="productZoomImagesUrl" />
+</c:if>
+<c:if test="${not fn:contains(product.url, '?sku=')}">
+    <c:url value="${product.url}/zoomImages" var="productZoomImagesUrl" />
+</c:if>
+
+<product:productPrimaryImage product="${product}" format="zoom" />
+
+
+    
+
+
 <!--            <ul class="jcarousel-skin"> -->
 <%--     <c:forEach items="${galleryImages}" var="container" varStatus="varStatus"> --%>
 <%--         <li><span class="thumb ${(varStatus.index==0)? "active":""}"> <img --%>
@@ -26,4 +31,3 @@
 <!--         </span></li> -->
 <%--     </c:forEach> --%>
 <!--            </ul> -->
-</div>

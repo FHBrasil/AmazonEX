@@ -3,13 +3,12 @@
     type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 
-<div class="col-sm-6 v-bottom margin-top">
-    <product:productDetailsTitleRatings product="${product}" showShortDescription="true" showBrandLogo="true"/>
-    <product:productPricePanel product="${product}"/>
-    <product:productDetailsShipping product="${product}"/>
-    <product:productVariantSelector productVariants="${product.variantOptions}"/>
-    <product:productDetailsInstallments product="${product}"/>
-</div>
+<product:productDetailsTitleRatings product="${product}" showShortDescription="true" showBrandLogo="true"/>
+<product:productPricePanel product="${product}"/>
+<product:productDetailsShipping product="${product}"/>
+<product:productVariantSelector productVariants="${product.variantOptions}"/>
+
+
 <!--         <div class="span-10 productDescription last"> -->
 <%--             <ycommerce:testId code="productDetails_productNamePrice_label_${product.code}"> --%>
 <%--                 <product:productPricePanel product="${product}" /> --%>

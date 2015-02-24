@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div class="col-sm-6" style="width:100%;">
+<div class="col-sm-6">
     <div class="row">
         <p class="col-xs-4">
             <a href="#">
