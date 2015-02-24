@@ -14,6 +14,7 @@
 
 	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
 		<property name="genders" type="java.util.List&lt;de.kpfamily.facades.product.data.GenderData>"/>
+		<property name="shortDescription" type="java.lang.String"/>
 	</bean>
 
 	<bean class="de.kpfamily.facades.product.data.GenderData">

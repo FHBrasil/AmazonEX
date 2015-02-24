@@ -191,4 +191,10 @@
 	</bean>
 
 	<bean id="genderData" class="de.kpfamily.facades.product.data.GenderData" scope="prototype"/>
+	
+	<alias name="kpProductFacade" alias="kpProductFacade"/>
+	<bean id="kpProductFacade" class="de.kpfamily.facades.impl.DefaultKPProductFacade"
+	       parent="accProductFacade">
+	</bean>
+	
 </beans>
