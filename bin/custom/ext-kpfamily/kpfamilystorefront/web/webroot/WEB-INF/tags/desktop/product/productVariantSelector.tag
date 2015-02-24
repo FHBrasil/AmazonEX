@@ -4,18 +4,19 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ attribute name="productVariants" required="true" type="java.util.List"%>
-
-<c:set var="showAddToCart" value="" scope="session" />
+<%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 
 <div class="row shadowbox">
     <!-- BEGIN SIZE VARIANT this part must only appear at products with size variants -->
     <div class="col-xs-4 text-right size150126">
-        <small>Gr&ouml;&szlig;e w&auml;hlen:</small>
+        <small>
+            <spring:theme code="product.variants.choose.size" text="Gr&ouml;&szlig;e w&auml;hlen"/>:
+        </small>
     </div>
     <div class="col-xs-8 btn-variants141219">
         <button type="button" class="btn btn-default" href="#">XS</button>
         <button type="button" class="btn btn-default" href="#">S</button>
-        <button type="button" class="btn btn-default active" href="#">M</button>
+        <button type="button" class="btn btn-default" href="#">M</button>
         <button type="button" class="btn btn-default" href="#">L</button>
         <button type="button" class="btn btn-default" href="#">XL</button>
         <button type="button" class="btn btn-default" href="#">XXL</button>
@@ -25,7 +26,9 @@
         <form>
             <div class="form-group row">
                 <div class="col-md-4 hidden-xs hidden-sm">
-                    <label class="" for="qty">Menge:</label>
+                    <label class="" for="qty">
+                        <spring:theme code="product.quantity" text="Menge"/>:
+                    </label>
                 </div>
                 <div class="col-xs-12 col-md-8">
                     <input type="number" min="1" max="10" class="form-control input-lg" id="qty"
@@ -35,11 +38,13 @@
         </form>
     </div>
     <div class="col-xs-8 margin-top">
-        <button type="button" class="btn btn-primary btn-lg" href="#cartModal" data-toggle="modal">In
-            den Warenkorb</button>
+        <button type="button" class="btn btn-primary btn-lg" href="#cartModal" data-toggle="modal">
+            <spring:theme code="basket.add.to.basket" text="In den Warenkorb" />
+        </button>
         <br />
         <button type="button" class="btn btn-link">
-            <span class="glyphicon glyphicon-heart"></span> Auf die Wunschliste
+            <span class="glyphicon glyphicon-heart"></span>
+            <spring:theme code="text.wishlist.add" text="Auf die Wunschliste"/>
         </button>
     </div>
 </div>

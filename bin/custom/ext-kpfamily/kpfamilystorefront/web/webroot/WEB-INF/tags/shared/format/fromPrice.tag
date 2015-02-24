@@ -6,7 +6,6 @@
 --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <c:choose>
 	<c:when test="${priceData.priceType == 'FROM'}">
 		<%--

@@ -7,7 +7,8 @@
 <%@ attribute name="product" required="true"
     type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 <%@ attribute name="galleryImages" required="true" type="java.util.List"%>
-<div class="col-xs-12 col-sm-6 v-bottom">
+<%-- remove this inline style after tests --%>
+<div class="col-xs-12 col-sm-6 v-bottom" style="float:left;">
     <c:if test="${fn:contains(product.url, '?sku=')}">
         <c:url value="${fn:substringBefore(product.url, '?sku=')}/zoomImages"
             var="productZoomImagesUrl" />

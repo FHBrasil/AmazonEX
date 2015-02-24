@@ -12,11 +12,12 @@
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
-<spring:theme code="text.addToCart" var="addToCartText" />
+
 <div class="productDetailsPanel container">
     <div class="margin-top">
         <product:productImagePanel product="${product}" galleryImages="${galleryImages}" />
         <product:productDetailsInfoPanel product="${product}"/>
+        
     </div>
 </div>        
 <!--         <div class="span-10 productDescription last"> -->

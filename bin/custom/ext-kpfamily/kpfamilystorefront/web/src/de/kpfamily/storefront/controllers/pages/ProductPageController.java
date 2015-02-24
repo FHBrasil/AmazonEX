@@ -68,329 +68,309 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 /**
  * Controller for product details page
  */
 @Controller
 @Scope("tenant")
 @RequestMapping(value = "/**/p")
-public class ProductPageController extends AbstractPageController
-{
-	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(ProductPageController.class);
+public class ProductPageController extends AbstractPageController {
+    @SuppressWarnings("unused")
+    private static final Logger LOG = Logger.getLogger(ProductPageController.class);
 
-	/**
-	 * We use this suffix pattern because of an issue with Spring 3.1 where a Uri value is incorrectly extracted if it
-	 * contains on or more '.' characters. Please see https://jira.springsource.org/browse/SPR-6164 for a discussion on
-	 * the issue and future resolution.
-	 */
-	private static final String PRODUCT_CODE_PATH_VARIABLE_PATTERN = "/{productCode:.*}";
-	private static final String REVIEWS_PATH_VARIABLE_PATTERN = "{numberOfReviews:.*}";
+    /**
+     * We use this suffix pattern because of an issue with Spring 3.1 where a
+     * Uri value is incorrectly extracted if it contains on or more '.'
+     * characters. Please see https://jira.springsource.org/browse/SPR-6164 for
+     * a discussion on the issue and future resolution.
+     */
+    private static final String PRODUCT_CODE_PATH_VARIABLE_PATTERN = "/{productCode:.*}";
+    private static final String REVIEWS_PATH_VARIABLE_PATTERN = "{numberOfReviews:.*}";
 
-	@Resource(name = "productModelUrlResolver")
-	private UrlResolver<ProductModel> productModelUrlResolver;
+    @Resource(name = "productModelUrlResolver")
+    private UrlResolver<ProductModel> productModelUrlResolver;
 
-	@Resource(name = "accProductFacade")
-	private ProductFacade productFacade;
+    @Resource(name = "accProductFacade")
+    private ProductFacade productFacade;
 
-	@Resource(name = "productService")
-	private ProductService productService;
+    @Resource(name = "productService")
+    private ProductService productService;
 
-	@Resource(name = "productBreadcrumbBuilder")
-	private ProductBreadcrumbBuilder productBreadcrumbBuilder;
+    @Resource(name = "productBreadcrumbBuilder")
+    private ProductBreadcrumbBuilder productBreadcrumbBuilder;
 
-	@Resource(name = "cmsPageService")
-	private CMSPageService cmsPageService;
+    @Resource(name = "cmsPageService")
+    private CMSPageService cmsPageService;
 
-	@Resource(name = "variantSortStrategy")
-	private VariantSortStrategy variantSortStrategy;
+    @Resource(name = "variantSortStrategy")
+    private VariantSortStrategy variantSortStrategy;
 
-	@Resource(name = "reviewValidator")
-	private ReviewValidator reviewValidator;
+    @Resource(name = "reviewValidator")
+    private ReviewValidator reviewValidator;
 
-
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
-	public String productDetail(@PathVariable("productCode") final String productCode, final Model model,
-			final HttpServletRequest request, final HttpServletResponse response) throws CMSItemNotFoundException,
-			UnsupportedEncodingException
-	{
-		final ProductModel productModel = productService.getProductForCode(productCode);
-		final String redirection = checkRequestUrl(request, response, productModelUrlResolver.resolve(productModel));
-		if (StringUtils.isNotEmpty(redirection))
-		{
-			return redirection;
-		}
-
-		updatePageTitle(productModel, model);
-		populateProductDetailForDisplay(productModel, model, request);
-		model.addAttribute(new ReviewForm());
-		final List<ProductReferenceData> productReferences = productFacade.getProductReferencesForCode(productCode,
-				Arrays.asList(ProductReferenceTypeEnum.SIMILAR, ProductReferenceTypeEnum.ACCESSORIES),
-				Arrays.asList(ProductOption.BASIC,ProductOption.PRICE), null);
-		model.addAttribute("productReferences", productReferences);
-		model.addAttribute("pageType", PageType.PRODUCT.name());
-
-		final String metaKeywords = MetaSanitizerUtil.sanitizeKeywords(productModel.getKeywords());
-		final String metaDescription = MetaSanitizerUtil.sanitizeDescription(productModel.getDescription());
-		setUpMetaData(model, metaKeywords, metaDescription);
-		return getViewForPage(model);
-	}
-
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/zoomImages", method = RequestMethod.GET)
-	public String showZoomImages(@PathVariable("productCode") final String productCode,
-			@RequestParam(value = "galleryPosition", required = false) final String galleryPosition, final Model model)
-	{
-		final ProductModel productModel = productService.getProductForCode(productCode);
-		final ProductData productData = productFacade.getProductForOptions(productModel,
-				Collections.singleton(ProductOption.GALLERY));
-		final List<Map<String, ImageData>> images = getGalleryImages(productData);
-		populateProductData(productData,model);
-		if (galleryPosition != null)
-		{
-			try
-			{
-				model.addAttribute("zoomImageUrl", images.get(Integer.parseInt(galleryPosition)).get("zoom").getUrl());
-			}
-			catch (final IndexOutOfBoundsException | NumberFormatException ioebe)
-			{
-				model.addAttribute("zoomImageUrl", "");
-			}
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
+    public String productDetail(@PathVariable("productCode") final String productCode,
+            final Model model, final HttpServletRequest request, final HttpServletResponse response)
+            throws CMSItemNotFoundException, UnsupportedEncodingException {
+        final ProductModel productModel = productService.getProductForCode(productCode);
+        final String redirection = checkRequestUrl(request, response,
+                productModelUrlResolver.resolve(productModel));
+        if (StringUtils.isNotEmpty(redirection)) {
+            return redirection;
         }
-		return ControllerConstants.Views.Fragments.Product.ZoomImagesPopup;
-	}
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/quickView", method = RequestMethod.GET)
-	public String showQuickView(@PathVariable("productCode") final String productCode, final Model model,
-			final HttpServletRequest request)
-	{
-		final ProductModel productModel = productService.getProductForCode(productCode);
-		final ProductData productData = productFacade.getProductForOptions(productModel, Arrays.asList(ProductOption.BASIC,
-				ProductOption.PRICE, ProductOption.SUMMARY, ProductOption.DESCRIPTION, ProductOption.CATEGORIES,
-				ProductOption.PROMOTIONS, ProductOption.STOCK, ProductOption.REVIEW, ProductOption.VARIANT_FULL, ProductOption.DELIVERY_MODE_AVAILABILITY));
+        updatePageTitle(productModel, model);
+        populateProductDetailForDisplay(productModel, model, request);
+        model.addAttribute(new ReviewForm());
+        final List<ProductReferenceData> productReferences = productFacade
+                .getProductReferencesForCode(productCode, Arrays.asList(
+                        ProductReferenceTypeEnum.SIMILAR, ProductReferenceTypeEnum.ACCESSORIES),
+                        Arrays.asList(ProductOption.BASIC, ProductOption.PRICE), null);
+        model.addAttribute("productReferences", productReferences);
+        model.addAttribute("pageType", PageType.PRODUCT.name());
 
-		sortVariantOptionData(productData);
-		populateProductData(productData, model);
-		getRequestContextData(request).setProduct(productModel);
+        final String metaKeywords = MetaSanitizerUtil.sanitizeKeywords(productModel.getKeywords());
+        final String metaDescription = MetaSanitizerUtil.sanitizeDescription(productModel
+                .getDescription());
+        setUpMetaData(model, metaKeywords, metaDescription);
+        return getViewForPage(model);
+    }
 
-		return ControllerConstants.Views.Fragments.Product.QuickViewPopup;
-	}
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/zoomImages", method = RequestMethod.GET)
+    public String showZoomImages(
+            @PathVariable("productCode") final String productCode,
+            @RequestParam(value = "galleryPosition", required = false) final String galleryPosition,
+            final Model model) {
+        final ProductModel productModel = productService.getProductForCode(productCode);
+        final ProductData productData = productFacade.getProductForOptions(productModel,
+                Collections.singleton(ProductOption.GALLERY));
+        final List<Map<String, ImageData>> images = getGalleryImages(productData);
+        populateProductData(productData, model);
+        if (galleryPosition != null) {
+            try {
+                model.addAttribute("zoomImageUrl", images.get(Integer.parseInt(galleryPosition))
+                        .get("zoom").getUrl());
+            } catch (final IndexOutOfBoundsException | NumberFormatException ioebe) {
+                model.addAttribute("zoomImageUrl", "");
+            }
+        }
+        return ControllerConstants.Views.Fragments.Product.ZoomImagesPopup;
+    }
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/review", method = { RequestMethod.GET, RequestMethod.POST })
-	public String postReview(@PathVariable final String productCode, final ReviewForm form, final BindingResult result,
-			final Model model, final HttpServletRequest request, final RedirectAttributes redirectAttrs)
-			throws CMSItemNotFoundException
-	{
-		getReviewValidator().validate(form, result);
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/quickView", method = RequestMethod.GET)
+    public String showQuickView(@PathVariable("productCode") final String productCode,
+            final Model model, final HttpServletRequest request) {
+        final ProductModel productModel = productService.getProductForCode(productCode);
+        final ProductData productData = productFacade.getProductForOptions(productModel, Arrays
+                .asList(ProductOption.BASIC, ProductOption.PRICE, ProductOption.SUMMARY,
+                        ProductOption.DESCRIPTION, ProductOption.CATEGORIES,
+                        ProductOption.PROMOTIONS, ProductOption.STOCK, ProductOption.REVIEW,
+                        ProductOption.VARIANT_FULL, ProductOption.DELIVERY_MODE_AVAILABILITY));
 
-		final ProductModel productModel = productService.getProductForCode(productCode);
+        sortVariantOptionData(productData);
+        populateProductData(productData, model);
+        getRequestContextData(request).setProduct(productModel);
 
-		if (result.hasErrors())
-		{
-			updatePageTitle(productModel, model);
-			GlobalMessages.addErrorMessage(model, "review.general.error");
-			model.addAttribute("showReviewForm", Boolean.TRUE);
-			populateProductDetailForDisplay(productModel, model, request);
-			storeCmsPageInModel(model, getPageForProduct(productModel));
-			return getViewForPage(model);
-		}
+        return ControllerConstants.Views.Fragments.Product.QuickViewPopup;
+    }
 
-		final ReviewData review = new ReviewData();
-		review.setHeadline(XSSFilterUtil.filter(form.getHeadline()));
-		review.setComment(XSSFilterUtil.filter(form.getComment()));
-		review.setRating(form.getRating());
-		review.setAlias(XSSFilterUtil.filter(form.getAlias()));
-		productFacade.postReview(productCode, review);
-		GlobalMessages.addFlashMessage(redirectAttrs, GlobalMessages.CONF_MESSAGES_HOLDER, "review.confirmation.thank.you.title");
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/review", method = {
+            RequestMethod.GET, RequestMethod.POST })
+    public String postReview(@PathVariable final String productCode, final ReviewForm form,
+            final BindingResult result, final Model model, final HttpServletRequest request,
+            final RedirectAttributes redirectAttrs) throws CMSItemNotFoundException {
+        getReviewValidator().validate(form, result);
 
-		return REDIRECT_PREFIX + productModelUrlResolver.resolve(productModel);
-	}
+        final ProductModel productModel = productService.getProductForCode(productCode);
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/reviewhtml/" + REVIEWS_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
-	public String reviewHtml(@PathVariable("productCode") final String productCode,
-			@PathVariable("numberOfReviews") final String numberOfReviews, final Model model, final HttpServletRequest request)
-	{
-		final ProductModel productModel = productService.getProductForCode(productCode);
-		final List<ReviewData> reviews;
-		final ProductData productData = productFacade.getProductForOptions(productModel,
-				Arrays.asList(ProductOption.BASIC, ProductOption.REVIEW));
+        if (result.hasErrors()) {
+            updatePageTitle(productModel, model);
+            GlobalMessages.addErrorMessage(model, "review.general.error");
+            model.addAttribute("showReviewForm", Boolean.TRUE);
+            populateProductDetailForDisplay(productModel, model, request);
+            storeCmsPageInModel(model, getPageForProduct(productModel));
+            return getViewForPage(model);
+        }
 
-		if ("all".equals(numberOfReviews))
-		{
-			reviews = productFacade.getReviews(productCode);
-		}
-		else
-		{
-			final int reviewCount = Math.min(Integer.parseInt(numberOfReviews), (productData.getNumberOfReviews() == null ? 0
-					: productData.getNumberOfReviews().intValue()));
-			reviews = productFacade.getReviews(productCode, Integer.valueOf(reviewCount));
-		}
+        final ReviewData review = new ReviewData();
+        review.setHeadline(XSSFilterUtil.filter(form.getHeadline()));
+        review.setComment(XSSFilterUtil.filter(form.getComment()));
+        review.setRating(form.getRating());
+        review.setAlias(XSSFilterUtil.filter(form.getAlias()));
+        productFacade.postReview(productCode, review);
+        GlobalMessages.addFlashMessage(redirectAttrs, GlobalMessages.CONF_MESSAGES_HOLDER,
+                "review.confirmation.thank.you.title");
 
-		getRequestContextData(request).setProduct(productModel);
-		model.addAttribute("reviews", reviews);
-		model.addAttribute("reviewsTotal", productData.getNumberOfReviews());
-		model.addAttribute(new ReviewForm());
+        return REDIRECT_PREFIX + productModelUrlResolver.resolve(productModel);
+    }
 
-		return ControllerConstants.Views.Fragments.Product.ReviewsTab;
-	}
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/reviewhtml/"
+            + REVIEWS_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
+    public String reviewHtml(@PathVariable("productCode") final String productCode,
+            @PathVariable("numberOfReviews") final String numberOfReviews, final Model model,
+            final HttpServletRequest request) {
+        final ProductModel productModel = productService.getProductForCode(productCode);
+        final List<ReviewData> reviews;
+        final ProductData productData = productFacade.getProductForOptions(productModel,
+                Arrays.asList(ProductOption.BASIC, ProductOption.REVIEW));
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/writeReview", method = RequestMethod.GET)
-	public String writeReview(@PathVariable final String productCode, final Model model)
-			throws CMSItemNotFoundException
-	{
-		final ProductModel productModel = productService.getProductForCode(productCode);
-		model.addAttribute(new ReviewForm());
-		setUpReviewPage(model, productModel);
-		return ControllerConstants.Views.Pages.Product.WriteReview;
-	}
+        if ("all".equals(numberOfReviews)) {
+            reviews = productFacade.getReviews(productCode);
+        } else {
+            final int reviewCount = Math.min(Integer.parseInt(numberOfReviews),
+                    (productData.getNumberOfReviews() == null ? 0 : productData
+                            .getNumberOfReviews().intValue()));
+            reviews = productFacade.getReviews(productCode, Integer.valueOf(reviewCount));
+        }
 
-	protected void setUpReviewPage(final Model model, final ProductModel productModel) throws CMSItemNotFoundException
-	{
-		final String metaKeywords = MetaSanitizerUtil.sanitizeKeywords(productModel.getKeywords());
-		final String metaDescription = MetaSanitizerUtil.sanitizeDescription(productModel.getDescription());
-		setUpMetaData(model, metaKeywords, metaDescription);
-		storeCmsPageInModel(model, getPageForProduct(productModel));
-		model.addAttribute("product", productFacade.getProductForOptions(productModel, Arrays.asList(ProductOption.BASIC)));
-		updatePageTitle(productModel, model);
-	}
+        getRequestContextData(request).setProduct(productModel);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("reviewsTotal", productData.getNumberOfReviews());
+        model.addAttribute(new ReviewForm());
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/writeReview", method = RequestMethod.POST)
-	public String writeReview(@PathVariable final String productCode, final ReviewForm form, final BindingResult result,
-										final Model model, final HttpServletRequest request, final RedirectAttributes redirectAttrs)
-			throws CMSItemNotFoundException
-	{
-		getReviewValidator().validate(form, result);
+        return ControllerConstants.Views.Fragments.Product.ReviewsTab;
+    }
 
-		final ProductModel productModel = productService.getProductForCode(productCode);
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/writeReview", method = RequestMethod.GET)
+    public String writeReview(@PathVariable final String productCode, final Model model)
+            throws CMSItemNotFoundException {
+        final ProductModel productModel = productService.getProductForCode(productCode);
+        model.addAttribute(new ReviewForm());
+        setUpReviewPage(model, productModel);
+        return ControllerConstants.Views.Pages.Product.WriteReview;
+    }
 
-		if (result.hasErrors())
-		{
-			GlobalMessages.addErrorMessage(model, "review.general.error");
-			populateProductDetailForDisplay(productModel, model, request);
-			setUpReviewPage(model, productModel);
-			return ControllerConstants.Views.Pages.Product.WriteReview;
-		}
+    protected void setUpReviewPage(final Model model, final ProductModel productModel)
+            throws CMSItemNotFoundException {
+        final String metaKeywords = MetaSanitizerUtil.sanitizeKeywords(productModel.getKeywords());
+        final String metaDescription = MetaSanitizerUtil.sanitizeDescription(productModel
+                .getDescription());
+        setUpMetaData(model, metaKeywords, metaDescription);
+        storeCmsPageInModel(model, getPageForProduct(productModel));
+        model.addAttribute("product", productFacade.getProductForOptions(productModel,
+                Arrays.asList(ProductOption.BASIC)));
+        updatePageTitle(productModel, model);
+    }
 
-		final ReviewData review = new ReviewData();
-		review.setHeadline(XSSFilterUtil.filter(form.getHeadline()));
-		review.setComment(XSSFilterUtil.filter(form.getComment()));
-		review.setRating(form.getRating());
-		review.setAlias(XSSFilterUtil.filter(form.getAlias()));
-		productFacade.postReview(productCode, review);
-		GlobalMessages.addFlashMessage(redirectAttrs, GlobalMessages.CONF_MESSAGES_HOLDER, "review.confirmation.thank.you.title");
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/writeReview", method = RequestMethod.POST)
+    public String writeReview(@PathVariable final String productCode, final ReviewForm form,
+            final BindingResult result, final Model model, final HttpServletRequest request,
+            final RedirectAttributes redirectAttrs) throws CMSItemNotFoundException {
+        getReviewValidator().validate(form, result);
 
-		return REDIRECT_PREFIX + productModelUrlResolver.resolve(productModel);
-	}
+        final ProductModel productModel = productService.getProductForCode(productCode);
 
-	@ExceptionHandler(UnknownIdentifierException.class)
-	public String handleUnknownIdentifierException(final UnknownIdentifierException exception, final HttpServletRequest request)
-	{
-		request.setAttribute("message", exception.getMessage());
-		return FORWARD_PREFIX + "/404";
-	}
+        if (result.hasErrors()) {
+            GlobalMessages.addErrorMessage(model, "review.general.error");
+            populateProductDetailForDisplay(productModel, model, request);
+            setUpReviewPage(model, productModel);
+            return ControllerConstants.Views.Pages.Product.WriteReview;
+        }
 
-	protected void updatePageTitle(final ProductModel productModel, final Model model)
-	{
-		storeContentPageTitleInModel(model, getPageTitleResolver().resolveProductPageTitle(productModel));
-	}
+        final ReviewData review = new ReviewData();
+        review.setHeadline(XSSFilterUtil.filter(form.getHeadline()));
+        review.setComment(XSSFilterUtil.filter(form.getComment()));
+        review.setRating(form.getRating());
+        review.setAlias(XSSFilterUtil.filter(form.getAlias()));
+        productFacade.postReview(productCode, review);
+        GlobalMessages.addFlashMessage(redirectAttrs, GlobalMessages.CONF_MESSAGES_HOLDER,
+                "review.confirmation.thank.you.title");
 
-	protected void populateProductDetailForDisplay(final ProductModel productModel, final Model model,
-			final HttpServletRequest request) throws CMSItemNotFoundException
-	{
-		getRequestContextData(request).setProduct(productModel);
+        return REDIRECT_PREFIX + productModelUrlResolver.resolve(productModel);
+    }
 
-		final ProductData productData = productFacade.getProductForOptions(productModel, Arrays.asList(ProductOption.BASIC,
-				ProductOption.PRICE, ProductOption.SUMMARY, ProductOption.DESCRIPTION, ProductOption.GALLERY,
-				ProductOption.CATEGORIES, ProductOption.REVIEW, ProductOption.PROMOTIONS, ProductOption.CLASSIFICATION,
-				ProductOption.VARIANT_FULL, ProductOption.STOCK, ProductOption.VOLUME_PRICES,
-				ProductOption.DELIVERY_MODE_AVAILABILITY));
+    @ExceptionHandler(UnknownIdentifierException.class)
+    public String handleUnknownIdentifierException(final UnknownIdentifierException exception,
+            final HttpServletRequest request) {
+        request.setAttribute("message", exception.getMessage());
+        return FORWARD_PREFIX + "/404";
+    }
 
-		sortVariantOptionData(productData);
-		storeCmsPageInModel(model, getPageForProduct(productModel));
-		populateProductData(productData, model);
-		model.addAttribute(WebConstants.BREADCRUMBS_KEY, productBreadcrumbBuilder.getBreadcrumbs(productModel));
-	}
+    protected void updatePageTitle(final ProductModel productModel, final Model model) {
+        storeContentPageTitleInModel(model,
+                getPageTitleResolver().resolveProductPageTitle(productModel));
+    }
 
-	protected void populateProductData(final ProductData productData, final Model model)
-	{
-		model.addAttribute("galleryImages", getGalleryImages(productData));
-		model.addAttribute("product", productData);
-	}
+    protected void populateProductDetailForDisplay(final ProductModel productModel,
+            final Model model, final HttpServletRequest request) throws CMSItemNotFoundException {
+        getRequestContextData(request).setProduct(productModel);
 
-	protected void sortVariantOptionData(final ProductData productData)
-	{
-		if (CollectionUtils.isNotEmpty(productData.getBaseOptions()))
-		{
-			for (final BaseOptionData baseOptionData : productData.getBaseOptions())
-			{
-				if (CollectionUtils.isNotEmpty(baseOptionData.getOptions()))
-				{
-					Collections.sort(baseOptionData.getOptions(), variantSortStrategy);
-				}
-			}
-		}
+        final ProductData productData = productFacade.getProductForOptions(productModel, Arrays
+                .asList(ProductOption.BASIC, ProductOption.PRICE, ProductOption.SUMMARY,
+                        ProductOption.DESCRIPTION, ProductOption.GALLERY, ProductOption.CATEGORIES,
+                        ProductOption.REVIEW, ProductOption.PROMOTIONS,
+                        ProductOption.CLASSIFICATION, ProductOption.VARIANT_FULL,
+                        ProductOption.STOCK, ProductOption.VOLUME_PRICES,
+                        ProductOption.DELIVERY_MODE_AVAILABILITY));
 
-		if (CollectionUtils.isNotEmpty(productData.getVariantOptions()))
-		{
-			Collections.sort(productData.getVariantOptions(), variantSortStrategy);
-		}
-	}
+        sortVariantOptionData(productData);
+        storeCmsPageInModel(model, getPageForProduct(productModel));
+        populateProductData(productData, model);
+        model.addAttribute(WebConstants.BREADCRUMBS_KEY,
+                productBreadcrumbBuilder.getBreadcrumbs(productModel));
+    }
 
-	protected List<Map<String, ImageData>> getGalleryImages(final ProductData productData)
-	{
-		final List<Map<String, ImageData>> galleryImages = new ArrayList<>();
-		if (CollectionUtils.isNotEmpty(productData.getImages()))
-		{
-			final List<ImageData> images = new ArrayList<>();
-			for (final ImageData image : productData.getImages())
-			{
-				if (ImageDataType.GALLERY.equals(image.getImageType()))
-				{
-					images.add(image);
-				}
-			}
-			Collections.sort(images, new Comparator<ImageData>()
-			{
-				@Override
-				public int compare(final ImageData image1, final ImageData image2)
-				{
-					return image1.getGalleryIndex().compareTo(image2.getGalleryIndex());
-				}
-			});
+    protected void populateProductData(final ProductData productData, final Model model) {
+        model.addAttribute("galleryImages", getGalleryImages(productData));
+        model.addAttribute("product", productData);
+    }
 
-			if (CollectionUtils.isNotEmpty(images))
-			{
-				int currentIndex = images.get(0).getGalleryIndex().intValue();
-				Map<String, ImageData> formats = new HashMap<String, ImageData>();
-				for (final ImageData image : images)
-				{
-					if (currentIndex != image.getGalleryIndex().intValue())
-					{
-						galleryImages.add(formats);
-						formats = new HashMap<>();
-						currentIndex = image.getGalleryIndex().intValue();
-					}
-					formats.put(image.getFormat(), image);
-				}
-				if (!formats.isEmpty())
-				{
-					galleryImages.add(formats);
-				}
-			}
-		}
-		return galleryImages;
-	}
+    protected void sortVariantOptionData(final ProductData productData) {
+        if (CollectionUtils.isNotEmpty(productData.getBaseOptions())) {
+            for (final BaseOptionData baseOptionData : productData.getBaseOptions()) {
+                if (CollectionUtils.isNotEmpty(baseOptionData.getOptions())) {
+                    Collections.sort(baseOptionData.getOptions(), variantSortStrategy);
+                }
+            }
+        }
 
-	protected ReviewValidator getReviewValidator()
-	{
-		return reviewValidator;
-	}
+        if (CollectionUtils.isNotEmpty(productData.getVariantOptions())) {
+            Collections.sort(productData.getVariantOptions(), variantSortStrategy);
+        }
+    }
 
-	protected AbstractPageModel getPageForProduct(final ProductModel product) throws CMSItemNotFoundException
-	{
-		return cmsPageService.getPageForProduct(product);
-	}
+    protected List<Map<String, ImageData>> getGalleryImages(final ProductData productData) {
+        final List<Map<String, ImageData>> galleryImages = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(productData.getImages())) {
+            final List<ImageData> images = new ArrayList<>();
+            for (final ImageData image : productData.getImages()) {
+                if (ImageDataType.GALLERY.equals(image.getImageType())) {
+                    images.add(image);
+                }
+            }
+            Collections.sort(images, new Comparator<ImageData>() {
+                @Override
+                public int compare(final ImageData image1, final ImageData image2) {
+                    return image1.getGalleryIndex().compareTo(image2.getGalleryIndex());
+                }
+            });
 
+            if (CollectionUtils.isNotEmpty(images)) {
+                int currentIndex = images.get(0).getGalleryIndex().intValue();
+                Map<String, ImageData> formats = new HashMap<String, ImageData>();
+                for (final ImageData image : images) {
+                    if (currentIndex != image.getGalleryIndex().intValue()) {
+                        galleryImages.add(formats);
+                        formats = new HashMap<>();
+                        currentIndex = image.getGalleryIndex().intValue();
+                    }
+                    formats.put(image.getFormat(), image);
+                }
+                if (!formats.isEmpty()) {
+                    galleryImages.add(formats);
+                }
+            }
+        }
+        return galleryImages;
+    }
 
+    protected ReviewValidator getReviewValidator() {
+        return reviewValidator;
+    }
+
+    protected AbstractPageModel getPageForProduct(final ProductModel product)
+            throws CMSItemNotFoundException {
+        return cmsPageService.getPageForProduct(product);
+    }
 
 }

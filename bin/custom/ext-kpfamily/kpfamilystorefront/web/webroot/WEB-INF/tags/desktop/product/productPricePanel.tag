@@ -2,19 +2,22 @@
 <%@ attribute name="product" required="true"
     type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
+<%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="row">
     <div class="col-xs-4 v-bottom">
         <p class="price">
-            <format:fromPrice priceData="${product.price}" />
-            <!--         <sup>75&nbsp;&euro;</sup> -->
-            <!-- TODO: format the price correctly -->
+            <format:price priceData="${product.price}" />
+            <sup>&nbsp;&euro;</sup>
+            <!-- TODO: format price correctly -->
         </p>
         <p>
-            <small> inkl. MwSt.<br />zzgl. Versand
+            <small>
+                <spring:theme code="product.tax.vat.included" text="inkl. MwSt."/>
+                <br/>
+                <spring:theme code="product.tax.shipping.excluded" text="zzgl. Versand"/>
             </small>
         </p>
     </div>
@@ -29,7 +32,7 @@
 <%-- 	<c:otherwise> --%>
 <!-- 		<table class="volume-prices" cellpadding="0" cellspacing="0" border="0"> -->
 <!-- 			<thead> -->
-<%-- 					<th class="volume-prices-quantity"><spring:theme code="product.volumePrices.column.qa"/></th> --%>
+<%-- 					<th class="volume-prices-quantity"><spring:theme code="product.volumePrices.column.quantity"/></th> --%>
 <%-- 					<th class="volume-price-amount"><spring:theme code="product.volumePrices.column.price"/></th> --%>
 <!-- 			</thead> -->
 <!-- 			<tbody> -->
