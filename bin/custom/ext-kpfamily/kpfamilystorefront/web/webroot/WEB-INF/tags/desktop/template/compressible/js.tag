@@ -35,8 +35,8 @@
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.bt-0.9.5-rc1.min.js"></script>
 <%-- PasswordStrength  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.pstrength.custom-1.2.0.js"></script>
-
-
+<%-- JQuery mobile --%>
+<script type="text/javascript" src="${commonResourcePath}/js/jquery.mobile.custom.min.js"></script>
 
 
 <%-- Custom ACC JS --%>

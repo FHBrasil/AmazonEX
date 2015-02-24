@@ -68,4 +68,4 @@
 
 <%-- Babyartikel customs --%>
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/babyartikel-main.css" />
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/custom/babyartikel-fonts.css">
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/babyartikel-fonts.css">

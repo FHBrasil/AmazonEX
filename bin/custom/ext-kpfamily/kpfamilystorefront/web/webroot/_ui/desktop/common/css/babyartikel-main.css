@@ -106,7 +106,7 @@
 	.stars span {color:#ffa700;position:absolute;left:0;top:0;overflow:hidden;}
 	
 	/* CSS for bonus system icons */
-	.fox24150217 {background-image: url("../layout/sparfuchs24.gif");background-repeat: no-repeat;padding-left: 30px;}
+	.fox24150217 {background-image: url("../images/pages/product/sparfuchs24.gif");background-repeat: no-repeat;padding-left: 30px;}
 	
 	/* CSS for socicon */
 	.socicon {position: relative;top: 1px;display: inline-block;font-family: 'socicon';font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;}
