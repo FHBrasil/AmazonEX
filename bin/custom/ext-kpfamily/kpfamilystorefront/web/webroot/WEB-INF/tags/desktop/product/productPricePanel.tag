@@ -7,11 +7,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="row">
-    <div class="col-xs-4 v-bottom">
+    <div class="col-xs-4 v-bottom" style="float:left;">
         <p class="price">
-            <format:price priceData="${product.price}" />
-            <sup>&nbsp;&euro;</sup>
-            <!-- TODO: format price correctly -->
+            ${product.priceEuro},
+            <sup>${product.priceCents}&nbsp;&euro;</sup>
         </p>
         <p>
             <small>
@@ -21,6 +20,8 @@
             </small>
         </p>
     </div>
+    <product:productDetailsShipping product="${product}"/>
+    <div class="clearfix"></div>
 </div>
 
 <%-- <c:choose> --%>

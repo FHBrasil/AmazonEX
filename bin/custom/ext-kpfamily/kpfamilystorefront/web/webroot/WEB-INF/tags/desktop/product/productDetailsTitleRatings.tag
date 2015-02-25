@@ -18,12 +18,12 @@
     <span class="glyphicon stars">
         <span style="width: 90%"></span>
     </span>
-     ${product.averageRating}(${product.numberOfReviews})
+     ${product.averageRating}(${product.reviewsTotalCount})
     <a href="#"><spring:theme code="review.write.review" text="Bewertung schreiben"/></a>
 </p>
 <c:if test="${showShortDescription}">
     <p>
-        ${product.description}
+        ${product.shortDescription}
         <a href="#">
             <spring:theme code="product.description.read.more" text="weiterlesen"/>
         </a>

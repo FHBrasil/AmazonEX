@@ -1,8 +1,11 @@
 package de.kpfamily.facades.populators;
 
-import de.hybris.platform.commercefacades.product.converters.populator.ProductPopulator;
+import java.math.BigDecimal;
+
 import de.hybris.platform.commercefacades.product.data.ProductData;
-import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.converters.impl.AbstractPopulatingConverter;
+import de.hybris.platform.europe1.model.PriceRowModel;
+import de.kpfamily.core.model.BabyartikelProductModel;
 
 
 /**
@@ -10,17 +13,28 @@ import de.hybris.platform.core.model.product.ProductModel;
  * @author jfelipe
  *
  */
-public class DefaultKPProductPopulator extends ProductPopulator {
-    
+public class DefaultKPProductPopulator
+        extends AbstractPopulatingConverter<BabyartikelProductModel, ProductData> {
     
     /**
      * 
      * @author jfelipe
      */
     @Override
-    public void populate(ProductModel source, ProductData target) {
+    public void populate(BabyartikelProductModel source, ProductData target) {
         super.populate(source, target);
-        
-        return;
+        target.setShortDescription(source.getShortDescription());
+        target.setAverageRating(source.getAverageRating());
+        target.setReviewsTotalCount(source.getReviewsTotalCount());
+        if(!source.getEurope1Prices().isEmpty()) {
+            PriceRowModel priceRow = source.getEurope1Prices().iterator().next();
+            BigDecimal price = new BigDecimal(priceRow.getPrice());
+            Integer priceEuro = price.intValue();
+            Integer priceCents = price.remainder(BigDecimal.ONE)
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).movePointRight(2).intValue();
+            target.setPriceEuro(priceEuro);
+            target.setPriceCents(priceCents);
+        }
     }
+    
 }

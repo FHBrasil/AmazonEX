@@ -5,7 +5,6 @@
 
 <product:productDetailsTitleRatings product="${product}" showShortDescription="true" showBrandLogo="true"/>
 <product:productPricePanel product="${product}"/>
-<product:productDetailsShipping product="${product}"/>
 <product:productVariantSelector productVariants="${product.variantOptions}"/>
 
 

@@ -13,6 +13,7 @@ import de.kpfamily.facades.KPProductFacade;
 public class DefaultKPProductFacade extends DefaultProductFacade<ProductModel>
         implements KPProductFacade {
 
+//    private ConfigurablePopulator<ProductModel, ProductData, ProductOption> productConfiguredPopulator;
     
     /**
      * 
