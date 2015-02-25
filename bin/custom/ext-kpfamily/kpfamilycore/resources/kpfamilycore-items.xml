@@ -218,6 +218,12 @@
 				    	<persistence type="dynamic" attributeHandler="babyartikelProductDefaultStockLevelHandler"/>
 				    	<modifiers write="false"/>
 				  	</attribute>
+				  	<attribute type="double" qualifier="boostingFactor">
+						<description>Factor used to boost the product visibility</description>
+						<modifiers/>
+						<defaultvalue>0</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
 				</attributes>
 			</itemtype>
 			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
@@ -255,6 +261,57 @@
 						<description>the order entry that the serial voucher was generated for</description>
 						<persistence type="property"/>
 						<modifiers optional="false"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="BabyartikelCategory" extends="Category">
+				<description>Babyartikel customization of the Hybris Category item</description>
+				<attributes>
+					<attribute type="int" qualifier="minLifetimeOfNewProducts">
+						<description>Minimum days to consider a product as new</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="double" qualifier="averageProfitPercentage">
+						<description>Calculated profit average of this Category's products</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="double" qualifier="enhanceNewProductsBy">
+						<description>Score used to enhance the visibility of new products</description>
+						<modifiers/>
+						<defaultvalue>0</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="double" qualifier="decreaseOutOfStockProductsBy">
+						<description>Score used to decrease the visibility of products without stock</description>
+						<modifiers/>
+						<defaultvalue>0</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="double" qualifier="decreaseLowProfitProductsBy">
+						<description>Score used to decrease the visibility of products with a poor profit percentage</description>
+						<modifiers/>
+						<defaultvalue>0</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="double" qualifier="multiplyProfitBy">
+						<description>Value used to fine-tune the profit score</description>
+						<modifiers/>
+						<defaultvalue>1</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="double" qualifier="multiplyTotalSalesBy">
+						<description>Value used to fine-tune the sales score</description>
+						<modifiers/>
+						<defaultvalue>1</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="double" qualifier="multiplyPageViewsBy">
+						<description>Value used to fine-tune the page views score</description>
+						<modifiers/>
+						<defaultvalue>1</defaultvalue>
+						<persistence type="property"/>
 					</attribute>
 				</attributes>
 			</itemtype>
