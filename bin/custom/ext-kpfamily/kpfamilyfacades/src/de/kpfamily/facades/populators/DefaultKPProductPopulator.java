@@ -23,7 +23,7 @@ public class DefaultKPProductPopulator
     @Override
     public void populate(BabyartikelProductModel source, ProductData target) {
         super.populate(source, target);
-        target.setAverageRating(source.getAverageRating());
+        target.setAverageRating(source.getReviewsAverageRating());
         target.setCode(source.getCode());
         target.setDescription(source.getDescription());
         target.setManufacturer(source.getManufacturerName());

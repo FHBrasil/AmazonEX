@@ -1,31 +1,31 @@
 @font-face {
     font-family: 'Droid Sans';
-    src: url('../fonts/DroidSans.eot');
-    src: url('../fonts/DroidSans.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/DroidSans.woff') format('woff'),
-         url('../fonts/DroidSans.ttf') format('truetype'),
-         url('../fonts/DroidSans.svg#droid_sansregular') format('svg');
+    src: url('DroidSans.eot');
+    src: url('DroidSans.eot?#iefix') format('embedded-opentype'),
+         url('DroidSans.woff') format('woff'),
+         url('DroidSans.ttf') format('truetype'),
+         url('DroidSans.svg#droid_sansregular') format('svg');
     font-weight: 400;
     font-style: normal;
 }
 @font-face {
     font-family: 'Droid Sans';
-    src: url('../fonts/DroidSansBold.eot');
-    src: url('../fonts/DroidSansBold.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/DroidSansBold.woff') format('woff'),
-         url('../fonts/DroidSansBold.ttf') format('truetype'),
-         url('../fonts/DroidSansBold.svg#droid_sansbold') format('svg');
+    src: url('DroidSansBold.eot');
+    src: url('DroidSansBold.eot?#iefix') format('embedded-opentype'),
+         url('DroidSansBold.woff') format('woff'),
+         url('DroidSansBold.ttf') format('truetype'),
+         url('DroidSansBold.svg#droid_sansbold') format('svg');
     font-weight: 700;
     font-style: normal;
 }
 @font-face {
     font-family: 'socicon';
-    src: url('../fonts/socicon-webfont.eot');
-    src: url('../fonts/socicon-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/socicon-webfont.woff') format('woff'),
-		 url('../fonts/socicon-webfont.woff2') format('woff2'),
-         url('../fonts/socicon-webfont.ttf') format('truetype'),
-         url('../fonts/socicon-webfont.svg#sociconregular') format('svg');
+    src: url('socicon-webfont.eot');
+    src: url('socicon-webfont.eot?#iefix') format('embedded-opentype'),
+         url('socicon-webfont.woff') format('woff'),
+		 url('font/socicon-webfont.woff2') format('woff2'),
+         url('socicon-webfont.ttf') format('truetype'),
+         url('socicon-webfont.svg#sociconregular') format('svg');
     font-weight: normal;
     font-style: normal;
     text-transform: initial;

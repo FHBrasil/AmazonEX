@@ -14,7 +14,7 @@
 	.carousel-control:hover {color: #FFF;text-shadow: 0px 1px 2px #000;}
 	.carousel-indicators li {border-color: #adadad;}
 	.carousel-indicators .active {background-color: #adadad;}
-	.carousel-inner {padding-bottom: 7px; background-image:url('../images/pages/product/shad-bot.png');background-position: center bottom;background-repeat: no-repeat; background-size: 380px 5px;}
+	.carousel-inner {padding-bottom: 7px; background-image:url('../layout/shad-bot.png');background-position: center bottom;background-repeat: no-repeat; background-size: 380px 5px;}
 	
 	#mainCarousel .carousel-indicators {bottom:-30px;}
 	.breadcrumb {background-color: #fff;margin:0;}
@@ -23,7 +23,7 @@
 	.price {font-size: 36px; font-weight: bold;margin-bottom: -8px;}
 	.price sup {font-size: 50%;top: -0.7em;left: -0.3em}
 	.lead {font-size: 16px;}
-	.shadowbox {padding: 20px 0 10px 0;background-image: url('../images/pages/product/shad-top.png'), url('../images/pages/product/shad-bot.png'), url('../images/pages/product/shad-mid.png');background-repeat: no-repeat, no-repeat, repeat-y;background-position: center top, center bottom, center top;background-size: 380px 5px;}
+	.shadowbox {padding: 20px 0 10px 0;background-image: url('../layout/shad-top.png'), url('../layout/shad-bot.png'), url('../layout/shad-mid.png');background-repeat: no-repeat, no-repeat, repeat-y;background-position: center top, center bottom, center top;background-size: 380px 5px;}
 	.navbar {margin-bottom: 0;}
 	.navbar-default .navbar-nav > li > a {color: #3e3e3e}
 	.navbar-default .navbar-nav > li > a:hover {text-decoration: underline;}
@@ -106,7 +106,7 @@
 	.stars span {color:#ffa700;position:absolute;left:0;top:0;overflow:hidden;}
 	
 	/* CSS for bonus system icons */
-	.fox24150217 {background-image: url("../images/pages/product/sparfuchs24.gif");background-repeat: no-repeat;padding-left: 30px;}
+	.fox24150217 {background-image: url("../layout/sparfuchs24.gif");background-repeat: no-repeat;padding-left: 30px;}
 	
 	/* CSS for socicon */
 	.socicon {position: relative;top: 1px;display: inline-block;font-family: 'socicon';font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;}
@@ -126,6 +126,11 @@
 	.underlinelinks150212 a {text-decoration: underline;}
 	
 	/* CSS for general product panels */
+	.pagination150224 h1,.pagination150224 .pagination {margin:0;}
+	.pagination150224 .glyphicon {font-size:15px;}
+	.pagination150224 .input-group-btn {float:left;display:inline;width:auto;}
+	.pagination150224 .input-group-btn button {border-radius: 0;border-left:none;}
+	
 	.box150102 .thumbnail {height: 190px;display:table;width:100%;padding:0;margin:0;border:0;}
 	.box150102 .thumbnail a {display:table-cell;vertical-align:bottom;}
 	.box150102 .thumbnail a > img {max-width:190px;max-height:190px;}
@@ -162,6 +167,15 @@
 	/* CSS for filters at category page */
 	.slider-selection {background-image: none !important; background-color: silver;box-shadow:none;}
 	.slider.slider-horizontal {width: 160px;}
+	.filter150219 {background-color: #f5f5f5;border:1px solid #ddd;border-width: 1px 0 1px 0;}
+	.filter150219 .panel-default {border-width: 0 0 1px 0;box-shadow:none;}
+	.filter150219 .panel-title .glyphicon {font-size:14px;}
+	.filter150219 .panel-body {background-color: #f5f5f5;}
+	.filter150219 .btn {background-color: #E6E6E6;}
+	.filter150219 ul {list-style-type:none;padding-left:0;}
+	.filter150219 a .glyphicon {color:silver;}
+	.filter150219 .active .glyphicon {color:#3e3e3e;}
+	
 	.filter150105 .dropdown-menu {padding: 0 15px;min-width:200px;}
 	.filter150105 .badge {background-color: white;border: 1px solid #ddd;color: #3e3e3e;font-weight: normal;}
 	.filter150105 .ba-color {margin:0;padding:5px;}

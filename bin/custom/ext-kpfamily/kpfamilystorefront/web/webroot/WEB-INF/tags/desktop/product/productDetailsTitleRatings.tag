@@ -5,6 +5,10 @@
 <%@ attribute name="showBrandLogo" required="true" type="Boolean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
+
+
+<script type="text/javascript" src="//display.ugc.bazaarvoice.com/static/kp-family/de_DE/bvapi.js"></script>
 
 <c:if test="${showBrandLogo}">
     <div class="col-sm-12 text-right hidden-xs">
@@ -14,13 +18,7 @@
 <h1>
     <b>${product.manufacturer}</b> ${product.name}
 </h1>
-<p>
-    <span class="glyphicon stars">
-        <span style="width: 90%"></span>
-    </span>
-     ${product.averageRating}(${product.reviewsTotalCount})
-    <a href="#"><spring:theme code="review.write.review" text="Bewertung schreiben"/></a>
-</p>
+<product:reviewsRatings product="${product}"/>
 <c:if test="${showShortDescription}">
     <p>
         ${product.shortDescription}
