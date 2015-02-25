@@ -23,9 +23,14 @@ public class DefaultKPProductPopulator
     @Override
     public void populate(BabyartikelProductModel source, ProductData target) {
         super.populate(source, target);
-        target.setShortDescription(source.getShortDescription());
         target.setAverageRating(source.getAverageRating());
+        target.setCode(source.getCode());
+        target.setDescription(source.getDescription());
+        target.setManufacturer(source.getManufacturerName());
+        target.setName(source.getName());
         target.setReviewsTotalCount(source.getReviewsTotalCount());
+        target.setShortDescription(source.getShortDescription());
+        target.setSummary(source.getSummary());
         if(!source.getEurope1Prices().isEmpty()) {
             PriceRowModel priceRow = source.getEurope1Prices().iterator().next();
             BigDecimal price = new BigDecimal(priceRow.getPrice());
