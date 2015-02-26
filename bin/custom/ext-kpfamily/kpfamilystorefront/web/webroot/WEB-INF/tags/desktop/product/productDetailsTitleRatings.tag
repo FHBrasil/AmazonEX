@@ -13,7 +13,7 @@
 <c:if test="${showBrandLogo}">
     <div class="col-sm-12 text-right hidden-xs">
         <a href="#"><img src="product/brand.jpg"></a>
-     </div>
+    </div>
 </c:if>
 <h1>
     <b>${product.manufacturer}</b> ${product.name}

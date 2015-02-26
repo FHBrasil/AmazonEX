@@ -7,10 +7,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="row">
-    <div class="col-xs-4 v-bottom" style="float:left;">
+    <div class="col-xs-4 v-bottom">
         <p class="price">
-            ${product.priceEuro},
-            <sup>${product.priceCents}&nbsp;&euro;</sup>
+            ${product.priceEuro},<sup>${product.priceCents} &euro;</sup>
         </p>
         <p>
             <small>
@@ -19,9 +18,9 @@
                 <spring:theme code="product.tax.shipping.excluded" text="zzgl. Versand"/>
             </small>
         </p>
-    </div>
-    <product:productDetailsShipping product="${product}"/>
-    <div class="clearfix"></div>
+    <%-- Again, leave the empty comment below alone. He doesn't need you to bully him... --%>
+    </div><!--
+    --><product:productDetailsShipping product="${product}"/>
 </div>
 
 <%-- <c:choose> --%>

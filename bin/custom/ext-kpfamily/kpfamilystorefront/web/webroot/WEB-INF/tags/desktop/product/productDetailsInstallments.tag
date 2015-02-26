@@ -8,7 +8,9 @@
     <div class="row">
         <p class="col-xs-4">
             <a href="#">
-                <b class="fox24150217">+1496 Punkte</b>
+                <b class="fox24150217">
+                    <spring:theme code="product.points.number.of.points" text="Punkte"/>
+                </b>
                 <small class="hidden-xs hidden-sm">
                     <br />
                     <spring:theme code="text.purchase.point.collect.save"

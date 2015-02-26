@@ -15,10 +15,11 @@
 
 <div class="productDetailsPanel container">
     <div class="margin-top">
-        <div class="col-xs-12 col-sm-6 v-bottom" style="float:left;">
+        <div class="col-xs-12 col-sm-6 v-bottom">
             <product:productImagePanel product="${product}" galleryImages="${galleryImages}" />
-        </div>
-        <div class="col-sm-6 v-bottom margin-top">
+            <%-- Leave the empty comment below alone. He doesn't need you to bully him... --%>
+        </div><!-- 
+        --><div class="col-sm-6 v-bottom margin-top">
             <product:productDetailsInfoPanel product="${product}"/>
         </div>
         <div class="margin-top margin-bottom">
@@ -27,6 +28,7 @@
             <div class="clearfix"></div>
         </div>
     </div>
+    <div class="clearfix"></div>
 </div>        
 <!--         <div class="span-10 productDescription last"> -->
 <%--             <ycommerce:testId code="productDetails_productNamePrice_label_${product.code}"> --%>

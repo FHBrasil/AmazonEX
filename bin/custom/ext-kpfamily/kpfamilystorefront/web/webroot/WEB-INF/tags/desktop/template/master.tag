@@ -48,7 +48,7 @@
 </head>
 
 <body class="${pageBodyCssClasses} ${cmsPageRequestContextData.liveEdit ? ' yCmsLiveEdit' : ''} language-${currentLanguage.isocode}">
-Theme: ${commonResourcePath}
+
 	<%-- Inject the page body here --%>
 	<jsp:doBody/>
 

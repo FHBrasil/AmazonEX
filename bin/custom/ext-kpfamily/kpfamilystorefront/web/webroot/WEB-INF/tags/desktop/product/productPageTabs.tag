@@ -10,14 +10,13 @@
 
 
 <div class="container">
-
     <product:productPageTabsHeader product="${product}"/>
-        
-    <div class="container">
+</div>
+<div class="container">
+    <div class="col-xs-12 tab150119">
         <product:productDetailsTitleRatings product="${product}" showShortDescription="false"
                 showBrandLogo="false"/>
-        
-        <product:productPageTabsBody product="${product}"/>
-        <product:productDetailsSeeAlso/>
     </div>
+    <product:productPageTabsBody product="${product}"/>
+    <product:productDetailsSeeAlso/>
 </div>

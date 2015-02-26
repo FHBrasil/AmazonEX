@@ -8,7 +8,8 @@
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/jquery.bt-0.9.5.css" />
 
 <%-- blueprintcss --%>
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/blueprint/screen.css" />
+<%-- removed because it crashes the layout --%>
+<%-- <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/blueprint/screen.css" /> --%>
 
 <%-- jQuery UI CSS --%>
 <link rel="stylesheet" type="text/css" media="screen" href="${commonResourcePath}/css/jquery.ui.stars-3.0.1.custom.css" />
@@ -24,8 +25,8 @@
 
 <%-- Common pages --%>
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/helper.css" />
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/main.css" />
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/buttons.css" />
+<%-- <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/main.css" /> --%> <%-- removed because it crashes the layout --%>
+<%-- <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/buttons.css" /> --%> <%-- removed because it crashes the layout --%>
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/forms.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/header.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/footer.css" />
@@ -68,4 +69,4 @@
 
 <%-- Babyartikel customs --%>
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/babyartikel-main.css" />
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/babyartikel-fonts.css">
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/fonts/babyartikel-fonts.css">
