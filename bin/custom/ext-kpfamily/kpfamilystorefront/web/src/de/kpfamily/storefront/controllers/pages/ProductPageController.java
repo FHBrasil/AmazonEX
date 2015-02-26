@@ -23,7 +23,6 @@ import de.hybris.platform.catalog.enums.ProductReferenceTypeEnum;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 import de.hybris.platform.cms2.servicelayer.services.CMSPageService;
-import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.ProductOption;
 import de.hybris.platform.commercefacades.product.data.BaseOptionData;
 import de.hybris.platform.commercefacades.product.data.ImageData;

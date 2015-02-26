@@ -6,7 +6,7 @@
 <div class="col-xs-8 v-bottom">
     <p>
         <b><spring:theme code="product.delivery.freitag.delivered" text="Am Freitag geliefert!"/></b>
-        <span class="glyphicon glyphicon-stop text-onstock"></span>
+        <span class="glyphicon glyphicon-stop ${product.availableInStock ? 'text-onstock' : 'text-nostock' }"></span>
         <br />
         <small>
             <spring:theme code="product.delivery.order.before.freitag"

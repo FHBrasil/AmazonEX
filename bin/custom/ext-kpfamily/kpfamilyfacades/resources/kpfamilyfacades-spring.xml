@@ -195,10 +195,10 @@
 	<alias name="kpProductFacade" alias="kpProductFacade"/>
 	<bean id="kpProductFacade" class="de.kpfamily.facades.impl.DefaultKPProductFacade"
 	       parent="accProductFacade">
-       <property name="productConverter" ref="defaultKPProductPopulator"/>
+       <property name="productConfiguredPopulator" ref="defaultKPProductPopulator"/>
 	</bean>
 	
-	<bean id="defaultKPProductPopulator" parent="defaultProductConverter"
+	<bean id="defaultKPProductPopulator" parent="defaultProductConfiguredPopulator"
 	       class="de.kpfamily.facades.populators.DefaultKPProductPopulator"/>
 	
 </beans>

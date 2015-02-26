@@ -1,5 +1,9 @@
 package de.kpfamily.facades.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
+import de.hybris.platform.commercefacades.product.ProductOption;
 import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commercefacades.product.impl.DefaultProductFacade;
 import de.hybris.platform.core.model.product.ProductModel;
@@ -13,7 +17,6 @@ import de.kpfamily.facades.KPProductFacade;
 public class DefaultKPProductFacade extends DefaultProductFacade<ProductModel>
         implements KPProductFacade {
 
-//    private ConfigurablePopulator<ProductModel, ProductData, ProductOption> productConfiguredPopulator;
     
     /**
      * 
@@ -21,7 +24,11 @@ public class DefaultKPProductFacade extends DefaultProductFacade<ProductModel>
      */
     @Override
     public ProductData getProductForCode(String code) {
-        ProductData productData = getProductForCodeAndOptions(code, null);
+        final List<ProductOption> options = Arrays.asList(ProductOption.BASIC, ProductOption.PRICE,
+                ProductOption.SUMMARY, ProductOption.DESCRIPTION, ProductOption.CATEGORIES,
+                ProductOption.PROMOTIONS, ProductOption.STOCK, ProductOption.REVIEW,
+                ProductOption.VARIANT_FULL, ProductOption.DELIVERY_MODE_AVAILABILITY);
+        ProductData productData = getProductForCodeAndOptions(code, options);
         return productData;
     }
     
