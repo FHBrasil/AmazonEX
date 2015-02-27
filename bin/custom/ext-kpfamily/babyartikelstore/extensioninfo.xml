@@ -14,7 +14,7 @@
 -->
 <extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
    <extension abstractclassprefix="Generated" classprefix="Babyartikelstore" managername="BabyartikelstoreManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="babyartikelstore">
-      <requires-extension name="apparelstore"/>
+	  <requires-extension name="acceleratorservices"/>
       <coremodule generated="true" manager="de.kpfamily.jalo.BabyartikelstoreManager" packageroot="de.kpfamily"/>
    </extension>
 </extensioninfo>

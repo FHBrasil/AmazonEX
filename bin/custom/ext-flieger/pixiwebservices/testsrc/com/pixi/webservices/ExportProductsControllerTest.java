@@ -71,7 +71,7 @@ public class ExportProductsControllerTest extends ServicelayerTransactionalTest
 		List<ProductModel> products = new ArrayList<ProductModel>();
 		
 		CatalogModel catalog = new CatalogModel();
-		catalog.setId("apparelProductCatalog");
+		catalog.setId("babyartikelProductCatalog");
 
 		CatalogVersionModel catalogVersion = new CatalogVersionModel();
 		catalogVersion.setCatalog(modelService.getByExample(catalog));
@@ -111,7 +111,7 @@ public class ExportProductsControllerTest extends ServicelayerTransactionalTest
 		LOG.info("testando o service de produtos");
 		
 		CatalogModel catalog = new CatalogModel();
-		catalog.setId("apparelProductCatalog");
+		catalog.setId("babyartikelProductCatalog");
 
 		CatalogVersionModel catalogVersion = new CatalogVersionModel();
 		catalogVersion.setCatalog(modelService.getByExample(catalog));

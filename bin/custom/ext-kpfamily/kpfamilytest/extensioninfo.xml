@@ -18,8 +18,6 @@
 			extensions which are automatically required -->
 
 		<requires-extension name="kpfamilyfacades"/>
-		<requires-extension name="electronicsstore"/>
-		<requires-extension name="apparelstore"/>
 
 		<coremodule generated="true" manager="de.hybris.platform.jalo.extension.GenericManager" packageroot="de.kpfamily.test"/>
 			

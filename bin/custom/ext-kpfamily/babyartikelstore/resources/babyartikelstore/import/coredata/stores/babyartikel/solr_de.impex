@@ -22,7 +22,6 @@ UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=
  ;$solrIndexedType;size;"Größe"
  ;$solrIndexedType;style;"Stil"
  ;$solrIndexedType;summary;"Zusammenfassung"
- ;$solrIndexedType;swatchColors;"Farbe"
  
 # Define the available sorts
 UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang]
