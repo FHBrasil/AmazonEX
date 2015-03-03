@@ -12,7 +12,7 @@
     <c:set var="count" value="${0}"/>
     <c:forEach var="image" items="${galleryImages}">
         <li class="col-xs-2" data-target="#mainCarousel" data-slide-to="${count}">
-            <img src="<c:url value='${image.url}'/>" width="100%" alt="Produktbild ${1+count}">
+            <img src="<c:url value='${image.url}'/>" width="100%" alt="Produktbild ${count+1}">
         </li>
         <c:set var="count" value="${count+1}" />
     </c:forEach>
