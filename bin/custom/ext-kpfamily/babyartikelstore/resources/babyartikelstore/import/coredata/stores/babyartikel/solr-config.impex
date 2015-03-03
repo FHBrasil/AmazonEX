@@ -1,0 +1,45 @@
+#
+# Import the Solr configuration for the store
+#
+$productCatalog=babyartikelProductCatalog
+$catalogVersions=catalogVersions(catalog(id),version);
+$serverConfigName=babyartikelSolrServerConfig
+$indexConfigName=babyartikelSolrIndexConfig
+$searchConfigName=babyartikelPageSize
+$facetSearchConfigName=babyartikelIndex
+$facetSearchConfigDescription=Babyartikel solr index
+$searchIndexNamePrefix=babyartikel
+$solrIndexedType=babyartikelProductType
+$indexBaseSite=babyartikel
+$indexLanguages=de,en
+$indexCurrencies=EUR
+
+#
+# Setup the Solr server, indexer, and search configs
+#
+
+# Create the solr server configuration
+INSERT_UPDATE SolrServerConfig;name[unique=true];mode(code);embeddedMaster
+;$serverConfigName;embedded;true
+
+# Create the solr indexer configuration
+INSERT_UPDATE SolrIndexConfig;name[unique=true];batchSize;numberOfThreads;indexMode(code);
+;$indexConfigName;100;1;TWO_PHASE;
+
+# Create the faceted search configuration
+INSERT_UPDATE SolrSearchConfig;description[unique=true];pageSize
+;$searchConfigName;20
+
+#
+# Setup the indexed types, their properties, and the update queries
+#
+
+# Declare the indexed type Product
+INSERT_UPDATE SolrIndexedType;identifier[unique=true];type(code);variant
+;$solrIndexedType;Product;false
+
+INSERT_UPDATE SolrFacetSearchConfig;name[unique=true];description;indexNamePrefix;languages(isocode);currencies(isocode);solrServerConfig(name);solrSearchConfig(description);solrIndexConfig(name);solrIndexedTypes(identifier);enabledLanguageFallbackMechanism;$catalogVersions
+;$facetSearchConfigName;$facetSearchConfigDescription;$searchIndexNamePrefix;$indexLanguages;$indexCurrencies;$serverConfigName;$searchConfigName;$indexConfigName;$solrIndexedType;true;$productCatalog:Online
+
+UPDATE BaseSite;uid[unique=true];solrFacetSearchConfiguration(name)
+;$indexBaseSite;$facetSearchConfigName

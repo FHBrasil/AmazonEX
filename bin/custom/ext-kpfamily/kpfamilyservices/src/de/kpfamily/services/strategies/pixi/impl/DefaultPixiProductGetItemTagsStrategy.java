@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 import com.pixi.core.strategies.PixiProductGetItemTagsStrategy;
 
 import de.hybris.platform.core.model.product.ProductModel;
-import de.kpfamily.core.model.BabyartikelProductModel;
 import de.kpfamily.core.model.ProductPackageModel;
 
 public class DefaultPixiProductGetItemTagsStrategy implements PixiProductGetItemTagsStrategy 
@@ -22,17 +21,15 @@ public class DefaultPixiProductGetItemTagsStrategy implements PixiProductGetItem
 	public List<String> getItemTagsByProduct(final ProductModel product) 
 	{
 		Assert.notNull(product);
-		Assert.isInstanceOf(BabyartikelProductModel.class, product);
 		
-		final BabyartikelProductModel babyProduct = (BabyartikelProductModel) product;
 		final List<String> itemTags = new ArrayList<String>();
 		
-		addPackageSizeTag(babyProduct, itemTags);
+		addPackageSizeTag(product, itemTags);
 		
 		return itemTags;
 	}
 
-	private void addPackageSizeTag(final BabyartikelProductModel product, final List<String> itemTags) 
+	private void addPackageSizeTag(final ProductModel product, final List<String> itemTags) 
 	{
 		if(product.getLogisticData() == null)
 		{

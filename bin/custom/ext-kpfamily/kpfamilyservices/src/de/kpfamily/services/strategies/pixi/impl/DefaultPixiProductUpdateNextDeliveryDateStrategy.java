@@ -12,7 +12,6 @@ import com.pixi.core.strategies.PixiProductUpdateNextDeliveryDateStrategy;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.ordersplitting.model.StockLevelModel;
 import de.hybris.platform.servicelayer.model.ModelService;
-import de.kpfamily.core.model.BabyartikelProductModel;
 
 public class DefaultPixiProductUpdateNextDeliveryDateStrategy implements PixiProductUpdateNextDeliveryDateStrategy 
 {
@@ -25,12 +24,10 @@ public class DefaultPixiProductUpdateNextDeliveryDateStrategy implements PixiPro
 	public boolean updateNextDeliveryDate(final ProductModel product, final Date arrivalDate) 
 	{
 		Assert.notNull(product);
-		Assert.isInstanceOf(BabyartikelProductModel.class, product);
 		
 		LOG.debug("Updating " + product.getCode() + " nextDeliveryDate to " + arrivalDate);
 
-		final BabyartikelProductModel babyartikelProduct = (BabyartikelProductModel) product;
-		final StockLevelModel defaultStockLevel = babyartikelProduct.getDefaultStockLevel();
+		final StockLevelModel defaultStockLevel = product.getDefaultStockLevel();
 		
 		if(defaultStockLevel != null)
 		{
