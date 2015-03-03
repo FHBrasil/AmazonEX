@@ -16,8 +16,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Spring Integration -->
-	<import resource="classpath:/kpfamilycore/integration/hot-folder-store-electronics-spring.xml"/>
-	<import resource="classpath:/kpfamilycore/integration/hot-folder-store-apparel-spring.xml"/>
 	<import resource="classpath:/kpfamilycore/integration/hot-folder-common-spring.xml"/>
 
 	<!-- SystemSetup for the KpfamilyCore -->
@@ -26,25 +24,13 @@
 
 	<!-- Solr field value providers -->
 
-	<bean id="electronicsCategorySource" parent="abstractCategorySource">
-		<property name="rootCategory" value="1"/>
-		<!-- '1' is the root icecat category -->
-	</bean>
-	<bean id="electronicsBrandCategorySource" parent="abstractCategorySource">
-		<property name="rootCategory" value="brands"/>
-		<!-- 'brands' is the root of the brands hierarchy -->
-	</bean>
-
-	<bean id="apparelCategorySource" parent="abstractCategorySource">
+	<bean id="babyartikelCategorySource" parent="abstractCategorySource">
 		<property name="rootCategory" value="categories"/>
-		<!-- 'categories' is the root apparel category -->
+		<!-- 'categories' is the root babyartikel category -->
 	</bean>
-	<bean id="apparelBrandCategorySource" parent="abstractCategorySource">
+	<bean id="babyartikelBrandCategorySource" parent="abstractCategorySource">
 		<property name="rootCategory" value="brands"/>
 		<!-- 'brands' is the root of the brands hierarchy -->
-	</bean>
-	<bean id="apparelCollectionCategorySource" parent="abstractCategorySource">
-		<property name="rootCategory" value="collections"/> <!-- 'collections' is the root of the collections hierarchy -->
 	</bean>
 
 	<bean id="abstractCategoryCodeValueProvider" abstract="true"
@@ -60,36 +46,17 @@
 		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 
-	<bean id="electronicsCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
-		<property name="categorySource" ref="electronicsCategorySource"/>
+	<bean id="babyartikelCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="babyartikelCategorySource"/>
 	</bean>
-	<bean id="electronicsBrandCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
-		<property name="categorySource" ref="electronicsBrandCategorySource"/>
+	<bean id="babyartikelBrandCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="babyartikelBrandCategorySource"/>
 	</bean>
-	<bean id="electronicsCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
-		<property name="categorySource" ref="electronicsCategorySource"/>
+	<bean id="babyartikelCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="babyartikelCategorySource"/>
 	</bean>
-	<bean id="electronicsBrandCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
-		<property name="categorySource" ref="electronicsBrandCategorySource"/>
-	</bean>
-
-	<bean id="apparelCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
-		<property name="categorySource" ref="apparelCategorySource"/>
-	</bean>
-	<bean id="apparelBrandCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
-		<property name="categorySource" ref="apparelBrandCategorySource"/>
-	</bean>
-	<bean id="apparelCollectionCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
-		<property name="categorySource" ref="apparelCollectionCategorySource"/>
-	</bean>
-	<bean id="apparelCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
-		<property name="categorySource" ref="apparelCategorySource"/>
-	</bean>
-	<bean id="apparelBrandCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
-		<property name="categorySource" ref="apparelBrandCategorySource"/>
-	</bean>
-	<bean id="apparelCollectionCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
-		<property name="categorySource" ref="apparelCollectionCategorySource"/>
+	<bean id="babyartikelBrandCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="babyartikelBrandCategorySource"/>
 	</bean>
 
 	<bean id="image515ValueProvider" parent="abstractImageValueProvider" >
@@ -130,47 +97,7 @@
 		<property name="promotionsService" ref="promotionsService"/>
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
 	</bean>
-
-	<bean id="colorFacetValueProvider"
-	      class="de.kpfamily.core.search.solrfacetsearch.provider.impl.ColorFacetValueProvider"
-	       parent="abstractPropertyFieldValueProvider">
-		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
-	</bean>
-
-	<bean id="colorFacetDisplayNameProvider"
-	      class="de.kpfamily.core.search.solrfacetsearch.provider.impl.ColorFacetDisplayNameProvider"
-	      >
-		<property name="enumerationService" ref="enumerationService"/>
-		<property name="i18nService" ref="i18nService"/>
-		<property name="commonI18NService" ref="commonI18NService"/>
-	</bean>
 	
-	<bean id="apparelPointOfServiceFacetDisplayNameProvider"
-	      class="de.kpfamily.core.search.solrfacetsearch.provider.impl.PointOfServiceFacetDisplayNameProvider"
-	      >
-		<property name="pointOfServiceService" ref="pointOfServiceService"/>
-	</bean>
-	
-	<bean id="electronicsPointOfServiceFacetDisplayNameProvider"
-	      class="de.kpfamily.core.search.solrfacetsearch.provider.impl.PointOfServiceFacetDisplayNameProvider"
-	      >
-		<property name="pointOfServiceService" ref="pointOfServiceService"/>
-	</bean>
-
-	<bean id="genderValueProvider"
-	      class="de.kpfamily.core.search.solrfacetsearch.provider.impl.GenderValueProvider"
-	       parent="abstractPropertyFieldValueProvider">
-		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
-	</bean>
-
-	<bean id="genderFacetDisplayNameProvider"
-	      class="de.kpfamily.core.search.solrfacetsearch.provider.impl.GenderFacetDisplayNameProvider"
-	      >
-		<property name="enumerationService" ref="enumerationService"/>
-		<property name="i18nService" ref="i18nService"/>
-		<property name="commonI18NService" ref="commonI18NService"/>
-	</bean>
-
 	<!--
 		Event listeners are singletons, therefore the dependency for a bean in tenant-scope
 		must be configured with a lookup method.
@@ -392,9 +319,7 @@
 		<property name="cmsSiteService" ref="cmsSiteService"/>
 		<property name="siteMappings">
 			<map>
-				<entry key="electronics" value-ref="newCustomerCheckoutFlowStrategy"/>
-				<entry key="apparel-de" value-ref="multiStepCheckoutFlowStrategy"/>
-				<entry key="apparel-uk" value-ref="multiStepCheckoutFlowStrategy"/>
+				<entry key="babyartikel" value-ref="multiStepCheckoutFlowStrategy"/>
 			</map>
 		</property>
 		<!-- Default to SINGLE step checkout -->
@@ -438,23 +363,6 @@
 		<property name="subscriptionPciOption" value="HOP"/>
 	</bean>
 
-	<!-- Product Reference Lookup Strategies-->
-	<alias name="apparelCrossSellingProductReferenceTargetStrategy" alias="crossSellingProductReferenceTargetStrategy"/>
-	<bean id="apparelCrossSellingProductReferenceTargetStrategy"
-	      parent="defaultCrossSellingProductReferenceTargetStrategy">
-		<property name="productReferenceTargetStrategies">
-			<list merge="true">
-				<ref bean="apparelSizeProductReferenceTargetStrategy"/>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="apparelSizeProductReferenceTargetStrategy"
-	      class="de.kpfamily.core.strategies.impl.ApparelSizeProductReferenceTargetStrategy">
-		<property name="commerceCategoryService" ref="commerceCategoryService"/>
-		<property name="rootCategoryCode" value="categories"/>
-	</bean>
-	
 	<!-- Dynamic attribute handlers -->
 	<bean id="articleStateInternalCodeHandler" class="de.kpfamily.core.model.ArticleStateDynamicInternalCode"/>
 	<bean id="shippingMethodInternalCodeHandler" class="de.kpfamily.core.model.ProductLogisticDataDynamicShippingMethodInternalCode"/>

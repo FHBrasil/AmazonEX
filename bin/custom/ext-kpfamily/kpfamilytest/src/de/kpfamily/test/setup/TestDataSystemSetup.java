@@ -9,7 +9,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
  *
- *  
+ *
  */
 package de.kpfamily.test.setup;
 
@@ -20,19 +20,18 @@ import de.hybris.platform.core.initialization.SystemSetup.Type;
 import de.hybris.platform.core.initialization.SystemSetupContext;
 import de.hybris.platform.core.initialization.SystemSetupParameter;
 import de.hybris.platform.core.initialization.SystemSetupParameterMethod;
-import de.kpfamily.test.constants.KpfamilyTestConstants;
-import de.kpfamily.test.orders.AcceleratorTestOrderData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Required;
+
+import de.kpfamily.test.constants.KpfamilyTestConstants;
 
 
 /**
  * This class provides hooks into the system's initialization and update processes.
- * 
+ *
  * @see "https://wiki.hybris.com/display/release4/Hooks+for+Initialization+and+Update+Process"
  */
 @SystemSetup(extension = KpfamilyTestConstants.EXTENSIONNAME)
@@ -41,20 +40,6 @@ public class TestDataSystemSetup extends AbstractSystemSetup
 	private static final Logger LOG = Logger.getLogger(TestDataSystemSetup.class);
 
 	private static final String CREATE_TEST_DATA = "createTestData";
-
-
-	private AcceleratorTestOrderData acceleratorTestOrderData;
-
-	protected AcceleratorTestOrderData getAcceleratorTestOrderData()
-	{
-		return acceleratorTestOrderData;
-	}
-
-	@Required
-	public void setAcceleratorTestOrderData(final AcceleratorTestOrderData acceleratorTestOrderData)
-	{
-		this.acceleratorTestOrderData = acceleratorTestOrderData;
-	}
 
 	/**
 	 * Generates the Dropdown and Multi-select boxes for the projectdata import
@@ -73,7 +58,7 @@ public class TestDataSystemSetup extends AbstractSystemSetup
 	/**
 	 * Implement this method to create initial objects. This method will be called by system creator during
 	 * initialization and system update. Be sure that this method can be called repeatedly.
-	 * 
+	 *
 	 * @param context
 	 *           the context provides the selected parameters and values
 	 */
@@ -86,7 +71,7 @@ public class TestDataSystemSetup extends AbstractSystemSetup
 	/**
 	 * Implement this method to create data that is used in your project. This method will be called during the system
 	 * initialization.
-	 * 
+	 *
 	 * @param context
 	 *           the context provides the selected parameters and values
 	 */
@@ -100,13 +85,6 @@ public class TestDataSystemSetup extends AbstractSystemSetup
 
 			LOG.info("Creating Reviews...");
 			importImpexFile(context, "/kpfamilytest/import/reviews.impex");
-
-			LOG.info("Creating Test Payment Subscriptions...");
-			getAcceleratorTestOrderData().createPaymentInfos();
-
-			LOG.info("Creating Test Orders...");
-			getAcceleratorTestOrderData().createSampleOrders();
-			getAcceleratorTestOrderData().createSampleBOPiSOrders();
 
 			LOG.info("Creating CS tickets...");
 			importImpexFile(context, "/kpfamilytest/import/cstickets.impex");

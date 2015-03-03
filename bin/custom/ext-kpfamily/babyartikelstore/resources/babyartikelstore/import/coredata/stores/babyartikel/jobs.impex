@@ -8,21 +8,21 @@ $targetContentCV=targetVersion(catalog(id[default=$targetContentCatalog]),versio
 $syncJobContentJobCode = syncContentApparelDe2Babyartikel;
 
 INSERT_UPDATE CatalogVersionSyncJob;code[unique=true];$sourceContentCV;$targetContentCV;removeMissingItems[default='false']
-;$syncJobContentJobCode;;;;
+#;$syncJobContentJobCode;;;;
 
 
 INSERT_UPDATE SyncJob2TypeRel;source(code)[unique=true][default=$syncJobContentJobCode];target(code)[unique=true];
-;;Product;
-;;Category;
-;;Media;
-;;Keyword;
-;;TaxRow;
-;;PriceRow;
-;;DiscountRow;
-;;MediaContainer;
-;;CMSItem;
-;;CMSRelation;
-;;BTGItem
+#;;Product;
+#;;Category;
+#;;Media;
+#;;Keyword;
+#;;TaxRow;
+#;;PriceRow;
+#;;DiscountRow;
+#;;MediaContainer;
+#;;CMSItem;
+#;;CMSRelation;
+#;;BTGItem
 
 ####
 # Criando job para sync do conteudo do apparel-uk para babyartikel
@@ -32,21 +32,21 @@ $sourceContentUKCV=sourceVersion(catalog(id[default=$contentUKCatalog]),version[
 $syncJobContentUKJobCode = syncContentApparelUk2Babyartikel;
 
 INSERT_UPDATE CatalogVersionSyncJob;code[unique=true];$sourceContentUKCV;$targetContentCV;removeMissingItems[default='false']
-;$syncJobContentUKJobCode;;;;
+#;$syncJobContentUKJobCode;;;;
 
 
 INSERT_UPDATE SyncJob2TypeRel;source(code)[unique=true][default=$syncJobContentUKJobCode];target(code)[unique=true];
-;;Product;
-;;Category;
-;;Media;
-;;Keyword;
-;;TaxRow;
-;;PriceRow;
-;;DiscountRow;
-;;MediaContainer;
-;;CMSItem;
-;;CMSRelation;
-;;BTGItem
+#;;Product;
+#;;Category;
+#;;Media;
+#;;Keyword;
+#;;TaxRow;
+#;;PriceRow;
+#;;DiscountRow;
+#;;MediaContainer;
+#;;CMSItem;
+#;;CMSRelation;
+#;;BTGItem
 
 
 ####
@@ -59,4 +59,4 @@ $sourceProductCV=sourceVersion(catalog(id[default=$productCatalog]),version[defa
 $targetProductCV=targetVersion(catalog(id[default=$targetProductCatalog]),version[default='Online'])[unique=true,default='$targetProductCatalog:Online']
 
 INSERT_UPDATE CatalogVersionSyncJob;code[unique=true];$sourceProductCV;$targetProductCV;removeMissingItems[default='false']
-;syncProductsApparelDe2Babyartikel;;;;
+#;syncProductsApparelDe2Babyartikel;;;;

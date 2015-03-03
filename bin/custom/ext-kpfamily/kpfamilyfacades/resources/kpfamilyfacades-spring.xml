@@ -45,37 +45,22 @@
 		<property name="mediaContainerService" ref="mediaContainerService"/>
 		<property name="typeService" ref="typeService"/>
 		<property name="imageFormatMapping" ref="imageFormatMapping"/>
+<!-- 	TODO adaptar para o babyartikel-->	
 		<property name="variantAttributeMapping">
 			<map>
-				<entry key="ApparelStyleVariantProduct.style" value="styleSwatch"/>
+				<!-- <entry key="ApparelStyleVariantProduct.style" value="styleSwatch"/> -->
 			</map>
-		</property>
+		</property> 
 	</bean>
 
 
 	<alias name="acceleratorGenderConverter" alias="genderConverter"/> 
 	<bean id="acceleratorGenderConverter" parent="abstractPopulatingConverter">
 		<property name="targetClass" value="de.kpfamily.facades.product.data.GenderData"/>
-			<property name="populators">
-				<list>
-					<ref bean="genderDataPopulator"/>
-				</list>
-			</property>
 	</bean>
 
-	<alias name="defaultGenderDataPopulator" alias="genderDataPopulator"/>
-	<bean id="defaultGenderDataPopulator" class="de.kpfamily.facades.populators.GenderDataPopulator" >
-		<property name="typeService" ref="typeService"/>
-	</bean>
-
-	<bean id="apparelProductPopulator" class="de.kpfamily.facades.populators.ApparelProductPopulator" >
-		<property name="genderConverter" ref="genderConverter"/>
-	</bean>
-
-	<!-- Add the apparelProductPopulator to the productConverter -->
 	<bean parent="modifyPopulatorList">
 		<property name="list" ref="productConverter"/>
-		<property name="add" ref="apparelProductPopulator"/>
 	</bean>
 
 	<!-- accelerator Image Format Mappings -->
@@ -191,4 +176,14 @@
 	</bean>
 
 	<bean id="genderData" class="de.kpfamily.facades.product.data.GenderData" scope="prototype"/>
+	
+	<alias name="kpProductFacade" alias="kpProductFacade"/>
+	<bean id="kpProductFacade" class="de.kpfamily.facades.impl.DefaultKPProductFacade"
+	       parent="accProductFacade">
+       <property name="productConfiguredPopulator" ref="defaultKPProductPopulator"/>
+	</bean>
+	
+	<bean id="defaultKPProductPopulator" parent="defaultProductConfiguredPopulator"
+	       class="de.kpfamily.facades.populators.DefaultKPProductPopulator"/>
+	
 </beans>

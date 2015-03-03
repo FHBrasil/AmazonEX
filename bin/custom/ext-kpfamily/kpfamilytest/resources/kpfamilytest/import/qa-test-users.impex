@@ -93,43 +93,43 @@ INSERT_UPDATE Customer;uid[unique=true];defaultPaymentaddress(&addressID);defaul
 
 
 INSERT_UPDATE Order;code[unique=true];user(uid);date[dateformat=dd.MM.yyyy HH:mm];currency(isocode);net;deliveryMode(code[default='premium-gross']);paymentMode(code);Discounts(code);calculated;site(uid);store(uid);status(code)
-;acceptanceTestOrder1;acceptanceuser@test.com;17.04.2011 15:10;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder1;acceptanceuser@test.com;17.04.2011 15:10;USD;false;;advance;;false;electronics;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder2;acceptanceuser@test.com;17.04.2011 15:12;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder2;acceptanceuser@test.com;17.04.2011 15:12;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder3;acceptanceuser@test.com;17.04.2011 15:14;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder3;acceptanceuser@test.com;17.04.2011 15:14;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder4;acceptanceuser@test.com;17.04.2011 15:16;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder4;acceptanceuser@test.com;17.04.2011 15:16;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder5;acceptanceuser@test.com;17.04.2011 15:18;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder5;acceptanceuser@test.com;17.04.2011 15:18;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder6;acceptanceuser@test.com;17.04.2011 15:20;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder6;acceptanceuser@test.com;17.04.2011 15:20;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder7;acceptanceuser@test.com;17.04.2011 15:22;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder7;acceptanceuser@test.com;17.04.2011 15:22;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder8;acceptanceuser@test.com;17.04.2011 15:24;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder8;acceptanceuser@test.com;17.04.2011 15:24;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder9;acceptanceuser@test.com;17.04.2011 15:26;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder9;acceptanceuser@test.com;17.04.2011 15:26;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder0;acceptanceuser@test.com;17.04.2011 15:28;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder0;acceptanceuser@test.com;17.04.2011 15:28;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder10;acceptanceuser@test.com;17.04.2011 15:30;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder10;acceptanceuser@test.com;17.04.2011 15:30;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder11;acceptanceuser@test.com;17.04.2011 15:32;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder11;acceptanceuser@test.com;17.04.2011 15:32;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
-;acceptanceTestOrder12;acceptanceuser@test.com;17.04.2011 15:34;USD;false;;advance;;false;electronics;electronics;CREATED
+;acceptanceTestOrder12;acceptanceuser@test.com;17.04.2011 15:34;USD;false;;advance;;false;babyartikel;babyartikel;CREATED
 "#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
 "#%   impex.getLastImportedItem().calculate();";
 
