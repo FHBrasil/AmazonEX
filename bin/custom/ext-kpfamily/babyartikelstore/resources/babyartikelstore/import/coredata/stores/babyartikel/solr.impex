@@ -14,37 +14,6 @@ $indexBaseSite=babyartikel
 $indexLanguages=de,en
 $indexCurrencies=EUR
 
-
-#
-# Setup the Solr server, indexer, and search configs
-#
-
-# Create the solr server configuration
-INSERT_UPDATE SolrServerConfig;name[unique=true];mode(code);embeddedMaster
-;$serverConfigName;embedded;true
-
-# Create the solr indexer configuration
-INSERT_UPDATE SolrIndexConfig;name[unique=true];batchSize;numberOfThreads;indexMode(code);
-;$indexConfigName;100;1;TWO_PHASE;
-
-# Create the faceted search configuration
-INSERT_UPDATE SolrSearchConfig;description[unique=true];pageSize
-;$searchConfigName;20
-
-#
-# Setup the indexed types, their properties, and the update queries
-#
-
-# Declare the indexed type Product
-INSERT_UPDATE SolrIndexedType;identifier[unique=true];type(code);variant;sorts(&sortRefID)
-;$solrIndexedType;Product;false;sortRef1,sortRef2,sortRef3,sortRef4,sortRef5,sortRef6
-
-INSERT_UPDATE SolrFacetSearchConfig;name[unique=true];description;indexNamePrefix;languages(isocode);currencies(isocode);solrServerConfig(name);solrSearchConfig(description);solrIndexConfig(name);solrIndexedTypes(identifier);enabledLanguageFallbackMechanism;$catalogVersions
-;$facetSearchConfigName;$facetSearchConfigDescription;$searchIndexNamePrefix;$indexLanguages;$indexCurrencies;$serverConfigName;$searchConfigName;$indexConfigName;$solrIndexedType;true;$productCatalog:Online
-
-UPDATE BaseSite;uid[unique=true];solrFacetSearchConfiguration(name)
-;$indexBaseSite;$facetSearchConfigName
-
 # Define price range set
 INSERT_UPDATE SolrValueRangeSet;name[unique=true];qualifier;type;solrValueRanges(&rangeValueRefID)
 ;babyartikelPriceRangeEUR;EUR;double;rangeRefEUR1,rangeRefEUR2,rangeRefEUR3,rangeRefEUR4,rangeRefEUR5,rangeRefEUR6,rangeRefEUR7,rangeRefEUR8,rangeRefEUR9,rangeRefEUR10,rangeRefEUR11,rangeRefEUR12,rangeRefEUR13
@@ -164,3 +133,6 @@ INSERT_UPDATE SolrSortField;sort(indexedType(identifier),code)[unique=true];fiel
 ;$solrIndexedType:name-desc;name;false
 ;$solrIndexedType:price-asc;priceValue;true
 ;$solrIndexedType:price-desc;priceValue;false
+
+UPDATE SolrIndexedType;identifier[unique=true];sorts(&sortRefID)
+;$solrIndexedType;sortRef1,sortRef2,sortRef3,sortRef4,sortRef5,sortRef6

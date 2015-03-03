@@ -3,6 +3,7 @@
  */
 package de.kpfamily.core.model;
 
+import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
 
 
@@ -10,17 +11,17 @@ import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeH
  * @author franthescollymaneira
  *
  */
-public class BabyartikelProductDynamicWeight extends AbstractDynamicAttributeHandler<String, BabyartikelProductModel>
+public class BabyartikelProductDynamicWeight extends AbstractDynamicAttributeHandler<String, ProductModel>
 {
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler#get(de.hybris.platform.servicelayer.model
 	 * .AbstractItemModel)
 	 */
 	@Override
-	public String get(final BabyartikelProductModel product)
+	public String get(final ProductModel product)
 	{
 		//TODO implementar classification system
 		return null;

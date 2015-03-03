@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
 import com.pixi.core.strategies.PixiOrderGetItemNoteStrategy;
 
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
-import de.kpfamily.core.model.BabyartikelProductModel;
+import de.hybris.platform.core.model.product.ProductModel;
 
 /**
  * @author franthescollymaneira
@@ -31,9 +31,8 @@ public class DefaultPixiOrderGetItemNoteStrategy implements PixiOrderGetItemNote
 	{
 		Assert.notNull(entry);
 		Assert.notNull(entry.getProduct());
-		Assert.isInstanceOf(BabyartikelProductModel.class, entry.getProduct());
 	
-		final BabyartikelProductModel product = (BabyartikelProductModel) entry.getProduct();
+		final ProductModel product = entry.getProduct();
 		
 		final List<String> notes = new ArrayList<String>();
 		

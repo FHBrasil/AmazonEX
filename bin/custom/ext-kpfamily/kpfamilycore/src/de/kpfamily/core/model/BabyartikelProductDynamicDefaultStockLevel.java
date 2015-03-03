@@ -3,6 +3,7 @@
  */
 package de.kpfamily.core.model;
 
+import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.ordersplitting.model.StockLevelModel;
 import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
 
@@ -15,18 +16,17 @@ import org.apache.commons.collections.CollectionUtils;
  * @author franthescollymaneira
  *
  */
-public class BabyartikelProductDynamicDefaultStockLevel extends
-		AbstractDynamicAttributeHandler<StockLevelModel, BabyartikelProductModel>
+public class BabyartikelProductDynamicDefaultStockLevel extends AbstractDynamicAttributeHandler<StockLevelModel, ProductModel>
 {
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler#get(de.hybris.platform.servicelayer
 	 * .model.AbstractItemModel)
 	 */
 	@Override
-	public StockLevelModel get(final BabyartikelProductModel product)
+	public StockLevelModel get(final ProductModel product)
 	{
 		final Set<StockLevelModel> stockLevels = product.getStockLevels();
 

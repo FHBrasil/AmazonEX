@@ -7,7 +7,6 @@ import org.springframework.util.Assert;
 import com.pixi.core.strategies.PixiProductGetSupplierPriceStrategy;
 
 import de.hybris.platform.core.model.product.ProductModel;
-import de.kpfamily.core.model.BabyartikelProductModel;
 
 public class DefaultPixiProductGetSupplierPriceStrategy implements PixiProductGetSupplierPriceStrategy 
 {
@@ -18,9 +17,8 @@ public class DefaultPixiProductGetSupplierPriceStrategy implements PixiProductGe
 	public BigDecimal getSupplierPrice(final ProductModel product) 
 	{
 		Assert.notNull(product);
-		Assert.isInstanceOf(BabyartikelProductModel.class, product);
 		
-		double supplierPrice = ((BabyartikelProductModel) product).getSupplierPrice();
+		double supplierPrice = product.getSupplierPrice();
 		
 		return BigDecimal.valueOf(supplierPrice);
 	}

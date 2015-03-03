@@ -13,24 +13,21 @@
  */
 package de.kpfamily.setup;
 
-import de.hybris.platform.commerceservices.dataimport.impl.CoreDataImportService;
-import de.hybris.platform.commerceservices.dataimport.impl.SampleDataImportService;
-import de.hybris.platform.commerceservices.setup.AbstractSystemSetup;
-import de.hybris.platform.commerceservices.setup.data.ImportData;
-import de.hybris.platform.commerceservices.setup.events.CoreDataImportedEvent;
-import de.hybris.platform.commerceservices.setup.events.SampleDataImportedEvent;
-import de.hybris.platform.core.initialization.SystemSetup;
-import de.hybris.platform.core.initialization.SystemSetupContext;
-import de.hybris.platform.core.initialization.SystemSetupParameter;
-import de.hybris.platform.core.initialization.SystemSetupParameterMethod;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Required;
 
+import de.hybris.platform.commerceservices.setup.AbstractSystemSetup;
+import de.hybris.platform.commerceservices.setup.data.ImportData;
+import de.hybris.platform.commerceservices.setup.events.CoreDataImportedEvent;
+import de.hybris.platform.core.initialization.SystemSetup;
+import de.hybris.platform.core.initialization.SystemSetupContext;
+import de.hybris.platform.core.initialization.SystemSetupParameter;
+import de.hybris.platform.core.initialization.SystemSetupParameterMethod;
 import de.kpfamily.constants.BabyartikelstoreConstants;
+import de.kpfamily.services.BabyartikelCoreDataImportService;
 
 
 @SystemSetup(extension = BabyartikelstoreConstants.EXTENSIONNAME)
@@ -39,11 +36,10 @@ public class BabyartikelStoreSystemSetup extends AbstractSystemSetup
 	public static final String BABYARTIKEL = "babyartikel";
 
 	private static final String IMPORT_CORE_DATA = "importCoreData";
-	private static final String IMPORT_SAMPLE_DATA = "importSampleData";
 	private static final String ACTIVATE_SOLR_CRON_JOBS = "activateSolrCronJobs";
+	private static final String IMPORT_SOLR_CONFIG = "importSolrConfig";
 
-	private CoreDataImportService coreDataImportService;
-	private SampleDataImportService sampleDataImportService;
+	private BabyartikelCoreDataImportService coreDataImportService;
 
 	@SystemSetupParameterMethod
 	@Override
@@ -52,55 +48,37 @@ public class BabyartikelStoreSystemSetup extends AbstractSystemSetup
 		final List<SystemSetupParameter> params = new ArrayList<SystemSetupParameter>();
 
 		params.add(createBooleanSystemSetupParameter(IMPORT_CORE_DATA, "Import Core Data", true));
-		params.add(createBooleanSystemSetupParameter(IMPORT_SAMPLE_DATA, "Import Sample Data", true));
+		params.add(createBooleanSystemSetupParameter(IMPORT_SOLR_CONFIG, "Import solr server configuration", false));
 		params.add(createBooleanSystemSetupParameter(ACTIVATE_SOLR_CRON_JOBS, "Activate Solr Cron Jobs", true));
 
 		return params;
 	}
-
-	/**
-	 * This method will be called during the system initialization.
-	 *
-	 * @param context
-	 *           the context provides the selected parameters and values
-	 */
+	
 	@SystemSetup(type = SystemSetup.Type.PROJECT, process = SystemSetup.Process.ALL)
 	public void createProjectData(final SystemSetupContext context)
 	{
 		final List<ImportData> importData = new ArrayList<ImportData>();
 
-		final ImportData electronicsImportData = new ImportData();
-		electronicsImportData.setProductCatalogName(BABYARTIKEL);
-		electronicsImportData.setContentCatalogNames(Arrays.asList(BABYARTIKEL));
-		electronicsImportData.setStoreNames(Arrays.asList(BABYARTIKEL));
-		importData.add(electronicsImportData);
+		final ImportData babyartikelImportData = new ImportData();
+		babyartikelImportData.setProductCatalogName(BABYARTIKEL);
+		babyartikelImportData.setContentCatalogNames(Arrays.asList(BABYARTIKEL));
+		babyartikelImportData.setStoreNames(Arrays.asList(BABYARTIKEL));
+		importData.add(babyartikelImportData);
 
 		getCoreDataImportService().execute(this, context, importData);
 		getEventService().publishEvent(new CoreDataImportedEvent(context, importData));
-
-		getSampleDataImportService().execute(this, context, importData);
-		getEventService().publishEvent(new SampleDataImportedEvent(context, importData));
+		
+		executeCatalogSyncJob(context, "babyartikelContentCatalog");
 	}
 
-	public CoreDataImportService getCoreDataImportService()
+	public BabyartikelCoreDataImportService getCoreDataImportService()
 	{
 		return coreDataImportService;
 	}
 
 	@Required
-	public void setCoreDataImportService(final CoreDataImportService coreDataImportService)
+	public void setCoreDataImportService(final BabyartikelCoreDataImportService coreDataImportService)
 	{
 		this.coreDataImportService = coreDataImportService;
-	}
-
-	public SampleDataImportService getSampleDataImportService()
-	{
-		return sampleDataImportService;
-	}
-
-	@Required
-	public void setSampleDataImportService(final SampleDataImportService sampleDataImportService)
-	{
-		this.sampleDataImportService = sampleDataImportService;
 	}
 }

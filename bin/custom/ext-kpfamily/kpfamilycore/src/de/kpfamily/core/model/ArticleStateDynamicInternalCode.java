@@ -3,6 +3,7 @@
  */
 package de.kpfamily.core.model;
 
+import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
@@ -18,7 +19,7 @@ import de.kpfamily.core.util.JaloUtils;
  * @author franthescollymaneira
  *
  */
-public class ArticleStateDynamicInternalCode extends AbstractDynamicAttributeHandler<String, BabyartikelProductModel>
+public class ArticleStateDynamicInternalCode extends AbstractDynamicAttributeHandler<String, ProductModel>
 {
 	@Resource
 	private ModelService modelService;
@@ -31,7 +32,7 @@ public class ArticleStateDynamicInternalCode extends AbstractDynamicAttributeHan
 	 * .AbstractItemModel)
 	 */
 	@Override
-	public String get(final BabyartikelProductModel product)
+	public String get(final ProductModel product)
 	{
 		final ArticleState articleState = product.getArticleState();
 		final Item item = modelService.getSource(articleState);

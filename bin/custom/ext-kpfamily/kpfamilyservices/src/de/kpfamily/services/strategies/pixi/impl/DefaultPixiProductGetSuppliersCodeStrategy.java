@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 import com.pixi.core.strategies.PixiProductGetSuppliersCodeStrategy;
 
 import de.hybris.platform.core.model.product.ProductModel;
-import de.kpfamily.core.model.BabyartikelProductModel;
 import de.kpfamily.core.model.ProductSupplierModel;
 
 public class DefaultPixiProductGetSuppliersCodeStrategy implements PixiProductGetSuppliersCodeStrategy 
@@ -19,11 +18,8 @@ public class DefaultPixiProductGetSuppliersCodeStrategy implements PixiProductGe
 	public List<String> getSuppliersCode(final ProductModel product) 
 	{
 		Assert.notNull(product);
-		Assert.isInstanceOf(BabyartikelProductModel.class, product);
 		
-		BabyartikelProductModel babyartikelProduct = (BabyartikelProductModel) product;
-		
-		List<ProductSupplierModel> suppliers = babyartikelProduct.getSuppliers();
+		List<ProductSupplierModel> suppliers = product.getSuppliers();
 		
 		if(CollectionUtils.isEmpty(suppliers))
 		{

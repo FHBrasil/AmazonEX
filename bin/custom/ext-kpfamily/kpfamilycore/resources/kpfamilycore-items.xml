@@ -43,19 +43,19 @@
 	<relations>
 		<relation code="Product2ProductSupplierRelation" autocreate="true" generate="false" localized="false">
 			<deployment table="Product2SupplierRel" typecode="10002" />
-			<sourceElement type="BabyartikelProduct" cardinality="many" navigable="false" />
+			<sourceElement type="Product" cardinality="many" navigable="false" />
 			<targetElement type="ProductSupplier" qualifier="suppliers" collectiontype="list" cardinality="many"/>
 		</relation>
 		<relation code="Product2SupplierPriceHistoryRelation" localized="false">
-			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
+			<sourceElement type="Product" qualifier="product" cardinality="one"/>
 			<targetElement type="PriceHistoryEntry" qualifier="supplierPriceHistory" cardinality="many"/>
 		</relation>
 		<relation code="Product2SellingPriceHistoryRelation" localized="false">
-			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
+			<sourceElement type="Product" qualifier="product" cardinality="one"/>
 			<targetElement type="PriceHistoryEntry" qualifier="sellingPriceHistory" cardinality="many"/>
 		</relation>
 		<relation code="Product2ProductSalesBreakdownRecordRelation" localized="false">
-			<sourceElement type="BabyartikelProduct" qualifier="product" cardinality="one"/>
+			<sourceElement type="Product" qualifier="product" cardinality="one"/>
 			<targetElement type="ProductSalesBreakdownRecord" qualifier="salesBreakdown" cardinality="many"/>
 		</relation>
 		<relation code="ProductLogisticData2ProductPackageRelation" localized="false">
@@ -98,8 +98,8 @@
 		</typegroup>
 		
 		<typegroup name="Babyartikel">
-			<itemtype code="BabyartikelProduct" extends="Product">
-				<description>Base babyartikel product extension that contains additional attributes.</description>
+			<itemtype code="Product" autocreate="false" generate="false">
+				<description>Babyartikel product customization that contains additional attributes.</description>
 				<attributes>
 					<attribute qualifier="shortDescription" type="localized:java.lang.String">
 						<description> A short description of the product. </description>
@@ -206,8 +206,7 @@
 					</attribute>
 				</attributes>
 			</itemtype>
-			<itemtype code="BabyartikelSizeVariantProduct" extends="BabyartikelProduct"
-			          autocreate="true" generate="true"
+			<itemtype code="BabyartikelSizeVariantProduct" extends="VariantProduct"
 			          jaloclass="de.kpfamily.core.jalo.BabyartikelSizeVariantProduct">
 				<description>Babyartikel size variant type that contains additional attribute describing variant size.</description>
 				<attributes>
@@ -218,7 +217,7 @@
 					</attribute>
 				</attributes>
 			</itemtype>
-			<itemtype code="BabyartikelSerialVoucherProduct" extends="BabyartikelProduct" 
+			<itemtype code="BabyartikelSerialVoucherProduct" extends="Product" 
 				jaloclass="de.kpfamily.core.jalo.BabyartikelSerialVoucherProduct">
 				<attributes>
 					<attribute qualifier="serialVoucher" type="SerialVoucher" generate="true">
@@ -244,7 +243,7 @@
 					</attribute>
 				</attributes>
 			</itemtype>
-			<itemtype code="BabyartikelCategory" extends="Category">
+			<itemtype code="Category" generate="false" autocreate="false">
 				<description>Babyartikel customization of the Hybris Category item</description>
 				<attributes>
 					<attribute type="int" qualifier="minLifetimeOfNewProducts">
