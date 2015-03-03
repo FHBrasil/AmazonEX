@@ -7,8 +7,8 @@ import de.hybris.platform.basecommerce.enums.StockLevelStatus;
 import de.hybris.platform.commercefacades.converter.impl.DefaultConfigurablePopulator;
 import de.hybris.platform.commercefacades.product.ProductOption;
 import de.hybris.platform.commercefacades.product.data.ProductData;
+import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.europe1.model.PriceRowModel;
-import de.kpfamily.core.model.BabyartikelProductModel;
 
 /**
  * 
@@ -16,7 +16,7 @@ import de.kpfamily.core.model.BabyartikelProductModel;
  *
  */
 public class DefaultKPProductPopulator extends
-        DefaultConfigurablePopulator<BabyartikelProductModel, ProductData, ProductOption> {
+        DefaultConfigurablePopulator<ProductModel, ProductData, ProductOption> {
 
     
     /**
@@ -24,7 +24,7 @@ public class DefaultKPProductPopulator extends
      * @author jfelipe
      */
     @Override
-    public void populate(BabyartikelProductModel source, ProductData target,
+    public void populate(ProductModel source, ProductData target,
             Collection<ProductOption> options) {
         super.populate(source, target, options);
         target.setAverageRating(source.getReviewsAverageRating());
@@ -38,8 +38,8 @@ public class DefaultKPProductPopulator extends
         if (!source.getEurope1Prices().isEmpty()) {
             PriceRowModel priceRow = source.getEurope1Prices().iterator().next();
             BigDecimal price = new BigDecimal(priceRow.getPrice());
-            Integer priceEuro = price.intValue();
-            Integer priceCents = price.remainder(BigDecimal.ONE)
+            int priceEuro = price.intValue();
+            int priceCents = price.remainder(BigDecimal.ONE)
                     .setScale(2, BigDecimal.ROUND_HALF_UP).movePointRight(2).intValue();
             target.setPriceEuro(priceEuro);
             target.setPriceCents(priceCents);
