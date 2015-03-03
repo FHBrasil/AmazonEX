@@ -14,7 +14,7 @@
 	<c:otherwise>
 		<table class="volume-prices" cellpadding="0" cellspacing="0" border="0">
 			<thead>
-					<th class="volume-prices-quantity"><spring:theme code="product.volumePrices.column.qa"/></th>
+					<th class="volume-prices-quantity"><spring:theme code="product.volumePrices.column.quantity"/></th>
 					<th class="volume-price-amount"><spring:theme code="product.volumePrices.column.price"/></th>
 			</thead>
 			<tbody>

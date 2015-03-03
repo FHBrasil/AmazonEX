@@ -176,4 +176,14 @@
 	</bean>
 
 	<bean id="genderData" class="de.kpfamily.facades.product.data.GenderData" scope="prototype"/>
+	
+	<alias name="kpProductFacade" alias="kpProductFacade"/>
+	<bean id="kpProductFacade" class="de.kpfamily.facades.impl.DefaultKPProductFacade"
+	       parent="accProductFacade">
+       <property name="productConfiguredPopulator" ref="defaultKPProductPopulator"/>
+	</bean>
+	
+	<bean id="defaultKPProductPopulator" parent="defaultProductConfiguredPopulator"
+	       class="de.kpfamily.facades.populators.DefaultKPProductPopulator"/>
+	
 </beans>

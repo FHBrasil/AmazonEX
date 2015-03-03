@@ -10,33 +10,44 @@
 
 <%-- j query query 2.1.7 --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.query-2.1.7.js"></script>
+
 <%-- jquery tabs dependencies --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery-ui-1.8.18.min.js"></script>
+
 <%-- j carousel --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.jcarousel-0.2.8.min.js"></script>
+
 <%-- j query templates --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.tmpl-1.0.0pre.min.js"></script>
+
 <%-- j query block UI --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.blockUI-2.39.js"></script>
+
 <%-- colorbox --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.colorbox.custom-1.3.16.js"></script>
+
 <%-- Slide Viewer --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.slideviewer.custom.1.2.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.easing.1.3.js"></script>
+
 <%-- Wait for images --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.waitforimages.min.js"></script>
+
 <%-- Scroll to --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.scrollTo-1.4.2-min.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.ui.stars-3.0.1.min.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.form-3.09.js"></script>
+
 <%-- BeautyTips  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.bgiframe-2.1.2.min.js"></script>
-<!--[if IE]><script type="text/javascript" src="${commonResourcePath}/js/excanvas-r3.compiled.js"></script>-->
+[if IE]><script type="text/javascript" src="${commonResourcePath}/js/excanvas-r3.compiled.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.bt-0.9.5-rc1.min.js"></script>
+
 <%-- PasswordStrength  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.pstrength.custom-1.2.0.js"></script>
 
-
+<%-- JQuery mobile --%>
+<script type="text/javascript" src="${commonResourcePath}/js/jquery.mobile.custom.min.js"></script>
 
 
 <%-- Custom ACC JS --%>
@@ -65,12 +76,10 @@
 <script type="text/javascript" src="${commonResourcePath}/js/acc.stars.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/acc.forgotpassword.js"></script>
 
-
 <%-- accessible-tabs  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.accessible-tabs-1.9.7.min.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/acc.productDetail.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/acc.producttabs.js"></script>	
-
 
 <%-- Cms Action JavaScript files --%>
 <c:forEach items="${cmsActionsJsFiles}" var="actionJsFile">
@@ -84,3 +93,12 @@
 
 <%-- Fix for Webkit Browsers (Needs to be loaded last)  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/acc.skiplinks.js"></script>
+
+<%-- Bootstrap --%>
+<script type="text/javascript" src="${commonResourcePath}/js/bootstrap.min.js"></script>
+
+<%-- Babyartikel Customs --%>
+<script type="text/javascript" src="${commonResourcePath}/js/pages/kp.page.product.js"></script>
+
+
+
