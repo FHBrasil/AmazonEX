@@ -16,19 +16,41 @@
 # ---- -------------------------------------------------------------------------
 # 
 # ---- Export Script -----------------------------------------------------------
-$catalog=babyartikel;
-$version=Staged;
+$productCatalog=babyartikel
+$version=Staged
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='$version'])[unique=true,default=$productCatalog:$version]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='$version']))
+$approvalstatus=approvalstatus(code)[default='approved']
 # 
 "#% impex.setTargetFile(""Product.csv"");"
-insert_update Product           ;code[unique=true];               ;name[lang=de];name[lang=en];approvalStatus(code)                      ;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
-"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+insert_update Product;code[unique=true];               ;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$productCatalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }}) AND {p:code} NOT LIKE '%bas'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+#
+"#% impex.setTargetFile(""Product_bas.csv"");"
+insert_update Product;code[unique=true];               ;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];            ;
+"#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$productCatalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }}) AND {p:code} LIKE '%bas'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+# 
+"#% impex.setTargetFile(""VariantProduct.csv"");"
+insert_update KPVariantProduct             ;code[unique=true];               ;name[lang=de];name[lang=en];baseProduct(code);$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
+"#% impex.exportItems(""SELECT {v:pk} FROM {KPVariantProduct AS v JOIN KPProduct AS p ON {p:pk} = {v:baseProduct} JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$productCatalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 
 # ---- Import Script -----------------------------------------------------------
-$catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),version[default='Staged'])[unique=true,default=babyartikelProductCatalog:Staged]
+$productCatalog=babyartikelProductCatalog
+$version=Staged
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='$version'])[unique=true,default=$productCatalog:$version]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='$version']))
+$approvalstatus=approvalstatus(code)[default='approved']
+$varianttype=varianttype(code)[default='BabyartikelSizeVariantProduct']
 # 
-insert_update BabyartikelProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];approvalStatus(code)[default='unapproved'];description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
+insert_update Product;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
+# 
+insert_update Product;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttype;
+"#% impex.includeExternalDataMedia(""Product_bas.csv"", ""UTF-8"", ';', 1, -1);"
+# 
+insert_update BabyartikelSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$baseProduct     ;$approvalstatus     ;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
+"#% impex.includeExternalDataMedia(""VariantProduct.csv"", ""UTF-8"", ';', 1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
