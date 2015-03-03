@@ -1,0 +1,13 @@
+# 
+# Create the BaseStore
+#
+#% impex.setLocale( Locale.GERMAN );
+
+$storeUid=babyartikel
+
+INSERT_UPDATE BaseStore2DeliveryModeRel;source(uid)[unique=true, default=$storeUid];target(code)[unique=true]
+;;premium-net
+;;standard-net
+;;premium-gross
+;;standard-gross
+;;free-standard-shipping

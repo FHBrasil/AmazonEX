@@ -41,8 +41,6 @@
 
 		<!-- ext-data -->
 		<!-- <extension name="commercesearchsampledata" /> -->
-		<extension name="apparelstore" />
-		<extension name="electronicsstore" />
 		<!-- <extension name="instoresampledata" /> -->
 
 
@@ -68,7 +66,7 @@
 		<extension name="kpfamilycore" />
 		<extension name="kpfamilyinitialdata" />
 		<extension name="kpfamilyfacades" />
-		<extension name="kpfamilytest" />
+		<!-- <extension name="kpfamilytest" /> -->
 		<extension name="kpfamilystorefront" />
 		<extension name="kpfamilycockpits" />
 		<extension name="kpfamilyservices" />

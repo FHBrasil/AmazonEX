@@ -92,27 +92,25 @@ INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[
 
 # Category fields
 INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);localized[default=false];multiValue[default=true];categoryField[default=true];useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider
-;$solrIndexedType; categoryName     ;text   ;true;;;true;true;apparelCategoryNameValueProvider
-;$solrIndexedType; brandName        ;text   ;true;;;    ;    ;apparelBrandCategoryNameValueProvider
-;$solrIndexedType; collectionName   ;text   ;true;;;    ;    ;apparelCollectionCategoryNameValueProvider
+;$solrIndexedType; categoryName     ;text   ;true;;;true;true;babyartikelCategoryNameValueProvider
+;$solrIndexedType; brandName        ;text   ;true;;;    ;    ;babyartikelBrandCategoryNameValueProvider
+;$solrIndexedType; collectionName   ;text   ;true;;;    ;    ;babyartikelCollectionCategoryNameValueProvider
 
 # Category facets
 INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);multiValue[default=true];facet[default=true];facetType(code);facetSort(code);priority;visible;categoryField[default=true];fieldValueProvider;facetDisplayNameProvider;topValuesProvider
 ;$solrIndexedType; allCategories ;string;;;Refine;Alpha;-9999;false;;categoryCodeValueProvider                 ;
 ;$solrIndexedType; categoryPath  ;string;;;Refine;Alpha;-9999;false;false;categoryPathValueProvider                 ;
-;$solrIndexedType; category      ;string;;;Refine;Alpha; 6000;true;;apparelCategoryCodeValueProvider          ;categoryFacetDisplayNameProvider;defaultTopValuesProvider
-;$solrIndexedType; collection    ;string;;;Refine;Alpha; 5500;true;;apparelCollectionCategoryCodeValueProvider;categoryFacetDisplayNameProvider;defaultTopValuesProvider
-;$solrIndexedType; brand         ;string;;;Refine;Alpha; 5000;true;;apparelBrandCategoryCodeValueProvider     ;categoryFacetDisplayNameProvider;defaultTopValuesProvider
+;$solrIndexedType; category      ;string;;;Refine;Alpha; 6000;true;;babyartikelCategoryCodeValueProvider          ;categoryFacetDisplayNameProvider;defaultTopValuesProvider
+;$solrIndexedType; collection    ;string;;;Refine;Alpha; 5500;true;;babyartikelCollectionCategoryCodeValueProvider;categoryFacetDisplayNameProvider;defaultTopValuesProvider
+;$solrIndexedType; brand         ;string;;;Refine;Alpha; 5000;true;;babyartikelBrandCategoryCodeValueProvider     ;categoryFacetDisplayNameProvider;defaultTopValuesProvider
 ;$solrIndexedType; gender        ;string;;;Refine;Alpha; 4500;true;false;genderValueProvider                       ;genderFacetDisplayNameProvider
 
 # Other facet properties
 INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];facet[default=true];facetType(code);facetSort(code);priority;visible;useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;facetDisplayNameProvider;customFacetSortProvider;topValuesProvider;rangeSets(name)
 ;$solrIndexedType; price            ;double ; ;true ;    ;    ; ;MultiSelectOr ;Alpha ; 4000;true;    ;    ;productPriceValueProvider              ;                                             ;                             ;defaultTopValuesProvider ;babyartikelPriceRangeEUR
 ;$solrIndexedType; style            ;string ; ;     ;true;    ; ;MultiSelectOr ;Alpha ;-1   ;false;    ;    ;optionalModelPropertyFieldValueProvider;                                             ;                             ;
-;$solrIndexedType; swatchColors     ;string ; ;     ;    ;true; ;MultiSelectOr ;Alpha ; 2500;true;    ;    ;colorFacetValueProvider                ;colorFacetDisplayNameProvider                ;                             ;
 ;$solrIndexedType; size             ;string ; ;     ;true;    ; ;MultiSelectOr ;Custom; 2000;true;    ;    ;optionalModelPropertyFieldValueProvider;                                             ;sizeAttributeSortProvider    ;
 ;$solrIndexedType; allPromotions    ;string ; ;false;    ;true; ;MultiSelectOr ;Alpha ; 0   ;false;    ;    ;promotionCodeValueProvider             ;promotionFacetDisplayNameProvider            ;                             ;
-;$solrIndexedType; availableInStores;string  ; ;     ;    ;true; ;MultiSelectOr ;Custom;10000;true;    ;    ;productStoreStockValueProvider         ;apparelPointOfServiceFacetDisplayNameProvider;distanceAttributeSortProvider;
 
 # Create the queries that will be used to extract data for Solr
 INSERT_UPDATE SolrIndexerQuery;solrIndexedType(identifier)[unique=true];identifier[unique=true];type(code);injectCurrentDate[default=true];injectCurrentTime[default=true];injectLastIndexTime[default=true];query;user(uid)
