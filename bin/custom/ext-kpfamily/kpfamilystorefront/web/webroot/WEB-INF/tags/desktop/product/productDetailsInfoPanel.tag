@@ -5,7 +5,7 @@
 
 <product:productDetailsTitleRatings product="${product}" showShortDescription="true" showBrandLogo="true"/>
 <product:productPricePanel product="${product}"/>
-<product:productVariantSelector productVariants="${product.variantOptions}"/>
+<product:productVariantSelector product="${product}"/>
 
 
 <!--         <div class="span-10 productDescription last"> -->

@@ -17,7 +17,7 @@
     <div class="margin-top">
         <div class="col-xs-12 col-sm-6 v-bottom">
             <product:productImagePanel product="${product}" galleryImages="${galleryImages}" />
-            <%-- Leave the empty comment below alone. He doesn't need you to bully him... --%>
+            <%-- Leave the empty comment below. --%>
         </div><!-- 
         --><div class="col-sm-6 v-bottom margin-top">
             <product:productDetailsInfoPanel product="${product}"/>
