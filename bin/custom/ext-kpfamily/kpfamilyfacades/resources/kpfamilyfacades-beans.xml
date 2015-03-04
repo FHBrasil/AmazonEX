@@ -10,10 +10,10 @@
 	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
 		<property name="genders"
 			 type="java.util.List&lt;de.kpfamily.facades.product.data.GenderData>" />
-		<property name="shortDescription" type="java.lang.String" />
-		<property name="priceEuro" type="java.lang.Integer" />
-		<property name="priceCents" type="java.lang.Integer" />
-		<property name="reviewsTotalCount" type="java.lang.Integer" />
+		<property name="shortDescription" type="String" />
+		<property name="priceEuro" type="int" />
+		<property name="priceCents" type="int" />
+		<property name="reviewsTotalCount" type="int" />
 		<property name="availableInStock" type="boolean" />
 	</bean>
 
