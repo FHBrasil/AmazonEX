@@ -47,11 +47,10 @@ INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[
 ;$solrIndexedType; priceValue             ;double ;            ;true;    ;    ;    ;    ;productPriceValueProvider;
 ;$solrIndexedType; keywords               ;text   ;            ;    ;true;    ;true;true;productKeywordsValueProvider
 ;$solrIndexedType; reviewAvgRating        ;double ;            ;    ;true;    ;    ;    ;productReviewAverageRatingValueProvider
-;$solrIndexedType; img-515Wx515H          ;string ;            ;    ;    ;    ;    ;    ;image515ValueProvider
-;$solrIndexedType; img-300Wx300H          ;string ;            ;    ;    ;    ;    ;    ;image300ValueProvider
-;$solrIndexedType; img-96Wx96H            ;string ;            ;    ;    ;    ;    ;    ;image96ValueProvider
-;$solrIndexedType; img-65Wx65H            ;string ;            ;    ;    ;    ;    ;    ;image65ValueProvider
-;$solrIndexedType; img-30Wx30H            ;string ;            ;    ;    ;    ;    ;    ;image30ValueProvider
+;$solrIndexedType; img-539Wx539H          ;string ;            ;    ;    ;    ;    ;    ;image539ValueProvider
+;$solrIndexedType; img-190Wx190H          ;string ;            ;    ;    ;    ;    ;    ;image190ValueProvider
+;$solrIndexedType; img-60Wx60H            ;string ;            ;    ;    ;    ;    ;    ;image60ValueProvider
+;$solrIndexedType; img-85Wx85H            ;string ;            ;    ;    ;    ;    ;    ;image85ValueProvider
 ;$solrIndexedType; url                    ;string ;            ;    ;true;    ;    ;    ;productUrlValueProvider
 ;$solrIndexedType; primaryPromotionCode   ;string ;            ;    ;    ;    ;    ;    ;promotionCodeValueProvider
 ;$solrIndexedType; primaryPromotionBanner ;string ;            ;    ;    ;    ;    ;    ;promotionImageValueProvider

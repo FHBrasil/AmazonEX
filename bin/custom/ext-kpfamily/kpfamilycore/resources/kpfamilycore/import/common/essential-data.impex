@@ -55,12 +55,10 @@ INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
 # Media formats
 INSERT_UPDATE MediaFormat;qualifier[unique=true]
 ;1200Wx1200H
-;515Wx515H
-;365Wx246H
-;300Wx300H
-;96Wx96H
-;65Wx65H
-;30Wx30H
+;539Wx539H
+;190Wx190H
+;85Wx85H
+;60Wx60H
 ;mobile
 ;tablet
 ;desktop
