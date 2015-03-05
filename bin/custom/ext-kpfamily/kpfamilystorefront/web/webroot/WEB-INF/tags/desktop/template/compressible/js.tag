@@ -97,8 +97,10 @@
 <%-- Bootstrap --%>
 <script type="text/javascript" src="${commonResourcePath}/js/bootstrap.min.js"></script>
 
-<%-- Babyartikel Customs --%>
+
+<%-- Babyartikel Customs / Pages --%>
 <script type="text/javascript" src="${commonResourcePath}/js/pages/kp.page.product.js"></script>
+
 
 
 

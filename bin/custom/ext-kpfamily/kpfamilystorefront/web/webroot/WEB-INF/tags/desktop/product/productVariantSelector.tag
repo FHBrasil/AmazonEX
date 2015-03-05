@@ -12,7 +12,6 @@
 </c:if>
 
 <div class="row shadowbox">
-    <!-- BEGIN SIZE VARIANT this part must only appear at products with size variants -->
     <div class="col-xs-4 text-right size150126">
         <small>
             <spring:theme code="product.variants.choose.size" text="Gr&ouml;&szlig;e w&auml;hlen" />:
@@ -24,41 +23,19 @@
                 <c:forEach items="${variantSize.variantOptionQualifiers}"
                         var="variantOptionQualifier">
                     <c:if test="${variantOptionQualifier.qualifier eq 'size'}">
-                        <button type="button" class="btn btn-default" href="#">
-                            ${variantOptionQualifier.value}
+                        <button class="btn btn-default btn-selectVariant" type="button" href="#"
+                                ${variantSize.stock.stockLevel < 1 ? "disabled='disabled'" : ""}>
+                            ${variantOptionQualifier.value}&nbsp;
                         </button>
                     </c:if>
                 </c:forEach>
             </c:forEach>
         </c:if>
     </div>
-    <!-- END SIZE VARIANT -->
-    <div class="col-xs-4 margin-top qty150126">
-        <form>
-            <div class="form-group row">
-                <div class="col-md-4 hidden-xs hidden-sm">
-                    <label class="" for="qty">
-                        <spring:theme code="product.quantity" text="Menge" />:
-                    </label>
-                </div>
-                <div class="col-xs-12 col-md-8">
-                    <input type="number" min="1" max="10" class="form-control input-lg" id="qty"
-                        value="1">
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-xs-8 margin-top">
-        <button type="button" class="btn btn-primary btn-lg" href="#cartModal" data-toggle="modal">
-            <spring:theme code="basket.add.to.basket" text="In den Warenkorb" />
-        </button>
-        <br />
-        <button type="button" class="btn btn-link">
-            <span class="glyphicon glyphicon-heart"></span>
-            <spring:theme code="text.wishlist.add" text="Auf die Wunschliste" />
-        </button>
-    </div>
+    <product:productAddToCartPanel allowAddToCart="${true}" product="${product}"/>
 </div>
+
+
 
 <%-- Determine if product is one of apparel style or size variant --%>
 <%-- <c:if test="${product.variantType eq 'ApparelStyleVariantProduct'}"> --%>
