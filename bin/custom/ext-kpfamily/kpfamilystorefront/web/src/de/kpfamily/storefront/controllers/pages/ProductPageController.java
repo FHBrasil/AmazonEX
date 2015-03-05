@@ -129,7 +129,7 @@ public class ProductPageController extends AbstractPageController {
         getRequestContextData(request).setProduct(productModel);
         storeCmsPageInModel(model, getPageForProduct(productModel));
         populateProductData(productData, model);
-        model.addAttribute(WebConstants.BREADCRUMBS_KEY, 
+        model.addAttribute(WebConstants.BREADCRUMBS_KEY,
                 productBreadcrumbBuilder.getBreadcrumbs(productModel));
         model.addAttribute(new ReviewForm());
         final List<ProductReferenceData> productReferences = productFacade
@@ -153,7 +153,7 @@ public class ProductPageController extends AbstractPageController {
      * @param model
      * @return
      *
-     * @author jfelipe
+     * @author 
      */
     @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/zoomImages", method = RequestMethod.GET)
     public String showZoomImages(
@@ -184,7 +184,7 @@ public class ProductPageController extends AbstractPageController {
      * @param request
      * @return
      *
-     * @author jfelipe
+     * @author 
      */
     @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/quickView", method = RequestMethod.GET)
     public String showQuickView(@PathVariable("productCode") final String productCode,
@@ -213,7 +213,7 @@ public class ProductPageController extends AbstractPageController {
      * @return
      * @throws CMSItemNotFoundException
      *
-     * @author jfelipe
+     * @author 
      */
     @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/review", method = {
             RequestMethod.GET, RequestMethod.POST })
@@ -250,7 +250,7 @@ public class ProductPageController extends AbstractPageController {
      * @param request
      * @return
      *
-     * @author jfelipe
+     * @author 
      */
     @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/reviewhtml/"
             + REVIEWS_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
@@ -284,7 +284,7 @@ public class ProductPageController extends AbstractPageController {
      * @return
      * @throws CMSItemNotFoundException
      *
-     * @author jfelipe
+     * @author 
      */
     @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/writeReview", method = RequestMethod.GET)
     public String writeReview(@PathVariable final String productCode, final Model model)
@@ -302,7 +302,7 @@ public class ProductPageController extends AbstractPageController {
      * @param productModel
      * @throws CMSItemNotFoundException
      *
-     * @author jfelipe
+     * @author 
      */
     protected void setUpReviewPage(final Model model, final ProductModel productModel)
             throws CMSItemNotFoundException {
@@ -328,7 +328,7 @@ public class ProductPageController extends AbstractPageController {
      * @return
      * @throws CMSItemNotFoundException
      *
-     * @author jfelipe
+     * @author
      */
     @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/writeReview", method = RequestMethod.POST)
     public String writeReview(@PathVariable final String productCode, final ReviewForm form,
@@ -356,11 +356,34 @@ public class ProductPageController extends AbstractPageController {
 
     /**
      * 
+     * @param productCode
+     * @param bindingResult
+     * @param model
+     * @param request
+     * @param redirectAttributes
+     * @return
+     * @throws CMSItemNotFoundException
+     *
+     * @author jfelipe
+     */
+    @RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/chooseVariant",
+            method = RequestMethod.POST)
+    public String chooseVariant(@PathVariable final String productCode, final Model model)
+            throws CMSItemNotFoundException {
+        ProductData productData = productFacade.getProductForCode(productCode);
+        model.addAttribute("product", productData);
+        model.addAttribute("galleryImages", getGalleryImages(productData));
+        return ControllerConstants.Views.Fragments.Product.VariantInfo;
+    }
+
+
+    /**
+     * 
      * @param exception
      * @param request
      * @return
      *
-     * @author jfelipe
+     * @author 
      */
     @ExceptionHandler(UnknownIdentifierException.class)
     public String handleUnknownIdentifierException(final UnknownIdentifierException exception,
@@ -375,7 +398,7 @@ public class ProductPageController extends AbstractPageController {
      * @param productModel
      * @param model
      *
-     * @author jfelipe
+     * @author 
      */
     protected void updatePageTitle(final ProductModel productModel, final Model model) {
         storeContentPageTitleInModel(model,
@@ -390,7 +413,7 @@ public class ProductPageController extends AbstractPageController {
     // * @param request
     // * @throws CMSItemNotFoundException
     // *
-    // * @author jfelipe
+    // * @author 
     // */
     // protected void populateProductDetailForDisplay(final ProductModel productModel,
     // final Model model, final HttpServletRequest request) throws
@@ -410,12 +433,14 @@ public class ProductPageController extends AbstractPageController {
     // model.addAttribute(WebConstants.BREADCRUMBS_KEY,
     // productBreadcrumbBuilder.getBreadcrumbs(productModel));
     // }
+    
+    
     /**
      * 
      * @param productData
      * @param model
      *
-     * @author jfelipe
+     * @author 
      */
     protected void populateProductData(final ProductData productData, final Model model) {
         model.addAttribute("product", productData);
@@ -426,7 +451,7 @@ public class ProductPageController extends AbstractPageController {
      * 
      * @param productData
      *
-     * @author jfelipe
+     * @author 
      */
     protected void sortVariantOptionData(final ProductData productData) {
         if (CollectionUtils.isNotEmpty(productData.getBaseOptions())) {
@@ -447,7 +472,7 @@ public class ProductPageController extends AbstractPageController {
      * @param productData
      * @return
      *
-     * @author jfelipe
+     * @author 
      */
     protected List<Map<String, ImageData>> getGalleryImages(final ProductData productData) {
         final List<Map<String, ImageData>> galleryImages = new ArrayList<>();
@@ -489,7 +514,7 @@ public class ProductPageController extends AbstractPageController {
      * 
      * @return
      *
-     * @author jfelipe
+     * @author 
      */
     protected ReviewValidator getReviewValidator() {
         return reviewValidator;
@@ -502,7 +527,7 @@ public class ProductPageController extends AbstractPageController {
      * @return
      * @throws CMSItemNotFoundException
      *
-     * @author jfelipe
+     * @author 
      */
     protected AbstractPageModel getPageForProduct(final ProductModel product)
             throws CMSItemNotFoundException {

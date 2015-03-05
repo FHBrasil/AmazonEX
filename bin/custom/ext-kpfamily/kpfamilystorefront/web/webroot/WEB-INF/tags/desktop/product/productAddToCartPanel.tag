@@ -7,9 +7,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme" %>
-<%@ taglib prefix="storepickup" tagdir="/WEB-INF/tags/desktop/storepickup" %>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags" %>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product" %>
+<%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="action" tagdir="/WEB-INF/tags/desktop/action" %>
 
@@ -33,6 +33,7 @@
         </div>
     </div>
     <div class="col-xs-8 margin-top">
+        <%-- TODO: open <cart:cartModal> on addToCartButton click --%>
         <button id="addToCartButton" class="btn btn-primary btn-lg" type="button" href="#cartModal"
                 data-toggle="modal">
             <spring:theme code="basket.add.to.basket" text="In den Warenkorb" />
@@ -44,6 +45,7 @@
         </button>
     </div>
 </form>
+
 
 <!-- <div class="qty"> -->
 <%-- 	<c:if test="${product.purchasable}"> --%>

@@ -15,17 +15,26 @@ KP.page.product = {
         __ts.parentNode.insertBefore(_ts, __ts);
     },
     
+    /*!  */
     setSelectedVariant : function() {
         $(".btn-selectVariant").click(function() {
-            // Mudar code do produto selecionado (form add to cart)
-            // Mudar campo quantidade para 1 (form add to cart)
-            // Mudar foto principal
-            // Mudar galeria de imagens
-            // Mudar conteúdo das abas (detalhes técnicos; descrição?; acessórios?)
-            console.log("select variant button clicked");
+            var productCode = $(this).prop("id");
+            $.ajax({
+                type : "POST",
+                url : "/p/"+ productCode +"/chooseVariant",
+                success : function(data) {
+                    /!* nothing to do yet */
+                },
+                error : function(xhr, statusText, error) {
+                    
+                },
+                complete : function(xhr, statusText) {
+                    
+                }
+            });
         });
     }
-
+    
 }
 
 $(document).ready(function() {

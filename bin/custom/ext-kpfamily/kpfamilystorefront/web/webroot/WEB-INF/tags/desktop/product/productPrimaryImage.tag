@@ -7,7 +7,7 @@
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 
-<c:set value="${ycommerce:productImage(product, format)}" var="primaryImage" />
+<c:set var="primaryImage" value="${ycommerce:productImage(product, format)}" />
 
 <c:choose>
     <c:when test="${not empty primaryImage}">

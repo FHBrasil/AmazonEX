@@ -174,6 +174,7 @@ public interface ControllerConstants
 				String ZoomImagesPopup = "fragments/product/zoomImagesPopup";
 				String ReviewsTab = "fragments/product/reviewsTab";
 				String StorePickupSearchResults = "fragments/product/storePickupSearchResults";
+				String VariantInfo = "fragments/product/variantInfo";
 			}
 		}
 	}
