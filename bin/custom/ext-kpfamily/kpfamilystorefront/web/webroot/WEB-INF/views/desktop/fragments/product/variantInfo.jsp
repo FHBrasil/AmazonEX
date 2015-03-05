@@ -6,7 +6,8 @@
 
 {
     "variantCode" : "${product.code}"
+  , "variantStock" : "${product.stock.stockLevel}"
   , "variantPrimaryImageUrl" : "<c:set var='primaryImage' value='${ycommerce:productImage(product, \'zoom\')}' /> ${primaryImage.url}"
   , "variantGalleryImages" : "${galleryImages}"
-  , "variantTabCOntent" : []
+  , "variantTabContent" : []
 }

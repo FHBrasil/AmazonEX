@@ -13,13 +13,14 @@
     <c:when test="${not empty primaryImage}">
         <c:choose>
             <c:when test="${not empty primaryImage.altText}">
-                <img src="${primaryImage.url}"
+                <img id="productDetailImage" src="${primaryImage.url}"
                         title="${fn:escapeXml(primaryImage.altText)}"
                         alt="${fn:escapeXml(primaryImage.altText)}" width="100%" />
             </c:when>
             <c:otherwise>
-                <img src="${primaryImage.url}" title="${fn:escapeXml(product.name)}"
-                        alt="${fn:escapeXml(product.name)}" width="100%" />
+                <img id="productDetailImage" src="${primaryImage.url}"
+                        title="${fn:escapeXml(product.name)}" alt="${fn:escapeXml(product.name)}"
+                        width="100%" />
             </c:otherwise>
         </c:choose>
     </c:when>

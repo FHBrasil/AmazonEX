@@ -23,7 +23,11 @@ KP.page.product = {
                 type : "POST",
                 url : "/p/"+ productCode +"/chooseVariant",
                 success : function(data) {
-                    /!* nothing to do yet */
+                    $("form[name=addToCartForm]").find("input[type=hidden][id=maxStock]")
+                            .val(data.variantStock);
+                    $("form[name=addToCartForm]").find("input[type=hidden][name=productCodePost]")
+                            .val(data.variantCode);
+                    $("#productDetailImage").prop("src", data.variantPrimaryImageUrl);
                 },
                 error : function(xhr, statusText, error) {
                     

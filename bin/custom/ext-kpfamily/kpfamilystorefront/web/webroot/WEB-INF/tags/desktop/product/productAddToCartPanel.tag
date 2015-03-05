@@ -16,7 +16,7 @@
 <c:url value="/cart/add" var="addToCartUrl"/>
 <c:set var="maxStock" value="${product.stock.stockLevel}"/> <%-- set variant max stock, not product --%>
 
-<form name="addToCartForm_${product.code}" action="${addToCartUrl}" method="POST">
+<form name="addToCartForm" action="${addToCartUrl}" method="POST">
     <input type="hidden" id="maxStock" value="${maxStock}" />
     <input type="hidden" name="productCodePost" value="${product.code}"/>
     <div class="col-xs-4 margin-top qty150126">
