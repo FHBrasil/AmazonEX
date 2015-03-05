@@ -97,10 +97,9 @@
 <%-- Bootstrap --%>
 <script type="text/javascript" src="${commonResourcePath}/js/bootstrap.min.js"></script>
 
+<%-- Actions --%>
+<script type="text/javascript" src="${commonResourcePath}/js/actions/kp.action.addToCart.js"></script>
 
 <%-- Babyartikel Customs / Pages --%>
 <script type="text/javascript" src="${commonResourcePath}/js/pages/kp.page.product.js"></script>
-
-
-
 

@@ -17,6 +17,12 @@ KP.page.product = {
     
     setSelectedVariant : function() {
         $(".btn-selectVariant").click(function() {
+            // Mudar code do produto selecionado (form add to cart)
+            // Mudar campo quantidade para 1 (form add to cart)
+            // Mudar foto principal
+            // Mudar galeria de imagens
+            // Mudar conteúdo das abas (detalhes técnicos; descrição?; acessórios?)
+            console.log("select variant button clicked");
         });
     }
 
