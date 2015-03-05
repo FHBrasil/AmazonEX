@@ -123,18 +123,14 @@ public class ProductPageController extends AbstractPageController {
             return redirection;
         }
         updatePageTitle(productModel, model);
-        // FIXME: Better call an populator/converter here?
-        // populateProductDetailForDisplay(productModel, model, request);
         ProductData productData = productFacade.getProductForCode(productCode);
         model.addAttribute("product", productData);
         model.addAttribute("galleryImages", getGalleryImages(productData));
-        // ---
         getRequestContextData(request).setProduct(productModel);
         storeCmsPageInModel(model, getPageForProduct(productModel));
         populateProductData(productData, model);
         model.addAttribute(WebConstants.BREADCRUMBS_KEY, 
                 productBreadcrumbBuilder.getBreadcrumbs(productModel));
-        // ---
         model.addAttribute(new ReviewForm());
         final List<ProductReferenceData> productReferences = productFacade
                 .getProductReferencesForCode(productCode, Arrays.asList(
