@@ -3,54 +3,41 @@
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
-<%@ attribute name="productVariants" required="true" type="java.util.List"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
+<%@ attribute name="product" required="true"
+    type="de.hybris.platform.commercefacades.product.data.ProductData"%>
+
+<c:if test="${product.variantType eq 'BabyartikelSizeVariantProduct' and not empty product.variantOptions}">
+    <c:set var="variantSizes" value="${product.variantOptions}" />
+</c:if>
 
 <div class="row shadowbox">
-    <!-- BEGIN SIZE VARIANT this part must only appear at products with size variants -->
     <div class="col-xs-4 text-right size150126">
         <small>
-            <spring:theme code="product.variants.choose.size" text="Gr&ouml;&szlig;e w&auml;hlen"/>:
+            <spring:theme code="product.variants.choose.size" text="Gr&ouml;&szlig;e w&auml;hlen" />:
         </small>
     </div>
     <div class="col-xs-8 btn-variants141219">
-        <button type="button" class="btn btn-default" href="#">XS</button>
-        <button type="button" class="btn btn-default" href="#">S</button>
-        <button type="button" class="btn btn-default" href="#">M</button>
-        <button type="button" class="btn btn-default" href="#">L</button>
-        <button type="button" class="btn btn-default" href="#">XL</button>
-        <button type="button" class="btn btn-default" href="#">XXL</button>
+        <c:if test="${not empty variantSizes}">
+            <c:forEach items="${variantSizes}" var="variantSize">
+                <c:forEach items="${variantSize.variantOptionQualifiers}"
+                        var="variantOptionQualifier">
+                    <c:if test="${variantOptionQualifier.qualifier eq 'size'}">
+                        <button id="${variantSize.code}" class="btn btn-default btn-selectVariant" type="button" href="#">
+<%--                                 ${variantSize.stock.stockLevel < 1 ? "disabled='disabled'" : ""}> --%>
+                            ${variantOptionQualifier.value}&nbsp;
+                        </button>
+                    </c:if>
+                </c:forEach>
+            </c:forEach>
+        </c:if>
     </div>
-    <!-- END SIZE VARIANT -->
-    <div class="col-xs-4 margin-top qty150126">
-        <form>
-            <div class="form-group row">
-                <div class="col-md-4 hidden-xs hidden-sm">
-                    <label class="" for="qty">
-                        <spring:theme code="product.quantity" text="Menge"/>:
-                    </label>
-                </div>
-                <div class="col-xs-12 col-md-8">
-                    <input type="number" min="1" max="10" class="form-control input-lg" id="qty"
-                        value="1">
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-xs-8 margin-top">
-        <button type="button" class="btn btn-primary btn-lg" href="#cartModal" data-toggle="modal">
-            <spring:theme code="basket.add.to.basket" text="In den Warenkorb" />
-        </button>
-        <br />
-        <button type="button" class="btn btn-link">
-            <span class="glyphicon glyphicon-heart"></span>
-            <spring:theme code="text.wishlist.add" text="Auf die Wunschliste"/>
-        </button>
-    </div>
+    <product:productAddToCartPanel allowAddToCart="${true}" product="${product}"/>
 </div>
 
 
- <%-- Determine if product is one of apparel style or size variant --%>
+
+<%-- Determine if product is one of apparel style or size variant --%>
 <%-- <c:if test="${product.variantType eq 'ApparelStyleVariantProduct'}"> --%>
 <%--     <c:set var="variantStyles" value="${product.variantOptions}" /> --%>
 <%-- </c:if> --%>
@@ -67,8 +54,6 @@
 <%--     <c:set var="currentStyleUrl" value="${product.baseOptions[1].selected.url}" /> --%>
 <%-- </c:if> --%>
 <%-- <c:url value="${currentStyleUrl}" var="currentStyledProductUrl" /> --%>
-
-
 <%-- Determine if product is other variant --%>
 <%-- <c:if test="${empty variantStyles}"> --%>
 <%--     <c:if test="${not empty product.variantOptions}"> --%>
