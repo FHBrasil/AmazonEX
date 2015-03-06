@@ -18,7 +18,7 @@
                 <spring:theme code="product.tax.shipping.excluded" text="zzgl. Versand"/>
             </small>
         </p>
-    <%-- Again, leave the empty comment below. --%>
+    <%-- Do not delete the empty comment below. --%>
     </div><!--
     --><product:productDetailsShipping product="${product}"/>
 </div>

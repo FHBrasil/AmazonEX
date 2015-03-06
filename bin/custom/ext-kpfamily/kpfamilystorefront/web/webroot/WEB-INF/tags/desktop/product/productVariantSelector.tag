@@ -23,8 +23,8 @@
                 <c:forEach items="${variantSize.variantOptionQualifiers}"
                         var="variantOptionQualifier">
                     <c:if test="${variantOptionQualifier.qualifier eq 'size'}">
-                        <button id="${variantSize.code}" class="btn btn-default btn-selectVariant" type="button" href="#">
-<%--                                 ${variantSize.stock.stockLevel < 1 ? "disabled='disabled'" : ""}> --%>
+                        <button id="${variantSize.code}" class="btn btn-default btn-selectVariant" type="button" href="#"
+                                ${variantSize.stock.stockLevel < 1 ? "disabled='disabled'" : ""}>
                             ${variantOptionQualifier.value}&nbsp;
                         </button>
                     </c:if>
