@@ -28,6 +28,8 @@ KP.page.product = {
                     $("form[name=addToCartForm]").find("input[type=hidden][name=productCodePost]")
                             .val(data.variantCode);
                     $("#productDetailImage").prop("src", data.variantPrimaryImageUrl);
+                    $("#productDetailImage").prop("title", data.variantImageTitle);
+                    $("#productDetailImage").prop("alt", data.variantImageAltText);
                 },
                 error : function(xhr, statusText, error) {
                     
