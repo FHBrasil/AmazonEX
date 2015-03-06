@@ -9,15 +9,10 @@ $lang=de
 UPDATE Language;isocode[unique=true];name[lang=$lang]
  ;de;"Deutsch"
  ;en;"Englisch"
- ;ja;"Japanisch"
- ;zh;"Chinesisch"
 
 # Currencies
 UPDATE Currency;isocode[unique=true];name[lang=$lang]
  ;EUR;"Euro"
- ;GBP;"Pound"
- ;JPY;"Japanese Yen"
- ;USD;"US Dollar"
 
 # Titles
 UPDATE Title;code[unique=true];name[lang=$lang]
@@ -44,38 +39,26 @@ UPDATE DistanceUnit;code[unique=true];name[lang=$lang]
  ;miles;"miles"
 
 # MediaFormats
-UPDATE MediaFormat;qualifier[unique=true];name[lang=$lang];
- ;1200Wx1200H;"1200Wx1200H"
- ;539Wx539H;"539Wx539H"
- ;190Wx190H;"190Wx190H"
- ;85Wx85H;"85Wx85H"
- ;60Wx60H;"60Wx60H"
+UPDATE ConversionMediaFormat;qualifier[unique=true];name[lang=$lang];
+ ;1200Wx1200H;"super zoom"
+ ;539Wx539H;"zoom"
+ ;190Wx190H;"product"
+ ;85Wx85H;"cart icon"
+ ;60Wx60H;"thumbnail"
 
 # Product Tax Groups
 UPDATE ProductTaxGroup;code[unique=true];name[lang=$lang]
- ;ca-sales-tax-full;"Kanadische Mehrwertsteuer"
  ;eu-vat-full;"voller Steuersatz"
  ;eu-vat-half;"halber Steuersatz"
- ;jp-vat-full;"Steuersatz"
- ;us-sales-tax-full;"US-Mehrwertsteuer"
 
 # User Tax Groups
 UPDATE UserTaxGroup;code[unique=true];name[lang=$lang]
- ;ca-taxes;"Kanadische Steuern"
  ;de-taxes;"DE Steuern"
- ;jp-taxes;"JP Steuern"
- ;uk-taxes;"UK Steuern"
- ;us-taxes;"US-Steuern"
 
 # Tax
 UPDATE Tax;code[unique=true];name[lang=$lang]
- ;ca-sales-tax-full;"Mehrwertsteuer"
  ;de-vat-full;"DE MwSt voll"
  ;de-vat-half;"DE MwSt halb"
- ;jp-vat-full;"Konsumsteuer"
- ;uk-vat-full;"UK MwSt voll"
- ;uk-vat-half;"UK MwSt halb"
- ;us-sales-tax-full;"Mehrwertsteuer"
 
 # Consginment statuses
 UPDATE ConsignmentStatus;code[unique=true];name[lang=$lang]

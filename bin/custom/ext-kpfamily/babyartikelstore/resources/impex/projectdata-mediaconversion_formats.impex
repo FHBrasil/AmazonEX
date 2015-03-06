@@ -1,0 +1,35 @@
+$catalogVersion=catalogVersion(catalog(id[default='babyartikelContentCatalog']),version[default='Staged'])[unique=true];
+$medias=medias(code, $catalogVersion);
+
+#
+# Babyartikel ConversionGroup
+#
+INSERT_UPDATE ConversionGroup;code[unique=true];name[lang=en];supportedFormats(qualifier);
+;BabyartikelConversionGroup;Babyartikel conversion with working File;Babyartikel-baseImage,1200Wx1200H,539Wx539H,190Wx190H,85Wx85H,60Wx60H;
+
+#
+# sample base media
+#
+INSERT_UPDATE Media;code[unique=true];$catalogVersion; mime;realfilename;mediaFormat(qualifier);@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true];
+;cityStadium;;image/jpeg;city_work.jpg;Babyartikel-baseImage;jar:de.kpfamily.jalo.BabyartikelstoreManager&/babyartikelstore/media/city_work.jpg;
+
+#
+# Test container
+#
+INSERT_UPDATE MediaContainer;qualifier[unique=true];$medias;$catalogVersion
+;babyartikelProductSampleMediaContainer;cityStadium;
+
+#
+# Executing a sync
+#
+INSERT_UPDATE MediaConversionCronJob;code[unique=true];$catalogVersion;job(code);includedFormats(qualifier);sessionLanguage(isoCode[default=de])
+;babyartikelMediaConversionCronJob;;mediaConversionJob;Babyartikel-baseImage,1200Wx1200H,539Wx539H,190Wx190H,85Wx85H,60Wx60H;
+ 
+INSERT_UPDATE CatalogVersionSyncCronJob; code[unique=true];job(code);sessionLanguage(isoCode[default=de]);logToFile[default=false];logToDataBase[default=false];forceUpdate[default=false]
+;babySyncMediaJob;sync babyartikelContentCatalog\:Staged->Online;
+ 
+#% import de.hybris.platform.core.Registry
+#% import de.hybris.platform.servicelayer.cronjob.CronJobService
+#% CronJobService cronJobService = Registry.getApplicationContext().getBean("cronJobService")
+#% cronJobService.performCronJob(cronJobService.getCronJob("babyartikelMediaConversionCronJob"),true)
+#% cronJobService.performCronJob(cronJobService.getCronJob("babySyncMediaJob"),true)
