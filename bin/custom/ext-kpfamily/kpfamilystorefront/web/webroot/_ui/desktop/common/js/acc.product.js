@@ -8,7 +8,7 @@ ACC.product = {
 	
 	enableAddToCartButton: function ()
 	{
-		$('#addToCartButton').removeAttr("disabled");
+		!$('#addToCartButton').removeAttr("disabled");
 	},
 
 	enableVariantSelectors: function ()
@@ -92,7 +92,7 @@ $(document).ready(function ()
 		bindToAddToCartForm();
 		bindToAddToCartStorePickUpForm();
 		enableStorePickupButton();
-		enableAddToCartButton();
+		/*!enableAddToCartButton();*/
 		enableVariantSelectors();
 	}
 });

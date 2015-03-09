@@ -60,6 +60,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -99,7 +100,19 @@ public class ProductPageController extends AbstractPageController {
     @Resource(name = "reviewValidator")
     private ReviewValidator reviewValidator;
 
+    
+    /**
+     * 
+     * @return
+     *
+     * @author jfelipe
+     */
+    @ModelAttribute("pageType")
+    public String pageType() {
+        return PageType.PRODUCT.name();
+    }
 
+    
     /**
      * 
      * @param productCode

@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-xs-4 v-bottom">
         <p class="price">
-            ${product.priceEuro},<sup>${product.priceCents} &euro;</sup>
+            ${product.priceEuro}, <sup>&euro; ${product.priceCents}</sup>
         </p>
         <p>
             <small>

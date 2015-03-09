@@ -10,30 +10,27 @@
 <c:if test="${product.variantType eq 'BabyartikelSizeVariantProduct' and not empty product.variantOptions}">
     <c:set var="variantSizes" value="${product.variantOptions}" />
 </c:if>
-
-<div class="row shadowbox">
-    <div class="col-xs-4 text-right size150126">
-        <small>
-            <spring:theme code="product.variants.choose.size" text="Gr&ouml;&szlig;e w&auml;hlen" />:
-        </small>
-    </div>
-    <div class="col-xs-8 btn-variants141219">
-        <c:if test="${not empty variantSizes}">
-            <c:forEach items="${variantSizes}" var="variantSize">
-                <c:forEach items="${variantSize.variantOptionQualifiers}"
-                        var="variantOptionQualifier">
-                    <c:if test="${variantOptionQualifier.qualifier eq 'size'}">
-                        <button id="${variantSize.code}" class="btn btn-default btn-selectVariant" type="button" href="#"
-                                ${variantSize.stock.stockLevel < 1 ? "disabled='disabled'" : ""}>
-                            ${variantOptionQualifier.value}&nbsp;
-                        </button>
-                    </c:if>
-                </c:forEach>
-            </c:forEach>
-        </c:if>
-    </div>
-    <product:productAddToCartPanel allowAddToCart="${true}" product="${product}"/>
+<div class="col-xs-4 text-right size150126">
+    <small>
+        <spring:theme code="product.variants.choose.size" text="Gr&ouml;&szlig;e w&auml;hlen" />:
+    </small>
 </div>
+<div class="col-xs-8 btn-variants141219">
+    <c:if test="${not empty variantSizes}">
+        <c:forEach items="${variantSizes}" var="variantSize">
+            <c:forEach items="${variantSize.variantOptionQualifiers}"
+                    var="variantOptionQualifier">
+                <c:if test="${variantOptionQualifier.qualifier eq 'size'}">
+                    <button id="${variantSize.code}" class="btn btn-default btn-selectVariant" type="button" href="#"
+                            ${variantSize.stock.stockLevel < 1 ? "disabled='disabled'" : ""}>
+                        ${variantOptionQualifier.value}&nbsp;
+                    </button>
+                </c:if>
+            </c:forEach>
+        </c:forEach>
+    </c:if>
+</div>
+
 
 
 

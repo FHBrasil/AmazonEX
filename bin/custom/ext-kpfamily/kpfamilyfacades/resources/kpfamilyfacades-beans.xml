@@ -6,6 +6,10 @@
 	into with hybris. -->
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="beans.xsd">
+	
+	<enum class="de.hybris.platform.acceleratorservices.controllers.page.PageType">
+	   <value>CHECKOUTPAGE</value>
+    </enum>
 
 	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
 		<property name="genders"

@@ -30,6 +30,11 @@ KP.page.product = {
                     $("#productDetailImage").prop("src", data.variantPrimaryImageUrl);
                     $("#productDetailImage").prop("title", data.variantImageTitle);
                     $("#productDetailImage").prop("alt", data.variantImageAltText);
+                    /*!In order to properly insert the 'disabled' prop, we need to remove it first*/
+                    $("#addToCartButton").prop("disabled", false);
+                    if(data.disableAddToCartButton == true) {
+                        $("#addToCartButton").prop("disabled", "disabled");
+                    }
                 },
                 error : function(xhr, statusText, error) {
                     

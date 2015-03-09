@@ -5,7 +5,10 @@
 
 <product:productDetailsTitleRatings product="${product}" showShortDescription="true" showBrandLogo="true"/>
 <product:productPricePanel product="${product}"/>
-<product:productVariantSelector product="${product}"/>
+<div class="row shadowbox">
+    <product:productVariantSelector product="${product}"/>
+    <product:productAddToCartPanel allowAddToCart="${true}" product="${product}"/>
+</div>
 
 
 <!--         <div class="span-10 productDescription last"> -->

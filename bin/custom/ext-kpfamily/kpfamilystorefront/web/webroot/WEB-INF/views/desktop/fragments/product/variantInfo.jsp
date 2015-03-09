@@ -5,23 +5,24 @@
 
 <%-- <spring:escapeBody javaScriptEscape="true"> --%>
 <c:set var='primaryImage' value='${ycommerce:productImage(product, \'zoom\')}' />
-
+<<c:url var="productImageUrl" value="${primaryImage.url}"/>
+<c:set var="disableAddToCartButton" value="${product.purchasable and product.stock.stockLevel > 0}"/>
 {
     "variantCode" : "${product.code}"
   , "variantStock" : "${product.stock.stockLevel}"
     <c:choose>
         <c:when test="${not empty primaryImage}">
-          , "variantPrimaryImageUrl" : "${primaryImage.url}"
+          , "variantPrimaryImageUrl" : "${productImageUrl}"
           , "variantImageTitle" : "${fn:escapeXml(primaryImage.title)}"
           , "variantImageAltText" : "${fn:escapeXml(primaryImage.altText)}"
         </c:when>
         <c:otherwise>
-          , "variantPrimaryImageUrl" : "${primaryImage.url}"
+          , "variantPrimaryImageUrl" : "${productImageUrl}"
           , "variantImageTitle" : "${fn:escapeXml(product.name)}"
           , "variantImageAltText" : "${fn:escapeXml(product.name)}"
         </c:otherwise>
     </c:choose>
   , "variantGalleryImages" : "${galleryImages}"
-  
   , "variantTabContent" : []
+  , "disableAddToCartButton" : "${disableAddToCartButton}"
 }

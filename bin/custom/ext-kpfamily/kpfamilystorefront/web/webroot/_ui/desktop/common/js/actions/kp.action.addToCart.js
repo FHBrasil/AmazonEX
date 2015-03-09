@@ -10,7 +10,7 @@ KP.action = {
                 url : "/cart/add",
                 data : {
                     productCodePost : productCode,
-                    form : { qty: quantity }
+                    qty: quantity
                 },
                 success : function(data, statusText, xhr) {
                 },

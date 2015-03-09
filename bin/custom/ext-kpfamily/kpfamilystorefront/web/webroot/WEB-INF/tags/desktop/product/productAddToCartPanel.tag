@@ -14,10 +14,10 @@
 <%@ taglib prefix="action" tagdir="/WEB-INF/tags/desktop/action" %>
 
 <c:url value="/cart/add" var="addToCartUrl"/>
-<c:set var="maxStock" value="${product.stock.stockLevel}"/> <%-- set variant max stock, not product --%>
+<c:set var="stockLevel" value="${product.stock.stockLevel}"/> <%-- set variant max stock, not product --%>
 
 <form name="addToCartForm" action="${addToCartUrl}" method="POST">
-    <input type="hidden" id="maxStock" value="${maxStock}" />
+    <input type="hidden" id="maxStock" value="${stockLevel}" />
     <input type="hidden" name="productCodePost" value="${product.code}"/>
     <div class="col-xs-4 margin-top qty150126">
         <div class="form-group row">
@@ -33,9 +33,13 @@
         </div>
     </div>
     <div class="col-xs-8 margin-top">
+        <c:set var="disableAddToCartButton" value="disabled='disabled'" />
+        <c:if test="${product.purchasable and product.stock.stockLevel > 0}">
+            <c:set var="disableAddToCartButton" value="iusiqbdifqyewbv"/>
+        </c:if>
         <%-- TODO: open <cart:cartModal> on addToCartButton click --%>
         <button id="addToCartButton" class="btn btn-primary btn-lg" type="button" href="#cartModal"
-                data-toggle="modal">
+                data-toggle="modal" ${disableAddToCartButton}>
             <spring:theme code="basket.add.to.basket" text="In den Warenkorb" />
         </button>
         <br />
