@@ -1,0 +1,14 @@
+# ---- Instructions ------------------------------------------------------------
+# *** Before doing any instructions, verify if it hasn't already done  ***
+# 
+# Just import this script in Hybris Management Console, with these options:
+#   - legacy mode
+#   - import_relaxed
+# 
+# ------------------------------------------------------------------------------
+# 
+# ---- Import Script -----------------------------------------------------------
+INSERT_UPDATE ShippingMethod;code[unique=true];internalCode
+;dropshipping;DV
+;warehouse;ZL
+# ------------------------------------------------------------------------------
