@@ -19,7 +19,7 @@
 		</rss>
 	</xsl:template>
 	<xsl:template match="product">
-		<xsl:if test="name != '' and product_price &gt; 0 and product_stock &gt; 0">
+		<xsl:if test="name != '' and price &gt; 0 and stock_level &gt; 0">
 			<item>
 				<id>
 					<xsl:value-of select="code" />
@@ -34,9 +34,11 @@
 					<xsl:value-of select="url" />
 				</link>
 				<tags>
-					<tag>
-						<xsl:value-of select="category" />
-					</tag>
+				    <xsl:for-each select="categories/category">
+						<tag>
+							<xsl:value-of select="." />
+						</tag>
+					</xsl:for-each>
 					<tag>
 						<xsl:choose>
 							<xsl:when test="gender = 'MALE'">
@@ -52,10 +54,10 @@
 					</tag>
 				</tags>
 				<images>
-					<xsl:for-each select="additionalImages/image">
-						<xsl:if test="additionalImageDimensions != ''">
-							<xsl:element name="{concat('_', additionalImageDimensions)}">
-								<xsl:value-of select="additionalUrl" />
+					<xsl:for-each select="images/additional_image">
+						<xsl:if test="additional_image_dimensions != ''">
+							<xsl:element name="{concat('_', additional_image_dimensions)}">
+								<xsl:value-of select="additional_image_url" />
 							</xsl:element>
 						</xsl:if>
 					</xsl:for-each>
@@ -65,11 +67,11 @@
 				</images>
 				<condition>new</condition>
 				<stock>
-					<xsl:value-of select="product_stock" />
+					<xsl:value-of select="stock_level" />
 				</stock>
 				<status>
 					<xsl:choose>
-						<xsl:when test="product_stock &gt; 0">
+						<xsl:when test="stock_level &gt; 0">
 							available
 						</xsl:when>
 						<xsl:otherwise>
@@ -81,16 +83,17 @@
 					<xsl:value-of select="previous_price" />
 				</old_price>
 				<price>
-					<xsl:value-of select="product_price" />
+					<xsl:value-of select="price" />
 					BRL
 				</price>
-				<xsl:if test="product_sale_price &gt; 0">
+				<xsl:if test="sale_price &gt; 0">
 					<sale_price>
-						<xsl:value-of select="product_sale_price" />
+						<xsl:value-of select="sale_price" />
 						BRL
 					</sale_price>
 					<sale_price_effective_date>
-						<xsl:value-of select="product_sale_date" />
+						<xsl:value-of select="sale_date_begin" /> / 
+						<xsl:value-of select="sale_date_end" />
 					</sale_price_effective_date>
 				</xsl:if>
 				<brand>
@@ -112,7 +115,7 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</gender>
-				<xsl:if test="product_price &gt; 99.99">
+				<xsl:if test="price &gt; 99.99">
 					<shipping>
 						<country>BR</country>
 						<price>0.0</price>
@@ -140,7 +143,7 @@
 				</specs>
 				<skus>
 					<xsl:for-each select="variants/variant">
-						<xsl:if test="variant_stock &gt; 0">
+						<xsl:if test="variant_stock_level &gt; 0">
 							<sku>
 								<id>
 									<xsl:value-of select="variant_code" />
