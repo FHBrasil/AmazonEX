@@ -20,13 +20,19 @@
            http://www.springframework.org/schema/aop/spring-aop.xsd">
 	
 	<!-- Strategies -->
-	<alias name="defaultFindMainMediaContainerStrategy" alias="findMainMediaContainerStrategy"/>
-	<bean id="defaultFindMainMediaContainerStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindMainMediaContainerStrategy"/>
+	<alias name="defaultFindMediaContainersStrategy" alias="findMediaContainersStrategy"/>
+	<bean id="defaultFindMediaContainersStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindMediaContainersStrategy"/>
 
+	<alias name="defaultFindMainMediaContainerStrategy" alias="findMainMediaContainerStrategy"/>
+	<bean id="defaultFindMainMediaContainerStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindMainMediaContainerStrategy">
+		<property name="findMediaContainersStrategy" ref="findMediaContainersStrategy" />
+	</bean>
+	
 	<!-- Listeners -->
 	<alias name="defaultGalleryChangedListener" alias="galleryChangedListener"/>
 	<bean id="defaultGalleryChangedListener" class="com.fliegersoftware.media.events.GalleryChangedListener">
 		<property name="modelService" ref="modelService"/>
+		<property name="findMediaContainersStrategy" ref="findMediaContainersStrategy"/>
 		<property name="findMainMediaContainerStrategy" ref="findMainMediaContainerStrategy"/>
 		<property name="imageFormatMapping" ref="imageFormatMapping"/>
 		<property name="mediaContainerService" ref="mediaContainerService"/>

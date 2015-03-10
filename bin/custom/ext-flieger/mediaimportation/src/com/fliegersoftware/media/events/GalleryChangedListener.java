@@ -9,14 +9,20 @@ import de.hybris.platform.core.model.media.MediaFormatModel;
 import de.hybris.platform.core.model.media.MediaModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.event.impl.AbstractEventListener;
+import de.hybris.platform.servicelayer.exceptions.ModelNotFoundException;
 import de.hybris.platform.servicelayer.media.MediaContainerService;
 import de.hybris.platform.servicelayer.media.MediaService;
 import de.hybris.platform.servicelayer.model.ModelService;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.media.strategies.FindMainMediaContainerStrategy;
+import com.fliegersoftware.media.strategies.FindMediaContainersStrategy;
 
 
 /**
@@ -31,6 +37,8 @@ public class GalleryChangedListener extends AbstractEventListener<GalleryChanged
 
 	private FindMainMediaContainerStrategy findMainMediaContainerStrategy;
 
+	private FindMediaContainersStrategy findMediaContainersStrategy;
+
 	private ImageFormatMapping imageFormatMapping;
 
 	private MediaContainerService mediaContainerService;
@@ -39,7 +47,7 @@ public class GalleryChangedListener extends AbstractEventListener<GalleryChanged
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.hybris.platform.servicelayer.event.impl.AbstractEventListener#onEvent(de.hybris.platform.servicelayer.event
 	 * .events.AbstractEvent)
@@ -50,62 +58,90 @@ public class GalleryChangedListener extends AbstractEventListener<GalleryChanged
 		LOG.debug("Entering event handler");
 
 		final ProductModel product = event.getProduct();
+
+		addMediasFromMainContainer(product);
+
+		addMediasFromAllContainers(product);
+	}
+
+	protected void addMediasFromMainContainer(final ProductModel product)
+	{
 		final MediaContainerModel mainMediaContainer = getFindMainMediaContainerStrategy().getMainMediaContainer(product);
 
-		if (mainMediaContainer == null)
+		MediaModel pictureMedia = null;
+		MediaModel thumbnailMedia = null;
+
+		if (mainMediaContainer != null)
+		{
+			LOG.debug(String.format("Product %s main media container is: %s", product.getCode(), mainMediaContainer.getQualifier()));
+
+			pictureMedia = getMediaByFormat(mainMediaContainer, "product");
+			thumbnailMedia = getMediaByFormat(mainMediaContainer, "thumbnail");
+		}
+		else
 		{
 			LOG.debug(String.format("Product %s has no main media container", product.getCode()));
-			removeMediasFromProduct(product);
+		}
+
+		product.setPicture(pictureMedia);
+		product.setThumbnail(thumbnailMedia);
+	}
+
+	protected void addMediasFromAllContainers(final ProductModel product)
+	{
+		final Collection<MediaContainerModel> containers = getFindMediaContainersStrategy().getMediaContainers(product);
+
+		product.setThumbnails(new ArrayList<MediaModel>());
+		product.setOthers(new ArrayList<MediaModel>());
+		product.setNormal(new ArrayList<MediaModel>());
+
+		if (CollectionUtils.isEmpty(containers))
+		{
+			LOG.debug(String.format("Product %s has no media containers", product.getCode()));
 			return;
 		}
 
-		LOG.debug(String.format("Product %s media container is: %s", product.getCode(), mainMediaContainer.getQualifier()));
-
-		addMediasToProduct(product, mainMediaContainer);
-	}
-
-	/**
-	 * @param product
-	 * @param mediaContainer
-	 */
-	private void addMediasToProduct(final ProductModel product, final MediaContainerModel mediaContainer)
-	{
-		LOG.debug(String.format("Adding medias to product %s using media container: %s", product.getCode(),
-				mediaContainer.getQualifier()));
-
-		product.setPicture(getMediaByFormat(mediaContainer, "product"));
-		product.setThumbnail(getMediaByFormat(mediaContainer, "thumbnail"));
-		//product.setThumbnails(getMediaByFormat(mediaContainer, "thumbnail"));
-		//product.setOthers(getMediaByFormat(mediaContainer, "zoom"));
-		//product.setNormal(getMediaByFormat(mediaContainer, "product"));
-	}
-
-	protected MediaModel getMediaByFormat(final MediaContainerModel mediaContainer, final String imageFormat)
-	{
-		final String mediaFormatQualifier = getImageFormatMapping().getMediaFormatQualifierForImageFormat(imageFormat);
-		if (mediaFormatQualifier == null)
+		for (final MediaContainerModel mediaContainer : containers)
 		{
-			return null;
+			addImageInFormat(mediaContainer, "thumbnail", product.getThumbnails());
+			addImageInFormat(mediaContainer, "zoom", product.getOthers());
+			addImageInFormat(mediaContainer, "product", product.getNormal());
+		}
+	}
+
+	private void addImageInFormat(final MediaContainerModel container, final String format, final Collection<MediaModel> medias)
+	{
+		final MediaModel media = getMediaByFormat(container, format);
+
+		CollectionUtils.addIgnoreNull(medias, media);
+	}
+
+	private MediaModel getMediaByFormat(final MediaContainerModel mediaContainer, final String imageFormat)
+	{
+		try
+		{
+			final String qualifier = getImageFormatMapping().getMediaFormatQualifierForImageFormat(imageFormat);
+			if (qualifier == null)
+			{
+				LOG.debug(String.format("Media format qualifier not found for image format %s", imageFormat));
+				return null;
+			}
+
+			final MediaFormatModel mediaFormat = getMediaService().getFormat(qualifier);
+			if (mediaFormat == null)
+			{
+				LOG.debug(String.format("MediaFormat not found for qualifier %s", qualifier));
+				return null;
+			}
+
+			return getMediaContainerService().getMediaForFormat(mediaContainer, mediaFormat);
+		}
+		catch (final ModelNotFoundException ignore)
+		{
+			// Ignore
 		}
 
-		final MediaFormatModel mediaFormat = getMediaService().getFormat(mediaFormatQualifier);
-		if (mediaFormat == null)
-		{
-			return null;
-		}
-
-		return getMediaContainerService().getMediaForFormat(mediaContainer, mediaFormat);
-	}
-
-	protected void removeMediasFromProduct(final ProductModel product)
-	{
-		LOG.debug(String.format("Cleaning medias from product %s", product.getCode()));
-
-		product.setPicture(null);
-		product.setThumbnail(null);
-		product.setThumbnails(null);
-		product.setOthers(null);
-		product.setNormal(null);
+		return null;
 	}
 
 	/**
@@ -196,5 +232,23 @@ public class GalleryChangedListener extends AbstractEventListener<GalleryChanged
 	public void setMediaService(final MediaService mediaService)
 	{
 		this.mediaService = mediaService;
+	}
+
+	/**
+	 * @return the findMediaContainersStrategy
+	 */
+	public FindMediaContainersStrategy getFindMediaContainersStrategy()
+	{
+		return findMediaContainersStrategy;
+	}
+
+	/**
+	 * @param findMediaContainersStrategy
+	 *           the findMediaContainersStrategy to set
+	 */
+	@Required
+	public void setFindMediaContainersStrategy(final FindMediaContainersStrategy findMediaContainersStrategy)
+	{
+		this.findMediaContainersStrategy = findMediaContainersStrategy;
 	}
 }
