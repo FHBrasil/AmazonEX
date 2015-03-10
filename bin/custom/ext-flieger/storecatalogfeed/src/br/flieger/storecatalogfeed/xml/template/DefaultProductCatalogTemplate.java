@@ -110,40 +110,43 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                 rootElement.addContent(xmlUtils.createElement("description",
                         product.getDescription()));
                 // Category / Manufacturer information
-                // TODO: mostrar as categorias em um array (com a árvore e os classifying categories)?
-                rootElement.addContent(xmlUtils.createElement("category",
-                        getCategory(product.getSupercategories())));
+                final Element categoriesElement = new Element("categories");
+                for(CategoryModel category : product.getSupercategories()) {
+                    categoriesElement.addContent(xmlUtils.createElement("category",
+                            category.getName()));
+                }
+                rootElement.addContent(categoriesElement);
                 rootElement.addContent(xmlUtils.createElement("gender", getGender(product)));
                 rootElement.addContent(xmlUtils.createElement("manufacturer",
-                        product.getManufacturerName()));
+                    product.getManufacturerName()));
                 // Image information
-                // TODO: não é melhor agrupar as imagens em um array?
-                rootElement.addContent(xmlUtils.createElement("main_image_url",
+                final Element imagesElement = new Element("images");
+                imagesElement.addContent(xmlUtils.createElement("main_image_url",
                         getImageUrl(product)));
-                rootElement.addContent(xmlUtils.createElement("main_image_dimensions",
+                imagesElement.addContent(xmlUtils.createElement("main_image_dimensions",
                         getImageDimensions(product.getPicture())));
-                rootElement.addContent(xmlUtils.createElement("thumbnail_url",
+                imagesElement.addContent(xmlUtils.createElement("thumbnail_image_url",
                         getThumbnailUrl(product)));
-                final Element galleryImages = new Element("additional_images");
                 for (MediaModel image : getAdditionalImages(product)) {
                     Element imageElement = new Element("additional_image");
                     imageElement.addContent(xmlUtils.createElement("additional_image_url",
                             getImageUrl(image)));
                     imageElement.addContent(xmlUtils.createElement("additional_image_dimensions",
                             getImageDimensions(image)));
-                    galleryImages.addContent(imageElement);
+                    imagesElement.addContent(imageElement);
                 }
-                rootElement.addContent(galleryImages);
+                rootElement.addContent(imagesElement);
                 // Price information
-                rootElement.addContent(xmlUtils.createElement("product_price",
+                rootElement.addContent(xmlUtils.createElement("price",
                         getProductPrice(product)));
                 rootElement.addContent(xmlUtils.createElement("previous_price",
                         getOldPrice(product)));
-                // TODO: adicionar sale price
-                
-                // ----
+                rootElement.addContent(xmlUtils.createElement("sale_price", getSalePrice(product)));
+                rootElement.addContent(xmlUtils.createElement("sale_date_begin",
+                        getSaleDateBegin(product)));
+                rootElement.addContent(xmlUtils.createElement("sale_date_end",
+                        getSaleDateEnd(product)));
                 // TODO: ver como fica o esquema de envio
-                
                 // ----
                 // Installments information
                 // TODO: ver como vai ficar o esquema de parcelas
@@ -153,8 +156,12 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                 // formatPrice(getParcelAmount(firstVariantPrice,
                 // BigDecimal.valueOf(installment.intValue())))));
                 // Stock information
-                rootElement.addContent(xmlUtils.createElement("product_stock",
+                rootElement.addContent(xmlUtils.createElement("stock_level",
                         getProductTotalStock(product)));
+                rootElement.addContent(xmlUtils.createElement("weight",
+                        String.valueOf(product.getWeight())));
+                rootElement.addContent(xmlUtils.createElement("color", ""));
+                rootElement.addContent(xmlUtils.createElement("hexa_color", ""));
                 // Variants
                 Element variantsElement = new Element("variants");
                 Collection<VariantProductModel> sizeVariants = product.getVariants();
@@ -179,16 +186,37 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                             getOldPrice(sizeVariant)));
                     variantElement.addContent(xmlUtils.createElement("variant_sale_price",
                             getSalePrice(sizeVariant)));
-                    variantElement.addContent(xmlUtils.createElement("variant_sale_date",
-                            getSaleDateRange(sizeVariant)));
-                    // TODO: ver essa parada aqui
-                    variantElement.addContent(xmlUtils.createElement("variant_stock",
+                    variantElement.addContent(xmlUtils.createElement("variant_sale_date_begin",
+                            getSaleDateBegin(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_sale_date_end",
+                            getSaleDateEnd(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_stock_level",
                             getVariantStock(sizeVariant, baseStore)));
                     variantElement.addContent(xmlUtils.createElement("variant_weight",
                             String.valueOf(sizeVariant.getWeight())));
+                    variantElement.addContent(xmlUtils.createElement("variant_color", ""));
+                    variantElement.addContent(xmlUtils.createElement("variant_color_hexa", ""));
+                    final Element variantImagesElement = new Element("variant_images");
+                    variantImagesElement.addContent(xmlUtils.createElement("variant_main_image_url",
+                            getImageUrl(sizeVariant)));
+                    variantImagesElement.addContent(xmlUtils.createElement(
+                            "variant_main_image_dimensions",
+                            getImageDimensions(sizeVariant.getPicture())));
+                    variantImagesElement.addContent(xmlUtils.createElement(
+                            "variant_thumbnail_image_url", getThumbnailUrl(sizeVariant)));
+                    for (MediaModel variantImage : getAdditionalImages(sizeVariant)) {
+                        Element variantImageElement = new Element("variant_additional_image");
+                        variantImageElement.addContent(xmlUtils.createElement(
+                                "variant_additional_image_url", getImageUrl(variantImage)));
+                        variantImageElement.addContent(xmlUtils.createElement(
+                                "variant_additional_image_dimensions",
+                                getImageDimensions(variantImage)));
+                        variantImagesElement.addContent(variantImageElement);
+                    }
+                    variantElement.addContent(variantImagesElement);
                     variantsElement.addContent(variantElement);
-                    // TODO: adicionar variant_color, variant_hexa_color e variant_images
                 }
+                
                 rootElement.addContent(variantsElement);
                 catalog.addContent(rootElement);
             } catch (final Exception e) {
@@ -473,14 +501,27 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
      * @param product
      * 
      */
-    protected String getSaleDateRange(final ProductModel product) {
+    protected String getSaleDateBegin(final ProductModel product) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         StandardDateRange dateRange = product.getEurope1Prices().iterator().hasNext() ? product
                 .getEurope1Prices().iterator().next().getDateRange() : null;
         return dateRange != null ? dateFormat.format(dateRange.getStart()) + "T"
-                + timeFormat.format(dateRange.getStart()) + "/"
-                + dateFormat.format(dateRange.getEnd()) + "T"
+                + timeFormat.format(dateRange.getStart()) : "";
+    }
+    
+    
+    /**
+     * 
+     * @param product
+     *
+     */
+    protected String getSaleDateEnd(final ProductModel product) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        StandardDateRange dateRange = product.getEurope1Prices().iterator().hasNext() ? product
+                .getEurope1Prices().iterator().next().getDateRange() : null;
+        return dateRange != null ? dateFormat.format(dateRange.getEnd()) + "T"
                 + timeFormat.format(dateRange.getEnd()) + "-0300" : "";
     }
 
