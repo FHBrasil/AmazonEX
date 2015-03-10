@@ -25,33 +25,6 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
-
-    
-	<!--  Configure the class to use for jalo session creation -->
-	<!-- <bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
-		<property name="targetClassName" value="com.fliegersoftware.media.jalo.MediaimportationJaloSession"/>
-	</bean>-->
-
-	<!-- Spring managed FilterChain for hybris Filter stack -->
-	<bean id="mediaimportationPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
-		<constructor-arg>
-			<list>
-				<ref bean="log4jFilter"/>
-				<ref bean="dynamicTenantActivationFilter"/>
-				<ref bean="sessionFilter"/>
-           		<ref bean="mediaimportationSecureMediaFilter"/>				
-			</list>
-		</constructor-arg>
-	</bean>
- 
-   <bean id="mediaimportationSecureMediaFilter" class="de.hybris.platform.servicelayer.web.SecureMediaFilter">
-       <property name="mediaPermissionService" ref="mediaPermissionService"/>
-       <property name="modelService" ref="modelService"/>
-       <property name="userService" ref="userService"/>
-       <property name="mediaService" ref="mediaService"/>
-      <!-- <property name="secureMediaToken" value="securemedias"/>  securemedias is default but you may overwrite it -->
-     </bean>	
-
 	<!-- 
 	 WARNING: 
 	 Do NOT override hybris managers or items within the web module!
