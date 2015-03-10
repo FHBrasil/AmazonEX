@@ -14,10 +14,10 @@
                 http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
     <!-- Feed template -->
-    <bean id="allProductsTemplate" scope="prototype"
-            class="br.flieger.storecatalogfeed.xml.template.AllProductsFromCatalogTemplate" />
-    <bean id="baseProductsTemplate" scope="prototype"
-            class="br.flieger.storecatalogfeed.xml.template.BaseProductsFromCatalogTemplate" />
+    <bean id="defaultProductCatalogTemplate" scope="prototype"
+            class="br.flieger.storecatalogfeed.xml.template.DefaultProductCatalogTemplate" />
+<!--     <bean id="baseProductsTemplate" scope="prototype" -->
+<!--             class="br.flieger.storecatalogfeed.xml.template.BaseProductsFromCatalogTemplate" /> -->
 
     <!-- Threads for feed generation -->
     <bean id="partialFeedGeneratorThread" scope="prototype"

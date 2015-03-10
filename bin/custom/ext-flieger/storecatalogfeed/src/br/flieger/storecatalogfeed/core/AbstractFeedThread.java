@@ -53,8 +53,8 @@ public abstract class AbstractFeedThread extends Thread {
         }
         getCatalogVersionService().setSessionCatalogVersions(Arrays.asList(getCatalogVersion()));
         JaloSession.getCurrentSession().setUser(UserManager.getInstance().getAdminEmployee());
-        commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("pt"));
-        commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("BRL"));
+        commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("de"));
+        commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("EUR"));
     }
 
 

@@ -6,6 +6,7 @@ package br.flieger.storecatalogfeed.dao;
 import de.hybris.platform.catalog.enums.ArticleApprovalStatus;
 import de.hybris.platform.catalog.model.CatalogVersionModel;
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.jalo.product.Product;
 import de.hybris.platform.servicelayer.internal.dao.AbstractItemDao;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
@@ -14,40 +15,54 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import br.flieger.storecatalogfeed.xml.template.AllProductsFromCatalogTemplate;
-import br.flieger.storecatalogfeed.xml.template.BaseProductsFromCatalogTemplate;
+import org.apache.log4j.Logger;
 
 /**
  * @author franthescolly
  *
  */
 public final class DefaultStoreFeedDao extends AbstractItemDao {
+    
+    private static final Logger LOG = Logger.getLogger(DefaultStoreFeedDao.class.getName());
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see de.fliegersoftware.catalog.dao.CatalogDAO#getCounter(java.lang.Class)
+     * @param catalogVersion
+     * @param xmlTemplate
+     *
+     * @author franthescolly
      */
     public int getCounter(CatalogVersionModel catalogVersion, String xmlTemplate) {
         String query = null;
-        if (xmlTemplate.equals(AllProductsFromCatalogTemplate.CODE)) {
-            query = getAllProductsQuery(true);
-        } else if (xmlTemplate.equals(BaseProductsFromCatalogTemplate.CODE)) {
-            query = getBaseProductsQuery(true);
-        }
+        query = getBaseProductsQuery(true);
+//        if (xmlTemplate.equals(AllProductsFromCatalogTemplate.CODE)) {
+//            query = getAllProductsQuery(true);
+//        } else if (xmlTemplate.equals(BaseProductsFromCatalogTemplate.CODE)) {
+//            query = getBaseProductsQuery(true);
+//        }
         FlexibleSearchQuery fsQuery = getDefaultSearchQuery(catalogVersion, query);
         return search(fsQuery).getTotalCount();
     }
 
 
+    /**
+     * 
+     * @param catalogVersion
+     * @param xmlTemplate
+     * @param beginindex
+     * @param total
+     *
+     * @author franthescolly
+     */
     public Set<ProductModel> findByPaging(CatalogVersionModel catalogVersion, String xmlTemplate,
             int beginindex, int total) {
         String query = null;
-        if (xmlTemplate.equals(AllProductsFromCatalogTemplate.CODE)) {
-            query = getAllProductsQuery(true);
-        } else if (xmlTemplate.equals(BaseProductsFromCatalogTemplate.CODE)) {
-            query = getBaseProductsQuery(true);
-        }
+        query = getBaseProductsQuery(true);
+//        if (xmlTemplate.equals(AllProductsFromCatalogTemplate.CODE)) {
+//            query = getAllProductsQuery(true);
+//        } else if (xmlTemplate.equals(BaseProductsFromCatalogTemplate.CODE)) {
+//            query = getBaseProductsQuery(true);
+//        }
         return paginatedSearch(catalogVersion, query, beginindex, total);
     }
 
@@ -55,11 +70,15 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
     /**
      * 
      * @param order
-     * @return
+     *
+     * @author franthescolly
      */
     private String getAllProductsQuery(boolean order) {
         StringBuilder query = new StringBuilder()
-                .append(" SELECT DISTINCT {p:PK} FROM {Product as p} WHERE {p:catalogVersion} = ?cv AND {p:approvalStatus} = ?as");
+                .append(" SELECT DISTINCT {p:PK} ")
+                .append(" FROM {Product as p} ")
+                .append(" WHERE {p:catalogVersion} = ?cv ")
+                .append(" AND {p:approvalStatus} = ?as ");
         if (order) {
             query.append(" ORDER BY {p:PK} ASC ");
         }
@@ -70,12 +89,19 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
     /**
      * 
      * @param order
-     * @return
+     *
+     * @author franthescolly
      */
     private String getBaseProductsQuery(boolean order) {
-        StringBuilder query = new StringBuilder().append(" SELECT DISTINCT {p:PK} ")
-                .append(" FROM {HeringProduct AS p} ").append(" WHERE {p:catalogVersion} = ?cv ")
-                .append(" AND {p:approvalStatus} = ?as");
+        StringBuilder query = new StringBuilder()
+                .append(" SELECT DISTINCT {p:pk} ")
+                .append(" FROM {Product AS p} ")
+                .append(" WHERE {p:catalogVersion} = ?cv ")
+                .append(" AND {p:approvalStatus} = ?as ")
+                .append(" AND {p:pk} NOT IN( {{ ")
+                    .append(" SELECT {b:pk} ")
+                    .append(" FROM {BabyartikelSizeVariantProduct AS b} ")
+                    .append(" WHERE {b:catalogVersion} = ?cv }} )");
         if (order) {
             query.append(" ORDER BY {p:PK} ASC ");
         }
@@ -83,11 +109,14 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
     }
 
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see de.fliegersoftware.catalog.dao.CatalogDAO#paginatedSearch(java.lang.Class,
-     * java.lang.String, java.util.Map, int, int)
+     * @param catalogVersion
+     * @param query
+     * @param beginindex
+     * @param total
+     *
+     * @author franthescolly
      */
     private Set<ProductModel> paginatedSearch(CatalogVersionModel catalogVersion, String query,
             int beginindex, int total) {
@@ -101,9 +130,11 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
 
 
     /**
+     * 
      * @param catalogVersion
      * @param query
-     * @return
+     *
+     * @author franthescolly
      */
     private FlexibleSearchQuery getDefaultSearchQuery(CatalogVersionModel catalogVersion,
             String query) {
@@ -115,4 +146,5 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
         searchQuery.addQueryParameter("as", ArticleApprovalStatus.APPROVED);
         return searchQuery;
     }
+    
 }

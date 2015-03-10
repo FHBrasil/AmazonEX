@@ -3,11 +3,8 @@
  */
 package br.flieger.storecatalogfeed.core;
 
-import static br.flieger.storecatalogfeed.constants.StorecatalogfeedConstants.FILE_PATH;
 import static br.flieger.storecatalogfeed.constants.StorecatalogfeedConstants.FILE_PREFIX;
 import static br.flieger.storecatalogfeed.constants.StorecatalogfeedConstants.PRODUCTS_LIMIT;
-
-import de.hybris.platform.core.model.product.ProductModel;
 
 import java.util.Set;
 import java.util.concurrent.CyclicBarrier;
@@ -15,6 +12,7 @@ import java.util.concurrent.CyclicBarrier;
 import org.jdom.Document;
 
 import br.flieger.storecatalogfeed.utils.XMLUtils;
+import de.hybris.platform.core.model.product.ProductModel;
 
 /**
  * This thread creates a partial export XML file, finding the products using the search
