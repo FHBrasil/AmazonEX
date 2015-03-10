@@ -110,12 +110,14 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                 rootElement.addContent(xmlUtils.createElement("description",
                         product.getDescription()));
                 // Category / Manufacturer information
+                // TODO: mostrar as categorias em um array (com a árvore e os classifying categories)?
                 rootElement.addContent(xmlUtils.createElement("category",
                         getCategory(product.getSupercategories())));
                 rootElement.addContent(xmlUtils.createElement("gender", getGender(product)));
                 rootElement.addContent(xmlUtils.createElement("manufacturer",
                         product.getManufacturerName()));
                 // Image information
+                // TODO: não é melhor agrupar as imagens em um array?
                 rootElement.addContent(xmlUtils.createElement("main_image_url",
                         getImageUrl(product)));
                 rootElement.addContent(xmlUtils.createElement("main_image_dimensions",
@@ -137,11 +139,17 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                         getProductPrice(product)));
                 rootElement.addContent(xmlUtils.createElement("previous_price",
                         getOldPrice(product)));
+                // TODO: adicionar sale price
+                
+                // ----
+                // TODO: ver como fica o esquema de envio
+                
+                // ----
                 // Installments information
                 // TODO: ver como vai ficar o esquema de parcelas
-                // rootElement.addContent(xmlUtils.createElement("parcelQty",
+                // rootElement.addContent(xmlUtils.createElement("installments_quantity",
                 // installment.toString()));
-                // rootElement.addContent(xmlUtils.createElement("parcelAmount",
+                // rootElement.addContent(xmlUtils.createElement("installments_amount",
                 // formatPrice(getParcelAmount(firstVariantPrice,
                 // BigDecimal.valueOf(installment.intValue())))));
                 // Stock information
@@ -179,6 +187,7 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                     variantElement.addContent(xmlUtils.createElement("variant_weight",
                             String.valueOf(sizeVariant.getWeight())));
                     variantsElement.addContent(variantElement);
+                    // TODO: adicionar variant_color, variant_hexa_color e variant_images
                 }
                 rootElement.addContent(variantsElement);
                 catalog.addContent(rootElement);
