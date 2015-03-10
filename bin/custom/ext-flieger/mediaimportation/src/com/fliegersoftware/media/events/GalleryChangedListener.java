@@ -78,8 +78,6 @@ public class GalleryChangedListener extends AbstractEventListener<GalleryChanged
 		//product.setThumbnails(getMediaByFormat(mediaContainer, "thumbnail"));
 		//product.setOthers(getMediaByFormat(mediaContainer, "zoom"));
 		//product.setNormal(getMediaByFormat(mediaContainer, "product"));
-
-		getModelService().save(product);
 	}
 
 	protected MediaModel getMediaByFormat(final MediaContainerModel mediaContainer, final String imageFormat)
@@ -108,8 +106,6 @@ public class GalleryChangedListener extends AbstractEventListener<GalleryChanged
 		product.setThumbnails(null);
 		product.setOthers(null);
 		product.setNormal(null);
-
-		getModelService().save(product);
 	}
 
 	/**
