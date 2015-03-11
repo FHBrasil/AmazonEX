@@ -12,6 +12,7 @@ import br.flieger.storecatalogfeed.utils.XMLUtils;
 import de.hybris.platform.category.model.CategoryModel;
 import de.hybris.platform.core.model.media.MediaModel;
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.variants.model.VariantProductModel;
 
 
 /**
@@ -51,7 +52,11 @@ public class AllProductCatalogTemplate extends DefaultProductCatalogTemplate {
                 // Product information
                 rootElement.addContent(xmlUtils.createElement("last_modification",
                         getFormattedModifiedTime(product), true));
+                rootElement.addContent(xmlUtils.createElement("is_base_product",
+                        isBaseProduct(product)));
                 rootElement.addContent(xmlUtils.createElement("code", product.getCode()));
+                rootElement.addContent(xmlUtils.createElement("base_product_code",
+                        getBaseProductCode(product)));
                 rootElement.addContent(xmlUtils.createElement("ean", product.getEan()));
                 rootElement.addContent(xmlUtils.createElement("url", getUrl(product)));
                 rootElement.addContent(xmlUtils.createElement("name", product.getName()));
@@ -122,4 +127,34 @@ public class AllProductCatalogTemplate extends DefaultProductCatalogTemplate {
         return document;
     }
     
+    
+    /**
+     * 
+     * @param product
+     * @return the base product code
+     *
+     * @author jfelipe
+     */
+    protected String getBaseProductCode(final ProductModel product) {
+        String baseProductCode = "";
+        if(product instanceof VariantProductModel) {
+            baseProductCode = ((VariantProductModel) product).getBaseProduct().getCode();
+        }
+        return baseProductCode;
+    }
+    
+    
+    /**
+     * 
+     * @param product
+     * @return true if is base product, false otherwise
+     *
+     * @author jfelipe
+     */
+    protected String isBaseProduct(final ProductModel product) {
+        if(product instanceof VariantProductModel) {
+            return String.valueOf(false);
+        }
+        return String.valueOf(true);
+    }
 }

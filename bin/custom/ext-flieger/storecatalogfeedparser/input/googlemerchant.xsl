@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <xsl:stylesheet version="1.0"
 	   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	   xmlns:g="http://base.google.com/ns/1.0"
-	   
-	   >
+	   xmlns:g="http://base.google.com/ns/1.0">
 	<xsl:output method="xml" encoding="utf-8" standalone="yes" />
 	<xsl:template match="/">
 		<rss version="2.0">
@@ -38,9 +36,9 @@
 					<xsl:value-of select="url" />
 				</link>
 				<g:product_type>
-					<xsl:template match="//categories[1]">
-						<xsl:value-of select="category" />
-					</xsl:template>
+<!-- 					<xsl:template match="//categories[1]"> -->
+<!-- 						<xsl:value-of select="category" /> -->
+<!-- 					</xsl:template> -->
 				</g:product_type>
 				<g:image_link>
 					<xsl:value-of select="main_image_url" />
@@ -107,11 +105,11 @@
 				<g:size>
 					<xsl:value-of select="size" />
 				</g:size>
-				<xsl:if test="string-length(code) &gt; 4">
-					<g:item_group_id>
-						<xsl:value-of select="baseProductCode" />
-					</g:item_group_id>
-				</xsl:if>
+<!-- 				<xsl:if test="is_base_product != 'true'"> -->
+<!-- 					<g:item_group_id> -->
+<!-- 						<xsl:value-of select="base_product_code" /> -->
+<!-- 					</g:item_group_id> -->
+<!-- 				</xsl:if> -->
 			</item>
 		</xsl:if>
 	</xsl:template>
