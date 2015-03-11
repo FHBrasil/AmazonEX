@@ -16,15 +16,21 @@ public interface XMLTemplate<T> {
     /**
      * 
      * @param type
-     * @param resolver
-     * @return
      */
     Document apply(Set<T> type);
+    
+    
+    /**
+     * 
+     * @param items
+     *
+     * @author jfelipe
+     */
+    Document createXMLDocument(Set<T> items);
 
 
     /**
      * 
-     * @return
      */
     String getCode();
 }

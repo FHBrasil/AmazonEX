@@ -98,8 +98,6 @@ public class FeedGenerator extends EmailNotifier {
 
 
     private boolean generateOutputFiles(final File root) {
-        validateSourceXML(new File(root, properties.getProperty("catalog.products.default.catalog"))
-                .getAbsolutePath());
         Iterator<ParseableEntry> iterator = new ParserManager().getParseableEntries(root)
                 .iterator();
         if (!iterator.hasNext()) {
@@ -110,7 +108,9 @@ public class FeedGenerator extends EmailNotifier {
         }
         for (boolean success = true; iterator.hasNext();) {
             ParseableEntry next = iterator.next();
-            if ((success &= parse(next, getXMLSource(root, next.getInput()))) && iterator.hasNext()) {
+            final String sourceFile = properties.getProperty(next.getSource());
+            success = validateSourceXML(new File(root, sourceFile).getAbsolutePath());
+            if ((success &= parse(next, getXMLSource(root, next.getSource()))) && iterator.hasNext()) {
                 continue;
             }
             return success;
@@ -119,9 +119,8 @@ public class FeedGenerator extends EmailNotifier {
     }
 
 
-    private String getXMLSource(File root, final String input) {
-        return new File(root, properties.getProperty("catalog.products.default.catalog"))
-                .getAbsolutePath();
+    private String getXMLSource(File root, final String source) {
+        return new File(root, properties.getProperty(source)).getAbsolutePath();
     }
 
 
@@ -134,11 +133,13 @@ public class FeedGenerator extends EmailNotifier {
     private boolean parse(ParseableEntry parseableEntry, String xmlSource) {
         Parser parser = new Parser();
         if (parser.transform(parseableEntry, xmlSource)) {
-            System.out.println("[OK] - " + parseableEntry.getOutput());
+            System.out.println("[OK] - source: "+ properties.getProperty(parseableEntry.getSource())
+                    +" | file: " + parseableEntry.getOutput());
             outputFiles.add(parseableEntry.getOutput());
             return true;
         }
-        System.out.println("[ERROR] - " + parseableEntry.getOutput());
+        System.out.println("[ERROR] - source: "+ properties.getProperty(parseableEntry.getSource())
+                    +" | file: " + parseableEntry.getOutput());
         return false;
     }
 

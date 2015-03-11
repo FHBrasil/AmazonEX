@@ -46,12 +46,28 @@ import de.hybris.platform.variants.model.VariantProductModel;
 import de.kpfamily.core.model.BabyartikelSizeVariantProductModel;
 
 /**
+ * Builds an default XML file with base products as parent nodes, and variant products as child 
+ * nodes, like the following:
+ * <code>
+ *   <products>
+ *     <products>
+ *       [ product nodes ]
+ *       <variants>
+ *         <variant>
+ *           [ variant nodes]
+ *         </variant>
+ *       </variants>
+ *     </products>
+ *   </products>
+ * </code>
+ * 
  * @author jfelipe
  *
  */
 public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> {
 
     public static final String CODE = "defaultProductCatalogTemplate";
+    
     protected static final int PRICE_SCALE = 2;
     protected static final RoundingMode PRICE_ROUND_MODE = RoundingMode.DOWN;
     protected static final BigDecimal DEFAULT_PARCEL_QUANTITY = BigDecimal.valueOf(5);
@@ -90,7 +106,8 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
      *
      * @author jfelipe
      */
-    protected Document createXMLDocument(Set<ProductModel> products) {
+    @Override
+    public Document createXMLDocument(Set<ProductModel> products) {
         final Element catalog = new Element("productCatalog");
         final Document document = new Document(catalog);
         final XMLUtils xmlUtils = new XMLUtils();
@@ -158,6 +175,7 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                 // Stock information
                 rootElement.addContent(xmlUtils.createElement("stock_level",
                         getProductTotalStock(product)));
+                rootElement.addContent(xmlUtils.createElement("size", ""));
                 rootElement.addContent(xmlUtils.createElement("weight",
                         String.valueOf(product.getWeight())));
                 rootElement.addContent(xmlUtils.createElement("color", ""));

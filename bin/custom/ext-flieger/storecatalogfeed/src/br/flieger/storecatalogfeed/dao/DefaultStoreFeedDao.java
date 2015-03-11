@@ -6,7 +6,6 @@ package br.flieger.storecatalogfeed.dao;
 import de.hybris.platform.catalog.enums.ArticleApprovalStatus;
 import de.hybris.platform.catalog.model.CatalogVersionModel;
 import de.hybris.platform.core.model.product.ProductModel;
-import de.hybris.platform.jalo.product.Product;
 import de.hybris.platform.servicelayer.internal.dao.AbstractItemDao;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
@@ -16,6 +15,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+
+import br.flieger.storecatalogfeed.xml.template.AllProductCatalogTemplate;
+import br.flieger.storecatalogfeed.xml.template.DefaultProductCatalogTemplate;
 
 /**
  * @author franthescolly
@@ -34,12 +36,11 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
      */
     public int getCounter(CatalogVersionModel catalogVersion, String xmlTemplate) {
         String query = null;
-        query = getBaseProductsQuery(true);
-//        if (xmlTemplate.equals(AllProductsFromCatalogTemplate.CODE)) {
-//            query = getAllProductsQuery(true);
-//        } else if (xmlTemplate.equals(BaseProductsFromCatalogTemplate.CODE)) {
-//            query = getBaseProductsQuery(true);
-//        }
+        if (xmlTemplate.equals(AllProductCatalogTemplate.CODE)) {
+            query = getAllProductsQuery(true);
+        } else if (xmlTemplate.equals(DefaultProductCatalogTemplate.CODE)) {
+            query = getBaseProductsQuery(true);
+        }
         FlexibleSearchQuery fsQuery = getDefaultSearchQuery(catalogVersion, query);
         return search(fsQuery).getTotalCount();
     }
@@ -57,12 +58,11 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
     public Set<ProductModel> findByPaging(CatalogVersionModel catalogVersion, String xmlTemplate,
             int beginindex, int total) {
         String query = null;
-        query = getBaseProductsQuery(true);
-//        if (xmlTemplate.equals(AllProductsFromCatalogTemplate.CODE)) {
-//            query = getAllProductsQuery(true);
-//        } else if (xmlTemplate.equals(BaseProductsFromCatalogTemplate.CODE)) {
-//            query = getBaseProductsQuery(true);
-//        }
+        if (xmlTemplate.equals(AllProductCatalogTemplate.CODE)) {
+            query = getAllProductsQuery(true);
+        } else if (xmlTemplate.equals(DefaultProductCatalogTemplate.CODE)) {
+            query = getBaseProductsQuery(true);
+        }
         return paginatedSearch(catalogVersion, query, beginindex, total);
     }
 

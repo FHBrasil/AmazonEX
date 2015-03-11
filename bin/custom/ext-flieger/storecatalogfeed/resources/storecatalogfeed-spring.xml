@@ -16,8 +16,8 @@
     <!-- Feed template -->
     <bean id="defaultProductCatalogTemplate" scope="prototype"
             class="br.flieger.storecatalogfeed.xml.template.DefaultProductCatalogTemplate" />
-<!--     <bean id="baseProductsTemplate" scope="prototype" -->
-<!--             class="br.flieger.storecatalogfeed.xml.template.BaseProductsFromCatalogTemplate" /> -->
+    <bean id="allProductCatalogTemplate" scope="prototype"
+            class="br.flieger.storecatalogfeed.xml.template.AllProductCatalogTemplate" />
 
     <!-- Threads for feed generation -->
     <bean id="partialFeedGeneratorThread" scope="prototype"

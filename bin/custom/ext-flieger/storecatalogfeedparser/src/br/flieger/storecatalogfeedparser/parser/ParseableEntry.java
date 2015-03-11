@@ -20,13 +20,17 @@ public class ParseableEntry {
         /**
 		 * 
 		 */
-        VALUE
+        VALUE,
+        /**
+         * 
+         */
+        SOURCE
     }
 
     /**
 	 * 
 	 */
-    private final String input, output;
+    private final String input, output, source;
     /**
 	 * 
 	 */
@@ -38,9 +42,10 @@ public class ParseableEntry {
      * @param input
      * @param output
      */
-    public ParseableEntry(final String input, final String output, final boolean BOMRequired) {
+    public ParseableEntry(final String input, final String output, final String source, final boolean BOMRequired) {
         this.input = input;
         this.output = output;
+        this.source = source;
         this.BOMRequired = BOMRequired;
     }
 
@@ -59,6 +64,14 @@ public class ParseableEntry {
     public final String getOutput() {
         return output;
     }
+    
+    
+    /**
+     * @return the output
+     */
+    public final String getSource() {
+        return source;
+    }
 
 
     /**
@@ -71,6 +84,6 @@ public class ParseableEntry {
 
     @Override
     public String toString() {
-        return (input + " : " + output + (BOMRequired ? "" : " [NO BOM]"));
+        return (source + " : " + input + " : " + output + (BOMRequired ? "" : " [NO BOM]"));
     }
 }

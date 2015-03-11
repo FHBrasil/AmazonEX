@@ -61,7 +61,7 @@ public abstract class AbstractFeedThread extends Thread {
     protected XMLTemplate<ProductModel> createTemplate(final String templateBeanName) {
         final ApplicationContext appCtx = Registry.getApplicationContext();
         final XMLTemplate<ProductModel> templateBean = appCtx.getBean(
-                templateBeanName + "Template", XMLTemplate.class);
+                templateBeanName /*+ "Template"*/, XMLTemplate.class);
         return templateBean;
     }
 

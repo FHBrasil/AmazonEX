@@ -37,10 +37,11 @@ public class ParserManager {
     public List<ParseableEntry> getParseableEntries(File root) {
         List<ParseableEntry> entries = new ArrayList<ParseableEntry>();
         for (String key : filter(properties.keySet(), FEED_INPUT_PREFIX, EntryPart.KEY)) {
-            String input = filter(properties.keySet(), key, EntryPart.VALUE).get(0);
+            String input = filter(properties.keySet(), key.replace(".source", ""), EntryPart.VALUE).get(0);
             String output = root.getName() + "/" + getOutputByInput(key);
+            String source = getSourceByInput(key);
             boolean isBOMRequired = !key.contains(".nobom");
-            entries.add(new ParseableEntry(input, output, isBOMRequired));
+            entries.add(new ParseableEntry(input, output, source, isBOMRequired));
         }
         return Collections.unmodifiableList(entries);
     }
@@ -49,6 +50,20 @@ public class ParserManager {
     private String getOutputByInput(String input) {
         input = input.replaceAll(".feed.input.", ".feed.output.");
         List<String> filter = filter(properties.keySet(), input, EntryPart.VALUE);
+        return filter.isEmpty() ? "" : filter.get(0);
+    }
+    
+    
+    /**
+     * 
+     * @param input
+     * @return
+     *
+     * @author jfelipe
+     */
+    private String getSourceByInput(String prefix) {
+        prefix = prefix.replaceAll(".feed.input.", ".feed.source.");
+        List<String> filter = filter(properties.keySet(), prefix, EntryPart.SOURCE);
         return filter.isEmpty() ? "" : filter.get(0);
     }
 
@@ -63,6 +78,9 @@ public class ParserManager {
                     result.add(element.toString());
                     break;
                 case VALUE:
+                    result.add(properties.getProperty(element.toString()).trim());
+                    break;
+                case SOURCE:
                     result.add(properties.getProperty(element.toString()).trim());
                     break;
                 }
