@@ -15,12 +15,12 @@
 			<description><xsl:value-of select="description"/></description>
 			<producturl><xsl:value-of select="url"/></producturl>
 			<price><xsl:value-of select="price"/></price>
-			<xsl:if test="oldPrice != price">
-				<retailprice><xsl:value-of select="oldPrice"/></retailprice>
+			<xsl:if test="previous_price != price">
+				<retailprice><xsl:value-of select="previous_price"/></retailprice>
 			</xsl:if>
-			<instock><xsl:value-of select="stock"/></instock>
-			<smallimage><xsl:value-of select="thumbnail"/></smallimage>
-			<bigimage><xsl:value-of select="image"/></bigimage>
+			<instock><xsl:value-of select="stock_level"/></instock>
+			<smallimage><xsl:value-of select="thumbnail_image_url"/></smallimage>
+			<bigimage><xsl:value-of select="main_image_url"/></bigimage>
 		</xsl:element>
 	<!-- </xsl:if> -->
 </xsl:template>
