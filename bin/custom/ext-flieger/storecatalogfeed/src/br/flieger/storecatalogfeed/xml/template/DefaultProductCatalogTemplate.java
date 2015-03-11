@@ -111,7 +111,6 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
         final Element catalog = new Element("productCatalog");
         final Document document = new Document(catalog);
         final XMLUtils xmlUtils = new XMLUtils();
-        final BaseStoreModel baseStore = getBaseStore(products.iterator().next());
         // Store information
         addDefaultStoreElements(xmlUtils, catalog, products.iterator().next().getCatalogVersion());
         for (final ProductModel product : products) {
@@ -120,7 +119,11 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                 // Product information
                 rootElement.addContent(xmlUtils.createElement("last_modification",
                         getFormattedModifiedTime(product), true));
+                rootElement.addContent(xmlUtils.createElement("is_base_product",
+                        isBaseProduct(product)));
                 rootElement.addContent(xmlUtils.createElement("code", product.getCode()));
+                rootElement.addContent(xmlUtils.createElement("base_product_code",
+                        getBaseProductCode(product)));
                 rootElement.addContent(xmlUtils.createElement("ean", product.getEan()));
                 rootElement.addContent(xmlUtils.createElement("url", getUrl(product)));
                 rootElement.addContent(xmlUtils.createElement("name", product.getName()));
@@ -129,8 +132,10 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                 // Category / Manufacturer information
                 final Element categoriesElement = new Element("categories");
                 for(CategoryModel category : product.getSupercategories()) {
-                    categoriesElement.addContent(xmlUtils.createElement("category",
-                            category.getName()));
+                    final Element categoryElement = xmlUtils.createElement("category",
+                            category.getName());
+                    categoryElement.setAttribute("code", category.getCode());
+                    categoriesElement.addContent(categoryElement);
                 }
                 rootElement.addContent(categoriesElement);
                 rootElement.addContent(xmlUtils.createElement("gender", getGender(product)));
@@ -180,62 +185,6 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                         String.valueOf(product.getWeight())));
                 rootElement.addContent(xmlUtils.createElement("color", ""));
                 rootElement.addContent(xmlUtils.createElement("hexa_color", ""));
-                // Variants
-                Element variantsElement = new Element("variants");
-                Collection<VariantProductModel> sizeVariants = product.getVariants();
-                for (VariantProductModel variant : sizeVariants) {
-                    BabyartikelSizeVariantProductModel sizeVariant;
-                    if (!(variant instanceof BabyartikelSizeVariantProductModel)) {
-                        continue;
-                    }
-                    sizeVariant = (BabyartikelSizeVariantProductModel) variant;
-                    Element variantElement = new Element("variant");
-                    variantElement.addContent(xmlUtils.createElement("variant_code",
-                            sizeVariant.getCode()));
-                    variantElement.addContent(xmlUtils.createElement("variant_ean",
-                            sizeVariant.getEan()));
-                    variantElement.addContent(xmlUtils.createElement("variant_size",
-                            sizeVariant.getSize()));
-                    variantElement.addContent(xmlUtils.createElement("variant_main_image_url",
-                            getImageUrl(sizeVariant)));
-                    variantElement.addContent(xmlUtils.createElement("variant_price",
-                            getProductPrice(sizeVariant)));
-                    variantElement.addContent(xmlUtils.createElement("variant_previous_price",
-                            getOldPrice(sizeVariant)));
-                    variantElement.addContent(xmlUtils.createElement("variant_sale_price",
-                            getSalePrice(sizeVariant)));
-                    variantElement.addContent(xmlUtils.createElement("variant_sale_date_begin",
-                            getSaleDateBegin(sizeVariant)));
-                    variantElement.addContent(xmlUtils.createElement("variant_sale_date_end",
-                            getSaleDateEnd(sizeVariant)));
-                    variantElement.addContent(xmlUtils.createElement("variant_stock_level",
-                            getVariantStock(sizeVariant, baseStore)));
-                    variantElement.addContent(xmlUtils.createElement("variant_weight",
-                            String.valueOf(sizeVariant.getWeight())));
-                    variantElement.addContent(xmlUtils.createElement("variant_color", ""));
-                    variantElement.addContent(xmlUtils.createElement("variant_color_hexa", ""));
-                    final Element variantImagesElement = new Element("variant_images");
-                    variantImagesElement.addContent(xmlUtils.createElement("variant_main_image_url",
-                            getImageUrl(sizeVariant)));
-                    variantImagesElement.addContent(xmlUtils.createElement(
-                            "variant_main_image_dimensions",
-                            getImageDimensions(sizeVariant.getPicture())));
-                    variantImagesElement.addContent(xmlUtils.createElement(
-                            "variant_thumbnail_image_url", getThumbnailUrl(sizeVariant)));
-                    for (MediaModel variantImage : getAdditionalImages(sizeVariant)) {
-                        Element variantImageElement = new Element("variant_additional_image");
-                        variantImageElement.addContent(xmlUtils.createElement(
-                                "variant_additional_image_url", getImageUrl(variantImage)));
-                        variantImageElement.addContent(xmlUtils.createElement(
-                                "variant_additional_image_dimensions",
-                                getImageDimensions(variantImage)));
-                        variantImagesElement.addContent(variantImageElement);
-                    }
-                    variantElement.addContent(variantImagesElement);
-                    variantsElement.addContent(variantElement);
-                }
-                
-                rootElement.addContent(variantsElement);
                 catalog.addContent(rootElement);
             } catch (final Exception e) {
                 e.printStackTrace();
@@ -541,6 +490,37 @@ public class DefaultProductCatalogTemplate implements XMLTemplate<ProductModel> 
                 .getEurope1Prices().iterator().next().getDateRange() : null;
         return dateRange != null ? dateFormat.format(dateRange.getEnd()) + "T"
                 + timeFormat.format(dateRange.getEnd()) + "-0300" : "";
+    }
+    
+    
+    /**
+     * 
+     * @param product
+     * @return the base product code
+     *
+     * @author jfelipe
+     */
+    protected String getBaseProductCode(final ProductModel product) {
+        String baseProductCode = "";
+        if(product instanceof VariantProductModel) {
+            baseProductCode = ((VariantProductModel) product).getBaseProduct().getCode();
+        }
+        return baseProductCode;
+    }
+    
+    
+    /**
+     * 
+     * @param product
+     * @return true if is base product, false otherwise
+     *
+     * @author jfelipe
+     */
+    protected String isBaseProduct(final ProductModel product) {
+        if(product instanceof VariantProductModel) {
+            return String.valueOf(false);
+        }
+        return String.valueOf(true);
     }
 
 

@@ -3,6 +3,7 @@
  */
 package br.flieger.storecatalogfeed.xml.template;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.jdom.Document;
@@ -12,7 +13,9 @@ import br.flieger.storecatalogfeed.utils.XMLUtils;
 import de.hybris.platform.category.model.CategoryModel;
 import de.hybris.platform.core.model.media.MediaModel;
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.variants.model.VariantProductModel;
+import de.kpfamily.core.model.BabyartikelSizeVariantProductModel;
 
 
 /**
@@ -29,9 +32,9 @@ import de.hybris.platform.variants.model.VariantProductModel;
  * @author jfelipe
  *
  */
-public class AllProductCatalogTemplate extends DefaultProductCatalogTemplate {
+public class BaseProductCatalogTemplate extends DefaultProductCatalogTemplate {
 
-    public static final String CODE = "allProductCatalogTemplate";
+    public static final String CODE = "baseProductCatalogTemplate";
     
     /**
      * 
@@ -44,6 +47,7 @@ public class AllProductCatalogTemplate extends DefaultProductCatalogTemplate {
         final Element catalog = new Element("productCatalog");
         final Document document = new Document(catalog);
         final XMLUtils xmlUtils = new XMLUtils();
+        final BaseStoreModel baseStore = getBaseStore(products.iterator().next());
         // Store information
         addDefaultStoreElements(xmlUtils, catalog, products.iterator().next().getCatalogVersion());
         for (final ProductModel product : products) {
@@ -52,11 +56,7 @@ public class AllProductCatalogTemplate extends DefaultProductCatalogTemplate {
                 // Product information
                 rootElement.addContent(xmlUtils.createElement("last_modification",
                         getFormattedModifiedTime(product), true));
-                rootElement.addContent(xmlUtils.createElement("is_base_product",
-                        isBaseProduct(product)));
                 rootElement.addContent(xmlUtils.createElement("code", product.getCode()));
-                rootElement.addContent(xmlUtils.createElement("base_product_code",
-                        getBaseProductCode(product)));
                 rootElement.addContent(xmlUtils.createElement("ean", product.getEan()));
                 rootElement.addContent(xmlUtils.createElement("url", getUrl(product)));
                 rootElement.addContent(xmlUtils.createElement("name", product.getName()));
@@ -116,6 +116,61 @@ public class AllProductCatalogTemplate extends DefaultProductCatalogTemplate {
                         String.valueOf(product.getWeight())));
                 rootElement.addContent(xmlUtils.createElement("color", ""));
                 rootElement.addContent(xmlUtils.createElement("hexa_color", ""));
+                // Variants
+                Element variantsElement = new Element("variants");
+                Collection<VariantProductModel> sizeVariants = product.getVariants();
+                for (VariantProductModel variant : sizeVariants) {
+                    BabyartikelSizeVariantProductModel sizeVariant;
+                    if (!(variant instanceof BabyartikelSizeVariantProductModel)) {
+                        continue;
+                    }
+                    sizeVariant = (BabyartikelSizeVariantProductModel) variant;
+                    Element variantElement = new Element("variant");
+                    variantElement.addContent(xmlUtils.createElement("variant_code",
+                            sizeVariant.getCode()));
+                    variantElement.addContent(xmlUtils.createElement("variant_ean",
+                            sizeVariant.getEan()));
+                    variantElement.addContent(xmlUtils.createElement("variant_size",
+                            sizeVariant.getSize()));
+                    variantElement.addContent(xmlUtils.createElement("variant_main_image_url",
+                            getImageUrl(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_price",
+                            getProductPrice(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_previous_price",
+                            getOldPrice(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_sale_price",
+                            getSalePrice(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_sale_date_begin",
+                            getSaleDateBegin(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_sale_date_end",
+                            getSaleDateEnd(sizeVariant)));
+                    variantElement.addContent(xmlUtils.createElement("variant_stock_level",
+                            getVariantStock(sizeVariant, baseStore)));
+                    variantElement.addContent(xmlUtils.createElement("variant_weight",
+                            String.valueOf(sizeVariant.getWeight())));
+                    variantElement.addContent(xmlUtils.createElement("variant_color", ""));
+                    variantElement.addContent(xmlUtils.createElement("variant_color_hexa", ""));
+                    final Element variantImagesElement = new Element("variant_images");
+                    variantImagesElement.addContent(xmlUtils.createElement("variant_main_image_url",
+                            getImageUrl(sizeVariant)));
+                    variantImagesElement.addContent(xmlUtils.createElement(
+                            "variant_main_image_dimensions",
+                            getImageDimensions(sizeVariant.getPicture())));
+                    variantImagesElement.addContent(xmlUtils.createElement(
+                            "variant_thumbnail_image_url", getThumbnailUrl(sizeVariant)));
+                    for (MediaModel variantImage : getAdditionalImages(sizeVariant)) {
+                        Element variantImageElement = new Element("variant_additional_image");
+                        variantImageElement.addContent(xmlUtils.createElement(
+                                "variant_additional_image_url", getImageUrl(variantImage)));
+                        variantImageElement.addContent(xmlUtils.createElement(
+                                "variant_additional_image_dimensions",
+                                getImageDimensions(variantImage)));
+                        variantImagesElement.addContent(variantImageElement);
+                    }
+                    variantElement.addContent(variantImagesElement);
+                    variantsElement.addContent(variantElement);
+                }
+                rootElement.addContent(variantsElement);
                 catalog.addContent(rootElement);
             } catch (final Exception e) {
                 e.printStackTrace();
@@ -128,33 +183,4 @@ public class AllProductCatalogTemplate extends DefaultProductCatalogTemplate {
     }
     
     
-    /**
-     * 
-     * @param product
-     * @return the base product code
-     *
-     * @author jfelipe
-     */
-    protected String getBaseProductCode(final ProductModel product) {
-        String baseProductCode = "";
-        if(product instanceof VariantProductModel) {
-            baseProductCode = ((VariantProductModel) product).getBaseProduct().getCode();
-        }
-        return baseProductCode;
-    }
-    
-    
-    /**
-     * 
-     * @param product
-     * @return true if is base product, false otherwise
-     *
-     * @author jfelipe
-     */
-    protected String isBaseProduct(final ProductModel product) {
-        if(product instanceof VariantProductModel) {
-            return String.valueOf(false);
-        }
-        return String.valueOf(true);
-    }
 }

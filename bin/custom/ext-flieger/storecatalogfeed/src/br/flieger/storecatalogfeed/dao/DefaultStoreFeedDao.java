@@ -16,7 +16,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import br.flieger.storecatalogfeed.xml.template.AllProductCatalogTemplate;
+import br.flieger.storecatalogfeed.xml.template.BaseProductCatalogTemplate;
 import br.flieger.storecatalogfeed.xml.template.DefaultProductCatalogTemplate;
 
 /**
@@ -36,7 +36,7 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
      */
     public int getCounter(CatalogVersionModel catalogVersion, String xmlTemplate) {
         String query = null;
-        if (xmlTemplate.equals(AllProductCatalogTemplate.CODE)) {
+        if (xmlTemplate.equals(BaseProductCatalogTemplate.CODE)) {
             query = getAllProductsQuery(true);
         } else if (xmlTemplate.equals(DefaultProductCatalogTemplate.CODE)) {
             query = getBaseProductsQuery(true);
@@ -58,7 +58,7 @@ public final class DefaultStoreFeedDao extends AbstractItemDao {
     public Set<ProductModel> findByPaging(CatalogVersionModel catalogVersion, String xmlTemplate,
             int beginindex, int total) {
         String query = null;
-        if (xmlTemplate.equals(AllProductCatalogTemplate.CODE)) {
+        if (xmlTemplate.equals(BaseProductCatalogTemplate.CODE)) {
             query = getAllProductsQuery(true);
         } else if (xmlTemplate.equals(DefaultProductCatalogTemplate.CODE)) {
             query = getBaseProductsQuery(true);
