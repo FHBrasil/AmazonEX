@@ -61,8 +61,7 @@ public class KpfamilyhmcManager extends GeneratedKpfamilyhmcManager {
      * like registering a jalo session listener. Each manager is created once for each
      * tenant.
      */
-    public KpfamilyhmcManager() // NOPMD
-    {
+    public KpfamilyhmcManager() { // NOPMD
         if (LOG.isDebugEnabled()) {
             LOG.debug("constructor of KpfamilyhmcManager called.");
         }
