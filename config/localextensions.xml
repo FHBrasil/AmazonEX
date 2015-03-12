@@ -70,6 +70,7 @@
 		<extension name="kpfamilystorefront" />
 		<extension name="kpfamilycockpits" />
 		<extension name="kpfamilyservices" />
+        <extension name="kpfamilyhmc" />
 
 
 		<!-- store -->
