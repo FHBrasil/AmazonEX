@@ -24,6 +24,4 @@
         <property name="typeCode" value="ProductCode" />
     </bean>
     
-    <bean id="productCodeListener" class="de.kpfamily.hmc.events.listeners.ProductCodeListener"/>
-    
 </beans>

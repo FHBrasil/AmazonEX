@@ -7,13 +7,11 @@ import java.util.Collections;
 import java.util.List;
 
 import com.google.common.base.Strings;
-import com.sun.xml.internal.ws.util.StringUtils;
 
 import de.hybris.platform.core.Registry;
-import de.hybris.platform.jalo.flexiblesearch.FlexibleSearch;
+import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
-import de.hybris.platform.servicelayer.search.SearchResult;
 import de.kpfamily.hmc.model.ProductCodeModel;
 
 /**
@@ -55,6 +53,26 @@ public class ProductCodeGenerator {
 
 
     /**
+     * 
+     * @param code
+     * @return
+     *
+     * @author jfelipe
+     */
+    private boolean existsProductCode(String code) throws AmbiguousIdentifierException {
+        FlexibleSearchService flexibleSearchService = (FlexibleSearchService) Registry
+                .getApplicationContext().getBean("flexibleSearchService");
+        FlexibleSearchQuery flexQuery = new FlexibleSearchQuery(" SELECT {p:" + ProductCodeModel.PK
+                + "} FROM {" + ProductCodeModel._TYPECODE + " AS p} WHERE {p:"
+                + ProductCodeModel.CODE + "} = ?code");
+        flexQuery.addQueryParameter("code", code);
+        ProductCodeModel result = flexibleSearchService.<ProductCodeModel> searchUnique(flexQuery);
+        return Strings.isNullOrEmpty(result.getCode()) ? Boolean.FALSE.booleanValue() : result
+                .getCode().equals(code);
+    }
+
+
+    /**
      * Searches for the maximum Product Code and adds 1.
      * Note: the product code counter should start from 100,000
      * 
@@ -67,11 +85,13 @@ public class ProductCodeGenerator {
         FlexibleSearchService flexibleSearchService = (FlexibleSearchService) Registry
                 .getApplicationContext().getBean("flexibleSearchService");
         FlexibleSearchQuery flexQuery = new FlexibleSearchQuery(" SELECT MAX({p:"
-                + ProductCodeModel.CODE +"}) FROM {"+ ProductCodeModel._TYPECODE +" AS p} ");
+                + ProductCodeModel.CODE + "}) FROM {" + ProductCodeModel._TYPECODE + " AS p} ");
         flexQuery.setResultClassList(Collections.singletonList(Integer.class));
         List<Integer> results = flexibleSearchService.<Integer> search(flexQuery).getResult();
         int maxProductCode = results == null || results.isEmpty() ? 0 : results.get(0).intValue();
-        maxProductCode += (maxProductCode < 100000) ? 100000 + 1 : 1;
+        if (!existsProductCode(String.valueOf(maxProductCode))) {
+            maxProductCode += (maxProductCode < 100000) ? 100000 + 1 : 1;
+        }
         return formatCode(maxProductCode);
     }
 
@@ -95,8 +115,8 @@ public class ProductCodeGenerator {
             throw new InvalidParameterException("Product code must have only digits: ["
                     + productCode + "]");
         }
-        // Here we concatenate the productCode twice because it has 6 digits, and we need 12 to
-        // generate a valid EAN13 number.
+        // Here we concatenate the productCode twice because it has 6 digits, and we need
+        // 12 to generate a valid EAN13 number.
         String code = productCode + productCode;
         int sum = 0;
         int factor = 3;
@@ -115,15 +135,16 @@ public class ProductCodeGenerator {
      * @author jfelipe
      */
     public boolean isValidEAN13(String ean13) {
-        if(Strings.isNullOrEmpty(ean13) || "[0-9]{13}".matches(ean13)) {
-            throw new InvalidParameterException("EAN13 must have exactly 13 digits: ["+ ean13 + "]");
+        if (Strings.isNullOrEmpty(ean13) || "[0-9]{13}".matches(ean13)) {
+            throw new InvalidParameterException("EAN13 must have exactly 13 digits: [" + ean13
+                    + "]");
         }
-        int checkDigit = Integer.parseInt(ean13.substring(ean13.length()-1));
+        int checkDigit = Integer.parseInt(ean13.substring(ean13.length() - 1));
         int sum = 0;
         int factor = 3;
         char[] ean = ean13.toCharArray();
         // validate the last digit we must not.
-        for (int i = 0; i < ean.length-1; i++) {
+        for (int i = 0; i < ean.length - 1; i++) {
             char c = ean[i];
             sum += Character.digit(c, 10) * (factor = 4 - factor);
         }
