@@ -69,12 +69,10 @@
 		<property name="mapping">
 			<map>
 				<entry key="superZoom" value="1200Wx1200H"/>
-				<entry key="zoom" value="515Wx515H"/>
-				<entry key="store" value="365Wx246H"/>
-				<entry key="product" value="300Wx300H"/>
-				<entry key="thumbnail" value="96Wx96H"/>
-				<entry key="cartIcon" value="65Wx65H"/>
-				<entry key="styleSwatch" value="30Wx30H"/>
+				<entry key="zoom" value="539Wx539H"/>
+				<entry key="product" value="190Wx190H"/>
+				<entry key="cartIcon" value="85Wx85H"/>
+				<entry key="thumbnail" value="60Wx60H"/>
 			</map>
 		</property>
 	</bean>

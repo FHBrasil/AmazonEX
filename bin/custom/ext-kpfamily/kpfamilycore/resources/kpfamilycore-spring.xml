@@ -16,7 +16,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Spring Integration -->
-	<import resource="classpath:/kpfamilycore/integration/hot-folder-common-spring.xml"/>
+	<import resource="classpath:/kpfamilycore/integration/hot-folder-store-babyartikel-spring.xml"/>
 
 	<!-- SystemSetup for the KpfamilyCore -->
 	<bean id="acceleratorCoreSystemSetup" class="de.kpfamily.core.setup.CoreSystemSetup"
@@ -59,20 +59,17 @@
 		<property name="categorySource" ref="babyartikelBrandCategorySource"/>
 	</bean>
 
-	<bean id="image515ValueProvider" parent="abstractImageValueProvider" >
-		<property name="mediaFormat" value="515Wx515H"/>
+	<bean id="image539ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="539Wx539H"/>
 	</bean>
-	<bean id="image300ValueProvider" parent="abstractImageValueProvider" >
-		<property name="mediaFormat" value="300Wx300H"/>
+	<bean id="image190ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="190Wx190H"/>
 	</bean>
-	<bean id="image96ValueProvider" parent="abstractImageValueProvider" >
-		<property name="mediaFormat" value="96Wx96H"/>
+	<bean id="image60ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="60Wx60H"/>
 	</bean>
-	<bean id="image65ValueProvider" parent="abstractImageValueProvider" >
-		<property name="mediaFormat" value="65Wx65H"/>
-	</bean>
-	<bean id="image30ValueProvider" parent="abstractImageValueProvider" >
-		<property name="mediaFormat" value="30Wx30H"/>
+	<bean id="image85ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="85Wx85H"/>
 	</bean>
 
 	<bean id="productUrlValueProvider"
