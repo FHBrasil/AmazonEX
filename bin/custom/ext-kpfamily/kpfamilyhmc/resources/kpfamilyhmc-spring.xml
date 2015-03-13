@@ -5,16 +5,21 @@
     use it only in accordance with the terms of the license agreement you entered 
     into with hybris. -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/aop
                 http://www.springframework.org/schema/aop/spring-aop.xsd">
+                
+<!--     <context:component-scan base-package="de.kpfamily.hmc"/> -->
     
     <bean id="productCodeEventInterceptor"
             class="de.kpfamily.hmc.events.interceptors.ProductCodeEventInterceptor"/>
     
-    <bean id="productCodeEventInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+    <bean id="productCodeEventInterceptorMapping"
+            class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
         <property name="interceptor" ref="productCodeEventInterceptor" />
         <property name="typeCode" value="ProductCode" />
     </bean>
