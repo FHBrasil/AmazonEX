@@ -36,7 +36,7 @@ public class ProductGalleryImagesInterceptor implements PrepareInterceptor<Produ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see de.hybris.platform.servicelayer.interceptor.PrepareInterceptor#onPrepare(java.lang.Object,
 	 * de.hybris.platform.servicelayer.interceptor.InterceptorContext)
 	 */
@@ -82,6 +82,11 @@ public class ProductGalleryImagesInterceptor implements PrepareInterceptor<Produ
 	private List<MediaContainerModel> getOldGalleryImages(final ProductModel product)
 	{
 		final ItemModelContext context = getItemModelContext(product);
+
+		if (context.isNew())
+		{
+			return null;
+		}
 
 		return context.getOriginalValue(GALLERYIMAGES);
 	}

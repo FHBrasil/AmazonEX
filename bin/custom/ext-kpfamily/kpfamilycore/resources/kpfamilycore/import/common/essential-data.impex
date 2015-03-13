@@ -48,12 +48,11 @@ INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
 ;email-attachments;email-attachments
 
 INSERT_UPDATE ConversionMediaFormat;qualifier[unique=true];conversionStrategy;conversion;inputFormat(qualifier);mimeType;
-;Babyartikel-baseImage;imageMagickMediaConversionStrategy;;;image/jpeg;
-;1200Wx1200H;imageMagickMediaConversionStrategy;-resize 1200x1200;Babyartikel-baseImage;
-;539Wx539H;imageMagickMediaConversionStrategy;-resize 539x539;Babyartikel-baseImage;
-;190Wx190H;imageMagickMediaConversionStrategy;-resize 190x190;Babyartikel-baseImage;
-;85Wx85H;imageMagickMediaConversionStrategy;-resize 85x85;Babyartikel-baseImage;
-;60Wx60H;imageMagickMediaConversionStrategy;-resize 60x60;Babyartikel-baseImage;
+;1200Wx1200H;imageMagickMediaConversionStrategy;;;image/jpeg;
+;539Wx539H;imageMagickMediaConversionStrategy;-resize 539x539;1200Wx1200H;
+;190Wx190H;imageMagickMediaConversionStrategy;-resize 190x190;1200Wx1200H;
+;85Wx85H;imageMagickMediaConversionStrategy;-resize 85x85;1200Wx1200H;
+;60Wx60H;imageMagickMediaConversionStrategy;-resize 60x60;1200Wx1200H;
 
 
 # Media formats

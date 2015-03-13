@@ -18,6 +18,8 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
+   	<!-- Hot-folder integration -->
+   	<import resource="classpath:/mediaimportation-hotfolder.xml"/>
 	
 	<!-- Strategies -->
 	<alias name="defaultFindMediaContainersStrategy" alias="findMediaContainersStrategy"/>

@@ -81,8 +81,6 @@
 		<extension name="kpfamilycockpits" />
 		<extension name="kpfamilyservices" />
 
-
-
 		<!-- flieger extensions -->
 		<extension name="pixicore" />
 		<extension name="pixiwebservices" />
