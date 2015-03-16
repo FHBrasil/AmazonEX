@@ -60,13 +60,13 @@
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/storeFinder.css" />
 
 <%-- Theme CSS files --%>
-<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/changes.css" />
+<%-- <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/changes.css" /> --%>
 
 <%--  AddOn Theme CSS files --%>
 <c:forEach items="${addOnThemeCssPaths}" var="addOnThemeCss">
     <link rel="stylesheet" type="text/css" media="all" href="${addOnThemeCss}" />
 </c:forEach>
 
-<%-- Babyartikel customs --%>
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/babyartikel-main.css" />
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/fonts/babyartikel-fonts.css">
+<%-- Theme CSS files --%>
+<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/babyartikel-main.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/fonts/babyartikel-fonts.css">
