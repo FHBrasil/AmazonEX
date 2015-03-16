@@ -61,7 +61,7 @@ public class ProductCodeEventInterceptor implements PrepareInterceptor, Validate
             final ProductCodeGenerator generator = new ProductCodeGenerator();
             if (Strings.isNullOrEmpty(productCode.getCode())) {
                 throw new InvalidProductCodeException("[Property " + ProductCodeModel._TYPECODE
-                        + "." + ProductCodeModel.CODE + " should not be null. ");
+                        + "." + ProductCodeModel.CODE + " should not be null.");
             }
             if (Strings.isNullOrEmpty(productCode.getName())) {
                 throw new InvalidProductCodeException("[Property " + ProductCodeModel._TYPECODE
