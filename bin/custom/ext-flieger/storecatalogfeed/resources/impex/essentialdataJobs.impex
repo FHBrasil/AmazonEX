@@ -1,0 +1,12 @@
+$catalog=babyartikelProductCatalog
+$version=Staged
+$catalogVersion=catalogversion(catalog(id[default=$catalog]),version[default='$version'])[unique=true,default=$catalog:$version]
+
+# Jobs
+INSERT_UPDATE ExportStoreFeedJob;code[unique=true]            ;job(code)                    ;singleExecutable;sessionLanguage(isocode);$catalogVersion;
+                                ;exportStoreFeedJobPerformable;exportStoreFeedJobPerformable;false           ;de                      ;               ;
+
+# Triggers
+INSERT_UPDATE Trigger;cronjob(code)[unique=true]   ;cronExpression;
+#% afterEach: impex.getLastImportedItem().setActivationTime(new Date());
+                     ;exportStoreFeedJobPerformable; 0 2 * * * ?  ;

@@ -51,6 +51,6 @@ public class PixiapiStandalone
 		System.out.println("User: " + jaloSession.getUser()); //NOPMD
 		Utilities.printAppInfo();
 
-		RedeployUtilities.shutdown();
-	}
+        RedeployUtilities.shutdown();
+    }
 }
