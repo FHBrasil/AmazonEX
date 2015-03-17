@@ -86,6 +86,7 @@
 		<extension name="pixicore" />
 		<extension name="pixiwebservices" />
 		<extension name="storecatalogfeed" />
+        <extension name="pixiapi" />
 
 		<!-- ext-accelerator -->
 		<extension name="acceleratorservices" />
