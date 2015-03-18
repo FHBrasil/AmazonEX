@@ -21,8 +21,8 @@ public interface PixiAPIExporter {
      * @param targetName
      *            The name of the target file
      * @return
-     *          File
+     *         File
      * @author jfelipe
      */
-    public File exportToFile(Node source, String targetName);
+    public File exportData(Node source, String targetName);
 }

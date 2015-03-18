@@ -7,15 +7,8 @@
 <items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="items.xsd">
     <itemtypes>
-        <itemtype code="PixiGetOrdersJob" autocreate="true" generate="true" extends="CronJob"
-                jaloclass="com.pixi.api.job.PixiGetOrdersJob">
-            <attributes>
-                <attribute qualifier="catalogVersion" type="CatalogVersion">
-                    <modifiers read="true" write="false" search="true" optional="false"
-                            initial="true" />
-                    <persistence type="property" />
-                </attribute>
-            </attributes>
+        <itemtype code="exportVedesOrdersToCsvJob" autocreate="true" generate="true" extends="CronJob"
+                jaloclass="com.pixi.api.job.ExportVedesOrdersToCsvJob">
         </itemtype>
     </itemtypes>
 </items>

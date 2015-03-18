@@ -7,39 +7,21 @@ package com.pixi.api.core;
  * 
  *
  */
-public class PixiParameter {
+public enum PixiParameter {
     
-    public static final String LOCATION_ID = "LocationId";
-    public static final String SHOW_ORDER = "ShowOrd";
+    LOCATION_ID         ("LocationId")
+  , SHOW_ORDER          ("ShowOrd")
+  , OPEN_ORDER_LINES    ("OpenOrderlines")
+  , S_ORDER_REFERENCE   ("SOrderRef")
+  ;
 
-    private final String name;
-    private final Object value;
-
-    /**
-     * 
-     * @param name
-     * @param value
-     */
-    public PixiParameter(String name, Object value) {
-        super();
-        this.name = name;
+    private final String value;
+    
+    private PixiParameter(String value) {
         this.value = value;
     }
 
-    
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
+    public String getValue() {
+        return this.value;
     }
-
-    
-    /**
-     * @return the value
-     */
-    public Object getValue() {
-        return value;
-    }
-
 }

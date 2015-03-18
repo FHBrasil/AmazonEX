@@ -4,10 +4,10 @@ $catalogVersion=catalogversion(catalog(id[default=$catalog]),version[default='$v
 
 
 # Jobs
-INSERT_UPDATE PixiGetOrdersJob;code[unique=true]          ;job(code)                  ;singleExecutable;sessionLanguage(isocode);$catalogVersion;
-                              ;pixiGetOrdersJobPerformable;pixiGetOrdersJobPerformable;false           ;de                      ;               ;
+INSERT_UPDATE exportVedesOrdersToCsvJob;code[unique=true]                   ;job(code)                           ;singleExecutable;sessionLanguage(isocode);
+                                       ;exportVedesOrdersToCsvJobPerformable;exportVedesOrdersToCsvJobPerformable;false           ;de                      ;
 
 # Triggers
 INSERT_UPDATE Trigger;cronjob(code)[unique=true] ;cronExpression;
 #% afterEach: impex.getLastImportedItem().setActivationTime(new Date());
-                     ;pixiGetOrdersJobPerformable; 0 2 * * * ?  ;
+                     ;exportVedesOrdersToCsvJobPerformable; 0 2 * * * ?  ;
