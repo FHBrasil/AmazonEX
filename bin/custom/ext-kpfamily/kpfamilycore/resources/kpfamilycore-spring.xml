@@ -371,4 +371,10 @@
 	<bean id="productPackageTagCodeHandler" class="de.kpfamily.core.model.ProductPackageDynamicTagCode" />
 	<bean id="productPackageBulkyHandler" class="de.kpfamily.core.model.ProductPackageDynamicBulky" />
 	
+    
+    <!-- DAOs -->
+<!--     <bean id="defaultProductSupplierDao" class="com.pixi.core.daos.impl.DefaultProductSupplierDao"> -->
+<!--         <constructor-arg value="ProductSupplier"/> -->
+<!--     </bean> -->
+    
 </beans>

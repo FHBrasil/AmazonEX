@@ -14,10 +14,10 @@ import org.w3c.dom.Node;
 import com.pixi.api.exporters.PixiAPIExporter;
 import com.pixi.api.ftp.FtpConnector;
 import com.pixi.api.importers.PixiApiImporter;
+import com.pixi.api.model.ExportVedesOrdersToCsvCronJobModel;
 
 import de.hybris.platform.cronjob.enums.CronJobResult;
 import de.hybris.platform.cronjob.enums.CronJobStatus;
-import de.hybris.platform.cronjob.model.CronJobModel;
 import de.hybris.platform.servicelayer.cronjob.AbstractJobPerformable;
 import de.hybris.platform.servicelayer.cronjob.PerformResult;
 
@@ -25,7 +25,8 @@ import de.hybris.platform.servicelayer.cronjob.PerformResult;
  * @author jfelipe
  *
  */
-public class ExportVedesOrdersToCsvJobPerformable extends AbstractJobPerformable {
+public class ExportVedesOrdersToCsvJobPerformable extends
+        AbstractJobPerformable<ExportVedesOrdersToCsvCronJobModel> {
 
     private static final Logger LOG = Logger.getLogger(ExportVedesOrdersToCsvJobPerformable.class
             .getName());
@@ -38,7 +39,7 @@ public class ExportVedesOrdersToCsvJobPerformable extends AbstractJobPerformable
      * 
      */
     @Override
-    public PerformResult perform(CronJobModel cronJob) {
+    public PerformResult perform(ExportVedesOrdersToCsvCronJobModel cronJob) {
         try {
             LOG.info("Initiated.");
             Node sOrderTags = getsOrderTagPixiApiImporter().importXml();
