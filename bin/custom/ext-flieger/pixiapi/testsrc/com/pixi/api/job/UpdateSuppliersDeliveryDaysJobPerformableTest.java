@@ -3,10 +3,9 @@
  */
 package com.pixi.api.job;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import com.pixi.api.importers.PixiApiImporter;
 import com.pixi.api.importers.impl.SupplierDeliveryDaysPixiApiImporter;

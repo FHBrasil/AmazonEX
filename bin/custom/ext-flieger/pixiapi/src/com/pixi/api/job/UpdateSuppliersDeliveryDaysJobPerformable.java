@@ -3,7 +3,6 @@
  */
 package com.pixi.api.job;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
