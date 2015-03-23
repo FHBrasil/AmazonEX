@@ -7,20 +7,25 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" height="125px" width="35%" rowspan="2" class="structureViewSection">
-					<cockpit code="SiteLogo" />
-				</td>
 				<td colspan="2" class="structureViewSection">
 					<cockpit code="HeaderLinks" />
-					<cockpit code="SearchBox" />
+				</td>
+				<td height="125px" width="20%" rowspan="2" class="structureViewSection">
+					<cockpit code="SiteLogo" />
+				</td>
+				<td width="20%" rowspan="2" class="structureViewSection">
+					<cockpit code="wishlist" />
 				</td>
 				<td width="20%" rowspan="2" class="structureViewSection">
 					<cockpit code="MiniCart" />
 				</td>
 			</tr>
 			<tr>
-				<td colspan="5" class="structureViewSection">
+				<td colspan="3" class="structureViewSection">
 					<cockpit code="NavigationBar" />
+				</td>
+				<td colspan="2" width="40%" class="structureViewSection">
+					<cockpit code="SearchBox" />
 				</td>
 			</tr>
 			<tr>
