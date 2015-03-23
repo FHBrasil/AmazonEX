@@ -3,6 +3,7 @@
  */
 package de.kpfamily.core.dao.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
@@ -36,7 +37,9 @@ public class DefaultProductSupplierDao extends DefaultGenericDao<ProductSupplier
         final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query);
         final SearchResult<ProductSupplierModel> search = getFlexibleSearchService().search(
                 searchQuery);
-        return search.getResult();
+        List<ProductSupplierModel> productSuppliers = search.getResult();
+        return productSuppliers != null ? productSuppliers : Collections
+                .<ProductSupplierModel> emptyList();
     }
 
 
@@ -71,6 +74,7 @@ public class DefaultProductSupplierDao extends DefaultGenericDao<ProductSupplier
         final SearchResult<ProductSupplierModel> search = getFlexibleSearchService().search(
                 searchQuery);
         List<ProductSupplierModel> productSuppliers = search.getResult();
-        return productSuppliers;
+        return productSuppliers != null ? productSuppliers : Collections
+                .<ProductSupplierModel> emptyList();
     }
 }

@@ -26,7 +26,7 @@ public interface ProductSupplierService {
      *
      * @author jfelipe
      */
-    ProductSupplierModel findUniqueByCode(String code);
+    ProductSupplierModel findByCode(String code);
 
 
     /**

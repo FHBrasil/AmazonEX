@@ -42,5 +42,5 @@ public interface PixiApiImporter {
      *
      * @author jfelipe
      */
-    int importInteger(String value) throws SOAPException, MalformedURLException;
+    int importInteger(String value);
 }

@@ -373,8 +373,13 @@
 	
     
     <!-- DAOs -->
-<!--     <bean id="defaultProductSupplierDao" class="com.pixi.core.daos.impl.DefaultProductSupplierDao"> -->
-<!--         <constructor-arg value="ProductSupplier"/> -->
-<!--     </bean> -->
+    <bean id="defaultProductSupplierDao" class="de.kpfamily.core.dao.impl.DefaultProductSupplierDao">
+        <constructor-arg value="ProductSupplier"/>
+    </bean>
+    
+    
+    <!-- Services -->
+    <bean id="defaultProductSupplierService"
+            class="de.kpfamily.core.service.impl.DefaultProductSupplierService"/>
     
 </beans>

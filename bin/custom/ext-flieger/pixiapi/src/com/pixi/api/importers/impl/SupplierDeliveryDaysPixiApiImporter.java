@@ -22,9 +22,9 @@ import com.pixi.api.importers.PixiApiImporter;
  * @author jfelipe
  *
  */
-public class DefaultDeliveryDaysPixiApiImporter implements PixiApiImporter {
+public class SupplierDeliveryDaysPixiApiImporter implements PixiApiImporter {
 
-    private static final Logger LOG = Logger.getLogger(DefaultDeliveryDaysPixiApiImporter.class
+    private static final Logger LOG = Logger.getLogger(SupplierDeliveryDaysPixiApiImporter.class
             .getName());
     private PixiSOAPAPI defaultPixiSoapApi;
 
@@ -44,8 +44,7 @@ public class DefaultDeliveryDaysPixiApiImporter implements PixiApiImporter {
      * 
      */
     @Override
-    public int importInteger(String value) throws SOAPException, MalformedURLException,
-            InvalidParameterException {
+    public int importInteger(String value) {
         if (value == null) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
@@ -73,16 +72,26 @@ public class DefaultDeliveryDaysPixiApiImporter implements PixiApiImporter {
      *
      * @author jfelipe
      */
-    private int importDefaultDeliveryDays(String supplierNumber) throws SOAPException,
-            MalformedURLException {
+    private int importDefaultDeliveryDays(String supplierNumber) {
         List<SimpleEntry<String, String>> functionParameters = new ArrayList<SimpleEntry<String, String>>();
         SimpleEntry parameter = new SimpleEntry(PixiParameter.SUPPLIER_NUMBER, supplierNumber);
         functionParameters.add(parameter);
-        SOAPMessage request = getDefaultPixiSoapApi().buildMessage(
-                PixiapiConstants.PIXIAPI_FUNCTION_GET_SUPPLIERS, functionParameters);
-        SOAPMessage response = getDefaultPixiSoapApi().sendPixiWebServiceRequest(request);
-        Node responseXml = response.getSOAPBody()
-                .getElementsByTagName(PixiapiConstants.PIXIAPI_RESPONSE_TAG_SQLROWSET1).item(0);
+        SOAPMessage request = null;
+        SOAPMessage response = null;
+        Node responseXml = null;
+        try {
+            request = getDefaultPixiSoapApi().buildMessage(
+                    PixiapiConstants.PIXIAPI_FUNCTION_GET_SUPPLIERS, functionParameters);
+            response = getDefaultPixiSoapApi().sendPixiWebServiceRequest(request);
+            responseXml = response.getSOAPBody()
+                    .getElementsByTagName(PixiapiConstants.PIXIAPI_RESPONSE_TAG_SQLROWSET1).item(0);
+        } catch (MalformedURLException me) {
+            LOG.error("Mal formed URL calling Pixi API function: "
+                    + PixiapiConstants.PIXIAPI_FUNCTION_GET_SUPPLIERS, me);
+        } catch (SOAPException se) {
+            LOG.error("Error requesting Pixi API function: "
+                    + PixiapiConstants.PIXIAPI_FUNCTION_GET_SUPPLIERS, se);
+        }
         if (responseXml != null) {
             NodeList rowTags = responseXml.getChildNodes();
             for (int i = 0; i < rowTags.getLength(); i++) {

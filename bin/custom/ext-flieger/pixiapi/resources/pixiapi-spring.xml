@@ -29,7 +29,7 @@
         <property name="defaultPixiSoapApi" ref="defaultPixiSoapApi" />
     </bean>
     
-    <bean id="defaultDeliveryDaysPixiApiImporter" class="com.pixi.api.importers.impl.DefaultDeliveryDaysPixiApiImporter">
+    <bean id="supplierDeliveryDaysPixiApiImporter" class="com.pixi.api.importers.impl.SupplierDeliveryDaysPixiApiImporter">
         <property name="defaultPixiSoapApi" ref="defaultPixiSoapApi" />
     </bean>
 
