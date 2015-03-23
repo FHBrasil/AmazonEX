@@ -36,7 +36,7 @@ public class FtpConnector {
 
 
     /**
-     * Stores the given file in its respective profile/ftp/directory.
+     * Stores the given file in its respective profile (ftp server and directory).
      * 
      * @param file
      *            The file to be stored
@@ -48,7 +48,7 @@ public class FtpConnector {
      * @author jfelipe
      */
     public boolean storeFile(File file) {
-        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXI_API_USE_DUMMY_FTP))
+        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXIAPI_USE_DUMMY_FTP))
                 .booleanValue()) {
             LOG.info("Using dummy FTP Address: uploading file " + file.getName());
             return true;
@@ -92,7 +92,7 @@ public class FtpConnector {
      * @author jfelipe
      */
     private boolean connect(FtpProfile profile) {
-        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXI_API_USE_DUMMY_FTP))
+        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXIAPI_USE_DUMMY_FTP))
                 .booleanValue()) {
             LOG.info("Using dummy FTP Address: connected");
             return true;
@@ -125,7 +125,7 @@ public class FtpConnector {
      * @author jfelipe
      */
     private void disconnect() {
-        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXI_API_USE_DUMMY_FTP))
+        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXIAPI_USE_DUMMY_FTP))
                 .booleanValue()) {
             LOG.info("Using dummy FTP Address: disconnected");
             return;
@@ -141,7 +141,7 @@ public class FtpConnector {
 
 
     /**
-     * Lists all the file profiles/ftp/dir where it needs to be stored.
+     * Lists all the file profiles (ftp servers and directories) where it needs to be stored.
      * 
      * @param file
      *            The file which will choose which profile to load
@@ -150,37 +150,56 @@ public class FtpConnector {
      * @author jfelipe
      */
     private List<FtpProfile> getFTPProfileChain(final File file) {
-        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXI_API_USE_DUMMY_FTP))
+        if (Boolean.valueOf(Config.getParameter(PixiapiConstants.PIXIAPI_USE_DUMMY_FTP))
                 .booleanValue()) {
             LOG.info("Using dummy FTP Address: creating FTP profile chain...");
             return Collections.EMPTY_LIST;
         }
         List<FtpProfile> profiles = new ArrayList<FtpProfile>();
-        // TODO: desenrolar essa parada aqui...
-        if (file.getName().equalsIgnoreCase(PixiapiConstants.PIXI_API_FTP_FILE_VEDE)) {
-            FtpProfile profile = new FtpProfile();
-            profile.setFtpAddress(Config
-                    .getParameter(PixiapiConstants.PIXI_API_FTP_PROFILE_NRZ_ADDRESS));
-            profile.setFtpUserName(Config
-                    .getParameter(PixiapiConstants.PIXI_API_FTP_PROFILE_NRZ_USERNAME));
-            profile.setFtpUserPassword(Config
-                    .getParameter(PixiapiConstants.PIXI_API_FTP_PROFILE_NRZ_PASSWORD));
-            profile.setFolders(new String[] { PixiapiConstants.PIXI_API_FTP_FOLDER_CUSTOMERS,
-                    PixiapiConstants.PIXI_API_FTP_FOLDER_380856090,
-                    PixiapiConstants.PIXI_API_FTP_FOLDER_IN });
-            profiles.add(profile);
-            FtpProfile profile2 = new FtpProfile();
-            profile2.setFtpAddress(Config
-                    .getParameter(PixiapiConstants.PIXI_API_FTP_PROFILE_SERVER5_ADDRESS));
-            profile2.setFtpUserName(Config
-                    .getParameter(PixiapiConstants.PIXI_API_FTP_PROFILE_SERVER5_USERNAME));
-            profile2.setFtpUserPassword(Config
-                    .getParameter(PixiapiConstants.PIXI_API_FTP_PROFILE_SERVER5_PASSWORD));
-            profile2.setFolders(new String[] {
-                    Config.getParameter(PixiapiConstants.PIXI_API_FTP_FOLDER_LIFERANT),
-                    Config.getParameter(PixiapiConstants.PIXI_API_FTP_FOLDER_VEDES) });
-            profiles.add(profile2);
+        if (file.getName().equalsIgnoreCase(PixiapiConstants.PIXIAPI_FTP_FILE_VEDE)) {
+            profiles.add(getProfileNrz());
+            profiles.add(getProfileServer5());
         }
         return profiles;
+    }
+
+
+    /**
+     * @return
+     *         The profile for NRZ host
+     * @author jfelipe
+     */
+    private FtpProfile getProfileNrz() {
+        FtpProfile profile = new FtpProfile();
+        profile.setFtpAddress(Config
+                .getParameter(PixiapiConstants.PIXIAPI_FTP_PROFILE_NRZ_ADDRESS));
+        profile.setFtpUserName(Config
+                .getParameter(PixiapiConstants.PIXIAPI_FTP_PROFILE_NRZ_USERNAME));
+        profile.setFtpUserPassword(Config
+                .getParameter(PixiapiConstants.PIXIAPI_FTP_PROFILE_NRZ_PASSWORD));
+        profile.setFolders(new String[] { PixiapiConstants.PIXIAPI_FTP_FOLDER_CUSTOMERS,
+                PixiapiConstants.PIXIAPI_FTP_FOLDER_380856090,
+                PixiapiConstants.PIXIAPI_FTP_FOLDER_IN });
+        return profile;
+    }
+
+
+    /**
+     * @return
+     *         The profile for server5 host
+     * @author jfelipe
+     */
+    private FtpProfile getProfileServer5() {
+        FtpProfile profile = new FtpProfile();
+        profile.setFtpAddress(Config
+                .getParameter(PixiapiConstants.PIXIAPI_FTP_PROFILE_SERVER5_ADDRESS));
+        profile.setFtpUserName(Config
+                .getParameter(PixiapiConstants.PIXIAPI_FTP_PROFILE_SERVER5_USERNAME));
+        profile.setFtpUserPassword(Config
+                .getParameter(PixiapiConstants.PIXIAPI_FTP_PROFILE_SERVER5_PASSWORD));
+        profile.setFolders(new String[] {
+                Config.getParameter(PixiapiConstants.PIXIAPI_FTP_FOLDER_LIFERANT),
+                Config.getParameter(PixiapiConstants.PIXIAPI_FTP_FOLDER_VEDES) });
+        return profile;
     }
 }

@@ -7,9 +7,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -146,14 +144,13 @@ public class VedeSupplierSOrderLinesCsvPixiApiExporterTest {
     @Test
     public void exportDataTest() {
         try {
-            when(sOrderLineTagPixiApiImporter.importFromPixiApi(any(String.class))).thenReturn(
+            when(sOrderLineTagPixiApiImporter.importXml(any(String.class))).thenReturn(
                     xmlSOrderLines);
             String filename = "file-test.csv";
-            File output = fixture.exportData(xmlSOrderKeys, filename);;
+            File output = fixture.exportData(xmlSOrderKeys, filename);
             //
             Assert.assertTrue("OutputStream should not de null", output != null);
-            Assert.assertTrue("Output should have something",
-                    output.toString().contains("123456"));
+            Assert.assertTrue("Output should have something", output.toString().contains("123456"));
         } catch (MalformedURLException | SOAPException e) {
             Assert.assertTrue("Should not have thrown an Exception: " + e.getMessage(), false);
         }

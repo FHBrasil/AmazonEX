@@ -11,7 +11,6 @@ import javax.xml.soap.SOAPException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 
-import com.pixi.api.constants.PixiapiConstants;
 import com.pixi.api.exporters.PixiAPIExporter;
 import com.pixi.api.ftp.FtpConnector;
 import com.pixi.api.importers.PixiApiImporter;
@@ -42,7 +41,7 @@ public class ExportVedesOrdersToCsvJobPerformable extends AbstractJobPerformable
     public PerformResult perform(CronJobModel cronJob) {
         try {
             LOG.info("Initiated.");
-            Node sOrderTags = getsOrderTagPixiApiImporter().importFromPixiApi();
+            Node sOrderTags = getsOrderTagPixiApiImporter().importXml();
             String filename = null; // PixiapiConstants.PIXI_API_FTP_FILE_VEDE + ".csv";
             File file = getVedeSupplierSOrderLinesCsvPixiAPIExporter().exportData(sOrderTags,
                     filename);

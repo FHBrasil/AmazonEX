@@ -1,4 +1,4 @@
-package com.pixi.api.job;
+package com.pixi.api.jalo;
 
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.JaloBusinessException;
@@ -6,10 +6,10 @@ import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.type.ComposedType;
 import org.apache.log4j.Logger;
 
-public class ExportVedesOrdersToCsvJob extends GeneratedExportVedesOrdersToCsvJob
+public class UpdateSupplierDeliveryDaysCronJob extends GeneratedUpdateSupplierDeliveryDaysCronJob
 {
 	@SuppressWarnings("unused")
-	private final static Logger LOG = Logger.getLogger( ExportVedesOrdersToCsvJob.class.getName() );
+	private final static Logger LOG = Logger.getLogger( UpdateSupplierDeliveryDaysCronJob.class.getName() );
 	
 	@Override
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException

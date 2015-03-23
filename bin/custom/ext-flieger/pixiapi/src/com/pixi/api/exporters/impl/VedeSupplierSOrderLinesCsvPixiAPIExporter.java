@@ -6,7 +6,6 @@ package com.pixi.api.exporters.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.MalformedURLException;
@@ -206,7 +205,7 @@ public class VedeSupplierSOrderLinesCsvPixiAPIExporter implements PixiAPIExporte
         List<Node> vedeSOrderLineTags = new ArrayList<Node>();
         for (String sOrderKey : keysToImport) {
             try {
-                Node sOrderLineTag = getsOrderLineTagPixiApiImporter().importFromPixiApi(sOrderKey);
+                Node sOrderLineTag = getsOrderLineTagPixiApiImporter().importXml(sOrderKey);
                 // Can't use .addAll() in this case... :/
                 if (sOrderLineTag != null) {
                     NodeList childNodes = sOrderLineTag.getChildNodes();

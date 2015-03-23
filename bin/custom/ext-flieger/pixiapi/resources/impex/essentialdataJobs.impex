@@ -4,8 +4,8 @@ $catalogVersion=catalogversion(catalog(id[default=$catalog]),version[default='$v
 
 
 # Jobs
-INSERT_UPDATE exportVedesOrdersToCsvJob;code[unique=true]                   ;job(code)                           ;singleExecutable;sessionLanguage(isocode);
-                                       ;exportVedesOrdersToCsvJobPerformable;exportVedesOrdersToCsvJobPerformable;false           ;de                      ;
+INSERT_UPDATE exportVedesOrdersToCsvCronJob;code[unique=true]            ;job(code)[forceWrite=true]          ;singleExecutable;sessionLanguage(isocode);
+                                           ;exportVedesOrdersToCsvCronJob;exportVedesOrdersToCsvJobPerformable;false           ;de                      ;
 
 # Triggers
 INSERT_UPDATE Trigger;cronjob(code)[unique=true] ;cronExpression;
