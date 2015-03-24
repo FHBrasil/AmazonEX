@@ -33,7 +33,7 @@ public class DefaultProductSupplierDao extends DefaultGenericDao<ProductSupplier
      */
     @Override
     public List<ProductSupplierModel> getAllProductSuppliers() {
-        final String query = "SELECT DISTINCT {p:code} " + " FROM {ProductSupplier as p} ";
+        final String query = "SELECT DISTINCT {p:pk} " + " FROM {ProductSupplier as p} ";
         final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query);
         final SearchResult<ProductSupplierModel> search = getFlexibleSearchService().search(
                 searchQuery);
@@ -49,7 +49,7 @@ public class DefaultProductSupplierDao extends DefaultGenericDao<ProductSupplier
     @Override
     public ProductSupplierModel getProductSupplierByCode(String code)
             throws AmbiguousIdentifierException {
-        final String query = "SELECT DISTINCT {p:code} " + " FROM {ProductSupplier as p} ";
+        final String query = "SELECT DISTINCT {p:pk} " + " FROM {ProductSupplier as p} ";
         final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query);
         final SearchResult<ProductSupplierModel> search = getFlexibleSearchService().search(
                 searchQuery);
@@ -67,7 +67,7 @@ public class DefaultProductSupplierDao extends DefaultGenericDao<ProductSupplier
      */
     @Override
     public List<ProductSupplierModel> getProductSuppliersByName(String name) {
-        final String query = "SELECT DISTINCT {p:code} " + " FROM {ProductSupplier as p} "
+        final String query = "SELECT DISTINCT {p:pk} " + " FROM {ProductSupplier as p} "
                 + " WHERE {p:name} LIKE '%?name%' ";
         final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query);
         searchQuery.addQueryParameter("name", name);
