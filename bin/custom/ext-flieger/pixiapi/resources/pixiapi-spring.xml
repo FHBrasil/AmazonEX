@@ -29,13 +29,20 @@
         <property name="defaultPixiSoapApi" ref="defaultPixiSoapApi" />
     </bean>
     
-    <bean id="supplierDeliveryDaysPixiApiImporter" class="com.pixi.api.importers.impl.SupplierDeliveryDaysPixiApiImporter">
+    <bean id="supplierDeliveryDaysPixiApiImporter"
+            class="com.pixi.api.importers.impl.SupplierDeliveryDaysPixiApiImporter">
         <property name="defaultPixiSoapApi" ref="defaultPixiSoapApi" />
     </bean>
 
     <!-- Exporters -->
     <bean id="vedeSupplierSOrderLinesCsvPixiAPIExporter" class="com.pixi.api.exporters.impl.VedeSupplierSOrderLinesCsvPixiAPIExporter">
         <property name="sOrderLineTagPixiApiImporter" ref="sOrderLineTagPixiApiImporter" />
+    </bean>
+    <bean id="updateSuppliersDeliveryDaysJobPerformable"
+            class="com.pixi.api.job.UpdateSuppliersDeliveryDaysJobPerformable"
+            parent="abstractJobPerformable">
+        <property name="defaultProductSupplierService" ref="defaultProductSupplierService"/>
+        <property name="supplierDeliveryDaysPixiApiImporter" ref="supplierDeliveryDaysPixiApiImporter"/>
     </bean>
 
     

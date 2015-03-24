@@ -51,7 +51,7 @@ public class SOrderLineTagPixiApiImporter implements PixiApiImporter {
      * 
      */
     @Override
-    public int importInteger(String value) throws SOAPException, MalformedURLException {
+    public int importInteger(String value) {
         // Not used
         return 0;
     }

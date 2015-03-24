@@ -32,11 +32,11 @@ public class UpdateSuppliersDeliveryDaysJobPerformable extends
     private static final Logger LOG = Logger
             .getLogger(UpdateSuppliersDeliveryDaysJobPerformable.class.getName());
     @Resource
-    ProductSupplierService defaultProductSupplierService;
+    private ProductSupplierService defaultProductSupplierService;
     @Resource
-    PixiApiImporter supplierDeliveryDaysPixiApiImporter;
+    private PixiApiImporter supplierDeliveryDaysPixiApiImporter;
     @Resource
-    ModelService defaultModelService;
+    private ModelService defaultModelService;
 
 
     /**
@@ -62,5 +62,58 @@ public class UpdateSuppliersDeliveryDaysJobPerformable extends
             }
         }
         return new PerformResult(CronJobResult.SUCCESS, CronJobStatus.FINISHED);
+    }
+
+
+    /**
+     * @return the defaultProductSupplierService
+     */
+    public ProductSupplierService getDefaultProductSupplierService() {
+        return defaultProductSupplierService;
+    }
+
+
+    /**
+     * @param defaultProductSupplierService
+     *            the defaultProductSupplierService to set
+     */
+    public void setDefaultProductSupplierService(
+            ProductSupplierService defaultProductSupplierService) {
+        this.defaultProductSupplierService = defaultProductSupplierService;
+    }
+
+
+    /**
+     * @return the supplierDeliveryDaysPixiApiImporter
+     */
+    public PixiApiImporter getSupplierDeliveryDaysPixiApiImporter() {
+        return supplierDeliveryDaysPixiApiImporter;
+    }
+
+
+    /**
+     * @param supplierDeliveryDaysPixiApiImporter
+     *            the supplierDeliveryDaysPixiApiImporter to set
+     */
+    public void setSupplierDeliveryDaysPixiApiImporter(
+            PixiApiImporter supplierDeliveryDaysPixiApiImporter) {
+        this.supplierDeliveryDaysPixiApiImporter = supplierDeliveryDaysPixiApiImporter;
+    }
+
+
+    /**
+     * @return the defaultModelService
+     */
+    public ModelService getDefaultModelService() {
+        return defaultModelService;
+    }
+
+
+    /**
+     * @param defaultModelService
+     *            the defaultModelService to set
+     */
+    public void setDefaultModelService(ModelService defaultModelService) {
+        this.defaultModelService = defaultModelService;
     }
 }
