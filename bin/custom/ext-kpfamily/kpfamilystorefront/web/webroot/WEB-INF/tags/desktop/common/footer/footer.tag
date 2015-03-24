@@ -7,4 +7,4 @@
 	<cms:component component="${feature}"/>
 </cms:pageSlot>
 
-<div>this tis the footer div</div>
+<div>this is the footer div</div>
