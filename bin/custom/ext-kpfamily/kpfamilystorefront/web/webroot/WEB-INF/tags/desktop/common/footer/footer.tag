@@ -6,3 +6,5 @@
 <cms:pageSlot position="Footer" var="feature" element="div" class="footer">
 	<cms:component component="${feature}"/>
 </cms:pageSlot>
+
+<div>this tis the footer div</div>
