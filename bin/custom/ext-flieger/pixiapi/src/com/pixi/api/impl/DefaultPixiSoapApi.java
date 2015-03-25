@@ -83,8 +83,8 @@ public class DefaultPixiSoapApi implements PixiSOAPAPI {
                 properties.getNameSpace());
         SOAPBodyElement messageFunction = messageBody.addBodyElement(bodyName);
         for (SimpleEntry<String, String> parameter : functionParameters) {
-            Name attributeName = soapFactory.createName(parameter.getKey(),
-                    properties.getPrefix(), properties.getNameSpace());
+            Name attributeName = soapFactory.createName(parameter.getKey(), properties.getPrefix(),
+                    properties.getNameSpace());
             SOAPElement requestFunctionAttribute = messageFunction.addChildElement(attributeName);
             Object attributeValue = parameter.getValue();
             if (attributeValue != null) {

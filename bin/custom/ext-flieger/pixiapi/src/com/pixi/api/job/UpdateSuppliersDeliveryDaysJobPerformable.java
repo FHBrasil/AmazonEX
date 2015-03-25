@@ -51,9 +51,8 @@ public class UpdateSuppliersDeliveryDaysJobPerformable extends
                     .getCode());
             if (deliveryDays > 0) {
                 try {
-                    // FIXME: update the productSupplier delivery Days
-                    // productSupplier.setDropShippingDeliveryDays(deliveryDays);
-                    // defaultModelService.save(productSupplier);
+                     productSupplier.setDropShippingDeliveryDays(deliveryDays);
+                     defaultModelService.save(productSupplier);
                     LOG.info("ProductSupplier updated. DeliveryDays set to: "
                             + productSupplier.getDropShippingDeliveryDays());
                 } catch (ModelSavingException me) {

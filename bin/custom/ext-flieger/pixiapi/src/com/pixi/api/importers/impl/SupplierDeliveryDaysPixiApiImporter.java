@@ -60,9 +60,16 @@ public class SupplierDeliveryDaysPixiApiImporter implements PixiApiImporter {
      * {@code
      * <SqlRowSet1>
      *   <row>
-     *     <someTag>
-     *       <DefaultDeliveryDays> value </DefaultDeliveryDays>
-     *     </someTag>
+     *     <SupplNr>SUPPLIER_CODE</SupplNr>
+     *     <SupplName>SUPPLIER_NAME</SupplName>
+     *     <DefaultDeliveryDays>DEFAULT_DELIVERY_DAYS</DefaultDeliveryDays>
+     *     <SupplFaxNR>SUPPLIER_FAX_NUMBER</SupplFaxNR>
+     *     <CustNR>SUPPLIER_DUNNO</CustNR>
+     *     <eMail>SUPPLIER_EMAIL</eMail>
+     *     <SupAddress>SUPPLIER_ADDRESS</SupAddress>
+     *     <SupZip>SUPPLIER_POSTAL_CODE</SupZip>
+     *     <SupPhone1>SUPPLIER_PHONE_NUMBER</SupPhone1>
+     *     <CanDoDirectFulfillment>SUPPLIER_DUNNO_2</CanDoDirectFulfillment>
      *   </row>
      * </SqlRowSet1>
      * }
@@ -74,7 +81,8 @@ public class SupplierDeliveryDaysPixiApiImporter implements PixiApiImporter {
      */
     private int importDefaultDeliveryDays(String supplierNumber) {
         List<SimpleEntry<String, String>> functionParameters = new ArrayList<SimpleEntry<String, String>>();
-        SimpleEntry parameter = new SimpleEntry(PixiParameter.SUPPLIER_NUMBER, supplierNumber);
+        SimpleEntry parameter = new SimpleEntry(PixiParameter.SUPPLIER_NUMBER.getValue(),
+                supplierNumber);
         functionParameters.add(parameter);
         SOAPMessage request = null;
         SOAPMessage response = null;
@@ -95,16 +103,14 @@ public class SupplierDeliveryDaysPixiApiImporter implements PixiApiImporter {
         if (responseXml != null) {
             NodeList rowTags = responseXml.getChildNodes();
             for (int i = 0; i < rowTags.getLength(); i++) {
-                NodeList someTag = rowTags.item(i).getChildNodes();
-                for (int j = 0; j < someTag.getLength(); j++) {
-                    Node deliveryDaysTag = someTag.item(j);
+                NodeList row = rowTags.item(i).getChildNodes();
+                for (int j = 0; j < row.getLength(); j++) {
+                    Node deliveryDaysTag = row.item(j);
                     String deliveryDaysTagName = deliveryDaysTag.getNodeName();
                     if (PixiapiConstants.PIXIAPI_RESPONSE_TAG_DEFAULT_DELIVERY_DAYS
                             .equalsIgnoreCase(deliveryDaysTagName)) {
-                        if (deliveryDaysTag.getLastChild() != null) {
-                            return Integer.parseInt(deliveryDaysTag.getFirstChild()
-                                    .getTextContent().trim());
-                        }
+                        return deliveryDaysTag.getTextContent() != null ? Integer
+                                .parseInt(deliveryDaysTag.getTextContent()) : -1;
                     }
                 }
             }
