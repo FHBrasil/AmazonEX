@@ -16,28 +16,17 @@ import org.w3c.dom.NodeList;
 import com.pixi.api.PixiSOAPAPI;
 import com.pixi.api.constants.PixiapiConstants;
 import com.pixi.api.core.PixiParameter;
-import com.pixi.api.importers.PixiApiImporter;
+import com.pixi.api.importers.AbstractPixiApiImporter;
 
 /**
  * @author jfelipe
  *
  */
-public class SupplierDeliveryDaysPixiApiImporter implements PixiApiImporter {
+public class SupplierDeliveryDaysPixiApiImporter extends AbstractPixiApiImporter {
 
     private static final Logger LOG = Logger.getLogger(SupplierDeliveryDaysPixiApiImporter.class
             .getName());
     private PixiSOAPAPI defaultPixiSoapApi;
-
-
-    /**
-     * Not used in this case
-     * 
-     */
-    @Override
-    public Node importXml(String... supplierNumbers) throws SOAPException, MalformedURLException {
-        // Not used
-        return null;
-    }
 
 
     /**
@@ -116,22 +105,5 @@ public class SupplierDeliveryDaysPixiApiImporter implements PixiApiImporter {
             }
         }
         return -1;
-    }
-
-
-    /**
-     * @return the defaultPixiSoapApi
-     */
-    public PixiSOAPAPI getDefaultPixiSoapApi() {
-        return defaultPixiSoapApi;
-    }
-
-
-    /**
-     * @param defaultPixiSoapApi
-     *            the defaultPixiSoapApi to set
-     */
-    public void setDefaultPixiSoapApi(PixiSOAPAPI defaultPixiSoapApi) {
-        this.defaultPixiSoapApi = defaultPixiSoapApi;
     }
 }

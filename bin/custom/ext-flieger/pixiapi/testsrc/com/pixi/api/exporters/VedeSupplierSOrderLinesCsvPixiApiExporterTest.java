@@ -22,7 +22,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.pixi.api.exporters.impl.VedeSupplierSOrderLinesCsvPixiAPIExporter;
-import com.pixi.api.importers.impl.SOrderLineTagPixiApiImporter;
+import com.pixi.api.importers.impl.SOrderLinesPixiApiImporter;
 
 /**
  * @author jfelipe
@@ -37,7 +37,7 @@ public class VedeSupplierSOrderLinesCsvPixiApiExporterTest {
     // Services
     // Controllers
     // Misc
-    private SOrderLineTagPixiApiImporter sOrderLineTagPixiApiImporter;
+    private SOrderLinesPixiApiImporter sOrderLineTagPixiApiImporter;
     private Element xmlSOrderKeys;
     private Element xmlSOrderLines;
 
@@ -58,8 +58,8 @@ public class VedeSupplierSOrderLinesCsvPixiApiExporterTest {
     public void setUp() {
         fixture = new VedeSupplierSOrderLinesCsvPixiAPIExporter();
         //
-        sOrderLineTagPixiApiImporter = mock(SOrderLineTagPixiApiImporter.class);
-        fixture.setsOrderLineTagPixiApiImporter(sOrderLineTagPixiApiImporter);
+        sOrderLineTagPixiApiImporter = mock(SOrderLinesPixiApiImporter.class);
+        fixture.setsOrderLinesPixiApiImporter(sOrderLineTagPixiApiImporter);
         // Initialing dummy objects
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -143,16 +143,11 @@ public class VedeSupplierSOrderLinesCsvPixiApiExporterTest {
      */
     @Test
     public void exportDataTest() {
-        try {
-            when(sOrderLineTagPixiApiImporter.importXml(any(String.class))).thenReturn(
-                    xmlSOrderLines);
-            String filename = "file-test.csv";
-            File output = fixture.exportData(xmlSOrderKeys, filename);
-            //
-            Assert.assertTrue("OutputStream should not de null", output != null);
-            Assert.assertTrue("Output should have something", output.toString().contains("123456"));
-        } catch (MalformedURLException | SOAPException e) {
-            Assert.assertTrue("Should not have thrown an Exception: " + e.getMessage(), false);
-        }
+        when(sOrderLineTagPixiApiImporter.importXml(any(String.class))).thenReturn(xmlSOrderLines);
+        String filename = "file-test.csv";
+        File output = fixture.exportData(xmlSOrderKeys, filename);
+        //
+        Assert.assertTrue("OutputStream should not de null", output != null);
+        Assert.assertTrue("Output should have something", output.toString().contains("123456"));
     }
 }

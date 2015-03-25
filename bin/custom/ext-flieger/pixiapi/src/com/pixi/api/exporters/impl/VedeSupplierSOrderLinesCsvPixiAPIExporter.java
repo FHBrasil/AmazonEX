@@ -37,7 +37,7 @@ public class VedeSupplierSOrderLinesCsvPixiAPIExporter implements PixiAPIExporte
 
     private static final Logger LOG = Logger
             .getLogger(VedeSupplierSOrderLinesCsvPixiAPIExporter.class.getName());
-    private PixiApiImporter sOrderLineTagPixiApiImporter;
+    private PixiApiImporter sOrderLinesPixiApiImporter;
     //
     private static final String CREATE_DATE_TAG = "CreateDate";
     private static final String SORDER_KEY_TAG = "SOrderKey";
@@ -204,18 +204,13 @@ public class VedeSupplierSOrderLinesCsvPixiAPIExporter implements PixiAPIExporte
     private List<Node> getVedeSOrderLineTags(List<String> keysToImport) {
         List<Node> vedeSOrderLineTags = new ArrayList<Node>();
         for (String sOrderKey : keysToImport) {
-            try {
-                Node sOrderLineTag = getsOrderLineTagPixiApiImporter().importXml(sOrderKey);
-                // Can't use .addAll() in this case... :/
-                if (sOrderLineTag != null) {
-                    NodeList childNodes = sOrderLineTag.getChildNodes();
-                    for (int j = 0; j < childNodes.getLength(); j++) {
-                        vedeSOrderLineTags.add(childNodes.item(j));
-                    }
+            Node sOrderLineTag = getsOrderLinesPixiApiImporter().importXml(sOrderKey);
+            // Can't use .addAll() in this case... :/
+            if (sOrderLineTag != null) {
+                NodeList childNodes = sOrderLineTag.getChildNodes();
+                for (int j = 0; j < childNodes.getLength(); j++) {
+                    vedeSOrderLineTags.add(childNodes.item(j));
                 }
-            } catch (MalformedURLException | SOAPException ex) {
-                // nothing to do is this case, just skipping to next loop
-                continue;
             }
         }
         return vedeSOrderLineTags;
@@ -225,8 +220,8 @@ public class VedeSupplierSOrderLinesCsvPixiAPIExporter implements PixiAPIExporte
     /**
      * @return the sOrderLineTagPixiApiImporter
      */
-    public PixiApiImporter getsOrderLineTagPixiApiImporter() {
-        return sOrderLineTagPixiApiImporter;
+    public PixiApiImporter getsOrderLinesPixiApiImporter() {
+        return sOrderLinesPixiApiImporter;
     }
 
 
@@ -234,7 +229,7 @@ public class VedeSupplierSOrderLinesCsvPixiAPIExporter implements PixiAPIExporte
      * @param sOrderLineTagPixiApiImporter
      *            the sOrderLineTagPixiApiImporter to set
      */
-    public void setsOrderLineTagPixiApiImporter(PixiApiImporter sOrderLineTagPixiApiImporter) {
-        this.sOrderLineTagPixiApiImporter = sOrderLineTagPixiApiImporter;
+    public void setsOrderLinesPixiApiImporter(PixiApiImporter sOrderLineTagPixiApiImporter) {
+        this.sOrderLinesPixiApiImporter = sOrderLineTagPixiApiImporter;
     }
 }

@@ -3,9 +3,8 @@
  */
 package com.pixi.api.importers;
 
-import java.net.MalformedURLException;
-
-import javax.xml.soap.SOAPException;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
 
 import org.w3c.dom.Node;
 
@@ -16,31 +15,38 @@ import org.w3c.dom.Node;
 public interface PixiApiImporter {
 
     /**
-     * Import an XML file from the FTP server.
+     * Imports an XML file from Pixi API.
      * 
      * @param values
      *            Array of values to be send with the request function
      * @return
      *         The XML file requested to the server
-     * @throws SOAPException
-     * @throws MalformedURLException
      *
      * @author jfelipe
      */
-    Node importXml(String... values) throws SOAPException, MalformedURLException;
+    Node importXml(String... values);
 
 
     /**
-     * Return a single int value from the server.
+     * Returns a single int value from Pixi API.
      * 
      * @param value
      *            The value to send with the request function
      * @return
      *         An integer, according to the request function
-     * @throws SOAPException
-     * @throws MalformedURLException
      *
      * @author jfelipe
      */
     int importInteger(String value);
+
+
+    /**
+     * Returns a list of value-key pair from Pixi API.
+     * 
+     * @param parameter
+     * @return
+     *         A list of value-key pair.
+     * @author jfelipe
+     */
+    List<SimpleEntry<String, String>> importListKeyValuePair(Object parameter);
 }

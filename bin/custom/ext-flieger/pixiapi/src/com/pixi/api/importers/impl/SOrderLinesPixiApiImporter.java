@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.pixi.api.importers.impl;
 
 import java.net.MalformedURLException;
@@ -14,54 +11,25 @@ import javax.xml.soap.SOAPMessage;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 
-import com.pixi.api.PixiSOAPAPI;
 import com.pixi.api.constants.PixiapiConstants;
 import com.pixi.api.core.PixiParameter;
-import com.pixi.api.importers.PixiApiImporter;
+import com.pixi.api.importers.AbstractPixiApiImporter;
 
 /**
  * @author jfelipe
  *
  */
-public class SOrderLineTagPixiApiImporter implements PixiApiImporter {
+public class SOrderLinesPixiApiImporter extends AbstractPixiApiImporter {
 
     private static final Logger LOG = Logger
-            .getLogger(SOrderLineTagPixiApiImporter.class.getName());
-    private PixiSOAPAPI defaultPixiSoapApi;
-
-
-    /**
-     * @return the defaultPixiSoapApi
-     */
-    public PixiSOAPAPI getDefaultPixiSoapApi() {
-        return defaultPixiSoapApi;
-    }
-
-
-    /**
-     * @param defaultPixiSoapApi
-     *            the defaultPixiSoapApi to set
-     */
-    public void setDefaultPixiSoapApi(PixiSOAPAPI defaultPixiSoapApi) {
-        this.defaultPixiSoapApi = defaultPixiSoapApi;
-    }
+            .getLogger(SOrderLinesPixiApiImporter.class.getName());
 
 
     /**
      * 
      */
     @Override
-    public int importInteger(String value) {
-        // Not used
-        return 0;
-    }
-
-
-    /**
-     * 
-     */
-    @Override
-    public Node importXml(String... values) throws SOAPException, MalformedURLException {
+    public Node importXml(String... values) {
         return importSOrderLineTags(values);
     }
 
@@ -75,12 +43,10 @@ public class SOrderLineTagPixiApiImporter implements PixiApiImporter {
      * @return
      *         A XML Node containg the list of SOrderLine accordingly to the given
      *         SOrderKey list
-     * @throws SOAPException
-     * @throws MalformedURLException
      *
      * @author jfelipe
      */
-    private Node importSOrderLineTags(String... values) throws SOAPException, MalformedURLException {
+    private Node importSOrderLineTags(String... values) {
         SOAPMessage message;
         SOAPMessage response;
         String sOrderReference = values != null && values.length > 0 ? values[0] : "";
@@ -93,9 +59,16 @@ public class SOrderLineTagPixiApiImporter implements PixiApiImporter {
                 .getValue(), null));
         functionParameters.add(new SimpleEntry<String, String>(PixiParameter.S_ORDER_REFERENCE
                 .getValue(), sOrderReference));
-        message = getDefaultPixiSoapApi().buildMessage(
-                PixiapiConstants.PIXIAPI_FUNCTION_GET_ORDER_LINES, functionParameters);
-        response = getDefaultPixiSoapApi().sendPixiWebServiceRequest(message);
-        return response.getSOAPBody().getElementsByTagName("SqlRowSet1").item(0);
+        try {
+            message = getDefaultPixiSoapApi().buildMessage(
+                    PixiapiConstants.PIXIAPI_FUNCTION_GET_ORDER_LINES, functionParameters);
+            response = getDefaultPixiSoapApi().sendPixiWebServiceRequest(message);
+            return response.getSOAPBody().getElementsByTagName("SqlRowSet1").item(0);
+        } catch (MalformedURLException me) {
+            LOG.error("Could not resolve Pixi API URL.", me);
+        } catch (SOAPException se) {
+            LOG.error("Error requesting SOAP Message.", se);
+        }
+        return null;
     }
 }

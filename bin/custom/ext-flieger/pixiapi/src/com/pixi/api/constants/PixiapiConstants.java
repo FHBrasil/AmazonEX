@@ -32,6 +32,7 @@ public final class PixiapiConstants extends GeneratedPixiapiConstants {
     public static final String PIXIAPI_FUNCTION_GET_ORDERS = "pixiGetSOrders";
     public static final String PIXIAPI_FUNCTION_GET_ORDER_LINES = "pixiGetSOrderlines";
     public static final String PIXIAPI_FUNCTION_GET_SUPPLIERS = "pixiGetSuppliers";
+    public static final String PIXIAPI_FUNCTION_GET_UPDATED_INVOICES = "pixiGetUpdatedInvoices";
     // FTP properties
     public static final String PIXIAPI_USE_DUMMY_FTP = "pixi.api.ftp.use.dummy";
     public static final String PIXIAPI_FTP_PROFILE_NRZ_ADDRESS = "pixi.api.ftp.hostname";
@@ -53,6 +54,8 @@ public final class PixiapiConstants extends GeneratedPixiapiConstants {
     // Response XML nodes / tags
     public static final String PIXIAPI_RESPONSE_TAG_SQLROWSET1 = "SqlRowSet1";
     public static final String PIXIAPI_RESPONSE_TAG_DEFAULT_DELIVERY_DAYS = "DefaultDeliveryDays";
+    public static final String PIXIAPI_RESPONSE_TAG_INVOICE_KEY = "InvoiceKey";
+    public static final String PIXIAPI_RESPONSE_TAG_INVOICE_NUMBER = "InvoiceNr";
     
     
     

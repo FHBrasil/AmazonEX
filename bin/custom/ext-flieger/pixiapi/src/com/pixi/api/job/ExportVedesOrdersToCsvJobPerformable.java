@@ -30,7 +30,7 @@ public class ExportVedesOrdersToCsvJobPerformable extends
 
     private static final Logger LOG = Logger.getLogger(ExportVedesOrdersToCsvJobPerformable.class
             .getName());
-    private PixiApiImporter sOrderTagPixiApiImporter;
+    private PixiApiImporter sOrdersPixiApiImporter;
     private PixiAPIExporter VedeSupplierSOrderLinesCsvPixiAPIExporter;
 
 
@@ -40,22 +40,17 @@ public class ExportVedesOrdersToCsvJobPerformable extends
      */
     @Override
     public PerformResult perform(ExportVedesOrdersToCsvCronJobModel cronJob) {
-        try {
-            LOG.info("Initiated.");
-            Node sOrderTags = getsOrderTagPixiApiImporter().importXml();
-            String filename = null; // PixiapiConstants.PIXI_API_FTP_FILE_VEDE + ".csv";
-            File file = getVedeSupplierSOrderLinesCsvPixiAPIExporter().exportData(sOrderTags,
-                    filename);
+        LOG.info("Initiated.");
+        Node sOrderTags = getsOrdersPixiApiImporter().importXml();
+        String filename = null; // PixiapiConstants.PIXI_API_FTP_FILE_VEDE + ".csv";
+        File file = getVedeSupplierSOrderLinesCsvPixiAPIExporter().exportData(sOrderTags, filename);
+        if (file != null) {
             FtpConnector ftpConnector = new FtpConnector();
             ftpConnector.storeFile(file);
             LOG.info("Finished with status: " + CronJobResult.SUCCESS);
             return new PerformResult(CronJobResult.SUCCESS, CronJobStatus.FINISHED);
-        } catch (MalformedURLException me) {
-            LOG.error("URL to send a request to Pixi Webservice API malformed: ", me);
-            return new PerformResult(CronJobResult.FAILURE, CronJobStatus.ABORTED);
-        } catch (SOAPException se) {
-            LOG.error("Error creating SOAPMessage: ", se);
-            return new PerformResult(CronJobResult.FAILURE, CronJobStatus.ABORTED);
+        } else {
+            return new PerformResult(CronJobResult.FAILURE, CronJobStatus.FINISHED);
         }
     }
 
@@ -63,8 +58,8 @@ public class ExportVedesOrdersToCsvJobPerformable extends
     /**
      * @return the sOrderTagPixiApiImporter
      */
-    public PixiApiImporter getsOrderTagPixiApiImporter() {
-        return sOrderTagPixiApiImporter;
+    public PixiApiImporter getsOrdersPixiApiImporter() {
+        return sOrdersPixiApiImporter;
     }
 
 
@@ -72,8 +67,8 @@ public class ExportVedesOrdersToCsvJobPerformable extends
      * @param sOrderTagPixiApiImporter
      *            the sOrderTagPixiApiImporter to set
      */
-    public void setsOrderTagPixiApiImporter(PixiApiImporter sOrderTagPixiApiImporter) {
-        this.sOrderTagPixiApiImporter = sOrderTagPixiApiImporter;
+    public void setsOrdersPixiApiImporter(PixiApiImporter sOrderTagPixiApiImporter) {
+        this.sOrdersPixiApiImporter = sOrderTagPixiApiImporter;
     }
 
 

@@ -14,6 +14,7 @@ public enum PixiParameter {
   , OPEN_ORDER_LINES    ("OpenOrderlines")
   , S_ORDER_REFERENCE   ("SOrderRef")
   , SUPPLIER_NUMBER     ("SupplNr")
+  , SINCE               ("Since")
   ;
 
     private final String value;
