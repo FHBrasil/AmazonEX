@@ -43,6 +43,8 @@
 	<c:if test="${!empty googleApiVersion}">
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=${googleApiVersion}&amp;key=${googleApiKey}&amp;sensor=false"></script>
 	</c:if>
+	
+	<base href="http://www1.babyartikel.de/"/>
 
 
 </head>
