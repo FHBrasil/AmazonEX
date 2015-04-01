@@ -15,6 +15,9 @@
 	<div class="span-24 section2">
 		<cms:pageSlot position="Section2A" var="feature" element="div" class="span-6 zone_a thumbnail_detail">
 			<cms:component component="${feature}" />
+			<cms:pageSlot position="Section2B" var="feature" element="div" class="span-6 zone_b thumbnail_detail">
+				<cms:component component="${feature}" />
+			</cms:pageSlot>
 		</cms:pageSlot>
 
 		<cms:pageSlot position="Section2B" var="feature" element="div" class="span-6 zone_b thumbnail_detail">
