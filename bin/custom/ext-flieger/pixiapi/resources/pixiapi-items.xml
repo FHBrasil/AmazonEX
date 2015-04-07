@@ -7,13 +7,5 @@
 <items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="items.xsd">
     
-    <itemtypes>
-        <itemtype code="exportVedesOrdersToCsvCronJob" autocreate="true" generate="true"
-                extends="CronJob" jaloclass="com.pixi.api.jalo.ExportVedesOrdersToCsvCronJob">
-        </itemtype>
-        
-        <itemtype code="updateSupplierDeliveryDaysCronJob" autocreate="true" generate="true"
-                extends="CronJob" jaloclass="com.pixi.api.jalo.UpdateSupplierDeliveryDaysCronJob">
-        </itemtype>
-    </itemtypes>
+
 </items>

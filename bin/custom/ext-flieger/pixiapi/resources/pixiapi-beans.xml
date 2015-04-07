@@ -1,29 +1,375 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!--
- [y] hybris Platform
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. This software 
+    is the confidential and proprietary information of hybris ("Confidential Information"). You 
+    shall not disclose such Confidential Information and shall use it only in accordance with the 
+    terms of the license agreement you entered into with hybris. -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="beans.xsd">
 
- Copyright (c) 2000-2013 hybris AG
- All rights reserved.
 
- This software is the confidential and proprietary information of hybris
- ("Confidential Information"). You shall not disclose such Confidential
- Information and shall use it only in accordance with the terms of the
- license agreement you entered into with hybris.
--->
+    <enum class="com.pixi.api.core.PixiParameterType"
+            template="resources/templates/beans/pixienum-template.vm">
+        <value>BIN_NAME                 ("BinName")</value>
+        <value>CUSTOMER_KEY             ("CustKey")</value>
+        <value>CUSTOMER_NUMBER_EXTERNAL ("CustomerNrExternal")</value>
+        <value>EAN                      ("EAN")</value>
+        <value>EAN_UPC                  ("EANUPC")</value>
+        <value>EVENT_ID                 ("eventID")</value>
+        <value>ITEM_REF                 ("ItemRef")</value>
+        <value>ITEM_NUMBER_INTERNAL     ("ItemNrInt")</value>
+        <value>ITEM_KEY                 ("ItemKey")</value>
+        <value>INVOICE_NUMBER           ("InvoiceNr")</value>
+        <value>ITEM_SUPPLIER_NUMBER     ("ItemNrSuppl")</value>
+        <value>LOCATION_ID              ("LocationId")</value>
+        <value>LOC_ID                   ("LocID")</value>
+        <value>NEW_STOCK_QUANTITY       ("NewStockQty")</value>
+        <value>OPEN_ORDER_LINES         ("OpenOrderlines")</value>
+        <value>ORDER_NUMBER_EXTERNAL    ("OrderNrExternal")</value>
+        <value>ORDER_NUMBER             ("OrderNr")</value>
+        <value>ORDER_LINE_KEY           ("OrderlineKey")</value>
+        <value>PAID                     ("paid")</value>
+        <value>PAID_DATE                ("PaidDate")</value>
+        <value>ROW_COUNT                ("Rowcount")</value>
+        <value>ROWS                     ("Rows")</value>
+        <value>SHOW_ORDER               ("ShowOrd")</value>
+        <value>S_ORDER_REFERENCE        ("SOrderRef")</value>
+        <value>SUPPLIER_NUMBER          ("SupplNr")</value>
+        <value>SINCE_DATE               ("Since")</value>
+        <value>SHOP_ID                  ("ShopID")</value>
+        <value>SHOP_ORDER_NUMBER        ("ShopOrderNr")</value>
+        <value>SUPPLIER_PRICE           ("SupplPrice")</value>
+        <value>WHOLE_HISTORY            ("WholeHistory")</value>
+    </enum>
 
-<!--
-	ATTENTION: This is just an example file. You have to edit it according to your needs.
--->
 
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+    <enum class="com.pixi.api.core.PixiFunction"
+            template="resources/templates/beans/pixienum-template.vm">
+        <value>GET_ALL_S_ORDERS                             ("pixiGetSOrders")</value>
+        <value>GET_CHANGED_ITEM_STOCK                       ("pixiGetChangedItemStock")</value>
+        <value>GET_CHANGED_ORDER_LINES                      ("pixiGetChangedOrderlines")</value>
+        <value>GET_ITEM_INFO                                ("pixiGetItemInfo")</value>
+        <value>GET_ITEM_DELIVERY_INFO                       ("pixiGetItemDeliveryInfo")</value>
+        <value>GET_INVOICE_BY_ORDER_NUMBER                  ("pixiGetInvoicesByOrderNr")</value>
+        <value>GET_INVOICE_LINES                            ("pixiGetInvoiceLines")</value>
+        <value>GET_INVOICES                                 ("pixiGetInvoice")</value>
+        <value>GET_ITEM_SALES_STATS                         ("pixiGetItemSalesStats")</value>
+        <value>GET_ITEM_STOCK_BINS                          ("pixiGetItemStockBins")</value>
+        <value>GET_ITEM_STOCK                               ("pixiGetItemStock")</value>
+        <value>GET_ORDER_NUMBER_BY_ORDER_NUMBER_EXTERNAL    ("pixiGetOrderNrByOrderNrExternal")</value>
+        <value>GET_ORDER_HEADER                             ("pixiGetOrderHeader")</value>
+        <value>GET_ORDER_LINE                               ("pixiGetOrderline")</value>
+        <value>GET_ORDER_HEADERS_FOR_CUSTOMER               ("pixiGetOrderHeadersForCustomer")</value>
+        <value>GET_PHYSICAL_ITEM_STOCK                      ("pixiGetPhysicalItemStock")</value>
+        <value>GET_S_ORDER_LINE                             ("pixiGetSOrderlines")</value>
+        <value>GET_SUPPLIERS_DEFAULT_DELIVERY_DAYS          ("pixiGetSuppliers")</value>
+        <value>GET_UPDATED_INVOICES                         ("pixiGetUpdatedInvoices")</value>
+        <!--  -->
+        <value>ESTIMATED_DELIVERY_UPDATES                   ("pixiEstimatedDeliveryUpdates")</value>
+        <value>SET_ITEM_SUPPLIER                            ("pixiSetItemSupplier")</value>
+        <value>SET_STOCK                                    ("pixiSetStock")</value>
+        <value>SET_INVOICE_PAID                             ("pixiSetInvoicePaid")</value>
+    </enum>
 
-	<!--
-		Example Data POJO
-	
-	<bean class="com.pixi.api.data.MyPojo">
-		<property name="id" type="String"/>
-		<property name="flag" type="boolean"/>
-	</bean>
-	-->
+
+    <enum class="com.pixi.api.core.PixiApiResponseTags"
+            template="resources/templates/beans/pixienum-template.vm">
+        <value>ROW                  ("row")</value>
+        <value>SQL_CLASS            ("sqlmessage:Class")</value>
+        <value>SQL_MESSAGE          ("sqlmessage:Message")</value>
+        <value>SQLROWSET1           ("SqlRowSet1")</value>
+        <value>SQL_RESULTSTREAM     ("sqlresultstream:SqlMessage")</value>
+        <value>SQL_ROW_COUNT        ("sqlrowcount:Count")</value>
+    </enum>
+
+
+    <bean class="com.pixi.api.core.PixiFunctionParameter">
+        <description>Parameter to be sent to Pixi API.</description>
+        <property name="type" type="com.pixi.api.core.PixiParameterType"/>
+        <property name="value" type="java.lang.String" />
+    </bean>
+
+
+    <bean class="com.pixi.api.result.PixiApiResult">
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.StringResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="value" type="java.lang.String"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.IntegerResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="value" type="int"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.DoubleResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="value" type="double"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.KeyValuePairResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="key" type="java.lang.String"/>
+        <property name="value" type="java.lang.String"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.InvoiceLineResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="invoiceLineKey" type="int" />
+        <property name="invoiceNr" type="java.lang.String" />
+        <property name="orderLineKey" type="int" />
+        <property name="artNr" type="java.lang.String" />
+        <property name="artName" type="java.lang.String" />
+        <property name="itemText" type="java.lang.String" />
+        <property name="orderDate" type="java.util.Date" />
+        <property name="orderQty" type="int" />
+        <property name="itemQty" type="int" />
+        <property name="itemPrice" type="double" />
+        <property name="shipCost" type="double" />
+        <property name="itemVAT" type="java.lang.String" />
+        <property name="itemNr" type="java.lang.String" />
+        <property name="itemNrSuppl" type="java.lang.String" />
+        <property name="eanUpc" type="java.lang.String" />
+        <property name="orderNr" type="java.lang.String" />
+        <property name="orderNrExternal" type="java.lang.String" />
+        <property name="status" type="java.lang.String" />
+        <property name="itemPriceNoVAT" type="double" />
+        <property name="fullPrice" type="double" />
+        <property name="discountValue" type="double" />
+        <property name="discountPerc" type="double" />
+        <property name="itemNrExtenal" type="java.lang.String" />
+        <property name="itemNrInt" type="java.lang.String" />
+    </bean>
+
+
+    <bean class="com.pixi.api.result.InvoiceResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="invoiceNumber" type="java.lang.String" />
+        <property name="invoiceDate" type="java.util.Date" />
+        <property name="paymentAddressId" type="java.lang.String" />
+        <property name="shipmentAddressId" type="java.lang.String" />
+        <property name="total" type="double" />
+        <property name="paymentCode" type="java.lang.String" />
+        <property name="paymentText" type="java.lang.String" />
+        <property name="paid" type="java.lang.String" />
+        <property name="totalToPay" type="double" />
+        <property name="paidSum" type="double" />
+        <property name="ccCardType" type="java.lang.String" />
+        <property name="ccCardNr" type="java.lang.String" />
+        <property name="ccCardName" type="java.lang.String" />
+        <property name="ccCardExp" type="java.lang.String" />
+        <property name="account" type="java.lang.String" />
+        <property name="blz" type="java.lang.String" />
+        <property name="bankName" type="java.lang.String" />
+        <property name="accountName" type="java.lang.String" />
+        <property name="shipDate" type="java.util.Date" />
+        <property name="orderNr" type="java.lang.String" />
+        <property name="orderNrExternal" type="java.lang.String" />
+        <property name="paymentDate" type="java.util.Date" />
+        <property name="trackingId" type="java.lang.String" />
+    </bean>
+
+
+    <bean class="com.pixi.api.result.ItemSalesStatsResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="open1SS" type="int" />
+        <property name="daysForStats" type="int" />
+        <property name="salesSinceDays" type="int" />
+        <property name="abc" type="java.lang.String" />
+        <property name="sales30" type="int" />
+        <property name="sales120" type="int" />
+        <property name="sales365" type="int" />
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.ItemStockBinsResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="binName" type="java.lang.String"/>
+        <property name="quantity" type="int"/>
+        <property name="binSortNum" type="int"/>
+        <property name="ean" type="java.lang.String"/>
+        <property name="itemNrInt" type="java.lang.String"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.ItemStockResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="availableStock" type="int"/>
+        <property name="physicalStock" type="int"/>
+        <property name="supllPrice" type="double"/>
+        <property name="itemKey" type="int"/>
+        <property name="eanUpc" type="java.lang.String"/>
+        <property name="itemNrSuppl" type="java.lang.String"/>
+        <property name="itemNrInt" type="java.lang.String"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.ChangedOrderLinesResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="itemNrInt" type="java.lang.String"/>
+        <property name="orderNrExternal" type="java.lang.String"/>
+        <property name="status" type="java.lang.String"/>
+        <property name="statusChangeDate" type="java.util.Date"/>
+        <property name="itemNrExternal" type="java.lang.String"/>
+        <property name="shopID" type="java.lang.String"/>
+        <property name="orderlineKey" type="java.lang.String"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.OrderHeaderResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="orderHeaderKey" type="java.lang.String"/>
+        <property name="orderNr" type="java.lang.String"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="orderNrExternal" type="java.lang.String"/>
+        <property name="orderTotal" type="double"/>
+        <property name="orderlinesTotal" type="double"/>
+        <property name="wholeOrderState" type="java.lang.String"/>
+        <property name="shipDate" type="java.util.Date"/>
+        <property name="lastShipDate" type="java.util.Date"/>
+        <property name="trackingID" type="java.lang.String"/>
+        <property name="shipVendor" type="java.lang.String"/>
+        <property name="shopId" type="java.lang.String"/>
+        <property name="orderDate" type="java.util.Date"/>
+        <property name="shipCost" type="double"/>
+        <property name="paymentAddressId" type="java.lang.String"/>
+        <property name="shipmentAddressId" type="java.lang.String"/>
+        <property name="shopNote" type="java.lang.String"/>
+        <property name="paymentType" type="java.lang.String"/>
+        <property name="ccCardType" type="java.lang.String"/>
+        <property name="ccCardNr" type="java.lang.String"/>
+        <property name="ccCardName" type="java.lang.String"/>
+        <property name="ccCardExp" type="java.lang.String"/>
+        <property name="account" type="java.lang.String"/>
+        <property name="blz" type="java.lang.String"/>
+        <property name="bankName" type="java.lang.String"/>
+        <property name="accountName" type="java.lang.String"/>
+        <property name="addressRemarks" type="java.lang.String"/>
+        <property name="custKey" type="java.lang.String"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.OrderLineResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="orderlineKey" type="java.lang.String"/>
+        <property name="artName" type="java.lang.String"/>
+        <property name="qty" type="java.lang.String"/>
+        <property name="price" type="double"/>
+        <property name="discountValue" type="double"/>
+        <property name="discountPerc" type="double"/>
+        <property name="fullPrice" type="double"/>
+        <property name="priceNoVAT" type="double"/>
+        <property name="status" type="java.lang.String"/>
+        <property name="statusText" type="java.lang.String"/>
+        <property name="shipDate" type="java.util.Date"/>
+        <property name="DFShipDate" type="java.util.Date"/>
+        <property name="orderDate" type="java.util.Date"/>
+        <property name="ItemNrExternal" type="java.lang.String"/>
+        <property name="OrderNrExternal" type="java.lang.String"/>
+        <property name="orderCurrency" type="java.lang.String"/>
+        <property name="vATRate" type="java.lang.String"/>
+        <property name="itemNrInt" type="java.lang.String"/>
+        <property name="dFShipmentTrackingID" type="java.lang.String"/>
+        <property name="oItemSpecialNote" type="java.lang.String"/>
+        <property name="availStockOrderLine" type="java.lang.String"/>
+        <property name="itemRef" type="java.lang.String"/>
+        <property name="reservedCount" type="java.lang.String"/>
+        <property name="estimatedDelivery" type="java.util.Date"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.ItemDeliveryInfoResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="supplierOrderNr" type="java.lang.String"/>
+        <property name="supplNr" type="java.lang.String"/>
+        <property name="supplierOrderQty" type="int"/>
+        <property name="estimatedDelivery" type="java.util.Date"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.ItemInfoResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="itemKey" type="int"/>
+        <property name="supplPrice" type="double"/>
+        <property name="itemName" type="java.lang.String"/>
+        <property name="vpe" type="int"/>
+        <property name="minStockQty" type="int"/>
+        <property name="minOrderQty" type="int"/>
+        <property name="supplNr" type="java.lang.String"/>
+        <property name="category" type="java.lang.String"/>
+        <property name="itemNrInt" type="java.lang.String"/>
+        <property name="itemNrSuppl" type="java.lang.String"/>
+        <property name="quantity" type="int"/>
+        <property name="priceVk" type="double"/>
+        <property name="vatLevel" type="java.lang.String"/>
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.SOrderResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="orderNumber" type="java.lang.String" />
+        <property name="supplierNumber" type="java.lang.String" />
+        <property name="supplierGroup" type="java.lang.String" />
+        <property name="orderDate" type="java.util.Date" />
+        <property name="status" type="java.lang.String" />
+        <property name="createDate" type="java.util.Date" />
+        <property name="createEmp" type="java.lang.String" />
+        <property name="updateDate" type="java.util.Date" />
+        <property name="updateEmp" type="java.lang.String" />
+        <property name="sOrderLocation" type="java.lang.String" />
+        <property name="sOrderKey" type="int" />
+        <property name="externalOrderNumber" type="java.lang.String" />
+        <property name="supplierName" type="java.lang.String" />
+    </bean>
+    
+    
+    <bean class="com.pixi.api.result.SOrderLineResult" extends="com.pixi.api.result.PixiApiResult"
+            template="resources/templates/beans/pixiapiresult-template.vm">
+        <property name="detail" type="int" />
+        <property name="detail2" type="int" />
+        <property name="articleNumber" type="java.lang.String" />
+        <property name="articleName" type="java.lang.String" />
+        <property name="orderQuantity" type="int" />
+        <property name="receiveDate" type="java.util.Date" />
+        <property name="status" type="java.lang.String" />
+        <property name="createDate" type="java.util.Date" />
+        <property name="createEmp" type="java.lang.String" />
+        <property name="updateDate" type="java.util.Date" />
+        <property name="updateEmp" type="java.lang.String" />
+        <property name="sOrderLineKey" type="int" />
+        <property name="sItemReference" type="int" />
+        <property name="mlConfirm" type="boolean" />
+        <property name="sOrderReference" type="int" />
+        <property name="sOrderLineNumber" type="int" />
+        <property name="note" type="java.lang.String" />
+        <property name="estimatedDelivery" type="java.util.Date" />
+        <property name="vkPrice" type="double" />
+        <property name="summaryQuantity" type="int" />
+        <property name="locationQuantity" type="int" />
+        <property name="quantityReceived" type="int" />
+        <property name="quantityNotDelivered" type="int" />
+        <property name="minOrderQuantity" type="int" />
+        <property name="minStockQuantity" type="int" />
+        <property name="orderUnit" type="java.lang.String" />
+        <property name="itemNumberSupplier" type="java.lang.String" />
+        <property name="itemNumberInternal" type="java.lang.String" />
+        <property name="vatPerc" type="double" />
+        <property name="ekPrice" type="double" />
+        <property name="ekValue" type="double" />
+        <property name="halCustO" type="int" />
+        <property name="openCustO" type="int" />
+        <property name="openSupplO" type="int" />
+        <property name="l30" type="int" />
+        <property name="l120" type="int" />
+        <property name="l365" type="int" />
+        <property name="stockQuantity" type="int" />
+        <property name="price" type="double" />
+    </bean>
+    
 
 </beans>

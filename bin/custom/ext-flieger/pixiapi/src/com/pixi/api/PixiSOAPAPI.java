@@ -1,14 +1,12 @@
-/**
- * 
- */
 package com.pixi.api;
 
-import java.net.MalformedURLException;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+
+import com.pixi.api.core.PixiFunction;
+import com.pixi.api.core.PixiFunctionParameter;
 
 /**
  * @author jfelipe
@@ -25,11 +23,10 @@ public interface PixiSOAPAPI {
      *            The values the given function needs.
      * @return
      *         A SOAPMessage object containing the response from end-point.
-     * @throws SOAPException
      *
      * @author jfelipe
      */
-    SOAPMessage buildMessage(String pixiFunction, List<SimpleEntry<String, String>> values)
+    SOAPMessage buildMessage(PixiFunction pixiFunction, List<PixiFunctionParameter> values)
             throws SOAPException;
 
 
@@ -40,11 +37,8 @@ public interface PixiSOAPAPI {
      *            The SOAPMessage containing the function that will be sent to Pixi API.
      * @return
      *         A SOAPMessage object containing the response from end-point.
-     * @throws SOAPException
-     * @throws MalformedURLException
      *
      * @author jfelipe
      */
-    SOAPMessage sendPixiWebServiceRequest(final SOAPMessage message) throws SOAPException,
-            MalformedURLException;
+    SOAPMessage sendPixiWebServiceRequest(final SOAPMessage message) throws SOAPException;
 }

@@ -1,8 +1,6 @@
 package com.pixi.api.importers.impl;
 
-import java.net.MalformedURLException;
 import java.security.InvalidParameterException;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,97 +11,106 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.pixi.api.PixiSOAPAPI;
-import com.pixi.api.constants.PixiapiConstants;
-import com.pixi.api.core.PixiParameter;
+import com.pixi.api.core.PixiApiResponseTags;
+import com.pixi.api.core.PixiFunction;
+import com.pixi.api.core.PixiFunctionParameter;
+import com.pixi.api.core.PixiParameterType;
+import com.pixi.api.exceptions.SOAPResponseErrorException;
 import com.pixi.api.importers.AbstractPixiApiImporter;
+import com.pixi.api.result.IntegerResult;
 
 /**
+ * Instantiate this class you should not! See {@link com.pixi.api.PixiApiFactory} you
+ * must. <br/>
+ * <br/>
+ * 
  * @author jfelipe
- *
  */
 public class SupplierDeliveryDaysPixiApiImporter extends AbstractPixiApiImporter {
 
     private static final Logger LOG = Logger.getLogger(SupplierDeliveryDaysPixiApiImporter.class
             .getName());
-    private PixiSOAPAPI defaultPixiSoapApi;
+    private static final String DEFAULT_DELIVERY_DAYS = "DefaultDeliveryDays";
 
 
     /**
      * 
      */
-    @Override
-    public int importInteger(String value) {
-        if (value == null) {
-            throw new InvalidParameterException(
-                    "The PixiAPI function parameter should not be null.");
-        }
-        return importDefaultDeliveryDays(value);
+    public SupplierDeliveryDaysPixiApiImporter() {
+        super();
+        validParameters.add(PixiParameterType.SUPPLIER_NUMBER);
     }
 
 
     /**
      * 
-     * Reponse XML:
-     * 
-     * {@code
-     * <SqlRowSet1>
-     *   <row>
-     *     <SupplNr>SUPPLIER_CODE</SupplNr>
-     *     <SupplName>SUPPLIER_NAME</SupplName>
-     *     <DefaultDeliveryDays>DEFAULT_DELIVERY_DAYS</DefaultDeliveryDays>
-     *     <SupplFaxNR>SUPPLIER_FAX_NUMBER</SupplFaxNR>
-     *     <CustNR>SUPPLIER_DUNNO</CustNR>
-     *     <eMail>SUPPLIER_EMAIL</eMail>
-     *     <SupAddress>SUPPLIER_ADDRESS</SupAddress>
-     *     <SupZip>SUPPLIER_POSTAL_CODE</SupZip>
-     *     <SupPhone1>SUPPLIER_PHONE_NUMBER</SupPhone1>
-     *     <CanDoDirectFulfillment>SUPPLIER_DUNNO_2</CanDoDirectFulfillment>
-     *   </row>
-     * </SqlRowSet1>
-     * }
-     * 
-     * @param supplierNumber
+     * @param functionParameters
+     *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
+     *            - {@link PixiParameterType#SUPPLIER_NUMBER}<br/>
      * @return
+     *         A XML Node containing the <SOrderKey> tags.
+     * @throws SOAPException
+     *             in case errors occurred during the Pixi API request
+     * @throws SOAPResponseErrorException
+     *             in case errors ocurred during the Pixi API response
      *
      * @author jfelipe
      */
-    private int importDefaultDeliveryDays(String supplierNumber) {
-        List<SimpleEntry<String, String>> functionParameters = new ArrayList<SimpleEntry<String, String>>();
-        SimpleEntry parameter = new SimpleEntry(PixiParameter.SUPPLIER_NUMBER.getValue(),
-                supplierNumber);
-        functionParameters.add(parameter);
+    @Override
+    public List<IntegerResult> importData(List<PixiFunctionParameter> functionParameters)
+            throws SOAPResponseErrorException, SOAPException {
+        if (functionParameters == null || functionParameters.isEmpty()) {
+            throw new InvalidParameterException(
+                    "The PixiAPI function parameter should not be null.");
+        }
+        return importDefaultDeliveryDays(functionParameters);
+    }
+
+
+    /**
+     * 
+     * @param functionParameters
+     *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
+     *            - {@link PixiParameterType#SUPPLIER_NUMBER}<br/>
+     * @return
+     * 
+     * @throws SOAPException
+     *             in case errors occurred during the Pixi API request
+     * @throws SOAPResponseErrorException
+     *             in case errors ocurred during the Pixi API response
+     *
+     * @author jfelipe
+     */
+    // FIXME: retirar esses for aninhados e retornar o Integer corretamente
+    private List<IntegerResult> importDefaultDeliveryDays(
+            List<PixiFunctionParameter> functionParameters) throws SOAPResponseErrorException,
+            SOAPException {
+        List<IntegerResult> results = new ArrayList<IntegerResult>();
         SOAPMessage request = null;
         SOAPMessage response = null;
         Node responseXml = null;
-        try {
-            request = getDefaultPixiSoapApi().buildMessage(
-                    PixiapiConstants.PIXIAPI_FUNCTION_GET_SUPPLIERS, functionParameters);
-            response = getDefaultPixiSoapApi().sendPixiWebServiceRequest(request);
-            responseXml = response.getSOAPBody()
-                    .getElementsByTagName(PixiapiConstants.PIXIAPI_RESPONSE_TAG_SQLROWSET1).item(0);
-        } catch (MalformedURLException me) {
-            LOG.error("Mal formed URL calling Pixi API function: "
-                    + PixiapiConstants.PIXIAPI_FUNCTION_GET_SUPPLIERS, me);
-        } catch (SOAPException se) {
-            LOG.error("Error requesting Pixi API function: "
-                    + PixiapiConstants.PIXIAPI_FUNCTION_GET_SUPPLIERS, se);
-        }
+        checkValidParameters(functionParameters);
+        request = getPixiSoapApi().buildMessage(
+                PixiFunction.GET_SUPPLIERS_DEFAULT_DELIVERY_DAYS, functionParameters);
+        response = getPixiSoapApi().sendPixiWebServiceRequest(request);
+        responseXml = response.getSOAPBody()
+                .getElementsByTagName(PixiApiResponseTags.SQLROWSET1.getValue()).item(0);
         if (responseXml != null) {
             NodeList rowTags = responseXml.getChildNodes();
-            for (int i = 0; i < rowTags.getLength(); i++) {
+            mainloop: for (int i = 0; i < rowTags.getLength(); i++) {
                 NodeList row = rowTags.item(i).getChildNodes();
                 for (int j = 0; j < row.getLength(); j++) {
                     Node deliveryDaysTag = row.item(j);
                     String deliveryDaysTagName = deliveryDaysTag.getNodeName();
-                    if (PixiapiConstants.PIXIAPI_RESPONSE_TAG_DEFAULT_DELIVERY_DAYS
-                            .equalsIgnoreCase(deliveryDaysTagName)) {
-                        return deliveryDaysTag.getTextContent() != null ? Integer
-                                .parseInt(deliveryDaysTag.getTextContent()) : -1;
+                    if (DEFAULT_DELIVERY_DAYS.equalsIgnoreCase(deliveryDaysTagName)) {
+                        IntegerResult result = new IntegerResult(Integer.parseInt(deliveryDaysTag
+                                .getTextContent()));
+                        results.add(result);
+                        break mainloop;
                     }
                 }
             }
         }
-        return -1;
+        return results;
     }
 }

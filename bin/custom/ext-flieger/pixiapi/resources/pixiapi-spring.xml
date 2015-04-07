@@ -3,58 +3,33 @@
     is the confidential and proprietary information of hybris ("Confidential Information"). You 
     shall not disclose such Confidential Information and shall use it only in accordance with the 
     terms of the license agreement you entered into with hybris. -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/aop
                 http://www.springframework.org/schema/aop/spring-aop.xsd">
-
-    <!-- Jobs -->
-    <bean id="exportVedesOrdersToCsvJobPerformable"
-            class="com.pixi.api.job.ExportVedesOrdersToCsvJobPerformable"
-            autowire="byName">
-        <property name="sOrdersPixiApiImporter" ref="sOrderPixiApiImporter" />
-        <property name="VedeSupplierSOrderLinesCsvPixiAPIExporter"
-                ref="vedeSupplierSOrderLinesCsvPixiAPIExporter" />
+    
+        
+    <bean id="defaultPixiSoapApi" class="com.pixi.api.impl.DefaultPixiSoapApi"/>
+    
+    
+    <bean id="abstractPixiApi" class="com.pixi.api.AbstractPixiApi" abstract="true">
+        <property name="pixiSoapApi" ref="defaultPixiSoapApi" />
     </bean>
     
-    <bean id="updateSuppliersDeliveryDaysJobPerformable"
-            class="com.pixi.api.job.UpdateSuppliersDeliveryDaysJobPerformable"
-            parent="abstractJobPerformable">
-        <property name="defaultProductSupplierService" ref="defaultProductSupplierService"/>
-        <property name="supplierDeliveryDaysPixiApiImporter"
-                ref="supplierDeliveryDaysPixiApiImporter"/>
-    </bean>
-
-    <!-- Pixi SOAP API -->
-    <bean id="defaultPixiSoapApi" class="com.pixi.api.impl.DefaultPixiSoapApi" />
-
-    <!-- Importers -->
-    <bean id="abstractPixiApiImporter" abstract="true"
-            class="com.pixi.api.importers.AbstractPixiApiImporter">
-        <property name="defaultPixiSoapApi" ref="defaultPixiSoapApi" />
-    </bean>
     
-    <bean id="sOrderPixiApiImporter"
-            class="com.pixi.api.importers.impl.SOrdersPixiApiImporter"
-            parent="abstractPixiApiImporter">
-    </bean>
+    <bean id="abstractPixiApiExporter" class="com.pixi.api.exporters.AbstractPixiApiExporter"
+            abstract="true" parent="abstractPixiApi"/>
 
-    <bean id="sOrderLinesPixiApiImporter"
-            class="com.pixi.api.importers.impl.SOrderLinesPixiApiImporter"
-            parent="abstractPixiApiImporter">
-    </bean>
     
-    <bean id="supplierDeliveryDaysPixiApiImporter"
-            class="com.pixi.api.importers.impl.SupplierDeliveryDaysPixiApiImporter"
-            parent="abstractPixiApiImporter">
-    </bean>
+    <bean id="abstractPixiApiImporter" class="com.pixi.api.importers.AbstractPixiApiImporter"
+            abstract="true" parent="abstractPixiApi"/>
 
-    <!-- Exporters -->
-    <bean id="vedeSupplierSOrderLinesCsvPixiAPIExporter"
-            class="com.pixi.api.exporters.impl.VedeSupplierSOrderLinesCsvPixiAPIExporter">
-        <property name="sOrderLinesPixiApiImporter" ref="sOrderLinesPixiApiImporter" />
-    </bean>
+    
+    <bean id="changedItemStockPixiApiImporter" parent="abstractPixiApiImporter"
+            class="com.pixi.api.importers.impl.ChangedItemStockPixiApiImporter"/>
+    
     
 </beans>
