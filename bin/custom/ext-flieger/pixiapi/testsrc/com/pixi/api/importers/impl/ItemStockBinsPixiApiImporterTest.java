@@ -74,7 +74,8 @@ public class ItemStockBinsPixiApiImporterTest {
             Assert.assertTrue("Results should not be null.", results != null);
             Assert.assertTrue("Results should not be empty.", results.size() > 0);
         } catch (Exception e) {
-            Assert.assertTrue("should not have thrown an Exception: " + e.getMessage(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -96,8 +97,8 @@ public class ItemStockBinsPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -127,8 +128,8 @@ public class ItemStockBinsPixiApiImporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }

@@ -4,8 +4,6 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.soap.SOAPException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -58,12 +56,9 @@ public class SupplierDeliveryDaysPixiApiImporterTest {
             List<IntegerResult> results = fixture.importData(parameters);
             IntegerResult result = results.get(0);
             Assert.assertTrue("Result should be greater than -1", result.getValue() > -1);
-        } catch (NumberFormatException e) {
-            // YTODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SOAPException e) {
-            // YTODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (Exception e) {
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -85,8 +80,8 @@ public class SupplierDeliveryDaysPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -116,8 +111,8 @@ public class SupplierDeliveryDaysPixiApiImporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }

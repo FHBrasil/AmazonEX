@@ -105,8 +105,9 @@ public class ItemInfoPixiApiImporter extends AbstractPixiApiImporter {
     private List<ItemInfoResult> importItemInfos(List<PixiFunctionParameter> functionParameters)
             throws SOAPResponseErrorException, SOAPException {
         List<ItemInfoResult> results = new ArrayList<ItemInfoResult>();
-        SOAPMessage request = getPixiSoapApi().buildMessage(
-                PixiFunction.GET_ITEM_INFO, functionParameters);
+        checkValidParameters(functionParameters);
+        SOAPMessage request = getPixiSoapApi().buildMessage(PixiFunction.GET_ITEM_INFO,
+                functionParameters);
         SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(request);
         Node responseXml = null;
         responseXml = response.getSOAPBody()

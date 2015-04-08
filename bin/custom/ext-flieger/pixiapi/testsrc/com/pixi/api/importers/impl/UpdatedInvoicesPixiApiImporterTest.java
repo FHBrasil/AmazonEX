@@ -52,13 +52,14 @@ public class UpdatedInvoicesPixiApiImporterTest {
     @Test
     public void importDataTest() {
         try {
+            // FIXME: This test is not working because we need to find valid parameters
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramDate = new PixiFunctionParameter();
             paramDate.setType(PixiParameterType.SINCE_DATE);
             Calendar testDate = Calendar.getInstance();
             testDate.set(Calendar.DAY_OF_MONTH, 1);
-            testDate.set(Calendar.MONTH, 9);
-            testDate.set(Calendar.YEAR, 2014);
+            testDate.set(Calendar.MONTH, 5);
+            testDate.set(Calendar.YEAR, 2013);
             String formattedTestDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(testDate
                     .getTime());
             paramDate.setValue(formattedTestDate);
@@ -68,7 +69,8 @@ public class UpdatedInvoicesPixiApiImporterTest {
             Assert.assertTrue("Result should not be null", results != null);
             Assert.assertFalse("Result should not be empty", results.isEmpty());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception" + e.getMessage(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -90,8 +92,8 @@ public class UpdatedInvoicesPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -121,8 +123,8 @@ public class UpdatedInvoicesPixiApiImporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }

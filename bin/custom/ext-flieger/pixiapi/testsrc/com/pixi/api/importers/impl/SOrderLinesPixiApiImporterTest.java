@@ -52,8 +52,7 @@ public class SOrderLinesPixiApiImporterTest {
     @Test
     public void importDataTest() {
         try {
-            // FIXME: This test is not working because we need to find a valid order
-            // reference
+            // FIXME: This test is not working because we need to find valid parameters
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramOrderRef = new PixiFunctionParameter();
             paramOrderRef.setType(PixiParameterType.S_ORDER_REFERENCE);
@@ -64,7 +63,8 @@ public class SOrderLinesPixiApiImporterTest {
             Assert.assertTrue("results should not be null.", results != null);
             Assert.assertFalse("results  should not be empty.", results.isEmpty());
         } catch (Exception e) {
-            Assert.assertTrue("should not have thrown an Exception: " + e.getMessage(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -86,8 +86,8 @@ public class SOrderLinesPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -117,8 +117,8 @@ public class SOrderLinesPixiApiImporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }

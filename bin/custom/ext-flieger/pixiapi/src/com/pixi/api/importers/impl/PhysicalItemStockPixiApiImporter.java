@@ -97,8 +97,9 @@ public class PhysicalItemStockPixiApiImporter extends AbstractPixiApiImporter {
             List<PixiFunctionParameter> functionParameters) throws SOAPResponseErrorException,
             SOAPException {
         List<IntegerResult> results = new ArrayList<IntegerResult>();
-        SOAPMessage request = getPixiSoapApi().buildMessage(
-                PixiFunction.GET_PHYSICAL_ITEM_STOCK, functionParameters);
+        checkValidParameters(functionParameters);
+        SOAPMessage request = getPixiSoapApi().buildMessage(PixiFunction.GET_PHYSICAL_ITEM_STOCK,
+                functionParameters);
         SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(request);
         if (response != null) {
             String responseValue = response.getSOAPBody().getFirstChild().getTextContent();

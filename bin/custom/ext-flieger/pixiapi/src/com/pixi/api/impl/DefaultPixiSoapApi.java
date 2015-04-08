@@ -53,7 +53,7 @@ public class DefaultPixiSoapApi implements PixiSOAPAPI {
         PropertiesUtil prop = PropertiesUtil.getInstance();
         String userAndPass = String.valueOf(prop.getUsername() + ":" + prop.getPassword());
         String authorization = Base64.encodeBase64String(userAndPass.getBytes());
-        // FIXME: code a trustManager to bypass the certificate
+        // FIXME: install a trustManager to bypass the certificate
         return authorization;
     }
 
@@ -102,7 +102,7 @@ public class DefaultPixiSoapApi implements PixiSOAPAPI {
 
     /**
      * 
-     * Send a request to Pixi API Webservice, accordingly to the given message.
+     * Send a request to Pixi API Webservice, according to the given message.
      * 
      * @param message
      *            The SOAPMessage containing the function that will be sent to Pixi API.
@@ -116,7 +116,7 @@ public class DefaultPixiSoapApi implements PixiSOAPAPI {
     public SOAPMessage sendPixiWebServiceRequest(final SOAPMessage message)
             throws SOAPResponseErrorException, SOAPException {
         if (message == null) {
-            throw new InvalidParameterException("No request to sendo to Pixi Webservice API");
+            throw new InvalidParameterException("No request to send to Pixi Webservice API");
         }
         PropertiesUtil prop = PropertiesUtil.getInstance();
         URL domain;

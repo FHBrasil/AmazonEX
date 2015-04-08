@@ -61,7 +61,8 @@ public class OrderNumberByOrderNumberExternalPixiApiImporterTest {
             IntegerResult result = results.get(0);
             Assert.assertTrue("Results should not be empty.", result.getValue() > 0);
         } catch (Exception e) {
-            Assert.assertTrue("should not have thrown an Exception: " + e.getMessage(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -83,8 +84,8 @@ public class OrderNumberByOrderNumberExternalPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -119,8 +120,8 @@ public class OrderNumberByOrderNumberExternalPixiApiImporterTest {
                     "Should have thrown an exception of type InvalidParameterException",
                     expectedException.getClass(), actualException.getClass());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }

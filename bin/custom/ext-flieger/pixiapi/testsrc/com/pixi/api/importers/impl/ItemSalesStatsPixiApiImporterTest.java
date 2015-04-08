@@ -15,11 +15,13 @@ import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.impl.DefaultPixiSoapApi;
 import com.pixi.api.result.ItemSalesStatsResult;
 
+import de.hybris.bootstrap.annotations.UnitTest;
+
 /**
  * @author jfelipe
  *
  */
-// @UnitTest
+@UnitTest
 public class ItemSalesStatsPixiApiImporterTest {
 
     private ItemSalesStatsPixiApiImporter fixture;
@@ -53,11 +55,11 @@ public class ItemSalesStatsPixiApiImporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramEanUpc = new PixiFunctionParameter();
             paramEanUpc.setType(PixiParameterType.EAN_UPC);
-            paramEanUpc.setValue("4707300150096");
+            paramEanUpc.setValue("4030936765076");
             parameters.add(paramEanUpc);
             PixiFunctionParameter paramItemNumber = new PixiFunctionParameter();
             paramItemNumber.setType(PixiParameterType.ITEM_NUMBER_INTERNAL);
-            paramItemNumber.setValue("2012000028951");
+            paramItemNumber.setValue("");
             parameters.add(paramItemNumber);
             //
             List<ItemSalesStatsResult> results = fixture.importData(parameters);
@@ -67,7 +69,8 @@ public class ItemSalesStatsPixiApiImporterTest {
             Assert.assertTrue("results should not be null.", result != null);
             Assert.assertTrue("Results should not be empty.", result.getOpen1SS() > -1);
         } catch (Exception e) {
-            Assert.assertTrue("should not have thrown an Exception: " + e.getMessage(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -89,8 +92,8 @@ public class ItemSalesStatsPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -120,8 +123,8 @@ public class ItemSalesStatsPixiApiImporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }

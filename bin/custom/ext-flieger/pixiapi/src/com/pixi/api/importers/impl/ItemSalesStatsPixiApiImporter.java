@@ -26,6 +26,7 @@ import com.pixi.api.result.ItemSalesStatsResult;
  * 
  * @author jfelipe
  */
+// @UnitTest
 public class ItemSalesStatsPixiApiImporter extends AbstractPixiApiImporter {
 
     private static final Logger LOG = Logger.getLogger(ItemSalesStatsPixiApiImporter.class);
@@ -97,54 +98,55 @@ public class ItemSalesStatsPixiApiImporter extends AbstractPixiApiImporter {
     private List<ItemSalesStatsResult> importItemSalesStats(
             List<PixiFunctionParameter> functionParameters) throws SOAPResponseErrorException,
             SOAPException {
-        // FIXME: this request is not working and I don't know why...
         List<ItemSalesStatsResult> results = new ArrayList<ItemSalesStatsResult>();
         ItemSalesStatsResult result = null;
         checkValidParameters(functionParameters);
-        SOAPMessage request = getPixiSoapApi().buildMessage(
-                PixiFunction.GET_ITEM_SALES_STATS, functionParameters);
+        SOAPMessage request = getPixiSoapApi().buildMessage(PixiFunction.GET_ITEM_SALES_STATS,
+                functionParameters);
         SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(request);
         if (response != null) {
             Node responseXml = null;
             responseXml = response.getSOAPBody()
                     .getElementsByTagName(PixiApiResponseTags.SQLROWSET1.getValue()).item(0);
             if (responseXml != null) {
-                Node row = responseXml.getChildNodes().item(0);
-                result = new ItemSalesStatsResult();
-                for (int j = 0; j < row.getChildNodes().getLength();) {
-                    Node currentTag = row.getChildNodes().item(0);
-                    String currentTagValue = currentTag.getTextContent().trim();
-                    switch (currentTag.getNodeName()) {
-                        case OPEN_1_SS:
-                            int open1SS = Integer.parseInt(currentTagValue);
-                            result.setOpen1SS(open1SS);
-                            break;
-                        case DAYS_FOR_STATS:
-                            int daysForStats = Integer.parseInt(currentTagValue);
-                            result.setDaysForStats(daysForStats);
-                            break;
-                        case SALES_SINCE_DAYS:
-                            int salesSinceDays = Integer.parseInt(currentTagValue);
-                            result.setSalesSinceDays(salesSinceDays);
-                            break;
-                        case ABC:
-                            result.setAbc(currentTagValue);
-                            break;
-                        case SALES_30:
-                            int sales30 = Integer.parseInt(currentTagValue);
-                            result.setSales30(sales30);
-                            break;
-                        case SALES_120:
-                            int sales120 = Integer.parseInt(currentTagValue);
-                            result.setSales120(sales120);
-                            break;
-                        case SALES_365:
-                            int sales365 = Integer.parseInt(currentTagValue);
-                            result.setSales365(sales365);
-                            break;
+                for (int i = 0; i < responseXml.getChildNodes().getLength(); i++) {
+                    Node row = responseXml.getChildNodes().item(i);
+                    result = new ItemSalesStatsResult();
+                    for (int j = 0; j < row.getChildNodes().getLength(); j++) {
+                        Node currentTag = row.getChildNodes().item(j);
+                        String currentTagValue = currentTag.getTextContent().trim();
+                        switch (currentTag.getNodeName()) {
+                            case OPEN_1_SS:
+                                int open1SS = Integer.parseInt(currentTagValue);
+                                result.setOpen1SS(open1SS);
+                                break;
+                            case DAYS_FOR_STATS:
+                                int daysForStats = Integer.parseInt(currentTagValue);
+                                result.setDaysForStats(daysForStats);
+                                break;
+                            case SALES_SINCE_DAYS:
+                                int salesSinceDays = Integer.parseInt(currentTagValue);
+                                result.setSalesSinceDays(salesSinceDays);
+                                break;
+                            case ABC:
+                                result.setAbc(currentTagValue);
+                                break;
+                            case SALES_30:
+                                int sales30 = Integer.parseInt(currentTagValue);
+                                result.setSales30(sales30);
+                                break;
+                            case SALES_120:
+                                int sales120 = Integer.parseInt(currentTagValue);
+                                result.setSales120(sales120);
+                                break;
+                            case SALES_365:
+                                int sales365 = Integer.parseInt(currentTagValue);
+                                result.setSales365(sales365);
+                                break;
+                        }
                     }
+                    results.add(result);
                 }
-                results.add(result);
             }
         }
         return results;

@@ -28,6 +28,7 @@ import com.pixi.api.result.InvoiceLineResult;
 public class InvoiceLinesPixiApiImporter extends AbstractPixiApiImporter {
 
     private static final Logger LOG = Logger.getLogger(InvoiceLinesPixiApiImporter.class);
+    //
     private static final String INVOICE_LINE_KEY = "InvoiceLineKey";
     private static final String ORDER_LINE_KEY = "OrderLineKey";
     private static final String ARTICLE_NUMBER = "ArtNr";
@@ -57,8 +58,7 @@ public class InvoiceLinesPixiApiImporter extends AbstractPixiApiImporter {
      */
     public InvoiceLinesPixiApiImporter() {
         super();
-        validParameters.add(PixiParameterType.SINCE_DATE);
-        validParameters.add(PixiParameterType.ROW_COUNT);
+        validParameters.add(PixiParameterType.INVOICE_NUMBER);
     }
 
 
@@ -67,8 +67,7 @@ public class InvoiceLinesPixiApiImporter extends AbstractPixiApiImporter {
      * 
      * @param functionParameters
      *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
-     *            - {@link PixiParameterType#SINCE_DATE}<br/>
-     *            - {@link PixiParameterType#ROW_COUNT}<br/>
+     *            - {@link PixiParameterType#INVOICE_NUMBER}<br/>
      * @return
      *         A Set of {@link String} containing the results from Pixi API
      * @throws SOAPException
@@ -94,8 +93,7 @@ public class InvoiceLinesPixiApiImporter extends AbstractPixiApiImporter {
      * 
      * @param functionParameters
      *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
-     *            - {@link PixiParameterType#SINCE_DATE}<br/>
-     *            - {@link PixiParameterType#ROW_COUNT}<br/>
+     *            - {@link PixiParameterType#INVOICE_NUMBER}<br/>
      * @return
      *         A Set of {@link String} containing the results from Pixi API
      * @throws SOAPException

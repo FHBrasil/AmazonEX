@@ -56,11 +56,11 @@ public class PhysicalItemStockPixiApiImporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramItemKey = new PixiFunctionParameter();
             paramItemKey.setType(PixiParameterType.ITEM_KEY);
-            paramItemKey.setValue("740");
+            paramItemKey.setValue("");
             parameters.add(paramItemKey);
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
-            paramEan.setValue("");
+            paramEan.setValue("2012000020140");
             parameters.add(paramEan);
             PixiFunctionParameter paramItemNumberSupplier = new PixiFunctionParameter();
             paramItemNumberSupplier.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
@@ -80,8 +80,8 @@ public class PhysicalItemStockPixiApiImporterTest {
             IntegerResult result = results.get(0);
             Assert.assertTrue("Results should not be empty.", result.getValue() > 0);
         } catch (Exception e) {
-            e.printStackTrace();
-            Assert.assertTrue("should not have thrown an Exception: " + e.getMessage(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -103,8 +103,8 @@ public class PhysicalItemStockPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -134,8 +134,8 @@ public class PhysicalItemStockPixiApiImporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }
