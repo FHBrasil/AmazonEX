@@ -1,7 +1,9 @@
 package com.pixi.api.exporters.impl;
 
 import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -19,7 +21,7 @@ import de.hybris.bootstrap.annotations.UnitTest;
  * @author jfelipe
  *
  */
-// @UnitTest
+@UnitTest
 public class InvoicePaidPixiApiExporterTest {
 
     private InvoicePaidPixiApiExporter fixture;
@@ -47,32 +49,30 @@ public class InvoicePaidPixiApiExporterTest {
     @Test
     public void importDataTest() {
         Assert.assertTrue("not implemented yet!", false);
-        // !!!!!!!!!! PELO AMOR DE JESUIS, NÃO ME RODE ESSE TESTE !!!!!!!!!!
-        // try {
-        // List<PixiFunctionParameter> parameters = new
-        // ArrayList<PixiFunctionParameter>();
-        // PixiFunctionParameter paramInvoiceNumber = new PixiFunctionParameter();
-        // paramInvoiceNumber.setType(PixiParameterType.INVOICE_NUMBER);
-        // paramInvoiceNumber.setValue("1");
-        // parameters.add(paramInvoiceNumber);
-        // PixiFunctionParameter paramPaid = new PixiFunctionParameter();
-        // paramPaid.setType(PixiParameterType.PAID);
-        // paramPaid.setValue("1");
-        // parameters.add(paramPaid);
-        // PixiFunctionParameter paramPaidDate = new PixiFunctionParameter();
-        // paramPaidDate.setType(PixiParameterType.PAID_DATE);
-        // Calendar yesterday = Calendar.getInstance();
-        // yesterday.add(Calendar.DAY_OF_MONTH, -1);
-        // String formattedYesterday = new SimpleDateFormat("yyyy-MM-dd").format(yesterday
-        // .getTime());
-        // paramPaidDate.setValue(formattedYesterday);
-        // parameters.add(paramPaidDate);
-        // //
-        // fixture.exportData(parameters);
-        // } catch (Exception e) {
-        // Assert.assertTrue("Should not have thrown an exception" + e.getMessage(),
-        // false);
-        // }
+        try {
+            List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
+            PixiFunctionParameter paramInvoiceNumber = new PixiFunctionParameter();
+            paramInvoiceNumber.setType(PixiParameterType.INVOICE_NUMBER);
+            paramInvoiceNumber.setValue("SHOP00369");
+            parameters.add(paramInvoiceNumber);
+            PixiFunctionParameter paramPaid = new PixiFunctionParameter();
+            paramPaid.setType(PixiParameterType.PAID);
+            paramPaid.setValue("1");
+            parameters.add(paramPaid);
+            PixiFunctionParameter paramPaidDate = new PixiFunctionParameter();
+            paramPaidDate.setType(PixiParameterType.PAID_DATE);
+            paramPaidDate.setValue("");
+            parameters.add(paramPaidDate);
+            PixiFunctionParameter paramEventId = new PixiFunctionParameter();
+            paramEventId.setType(PixiParameterType.EVENT_ID);
+            paramEventId.setValue("PPZ");
+            parameters.add(paramEventId);
+            //
+            fixture.exportData(parameters);
+        } catch (Exception e) {
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
+        }
     }
 
 
@@ -93,8 +93,8 @@ public class InvoicePaidPixiApiExporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -124,8 +124,8 @@ public class InvoicePaidPixiApiExporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }

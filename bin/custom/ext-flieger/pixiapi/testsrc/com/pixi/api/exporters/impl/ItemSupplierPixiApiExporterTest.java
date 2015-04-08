@@ -13,8 +13,6 @@ import org.junit.rules.ExpectedException;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 
-import de.hybris.bootstrap.annotations.UnitTest;
-
 /**
  * @author jfelipe
  *
@@ -47,40 +45,38 @@ public class ItemSupplierPixiApiExporterTest {
     @Test
     public void importDataTest() {
         Assert.assertTrue("not implemented yet!", false);
-        // !!!!!!!!!! PELO AMOR DE JESUIS, NÃO ME RODE ESSE TESTE !!!!!!!!!!
-        // try {
-        // List<PixiFunctionParameter> parameters = new
-        // ArrayList<PixiFunctionParameter>();
-        // PixiFunctionParameter paramItemKey = new PixiFunctionParameter();
-        // paramItemKey.setType(PixiParameterType.ITEM_KEY);
-        // paramItemKey.setValue("1");
-        // parameters.add(paramItemKey);
-        // PixiFunctionParameter paramItemNumberInternal = new PixiFunctionParameter();
-        // paramItemNumberInternal.setType(PixiParameterType.ITEM_NUMBER_INTERNAL);
-        // paramItemNumberInternal.setValue("1");
-        // parameters.add(paramItemNumberInternal);
-        // PixiFunctionParameter paramSupplierNumber = new PixiFunctionParameter();
-        // paramSupplierNumber.setType(PixiParameterType.SUPPLIER_NUMBER);
-        // paramSupplierNumber.setValue("1");
-        // parameters.add(paramSupplierNumber);
-        // PixiFunctionParameter paramSupplierPrice = new PixiFunctionParameter();
-        // paramSupplierPrice.setType(PixiParameterType.SUPPLIER_PRICE);
-        // paramSupplierPrice.setValue("1");
-        // parameters.add(paramSupplierPrice);
-        // PixiFunctionParameter paramEan = new PixiFunctionParameter();
-        // paramEan.setType(PixiParameterType.EAN);
-        // paramEan.setValue("1");
-        // parameters.add(paramEan);
-        // PixiFunctionParameter paramItemNumberSupplier = new PixiFunctionParameter();
-        // paramItemNumberSupplier.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
-        // paramItemNumberSupplier.setValue("1");
-        // parameters.add(paramItemNumberSupplier);
-        // //
-        // fixture.exportData(parameters);
-        // } catch (Exception e) {
-        // Assert.assertTrue("Should not have thrown an exception" + e.getMessage(),
-        // false);
-        // }
+        try {
+            List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
+            PixiFunctionParameter paramItemKey = new PixiFunctionParameter();
+            paramItemKey.setType(PixiParameterType.ITEM_KEY);
+            paramItemKey.setValue("1");
+            parameters.add(paramItemKey);
+            PixiFunctionParameter paramItemNumberInternal = new PixiFunctionParameter();
+            paramItemNumberInternal.setType(PixiParameterType.ITEM_NUMBER_INTERNAL);
+            paramItemNumberInternal.setValue("1");
+            parameters.add(paramItemNumberInternal);
+            PixiFunctionParameter paramSupplierNumber = new PixiFunctionParameter();
+            paramSupplierNumber.setType(PixiParameterType.SUPPLIER_NUMBER);
+            paramSupplierNumber.setValue("1");
+            parameters.add(paramSupplierNumber);
+            PixiFunctionParameter paramSupplierPrice = new PixiFunctionParameter();
+            paramSupplierPrice.setType(PixiParameterType.SUPPLIER_PRICE);
+            paramSupplierPrice.setValue("1");
+            parameters.add(paramSupplierPrice);
+            PixiFunctionParameter paramEan = new PixiFunctionParameter();
+            paramEan.setType(PixiParameterType.EAN);
+            paramEan.setValue("1");
+            parameters.add(paramEan);
+            PixiFunctionParameter paramItemNumberSupplier = new PixiFunctionParameter();
+            paramItemNumberSupplier.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
+            paramItemNumberSupplier.setValue("1");
+            parameters.add(paramItemNumberSupplier);
+            //
+            fixture.exportData(parameters);
+        } catch (Exception e) {
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
+        }
     }
 
 
@@ -101,8 +97,8 @@ public class ItemSupplierPixiApiExporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 

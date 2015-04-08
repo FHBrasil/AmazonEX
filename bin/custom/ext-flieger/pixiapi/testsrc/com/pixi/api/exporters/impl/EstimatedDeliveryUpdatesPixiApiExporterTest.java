@@ -19,7 +19,7 @@ import de.hybris.bootstrap.annotations.UnitTest;
  * @author jfelipe
  *
  */
-// @UnitTest
+@UnitTest
 public class EstimatedDeliveryUpdatesPixiApiExporterTest {
 
     private EstimatedDeliveryUpdatesPixiApiExporter fixture;
@@ -47,28 +47,26 @@ public class EstimatedDeliveryUpdatesPixiApiExporterTest {
     @Test
     public void importDataTest() {
         Assert.assertTrue("not implemented yet!", false);
-        // !!!!!!!!!!!!!!!!!! PELO AMOR DE JESUIS NÃO ME RODE ESSE TESTE !!!!!!!!!!!!!!!!!
-        // try {
-        // List<PixiFunctionParameter> parameters = new
-        // ArrayList<PixiFunctionParameter>();
-        // PixiFunctionParameter paramOrderNumber = new PixiFunctionParameter();
-        // paramOrderNumber.setType(PixiParameterType.ORDER_NUMBER);
-        // paramOrderNumber.setValue("1");
-        // parameters.add(paramOrderNumber);
-        // PixiFunctionParameter paramShopOrderNumber = new PixiFunctionParameter();
-        // paramShopOrderNumber.setType(PixiParameterType.SHOP_ORDER_NUMBER);
-        // paramShopOrderNumber.setValue("1");
-        // parameters.add(paramShopOrderNumber);
-        // PixiFunctionParameter paramItemRef = new PixiFunctionParameter();
-        // paramItemRef.setType(PixiParameterType.ITEM_REF);
-        // paramItemRef.setValue("1");
-        // parameters.add(paramItemRef);
-        // //
-        // fixture.exportData(parameters);
-        // } catch (Exception e) {
-        // Assert.assertTrue("Should not have thrown an exception" + e.getMessage(),
-        // false);
-        // }
+        try {
+            List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
+            PixiFunctionParameter paramOrderNumber = new PixiFunctionParameter();
+            paramOrderNumber.setType(PixiParameterType.ORDER_NUMBER);
+            paramOrderNumber.setValue("1");
+            parameters.add(paramOrderNumber);
+            PixiFunctionParameter paramShopOrderNumber = new PixiFunctionParameter();
+            paramShopOrderNumber.setType(PixiParameterType.SHOP_ORDER_NUMBER);
+            paramShopOrderNumber.setValue("1");
+            parameters.add(paramShopOrderNumber);
+            PixiFunctionParameter paramItemRef = new PixiFunctionParameter();
+            paramItemRef.setType(PixiParameterType.ITEM_REF);
+            paramItemRef.setValue("1");
+            parameters.add(paramItemRef);
+            //
+            fixture.exportData(parameters);
+        } catch (Exception e) {
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
+        }
     }
 
 
@@ -89,8 +87,8 @@ public class EstimatedDeliveryUpdatesPixiApiExporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 

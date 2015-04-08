@@ -13,8 +13,6 @@ import org.junit.rules.ExpectedException;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 
-import de.hybris.bootstrap.annotations.UnitTest;
-
 /**
  * @author jfelipe
  *
@@ -47,28 +45,26 @@ public class StockPixiApiExporterTest {
     @Test
     public void importDataTest() {
         Assert.assertTrue("not implemented yet!", false);
-        // !!!!!!!!!! PELO AMOR DE JESUIS, NÃO ME RODE ESSE TESTE !!!!!!!!!!
-        // try {
-        // List<PixiFunctionParameter> parameters = new
-        // ArrayList<PixiFunctionParameter>();
-        // PixiFunctionParameter paramEanUpc = new PixiFunctionParameter();
-        // paramEanUpc.setType(PixiParameterType.EAN_UPC);
-        // paramEanUpc.setValue("1");
-        // parameters.add(paramEanUpc);
-        // PixiFunctionParameter paramBinName = new PixiFunctionParameter();
-        // paramBinName.setType(PixiParameterType.BIN_NAME);
-        // paramBinName.setValue("1");
-        // parameters.add(paramBinName);
-        // PixiFunctionParameter paramNewStockQuantity = new PixiFunctionParameter();
-        // paramNewStockQuantity.setType(PixiParameterType.NEW_STOCK_QUANTITY);
-        // paramNewStockQuantity.setValue("1");
-        // parameters.add(paramNewStockQuantity);
-        // //
-        // fixture.exportData(parameters);
-        // } catch (Exception e) {
-        // Assert.assertTrue("Should not have thrown an exception" + e.getMessage(),
-        // false);
-        // }
+        try {
+            List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
+            PixiFunctionParameter paramEanUpc = new PixiFunctionParameter();
+            paramEanUpc.setType(PixiParameterType.EAN_UPC);
+            paramEanUpc.setValue("4008600030898");
+            parameters.add(paramEanUpc);
+            PixiFunctionParameter paramBinName = new PixiFunctionParameter();
+            paramBinName.setType(PixiParameterType.BIN_NAME);
+            paramBinName.setValue("");
+            parameters.add(paramBinName);
+            PixiFunctionParameter paramNewStockQuantity = new PixiFunctionParameter();
+            paramNewStockQuantity.setType(PixiParameterType.NEW_STOCK_QUANTITY);
+            paramNewStockQuantity.setValue("666");
+            parameters.add(paramNewStockQuantity);
+            //
+            fixture.exportData(parameters);
+        } catch (Exception e) {
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
+        }
     }
 
 
@@ -89,8 +85,8 @@ public class StockPixiApiExporterTest {
             Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
                     + "should not be null.", actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 
@@ -120,8 +116,8 @@ public class StockPixiApiExporterTest {
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
-            Assert.assertTrue("Should not have thrown an exception of type "
-                    + e.getClass().getName(), false);
+            Assert.assertTrue("Should not have thrown an exception. Type: "
+                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
         }
     }
 }
