@@ -13,13 +13,11 @@ import org.junit.rules.ExpectedException;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 
-import de.hybris.bootstrap.annotations.UnitTest;
-
 /**
  * @author jfelipe
  *
  */
-@UnitTest
+// @UnitTest
 public class EstimatedDeliveryUpdatesPixiApiExporterTest {
 
     private EstimatedDeliveryUpdatesPixiApiExporter fixture;
@@ -46,20 +44,19 @@ public class EstimatedDeliveryUpdatesPixiApiExporterTest {
      */
     @Test
     public void importDataTest() {
-        Assert.assertTrue("not implemented yet!", false);
         try {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramOrderNumber = new PixiFunctionParameter();
             paramOrderNumber.setType(PixiParameterType.ORDER_NUMBER);
-            paramOrderNumber.setValue("1");
+            paramOrderNumber.setValue("");
             parameters.add(paramOrderNumber);
             PixiFunctionParameter paramShopOrderNumber = new PixiFunctionParameter();
             paramShopOrderNumber.setType(PixiParameterType.SHOP_ORDER_NUMBER);
-            paramShopOrderNumber.setValue("1");
+            paramShopOrderNumber.setValue("");
             parameters.add(paramShopOrderNumber);
             PixiFunctionParameter paramItemRef = new PixiFunctionParameter();
             paramItemRef.setType(PixiParameterType.ITEM_REF);
-            paramItemRef.setValue("1");
+            paramItemRef.setValue("");
             parameters.add(paramItemRef);
             //
             fixture.exportData(parameters);

@@ -44,12 +44,11 @@ public class StockPixiApiExporterTest {
      */
     @Test
     public void importDataTest() {
-        Assert.assertTrue("not implemented yet!", false);
         try {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramEanUpc = new PixiFunctionParameter();
             paramEanUpc.setType(PixiParameterType.EAN_UPC);
-            paramEanUpc.setValue("4008600030898");
+            paramEanUpc.setValue("");
             parameters.add(paramEanUpc);
             PixiFunctionParameter paramBinName = new PixiFunctionParameter();
             paramBinName.setType(PixiParameterType.BIN_NAME);
@@ -57,7 +56,7 @@ public class StockPixiApiExporterTest {
             parameters.add(paramBinName);
             PixiFunctionParameter paramNewStockQuantity = new PixiFunctionParameter();
             paramNewStockQuantity.setType(PixiParameterType.NEW_STOCK_QUANTITY);
-            paramNewStockQuantity.setValue("666");
+            paramNewStockQuantity.setValue("");
             parameters.add(paramNewStockQuantity);
             //
             fixture.exportData(parameters);

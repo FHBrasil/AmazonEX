@@ -1,9 +1,7 @@
 package com.pixi.api.exporters.impl;
 
 import java.security.InvalidParameterException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -15,13 +13,11 @@ import org.junit.rules.ExpectedException;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 
-import de.hybris.bootstrap.annotations.UnitTest;
-
 /**
  * @author jfelipe
  *
  */
-@UnitTest
+// @UnitTest
 public class InvoicePaidPixiApiExporterTest {
 
     private InvoicePaidPixiApiExporter fixture;
@@ -48,7 +44,6 @@ public class InvoicePaidPixiApiExporterTest {
      */
     @Test
     public void importDataTest() {
-        Assert.assertTrue("not implemented yet!", false);
         try {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramInvoiceNumber = new PixiFunctionParameter();

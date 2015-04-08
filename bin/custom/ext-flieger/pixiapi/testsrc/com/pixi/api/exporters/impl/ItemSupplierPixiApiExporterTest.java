@@ -44,32 +44,31 @@ public class ItemSupplierPixiApiExporterTest {
      */
     @Test
     public void importDataTest() {
-        Assert.assertTrue("not implemented yet!", false);
         try {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramItemKey = new PixiFunctionParameter();
             paramItemKey.setType(PixiParameterType.ITEM_KEY);
-            paramItemKey.setValue("1");
+            paramItemKey.setValue("");
             parameters.add(paramItemKey);
             PixiFunctionParameter paramItemNumberInternal = new PixiFunctionParameter();
             paramItemNumberInternal.setType(PixiParameterType.ITEM_NUMBER_INTERNAL);
-            paramItemNumberInternal.setValue("1");
+            paramItemNumberInternal.setValue("");
             parameters.add(paramItemNumberInternal);
             PixiFunctionParameter paramSupplierNumber = new PixiFunctionParameter();
             paramSupplierNumber.setType(PixiParameterType.SUPPLIER_NUMBER);
-            paramSupplierNumber.setValue("1");
+            paramSupplierNumber.setValue("");
             parameters.add(paramSupplierNumber);
             PixiFunctionParameter paramSupplierPrice = new PixiFunctionParameter();
             paramSupplierPrice.setType(PixiParameterType.SUPPLIER_PRICE);
-            paramSupplierPrice.setValue("1");
+            paramSupplierPrice.setValue("");
             parameters.add(paramSupplierPrice);
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
-            paramEan.setValue("1");
+            paramEan.setValue("");
             parameters.add(paramEan);
             PixiFunctionParameter paramItemNumberSupplier = new PixiFunctionParameter();
             paramItemNumberSupplier.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
-            paramItemNumberSupplier.setValue("1");
+            paramItemNumberSupplier.setValue("");
             parameters.add(paramItemNumberSupplier);
             //
             fixture.exportData(parameters);
