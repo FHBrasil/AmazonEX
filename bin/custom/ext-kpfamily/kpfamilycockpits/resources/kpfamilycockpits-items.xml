@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2014 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="items.xsd">
+    
+    <itemtypes>
+        <itemtype code="KPFamilyDivImageComponent" autocreate="true" generate="true"
+                extends="CMSParagraphComponent">
+            <attributes>
+                <attribute qualifier="image" type="localized:Media">
+                    <persistence type="property"/>
+                    <description>
+                        Attribute that stores the localized media of the paragraph
+                    </description>
+                </attribute>
+                <attribute qualifier="cssClass" type="java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="title" type="java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="text" type="java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="hyperlink" type="java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+    </itemtypes>        
+
+</items>

@@ -758,3 +758,9 @@ INSERT_UPDATE CategoryPage;$contentCV[unique=true];uid[unique=true];name;masterT
 ;;productList;Product List;ProductListPageTemplate;false;
 ;;productGrid;Product Grid;ProductGridPageTemplate;true;
 ;;category;Default Category Page;CategoryPageTemplate;false;
+
+
+# Insert custom Valid Component Types into sections
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;Section1;LandingPage2Template;KPFamilyDivImageComponent;narrow
+

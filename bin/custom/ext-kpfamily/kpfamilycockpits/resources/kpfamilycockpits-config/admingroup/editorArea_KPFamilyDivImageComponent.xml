@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editor>
+    <group qualifier="editorial" visible="true" initially-opened="true">
+        <label lang="de">Editorial</label>
+        <label lang="en">Editorial</label>
+        <property qualifier="KPFamilyDivImageComponent.title" />
+        <property qualifier="KPFamilyDivImageComponent.text" />
+        <property qualifier="KPFamilyDivImageComponent.cssClass" />
+        <property qualifier="KPFamilyDivImageComponent.hyperlink" />
+        <property qualifier="KPFamilyDivImageComponent.image"
+                editor="simpleMediaReferenceSelector">
+            <parameter>
+                <name>mimeTypes</name>
+                <value>image/jpeg;image/gif</value>
+            </parameter>
+            <parameter>
+                <name>mimeTypes</name>
+                <value>image/jpeg;image/gif</value>
+            </parameter>
+            <parameter>
+                <name>allowCreate</name>
+                <value>true</value>
+            </parameter>
+            <parameter>
+                <name>restrictToCreateTypes</name>
+                <value>Media</value>
+            </parameter>
+            <parameter>
+                <name>celumMediaFormat</name>
+                <value>picture</value>
+            </parameter>
+        </property>
+    </group>
+</editor>
