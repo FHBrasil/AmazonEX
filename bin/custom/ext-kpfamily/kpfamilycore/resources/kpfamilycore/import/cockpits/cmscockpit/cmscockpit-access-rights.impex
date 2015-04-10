@@ -4,7 +4,7 @@
 
 $START_USERRIGHTS;;;;;;;;;
 Type;UID;MemberOfGroups;Password;Target;read;change;create;remove;change_perm
-UserGroup;cmsmanagergroup;cockpitgroup,employeegroup;;;;;;;
+UserGroup;cmsmanagergroup;cockpitgroup,employeegroup,admingroup;;;;;;;
 
 # general
 ;;;;Item;+;;;;;
@@ -85,7 +85,7 @@ UserGroup;cmsmanagergroup;cockpitgroup,employeegroup;;;;;;;
 ;;;;AccountNavigationCollectionComponent;+;+;+;+;+;
 ;;;;JspIncludeComponent;+;+;+;+;+;
 ;;;;AccountBookmarkComponent;+;+;+;+;+;
-;;;;KPFamilyDivImageComponent;+;+;+;+;+;
+;;;;KPFamilyParagraphComponent;+;+;+;+;+;
 
 # Access Rights for Products & Catalog;;;;;;;;;
 ;;;;ItemSyncTimestamp;+;;;

@@ -6,10 +6,10 @@ import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.type.ComposedType;
 import org.apache.log4j.Logger;
 
-public class KPFamilyDivImageComponent extends GeneratedKPFamilyDivImageComponent
+public class KPFamilyParagraphComponent extends GeneratedKPFamilyParagraphComponent
 {
 	@SuppressWarnings("unused")
-	private final static Logger LOG = Logger.getLogger( KPFamilyDivImageComponent.class.getName() );
+	private final static Logger LOG = Logger.getLogger( KPFamilyParagraphComponent.class.getName() );
 	
 	@Override
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException
