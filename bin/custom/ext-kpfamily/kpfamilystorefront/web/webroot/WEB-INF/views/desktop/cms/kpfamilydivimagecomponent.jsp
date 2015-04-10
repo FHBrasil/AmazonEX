@@ -5,9 +5,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:url var="imageUrl" value="${image.url}"/>
+<c:url var="customHyperlink" value="${hyperlink}"/>
 
 <div class="${cssClass}">
-    <a href="${hyperlink}">
+    <a href="${customHyperlink}">
        <img src="${imageUrl}">
         <div>
             <h3>${title}</h3>
