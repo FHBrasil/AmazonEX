@@ -4,15 +4,23 @@
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:url var="imageUrl" value="${image.url}"/>
-<c:url var="customHyperlink" value="${hyperlink}"/>
+<c:if test="${component.visible}">
 
 <div class="${cssClass}">
+    <c:choose>
+    <c:when test="${not empty hyperlink}">
+        <c:url var="customHyperlink" value="${hyperlink}" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="customHyperlink" value="#" />
+    </c:otherwise>
+    </c:choose>
     <a href="${customHyperlink}">
-       <img src="${imageUrl}">
+        <img src="${backgroundImage.url}">
         <div>
             <h3>${title}</h3>
             <span>${text}</span>
         </div>
     </a>
 </div>
+</c:if>
