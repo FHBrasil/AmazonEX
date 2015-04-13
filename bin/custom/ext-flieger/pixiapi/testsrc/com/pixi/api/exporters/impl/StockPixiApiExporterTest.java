@@ -13,11 +13,13 @@ import org.junit.rules.ExpectedException;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 
+import de.hybris.bootstrap.annotations.UnitTest;
+
 /**
  * @author jfelipe
  *
  */
-// @UnitTest
+@UnitTest
 public class StockPixiApiExporterTest {
 
     private StockPixiApiExporter fixture;
