@@ -11,11 +11,11 @@
     <group qualifier="editorial" visible="true" initially-opened="true">
         <label lang="de">Redaktionell</label>
         <label lang="en">Editorial</label>
-        <property qualifier="KPFamilyParagraphComponent.title" />
-        <property qualifier="KPFamilyParagraphComponent.text" />
-        <property qualifier="KPFamilyParagraphComponent.cssClass" />
-        <property qualifier="KPFamilyParagraphComponent.hyperlink" />
-        <property qualifier="KPFamilyParagraphComponent.backgroundImage"
+        <property qualifier="KPCategoryImageComponent.title" />
+        <property qualifier="KPCategoryImageComponent.text" />
+        <property qualifier="KPCategoryImageComponent.cssClass" />
+        <property qualifier="KPCategoryImageComponent.hyperlink" />
+        <property qualifier="KPCategoryImageComponent.backgroundImage"
                 editor="simpleMediaReferenceSelector">
             <parameter>
                 <name>mimeTypes</name>

@@ -85,7 +85,8 @@ UserGroup;cmsmanagergroup;cockpitgroup,employeegroup,admingroup;;;;;;;
 ;;;;AccountNavigationCollectionComponent;+;+;+;+;+;
 ;;;;JspIncludeComponent;+;+;+;+;+;
 ;;;;AccountBookmarkComponent;+;+;+;+;+;
-;;;;KPFamilyParagraphComponent;+;+;+;+;+;
+;;;;KPCategoryImageComponent;+;+;+;+;+;
+;;;;KPContainerComponent;+;+;+;+;+;
 
 # Access Rights for Products & Catalog;;;;;;;;;
 ;;;;ItemSyncTimestamp;+;;;

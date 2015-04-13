@@ -11,11 +11,11 @@
         <group qualifier="Properties" visible="true" initially-opened="true">
             <label lang="en">Properties</label>
             <label lang="de">Eigenschaften</label>
-            <property qualifier="KPFamilyParagraphComponent.title" editorCode="wysiwyg" />
-            <property qualifier="KPFamilyParagraphComponent.text" editorCode="wysiwyg" />
-            <property qualifier="KPFamilyParagraphComponent.cssClass" editorCode="wysiwyg" />
-            <property qualifier="KPFamilyParagraphComponent.hyperlink" editorCode="wysiwyg" />
-            <property qualifier="KPFamilyParagraphComponent.backgroundImage"
+            <property qualifier="KPCategoryImageComponent.title" />
+            <property qualifier="KPCategoryImageComponent.text" />
+            <property qualifier="KPCategoryImageComponent.cssClass" />
+            <property qualifier="KPCategoryImageComponent.hyperlink" />
+            <property qualifier="KPCategoryImageComponent.backgroundImage"
                     editorCode="simpleMediaReferenceSelector" />
         </group>
     </displayed-properties>    

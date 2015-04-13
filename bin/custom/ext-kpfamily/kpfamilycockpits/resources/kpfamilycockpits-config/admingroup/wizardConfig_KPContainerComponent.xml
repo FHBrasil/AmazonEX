@@ -11,12 +11,8 @@
         <group qualifier="Properties" visible="true" initially-opened="true">
             <label lang="en">Properties</label>
             <label lang="de">Eigenschaften</label>
-            <property qualifier="KPCategoryImageComponent.title" />
-            <property qualifier="KPCategoryImageComponent.text" />
-            <property qualifier="KPCategoryImageComponent.cssClass" />
-            <property qualifier="KPCategoryImageComponent.hyperlink" />
-            <property qualifier="KPCategoryImageComponent.backgroundImage"
-                    editorCode="simpleMediaReferenceSelector" />
+            <property qualifier="KPContainerComponent.cssClass" />
+            <property qualifier="KPContainerComponent.components"  />
         </group>
     </displayed-properties>    
 </wizard-config>

@@ -6,9 +6,28 @@
 
 <items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="items.xsd">
+    
+    <collectiontypes>
+        <collectiontype code="ComponentList" elementtype="AbstractCMSComponent"
+                autocreate="true" generate="true" type="list" />
+    </collectiontypes>
+    
     <itemtypes>
-        <itemtype code="KPFamilyParagraphComponent" autocreate="true" generate="true"
-                extends="CMSParagraphComponent">
+        <itemtype code="KPContainerComponent" autocreate="true" generate="true"
+                extends="AbstractCMSComponent"
+                jaloclass="de.kpfamily.cockpits.jalo.KPContainerComponent">
+            <attributes>
+                <attribute qualifier="cssClass" type="java.lang.String">
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="components" type="ComponentList">
+                    <persistence type="property" />
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="KPCategoryImageComponent" autocreate="true" generate="true"
+            extends="CMSParagraphComponent">
             <attributes>
                 <attribute qualifier="title" type="localized:java.lang.String">
                     <persistence type="property" />
@@ -30,5 +49,7 @@
                 </attribute>
             </attributes>
         </itemtype>
+
+
     </itemtypes>
 </items>

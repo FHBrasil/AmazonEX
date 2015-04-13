@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editor>
-    <group qualifier="General" visible="true" initially-opened="true">
+    <group qualifier="General" visible="true" initially-opened="false">
         <label lang="de">Stammdaten</label>
         <label lang="en">General</label>
         <property qualifier="CMSItem.name"/>
@@ -11,33 +11,8 @@
     <group qualifier="editorial" visible="true" initially-opened="true">
         <label lang="de">Redaktionell</label>
         <label lang="en">Editorial</label>
-        <property qualifier="KPCategoryImageComponent.title" />
-        <property qualifier="KPCategoryImageComponent.text" />
-        <property qualifier="KPCategoryImageComponent.cssClass" />
-        <property qualifier="KPCategoryImageComponent.hyperlink" />
-        <property qualifier="KPCategoryImageComponent.backgroundImage"
-                editor="simpleMediaReferenceSelector">
-            <parameter>
-                <name>mimeTypes</name>
-                <value>image/jpeg;image/gif</value>
-            </parameter>
-            <parameter>
-                <name>mimeTypes</name>
-                <value>image/jpeg;image/gif</value>
-            </parameter>
-            <parameter>
-                <name>allowCreate</name>
-                <value>true</value>
-            </parameter>
-            <parameter>
-                <name>restrictToCreateTypes</name>
-                <value>Media</value>
-            </parameter>
-            <parameter>
-                <name>celumMediaFormat</name>
-                <value>picture</value>
-            </parameter>
-        </property>
+        <property qualifier="KPContainerComponent.cssClass" />
+        <property qualifier="KPContainerComponent.components" />
     </group>
     
     <group qualifier="visibility" visible="true" initially-opened="false">

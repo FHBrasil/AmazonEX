@@ -8,11 +8,9 @@
         <common:globalMessages/>
     </div>
 
-    <div class="container text-center teaser150326">
-        <cms:pageSlot position="Section1" var="feature">
-            <cms:component component="${feature}" element="div" class=""/>
-        </cms:pageSlot>
-    </div>
+    <cms:pageSlot position="Section1" var="feature">
+        <cms:component component="${feature}" element="div" class=""/>
+    </cms:pageSlot>
     
     <div class="span-24 section2">
         <cms:pageSlot position="Section2A" var="feature" element="div" class="span-6 zone_a thumbnail_detail">
