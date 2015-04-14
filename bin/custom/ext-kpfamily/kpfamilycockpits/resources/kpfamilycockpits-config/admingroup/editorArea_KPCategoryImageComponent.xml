@@ -11,6 +11,7 @@
     <group qualifier="editorial" visible="true" initially-opened="true">
         <label lang="de">Redaktionell</label>
         <label lang="en">Editorial</label>
+        <lable 
         <property qualifier="KPCategoryImageComponent.title" />
         <property qualifier="KPCategoryImageComponent.text" />
         <property qualifier="KPCategoryImageComponent.cssClass" />
