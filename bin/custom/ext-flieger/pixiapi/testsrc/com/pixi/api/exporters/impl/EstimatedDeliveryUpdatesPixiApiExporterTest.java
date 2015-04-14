@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
+import com.pixi.api.impl.DefaultPixiSoapApi;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 
@@ -37,6 +38,7 @@ public class EstimatedDeliveryUpdatesPixiApiExporterTest {
     @Before
     public void setUp() {
         fixture = new EstimatedDeliveryUpdatesPixiApiExporter();
+        fixture.setPixiSoapApi(new DefaultPixiSoapApi());
     }
 
 

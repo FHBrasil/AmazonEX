@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
+import com.pixi.api.impl.DefaultPixiSoapApi;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 
@@ -37,6 +38,7 @@ public class ItemSupplierPixiApiExporterTest {
     @Before
     public void setUp() {
         fixture = new ItemSupplierPixiApiExporter();
+        fixture.setPixiSoapApi(new DefaultPixiSoapApi());
     }
 
 
@@ -66,7 +68,8 @@ public class ItemSupplierPixiApiExporterTest {
             parameters.add(paramSupplierPrice);
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
-            paramEan.setValue("");
+            paramEan.setValue("4007923665107");                 // older
+            // paramEan.setValue("4045875029899");                 // newer
             parameters.add(paramEan);
             PixiFunctionParameter paramItemNumberSupplier = new PixiFunctionParameter();
             paramItemNumberSupplier.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);

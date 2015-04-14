@@ -58,8 +58,8 @@ public class UpdatedInvoicesPixiApiImporterTest {
             paramDate.setType(PixiParameterType.SINCE_DATE);
             Calendar testDate = Calendar.getInstance();
             testDate.set(Calendar.DAY_OF_MONTH, 1);
-            testDate.set(Calendar.MONTH, 5);
-            testDate.set(Calendar.YEAR, 2013);
+            testDate.set(Calendar.MONTH, 7);
+            testDate.set(Calendar.YEAR, 2014);
             String formattedTestDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(testDate
                     .getTime());
             paramDate.setValue(formattedTestDate);

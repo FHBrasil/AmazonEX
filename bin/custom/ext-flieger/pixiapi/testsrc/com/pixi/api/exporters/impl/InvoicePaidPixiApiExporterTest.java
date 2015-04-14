@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
+import com.pixi.api.impl.DefaultPixiSoapApi;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 
@@ -37,6 +38,7 @@ public class InvoicePaidPixiApiExporterTest {
     @Before
     public void setUp() {
         fixture = new InvoicePaidPixiApiExporter();
+        fixture.setPixiSoapApi(new DefaultPixiSoapApi());
     }
 
 
@@ -50,7 +52,7 @@ public class InvoicePaidPixiApiExporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramInvoiceNumber = new PixiFunctionParameter();
             paramInvoiceNumber.setType(PixiParameterType.INVOICE_NUMBER);
-            paramInvoiceNumber.setValue("SHOP00369");
+            paramInvoiceNumber.setValue("");
             parameters.add(paramInvoiceNumber);
             PixiFunctionParameter paramPaid = new PixiFunctionParameter();
             paramPaid.setType(PixiParameterType.PAID);

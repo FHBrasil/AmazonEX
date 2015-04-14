@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.impl.DefaultPixiSoapApi;
-import com.pixi.api.result.StringResult;
+import com.pixi.api.result.ItemStockResult;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 
@@ -59,7 +59,7 @@ public class ChangedItemStockPixiApiImporterTest {
                     .getTime());
             paramDate.setValue(formattedTestDate);
             parameters.add(paramDate);
-            Set<StringResult> results = fixture.importData(parameters);
+            Set<ItemStockResult> results = fixture.importData(parameters);
             Assert.assertTrue("results should not be null.", results != null);
             Assert.assertFalse("Results should not be empty.", results.isEmpty());
         } catch (Exception e) {

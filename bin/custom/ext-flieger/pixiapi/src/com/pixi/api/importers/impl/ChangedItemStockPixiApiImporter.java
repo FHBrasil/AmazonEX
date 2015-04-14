@@ -1,5 +1,6 @@
 package com.pixi.api.importers.impl;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +19,7 @@ import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.exceptions.SOAPResponseErrorException;
 import com.pixi.api.importers.AbstractPixiApiImporter;
-import com.pixi.api.result.StringResult;
+import com.pixi.api.result.ItemStockResult;
 
 /**
  * Instantiate this class you should not! See {@link com.pixi.api.PixiApiFactory} you
@@ -30,8 +31,14 @@ import com.pixi.api.result.StringResult;
 public class ChangedItemStockPixiApiImporter extends AbstractPixiApiImporter {
 
     private static final Logger LOG = Logger.getLogger(ChangedItemStockPixiApiImporterTest.class);
+    //
     private static final int ROWS_TO_RETRIEVE = 20000;
+    //
+    private static final String ITEM_KEY = "ItemKey";
+    private static final String ITEM_NUMBER_INTERNAL = "ItemNrInt";
     private static final String EANUPC = "EANUPC";
+    private static final String PHYSICAL_STOCK = "PhysicalStock";
+    private static final String AVAILABLE_STOCK = "AvailableStock";
 
 
     /**
@@ -59,7 +66,7 @@ public class ChangedItemStockPixiApiImporter extends AbstractPixiApiImporter {
      * @author jfelipe
      */
     @Override
-    public Set<StringResult> importData(List<PixiFunctionParameter> functionParameters)
+    public Set<ItemStockResult> importData(List<PixiFunctionParameter> functionParameters)
             throws SOAPResponseErrorException, SOAPException {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
@@ -84,9 +91,10 @@ public class ChangedItemStockPixiApiImporter extends AbstractPixiApiImporter {
      *             in case errors ocurred during the Pixi API response
      * @author jfelipe
      */
-    private Set<StringResult> importChangedItemStock(List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException {
-        Set<StringResult> results = new HashSet<StringResult>();
+    private Set<ItemStockResult> importChangedItemStock(
+            List<PixiFunctionParameter> functionParameters) throws SOAPResponseErrorException,
+            SOAPException {
+        Set<ItemStockResult> results = new HashSet<ItemStockResult>();
         SOAPMessage request = null;
         SOAPMessage response = null;
         NodeList responseXml = null;
@@ -104,13 +112,32 @@ public class ChangedItemStockPixiApiImporter extends AbstractPixiApiImporter {
         if (sqlRowSetTag != null) {
             for (int i = 0; i < sqlRowSetTag.getChildNodes().getLength(); i++) {
                 Node row = sqlRowSetTag.getChildNodes().item(i);
+                ItemStockResult result = new ItemStockResult();
                 for (int j = 0; j < row.getChildNodes().getLength(); j++) {
-                    Node rowChild = row.getChildNodes().item(j);
-                    if (EANUPC.equalsIgnoreCase(rowChild.getNodeName())) {
-                        StringResult result = new StringResult(rowChild.getTextContent().trim());
-                        results.add(result);
+                    Node currentTag = row.getChildNodes().item(j);
+                    String currentTagValue = currentTag.getTextContent().trim();
+                    switch (currentTag.getNodeName()) {
+                        case ITEM_KEY:
+                            int itemKey = Integer.parseInt(currentTagValue);
+                            result.setItemKey(itemKey);
+                            break;
+                        case ITEM_NUMBER_INTERNAL:
+                            result.setItemNrInt(currentTagValue);
+                            break;
+                        case EANUPC:
+                            result.setEanUpc(currentTagValue);
+                            break;
+                        case PHYSICAL_STOCK:
+                            int physicalStock = Integer.parseInt(currentTagValue);
+                            result.setPhysicalStock(physicalStock);
+                            break;
+                        case AVAILABLE_STOCK:
+                            int availableStock = Integer.parseInt(currentTagValue);
+                            result.setAvailableStock(availableStock);
+                            break;
                     }
                 }
+                results.add(result);
             }
         }
         return results;

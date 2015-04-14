@@ -57,7 +57,8 @@ public class ItemDeliveryInfoPixiApiImporterTest {
             parameters.add(paramItemKey);
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
-            paramEan.setValue("2012000020140");
+            paramEan.setValue("4007923665107");                 // older
+            // paramEan.setValue("4045875029899");                 // newer
             parameters.add(paramEan);
             PixiFunctionParameter paramItemSupplierNumber = new PixiFunctionParameter();
             paramItemSupplierNumber.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);

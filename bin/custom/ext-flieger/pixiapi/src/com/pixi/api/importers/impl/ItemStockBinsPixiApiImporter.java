@@ -1,5 +1,6 @@
 package com.pixi.api.importers.impl;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,10 +104,16 @@ public class ItemStockBinsPixiApiImporter extends AbstractPixiApiImporter {
             SOAPException {
         List<ItemStockBinsResult> results = new ArrayList<ItemStockBinsResult>();
         checkValidParameters(functionParameters);
-        SOAPMessage request = getPixiSoapApi().buildMessage(
-                PixiFunction.GET_ITEM_STOCK_BINS, functionParameters);
+        SOAPMessage request = getPixiSoapApi().buildMessage(PixiFunction.GET_ITEM_STOCK_BINS,
+                functionParameters);
         SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(request);
-        if (response != null) {
+        try {
+            response.writeTo(System.err);
+        } catch (IOException e) {
+            // YTODO Auto-generated catch block
+            e.printStackTrace();
+        }
+//        if (response != null) {
             Node responseXml = null;
             responseXml = response.getSOAPBody()
                     .getElementsByTagName(PixiApiResponseTags.SQLROWSET1.getValue()).item(0);
@@ -140,7 +147,7 @@ public class ItemStockBinsPixiApiImporter extends AbstractPixiApiImporter {
                     results.add(result);
                 }
             }
-        }
+//        }
         return results;
     }
 }

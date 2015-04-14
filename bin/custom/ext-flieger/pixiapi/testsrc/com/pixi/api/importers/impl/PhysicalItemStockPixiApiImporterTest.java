@@ -60,7 +60,8 @@ public class PhysicalItemStockPixiApiImporterTest {
             parameters.add(paramItemKey);
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
-            paramEan.setValue("2012000020140");
+            paramEan.setValue("4007923665107");                 // older
+            // paramEan.setValue("4045875029899");                 // newer
             parameters.add(paramEan);
             PixiFunctionParameter paramItemNumberSupplier = new PixiFunctionParameter();
             paramItemNumberSupplier.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
@@ -72,7 +73,7 @@ public class PhysicalItemStockPixiApiImporterTest {
             parameters.add(paramItemNumberInternal);
             PixiFunctionParameter paramLocationId = new PixiFunctionParameter();
             paramLocationId.setType(PixiParameterType.LOCATION_ID);
-            paramLocationId.setValue("");
+            paramLocationId.setValue("001");
             parameters.add(paramLocationId);
             //
             List<IntegerResult> results = fixture.importData(parameters);

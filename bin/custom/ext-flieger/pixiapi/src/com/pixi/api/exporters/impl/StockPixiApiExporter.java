@@ -1,5 +1,6 @@
 package com.pixi.api.exporters.impl;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.xml.soap.SOAPMessage;
 import com.pixi.api.core.PixiFunction;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
+import com.pixi.api.exceptions.SOAPResponseErrorException;
 import com.pixi.api.exporters.AbstractPixiApiExporter;
 
 /**
@@ -45,7 +47,8 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
      * @author jfelipe
      */
     @Override
-    public void exportData(List<PixiFunctionParameter> functionParameters) throws SOAPException {
+    public void exportData(List<PixiFunctionParameter> functionParameters)
+            throws SOAPResponseErrorException, SOAPException {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
@@ -67,7 +70,8 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
      *
      * @author jfelipe
      */
-    private void exportStock(List<PixiFunctionParameter> functionParameters) throws SOAPException {
+    private void exportStock(List<PixiFunctionParameter> functionParameters)
+            throws SOAPResponseErrorException, SOAPException {
         checkValidParameters(functionParameters);
         SOAPMessage request = getPixiSoapApi().buildMessage(PixiFunction.SET_STOCK,
                 functionParameters);
