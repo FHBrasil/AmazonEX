@@ -19,16 +19,17 @@ import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.exceptions.SOAPResponseErrorException;
 import com.pixi.api.impl.DefaultPixiSoapApi;
 import com.pixi.api.importers.impl.ChangedItemStockPixiApiImporter;
-import com.pixi.api.importers.impl.PhysicalItemStockPixiApiImporter;
 import com.pixi.api.result.ItemStockResult;
-
-import de.hybris.bootstrap.annotations.DemoTest;
 
 /**
  * @author jfelipe
  *
+ * @deprecated Use this test you must not! By Herr Gleichmann words, we shouldn't
+ *             update stock data on Pixi.
+ *
  */
-@DemoTest
+// @UnitTest
+@Deprecated
 public class StockPixiApiExporterTest {
 
     private StockPixiApiExporter fixture;
@@ -44,6 +45,7 @@ public class StockPixiApiExporterTest {
      * @author jfelipe
      */
     @Before
+    @Deprecated
     public void setUp() {
         fixture = new StockPixiApiExporter();
         fixture.setPixiSoapApi(new DefaultPixiSoapApi());
@@ -55,6 +57,7 @@ public class StockPixiApiExporterTest {
      * @author jfelipe
      */
     @Test
+    @Deprecated
     public void importDataTest() {
         try {
             int stockQuantity = new Random(Calendar.getInstance().getTimeInMillis()).nextInt(200);
@@ -108,6 +111,7 @@ public class StockPixiApiExporterTest {
 
 
     @Test
+    @Deprecated
     public void importData_EanNotExists() {
         try {
             // int stockQuantity = new Random().nextInt(100);
@@ -143,6 +147,7 @@ public class StockPixiApiExporterTest {
      * @author jfelipe
      */
     @Test
+    @Deprecated
     public void importDataTest_NullParameters() {
         try {
             fixture.exportData(null);
@@ -168,6 +173,7 @@ public class StockPixiApiExporterTest {
      * @author jfelipe
      */
     @Test
+    @Deprecated
     public void importDataTest_WrongParameterList() {
         try {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();

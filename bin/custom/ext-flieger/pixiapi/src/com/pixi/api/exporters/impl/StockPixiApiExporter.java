@@ -1,6 +1,5 @@
 package com.pixi.api.exporters.impl;
 
-import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -18,8 +17,12 @@ import com.pixi.api.exporters.AbstractPixiApiExporter;
  * must. <br/>
  * <br/>
  * 
+ * @deprecated Use this exporter you must not! By Herr Gleichmann words, we shouldn't
+ *             update stock data on Pixi.
+ * 
  * @author jfelipe
  */
+@Deprecated
 public class StockPixiApiExporter extends AbstractPixiApiExporter {
 
     /**
@@ -36,6 +39,9 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
     /**
      * Sets the the stock quantity. <br/>
      * 
+     * @deprecated Use this exporter you must not! By Herr Gleichmann words, we shouldn't
+     *             update stock data on Pixi.
+     * 
      * @param functionParameters
      *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
      *            - {@link PixiParameterType#EAN_UPC}<br/>
@@ -47,6 +53,7 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
      * @author jfelipe
      */
     @Override
+    @Deprecated
     public void exportData(List<PixiFunctionParameter> functionParameters)
             throws SOAPResponseErrorException, SOAPException {
         if (functionParameters == null || functionParameters.isEmpty()) {
@@ -60,6 +67,9 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
     /**
      * Sets the the stock quantity. <br/>
      * 
+     * @deprecated Use this exporter you must not! By Herr Gleichmann words, we shouldn't
+     *             update stock data on Pixi.
+     * 
      * @param functionParameters
      *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
      *            - {@link PixiParameterType#EAN_UPC}<br/>
@@ -70,6 +80,7 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
      *
      * @author jfelipe
      */
+    @Deprecated
     private void exportStock(List<PixiFunctionParameter> functionParameters)
             throws SOAPResponseErrorException, SOAPException {
         checkValidParameters(functionParameters);

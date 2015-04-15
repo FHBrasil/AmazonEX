@@ -131,8 +131,6 @@ public class PixiApiFactory {
                 return new InvoicePaidPixiApiExporter();
             case SET_ITEM_SUPPLIER:
                 return new ItemSupplierPixiApiExporter();
-            case SET_STOCK:
-                return new StockPixiApiExporter();
             default:
                 return null;
         }
