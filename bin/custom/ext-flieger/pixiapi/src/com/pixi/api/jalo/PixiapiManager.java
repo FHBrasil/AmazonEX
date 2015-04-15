@@ -13,14 +13,14 @@
  */
 package com.pixi.api.jalo;
 
-import de.hybris.platform.core.Registry;
-import de.hybris.platform.util.JspContext;
-
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import com.pixi.api.constants.PixiapiConstants;
+
+import de.hybris.platform.core.Registry;
+import de.hybris.platform.util.JspContext;
 
 
 

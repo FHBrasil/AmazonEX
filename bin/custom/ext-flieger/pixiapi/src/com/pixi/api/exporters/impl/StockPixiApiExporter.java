@@ -17,8 +17,8 @@ import com.pixi.api.exporters.AbstractPixiApiExporter;
  * must. <br/>
  * <br/>
  * 
- * @deprecated Use this exporter you must not! By Herr Gleichmann words, we shouldn't
- *             update stock data on Pixi.
+ * @deprecated Use this exporter you must not! The stock must not be updated from the
+ *             shop.
  * 
  * @author jfelipe
  */
@@ -39,8 +39,8 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
     /**
      * Sets the the stock quantity. <br/>
      * 
-     * @deprecated Use this exporter you must not! By Herr Gleichmann words, we shouldn't
-     *             update stock data on Pixi.
+     * @deprecated Use this exporter you must not! The stock must not be updated from the
+     *             shop.
      * 
      * @param functionParameters
      *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
@@ -49,6 +49,8 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
      *            - {@link PixiParameterType#NEW_STOCK_QUANTITY}<br/>
      * @throws SOAPException
      *             in case there any errors occurred during the Pixi API call
+     * @throws SOAPResponseErrorException
+     *             in case any errors ocurred during the Pixi API response
      *
      * @author jfelipe
      */
@@ -67,8 +69,8 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
     /**
      * Sets the the stock quantity. <br/>
      * 
-     * @deprecated Use this exporter you must not! By Herr Gleichmann words, we shouldn't
-     *             update stock data on Pixi.
+     * @deprecated Use this exporter you must not! The stock must not be updated from the
+     *             shop.
      * 
      * @param functionParameters
      *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
@@ -77,6 +79,8 @@ public class StockPixiApiExporter extends AbstractPixiApiExporter {
      *            - {@link PixiParameterType#NEW_STOCK_QUANTITY}<br/>
      * @throws SOAPException
      *             in case there any errors occurred during the Pixi API call
+     * @throws SOAPResponseErrorException
+     *             in case any errors ocurred during the Pixi API response
      *
      * @author jfelipe
      */

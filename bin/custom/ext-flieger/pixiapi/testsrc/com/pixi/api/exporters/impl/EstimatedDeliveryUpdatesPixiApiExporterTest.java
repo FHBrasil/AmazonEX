@@ -14,13 +14,14 @@ import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.impl.DefaultPixiSoapApi;
 
-import de.hybris.bootstrap.annotations.UnitTest;
-
 /**
  * @author jfelipe
  *
+ * @deprecated Use this test you must not!
+ *
  */
-@UnitTest
+// @UnitTest
+@Deprecated
 public class EstimatedDeliveryUpdatesPixiApiExporterTest {
 
     private EstimatedDeliveryUpdatesPixiApiExporter fixture;
@@ -64,6 +65,7 @@ public class EstimatedDeliveryUpdatesPixiApiExporterTest {
             parameters.add(paramItemRef);
             //
             fixture.exportData(parameters);
+            Assert.assertTrue("", false);
         } catch (Exception e) {
             Assert.assertTrue("Should not have thrown an exception. Type: "
                     + e.getClass().getName() + ". Message: " + e.getMessage(), false);

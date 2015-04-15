@@ -14,13 +14,13 @@
 package com.pixi.api.jalo;
 
 import static org.junit.Assert.assertTrue;
-import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.testframework.HybrisJUnit4TransactionalTest;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.hybris.platform.testframework.HybrisJUnit4TransactionalTest;
 
 
 /**

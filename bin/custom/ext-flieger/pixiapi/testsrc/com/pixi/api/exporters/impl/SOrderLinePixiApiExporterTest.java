@@ -13,9 +13,7 @@ import org.junit.rules.ExpectedException;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.impl.DefaultPixiSoapApi;
-import com.pixi.api.importers.impl.ItemInfoPixiApiImporter;
 import com.pixi.api.importers.impl.SOrderLinesPixiApiImporter;
-import com.pixi.api.result.ItemInfoResult;
 import com.pixi.api.result.SOrderLineResult;
 
 import de.hybris.bootstrap.annotations.UnitTest;
@@ -57,7 +55,7 @@ public class SOrderLinePixiApiExporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramSOrderLineKey = new PixiFunctionParameter();
             paramSOrderLineKey.setType(PixiParameterType.S_ORDER_LINE_KEY);
-            paramSOrderLineKey.setValue("");
+            paramSOrderLineKey.setValue("");                    // TODO: Get a proper value
             parameters.add(paramSOrderLineKey);
             PixiFunctionParameter paramUsername = new PixiFunctionParameter();
             paramUsername.setType(PixiParameterType.USERNAME);

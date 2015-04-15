@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.pixi.api.core.PixiFunction;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
+import com.pixi.api.exceptions.SOAPResponseErrorException;
 import com.pixi.api.exporters.AbstractPixiApiExporter;
 
 /**
@@ -18,8 +19,11 @@ import com.pixi.api.exporters.AbstractPixiApiExporter;
  * must. <br/>
  * <br/>
  * 
+ * @deprecated Use this exporter you must not! This export is not used in version 4.
+ * 
  * @author jfelipe
  */
+@Deprecated
 public class EstimatedDeliveryUpdatesPixiApiExporter extends AbstractPixiApiExporter {
 
     private static final Logger LOG = Logger
@@ -47,11 +51,15 @@ public class EstimatedDeliveryUpdatesPixiApiExporter extends AbstractPixiApiExpo
      *            - {@link PixiParameterType#ITEM_REF}<br/>
      * @throws SOAPException
      *             in case there any errors occurred during the Pixi API call
+     * @throws SOAPResponseErrorException
+     *             in case any errors ocurred during the Pixi API response
      *
      * @author jfelipe
      */
     @Override
-    public void exportData(List<PixiFunctionParameter> functionParameters) throws SOAPException {
+    @Deprecated
+    public void exportData(List<PixiFunctionParameter> functionParameters)
+            throws SOAPResponseErrorException, SOAPException {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
@@ -70,11 +78,14 @@ public class EstimatedDeliveryUpdatesPixiApiExporter extends AbstractPixiApiExpo
      *            - {@link PixiParameterType#ITEM_REF}<br/>
      * @throws SOAPException
      *             in case there any errors occurred during the Pixi API call
+     * @throws SOAPResponseErrorException
+     *             in case any errors ocurred during the Pixi API response
      *
      * @author jfelipe
      */
+    @Deprecated
     private void exportEstimatedDeliveryUpdates(List<PixiFunctionParameter> functionParameters)
-            throws SOAPException {
+            throws SOAPResponseErrorException, SOAPException {
         checkValidParameters(functionParameters);
         SOAPMessage request = getPixiSoapApi().buildMessage(
                 PixiFunction.ESTIMATED_DELIVERY_UPDATES, functionParameters);

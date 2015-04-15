@@ -9,6 +9,7 @@ import javax.xml.soap.SOAPMessage;
 import com.pixi.api.core.PixiFunction;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
+import com.pixi.api.exceptions.SOAPResponseErrorException;
 import com.pixi.api.exporters.AbstractPixiApiExporter;
 
 /**
@@ -47,11 +48,14 @@ public class ItemSupplierPixiApiExporter extends AbstractPixiApiExporter {
      *            - {@link PixiParameterType#ITEM_SUPPLIER_NUMBER}<br/>
      * @throws SOAPException
      *             in case there any errors occurred during the Pixi API call
+     * @throws SOAPResponseErrorException
+     *             in case any errors ocurred during the Pixi API response
      *
      * @author jfelipe
      */
     @Override
-    public void exportData(List<PixiFunctionParameter> functionParameters) throws SOAPException {
+    public void exportData(List<PixiFunctionParameter> functionParameters)
+            throws SOAPResponseErrorException, SOAPException {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
@@ -73,11 +77,13 @@ public class ItemSupplierPixiApiExporter extends AbstractPixiApiExporter {
      *            - {@link PixiParameterType#ITEM_SUPPLIER_NUMBER}<br/>
      * @throws SOAPException
      *             in case there any errors occurred during the Pixi API call
+     * @throws SOAPResponseErrorException
+     *             in case any errors ocurred during the Pixi API response
      *
      * @author jfelipe
      */
     private void exportItemSupplier(List<PixiFunctionParameter> functionParameters)
-            throws SOAPException {
+            throws SOAPResponseErrorException, SOAPException {
         checkValidParameters(functionParameters);
         SOAPMessage request = getPixiSoapApi().buildMessage(PixiFunction.SET_ITEM_SUPPLIER,
                 functionParameters);

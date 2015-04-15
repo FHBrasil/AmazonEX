@@ -5,15 +5,6 @@ package br.flieger.storecatalogfeed.core;
 
 import static br.flieger.storecatalogfeed.constants.StorecatalogfeedConstants.FILE_PATH;
 
-import de.hybris.platform.catalog.CatalogVersionService;
-import de.hybris.platform.catalog.model.CatalogVersionModel;
-import de.hybris.platform.core.Registry;
-import de.hybris.platform.core.model.product.ProductModel;
-import de.hybris.platform.jalo.JaloSession;
-import de.hybris.platform.jalo.user.UserManager;
-import de.hybris.platform.servicelayer.i18n.CommonI18NService;
-import de.hybris.platform.store.BaseStoreModel;
-
 import java.util.Arrays;
 
 import javax.annotation.Resource;
@@ -23,6 +14,14 @@ import org.springframework.context.ApplicationContext;
 
 import br.flieger.storecatalogfeed.dao.DefaultStoreFeedDao;
 import br.flieger.storecatalogfeed.xml.template.XMLTemplate;
+import de.hybris.platform.catalog.CatalogVersionService;
+import de.hybris.platform.catalog.model.CatalogVersionModel;
+import de.hybris.platform.core.Registry;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.jalo.JaloSession;
+import de.hybris.platform.jalo.user.UserManager;
+import de.hybris.platform.servicelayer.i18n.CommonI18NService;
+import de.hybris.platform.store.BaseStoreModel;
 
 /**
  * @author franthescollymaneira

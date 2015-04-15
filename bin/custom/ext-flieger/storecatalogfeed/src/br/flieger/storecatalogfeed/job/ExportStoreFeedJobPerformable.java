@@ -3,14 +3,6 @@
  */
 package br.flieger.storecatalogfeed.job;
 
-import de.hybris.platform.catalog.model.CatalogVersionModel;
-import de.hybris.platform.cronjob.enums.CronJobResult;
-import de.hybris.platform.cronjob.enums.CronJobStatus;
-import de.hybris.platform.cronjob.model.CronJobModel;
-import de.hybris.platform.servicelayer.cronjob.AbstractJobPerformable;
-import de.hybris.platform.servicelayer.cronjob.PerformResult;
-import de.hybris.platform.util.Config;
-
 import java.security.InvalidParameterException;
 import java.util.Collection;
 import java.util.Date;
@@ -19,6 +11,13 @@ import org.apache.log4j.Logger;
 
 import br.flieger.storecatalogfeed.core.FullFeedGeneratorThread;
 import br.flieger.storecatalogfeed.model.job.ExportStoreFeedJobModel;
+import de.hybris.platform.catalog.model.CatalogVersionModel;
+import de.hybris.platform.cronjob.enums.CronJobResult;
+import de.hybris.platform.cronjob.enums.CronJobStatus;
+import de.hybris.platform.cronjob.model.CronJobModel;
+import de.hybris.platform.servicelayer.cronjob.AbstractJobPerformable;
+import de.hybris.platform.servicelayer.cronjob.PerformResult;
+import de.hybris.platform.util.Config;
 
 /**
  * @author franthescollymaneira

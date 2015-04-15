@@ -3,8 +3,6 @@
  */
 package br.flieger.storecatalogfeed.core;
 
-import static br.flieger.storecatalogfeed.constants.StorecatalogfeedConstants.FILE_PATH;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;

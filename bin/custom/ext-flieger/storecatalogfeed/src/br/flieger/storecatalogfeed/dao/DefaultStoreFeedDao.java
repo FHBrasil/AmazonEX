@@ -3,13 +3,6 @@
  */
 package br.flieger.storecatalogfeed.dao;
 
-import de.hybris.platform.catalog.enums.ArticleApprovalStatus;
-import de.hybris.platform.catalog.model.CatalogVersionModel;
-import de.hybris.platform.core.model.product.ProductModel;
-import de.hybris.platform.servicelayer.internal.dao.AbstractItemDao;
-import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
-import de.hybris.platform.servicelayer.search.SearchResult;
-
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,6 +11,12 @@ import org.apache.log4j.Logger;
 
 import br.flieger.storecatalogfeed.xml.template.BaseProductCatalogTemplate;
 import br.flieger.storecatalogfeed.xml.template.DefaultProductCatalogTemplate;
+import de.hybris.platform.catalog.enums.ArticleApprovalStatus;
+import de.hybris.platform.catalog.model.CatalogVersionModel;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.servicelayer.internal.dao.AbstractItemDao;
+import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
+import de.hybris.platform.servicelayer.search.SearchResult;
 
 /**
  * @author franthescolly

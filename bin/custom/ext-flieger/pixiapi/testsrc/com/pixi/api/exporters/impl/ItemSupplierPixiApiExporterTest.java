@@ -13,6 +13,8 @@ import org.junit.rules.ExpectedException;
 import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.impl.DefaultPixiSoapApi;
+import com.pixi.api.importers.impl.ItemInfoPixiApiImporter;
+import com.pixi.api.result.ItemInfoResult;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 
@@ -69,7 +71,7 @@ public class ItemSupplierPixiApiExporterTest {
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
             paramEan.setValue("4007923665107");                 // older
-            // paramEan.setValue("4045875029899");                 // newer
+            // paramEan.setValue("4045875029899"); // newer
             parameters.add(paramEan);
             PixiFunctionParameter paramItemNumberSupplier = new PixiFunctionParameter();
             paramItemNumberSupplier.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
@@ -77,6 +79,17 @@ public class ItemSupplierPixiApiExporterTest {
             parameters.add(paramItemNumberSupplier);
             //
             fixture.exportData(parameters);
+            //
+            List<PixiFunctionParameter> paramsTest = new ArrayList<PixiFunctionParameter>();
+            paramsTest.add(paramItemKey);
+            ItemInfoPixiApiImporter itemImporter = new ItemInfoPixiApiImporter();
+            itemImporter.setPixiSoapApi(new DefaultPixiSoapApi());
+            List<ItemInfoResult> results = itemImporter.importData(paramsTest);
+            Assert.assertTrue("Results should not be null.", results != null);
+            Assert.assertTrue("Results should not be empty.", results.size() > 0);
+            ItemInfoResult result = results.get(0);
+            Assert.assertEquals("Results supplier should be the same as sent.", "",
+                    result.getSupplNr());
         } catch (Exception e) {
             Assert.assertTrue("Should not have thrown an exception. Type: "
                     + e.getClass().getName() + ". Message: " + e.getMessage(), false);

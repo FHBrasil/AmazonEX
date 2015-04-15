@@ -4,7 +4,6 @@ import com.pixi.api.core.PixiFunction;
 import com.pixi.api.exporters.impl.EstimatedDeliveryUpdatesPixiApiExporter;
 import com.pixi.api.exporters.impl.InvoicePaidPixiApiExporter;
 import com.pixi.api.exporters.impl.ItemSupplierPixiApiExporter;
-import com.pixi.api.exporters.impl.StockPixiApiExporter;
 import com.pixi.api.importers.impl.ChangedItemStockPixiApiImporter;
 import com.pixi.api.importers.impl.ChangedOrderLinesPixiApiImporter;
 import com.pixi.api.importers.impl.InvoiceByOrderNumberPixiApiImporter;

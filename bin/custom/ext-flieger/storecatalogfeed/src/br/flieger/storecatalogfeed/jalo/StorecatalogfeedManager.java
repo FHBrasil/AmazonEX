@@ -11,14 +11,13 @@
  */
 package br.flieger.storecatalogfeed.jalo;
 
-import de.hybris.platform.core.Registry;
-import de.hybris.platform.util.JspContext;
-
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import br.flieger.storecatalogfeed.constants.StorecatalogfeedConstants;
+import de.hybris.platform.core.Registry;
+import de.hybris.platform.util.JspContext;
 
 /**
  * This is the extension manager of the Storecatalogfeed extension.
