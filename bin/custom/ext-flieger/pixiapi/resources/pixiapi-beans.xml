@@ -15,6 +15,7 @@
         <value>EAN                      ("EAN")</value>
         <value>EAN_UPC                  ("EANUPC")</value>
         <value>EVENT_ID                 ("eventID")</value>
+        <value>ESTIMATED_DELIVERY       ("EstimatedDelivery")</value>
         <value>ITEM_REF                 ("ItemRef")</value>
         <value>ITEM_NUMBER_INTERNAL     ("ItemNrInt")</value>
         <value>ITEM_KEY                 ("ItemKey")</value>
@@ -23,21 +24,25 @@
         <value>LOCATION_ID              ("LocationId")</value>
         <value>LOC_ID                   ("LocID")</value>
         <value>NEW_STOCK_QUANTITY       ("NewStockQty")</value>
+        <value>NOTE                     ("Note")</value>
         <value>OPEN_ORDER_LINES         ("OpenOrderlines")</value>
         <value>ORDER_NUMBER_EXTERNAL    ("OrderNrExternal")</value>
         <value>ORDER_NUMBER             ("OrderNr")</value>
         <value>ORDER_LINE_KEY           ("OrderlineKey")</value>
         <value>PAID                     ("paid")</value>
         <value>PAID_DATE                ("PaidDate")</value>
+        <value>QUANTITY_NOT_DELIVERED   ("QtyNotDelivered")</value>
         <value>ROW_COUNT                ("Rowcount")</value>
         <value>ROWS                     ("Rows")</value>
         <value>SHOW_ORDER               ("ShowOrd")</value>
+        <value>S_ORDER_LINE_KEY         ("SOrderlineKey")</value>
         <value>S_ORDER_REFERENCE        ("SOrderRef")</value>
         <value>SUPPLIER_NUMBER          ("SupplNr")</value>
         <value>SINCE_DATE               ("Since")</value>
         <value>SHOP_ID                  ("ShopID")</value>
         <value>SHOP_ORDER_NUMBER        ("ShopOrderNr")</value>
         <value>SUPPLIER_PRICE           ("SupplPrice")</value>
+        <value>USERNAME                 ("UserName")</value>
         <value>WHOLE_HISTORY            ("WholeHistory")</value>
     </enum>
 
@@ -68,6 +73,7 @@
         <value>SET_ITEM_SUPPLIER                            ("pixiSetItemSupplier")</value>
         <value>SET_STOCK                                    ("pixiSetStock")</value>
         <value>SET_INVOICE_PAID                             ("pixiSetInvoicePaid")</value>
+        <value>UPDATE_S_ORDER_LINE                          ("pixiUpdateSOrderline")</value>
     </enum>
 
 
