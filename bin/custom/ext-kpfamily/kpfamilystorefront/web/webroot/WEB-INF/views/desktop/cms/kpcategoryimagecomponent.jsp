@@ -15,7 +15,7 @@
             </c:otherwise>
         </c:choose>
         <a href="${customHyperlink}">
-            <img src="${backgroundImage.url}">
+            <img src="${media.url}" title="${media.altText}" alt="${media.altText}"/>
             <div>
                 <h3>${title}</h3>
                 <span>${text}</span>

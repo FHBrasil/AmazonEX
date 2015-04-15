@@ -15,7 +15,7 @@
             <property qualifier="KPCategoryImageComponent.text" />
             <property qualifier="KPCategoryImageComponent.cssClass" />
             <property qualifier="KPCategoryImageComponent.hyperlink" />
-            <property qualifier="KPCategoryImageComponent.backgroundImage"
+            <property qualifier="CMSImageComponent.media" 
                     editorCode="simpleMediaReferenceSelector" />
         </group>
     </displayed-properties>    

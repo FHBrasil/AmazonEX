@@ -14,7 +14,7 @@
     
     <itemtypes>
         <itemtype code="KPContainerComponent" autocreate="true" generate="true"
-                extends="AbstractCMSComponent"
+                extends="SimpleCMSComponent"
                 jaloclass="de.kpfamily.cockpits.jalo.KPContainerComponent">
             <attributes>
                 <attribute qualifier="cssClass" type="java.lang.String">
@@ -27,7 +27,7 @@
         </itemtype>
 
         <itemtype code="KPCategoryImageComponent" autocreate="true" generate="true"
-            extends="CMSParagraphComponent">
+                extends="CMSImageComponent" abstract="false">
             <attributes>
                 <attribute qualifier="title" type="localized:java.lang.String">
                     <persistence type="property" />
@@ -40,12 +40,6 @@
                 </attribute>
                 <attribute qualifier="hyperlink" type="java.lang.String">
                     <persistence type="property" />
-                </attribute>
-                <attribute qualifier="backgroundImage" type="localized:Media">
-                    <persistence type="property" />
-                    <description>
-                        Attribute that stores the localized media of the paragraph
-                    </description>
                 </attribute>
             </attributes>
         </itemtype>
