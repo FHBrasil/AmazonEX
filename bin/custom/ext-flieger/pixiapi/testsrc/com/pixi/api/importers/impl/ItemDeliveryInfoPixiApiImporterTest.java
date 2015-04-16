@@ -49,7 +49,6 @@ public class ItemDeliveryInfoPixiApiImporterTest {
     @Test
     public void importDataTest() {
         try {
-            // FIXME: This test is not working because we need to find valid parameters
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramItemKey = new PixiFunctionParameter();
             paramItemKey.setType(PixiParameterType.ITEM_KEY);
@@ -57,8 +56,7 @@ public class ItemDeliveryInfoPixiApiImporterTest {
             parameters.add(paramItemKey);
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
-            paramEan.setValue("4007923665107");                 // older
-            // paramEan.setValue("4045875029899");                 // newer
+            paramEan.setValue("4007923665107");
             parameters.add(paramEan);
             PixiFunctionParameter paramItemSupplierNumber = new PixiFunctionParameter();
             paramItemSupplierNumber.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);

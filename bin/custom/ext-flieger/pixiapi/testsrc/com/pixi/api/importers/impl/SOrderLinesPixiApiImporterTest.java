@@ -52,7 +52,6 @@ public class SOrderLinesPixiApiImporterTest {
     @Test
     public void importDataTest() {
         try {
-            // FIXME: This test is not working because we need to find valid parameters
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramOrderRef = new PixiFunctionParameter();
             paramOrderRef.setType(PixiParameterType.S_ORDER_REFERENCE);
