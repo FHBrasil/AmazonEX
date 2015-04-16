@@ -3,7 +3,6 @@ package de.kpfamily.hmc.productcode;
 import java.security.InvalidParameterException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,9 +25,9 @@ import de.kpfamily.hmc.model.ProductCodeModel;
  */
 public class ProductCodeGenerator {
 
-    private static final String CODE_FORMAT = "000000000000";
+    private static final String CODE_FORMAT = "000000";
     private static final String REGEX_VALID_EAN = "[0-9]{13}";
-    private static final String REGEX_VALID_PRODUCT_CODE = "[0-9]{12}";
+    private static final String REGEX_VALID_PRODUCT_CODE = "[0-9]{6}";
 
 
     /**
@@ -67,15 +66,15 @@ public class ProductCodeGenerator {
         try {
             FlexibleSearchService flexibleSearchService = (FlexibleSearchService) Registry
                     .getApplicationContext().getBean("flexibleSearchService");
-            FlexibleSearchQuery flexQuery = new FlexibleSearchQuery(" SELECT {p:" 
+            FlexibleSearchQuery flexQuery = new FlexibleSearchQuery(" SELECT {p:"
                     + ProductCodeModel.PK + "} FROM {" + ProductCodeModel._TYPECODE
                     + " AS p} WHERE {p:" + ProductCodeModel.CODE + "} = ?code");
             flexQuery.addQueryParameter("code", code);
-            ProductCodeModel result = flexibleSearchService.<ProductCodeModel> searchUnique(
-                    flexQuery);
+            ProductCodeModel result = flexibleSearchService
+                    .<ProductCodeModel> searchUnique(flexQuery);
             return Strings.isNullOrEmpty(result.getCode()) ? Boolean.FALSE.booleanValue() : result
                     .getCode().equals(code);
-        } catch(ModelNotFoundException mnfe) {
+        } catch (ModelNotFoundException mnfe) {
             return Boolean.FALSE.booleanValue();
         }
     }
@@ -97,36 +96,12 @@ public class ProductCodeGenerator {
                 + ProductCodeModel.CODE + "}) FROM {" + ProductCodeModel._TYPECODE + " AS p} ");
         flexQuery.setResultClassList(Collections.singletonList(Integer.class));
         List<Integer> results = flexibleSearchService.<Integer> search(flexQuery).getResult();
-        int maxProductCode = results == null || results.isEmpty() || results.get(0) == null ? 0 
+        int maxProductCode = results == null || results.isEmpty() || results.get(0) == null ? 0
                 : results.get(0).intValue();
         if (!existsProductCode(String.valueOf(maxProductCode))) {
             maxProductCode += (maxProductCode < 100000) ? 100000 + 1 : 1;
         }
         return formatCode(maxProductCode);
-    }
-
-
-    /**
-     * Generates the product EAN based on the 12 digit Product Code.
-     * 
-     * @param productCode
-     *            The generated Product Code
-     * @return The EAN13 for the given Product Code
-     * 
-     * @author jfelipe
-     * 
-     */
-    public String generateEAN13(final String productCode) {
-        if (Strings.isNullOrEmpty(productCode) || !productCode.matches(REGEX_VALID_PRODUCT_CODE)) {
-            throw new InvalidParameterException("Product code must have 12 digits exactly: ["
-                    + productCode + "]");
-        }
-        int sum = 0;
-        int factor = 3;
-        for (char c : productCode.toCharArray()) {
-            sum += Character.digit(c, 10) * (factor = 4 - factor);
-        }
-        return productCode + ((1000 - sum) % 10);
     }
 
 
@@ -139,7 +114,8 @@ public class ProductCodeGenerator {
      */
     public boolean isValidEAN13(String ean13) {
         if (Strings.isNullOrEmpty(ean13) || !ean13.matches(REGEX_VALID_EAN)) {
-            throw new InvalidParameterException("EAN13 must have exactly 13 digits: ["+ ean13 +"]");
+            throw new InvalidParameterException("EAN13 must have exactly 13 digits: [" + ean13
+                    + "]");
         }
         int checkDigit = Integer.parseInt(ean13.substring(ean13.length() - 1));
         int sum = 0;

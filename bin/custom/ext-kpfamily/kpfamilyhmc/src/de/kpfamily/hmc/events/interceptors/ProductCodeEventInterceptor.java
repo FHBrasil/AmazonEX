@@ -39,9 +39,6 @@ public class ProductCodeEventInterceptor implements PrepareInterceptor, Validate
             final ProductCodeGenerator generator = new ProductCodeGenerator();
             final ProductCodeModel productCode = (ProductCodeModel) model;
             productCode.setCode(generator.getFormattedNextProductCode());
-            if (Strings.isNullOrEmpty(productCode.getEan())) {
-                productCode.setEan(generator.generateEAN13(productCode.getCode()));
-            }
             eventService.publishEvent(new ProductCodeEvent(productCode));
         }
     }
