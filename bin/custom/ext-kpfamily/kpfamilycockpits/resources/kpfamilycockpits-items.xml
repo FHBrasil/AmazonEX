@@ -8,7 +8,7 @@
         xsi:noNamespaceSchemaLocation="items.xsd">
     
     <collectiontypes>
-        <collectiontype code="ComponentList" elementtype="AbstractCMSComponent"
+        <collectiontype code="cmsComponentCollection" elementtype="SimpleCMSComponent"
                 autocreate="true" generate="true" type="list" />
     </collectiontypes>
     
@@ -20,7 +20,7 @@
                 <attribute qualifier="cssClass" type="java.lang.String">
                     <persistence type="property" />
                 </attribute>
-                <attribute qualifier="components" type="ComponentList">
+                <attribute qualifier="components" type="cmsComponentCollection">
                     <persistence type="property" />
                 </attribute>
             </attributes>
