@@ -55,12 +55,14 @@ public class InvoicePixiApiImporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramInvoiceNumber = new PixiFunctionParameter();
             paramInvoiceNumber.setType(PixiParameterType.INVOICE_NUMBER);
-            paramInvoiceNumber.setValue("KPF012729");
+            paramInvoiceNumber.setValue("KPF403950");
             parameters.add(paramInvoiceNumber);
             //
             List<InvoiceResult> results = fixture.importData(parameters);
             Assert.assertTrue("results should not be null.", results != null);
             Assert.assertFalse("Results should not be empty.", results.isEmpty());
+            InvoiceResult result = results.get(0);
+            Assert.assertEquals("Invoice amount should be 49.90 €.", 49.90, result.getTotal(), 0.2);
         } catch (Exception e) {
             Assert.assertTrue("Should not have thrown an exception. Type: "
                     + e.getClass().getName() + ". Message: " + e.getMessage(), false);

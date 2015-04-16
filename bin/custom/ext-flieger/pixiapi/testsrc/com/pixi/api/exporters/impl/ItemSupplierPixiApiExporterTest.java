@@ -54,7 +54,7 @@ public class ItemSupplierPixiApiExporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramItemKey = new PixiFunctionParameter();
             paramItemKey.setType(PixiParameterType.ITEM_KEY);
-            paramItemKey.setValue("");
+            paramItemKey.setValue("5010415203724");
             parameters.add(paramItemKey);
             PixiFunctionParameter paramItemNumberInternal = new PixiFunctionParameter();
             paramItemNumberInternal.setType(PixiParameterType.ITEM_NUMBER_INTERNAL);
@@ -62,7 +62,7 @@ public class ItemSupplierPixiApiExporterTest {
             parameters.add(paramItemNumberInternal);
             PixiFunctionParameter paramSupplierNumber = new PixiFunctionParameter();
             paramSupplierNumber.setType(PixiParameterType.SUPPLIER_NUMBER);
-            paramSupplierNumber.setValue("");
+            paramSupplierNumber.setValue("HAUC");
             parameters.add(paramSupplierNumber);
             PixiFunctionParameter paramSupplierPrice = new PixiFunctionParameter();
             paramSupplierPrice.setType(PixiParameterType.SUPPLIER_PRICE);

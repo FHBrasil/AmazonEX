@@ -55,7 +55,7 @@ public class SOrderLinesPixiApiImporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramOrderRef = new PixiFunctionParameter();
             paramOrderRef.setType(PixiParameterType.S_ORDER_REFERENCE);
-            paramOrderRef.setValue("");
+            paramOrderRef.setValue("70048022");
             parameters.add(paramOrderRef);
             //
             List<SOrderLineResult> results = fixture.importData(parameters);

@@ -55,7 +55,7 @@ public class SOrderLinePixiApiExporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramSOrderLineKey = new PixiFunctionParameter();
             paramSOrderLineKey.setType(PixiParameterType.S_ORDER_LINE_KEY);
-            paramSOrderLineKey.setValue("");                    // TODO: Get a proper value
+            paramSOrderLineKey.setValue("585522");
             parameters.add(paramSOrderLineKey);
             PixiFunctionParameter paramUsername = new PixiFunctionParameter();
             paramUsername.setType(PixiParameterType.USERNAME);

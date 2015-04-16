@@ -1,5 +1,6 @@
 package com.pixi.api.importers.impl;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
