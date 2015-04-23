@@ -1,5 +1,7 @@
 package com.pixi.api;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.xml.soap.SOAPException;
@@ -13,12 +15,13 @@ import com.pixi.api.exceptions.SOAPResponseErrorException;
  */
 public interface PixiApiExporter {
 
-    /**
-     * 
-     * @param functionParameters
-     *
-     * @author jfelipe
-     */
-    void exportData(List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException;
+	/**
+	 * 
+	 * @param functionParameters
+	 *
+	 * @author jfelipe
+	 */
+	void exportData(List<PixiFunctionParameter> functionParameters)
+			throws SOAPResponseErrorException, SOAPException,
+			NoSuchAlgorithmException, KeyManagementException;
 }

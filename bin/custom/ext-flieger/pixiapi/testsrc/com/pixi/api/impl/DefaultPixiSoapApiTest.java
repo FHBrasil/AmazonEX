@@ -98,8 +98,7 @@ public class DefaultPixiSoapApiTest {
             expectedException.expect(InvalidParameterException.class);
             expectedException.expectMessage("Request function should not be null.");
             fixture.buildMessage(null, dummyParams);
-        } catch (SOAPException e) {
-            // YTODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -117,8 +116,7 @@ public class DefaultPixiSoapApiTest {
             expectedException.expect(InvalidParameterException.class);
             expectedException.expectMessage("Function parameters should not be empty.");
             fixture.buildMessage(PixiFunction.GET_ALL_S_ORDERS, null);
-        } catch (SOAPException e) {
-            // YTODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

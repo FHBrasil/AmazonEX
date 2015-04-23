@@ -1,7 +1,8 @@
 package com.pixi.api.importers.impl;
 
-import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,10 +76,12 @@ public class ItemInfoPixiApiImporter extends AbstractPixiApiImporter {
      *             in case errors ocurred during the Pixi API response
      *
      * @author jfelipe
+     * @throws NoSuchAlgorithmException 
+     * @throws KeyManagementException 
      */
     @Override
     public List<ItemInfoResult> importData(List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException {
+            throws SOAPResponseErrorException, SOAPException, KeyManagementException, NoSuchAlgorithmException {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
@@ -102,9 +105,11 @@ public class ItemInfoPixiApiImporter extends AbstractPixiApiImporter {
      *             in case errors ocurred during the Pixi API response
      *
      * @author jfelipe
+     * @throws NoSuchAlgorithmException 
+     * @throws KeyManagementException 
      */
     private List<ItemInfoResult> importItemInfos(List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException {
+            throws SOAPResponseErrorException, SOAPException, KeyManagementException, NoSuchAlgorithmException {
         List<ItemInfoResult> results = new ArrayList<ItemInfoResult>();
         checkValidParameters(functionParameters);
         SOAPMessage request = getPixiSoapApi().buildMessage(PixiFunction.GET_ITEM_INFO,

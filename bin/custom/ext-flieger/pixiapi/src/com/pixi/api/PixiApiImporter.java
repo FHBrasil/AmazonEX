@@ -1,6 +1,8 @@
 package com.pixi.api;
 
 import java.security.InvalidParameterException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,12 +18,14 @@ import com.pixi.api.result.PixiApiResult;
  */
 public interface PixiApiImporter {
 
-    /**
-     * 
-     * @param functionParameters
-     *
-     * @author jfelipe
-     */
-    Collection<? extends PixiApiResult> importData(List<PixiFunctionParameter> functionParameters)
-            throws InvalidParameterException, SOAPResponseErrorException, SOAPException;
+	/**
+	 * 
+	 * @param functionParameters
+	 *
+	 * @author jfelipe
+	 */
+	Collection<? extends PixiApiResult> importData(
+			List<PixiFunctionParameter> functionParameters)
+			throws InvalidParameterException, SOAPResponseErrorException,
+			SOAPException, NoSuchAlgorithmException, KeyManagementException;
 }
