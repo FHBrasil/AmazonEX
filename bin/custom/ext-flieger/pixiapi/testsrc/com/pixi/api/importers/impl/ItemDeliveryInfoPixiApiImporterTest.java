@@ -19,7 +19,6 @@ import de.hybris.bootstrap.annotations.UnitTest;
 
 /**
  * @author jfelipe
- *
  */
 @UnitTest
 public class ItemDeliveryInfoPixiApiImporterTest {
@@ -41,9 +40,6 @@ public class ItemDeliveryInfoPixiApiImporterTest {
 
 
     /**
-     * 
-     * 
-     *
      * @author jfelipe
      */
     @Test
@@ -52,34 +48,37 @@ public class ItemDeliveryInfoPixiApiImporterTest {
             List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
             PixiFunctionParameter paramItemKey = new PixiFunctionParameter();
             paramItemKey.setType(PixiParameterType.ITEM_KEY);
-            paramItemKey.setValue("0");
+            paramItemKey.setValue(null);
             parameters.add(paramItemKey);
             PixiFunctionParameter paramEan = new PixiFunctionParameter();
             paramEan.setType(PixiParameterType.EAN);
-//            paramEan.setValue("4007923665107");
-            paramEan.setValue("4009250043351");
+            paramEan.setValue("4250118501791");
             parameters.add(paramEan);
             PixiFunctionParameter paramItemSupplierNumber = new PixiFunctionParameter();
-            paramItemSupplierNumber.setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
-            paramItemSupplierNumber.setValue("");
+            paramItemSupplierNumber
+                    .setType(PixiParameterType.ITEM_SUPPLIER_NUMBER);
+            paramItemSupplierNumber.setValue(null);
             parameters.add(paramItemSupplierNumber);
             PixiFunctionParameter paramItemNumberInternal = new PixiFunctionParameter();
-            paramItemNumberInternal.setType(PixiParameterType.ITEM_NUMBER_INTERNAL);
-            paramItemNumberInternal.setValue("");
+            paramItemNumberInternal
+                    .setType(PixiParameterType.ITEM_NUMBER_INTERNAL);
+            paramItemNumberInternal.setValue(null);
             parameters.add(paramItemNumberInternal);
             //
-            List<ItemDeliveryInfoResult> results = fixture.importData(parameters);
+            List<ItemDeliveryInfoResult> results = fixture
+                    .importData(parameters);
             Assert.assertTrue("Results should not be null.", results != null);
-            Assert.assertTrue("Results should not be empty.", results.size() > 0);
+            Assert.assertTrue("Results should not be empty.",
+                    results.size() > 0);
         } catch (Exception e) {
             Assert.assertTrue("Should not have thrown an exception. Type: "
-                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
+                    + e.getClass().getName() + ". Message: " + e.getMessage(),
+                    false);
         }
     }
 
 
     /**
-     *
      * @author jfelipe
      */
     @Test
@@ -92,19 +91,18 @@ public class ItemDeliveryInfoPixiApiImporterTest {
             Assert.assertEquals(
                     "Should have thrown an exception of type InvalidParameterException",
                     expectedException.getClass(), actualException.getClass());
-            Assert.assertEquals("Wrong exception message. ", "The PixiAPI function parameter "
-                    + "should not be null.", actualException.getMessage());
+            Assert.assertEquals("Wrong exception message. ",
+                    "The PixiAPI function parameter " + "should not be null.",
+                    actualException.getMessage());
         } catch (Exception e) {
             Assert.assertTrue("Should not have thrown an exception. Type: "
-                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
+                    + e.getClass().getName() + ". Message: " + e.getMessage(),
+                    false);
         }
     }
 
 
     /**
-     * 
-     * 
-     *
      * @author jfelipe
      */
     @Test
@@ -122,12 +120,15 @@ public class ItemDeliveryInfoPixiApiImporterTest {
             Assert.assertEquals(
                     "Should have thrown an exception of type InvalidParameterException",
                     expectedException.getClass(), actualException.getClass());
-            Assert.assertEquals("Wrong exception message. ", "The given PixiFunctionParameter "
-                    + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
+            Assert.assertEquals("Wrong exception message. ",
+                    "The given PixiFunctionParameter "
+                            + "list has an invalid parameters: "
+                            + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
         } catch (Exception e) {
             Assert.assertTrue("Should not have thrown an exception. Type: "
-                    + e.getClass().getName() + ". Message: " + e.getMessage(), false);
+                    + e.getClass().getName() + ". Message: " + e.getMessage(),
+                    false);
         }
     }
 }

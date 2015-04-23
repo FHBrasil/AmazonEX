@@ -1,6 +1,5 @@
 package com.pixi.api.importers.impl;
 
-import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -154,13 +153,7 @@ public class SOrderLinesPixiApiImporter extends AbstractPixiApiImporter {
 		message = getPixiSoapApi().buildMessage(PixiFunction.GET_S_ORDER_LINE,
 				functionParameters);
 		response = getPixiSoapApi().sendPixiWebServiceRequest(message);
-		try {
-			response.writeTo(System.err);
-		} catch (IOException e) {
-			// YTODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		if (response != null) {
+		if (response != null) {
 			Node responseXml = response.getSOAPBody()
 					.getElementsByTagName("SqlRowSet1").item(0);
 			if (responseXml != null) {
@@ -342,7 +335,7 @@ public class SOrderLinesPixiApiImporter extends AbstractPixiApiImporter {
 					results.add(result);
 				}
 			}
-//		}
+		}
 		return results;
 	}
 }

@@ -4,7 +4,6 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 import org.junit.Assert;

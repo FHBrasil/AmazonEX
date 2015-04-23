@@ -1,6 +1,5 @@
 package com.pixi.api.importers.impl;
 
-import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
