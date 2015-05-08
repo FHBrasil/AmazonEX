@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	<alias name="defaultNewsletterSubscriberFacade" alias="newsletterSubscriptionFacade"/>
+	<bean id="defaultNewsletterSubscriberFacade" class="com.flieger.facades.impl.DefaultNewsletterSubscriberFacade">
+		<property name="modelService" ref="modelService" />
+		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService" />
+	</bean>
+		
+	<alias name="defaultNewsletterSubscriptionService" alias="newsletterSubscriptionService"/>
+	<bean id="defaultNewsletterSubscriptionService" class="com.flieger.services.impl.DefaultNewsletterSubscriptionService">
+		<property name="modelService" ref="modelService" />
+		<property name="eventService" ref="eventService"/>
+		<property name="userService" ref="userService"/>
+		<property name="newsletterDao" ref="newsletterDao"/>
+	</bean>
+	
+	<!-- DAO -->
+	<bean id="newsletterDao" class="com.flieger.dao.impl.DefaultNewsletterDao" parent="abstractItemDao" />
+	
+	<!-- Populators -->
+	<bean id="newsletterSubscriberPopulator" class="com.flieger.facades.populators.NewsletterSubscriberPopulator" />
+	<bean id="newsletterSubscriberReversePopulator" class="com.flieger.facades.populators.NewsletterSubscriberReversePopulator" />
+	
+	<!-- Listener -->
+	<bean id="newsletterSubscriptionListener" class="com.flieger.event.listener.NewNewsletterSubscriptionListener" />
+	
+	<!-- Converters -->
+	<alias name="defaultNewsletterSubscriberReverseConverter" alias="newsletterSubscriberReverseConverter"/> 
+		<bean id="defaultNewsletterSubscriberReverseConverter" parent="abstractPopulatingConverter">
+			<property name="targetClass" value="com.flieger.facades.populators.NewsletterSubscriberReversePopulator"/>
+				<property name="populators">
+					<list>
+						<ref bean="newsletterSubscriberReversePopulator"/>
+					</list>
+				</property>
+		</bean>
+	
+	
+</beans>
