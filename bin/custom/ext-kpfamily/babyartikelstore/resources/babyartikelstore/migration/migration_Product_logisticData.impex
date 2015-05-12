@@ -37,7 +37,7 @@ $catalogVersion=catalogversion(catalog(id[default=babyartikelProductCatalog]),ve
 insert_update ProductLogisticData;&productLogisticDataPK;productCode[unique=true];                    ;shippingMethod(internalCode);customsTariffNumber(value)[allownull=true];dispatchViaForwardingAgent[default=false];
 "#% impex.includeExternalDataMedia(""Product_logisticdata.csv"" , ""UTF-8"", ';',  1 , -1);"
 # 
-update BabyartikelProduct;code[unique=true]       ;logisticData(&productLogisticDataPK);$catalogVersion
+update HeringProduct;code[unique=true]       ;logisticData(&productLogisticDataPK);$catalogVersion
 "#% impex.includeExternalDataMedia(""Product.csv"" , ""UTF-8"", ';',  1 , -1);"
 # ------------------------------------------------------------------------------
 # 

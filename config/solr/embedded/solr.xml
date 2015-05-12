@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<solr persistent="true" sharedLib="hybris">
+  <cores adminPath="/admin/cores">
+    <core name="master_babyartikel_Product" instanceDir="/workspace/kpfamily_5/config/solr/embedded" dataDir="/workspace/kpfamily_5/data/solrfacetsearch/MASTER/babyartikel_Product"/>
+
+    <core name="master_babyartikel_Product_1" instanceDir="/workspace/kpfamily_5/config/solr/embedded" dataDir="/workspace/kpfamily_5/data/solrfacetsearch/MASTER/babyartikel_Product_1"/>
+
+    <core name="master_dzarm_Product" instanceDir="/workspace/fliegercommerce/config/solr/embedded" dataDir="/workspace/fliegercommerce/data/solrfacetsearch/MASTER/dzarm_Product"/>
+
+    <core name="master_dzarm_Product_1" instanceDir="/workspace/fliegercommerce/config/solr/embedded" dataDir="/workspace/fliegercommerce/data/solrfacetsearch/MASTER/dzarm_Product_1"/>
+</cores>
+</solr>

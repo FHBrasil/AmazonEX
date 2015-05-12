@@ -1,499 +1,1005 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!--
- [y] hybris Platform
-
- Copyright (c) 2000-2013 hybris AG
- All rights reserved.
-
- This software is the confidential and proprietary information of hybris
- ("Confidential Information"). You shall not disclose such Confidential
- Information and shall use it only in accordance with the terms of the
- license agreement you entered into with hybris.
--->
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. This software is the 
+    confidential and proprietary information of hybris ("Confidential Information"). You shall not disclose 
+    such Confidential Information and shall use it only in accordance with the terms of the license agreement 
+    you entered into with hybris. -->
 
 <items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
 
-	<collectiontypes>
-		<collectiontype code="GenderList" elementtype="Gender" autocreate="true" generate="true" type="list"/>
-		<collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum" autocreate="true" generate="true" type="set"/>
-		<collectiontype code="MeasurementsList" elementtype="ProductMeasurements" autocreate="true" generate="true" type="list"/>
-		<collectiontype code="MenuDefinitionCollection" elementtype="MenuDefinition" autocreate="true" generate="false"/>
-	</collectiontypes>
+    <collectiontypes>
+        <collectiontype code="GenderList" elementtype="Gender" autocreate="true"
+            generate="true" type="list" />
+        <collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum"
+            autocreate="true" generate="true" type="set" />
+        <collectiontype code="MeasurementsList" elementtype="ProductMeasurements"
+            autocreate="true" generate="true" type="list" />
+        <collectiontype code="MenuDefinitionCollection" elementtype="MenuDefinition"
+            autocreate="true" generate="false" />
+    </collectiontypes>
 
-	<enumtypes>
-      	<enumtype code="Gender" autocreate="false" generate="false">
-			<value code="UNISEX"/>
-			<value code="UNDEFINED"/>
-		</enumtype>
-		
-		<enumtype code="OrderStatus" autocreate="false" generate="false">
-			<value code="INVOICE" />
-			<value code="DISPATCHED"/>
-			<value code="PENDING_APPROVAL" />
-			<value code="CAPTURE_PAYMENT" />
-			<value code="WAITING_PAYMENT_NOTIFICATION" />
-			<value code="ESTORNO" />
-			<value code="RESERVED" />
-			<value code="DELIVERED" />
-			<value code="FRAUD_NOT_SENT" />
-		</enumtype>
-		
-		<enumtype code="PaymentStatus" autocreate="false" generate="false">
-			<value code="PENDING_APPROVAL" />
-			<value code="WAITING_PAYMENT_NOTIFICATION" />
-		</enumtype>
-		
-		<enumtype generate="true" code="SwatchColorEnum" autocreate="true" dynamic="true">
-			<value code="BLACK"/>
-			<value code="BLUE"/>
-			<value code="BROWN"/>
-			<value code="GREEN"/>
-			<value code="GREY"/>
-			<value code="ORANGE"/>
-			<value code="PINK"/>
-			<value code="PURPLE"/>
-			<value code="RED"/>
-			<value code="SILVER"/>
-			<value code="WHITE"/>
-			<value code="YELLOW"/>
-		</enumtype>
-		
-		<enumtype code="ExportStatus" autocreate="false" generate="false">
-		   <value code="NOTAUTHORIZED"/>
-		</enumtype>
-		
-		<enumtype generate="true" code="TipoDeEndereco" autocreate="true" dynamic="true">
-			<value code="RESIDENCIAL"/>
-			<value code="COMERCIAL"/>
-		</enumtype>
-		
-		<enumtype dynamic="true" generate="false" code="SolrPropertiesTypes" autocreate="false">
-			<value code="semicolonDelimited" />
-		</enumtype>
-		
-		<enumtype code="FraudStatus" autocreate="false" generate="false" dynamic="true">
-			<value code="NOTSENT" />
-		</enumtype>
-	</enumtypes>
-	<!-- 
-	<relations>
-		<relation code="HeringProduct2MeasurementsRel" localized="false" autocreate="true">
-			<sourceElement qualifier="product" type="HeringProduct" cardinality="one"/>
-			<targetElement qualifier="measurements" type="ProductMeasurements" cardinality="many" collectiontype="list"/>
-		</relation>
-	</relations>
- 	-->
-	<itemtypes>
-		<typegroup name="Hering">
-			<itemtype code="BaseStore" autocreate="false" generate="false">
-				<description>Extending BaseStore type with additional attributes.</description>
-				<attributes>
-					<attribute type="java.lang.Double" qualifier="freeDeliveryThreshold">
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="java.lang.String" qualifier="linxSiteCode">
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			
-			<itemtype code="HeringWishlist" extends="Wishlist2" autocreate="true" generate="true" jaloclass="br.hering.core.jalo.HeringWishlist">
-				<attributes>
-					<attribute qualifier="publicName" type="java.lang.String">
-						<modifiers read="true" write="true" optional="true" />
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			
-			<itemtype code="HeringProduct" extends="Product"
-			          autocreate="true" generate="true"
-			          jaloclass="br.hering.core.jalo.HeringProduct">
-				<description>Base hering product extension that contains additional attributes.</description>
-				<attributes>
-					<attribute qualifier="genders" type="GenderList">
-						<description>List of genders that the HeringProduct is designed for</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="measurementList" type="MeasurementsList">
-						<description>List of measurements of the HeringProduct</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			<itemtype code="Product"
-			          autocreate="false" generate="false">
-				<attributes>
-					<attribute qualifier="oldPrice" type="java.math.BigDecimal">
-						<description>Original price of the product</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="sale30" type="int">
-						<description>Quantity of sales in 30 days</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="sale30date" type="java.util.Date">
-						<description>Date verification of sales' quantity in 30 days</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			<itemtype code="Address"
-			          autocreate="false" generate="false">
-				<description>Base hering product extension that contains additional attributes.</description>
-				<attributes>
-					<attribute qualifier="dddPhone" type="localized:java.lang.String">
-						<description>DDD of the telephone. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="dddCellPhone" type="localized:java.lang.String">
-						<description>DDD of the cellphone. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="complemento" type="localized:java.lang.String">
-						<description>Observation of the address. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="tipoDeEndereco" type="TipoDeEndereco">
-						<description>Address type (comercial/residencial). </description>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="pontoDeReferencia" type="localized:java.lang.String">
-						<description>Reference of the Address. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="receiver" type="localized:java.lang.String">
-						<description>Receiver of the Address. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			<itemtype code="HeringStyleVariantProduct" extends="VariantProduct"
-			          autocreate="true" generate="true"
-			          jaloclass="br.hering.core.jalo.HeringStyleVariantProduct">
-				<description>Hering style variant type that contains additional attribute describing variant style.
-				</description>
-				<attributes>
-					<attribute qualifier="style" type="localized:java.lang.String"
-					           metatype="VariantAttributeDescriptor">
-						<description>Color/Pattern of the product.</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="swatchColors" type="SwatchColorSet">
-						<description>A normalized color mapping to a standardized front-end navigable name.
-						</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			<itemtype code="HeringSizeVariantProduct" extends="HeringStyleVariantProduct"
-			          autocreate="true" generate="true"
-			          jaloclass="br.hering.core.jalo.HeringSizeVariantProduct">
-				<description>Hering size variant type that contains additional attribute describing variant size.</description>
-				<attributes>
-					<attribute qualifier="size" type="localized:java.lang.String" metatype="VariantAttributeDescriptor">
-						<description>Size of the product.</description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="int" qualifier="position">
-						<description>Defines the ordering of the skus</description>
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="double" qualifier="weight">
-				    	<persistence type="dynamic"/>
-				    	<modifiers write="false"/>
-				  	</attribute>
-					<attribute type="java.lang.String" qualifier="colorRGB">
-				    	<persistence type="dynamic"/>
-				    	<modifiers write="false"/>
-				  	</attribute>
-				  	<attribute type="java.lang.String" qualifier="colorBasicDescription">
-				    	<persistence type="dynamic"/>
-				    	<modifiers write="false"/>
-				  	</attribute>
-				  	<attribute type="java.lang.String" qualifier="colorFullDescription">
-				    	<persistence type="dynamic"/>
-				    	<modifiers write="false"/>
-				  	</attribute>
-				</attributes>
-			</itemtype>
-			
-			<itemtype code="ProductMeasurements">
-				<deployment table="ProductMeasurements" typecode="10004"/>
-				<attributes>
-					<attribute type="localized:java.lang.String" qualifier="size">
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="localized:java.lang.String" qualifier="type">
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="localized:java.lang.Double" qualifier="measurement">
-						<persistence type="property"/>
-					</attribute>
-					<attribute type="localized:Media" qualifier="picture">
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-		</typegroup>
-		
-		<typegroup name="AcceleratorBR">
-			<itemtype code="Customer" autocreate="false" generate="false">
-				<description>Base hering product extension that contains additional attributes.</description>
-				<attributes>
-					<attribute qualifier="birthday" type="java.util.Date">
-						<modifiers read="true" write="true" optional="true" />
-						<persistence type="property"/>
-					</attribute>
-					
-					<attribute qualifier="cpfcnpj" type="java.lang.String">
-						<description>CPF or CNPF of the customer.</description>
-						<modifiers read="true" write="true" optional="true" />
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="rgIe" type="localized:java.lang.String">
-						<description>Number of the document. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="ufIe" type="java.lang.String">
-						<description>Uf of the Ie. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="registrationDate" type="localized:java.util.Date">
-						<description>Date of registration. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="gender" type="Gender">
-						<description>Gender of the customer </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="facebookId" type="java.lang.Long">
-						<description>Facebook ID. </description>
-						<modifiers/>
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			<itemtype code="AbstractOrder" autocreate="false" generate="false">
-				<attributes>
-					<attribute qualifier="estimatedDeliveryDays" type="int">
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-		</typegroup>
-	
-		<typegroup name="CustomPaymentModes">
-			<itemtype code="PayPalPaymentInfo" extends="PaymentInfo" jaloclass="br.hering.core.jalo.order.payment.PayPalPaymentInfo">
-			<attributes>
-				<attribute type="java.lang.String" qualifier="token">
-					<description>Token ID of the PayPal session</description>
-					<modifiers optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="payerid">
-					<description>PayPal ID of user involved in transaction</description>
-					<modifiers optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="payeremail">
-					<description>Email of user involved in transaction</description>
-					<modifiers optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="transactionID">
-					<description>Returned transactionID from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="orderTime">
-					<description>Returned Order Time from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="paymentStatus">
-					<description>Returned payment status from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="pendingReason">
-					<description>Returned pending reason from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="reasonCode">
-					<description>Returned reason code from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="approvalResult">
-					<description>Returned approval result from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="error">
-					<description>Returned error from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.String" qualifier="errorDetails">
-					<description>Returned error details from PayPal</description>
-					<modifiers optional="true" />
-					<persistence type="property" />
-				</attribute>
-			</attributes>
-			</itemtype>			
-			<itemtype code="VoucherPaymentInfo" extends="PaymentInfo" jaloclass="br.hering.core.jalo.order.payment.VoucherPaymentInfo">
-				<attributes>
-					<attribute type="java.lang.String" qualifier="voucher">
-						<description>Vocher Code</description>
-						<modifiers optional="true" />
-						<persistence type="property" />
-					</attribute>
-					<attribute type="java.lang.Double" qualifier="voucherValue">
-						<description>Voucher Value</description>
-						<modifiers optional="true" />
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-		</typegroup>
-		<typegroup name="cronjobs">
-			<itemtype code="EmployeeIdentificationJob" jaloclass="br.hering.core.jobs.EmployeeIdentificationJob" extends="CronJob"/>
-			<itemtype code="FixBoletoNotAuthorizedJob"	jaloclass="br.hering.core.jobs.FixBoletoNotAuthorizedJob" extends="CronJob"/>
-			<itemtype code="FixTelephoneDDDMigrationJob" jaloclass="br.hering.core.jobs.FixTelephoneDDDMigrationJob" extends="CronJob"/>
-			<itemtype code="ProductCarouselCleanupJob" jaloclass="br.hering.core.jobs.ProductCarouselCleanupJob" extends="CronJob"/>
-			<itemtype code="ProductCarouselAddProductsJob" jaloclass="br.hering.core.jobs.ProductCarouselAddProductsJob" extends="CronJob">
-				<attributes>
-					<attribute qualifier="baseStore" type="BaseStore">
-						<description>The base store to run against</description>
-						<persistence type="property" />
-						<modifiers read="true" write="true" />
-					</attribute>
-					<attribute qualifier="cmsSite" type="CMSSite">
-						<description>The cms site to run against</description>
-						<persistence type="property" />
-						<modifiers read="true" write="true" />
-					</attribute>
-				</attributes>
-			</itemtype>
-			<itemtype code="ControlProductVisibilityJob" jaloclass="br.hering.core.jobs.ControlProductVisibilityJob" extends="CronJob">
-				<attributes>
-					<attribute qualifier="productCatalogVersions" type="CatalogVersionCollection">
-						<description>List of catalog versions to search the products to run against</description>
-						<modifiers optional="false"/>
-						<persistence type="property"/>
-					</attribute>
-					<attribute qualifier="numberOfRows" type="int">
-						<description>Result set paging</description>
-						<modifiers optional="false"/>
-						<persistence type="property"/>
-					</attribute>
-				</attributes>
-			</itemtype>
-			<itemtype	code="MenuGeneratorJob" 
-							extends="CronJob"
-							jaloclass="br.hering.core.jobs.MenuGeneratorJob">
-					<attributes>
-						<attribute qualifier="baseStore" type="BaseStore">
-							<description>The base store to run against</description>
-							<persistence type="property" />
-							<modifiers read="true" write="true" optional="false"/>
-						</attribute>
-						<attribute qualifier="cmsSite" type="CMSSite">
-							<description>The cms site to run against</description>
-							<persistence type="property" />
-							<modifiers read="true" write="true" optional="false"/>
-						</attribute>
-						<attribute autocreate="true" qualifier="menuDefinitions" type="MenuDefinitionCollection">
-		               <modifiers read="true" write="true" search="false" removable="false" optional="true" partof="true"/>
-		               <persistence type="property"/>
-		            </attribute>						
-					</attributes>
-			</itemtype>
-		</typegroup>
-		<typegroup name="Restrictions">
-			<itemtype code="UrlPatternRestriction" jaloclass="br.hering.core.jalo.restrictions.UrlPatternRestriction" extends="AbstractRestriction" autocreate="true" generate="true">
-				<attributes>
-					<attribute qualifier="urlPatterns" type="StringCollection">
-						<persistence type="property" />
-						<modifiers optional="false"/>
-					</attribute>
-					<attribute qualifier="matchAllPatterns" type="boolean">
-						<persistence type="property" />
-						<modifiers optional="false"/>
-						<defaultvalue>java.lang.Boolean.TRUE</defaultvalue>
-					</attribute>
-				</attributes>
-			</itemtype>
-		</typegroup>
-		<typegroup name="CMSComponents">
-			<!-- CMS components -->
-			<itemtype code="ProductCarouselComponent" autocreate="false" generate="false">
-				<description>Extends existing type with additional attributes.</description>
-				<attributes>
-					<attribute qualifier="onlyNewArrivals" type="boolean">
-						<persistence type="property" />
-						<modifiers optional="false" />
-						<defaultvalue>Boolean.FALSE</defaultvalue>
-					</attribute>
-					<attribute qualifier="onlyBestSellers" type="boolean">
-						<persistence type="property" />
-						<modifiers optional="false" />
-						<defaultvalue>Boolean.FALSE</defaultvalue>
-					</attribute>
-					<attribute qualifier="carouselResultsSize" type="int">
-						<persistence type="property" />
-						<modifiers optional="true" />
-					</attribute>
-				</attributes>
-			</itemtype>
-		</typegroup>
-	
-		<typegroup>
-			<itemtype	code="MenuDefinition"
-	      				extends="GenericItem"
-	      				jaloclass="br.hering.core.jalo.MenuDefinition"
-	      				autocreate="true"
-	      				generate="true">
-		      	<description>Url for a given menu</description>
-		         <deployment table="MenuDefinitions" typecode="6666"/>
-		         <attributes>
-		         	<attribute qualifier="name" type="java.lang.String">
-		         		<modifiers read="true" write="true" search="true" optional="false" />
-		         		<persistence type="property" />
-		         		<description>Menu key - The phrase that appears at the headline</description>
-		         	</attribute>
-		         	<attribute qualifier="query" type="java.lang.String">
-			         	<modifiers read="true" write="true" search="true" optional="false" />
-			         	<persistence type="property"/>
-			         	<description>Url value - the query that will be performed</description>
-			         </attribute>
-						<attribute qualifier="notAllowedCategories" type="StringCollection">
-							<persistence type="property" />
-						</attribute>
-						<attribute qualifier="customCategories" type="String2StringMapType">
-							<persistence type="property" />
-						</attribute>
-	          </attributes>
-		      </itemtype>
-			</typegroup>			
-	</itemtypes>
+
+    <enumtypes>
+        <enumtype code="Gender" autocreate="false" generate="false">
+            <value code="UNISEX" />
+            <value code="UNDEFINED" />
+        </enumtype>
+
+        <enumtype code="OrderStatus" autocreate="false" generate="false">
+            <value code="INVOICE" />
+            <value code="DISPATCHED" />
+            <value code="PENDING_APPROVAL" />
+            <value code="CAPTURE_PAYMENT" />
+            <value code="WAITING_PAYMENT_NOTIFICATION" />
+            <value code="ESTORNO" />
+            <value code="RESERVED" />
+            <value code="DELIVERED" />
+            <value code="FRAUD_NOT_SENT" />
+            <value code="RETURNED" />
+            <value code="CHARGEBACK" />
+        </enumtype>
+
+        <enumtype code="PaymentStatus" autocreate="false" generate="false">
+            <value code="PENDING_APPROVAL" />
+            <value code="WAITING_PAYMENT_NOTIFICATION" />
+        </enumtype>
+
+        <enumtype generate="true" code="SwatchColorEnum" autocreate="true" dynamic="true">
+            <value code="BLACK" />
+            <value code="BLUE" />
+            <value code="BROWN" />
+            <value code="GREEN" />
+            <value code="GREY" />
+            <value code="ORANGE" />
+            <value code="PINK" />
+            <value code="PURPLE" />
+            <value code="RED" />
+            <value code="SILVER" />
+            <value code="WHITE" />
+            <value code="YELLOW" />
+        </enumtype>
+
+        <enumtype code="ExportStatus" autocreate="false" generate="false">
+            <value code="NOTAUTHORIZED" />
+        </enumtype>
+
+        <enumtype generate="true" code="TipoDeEndereco" autocreate="true" dynamic="true">
+            <value code="RESIDENCIAL" />
+            <value code="COMERCIAL" />
+        </enumtype>
+
+        <enumtype dynamic="true" generate="false" code="SolrPropertiesTypes" autocreate="false">
+            <value code="semicolonDelimited" />
+        </enumtype>
+
+        <enumtype code="FraudStatus" autocreate="false" generate="false" dynamic="true">
+            <value code="NOTSENT" />
+        </enumtype>
+
+        <enumtype generate="true" code="ArticleState" autocreate="true">
+            <value code="CURRENT" />
+            <value code="DEPRECATED" />
+            <value code="OLD" />
+        </enumtype>
+
+        <enumtype generate="true" code="ShippingMethod" autocreate="true">
+            <value code="WAREHOUSE" />
+            <value code="DROPSHIPPING" />
+        </enumtype>
+
+        <enumtype code="OrderEntryStatus" autocreate="false" generate="true" dynamic="false">
+            <value code="CHARGEBACK" />
+            <value code="SHIPPED" />
+            <value code="RETURNED" />
+            <value code="AWAITING_PAYMENT" />
+            <value code="AWAITING_SHIPPING" />
+            <value code="PROCESSING" />
+            <value code="NOT_AVAILABLE" />
+            <value code="DIRECT_SHIPMENT" />
+            <value code="DIRECT_SHIPMENT_PACKED" />
+            <value code="EXCHANGE" />
+        </enumtype>
+    </enumtypes>
+
+
+    <relations>
+        <relation code="Product2ProductSupplierRelation" autocreate="true" generate="false"
+            localized="false">
+            <deployment table="Product2SupplierRel" typecode="10014" />
+            <sourceElement type="Product" cardinality="many" navigable="false" />
+            <targetElement type="ProductSupplier" qualifier="suppliers"
+                collectiontype="list" cardinality="many" />
+        </relation>
+        
+        <relation code="Product2SupplierPriceHistoryRelation" localized="false">
+            <sourceElement type="Product" qualifier="product" cardinality="one" />
+            <targetElement type="PriceHistoryEntry" qualifier="supplierPriceHistory"
+                cardinality="many" />
+        </relation>
+        
+        <relation code="Product2SellingPriceHistoryRelation" localized="false">
+            <sourceElement type="Product" qualifier="product" cardinality="one" />
+            <targetElement type="PriceHistoryEntry" qualifier="sellingPriceHistory"
+                cardinality="many" />
+        </relation>
+        
+        <relation code="Product2ProductSalesBreakdownRecordRelation" localized="false">
+            <sourceElement type="Product" qualifier="product" cardinality="one" />
+            <targetElement type="ProductSalesBreakdownRecord" qualifier="salesBreakdown"
+                cardinality="many" />
+        </relation>
+        
+        <relation code="ProductLogisticData2ProductPackageRelation" localized="false">
+            <sourceElement type="ProductLogisticData" qualifier="logisticData"
+                cardinality="one" />
+            <targetElement type="ProductPackage" qualifier="packages" cardinality="many" />
+        </relation>
+    </relations>
+
+
+    <itemtypes>
+        <typegroup name="Hybris">
+            <itemtype code="AbstractOrderEntry" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="status" type="OrderEntryStatus">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+            
+            <itemtype code="OrderEntryStatus" generate="false" autocreate="false">
+                <attributes>
+                    <attribute qualifier="externalCode" type="java.lang.String" generate="false">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+            
+            <itemtype code="StockLevel" generate="false" autocreate="false">
+                <attributes>
+                    <attribute qualifier="minimumStockLevel" type="int">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="warehouseArrivalDate" type="java.util.Date">
+                        <description>Only for out of stock items: this date indicates when new items
+                        will arrive at the warehouse</description>
+                        <persistence type="property" />
+                        <modifiers />
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+
+        <typegroup name="Babyartikel">
+            <itemtype code="BaseStore" autocreate="false" generate="false">
+                <description>Extending BaseStore type with additional attributes.</description>
+                <attributes>
+                    <attribute type="java.lang.Double" qualifier="freeDeliveryThreshold">
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="linxSiteCode">
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="HeringWishlist" extends="Wishlist2" autocreate="true" generate="true"
+                jaloclass="br.hering.core.jalo.HeringWishlist">
+                <attributes>
+                    <attribute qualifier="publicName" type="java.lang.String">
+                        <modifiers read="true" write="true" optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="Product" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="oldPrice" type="java.math.BigDecimal">
+                        <description>Original price of the product</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="sale30" type="int">
+                        <description>Quantity of sales in 30 days</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="sale30date" type="java.util.Date">
+                        <description>Date verification of sales' quantity in 30 days</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="shortDescription" type="localized:java.lang.String">
+                        <description> A short description of the product. </description>
+                        <persistence type="property">
+                            <columntype database="mysql">
+                                <value>text</value>
+                            </columntype>
+                        </persistence>
+                        <modifiers read="true" write="true" optional="true" />
+                    </attribute>
+                    <attribute qualifier="articleState" type="ArticleState">
+                        <description>Defines the current state of the product within it's collection</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="articleStateInternalCode" type="java.lang.String">
+                        <description>Dynamic attribute to retrieve the article state internal code</description>
+                        <modifiers read="true" write="false" />
+                        <persistence type="dynamic" attributeHandler="articleStateInternalCodeHandler" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="HeringProduct" extends="Product" autocreate="true" generate="true"
+                jaloclass="br.hering.core.jalo.HeringProduct">
+                <description>Base Hering product extension that contains additional attributes.</description>
+                <attributes>
+                    <attribute qualifier="genders" type="GenderList">
+                        <description>List of genders that the HeringProduct is designed for</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="measurementList" type="MeasurementsList">
+                        <description>List of measurements of the HeringProduct</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="supplierPrice" type="double">
+                        <description>The price that the product was bought from the supplier - old
+                        manufacturerPurchasePrice</description>
+                        <persistence type="property" />
+                        <modifiers />
+                    </attribute>
+                    <attribute qualifier="seoPageTitle" type="localized:java.lang.String">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="reviewsAverageRating" type="double">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="reviewsTotalCount" type="int">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="previousPrice" type="double">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="suggestedRetailPrice" type="double">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="int" qualifier="dailySalesFrequency">
+                        <description>old daily sales.</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="tradingGroup" type="TradingGroup">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="family" type="java.lang.String">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="designFamily" type="java.lang.String">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="gaPageViews" type="int">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="ProductLogisticData" qualifier="logisticData">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="defaultStockLevel" type="StockLevel">
+                        <persistence type="dynamic" attributeHandler="babyartikelProductDefaultStockLevelHandler" />
+                        <modifiers write="false" />
+                    </attribute>
+                    <attribute type="double" qualifier="boostingFactor">
+                        <description>Factor used to boost the product visibility</description>
+                        <modifiers />
+                        <defaultvalue>0.0</defaultvalue>
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="HeringStyleVariantProduct" extends="VariantProduct" autocreate="true"
+                generate="true" jaloclass="br.hering.core.jalo.HeringStyleVariantProduct">
+                <description>Hering style variant type that contains additional attribute describing variant style.
+                </description>
+                <attributes>
+                    <attribute qualifier="style" type="localized:java.lang.String"
+                        metatype="VariantAttributeDescriptor">
+                        <description>Color/Pattern of the product.</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="swatchColors" type="SwatchColorSet">
+                        <description>A normalized color mapping to a standardized front-end navigable name.
+                        </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="HeringSizeVariantProduct" extends="HeringStyleVariantProduct"
+                autocreate="true" generate="true" jaloclass="br.hering.core.jalo.HeringSizeVariantProduct">
+                <description>Hering size variant type that contains additional attribute describing variant size.</description>
+                <attributes>
+                    <attribute qualifier="size" type="localized:java.lang.String"
+                        metatype="VariantAttributeDescriptor">
+                        <description>Size of the product.</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="int" qualifier="position">
+                        <description>Defines the ordering of the skus</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="weight">
+                        <persistence type="dynamic" />
+                        <modifiers write="false" />
+                    </attribute>
+                    <attribute qualifier="length" type="double">
+                        <description>Length of the product, this attribute is dynamic to make it easier
+                            to get the value from the classification system</description>
+                        <persistence type="dynamic" attributeHandler="babyartikelProductLengthHandler" />
+                        <modifiers write="false" />
+                    </attribute>
+                    <attribute qualifier="height" type="double">
+                        <description>Height of the product, this attribute is dynamic to make it easier
+                        to get the value from the classification system</description>
+                        <persistence type="dynamic" attributeHandler="babyartikelProductHeightHandler" />
+                        <modifiers write="false" />
+                    </attribute>
+                    <attribute qualifier="width" type="double">
+                        <description>Width of the product, this attribute is dynamic to make it easier
+                        to get the value from the classification system</description>
+                        <persistence type="dynamic" attributeHandler="babyartikelProductWidthHandler" />
+                        <modifiers write="false" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="colorRGB">
+                        <persistence type="dynamic" />
+                        <modifiers write="false" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="colorBasicDescription">
+                        <persistence type="dynamic" />
+                        <modifiers write="false" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="colorFullDescription">
+                        <persistence type="dynamic" />
+                        <modifiers write="false" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="BabyartikelSerialVoucherProduct" extends="Product"
+                jaloclass="de.kpfamily.core.jalo.BabyartikelSerialVoucherProduct">
+                <attributes>
+                    <attribute qualifier="serialVoucher" type="SerialVoucher" generate="true">
+                        <description>serial voucher from voucher extension</description>
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="BabyartikelSerialVoucherProductSellingHistory"
+                jaloclass="de.kpfamily.core.jalo.BabyartikelSerialVoucherProductSellingHistory">
+                <deployment table="SVProductSellingHistory" typecode="10013" />
+                <attributes>
+                    <attribute qualifier="serialVoucherCode" type="java.lang.String">
+                        <description>serial voucher code that was generated for a given order entry</description>
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                    </attribute>
+                    <attribute qualifier="orderEntry" type="OrderEntry">
+                        <description>the order entry that the serial voucher was generated for</description>
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ProductMeasurements">
+                <deployment table="ProductMeasurements" typecode="10004" />
+                <attributes>
+                    <attribute type="localized:java.lang.String" qualifier="size">
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="localized:java.lang.String" qualifier="type">
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="localized:java.lang.Double" qualifier="measurement">
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="localized:Media" qualifier="picture">
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ArticleState" generate="false" autocreate="false">
+                <attributes>
+                    <attribute qualifier="internalCode" type="java.lang.String" generate="false">
+                        <description>The internal code used to identify the Article state, used by the
+                        company team to daily maintain the product data.</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="Category" generate="false" autocreate="false">
+                <description>Babyartikel customization of the Hybris Category item</description>
+                <attributes>
+                    <attribute type="int" qualifier="minLifetimeOfNewProducts">
+                        <description>Minimum days to consider a product as new</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="averageProfitPercentage">
+                        <description>Calculated profit average of this Category's products</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="enhanceNewProductsBy">
+                        <description>Score used to enhance the visibility of new products</description>
+                        <modifiers />
+                        <defaultvalue>0</defaultvalue>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="decreaseOutOfStockProductsBy">
+                        <description>Score used to decrease the visibility of products without stock</description>
+                        <modifiers />
+                        <defaultvalue>0</defaultvalue>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="decreaseLowProfitProductsBy">
+                        <description>Score used to decrease the visibility of products with a poor
+                        profit percentage</description>
+                        <modifiers />
+                        <defaultvalue>0</defaultvalue>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="multiplyProfitBy">
+                        <description>Value used to fine-tune the profit score</description>
+                        <modifiers />
+                        <defaultvalue>1</defaultvalue>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="multiplyTotalSalesBy">
+                        <description>Value used to fine-tune the sales score</description>
+                        <modifiers />
+                        <defaultvalue>1</defaultvalue>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="multiplyPageViewsBy">
+                        <description>Value used to fine-tune the page views score</description>
+                        <modifiers />
+                        <defaultvalue>1</defaultvalue>
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="Address" autocreate="false" generate="false">
+                <description>Base hering product extension that contains additional attributes.</description>
+                <attributes>
+                    <attribute qualifier="dddPhone" type="localized:java.lang.String">
+                        <description>DDD of the telephone. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="dddCellPhone" type="localized:java.lang.String">
+                        <description>DDD of the cellphone. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="complemento" type="localized:java.lang.String">
+                        <description>Observation of the address. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="tipoDeEndereco" type="TipoDeEndereco">
+                        <description>Address type (comercial/residencial). </description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="pontoDeReferencia" type="localized:java.lang.String">
+                        <description>Reference of the Address. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="receiver" type="localized:java.lang.String">
+                        <description>Receiver of the Address. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ShippingMethod" generate="false" autocreate="false">
+                <attributes>
+                    <attribute qualifier="internalCode" type="java.lang.String" generate="false">
+                        <description>The internal code used to identify the Shipping method, used by the
+                        company team to daily maintain the product data.</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ProductPackage">
+                <deployment table="ProductPackage" typecode="10008" />
+                <attributes>
+                    <attribute qualifier="tagCode" type="java.lang.String">
+                        <description>Tag code used to identify the package</description>
+                        <modifiers read="true" write="false" />
+                        <persistence type="dynamic" attributeHandler="productPackageTagCodeHandler" />
+                    </attribute>
+                    <attribute qualifier="bulky" type="boolean">
+                        <description>Defines if the product is bulky</description>
+                        <modifiers read="true" write="false" />
+                        <persistence type="dynamic" attributeHandler="productPackageBulkyHandler" />
+                    </attribute>
+                    <attribute qualifier="length" type="int">
+                        <description>Length that this package supports in cm</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="width" type="int">
+                        <description>Width that this package supports in cm</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="height" type="int">
+                        <description>Height that this package supports in cm</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="weight" type="double">
+                        <description>Weight that this package supports</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ProductSupplier">
+                <description>Products supplier</description>
+                <deployment table="ProductSupplier" typecode="10001" />
+                <attributes>
+                    <attribute type="java.lang.String" qualifier="code">
+                        <modifiers optional="false" unique="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="localized:java.lang.String" qualifier="name">
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="int" qualifier="warehouseDeliveryDays">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="int" qualifier="dropShippingDeliveryDays">
+                        <description>old dvDeliveryDays.</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="orderFrequency" type="int">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="supplierCodeIdx">
+                        <key attribute="code" />
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="TradingGroup">
+                <deployment table="TradingGroup" typecode="10009" />
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <modifiers unique="true" optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="tradingGroupCodeIDX" unique="true">
+                        <key attribute="code" />
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="PriceHistoryEntry">
+                <deployment table="PriceHistoryEntry" typecode="10010" />
+                <attributes>
+                    <attribute qualifier="price" type="double">
+                        <persistence type="property" />
+                        <modifiers optional="false" initial="true" write="false" />
+                    </attribute>
+                    <attribute qualifier="date" type="java.util.Date">
+                        <persistence type="property" />
+                        <modifiers optional="false" initial="true" write="false" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ProductSalesBreakdownRecord">
+                <deployment table="ProductSalesBreakdown" typecode="10011" />
+                <attributes>
+                    <attribute qualifier="timePeriodInDays" type="int">
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                    </attribute>
+                    <attribute qualifier="quantity" type="int">
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                    </attribute>
+                    <attribute qualifier="source" type="java.lang.String">
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ProductLogisticData">
+                <deployment table="ProductLogisticData" typecode="10012" />
+                <attributes>
+                    <attribute qualifier="productCode" type="java.lang.String">
+                        <modifiers optional="false" unique="true" initial="true" write="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="double" qualifier="customsTariffNumber">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="Country" qualifier="countryOfOrigin">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="boolean" qualifier="dispatchViaForwardingAgent">
+                        <description>defines if the product is so big that we cannot dispatch it via
+                        package, but via 'truck', old name: forwardingShipping</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                    <attribute type="boolean" qualifier="dispatchViaSupplier">
+                        <description>defines if the product will be delivered directly from the Supplier
+                        to the final Customer, old name: dfMethod</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="shippingMethod" type="ShippingMethod">
+                        <description>Defines the way that the product is shipped</description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="shippingMethodInternalCode" type="java.lang.String">
+                        <description>Dynamic attribute to retrieve the shipping method internal code</description>
+                        <modifiers read="true" write="false" />
+                        <persistence type="dynamic" attributeHandler="shippingMethodInternalCodeHandler" />
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="productLogisticDataProductCodeIDX" unique="true">
+                        <key attribute="productCode" />
+                    </index>
+                </indexes>
+            </itemtype>
+        </typegroup>
+
+
+        <typegroup name="AcceleratorBR">
+            <itemtype code="Customer" autocreate="false" generate="false">
+                <description>Base hering product extension that contains additional attributes.</description>
+                <attributes>
+                    <attribute qualifier="birthday" type="java.util.Date">
+                        <modifiers read="true" write="true" optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+
+                    <attribute qualifier="cpfcnpj" type="java.lang.String">
+                        <description>CPF or CNPF of the customer.</description>
+                        <modifiers read="true" write="true" optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="rgIe" type="localized:java.lang.String">
+                        <description>Number of the document. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="ufIe" type="java.lang.String">
+                        <description>Uf of the Ie. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="registrationDate" type="localized:java.util.Date">
+                        <description>Date of registration. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="gender" type="Gender">
+                        <description>Gender of the customer </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="facebookId" type="java.lang.Long">
+                        <description>Facebook ID. </description>
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+            
+            <itemtype code="AbstractOrder" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="estimatedDeliveryDays" type="int">
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+
+        <typegroup name="CustomPaymentModes">
+            <itemtype code="PayPalPaymentInfo" extends="PaymentInfo"
+                jaloclass="br.hering.core.jalo.order.payment.PayPalPaymentInfo">
+                <attributes>
+                    <attribute type="java.lang.String" qualifier="token">
+                        <description>Token ID of the PayPal session</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="payerid">
+                        <description>PayPal ID of user involved in transaction</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="payeremail">
+                        <description>Email of user involved in transaction</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="transactionID">
+                        <description>Returned transactionID from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="orderTime">
+                        <description>Returned Order Time from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="paymentStatus">
+                        <description>Returned payment status from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="pendingReason">
+                        <description>Returned pending reason from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="reasonCode">
+                        <description>Returned reason code from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="approvalResult">
+                        <description>Returned approval result from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="error">
+                        <description>Returned error from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="errorDetails">
+                        <description>Returned error details from PayPal</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+            
+            <itemtype code="VoucherPaymentInfo" extends="PaymentInfo"
+                jaloclass="br.hering.core.jalo.order.payment.VoucherPaymentInfo">
+                <attributes>
+                    <attribute type="java.lang.String" qualifier="voucher">
+                        <description>Vocher Code</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="java.lang.Double" qualifier="voucherValue">
+                        <description>Voucher Value</description>
+                        <modifiers optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+        
+        
+        <typegroup name="cronjobs">
+            <itemtype code="EmployeeIdentificationJob" jaloclass="br.hering.core.jobs.EmployeeIdentificationJob"
+                extends="CronJob" />
+                
+            <itemtype code="FixBoletoNotAuthorizedJob" jaloclass="br.hering.core.jobs.FixBoletoNotAuthorizedJob"
+                extends="CronJob" />
+                
+            <itemtype code="FixTelephoneDDDMigrationJob" jaloclass="br.hering.core.jobs.FixTelephoneDDDMigrationJob"
+                extends="CronJob" />
+                
+            <itemtype code="ProductCarouselCleanupJob" jaloclass="br.hering.core.jobs.ProductCarouselCleanupJob"
+                extends="CronJob" />
+                
+            <itemtype code="ProductCarouselAddProductsJob" jaloclass="br.hering.core.jobs.ProductCarouselAddProductsJob"
+                extends="CronJob">
+                <attributes>
+                    <attribute qualifier="baseStore" type="BaseStore">
+                        <description>The base store to run against</description>
+                        <persistence type="property" />
+                        <modifiers read="true" write="true" />
+                    </attribute>
+                    <attribute qualifier="cmsSite" type="CMSSite">
+                        <description>The cms site to run against</description>
+                        <persistence type="property" />
+                        <modifiers read="true" write="true" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ControlProductVisibilityJob" jaloclass="br.hering.core.jobs.ControlProductVisibilityJob"
+                extends="CronJob">
+                <attributes>
+                    <attribute qualifier="productCatalogVersions" type="CatalogVersionCollection">
+                        <description>List of catalog versions to search the products to run against</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="numberOfRows" type="int">
+                        <description>Result set paging</description>
+                        <modifiers optional="false" />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="MenuGeneratorJob" extends="CronJob"
+                jaloclass="br.hering.core.jobs.MenuGeneratorJob">
+                <attributes>
+                    <attribute qualifier="baseStore" type="BaseStore">
+                        <description>The base store to run against</description>
+                        <persistence type="property" />
+                        <modifiers read="true" write="true" optional="false" />
+                    </attribute>
+                    <attribute qualifier="cmsSite" type="CMSSite">
+                        <description>The cms site to run against</description>
+                        <persistence type="property" />
+                        <modifiers read="true" write="true" optional="false" />
+                    </attribute>
+                    <attribute autocreate="true" qualifier="menuDefinitions" type="MenuDefinitionCollection">
+                        <modifiers read="true" write="true" search="false" removable="false"
+                            optional="true" partof="true" />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+
+        <typegroup name="Restrictions">
+            <itemtype code="UrlPatternRestriction" jaloclass="br.hering.core.jalo.restrictions.UrlPatternRestriction"
+                extends="AbstractRestriction" autocreate="true" generate="true">
+                <attributes>
+                    <attribute qualifier="urlPatterns" type="StringCollection">
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                    </attribute>
+                    <attribute qualifier="matchAllPatterns" type="boolean">
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                        <defaultvalue>java.lang.Boolean.TRUE</defaultvalue>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+
+        <typegroup name="CMSComponents">
+            <!-- CMS components -->
+            <itemtype code="ProductCarouselComponent" autocreate="false" generate="false">
+                <description>Extends existing type with additional attributes.</description>
+                <attributes>
+                    <attribute qualifier="onlyNewArrivals" type="boolean">
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                        <defaultvalue>Boolean.FALSE</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="onlyBestSellers" type="boolean">
+                        <persistence type="property" />
+                        <modifiers optional="false" />
+                        <defaultvalue>Boolean.FALSE</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="carouselResultsSize" type="int">
+                        <persistence type="property" />
+                        <modifiers optional="true" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+
+        <typegroup>
+            <itemtype code="MenuDefinition" extends="GenericItem" jaloclass="br.hering.core.jalo.MenuDefinition"
+                autocreate="true" generate="true">
+                <description>Url for a given menu</description>
+                <deployment table="MenuDefinitions" typecode="6666" />
+                <attributes>
+                    <attribute qualifier="name" type="java.lang.String">
+                        <modifiers read="true" write="true" search="true" optional="false" />
+                        <persistence type="property" />
+                        <description>Menu key - The phrase that appears at the headline</description>
+                    </attribute>
+                    <attribute qualifier="query" type="java.lang.String">
+                        <modifiers read="true" write="true" search="true" optional="false" />
+                        <persistence type="property" />
+                        <description>Url value - the query that will be performed</description>
+                    </attribute>
+                    <attribute qualifier="notAllowedCategories" type="StringCollection">
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="customCategories" type="String2StringMapType">
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+
+        <typegroup name="Processes">
+            <itemtype code="OrderEntryStatusProcess" extends="BusinessProcess" autocreate="true"
+                generate="true" jaloclass="de.kpfamily.core.jalo.process.OrderEntryStatusProcess">
+                <description>It represents the business process that updates an order entry.</description>
+                <attributes>
+                    <attribute qualifier="orderEntry" type="OrderEntry">
+                        <persistence type="property" />
+                        <description>Attribute contains the order entry object that will be used in the
+                        process.</description>
+                    </attribute>
+                    <attribute qualifier="oldStatus" type="OrderEntryStatus">
+                        <persistence type="property" />
+                        <description>Attribute contains the old status of the order entry that will be
+                        used in the process.</description>
+                    </attribute>
+                    <attribute qualifier="newStatus" type="OrderEntryStatus">
+                        <persistence type="property" />
+                        <description>Attribute contains the new status of the order entry that will be
+                        used in the process.</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+    </itemtypes>
 </items>
