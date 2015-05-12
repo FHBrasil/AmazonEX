@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/" 
+	xmlns:h="http://hering.fliegersoftware.de/interface/soap/">
+  <xs:element name="importarProdutoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="h:produto"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="h:variacao"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="produto">
+    <xs:complexType>
+      <xs:sequence>
+      	<xs:element name="codigoSite" type="xs:string"/>
+        <xs:element name="codigo" type="xs:string"/>
+        <xs:element name="titulo" type="xs:string"/>
+        <xs:element name="descricaoFiscal" type="xs:string"/>
+        <xs:element name="descricaoB2C" type="xs:string"/>
+        <xs:element name="griffe" type="xs:string"/>
+        <xs:element name="linha" type="xs:string"/>
+        <xs:element name="tipoTecido" type="xs:string"/>
+        <xs:element name="composicao" type="xs:string"/>
+        <xs:element name="sexo" type="xs:string"/>
+        <xs:element name="parte" type="xs:string"/>
+        <xs:element name="tags" minOccurs="0" type="xs:string"/>
+        <xs:element name="codigoCategoria" type="xs:string"/>
+        <xs:element name="codigoSubCategoria" type="xs:string"/>
+        <xs:element name="codigoGrupo" type="xs:string"/>
+        <xs:element name="codigoSubGrupo" type="xs:string"/>
+        <xs:element name="ocasiao" type="xs:string" minOccurs="0"/>
+        <xs:element name="tendencia" type="xs:string" minOccurs="0"/>
+        <xs:element name="tipoMaterial" type="xs:string" minOccurs="0"/>
+        <xs:element ref="h:colecao"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="variacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sku" type="xs:string"/>
+        <xs:element name="ean" type="xs:string"/>
+        <xs:element name="ordem" type="xs:int"/>
+        <xs:element name="tamanho" type="xs:string"/>
+        <xs:element name="peso" type="xs:double"/>
+        <xs:element ref="h:cor"/>
+        <xs:element name="dataOnline" type="xs:string"/>
+        <xs:element name="dataOffline" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="colecao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="codigo" type="xs:string"/>
+        <xs:element name="descricao" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="codigo" type="xs:string"/>
+        <xs:element name="descricao" type="xs:string"/>
+        <xs:element name="descricaoCorBasica" type="xs:string"/>
+        <xs:element name="rgb" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

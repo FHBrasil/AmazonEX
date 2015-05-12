@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2012 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	<itemtypes>
+		<itemtype code="PaypalOperation" extends="GenericItem"
+			generate="true" autocreate="true">
+			<description>Paypal operation</description>
+			<deployment table="PaypalOperations" typecode="12003" />
+			<attributes>
+				<attribute qualifier="operationName" type="java.lang.String">
+					<description>API operation name</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="request" type="java.lang.String">
+					<description>Full operation request</description>
+					<persistence type="property">
+						<columntype>
+							<value>HYBRIS.LONG_STRING</value>
+						</columntype>
+					</persistence>
+				</attribute>
+				<attribute qualifier="response" type="java.lang.String">
+					<description>Full operation response</description>
+					<persistence type="property">
+						<columntype>
+							<value>HYBRIS.LONG_STRING</value>
+						</columntype>
+					</persistence>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype generate="true" code="PaypalOperationsCleanerCronJob"
+			extends="CronJob" autocreate="true">
+		</itemtype>
+
+		<itemtype code="PaypalPaymentInfo" extends="PaymentInfo"
+			autocreate="true" generate="false">
+			<attributes>
+				<!-- Token and transactionId are duplicated in case it will be more convenient 
+					to store them here -->
+				<attribute qualifier="token" type="java.lang.String">
+					<description>Token for PayPal operations chain</description>
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+				<attribute qualifier="transactionId" type="java.lang.String">
+					<description>TransactionId for PayPal operations chain (incl. Capture)</description>
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+				<attribute qualifier="payerId" type="java.lang.String">
+					<description>PayerId for DoExpressCheckoutPayment PayPal operation</description>
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PaypalConfigProperty" extends="GenericItem"
+			generate="true" autocreate="true">
+			<description>Paypal config property(pair of map)</description>
+			<deployment table="PaypalConfigProperty" typecode="12004" />
+			<attributes>
+				<attribute qualifier="key" type="java.lang.String">
+					<description>Key of property</description>
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+				<attribute qualifier="value" type="java.lang.String">
+					<description>Value of property</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

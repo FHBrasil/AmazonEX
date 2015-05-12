@@ -1,0 +1,162 @@
+#accessibletabsnavigation0-1,#accessibletabsnavigation0-2 {display:none}
+.breadcrumb {width:100%}
+#cboxOverlay {opacity:.8;background:#000 url(../images/colorbox/overlay.png) repeat 0 0}
+#cboxClose {background:url("../images/bt-fechar-modal.png") no-repeat;width:33px;height:33px;position:absolute;cursor:pointer;margin-right:68px;z-index:9999}
+#cboxClose.hover {background-position:0 0}
+.product-shipping-price+a {display:none}
+.price-to,.price-from {display:inline-block;font-size:11px !important;font-family:"Roboto";width:auto;float:left}
+.price-regular {font-size:11px;font-family:"Roboto";padding:10px 0 0 0;margin-bottom:6px}
+.price-from {text-decoration:line-through;margin-right:10px}
+.price-parcel {margin-right:7px;font-size:14px !important}
+.price-parcel,.price-parcel-price {display:inline-block;width:auto;float:left}
+.productDescription {position:relative}
+.productImageGallery li {border:0;float:none;display:block;clear:both}
+.productDescription h1 {float:left;width:100%;border:0;color:#000;font-family:"Roboto",sans-serif !important;font-size:16px;font-weight:bold;line-height:19px;margin:0;text-transform:uppercase}
+.product-code {display:block;font:10px/27px Arial;text-transform:uppercase;color:#b4b4b4}
+.pickupInStoreButton {display:none}
+.stock_message {margin:10px 0;font-family:"Roboto",sans-serif;font-size:11px;text-transform:uppercase;clear:both;padding-top:10px}
+.qty {font-family:"Roboto";font-size:12px}
+.qty label {width:100%;float:left;margin-bottom:10px;text-transform:uppercase;font-size:11px}
+.qty input {text-align:center;padding:0;width:28px;height:16px;border:1px solid #000;float:left;margin-right:4px;font-size:10px}
+.qty .productUpdateQuantityLess1 {background:#000;color:#FFF;width:17px;float:left;text-align:center;height:18px;font-size:19px;line-height:71%;margin-right:4px;font-weight:normal}
+.qty .productUpdateQuantityMore1 {background:#000;color:#FFF;width:18px;float:left;text-align:center;height:18px;font-size:13px;line-height:125%;margin-right:4px;font-weight:normal}
+.price-from,.price-to {font:10px/27px "Roboto",sans-serif;color:#000;text-transform:uppercase}
+.productDescription {color:#000;font-family:"Roboto",sans-serif;font-size:21px;font-weight:bold}
+.productDescription table {width:100%}
+.productDescription .big-price {float:none !important;font:bold 20px/27px "Roboto",sans-serif;clear:both}
+.productDescription .price-from-to {font:10px/27px "Roboto",sans-serif}
+.productDescription .product-attractions-free-shipping,.productDescription .product-attractions-blackfriday,.productDescription .productattractions-new,.productDescription .product-attractions-sale {background:#000;font:10px/16px "Roboto",sans-serif;float:right;text-align:center;width:95px;color:#FFF;clear:both;text-transform:uppercase;margin-bottom:2px}
+.productDescription .product-attractions-sale {background:#2db05e}
+.productDescription .product-attractions-blackfriday {background:#eb272b}
+.productDescription .yCmsContentSlot {width:100%;margin:0}
+.productDescription .yCmsContentSlot .product-payment-methods {display:block;text-align:right;padding:24px 0}
+.productDescription .yCmsContentSlot .product-payment-methods .product-payment-methods-link {font:10px/16px "Roboto",sans-serif;text-decoration:underline}
+.productDescription .yCmsContentSlot .product-payment-methods .product-payment-methods-link:hover {text-decoration:none}
+.prodReview {display:none}
+.productAddToCartPanel {float:left;width:100%}
+.productDescription .summary {display:none}
+.productDescription .share {width:117px;height:44px;display:inline-block;background:url("../images/compartilhe.png") no-repeat center;text-indent:-9999px;float:left}
+.variant_options {float:left;width:100%}
+.variant_options .colour,.variant_options .size {display:block;border-top:1px solid #DDD;padding:5px 0}
+.variant_options .colour>div,.variant_options .colour [for=Size],.variant_options .size>div,.variant_options .size [for=Size] {text-transform:uppercase;font:bold 11px/26px "Roboto",sans-serif;color:#000;display:block}
+.variant_options .colour {padding:10px 0 15px 0 !important}
+.variant_options .colour a {border:1px solid #000;display:block;height:30px;line-height:30px;margin:0;padding:0 5px;overflow:hidden}
+.variant_options .colour .selectedCor a.SELECTED-colorVariant {padding:4px 2px;border-width:3px;height:19px}
+.variant_options .colour .selectedCor a.SELECTED-colorVariant:hover {border-color:#23cd63 !important}
+.variant_options .colour a.colorVariant:hover {width:20px;height:30px}
+.variant_options span.corName {display: none;position: absolute !important;padding: 2px 5px;line-height:0.0em;background: #000 !important;color: #FFF !important;height:auto;text-transform:uppercase;font:normal 9px "Roboto",sans-serif;width: auto;text-align: center!important;/*box-shadow: 5px 5px 2px #333;-webkit-box-shadow: 5px 5px 2px #333;-moz-box-shadow: 5px 5px 2px #333;*/}
+.variant_options .colour a img {width:100%;height:auto}
+.variant_options .size {position:relative}
+.variant_options .size form {float:left;width:255px}
+.variant_options .size form .OutOfStock-class {border-color:#e3e3e3;color:#e3e3e3;background:url("../images/produto-esgotado.png") 95% 3px no-repeat}
+.variant_options .size form .OutOfStock-class a {color:#e3e3e3}
+.variant_options .size form .SELECTED-OutOfStock-class {border-color:#000;color:#e3e3e3;background:url("../images/produto-esgotado.png") 95% 3px no-repeat}
+.variant_options .size form .SELECTED-OutOfStock-class:hover {border-color:#23cd63 !important}
+.variant_options .size label {float:left;padding:3px 4px;line-height:27px;font-size:11px;border:1px solid #000;cursor:pointer;min-width:23px;height:25px;margin:2px;text-align:center;color:#000;text-align:left}
+.variant_options .size label:hover {border-color:#23cd63 !important}
+.variant_options .size label[for=Size] {border:0;clear:both;display:block;float:none;width:auto;padding:0;text-align:left}
+.variant_options .size label.SELECTED-InStock-class {border-width:3px;padding:1px 2px;text-align:center;border:3px solid #2db05e;background:#2db05e;color:#FFF}
+.variant_options .size label.SELECTED-InStock-class a {color:#FFF}
+.variant_options .size [type=radio] {position:absolute;left:-9000em;top:0}
+.variant_options .don-know-size {display:none !important;float:right}
+.variant_options br {display:none}
+.don-know-size-click a {display:inline-block;text-align:left;text-indent:-9999px;width:151px;height:64px;background:url("../images/nao-sabe-tamanho-1.png") no-repeat 25px -21px;position:absolute;right:0}
+.addToCartButton {outline:0;text-indent:-9000em;font-size:0 !important;line-height:0 !important;float:left !important;width:390px !important;height:62px !important;background:url("../images/bt-comprar.png") no-repeat center !important;border:0 !important;margin:20px 0}
+.productDescription .LoveShare {text-align:left;float:left}
+.productDescription .add_to_cart_form {width:100%;float:left}
+#productTabs {margin:30px 0 10px;clear:both;float:left;width:100%;font-family:"Roboto",sans-serif}
+#productTabs .content {margin:10px 0 0 0}
+#productTabs tbody td div {border:0 !important}
+#productTabs tbody td p {text-align:justify;padding:10px;color:#646464;font:12px/25px "Roboto",sans-serif}
+.tabBody .productDescriptionText {font-family:"Roboto";font-weight:100;color:#000;font-size:12px;line-height:18px;margin-bottom:30px}
+.tabHead2 {color:#000;font-family:"Roboto",sans-serif;font-size:16px;font-weight:bold;text-transform:uppercase;border-bottom:1px solid #979797;padding-bottom:4px;margin-bottom:11px}
+#productTabs ul.tabs-list li.current a {color:#000;font-family:"Roboto",sans-serif;font-size:16px;font-weight:bold}
+.product-shipping-price {float:right;text-transform:uppercase;font:bold 9px/16px "Roboto",sans-serif;color:#646464;position:relative;width:122px !important}
+.product-shipping-price .input-shipping-price-input {border:1px solid #DDD;padding:0 8px;font:10px/23px "Roboto",sans-serif;height:20px;display:block;padding-right:0;width:74px;outline:0}
+.product-shipping-price a {width:23px;height:23px;position:absolute;top:17px;right:0}
+.product-shipping-price+a {z-index:1000;position:fixed;right:0;bottom:0}
+.product-shipping-price-link {display:none}
+.input-shipping-price-submit {border:0;width:22px;height:23px;text-indent:-9999px;display:inline-block;background:#32aa60 url("../images/bt-cep-go.png") no-repeat;position:absolute;top:15px;right:0;cursor:pointer;outline:0}
+.scrollerProduct .thumb {border:0 !important}
+.thumb img {width:100%;height:auto}
+.details,.priceContainer {clear:both;display:block;color:#000 !important;text-transform:uppercase}
+.details {font:bold 11px/13px "Roboto",sans-serif;padding:0 !important}
+.priceContainer {font:10px/12px "Roboto",sans-serif;float:left !important;margin:0 !important}
+.page-productDetails .jcarousel-prev,.page-productDetails .jcarousel-next {top:-55px;cursor:pointer}
+.details {margin-bottom:10px;clear:both;display:block;font:bold 12px/16px "Roboto",sans-serif;color:#000;position:static !important;display:block;clear:both}
+.listProductLowStock {text-transform:uppercase;color:#000 !important;font-size:11px}
+.jcarousel-item {position:relative}
+.priceContainer table {width:100%}
+.priceContainer .search-flags {float:left;width:100%;top:260px;position:absolute;right:-121px}
+.priceContainer .search-flags div {background:none repeat scroll 0 0 #000;color:#fff;padding:1px 4px 1px 4px;font:10px/16px "Roboto",sans-serif;text-transform:uppercase;margin-bottom:3px;width:90px;text-align:center}
+.priceContainer .search-flags .product-attractions-sale {background:#2db05e}
+.priceContainer .search-flags .product-attractions-blackfriday {background:#eb272b}
+.details,.priceContainer {text-transform:none !important}
+.productImage {position:relative}
+.productImage .productImagePrimary a.productImagePrimaryLink {display:block;width:420px}
+.productImage .productImagePrimary a.productImageZoomLink {display:block;width:36px;height:36px;background:url("../images/productImageZoomLinkIcon.png") no-repeat center center;position:absolute;top:0;right:92px}
+.productImage .productImageGallery {overflow:hidden}
+.productImage .productImageGallery .jcarousel-clip {height:515px}
+.productImage .productImageGallery li {margin-bottom:2px}
+.productImage .productImageGallery li .thumb {display:block;overflow:hidden;width:96px;margin:1px;cursor:pointer}
+.productDescription .summary {color:#666;margin:0 0 10px 0}
+.productDescription .colour {padding:5px 0;line-height:2.5em;color:#929292}
+.productDescription ul.colorlist {float:left}
+.productDescription ul.colorlist li {float:left;margin:0 5px 5px 0;width:28px;height:28px;margin-bottom:10px}
+.productDescription .size {color:#929292}
+.productDescription .size form {float:left}
+.productDescription .size .size-guide {float:left}
+.productDescription .size form label {display:block;margin-bottom:7px;text-align:center}
+.productDescription .collect_from_store {width:49%}
+.productDescription .share>span {display:none}
+#productTabs ul.tabs-list,#productTabs .tabHead {border-bottom:1px solid #979797}
+#productTabs ul.tabs-list li {float:left}
+#productTabs ul.tabs-list li a,#productTabs .tabHead {display:block;text-transform:uppercase;font-weight:bold;padding:10px 50px 5px 0}
+#productTabs .current-info,#productTabs .content .tabhead {display:none}
+#productTabs .content {position:relative}
+.productFeatureClasses .headline {border-bottom:1px solid #a5a5a5;height:30px;line-height:30px;text-transform:uppercase;font-weight:bold;font-size:1em;white-space:nowrap;display:block;margin:20px 0 0 0}
+.productFeatureClasses table {width:100%}
+.productFeatureClasses table tr:nth-child(odd) {background:#f6f6f6}
+.productFeatureClasses table td {width:50%;padding:10px 20px}
+.productFeatureClasses table td.attrib {font-weight:bold}
+.prodReview {margin:0 0 20px 0}
+.prodReview .count {color:gray;padding:0 10px}
+.prodReview .write {color:gray;font-weight:bold;padding:0 0 0 10px;background:url("../images/facetMoreLessIcon.png") no-repeat left center}
+.reviews .actionBar {height:30px;line-height:30px;color:gray;font-size:1em;white-space:nowrap;display:block;margin:20px 0}
+.reviews .actionBar.top {border-bottom:1px solid #a5a5a5}
+.reviews .actionBar.bottom {border-top:1px solid #a5a5a5}
+.reviews .actionBar a,.reviews .actionBar .write {color:gray;font-weight:bold;padding:0 0 0 10px;background:url("../images/facetMoreLessIcon.png") no-repeat left center}
+.reviews .reviewDetail {border-top:1px solid #a5a5a5;padding:20px 0}
+.reviews .reviewDetail:first-child {border-top:0}
+.reviews .reviewDetail .headline {font-weight:bold}
+.reviews .reviewDetail .autor {font-style:italic;color:gray}
+#write_reviews.reviews .headline {border-bottom:1px solid #a5a5a5;font-size:1.2em;font-weight:bold;height:39px;line-height:39px;text-transform:uppercase;margin:0 0 20px 0}
+.reviews .description {margin:0 0 20px 0}
+#colorbox .productImage .productImageGallery .jcarousel-clip {height:455px}
+#colorbox .productImage .productImageGallery li {margin:0 0 18px}
+#quickviewLightbox {padding:20px}
+#quickviewLightbox .productImage {padding:0;margin:0 30px 0 0}
+#quickviewLightbox .productImage .productImagePrimary {margin:0}
+#quickviewLightbox .productImage .productImagePrimary .productImagePrimaryLink {width:284px}
+#quickviewLightbox .productImage .productImagePrimary a.productImageZoomLink {right:0}
+#quickviewLightbox .productDescription {width:496px}
+body.page-login #cboxWrapper,body.page-checkout-login #cboxWrapper {top:10%}
+body.page-login #cboxContent,body.page-checkout-login #cboxContent {height:273px !important}
+body.page-login #cboxContent .required,body.page-login #cboxContent .description,body.page-login #cboxContent .control-label,body.page-login #cboxContent .headline,body.page-checkout-login #cboxContent .required,body.page-checkout-login #cboxContent .description,body.page-checkout-login #cboxContent .control-label,body.page-checkout-login #cboxContent .headline {color:#FFF;font:12px/16px Roboto}
+body.page-login #cboxContent .required,body.page-login #cboxContent .headline,body.page-checkout-login #cboxContent .required,body.page-checkout-login #cboxContent .headline {font-size:14px;text-transform:uppercase;font-weight:bold}
+.productDetailsPanel .productImagePrimary {overflow:hidden;width:460px;float:right;text-align:center}
+.productDetailsPanel .product-shipping-price .calculateDelivery input#cep {border-color:#ccc !important}
+.productDetailsPanel .product-shipping-price .calculateDelivery input.input-shipping-price-submit {margin-top:8px;left:89px}
+.thumb img {width:auto !important}
+#reviews .tabHead2 {display:none !important}
+#write_reviews,#read_reviews {padding:0 !important;width:950px !important}
+#write_reviews {display:inline;clear:both}
+#write_reviews .actionBar {float:left;width:300px;height:22px;padding:2px 0 0 0;clear:both;font-family:"Roboto";color:#999;font-size:13px;text-transform:uppercase;font-weight:normal;margin:20px 0 0 0}
+#write_reviews .actionBar a {color:#636363;padding:2px 0 0 25px;text-decoration:none;background:url("../images/back-aval.png") no-repeat 0}
+#read_reviews {float:left;display:block;width:930px;height:auto;font-family:"Roboto";font-weight:100;color:#000;font-size:12px;line-height:22px;margin:0;padding:0 0 0 20px;clear:both}
+.r-bold {font-weight:bold}
+.rev-name {width:252px;padding:0;margin:10px 0 10px 0;float:left}
+.rev-details {width:650px;padding:0 0 0 28px;margin:-23px 0 10px 0;float:left;background:#f6f6f6 url("../images/r-apost1.png") no-repeat left 5px top 5px}
+.r-apost2 {float:right;width:16px;height:15px;padding:0;margin:5px;margin-top:34px;background:url("../images/r-apost2.png")}
+.tabHead3 {color:#000;font-family:"Roboto",sans-serif;font-size:12px;font-weight:bold;border-bottom:1px solid #979797;padding-bottom:4px;margin-bottom:11px}
+.tabBotton {font-family:"Roboto",sans-serif;font-weight:bold;border-bottom:1px solid #979797;padding-bottom:4px;margin-bottom:11px}

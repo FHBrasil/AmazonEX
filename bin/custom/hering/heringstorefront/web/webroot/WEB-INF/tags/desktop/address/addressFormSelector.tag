@@ -1,0 +1,241 @@
+<%@ attribute name="supportedCountries" required="true" type="java.util.List"%>
+<%@ attribute name="regions" required="true" type="java.util.List"%>
+<%@ attribute name="country" required="false" type="java.lang.String"%>
+<%@ attribute name="cancelUrl" required="false" type="java.lang.String"%>
+<%@ attribute name="page" required="false" type="java.lang.String"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="address" tagdir="/WEB-INF/tags/desktop/address"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:if test="${themeName == 'black'}">
+<c:if test="${not empty deliveryAddresses}">
+	<div id="savedAddressListHolder" style="display: block" class="clear" >
+		<div id="savedAddressList" class="summaryOverlay clearfix">
+			<div class="headline"><spring:theme code="address.headline" text="Addressbook"/></div>
+			<div class="addressList">
+			<c:forEach items="${deliveryAddresses}" var="deliveryAddress" varStatus="status">
+				<div class="addressEntry">
+					<ul>
+						<li>${fn:escapeXml(deliveryAddress.type.code)}</li>
+						<li>${fn:escapeXml(deliveryAddress.firstName)}&nbsp; ${fn:escapeXml(deliveryAddress.lastName)}</li>
+						<li><c:if test="${not empty deliveryAddress.receiver}">${fn:escapeXml(deliveryAddress.receiver)}</c:if></li>
+						<li>(${fn:escapeXml(deliveryAddress.dddPhone)})${fn:escapeXml(deliveryAddress.phone)}</li>
+						<li><c:if test="${not empty deliveryAddress.celPhone}">(${fn:escapeXml(deliveryAddress.dddCelPhone)})${fn:escapeXml(deliveryAddress.celPhone)}</c:if></li>
+						<li>${fn:escapeXml(deliveryAddress.line1)}&nbsp; ${fn:escapeXml(deliveryAddress.number)}</li>
+						<li>${fn:escapeXml(deliveryAddress.complement)}</li>
+						<li><c:if test="${not empty deliveryAddress.reference}">${fn:escapeXml(deliveryAddress.reference)}</c:if></li>
+						<li>${fn:escapeXml(deliveryAddress.postalCode)}-${fn:escapeXml(deliveryAddress.district)}</li>
+						<li>${fn:escapeXml(deliveryAddress.town)}<c:if test="${not empty deliveryAddress.region.name}">-${fn:escapeXml(deliveryAddress.region.name)}</c:if>-${fn:escapeXml(deliveryAddress.country.name)}</li>
+
+					</ul>
+					<form:form action="${request.contextPath}/checkout/multi/edit-delivery-address" method="GET">
+						<input type="hidden" name="editAddressCode" value="${deliveryAddress.id}"/>
+						<button type="submit" class="adressButtonEditAddress" tabindex="${status.count + 21}">Editar</button>
+					</form:form>
+					<c:if test="${fn:length(deliveryAddresses) > 1}">
+						<form:form action="${request.contextPath}/checkout/multi/remove-address" method="POST">
+							<input type="hidden" name="addressCode" value="${deliveryAddress.id}"/>
+							<button type="submit" class="adressButtonEraseAddress" tabindex="${status.count + 21}">Apagar</button>
+						</form:form>
+					</c:if>
+					<form action="${request.contextPath}/checkout/multi/select-delivery-address" method="GET">
+						<input type="hidden" name="selectedAddressCode" value="${deliveryAddress.id}"/>
+						<button type="submit" class="adressButtonThisAddress" tabindex="${status.count + 21}"><spring:theme code="checkout.deliverThisAddress" text="Entregar nesse endereço"/></button>
+					</form> 
+				</div>
+			</c:forEach>
+			</div>
+		</div>
+	</div>
+</c:if>
+
+<div class="headline"><spring:theme code="address.incluirEndereco" text="INCLUIR NOVO ENDEREÇO"/></div>
+<form:form method="post" commandName="heringAddressForm">
+	<form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}"/>
+	<input type="hidden" name="bill_state" id="address.billstate"/>
+	<div id="i18nAddressForm" class="i18nAddressForm">
+		<address:addressFormElements regions="${regions}" country="BR" page="${page}"/>
+	</div>
+			<!-- Sergio Prado Junior 05-06-2014 -->
+	<sec:authorize ifNotGranted="ROLE_ANONYMOUS">
+	<div class="form-additionals">
+		<div class="required right"><spring:theme code="form.required" text="Fields marked * are required"/></div>
+<!-- 		<div style="display:none"> -->
+		<!-- Sergio Prado Junior 05-06-2014 -->
+		<!-- Checkou Save Added Address -->
+		<c:choose>
+			<c:when test="${showSaveToAddressBook}">
+				<input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
+<%-- 				<formElement:formCheckbox idKey="saveAddressInMyAddressBook"  --%>
+<%-- 					labelKey="checkout.summary.deliveryAddress.saveAddressInMyAddressBook"  --%>
+<%-- 					path="saveInAddressBook"  --%>
+<%-- 					inputCSS="add-address-left-input"  --%>
+<%-- 					labelCSS="add-address-left-label"  --%>
+<%-- 					mandatory="false"/> --%>
+				<!-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }">  -->
+			</c:when>
+			<c:when test="${not addressBookEmpty && not isDefaultAddress}">
+				<c:if test="${false}">
+					<formElement:formCheckbox idKey="defaultAddress" labelKey="address.default" path="defaultAddress" inputCSS="add-address-left-input" labelCSS="add-address-left-label" mandatory="false"/>
+				</c:if>
+				<!-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }"> -->
+			</c:when>
+		</c:choose>
+<!-- 		</div> -->
+	</div>
+	</sec:authorize>
+
+	<div id="addressform_button_panel" class="form-actions">
+			
+		
+				<c:if test="${not noAddress}">
+					<ycommerce:testId code="multicheckout_cancel_button">
+						<c:url value="${cancelUrl}" var="cancel"/>
+						<c:if test="false">
+							<div id="addressform_button_cancel" class="bt-cancelar">
+								<a class="button" href="${cancel}"><spring:theme code="checkout.multi.cancel" text="Cancel"/></a>
+							</div>
+						</c:if>
+					</ycommerce:testId>
+				</c:if>
+				
+				
+				<c:choose>
+					<c:when test="${edit eq true}">
+						<ycommerce:testId code="multicheckout_saveAddress_button">
+							<button class="positive right change_address_button show_processing_message" type="submit">
+								<spring:theme code="checkout.multi.saveAddress" text="Save address"/>
+							</button>
+						</ycommerce:testId>
+					</c:when>
+					<c:otherwise>
+						<ycommerce:testId code="multicheckout_saveAddress_button">
+							<button class="positive right change_address_button show_processing_message" type="submit">
+								<spring:theme code="checkout.checkout.multi.next" text="Continuar"/>
+							</button>
+						</ycommerce:testId>
+					</c:otherwise>
+				</c:choose>
+		
+				
+			
+	</div>
+</form:form>
+</c:if>
+
+<c:if test="${themeName == 'hering' || themeName == 'dzarm' || themeName == 'foryou'}">
+	<c:if test="${not empty deliveryAddresses}">
+		<div id="savedAddressListHolder" style="display: block" class="clear" >
+			<div id="savedAddressList" class="summaryOverlay clearfix">
+				<div class="headline"><spring:theme code="address.headline" text="Addressbook"/></div>
+				<div class="addressList">
+					<c:forEach items="${deliveryAddresses}" var="deliveryAddress" varStatus="status">
+						<div class="addressEntry">
+							<ul>
+								<li>${fn:escapeXml(deliveryAddress.type.code)}</li>
+								<li>${fn:escapeXml(deliveryAddress.firstName)}&nbsp; ${fn:escapeXml(deliveryAddress.lastName)}</li>
+								<li><c:if test="${not empty deliveryAddress.receiver}">${fn:escapeXml(deliveryAddress.receiver)}</c:if></li>
+								<li>(${fn:escapeXml(deliveryAddress.dddPhone)})${fn:escapeXml(deliveryAddress.phone)}</li>
+								<li><c:if test="${not empty deliveryAddress.celPhone}">(${fn:escapeXml(deliveryAddress.dddCelPhone)})${fn:escapeXml(deliveryAddress.celPhone)}</c:if></li>
+								<li>${fn:escapeXml(deliveryAddress.line1)}&nbsp; ${fn:escapeXml(deliveryAddress.number)}</li>
+								<li>${fn:escapeXml(deliveryAddress.complement)}</li>
+								<li><c:if test="${not empty deliveryAddress.reference}">${fn:escapeXml(deliveryAddress.reference)}</c:if></li>
+								<li>${fn:escapeXml(deliveryAddress.postalCode)}-${fn:escapeXml(deliveryAddress.district)}</li>
+								<li>${fn:escapeXml(deliveryAddress.town)}<c:if test="${not empty deliveryAddress.region.name}">-${fn:escapeXml(deliveryAddress.region.name)}</c:if>-${fn:escapeXml(deliveryAddress.country.name)}</li>
+							</ul>
+							<form:form action="${request.contextPath}/checkout/multi/edit-delivery-address" method="GET">
+								<input type="hidden" name="editAddressCode" value="${deliveryAddress.id}"/>
+								<button type="submit" class="adressButtonEditAddress" tabindex="${status.count + 21}">Editar</button>
+							</form:form>
+							<c:if test="${fn:length(deliveryAddresses) > 1}">
+								<form:form action="${request.contextPath}/checkout/multi/remove-address" method="POST">
+									<input type="hidden" name="addressCode" value="${deliveryAddress.id}"/>
+									<button type="submit" class="adressButtonEraseAddress" tabindex="${status.count + 21}">Apagar</button>
+								</form:form>
+							</c:if>
+							<form action="${request.contextPath}/checkout/multi/select-delivery-address" method="GET">
+								<input type="hidden" name="selectedAddressCode" value="${deliveryAddress.id}"/>
+								<button type="submit" class="adressButtonThisAddress" tabindex="${status.count + 21}"><spring:theme code="checkout.deliverThisAddress" text="Entregar nesse endereço"/></button>
+							</form> 
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	<c:choose>
+		<c:when test="${edit eq true}">
+			<header>
+				<h2>ALTERAR ENDERE&Ccedil;O</h2>
+			</header>
+		</c:when>
+		<c:otherwise>
+			<header>
+				<h2>ADICIONAR ENDERE&Ccedil;O</h2>
+			</header>
+		</c:otherwise>
+	</c:choose>
+	<form:form method="post" commandName="heringAddressForm">
+		<form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}"/>
+		<input type="hidden" name="bill_state" id="address.billstate"/>
+		<address:addressFormElements regions="${regions}" country="BR" page="${page}"/>
+		
+		<sec:authorize ifNotGranted="ROLE_ANONYMOUS">
+			<div class="form-additionals">
+				<c:choose>
+					<c:when test="${showSaveToAddressBook}">
+						<input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
+<%-- 						<formElement:formCheckbox idKey="saveAddressInMyAddressBook"  --%>
+<%-- 							labelKey="checkout.summary.deliveryAddress.saveAddressInMyAddressBook"  --%>
+<%-- 							path="saveInAddressBook"  --%>
+<%-- 							inputCSS="add-address-left-input"  --%>
+<%-- 							labelCSS="add-address-left-label"  --%>
+<%-- 							mandatory="false"/> --%>
+						<!-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }">  -->
+					</c:when>
+					<c:when test="${not addressBookEmpty && not isDefaultAddress}">
+						<c:if test="${false}">
+							<formElement:formCheckbox idKey="defaultAddress" labelKey="address.default" path="defaultAddress" inputCSS="add-address-left-input" labelCSS="add-address-left-label" mandatory="false"/>
+						</c:if>
+						<!-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }"> -->
+					</c:when>
+				</c:choose>
+			</div>
+		</sec:authorize>
+		<div id="addressform_button_panel" class="form-actions">
+			<c:if test="${not noAddress}">
+				<ycommerce:testId code="multicheckout_cancel_button">
+					<c:url value="${cancelUrl}" var="cancel"/>
+					<c:if test="false">
+						<div id="addressform_button_cancel" class="bt-cancelar">
+							<a class="btn btn-cancelar" href="${cancel}"><spring:theme code="checkout.multi.cancel" text="Cancel"/></a>
+						</div>
+					</c:if>
+				</ycommerce:testId>
+			</c:if>
+			<c:choose>
+				<c:when test="${edit eq true}">
+					<ycommerce:testId code="multicheckout_saveAddress_button">
+						<button class="btn btn-confirmar" type="submit">
+							<spring:theme code="checkout.multi.saveAddress" text="Save address"/>
+						</button>
+					</ycommerce:testId>
+				</c:when>
+				<c:otherwise>
+					<ycommerce:testId code="multicheckout_saveAddress_button">
+						<button class="btn btn-confirmar" type="submit">
+							<spring:theme code="checkout.checkout.multi.next" text="Continuar"/>
+						</button>
+					</ycommerce:testId>
+				</c:otherwise>
+			</c:choose>
+			<a class="btn btn-cancelar" href="${cancel}"><spring:theme code="checkout.multi.cancel" text="Cancel"/></a>
+		</div>
+	</form:form>
+</c:if>

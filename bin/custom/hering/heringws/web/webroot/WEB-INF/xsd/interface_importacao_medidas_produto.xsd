@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/" 
+	xmlns:h="http://hering.fliegersoftware.de/interface/soap/">
+  <xs:element name="importarMedidasProdutoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="h:medidaProduto"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="medidaProduto">
+    <xs:complexType>
+      <xs:sequence>
+      	<xs:element ref="h:codigoSite"/>
+        <xs:element ref="h:codigoProduto"/>
+        <xs:element ref="h:tipo"/>
+        <xs:element ref="h:medida"/>
+        <xs:element ref="h:tamanho"/>
+        <xs:element ref="h:imagem"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoSite" type="xs:string"/>
+  <xs:element name="codigoProduto" type="xs:string"/>
+  <xs:element name="tipo" type="xs:string"/>
+  <xs:element name="medida" type="xs:decimal"/>
+  <xs:element name="tamanho" type="xs:string"/>
+  <xs:element name="imagem" type="xs:string"/>
+</xs:schema>

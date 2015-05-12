@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/" 
+	xmlns:h="http://hering.fliegersoftware.de/interface/soap/">
+  <xs:element name="importarAtributosProdutoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="h:atributo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="atributo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="codigo" type="xs:string"/>
+        <xs:element name="tipo" type="xs:string"/>
+        <xs:element name="descricao" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

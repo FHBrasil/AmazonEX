@@ -1,0 +1,8 @@
+#Ant properties
+#Fri Oct 25 18:24:57 CEST 2013
+builddate=20131025 1823
+description=newsletter
+name=newsletter
+vendor=hybris
+version=5.0.4.0
+version.api=5.0.4

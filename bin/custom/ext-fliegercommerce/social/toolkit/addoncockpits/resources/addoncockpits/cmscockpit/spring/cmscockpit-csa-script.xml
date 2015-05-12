@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+
+<!-- WARNING: This is the Spring WEB configuration file. If you want to replace 
+	items or managers you have to do this from the extensions core configuration 
+	file (cmscockpit/resources/cmscockpit-application-context.xml) -->
+
+<!-- WARNING: This file is imported in cmscockpit-web-spring.xml therefore you don't need
+	to list it in your deployment descriptor -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util-3.1.xsd"
+	default-autowire="byName">
+	
+	<bean id="defaultLiveEditCallbackScript" class="com.hybris.addon.cockpits.session.script.config.SimpleAddOnScriptFragment">
+		<property name="group" value="LIVEEDIT" />
+		<property name="script">
+		<value>
+		 <![CDATA[
+		function notifyIframeZkComponent(cmp_id, slot_id){
+				var iframeCollection = document.getElementsByTagName('iframe');
+				var id="";
+		      for(index in iframeCollection){
+		      	if(iframeCollection[index].className!=null&&iframeCollection[index].className=='liveEditBrowser'&&iframeCollection[index].offsetHeight!=0){
+		      		id=iframeCollection[index].id;
+		      		break;
+		          }
+		      }
+		      comm.sendUser(id,'callback',cmp_id, slot_id)
+		   }
+			
+		   ]]>
+		  </value> 
+		  </property> 
+		   
+	</bean>
+	
+	<bean id="defaultLiveEditUrlChangeCallbackScript" class="com.hybris.addon.cockpits.session.script.config.SimpleAddOnScriptFragment">
+		<property name="group" value="LIVEEDIT" />
+		<property name="script">
+		<value>
+		 <![CDATA[
+			
+			function notifyIframeAboutUrlChanage(url, pagePk, userPk, jaloSessionId){
+				var iframeCollection = document.getElementsByTagName('iframe');
+				var id="";
+		      for(index in iframeCollection){
+		      	if(iframeCollection[index].className!=null&&iframeCollection[index].className=='liveEditBrowser'&&iframeCollection[index].offsetHeight!=0){
+		      		id=iframeCollection[index].id;
+		      		break;
+		          }
+		      }
+		      comm.sendUser(id,'urlChange',url,pagePk,userPk,jaloSessionId)
+		   }
+		   ]]>
+		  </value> 
+		  </property> 
+	</bean>
+	
+	
+	<!-- Callback Event Handler Registry -->
+	<alias name="defaultCallbackEventHandlerRegistry" alias="liveEditCallbackEventHandlerRegistry" />
+	<bean id="defaultCallbackEventHandlerRegistry" class="com.hybris.addon.cockpits.components.liveedit.DefaultCallbackEventHandlerRegistry" />
+	<bean id="liveEditClick2EditCallbackEventHandler" class="com.hybris.addon.cockpits.components.liveedit.AddOnLiveEditView$Click2EditCallbackEventHandler" />
+	<bean id="liveEditUrlChangeCallbackEventHandler" class="com.hybris.addon.cockpits.components.liveedit.AddOnLiveEditView$UrlChangeCallbackEventHandler" >
+		<property name="urlChangeEventConverter" ref="urlChangeEventConverter" />
+	</bean>
+	
+	
+	<alias alias="liveEditCaptionButtonHandlers" name="defaultLiveEditCaptionButtonHandlers" />
+	<util:list id="defaultLiveEditCaptionButtonHandlers">
+		<ref bean="liveEditCaptionButtonHandler"/>
+		<ref bean="previewContextLiveEditCaptionButtonHandler" />
+		<ref bean="pageEditLiveEditCaptionButtonHandler" />
+	</util:list>
+	
+	<alias name="defaultLiveEditCaptionButtonHandler" alias="liveEditCaptionButtonHandler" />
+	<bean id="defaultLiveEditCaptionButtonHandler" class="com.hybris.addon.cockpits.session.liveedit.impl.AddOnLiveEditContentBrowser$ActivateLiveEditCaptionButtonHandler" />
+	<alias name="defaultPreviewContextLiveEditCaptionButtonHandler" alias="previewContextLiveEditCaptionButtonHandler" />
+	<bean id="defaultPreviewContextLiveEditCaptionButtonHandler" class="com.hybris.addon.cockpits.session.liveedit.impl.AddOnLiveEditContentBrowser$PreviewContextLiveEditCaptionButtonHandler" />
+	<alias name="defaultPageEditLiveEditCaptionButtonHandler" alias="pageEditLiveEditCaptionButtonHandler" />
+	<bean id="defaultPageEditLiveEditCaptionButtonHandler" class="com.hybris.addon.cockpits.session.liveedit.impl.AddOnLiveEditContentBrowser$PageEditLiveEditCaptionButtonHandler" >
+		<property name="cmsAdminSiteService" ref="cmsAdminSiteService" />
+	</bean>
+	
+</beans>

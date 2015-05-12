@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/" 
+	xmlns:h="http://hering.fliegersoftware.de/interface/soap/">
+  <xs:element name="importarEstoqueSaldoProdutoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="h:estoqueSaldoProduto"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="estoqueSaldoProduto">
+    <xs:complexType>
+      <xs:sequence>
+      	<xs:element ref="h:codigoSite"/>
+        <xs:element ref="h:sku"/>
+        <xs:element ref="h:estoque"/>
+        <xs:element ref="h:estoqueVirtual"/>
+        <xs:element ref="h:permiteVirtual"/>
+        <xs:element ref="h:tempoEntregaVirtual"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoSite" type="xs:string"/>
+  <xs:element name="sku" type="xs:string"/>
+  <xs:element name="estoque" type="xs:int"/>
+  <xs:element name="estoqueVirtual" type="xs:int"/>
+  <xs:element name="permiteVirtual" type="xs:boolean"/>
+  <xs:element name="tempoEntregaVirtual" type="xs:int"/>
+</xs:schema>

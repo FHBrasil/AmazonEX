@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="https://transaction.mundipaggone.com/MundiPaggService.svc?wsdl" uri="wsdl/transaction.mundipaggone.com/MundiPaggService.svc.wsdl"/>
+    <system systemId="https://transaction.mundipaggone.com/MundiPaggService.svc?xsd=xsd0" uri="wsdl/transaction.mundipaggone.com/MundiPaggService.svc.xsd_xsd0.xsd"/>
+    <system systemId="https://transaction.mundipaggone.com/MundiPaggService.svc?xsd=xsd1" uri="wsdl/transaction.mundipaggone.com/MundiPaggService.svc.xsd_xsd1.xsd"/>
+    <system systemId="https://transaction.mundipaggone.com/MundiPaggService.svc?xsd=xsd2" uri="wsdl/transaction.mundipaggone.com/MundiPaggService.svc.xsd_xsd2.xsd"/>
+</catalog>

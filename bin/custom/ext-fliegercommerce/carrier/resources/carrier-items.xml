@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+	<itemtypes>
+		<typegroup name="carrierGroup">
+			
+			<itemtype code="CarrierZoneDeliveryMode" extends="ZoneDeliveryMode">
+				<attributes>
+					<attribute qualifier="dateRange" type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="transportMode" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		
+			<itemtype code="CarrierZone" extends="Zone">
+            	<attributes>
+	           		<attribute qualifier="zipCodeBegin" type="java.lang.String">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="zipCodeEnd" type="java.lang.String">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+            	</attributes>
+            	<indexes>
+					<index name="IdentityZoneIDX" unique="true">
+						<key attribute="zipCodeBegin"/>
+						<key attribute="zipCodeEnd"/>
+					</index>
+				</indexes>
+            </itemtype>
+            
+            <itemtype code="OrderWeightRange">
+            	<deployment table="OrderWeightRange" typecode="10657"></deployment>
+            	<attributes>
+            		<attribute qualifier="weightBegin" type="java.math.BigDecimal">
+            			<modifiers optional="false" />
+            			<persistence type="property" />
+            		</attribute>
+            		<attribute qualifier="weightEnd" type="java.math.BigDecimal">
+            			<modifiers optional="false" />
+            			<persistence type="property" />
+            		</attribute>
+            	</attributes>	
+            	<indexes>
+					<index name="IdentityWeightIDX" unique="true">
+						<key attribute="weightBegin"/>
+						<key attribute="weightEnd"/>
+					</index>
+				</indexes>
+            </itemtype>
+            
+            <itemtype code="ZoneDeliveryModeValue" autocreate="false" generate="false">
+				<indexes>
+					<index name="IdentityIDX" replace="true" remove="true">
+						<key attribute="deliveryMode"/>
+					</index>
+					<index name="ModeIDX" replace="true" remove="true">
+						<key attribute="deliveryMode"/>
+					</index>
+					<index name="ZoneIDX" replace="true" remove="true">
+						<key attribute="deliveryMode"/>
+					</index>
+				</indexes>
+			</itemtype>
+            
+           <itemtype code="CarrierZoneDeliveryModeValue" extends="ZoneDeliveryModeValue" >
+            	<deployment table="CarrierValues" typecode="10660"/>
+				<attributes>
+					<attribute qualifier="estimatedDeliveryDays" type="int">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="weightRange" type="OrderWeightRange">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="false" initial="true" unique="true"/>
+					</attribute>
+					<attribute qualifier="tollValue" type="double">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="insurancePercentage" type="double">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="CarrierIdentityIDX" unique="true">
+						<key attribute="deliveryMode"/>
+						<key attribute="zone"/>
+						<key attribute="currency"/>
+						<key attribute="minimum"/>
+						<key attribute="weightRange"/>
+					</index>
+				</indexes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

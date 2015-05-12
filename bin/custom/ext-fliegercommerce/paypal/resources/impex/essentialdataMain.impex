@@ -1,0 +1,12 @@
+# Additional Payment Mode
+INSERT_UPDATE StandardPaymentMode;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];active;paymentinfotype(code)
+;paypal;PayPal;PayPal;Bezahlung per PayPal;payment with PayPal;true;PaypalPaymentInfo
+
+INSERT_UPDATE PaypalConfigProperty;key[unique=true];value
+;endpoint;https://api-3t.sandbox.paypal.com/2.0;
+;username;wmoscon-facilitator_api1.gmail.com;
+;password;1404767506;
+;signature;AFcWxV21C7fd0v3bYYYRCpSSRl31A2tVvLmf6F5We.WS3gheTxJn2W7G;
+;redirectUrl.desktop;https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=;
+;returnUrl.multi.desktop;https://dzarm.local:9002/store/checkout/multi/paypalResponse?result=accepted&guid=;
+;cancelUrl.multi.desktop;https://dzarm.local:9002/store/checkout/multi/paypalResponse?result=error;

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+		<typegroup name="notifyme">
+			<itemtype code="Notifyme" autocreate="true" generate="true" jaloclass="com.flieger.notificationservices.jalo.Notifyme">
+				<deployment table="Notifyme" typecode="10005"/>
+				<attributes>
+					<attribute qualifier="name" type="java.lang.String">
+						<persistence type="property" />
+						<description>Nome do cliente.</description>
+					</attribute>
+					<attribute qualifier="email" type="java.lang.String">
+						<persistence type="property" />
+						<description>Endereço de e-mail que será disparado a notificação.</description>
+					</attribute>
+					<attribute qualifier="code" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="BaseStore" qualifier="baseStore">
+						<persistence type="property" />
+						<description>Store of notification.</description>
+					</attribute>
+					<attribute qualifier="product" type="Product">
+						<persistence type="property" />
+						<description>HeringProduct of notification.</description>
+					</attribute>
+					<attribute qualifier="created" type="java.util.Date">
+						<persistence type="property" />
+						<description>Data de criação do registro.</description>
+					</attribute>
+					<attribute qualifier="days" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Quantidade de dias a notificação expirar.</description>
+						<defaultvalue>0</defaultvalue>
+					</attribute>
+					<attribute qualifier="notified" type="java.util.Date">
+						<persistence type="property" />
+						<description>Data do disparo da notificação.</description>
+						<defaultvalue>null</defaultvalue>
+					</attribute>
+					<attribute qualifier="expired" type="java.util.Date">
+						<persistence type="property" />
+						<description>Data em que o processo expirou a notificação</description>
+						<defaultvalue>null</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype generate="true"
+		           code="NotifyMeProductJob"
+		           jaloclass="com.flieger.notificationservices.job.NotifyMeProductJob"
+		           extends="CronJob"
+		           autocreate="true">
+			</itemtype>
+			
+			<itemtype generate="true"
+		           code="NotifyMePaymentJob"
+		           jaloclass="com.flieger.notificationservices.job.NotifyMePaymentJob"
+		           extends="CronJob"
+		           autocreate="true">
+		           
+		          <attributes>
+					<attribute qualifier="days" type="int">
+		               <modifiers read="true" write="false" search="true" optional="false" initial="true"/>
+		               <persistence type="property"/>
+					</attribute>
+					<attribute qualifier="continuousNotifications" type="boolean">
+		               <modifiers read="true" write="false" search="true" optional="false" initial="true"/>
+		               <persistence type="property"/>
+		               <description>Define se a notificação poderá ser repitida na próxima execução.</description>
+					</attribute>
+					<attribute qualifier="siteUrl" type="java.lang.String">
+		               <modifiers read="true" write="false" search="true" optional="false" initial="true"/>
+		               <persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype generate="true"
+		           code="NotifyMeAbandonedCartJob"
+		           jaloclass="com.flieger.notificationservices.job.NotifyMeAbandonedCartJob"
+		           extends="CronJob"
+		           autocreate="true">
+		           
+		          <attributes>
+					<attribute qualifier="days" type="int">
+		               <modifiers read="true" write="false" search="true" optional="false" initial="true"/>
+		               <persistence type="property"/>
+		               <description>Quantidade de dias para definir o período da pesquisa - data atual menos dias.</description>
+					</attribute>
+					<attribute qualifier="siteUrl" type="java.lang.String">
+		               <modifiers read="true" write="false" search="true" optional="false" initial="true"/>
+		               <persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

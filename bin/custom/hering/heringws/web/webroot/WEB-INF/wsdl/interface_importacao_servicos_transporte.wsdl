@@ -1,0 +1,74 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://hering.fliegersoftware.de/interface/soap/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://hering.fliegersoftware.de/interface/soap/"
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:h="http://hering.fliegersoftware.de/interface/soap/"
+			attributeFormDefault="qualified" elementFormDefault="qualified"
+			targetNamespace="http://hering.fliegersoftware.de/interface/soap/">
+			<xs:element name="importarServicosTransporteRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="h:servicoTransporte" />
+						<xs:element maxOccurs="unbounded" ref="h:frete" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="servicoTransporte">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="codigoSite" type="xs:string" />
+						<xs:element name="codigoTransportadora" type="xs:string" />
+						<xs:element name="nomeTransportadora" type="xs:string" />
+						<xs:element name="formaEnvio" type="xs:string" />
+						<xs:element name="dataInicialVigencia" type="xs:string" />
+						<xs:element name="dataFinalVigencia" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="frete">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="cepInicial" type="xs:string" />
+						<xs:element name="cepFinal" type="xs:string" />
+						<xs:element name="faixaPesoInicial" type="xs:int" />
+						<xs:element name="faixaPesoFinal" type="xs:int" />
+						<xs:element minOccurs="0" name="cidade" type="xs:string" />
+						<xs:element minOccurs="0" name="uf" type="xs:string" />
+						<xs:element name="prazoEntrega" type="xs:int" />
+						<xs:element name="valorPeso" type="xs:double" />
+						<xs:element name="valorPedagio" type="xs:double" />
+						<xs:element name="valorPercentual" type="xs:double" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="importarServicosTransporteRequest">
+		<wsdl:part element="tns:importarServicosTransporteRequest"
+			name="importarServicosTransporteRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="HeringWebservicesResource">
+		<wsdl:operation name="importarServicosTransporte">
+			<wsdl:input message="tns:importarServicosTransporteRequest"
+				name="importarServicosTransporteRequest"></wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="HeringWebservicesResourceSoap11" type="tns:HeringWebservicesResource">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="importarServicosTransporte">
+			<soap:operation soapAction="" />
+			<wsdl:input name="importarServicosTransporteRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="HeringWebservicesResourceService">
+		<wsdl:port binding="tns:HeringWebservicesResourceSoap11"
+			name="HeringWebservicesResourceSoap11">
+			<soap:address location="http://dzarm.local:9001/interface/soap" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

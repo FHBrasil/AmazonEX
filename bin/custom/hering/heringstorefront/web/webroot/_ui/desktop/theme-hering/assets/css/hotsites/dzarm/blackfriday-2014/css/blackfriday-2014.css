@@ -1,0 +1,285 @@
+body {background: url("../imagens/bg.jpg") no-repeat scroll center 96px rgba(0, 0, 0, 0) !important; background-color: #e0eadf !important;}
+
+.hotsite-blackfriday-2014 {
+	width: 100%;
+	height: 704px; /*DZ*/
+	background-image: url("../imagens/bg_content.jpg");
+	background-position: 50% 50%;
+	background-size: cover;
+	font-family: 'PT Sans', sans-serif !important;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container {
+	position: relative;
+	width: 768px;
+	margin: 0 auto;
+	text-align: center;
+	padding-top: 41px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container h1 {
+	margin: 0;
+	height: 90px;
+	text-indent: -120000px;
+	background-image: url(../imagens/logo-completo.png);
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	margin-bottom: 56px;
+	font-family: 'PT Sans', sans-serif !important;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container>p {
+	font-size: 22px;
+	color: #fff;
+	line-height: 27px;
+	margin-bottom: 77px;
+	font-family: 'PT Sans', sans-serif !important;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container>p a {
+	color: #fff !important;
+	font-family: 'PT Sans', sans-serif !important;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador {
+	margin: 0 auto;
+	border: 1px solid #7d7c7c;
+	height: auto;
+	width: 612px;
+	text-align: center;
+	color: #fff;
+	font-size: 40px;
+	/*line-height: 100px;*/
+	font-weight: bold;
+	margin-bottom: 68px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.numero {
+	margin: 10px 0;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 18px;
+	padding: 0 15px;
+	font-weight: normal;
+	color: #838383;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.separa {
+	display: inline-block;
+	vertical-align: top;
+	font-size: 50px;
+	line-height: 90px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.numero span {
+	display: block;
+	font-size: 98px;
+	font-weight: bold;
+	color: #fff;
+	/*line-height: 100px;*/
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form {
+	display: block;
+	width: 612px;
+	margin: 0 auto;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form>p {
+	font-size: 22px;
+	color: #fff;
+	line-height: 27px;
+	margin-bottom: 12px;
+	font-family: 'PT Sans', sans-serif !important;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form>p br {
+	display: none;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form input {
+	width: 212px;
+	height: 31px !important;
+	font-size: 18px;
+	font-family: inherit;
+	border: 0;
+	background-color: #726f6f;
+	color: #000 !important;
+}
+			
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container input[type="radio"] {
+	width: auto;
+	display: inline-block;
+	height: 10px !important;
+	font-family: inherit;
+	border: 0;
+	margin-right: 5px;
+	vertical-align: top !important;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form .gender label {
+	display: inline-block;
+	color: #FFF !important;
+	margin: 10px;
+	font-size: 16px;
+	line-height: 18px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form .validation-wrapper {
+	display: block;
+	width: 232px !important;
+	margin: 0 !important;
+	vertical-align: top !important;
+}
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form .validation-wrapper input{
+	width: 212px !important;
+	margin-right: 0 !important;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form button {
+	border: 0;
+	background: none;
+	height: 31px !important;
+	font-size: 18px;
+	color: #000;
+	background-color: #fff;
+	text-transform: lowercase;
+	vertical-align: top;
+	float: none !important; 
+	display: inline !important; 
+	margin: 0 !important; 
+	padding: 0 7px !important;
+}
+
+
+@media screen and (max-width: 1000px) {
+.hotsite-blackfriday-2014 {
+	background-image: url(../imagens/bg-vazio.jpg);
+}
+}
+
+
+/*@media screen and (max-width: 1080px) {
+	.hotsite-blackfriday-2014 {
+		background-image: url(../imagens/bg-so-criancas.jpg);
+	}
+}
+
+@media screen and (max-width: 880px) {
+	.hotsite-blackfriday-2014 {
+		background-image: url(../imagens/bg-small.jpg);
+	}
+}*/
+
+
+@media screen and (max-width: 768px) {
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container {
+	width: 100%;
+}
+}
+
+
+@media screen and (max-width: 632px) {
+body,html {
+	min-width: 0 !important;
+}
+
+.hotsite-blackfriday-2014 {
+	/*background-image: url(../imagens/bg-vazio.jpg);*/
+	height: auto;
+	padding-bottom: 20px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container {
+	width: 100%;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container h1 {
+	margin-bottom: 40px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container>p {
+	margin-bottom: 30px;
+	padding: 0 20px;
+	font-size: 18px;
+	line-height: 22px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form {
+	width: auto;
+	padding: 0 20px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form>p {
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form input {
+	display: block;
+	width: 280px;
+	margin: 0 auto 6px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form .validation-wrapper {
+	display: block !important;
+	width: 280px !important;
+	margin: 0 auto 6px !important;
+}
+	.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form .validation-wrapper input{
+		width: 260px !important;
+		margin-right: 0 !important;
+	}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container form button {
+	width: 280px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador {
+	padding: 15px 0;
+	width: 300px;
+	height: auto;
+	margin-bottom: 30px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador {
+	font-size: 10px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.numero {
+	margin: 0;
+	vertical-align: text-top;
+	color: #fff;
+	font-size: 14px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.numero.dias {
+	font-size: 24px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.numero>span {
+	font-size: 50px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.numero.dias {
+	display: block;
+	color: #fff;
+	margin-bottom: 10px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.separa-dias {
+	display: none;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.separa {
+	line-height: 50px;
+	font-size: 30px;
+}
+
+.hotsite-blackfriday-2014 .hotsite-blackfriday-2014-container .hotsite-blackfriday-2014-contador>.numero.dias>span {
+	display: inline;
+	padding-right: 10px;
+
+
+}
+}

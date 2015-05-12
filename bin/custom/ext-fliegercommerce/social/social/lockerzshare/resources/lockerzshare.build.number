@@ -1,0 +1,9 @@
+#Ant properties
+#Mon May 19 18:02:45 CEST 2014
+builddate=20140519 1802
+description=lockerzshare
+name=lockerzshare
+releasedate=20140401 0224
+vendor=hybris
+version=5.1.1.0
+version.api=5.1.1

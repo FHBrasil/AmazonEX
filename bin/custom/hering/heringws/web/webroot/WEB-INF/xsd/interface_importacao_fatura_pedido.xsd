@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/" 
+	xmlns:h="http://hering.fliegersoftware.de/interface/soap/">
+  <xs:element name="importarFaturaPedidoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="h:faturaPedido"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="faturaPedido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="codigoSite" type="xs:string"/>
+        <xs:element name="codigoCliente" type="xs:string"/>
+        <xs:element name="codigoPedido" type="xs:string"/>
+        <xs:element name="statusPedido" type="xs:string"/> <!-- falta programar -->
+        <xs:element name="dataFaturamento" type="xs:string"/>
+        <xs:element name="codigoRastreio" minOccurs="0" type="xs:string"/>
+        <xs:element name="numeroNotaFiscal" minOccurs="0"  type="xs:string"/>
+        <xs:element name="chaveNotaFiscal" minOccurs="0"  type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,14 @@
+#
+# Import Themes
+#
+
+# Language
+$lang=pt
+
+# SiteTheme
+UPDATE SiteTheme;code[unique=true];name[lang=$lang]
+ ;black;"Black"
+ ;blue;"Blue"
+ ;hering;"Hering"
+ ;dzarm;"Dzarm"
+ ;foryou;"For You"

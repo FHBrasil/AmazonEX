@@ -1,0 +1,56 @@
+.institutional-gallery{
+	overflow: hidden;
+	margin: 30px -5px;
+	width: 100%;
+}
+
+.institutional-gallery .left{
+	overflow: hidden;
+	width: 66.67% !important;
+}
+
+.institutional-gallery .left a{
+	width: 50%;
+}
+
+.institutional-gallery .right{
+	overflow: hidden;
+	width: 33.33% !important;
+}
+.institutional-gallery .right a{
+	width: 100%;
+}
+
+.institutional-gallery a{
+	box-sizing: border-box;	
+	display: block;
+	float: left;
+	overflow: hidden;
+	padding: 0 5px 5px;
+}
+.institutional-gallery a img{
+	height: auto;
+	max-width: 100%; 
+}
+
+
+.fancybox-skin {
+	padding-right: 15px !important;
+}
+
+@media (max-width: 1199px) {
+
+	.institutional-gallery{
+		margin: 30px auto;
+	}
+
+}
+
+@media (max-width: 660px) {
+
+	.institutional-gallery .left, .institutional-gallery .right, .institutional-gallery a{
+		float: none;
+		width: 100% !important;
+	}
+
+}

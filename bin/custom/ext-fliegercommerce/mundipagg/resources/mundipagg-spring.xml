@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+    <!--Add this code in your ...facade-spring-xml if you want use mundipag payment provider
+    
+    <alias name="defaultMundipaggPaymentService" alias="paymentService"/>
+    <bean id="defaultMundipaggPaymentService" class="com.flieger.payment.impl.DefaultMundipaggPaymentService" parent="defaultPaymentService">      
+    </bean>
+
+    <alias name="defaultMundipaggCardPaymentService" alias="cardPaymentService"/>
+    <bean id="defaultMundipaggCardPaymentService" class="com.flieger.payment.impl.DefaultMundipaggCardPaymentService">     
+        <property name="commandFactoryRegistry" ref="commandFactoryRegistry"/> 
+    </bean>
+    
+    
+    <bean id="mundipaggBoletoPaymentInfoData" class="com.flieger.payment.data.MundipaggBoletoPaymentInfoData" scope="prototype"/>
+    
+    <bean id="mundipaggBoletoPaymentInfoPopulator" class="com.kpfamily.facades.populators.order.MundipaggBoletoPaymentInfoPopulator">
+		<property name="addressConverter" ref="addressConverter"/>
+    </bean>
+    
+    <bean id="mundipaggBoletoPaymentInfoReversePopulator" class="com.kpfamily.facades.populators.order.MundipaggBoletoPaymentInfoReversePopulator">
+		<property name="addressReversePopulator" ref="addressReversePopulator"/>
+    </bean>
+    
+    <alias name="defaultMundipaggBoletoPaymentInfoConverter" alias="mundipaggBoletoPaymentInfoConverter"/>
+	<bean id="defaultMundipaggBoletoPaymentInfoConverter">
+		<lookup-method name="createTarget" bean="mundipaggBoletoPaymentInfoData"/>
+		<property name="populators">
+			<list>
+				<ref bean="mundipaggBoletoPaymentInfoPopulator"/>
+			</list>
+		</property>
+    </bean>
+    -->
+    
+    <alias name="defaultBoletoPaymentService" alias="boletoPaymentService"/>
+    <bean name="defaultBoletoPaymentService" class="com.flieger.payment.impl.DefaultMundipaggBoletoPaymentService">
+		<property name="commandFactoryRegistry" ref="commandFactoryRegistry"/>
+    </bean>
+    
+    <bean name="mundipaggCommandFactory"
+		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
+		scope="tenant">
+        <property name="paymentProvider" value="Mundipagg" />
+        <property name="commands">
+            <map>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.IsApplicableCommand
+                        </value>
+                    </key>
+                    <bean class="com.flieger.payment.commands.impl.MundipaggIsApplicableCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.AuthorizationCommand
+                        </value>
+                    </key>
+                    <bean class="com.flieger.payment.commands.impl.MundipaggAuthorizationCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.SubscriptionAuthorizationCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggSubscriptionAuthorizationCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.CaptureCommand
+                        </value>
+                    </key>
+                    <bean class="com.flieger.payment.commands.impl.MundipaggCaptureCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.PartialCaptureCommand
+                        </value>
+                    </key>
+                    <bean class="com.flieger.payment.commands.impl.MundipaggPartialCaptureCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.EnrollmentCheckCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggEnrollmentCheckCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.VoidCommand
+                        </value>
+                    </key>
+                    <bean class="com.flieger.payment.commands.impl.MundipaggVoidCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.FollowOnRefundCommand
+                        </value>
+                    </key>
+                    <bean class="com.flieger.payment.commands.impl.MundipaggFollowOnRefundCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.StandaloneRefundCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggStandaloneRefundCommand" />
+                </entry>
+
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.CreateSubscriptionCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggCreateSubscriptionCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.DeleteSubscriptionCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggDeleteSubscriptionCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.GetSubscriptionDataCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggGetSubscriptionDataCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.UpdateSubscriptionCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggUpdateSubscriptionCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">com.flieger.payment.commands.AuthorizationCaptureCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggAuthorizationCaptureCommand" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">com.flieger.payment.commands.AuthorizationCaptureCommandWithInstantBuy
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggAuthorizationCaptureCommandWithInstantBuy" />
+                </entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">com.flieger.payment.commands.AuthorizationBoletoCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.payment.commands.impl.MundipaggAuthorizationBoletoCommand" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,58 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://hering.fliegersoftware.de/interface/soap/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://hering.fliegersoftware.de/interface/soap/"
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:h="http://hering.fliegersoftware.de/interface/soap/"
+			attributeFormDefault="qualified" elementFormDefault="qualified"
+			targetNamespace="http://hering.fliegersoftware.de/interface/soap/">
+			<xs:element name="importarFaturaPedidoRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" ref="h:faturaPedido" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="faturaPedido">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="codigoSite" type="xs:string" />
+						<xs:element name="codigoCliente" type="xs:string" />
+						<xs:element name="codigoPedido" type="xs:string" />
+						<xs:element name="statusPedido" type="xs:string" />
+						<xs:element name="dataFaturamento" type="xs:string" />
+						<xs:element minOccurs="0" name="codigoRastreio" type="xs:string" />
+						<xs:element minOccurs="0" name="numeroNotaFiscal" type="xs:string" />
+						<xs:element minOccurs="0" name="chaveNotaFiscal" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="importarFaturaPedidoRequest">
+		<wsdl:part element="tns:importarFaturaPedidoRequest" name="importarFaturaPedidoRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="HeringWebservicesResource">
+		<wsdl:operation name="importarFaturaPedido">
+			<wsdl:input message="tns:importarFaturaPedidoRequest"
+				name="importarFaturaPedidoRequest"></wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="HeringWebservicesResourceSoap11" type="tns:HeringWebservicesResource">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="importarFaturaPedido">
+			<soap:operation soapAction="" />
+			<wsdl:input name="importarFaturaPedidoRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="HeringWebservicesResourceService">
+		<wsdl:port binding="tns:HeringWebservicesResourceSoap11"
+			name="HeringWebservicesResourceSoap11">
+			<soap:address location="http://dzarm.local:9001/interface/soap" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

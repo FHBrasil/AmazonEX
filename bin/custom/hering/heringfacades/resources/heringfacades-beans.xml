@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="genders" type="java.util.List&lt;br.hering.facades.product.data.GenderData>"/>
+		<property name="color" type="br.hering.facades.product.data.ColorData"/>
+		<property name="onlinedate" 					type="java.util.Date" />
+		<property name="oldPrice" 						type="java.math.BigDecimal" />
+		<property name="newProduct" 					type="boolean" />
+		<property name="freeShipping" 					type="boolean"/>
+		<property name="fromPrice"						type="boolean"/>
+		<property name="blackfriday"					type="boolean"/>
+		<property name="priceParcels"					type="int"/>
+		<property name="parcelUnitPrice"				type="double" />
+		<property name="allParcelsSimpleSplitedArray" 	type="String"/>
+		<property name="listableClassifications" 		type="java.util.Collection&lt;de.hybris.platform.commercefacades.product.data.ClassificationData>"/>
+		<property name="measurements" 					type="java.util.Collection&lt;br.hering.facades.product.data.MeasurementsData>"/>
+		<property name="size"				 			type="String"/>
+		<property name="colors" 						type="java.util.Collection&lt;br.hering.facades.product.data.VariantColorData>"/>
+		<property name="sizes" 						    type="java.util.Collection&lt;br.hering.facades.product.data.SizeNodeData>"/>
+		<property name="previewImages" 					type="java.util.Collection&lt;de.hybris.platform.commercefacades.product.data.ImageData>"/>
+		<property name="brand"							type="String"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.VariantOptionData">
+		<property name="color" type="br.hering.facades.product.data.ColorData"/>
+	</bean>
+
+	<enum class="de.hybris.platform.commercefacades.product.ProductOption">
+		<value>VARIANT_AVAILABLE</value>
+	</enum>
+
+	<bean class="br.hering.facades.product.data.GenderData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	
+	
+	<bean class="br.hering.facades.product.data.AddressTypeData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	
+	<bean class="br.hering.facades.product.data.ColorData">
+		<property name="RGB" type="String"/>
+		<property name="basicDescription" type="String"/>
+		<property name="fullDescription" type="String"/>
+	</bean>
+	
+	<bean class="br.hering.facades.product.data.VariantSizeData">
+		<property name="productCode" type="String"/>
+		<property name="sizeValue" type="String"/>
+	</bean>
+
+	<bean class="br.hering.facades.product.data.VariantColorData">
+		<property name="colorCode" type="String"/>
+		<property name="colorName" type="String"/>
+		<property name="RGB" type="String"/>
+	</bean>
+
+	<bean class="br.hering.facades.product.data.SizeNodeData">
+		<property name="colorCode" type="java.lang.String"/>
+		<property name="sizeValue" type="java.util.Collection&lt;br.hering.facades.product.data.VariantSizeData>"/>
+	</bean>
+	
+	<!-- Price Beans -->
+	<bean class="de.hybris.platform.commercefacades.order.price.data.DiscountData">
+		<property name="absolute" type="boolean" />
+		<property name="code" type="String" />
+		<property name="currency" type="de.hybris.platform.commercefacades.storesession.data.CurrencyData" />
+		<property name="global" type="boolean" />
+		<property name="name" type="String" />
+		<property name="priority" type="int" />
+		<property name="value" type="double" />
+	</bean>
+	
+	<!-- Cart Beans -->
+	<bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+		<property name="appliedVoucherCodes" type="java.util.List&lt;String>" />
+		<property name="customPaymentInfo" type="br.hering.facades.order.data.CustomPaymentInfoData" />
+		<property name="voucherPaymentInfo" type="br.hering.facades.order.data.VoucherPaymentInfoData" />
+		<property name="paymentMode" type="br.hering.facades.order.data.PaymentModeData" />
+		<property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData" />
+		<property name="estimatedDeliveryDays" type="java.lang.Integer" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData" extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
+		<property name="birthday" type="java.util.Date" />
+		<property name="newsletterSubscription" type="com.flieger.data.NewsletterSubscriberData"/>
+		<property name="gender" type="de.hybris.platform.core.enums.Gender"/>
+		<property name="cpfcnpj" type="java.lang.String" />
+		<property name="rgIe" type="java.lang.String" />
+		<property name="ufIe" type="java.lang.String" />
+		<property name="orders" type="java.util.Collection&lt;java.lang.String>" />
+		<property name="newsletters" type="java.util.List&lt;com.flieger.data.NewsletterSubscriberData>" />
+		<property name="primaryKey" type="java.lang.String"/>
+	</bean>
+        
+    <bean class="de.hybris.platform.commercefacades.user.data.RegisterData">
+		<property name="birthday" type="java.util.Date" />
+		<property name="gender" type="de.hybris.platform.core.enums.Gender"/>
+		<property name="cpfcnpj" type="java.lang.String" />
+		<property name="rgIe" type="java.lang.String" />
+		<property name="ufIe" type="java.lang.String" />
+		<property name="baseStore" type="java.lang.String" />
+	</bean>
+	
+	<!-- Payment data -->
+	<bean class="br.hering.facades.order.data.CustomPaymentInfoData"
+			extends="de.hybris.platform.acceleratorservices.payment.cybersource.data.PaymentInfoData">
+		<property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData" />
+	</bean>
+	
+	<bean class="br.hering.facades.order.data.PayPalPaymentInfoData" 
+			extends="br.hering.facades.order.data.CustomPaymentInfoData">		
+		<property name="token" type="java.lang.String"/>										
+		<property name="payerid" type="java.lang.String"/>
+		<property name="payeremail" type="java.lang.String"/>
+		<property name="transactionID" type="java.lang.String"/>
+		<property name="orderTime" type="java.lang.String"/>
+		<property name="paymentStatus" type="java.lang.String"/>
+		<property name="pendingReason" type="java.lang.String"/>
+		<property name="reasonCode" type="java.lang.String"/>
+		<property name="approvalResult" type="java.lang.String"/>
+		<property name="error" type="java.lang.String"/>
+		<property name="errorDetails" type="java.lang.String"/>							
+	</bean>
+	
+	<bean class="br.hering.facades.order.data.VoucherPaymentInfoData" 
+			extends="br.hering.facades.order.data.CustomPaymentInfoData">
+	   <property name="voucherCode" type="java.lang.String"/>	
+	   <property name="value" type="double"/> 	
+		<property name="error" type="java.lang.String"/>
+		<property name="errorDetails" type="java.lang.String"/>							
+	</bean>
+	
+	<bean class="br.hering.facades.order.data.PaymentModeData">
+		<property name="code" type="String" />
+		<property name="name" type="String" />
+		<property name="description" type="String" />
+	</bean>
+	<!-- PaypalSession data -->
+	<bean class="br.hering.facades.checkout.data.PaypalSessionData">
+		<property name="token" type="String" />
+		<property name="payerID" type="String" />
+		<property name="errors" type="String" />
+		<property name="transactionID" type="String" />
+		<property name="urlReturn" type="String" />
+		<property name="urlCancel" type="String" />
+		<property name="isGuest" type="Boolean" />
+		<property name="cartData" type="de.hybris.platform.commercefacades.order.data.CartData" />
+		<property name="customerData" type="de.hybris.platform.commercefacades.user.data.CustomerData"/>
+		<property name="currencyISO" type="String"/>
+		<property name="paypalRedirect" type="String"/>
+		<property name="oneButChkt" type="Boolean"/>
+		
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.order.data.OrderHistoryData">	      
+		<property name="trackingID" type="String"/>
+		<property name="chaveNfe" type="String"/>
+		<property name="deliveryMode" type="String"/>
+		<property name="paymentMode" type="String"/>
+		<property name="boletoExpired" type="Boolean"/>
+	</bean> 
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.FeatureData">
+		<property name="listable" type="boolean"/>
+	</bean>
+	
+	<bean class="br.hering.facades.product.data.MeasurementsData">
+		<property name="type" type="String"/>
+		<property name="size" type="String"/>
+		<property name="measurement" type="double"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.AddressData">
+		<property name="dddPhone" type="String"></property>
+		<property name="dddCelPhone" type="String"></property>
+		<property name="celPhone" type="String"></property>
+		<property name="number" type="String"/>
+		<property name="complement" type="String"/>
+		<property name="reference" type="String"/>
+		<property name="receiver" type="String"/>
+		<property name="district" type="String"/>
+		<property name="type" type="br.hering.core.enums.TipoDeEndereco"/>
+	</bean>
+	
+	<!-- Wishlist Beans -->
+	<bean class="br.hering.facades.wishlist.data.HeringWishlistData">
+		<property name="name" type="String" />
+		<property name="publicName" type="String" />
+		<property name="description" type="String" />
+		<property name="principal" type="Boolean" />
+		<property name="entries" type="java.util.List&lt;br.hering.facades.wishlist.data.HeringWishlistEntryData>" />
+		<property name="user" type="de.hybris.platform.commercefacades.user.data.CustomerData"/>
+	</bean>
+
+	<bean class="br.hering.facades.wishlist.data.HeringWishlistEntryData">
+		<property name="product" type="de.hybris.platform.commercefacades.product.data.ProductData" />
+		<property name="desired" type="int" />
+		<property name="received" type="int" />
+		<property name="priority" type="br.hering.facades.wishlist.data.HeringWishlistEntryPriorityData" />
+		<property name="addedDate" type="java.util.Date" />
+		<property name="comment" type="String" />
+	</bean>
+
+	<bean class="br.hering.facades.wishlist.data.HeringWishlistEntryPriorityData">
+		<property name="code" type="String" />
+		<property name="name" type="String" />
+	</bean>
+	<!-- End Wishlist Beans --> 
+	<!-- extending the paymentinfodata. adding the PK property -->
+	<bean class="de.hybris.platform.acceleratorservices.payment.cybersource.data.PaymentInfoData">
+		<property name="PK" type="String"/>
+	</bean>
+	
+	<bean class="br.hering.facades.product.preview.data.ProductPreviewData">
+		<property name="code" type="String" />
+		<property name="url" type="String" />
+		<property name="size" type="String" />
+		<property name="color" type="br.hering.facades.product.data.ColorData"/>
+		<property name="images" type="java.util.Collection&lt;de.hybris.platform.commercefacades.product.data.ImageData>"/>
+		<property name="stock" type="int" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+		<property name="trackingID" type="String"/>
+	</bean>
+</beans> 

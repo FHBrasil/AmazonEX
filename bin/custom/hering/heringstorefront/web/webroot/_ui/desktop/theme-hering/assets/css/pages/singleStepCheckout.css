@@ -1,0 +1,14 @@
+.singleStepCheckout .display-inline {
+	display: inline;
+}
+
+form.addEditDeliveryAddressForm input, select {
+	/* margin-bottom: 15px !important; */
+}
+
+form.addEditDeliveryAddressForm .btn-voucher {
+	background: #525252;
+	color: #fff;
+	font-size: 15px;
+	margin-top: 10px;
+}

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="PaymentTransactionType" autocreate="false" generate="false">
+			<value code="AUTHORIZATION3D" />
+		</enumtype>	
+	</enumtypes>
+
+	<itemtypes>
+		<typegroup name="CustomPaymentTransactionEntry">
+			<itemtype code="PaymentTransactionEntry" autocreate="false"
+				generate="false">
+				<attributes>
+					<attribute qualifier="adyenReference" type="java.lang.String">
+						<description>Adyen's unique reference that is associated with the payment</description>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute qualifier="adyenMerchantReference" type="java.lang.String">
+						<description>Merchant reference for this payment</description>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute qualifier="adyenAuthorizationCode" type="java.lang.String">
+						<description>Payment authorization Code</description>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute qualifier="adyenBoletoNossoNumero" type="java.lang.String">
+						<description>Boleto payment unique number from Adyen</description>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute qualifier="adyenBoletoExpirationDate" type="java.lang.String">
+						<description>Boleto expirationdate</description>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute qualifier="adyenBoletoUrl" type="java.lang.String">
+						<description>Url to retrieve the pdf document for payment.</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>HYBRIS.LONG_STRING</value>
+							</columntype>
+						</persistence>
+					</attribute>
+<!-- 					parametros que deveriam estar incluídos em um objeto payment -->
+<!-- 					<attribute qualifier="paymentInfo" type="PaymentInfo"> -->
+<!-- 						<description>The paymentinfo of this transaction</description> -->
+<!-- 						<persistence type="property"></persistence> -->
+<!-- 					</attribute> -->
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="CustomPaymentInfo">
+			<itemtype code="CreditCardPaymentInfo" autocreate="false" generate="false">
+				<description>Extending CreditCardPaymentInfo type with additional attributes to Adyen adding key "stantBuyKey" and "cpf" for subscription.</description>
+				<attributes>
+					<attribute qualifier="stantBuyKey" type="java.lang.String">
+						<description> StantBuyKey. </description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cpf" type="java.lang.String">
+						<description> Document (CPF)</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="installment" type="java.lang.Integer">
+						<description> Installment number </description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cardBrand" type="java.lang.String">
+						<description> card brand </description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BoletoPaymentInfo" extends="PaymentInfo"
+				jaloclass="com.flieger.payment.jalo.BoletoPaymentInfo">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="transactionReference">
+						<description>Identifier of the transaction by store </description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="nossoNumero">
+						<description>Unique number for boleto</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="daysToAddInBoletoExpirationDate">
+						<description>Days to add in boleto expiration date</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="cpf">
+						<description> Document (CPF). </description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype	code="HeringDebitPaymentInfo" 
+							extends="DebitPaymentInfo"
+							jaloclass="com.flieger.payment.jalo.HeringDebitPaymentInfo"
+							autocreate="true" generate="true">
+				<description>Debit</description>
+				<attributes>
+					<attribute qualifier="subscriptionId" type="java.lang.String">
+						<persistence type="property" />
+						<description>Subscription ID is the reference information for the credit cart data stored in the external payment provider.</description>
+					</attribute>
+					<attribute qualifier="issuerUrl" type="java.lang.String">
+						<description>Url to where the client must be redirected after make the payment.</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>HYBRIS.LONG_STRING</value>
+							</columntype>
+						</persistence>
+					</attribute>
+					<attribute qualifier="returnUrl" type="java.lang.String">
+						<description>Url to where the client must be redirected after make the payment.</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>HYBRIS.LONG_STRING</value>
+							</columntype>
+						</persistence>
+					</attribute>
+					<attribute qualifier="paRequest" type="java.lang.String">
+						<description>payment request hash that will be submited to cielo in order to process the payment</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>HYBRIS.LONG_STRING</value>
+							</columntype>
+						</persistence>
+					</attribute>
+					<attribute qualifier="md" type="java.lang.String">
+						<description>hash that will be produced by Adyen in the first
+						step of the authorization process, then will be submited to Cielo
+						in order to retrieve the paResponse</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>HYBRIS.LONG_STRING</value>
+							</columntype>
+						</persistence>
+					</attribute>
+					<attribute qualifier="userAgent" type="java.lang.String">
+						<persistence type="property" />
+						<description>information from user browser</description>
+					</attribute>
+					<attribute qualifier="accept" type="java.lang.String">
+						<persistence type="property" />
+						<description>information from user browser</description>
+					</attribute>
+					<attribute qualifier="shopperIP" type="java.lang.String">
+						<persistence type="property" />
+						<description>information from user browser</description>
+					</attribute>
+					<attribute qualifier="merchantTransactionCode" type="java.lang.String">
+						<persistence type="property" />
+						<description>Dzarm</description>
+					</attribute>
+					<attribute qualifier="mpiImplementationType" type="java.lang.String">
+						<persistence type="property" />
+						<description>Dzarm</description>
+					</attribute>
+					<attribute qualifier="currency" type="java.lang.String">
+						<persistence type="property" />
+						<description>The currencies must be persisted because the several
+						call to the psp are not made in a single step</description>
+					</attribute>
+					<attribute qualifier="amount" type="java.math.BigDecimal">
+						<persistence type="property"/>
+						<description>The currencies must be persisted because the several
+						call to the psp are not made in a single step</description>
+					</attribute>					
+					
+					<!-- colocando no modelo os mesmos dados que existem no data -->					
+					<attribute qualifier="cardAccountHolderName" type="java.lang.String">
+						<persistence type="property"/>
+						<description> the card holder full name</description>
+					</attribute>	
+					<attribute qualifier="cardCvNumber" type="java.lang.String">
+						<persistence type="property"/>
+						<description> the card holder security code</description>
+					</attribute>
+					<attribute qualifier="cardExpirationMonth" type="java.lang.Integer">
+						<persistence type="property"/>
+						<description> the card expiry monty</description>
+					</attribute>
+					<attribute qualifier="cardExpirationYear" type="java.lang.Integer">
+						<persistence type="property"/>
+						<description> the card expiry year</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

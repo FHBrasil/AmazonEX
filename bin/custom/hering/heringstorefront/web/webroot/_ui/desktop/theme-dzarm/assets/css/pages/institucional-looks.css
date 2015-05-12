@@ -1,0 +1,207 @@
+.product {
+	width: 300px;
+	min-width: 300px;
+}
+.slider-blue-stripe {
+	width: 55px;
+	max-height: 450px;
+	background: #fff;
+	color: #6cb997;
+}
+.slider-blue-stripe b {
+	font-size: 40px;
+	font-family: 'bebas_neue';
+	letter-spacing: 5px;
+	margin-left: -73px;
+	margin-top: 315px;
+}
+
+.slider-blue-stripe b:after{
+	content: '_';
+}
+.product .info {
+	width: 300px;
+}
+.pager-blue {
+	background: #000;
+	border-bottom: none;
+	border-right: 5px solid #6cb997;
+	height: 450px;
+}
+
+
+#looks-dicas-sliders{
+	border-top: 2px solid #d8d5d5;
+}
+#looks-dicas-sliders .product-infinite-wrapper {
+	display: none;
+}
+#looks-dicas-sliders .product-infinite-wrapper.active {
+	display: block;
+}
+
+.pager-blue{
+	float: left;
+	overflow: hidden;
+	width: 500px;
+}
+.pager-blue div{
+	background: url('../../../assets/images/bg-looks-dicas.svg') no-repeat center 90px;
+	background-size: 146px 148px;
+	color: #fff;
+	float: left;
+	text-align: center;
+	padding: 20px;
+	width: 260px;
+}
+.pager-blue div h2{
+	font-family: 'bebas_neue';
+	font-size: 40px;
+	font-weight: 300;
+	letter-spacing: 5px;
+	margin: 230px 0 5px;
+}
+.pager-blue div p{
+	font-family: 'DIN-Regular';
+	font-size: 15px;
+	line-height: 20px;
+}
+.pager-blue div p span{
+	font-size: 18px;
+}
+.pager-blue ul{
+	display: block;
+	float: right;
+	width: 175px;
+}
+.pager-blue ul li{
+	margin: 32px 0 0 0;
+}
+.pager-blue a{
+	color: #6cb997;
+	font-family: 'bebas_neue';
+	font-size: 26px;
+	letter-spacing: 4px;
+}
+.pager-blue a:hover{
+	text-decoration: none;
+}
+.pager-blue a:after{
+	content: '_';
+}
+
+.home.page p{
+	font-size: 15px !important;
+	line-height: 20px !important;
+}
+
+.product-infinite-wrapper{
+	padding: 0 0 0 50px;
+}
+.slider-blue-stripe{
+	margin: 0 0 0 -50px;
+}
+.product-infinite-wrapper:before, .product-infinite-wrapper:after {
+	display: none;
+}
+.product-slider .product{
+	margin: 0!important;
+}
+.product-infinite-wrapper .bx-pager {
+	bottom: -25px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a {
+	background: rgba(255, 255, 255, 0.2);
+	width: 10px;
+	height: 10px;
+	margin: 0 5px;
+}
+
+.blue-nav .bx-wrapper .bx-pager.bx-default-pager a {
+	border-color: #fff;
+}
+.blue-nav .bx-wrapper .bx-pager.bx-default-pager a:hover, .blue-nav .bx-wrapper .bx-pager.bx-default-pager a.active {
+	background: #fff;
+}
+
+.meus-lookbooks{
+	background: #6cb997;
+	height: 30px;
+	line-height: 30px;
+	margin: -110px 0 50px 0;
+}
+.meus-lookbooks a{
+	color: #000;
+	display: inline-block;
+	font-family: 'bebas_neue';
+	font-size: 12px;
+	height: 30px;
+	letter-spacing: 2px;
+	line-height: 30px;
+	text-align: center;
+	width: 500px;
+}
+
+@media (max-width: 1199px){
+
+	.product-infinite-wrapper .container{
+		margin: 0 !important;
+	}
+	.slider-blue-stripe{
+		top: 0;
+	}
+
+}
+
+@media (max-width: 880px) {
+
+	.pager-blue { 
+		box-sizing: border-box;
+		border-right: none;
+		float: none;
+		height: auto;
+		width: 100%;
+	}
+	.pager-blue div{
+		background-image: none;
+	}
+	.pager-blue div h2{
+		margin: 0 0 5px 0;
+	}
+	.pager-blue div, .pager-blue ul{
+		box-sizing: border-box;
+		float: none;
+		width: 100%;
+	}
+	.pager-blue ul{
+		margin: 0 0 40px 0 !important;
+	}
+	.pager-blue ul li{
+		text-align: center;
+		margin: 0 0 30px 0;
+	}
+	.pager-blue ul li a{
+		padding: 0 !important;
+		font-size: 20px;
+	}
+	
+	.meus-lookbooks{
+		height: 75px;
+	}
+	.meus-lookbooks a{
+		margin: 35px 0 0 0;
+		position: absolute;
+		width: 100%;
+	}
+	.bx-controls{
+		margin-left: -25px;
+	}
+
+}
+@media (max-width: 600px) {
+
+	.slider-blue-stripe {
+		margin: 0px 0 0 -5px;
+	}	
+
+}

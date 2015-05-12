@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+ 	<alias name="defaultAdyenCardInstallmentsService" alias="adyenCardInstallmentsService" />
+	<bean id="defaultAdyenCardInstallmentsService" class="com.adyen.services.payment.impl.DefaultAdyenCardInstallmentsService"/>
+
+	<alias name="defaultBoletoPaymentService" alias="boletoPaymentService"/>
+   <bean name="defaultBoletoPaymentService" class="com.adyen.services.payment.impl.AdyenBoletoPaymentServiceImpl">
+   	<property name="commandFactoryRegistry" ref="commandFactoryRegistry"/>
+   </bean>
+    
+	<bean name="adyenCommandFactory"
+		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
+		scope="tenant">
+		<property name="paymentProvider" value="Adyen" />
+		<property name="commands">
+			<map>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.IsApplicableCommand
+						</value>
+					</key>
+					<bean class="com.flieger.adyen.commands.impl.AdyenIsApplicableCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">com.flieger.adyen.command.AuthorizationCommand
+						</value>
+					</key>
+					<bean class="com.flieger.adyen.commands.impl.AdyenAuthorizationCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.SubscriptionAuthorizationCommand
+						</value>
+					</key>
+					<bean
+						class="com.flieger.adyen.commands.impl.AdyenSubscriptionAuthorizationCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">com.flieger.adyen.command.CaptureCommand
+						</value>
+					</key>
+					<bean class="com.flieger.adyen.commands.impl.AdyenCaptureCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.PartialCaptureCommand
+						</value>
+					</key>
+					<bean class="com.flieger.adyen.commands.impl.AdyenPartialCaptureCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.EnrollmentCheckCommand
+						</value>
+					</key>
+					<bean class="com.flieger.adyen.commands.impl.AdyenEnrollmentCheckCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.VoidCommand
+						</value>
+					</key>
+					<bean class="com.flieger.adyen.commands.impl.AdyenVoidCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.FollowOnRefundCommand
+						</value>
+					</key>
+					<bean class="com.flieger.adyen.commands.impl.AdyenFollowOnRefundCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.StandaloneRefundCommand
+						</value>
+					</key>
+					<bean
+						class="com.flieger.adyen.commands.impl.AdyenStandaloneRefundCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.CreateSubscriptionCommand
+						</value>
+					</key>
+					<bean
+						class="com.flieger.adyen.commands.impl.AdyenCreateSubscriptionCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.DeleteSubscriptionCommand
+						</value>
+					</key>
+					<bean
+						class="com.flieger.adyen.commands.impl.AdyenDeleteSubscriptionCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.GetSubscriptionDataCommand
+						</value>
+					</key>
+					<bean
+						class="com.flieger.adyen.commands.impl.AdyenGetSubscriptionDataCommand" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.payment.commands.UpdateSubscriptionCommand
+						</value>
+					</key>
+					<bean
+						class="com.flieger.adyen.commands.impl.AdyenUpdateSubscriptionCommand" />
+				</entry>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">com.flieger.adyen.command.BoletoCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.adyen.commands.impl.AdyenBoletoAuthorizationCommand" />
+                </entry>
+				<entry>
+                    <key>
+                        <value type="java.lang.Class">com.flieger.adyen.command.RecurringDetailsCommand
+                        </value>
+                    </key>
+                    <bean
+						class="com.flieger.adyen.commands.impl.AdyenRecurringDetailsCommand" />
+                </entry>
+            <entry>
+                 <key>
+                     <value type="java.lang.Class">com.flieger.adyen.command.AdyenDebitAuthorizationCommand</value>
+                 </key>
+                 <bean class="com.flieger.adyen.commands.impl.DefaultAdyenDebitAuthorizationCommand" />
+             </entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- The hybris platform provides one single Spring application context 
+		for beans located at the jalo layer. Each extension can add beans to this 
+		context by specifying them at this configuration file. You can use and/or 
+		redefine beans defined at configuration files of other extensions as well 
+		as adding new one. If you want to locate this file at a different location 
+		or want to use several files for better, structuring, please use the '<yourextension>.application-context' 
+		property at your project.properties file. There you can specify a comma separated 
+		list of files where first is tried to find a file per classpath and then 
+		per file system. If you want to configure beans for your web module please 
+		have a look at your web/webroot/WEB-INF/<extname>-web-spring.xml. -->
+
+	<!-- Example how to override a manager -->
+	<!-- <bean id="core.productManager" class="com.flieger.jalo.AdyenProductManager" 
+		init-method="init" destroy-method="destroy" /> -->
+
+
+	<!-- Example how to configure the class to use for jalo session creation -->
+	<!-- <bean id="jalosession" class="de.hybris.platform.jalo.JaloSessionFactory"> 
+		<property name="targetClassName" value="com.flieger.jalo.AdyenJaloSession"/> 
+		</bean> -->
+
+
+	<!-- Example how to override an item -->
+	<!-- <bean id="de.hybris.platform.jalo.product.Product" class="com.flieger.jalo.AdyenProduct" 
+		scope="prototype" /> -->
+
+	<!-- Example how to register and use an AOP aspect Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html -->
+
+	<!-- <bean id="adyenProfBean" class="com.flieger.aop.AdyenProfilingAspect"/> 
+		<aop:config proxy-target-class="true"> <aop:aspect id="adyenProfAspect" ref="adyenProfBean" 
+		> <aop:pointcut id="profiledMethods" expression="execution(* getModificationTime(..))" 
+		/> <aop:around pointcut-ref="profiledMethods" method="profile" /> </aop:aspect> 
+		</aop:config> -->
+
+
+	<!-- some other examples of a pointcut that matches everything: <aop:pointcut 
+		id="profiledMethods" expression="bean(de.hybris.platform.jalo.user.Customer) 
+		&amp;&amp; !execution(* getPK(..))" /> <aop:pointcut id="profiledMethods" 
+		expression="execution(* *(..))" /> -->
+
+
+
+</beans>

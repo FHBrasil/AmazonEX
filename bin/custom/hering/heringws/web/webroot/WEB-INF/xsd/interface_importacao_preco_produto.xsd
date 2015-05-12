@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	targetNamespace="http://hering.fliegersoftware.de/interface/soap/" 
+	xmlns:h="http://hering.fliegersoftware.de/interface/soap/">
+  <xs:element name="importarPrecoProdutoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="h:precoProduto"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="precoProduto">
+    <xs:complexType>
+      <xs:sequence>
+      	<xs:element ref="h:codigoSite"/>
+        <xs:element ref="h:sku"/>
+        <xs:element ref="h:preco"/>
+        <xs:element ref="h:precoDe"/>
+        <xs:element ref="h:ativacao"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoSite" type="xs:string"/>
+  <xs:element name="sku" type="xs:string"/>
+  <xs:element name="preco" type="xs:decimal"/>
+  <xs:element name="precoDe" type="xs:decimal"/>
+  <xs:element name="ativacao" type="xs:string"/>
+</xs:schema>

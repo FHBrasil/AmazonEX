@@ -1,0 +1,1 @@
+$(function(){$.browser.msie&&parseInt($.browser.version)<10&&$("html").addClass("ie ie-"+parseInt($.browser.version))});

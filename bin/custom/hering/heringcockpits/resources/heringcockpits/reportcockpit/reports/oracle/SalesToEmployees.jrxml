@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesForEmployees" pageWidth="700" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="660" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="2"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT {o:pk} AS orderPk
+     , {o:totalPrice} AS orderAmount
+     , {c:name} AS customerName
+     , {c:cpfcnpj} AS customerCPfCnpj
+     , {pm.code} AS paymentMode
+     , {o:creationTime} AS orderFullDate
+FROM {
+      Order AS o
+      JOIN Customer AS c ON {c:pk} = {o:user}
+      JOIN PrincipalGroup AS g ON {g:uid} = 'ADMINISTRATIVO'
+                                  OR {g:uid} = 'PRODUTIVO'
+      JOIN PrincipalGroupRelation AS gr ON {gr:source} = {c:PK}
+                                           AND {gr:target} = {g:PK}
+      JOIN PaymentMode AS pm ON {pm:pk} = {o:paymentMode}
+     }
+WHERE {o:creationTime} >= TRUNC(SYSDATE - 15)
+ORDER BY {o:creationTime}]]>
+	</queryString>
+	<field name="orderPk" class="java.lang.String"/>
+	<field name="orderAmount" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="customerCPfCnpj" class="java.lang.String"/>
+	<field name="paymentMode" class="java.lang.String"/>
+	<field name="orderFullDate" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="660" height="32" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Vendas para Funionários]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pedido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="0" width="114" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="214" y="0" width="137" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="351" y="0" width="97" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF / CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="448" y="0" width="115" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Modo Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="563" y="0" width="97" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="485" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="100" height="18" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{orderPk}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="100" y="0" width="114" height="18" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{orderAmount}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="214" y="0" width="137" height="18" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{customerName}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="351" y="0" width="97" height="18" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{customerCPfCnpj}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="448" y="0" width="115" height="18" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{paymentMode}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="563" y="0" width="97" height="18" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{orderFullDate})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

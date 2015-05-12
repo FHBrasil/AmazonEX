@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+<!-- Adyen Payment Provider -->
+	<alias name="defaultAdyenPaymentService" alias="paymentService" />
+	<bean id="defaultAdyenPaymentService" class="com.adyen.services.payment.impl.DefaultAdyenPaymentService"
+		parent="defaultPaymentService">
+		<property name="cartService" ref="cartService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="modelService" ref="modelService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+<!-- 		<property name="boletoPaymentService" ref="boletoPaymentService" /> -->
+	</bean>
+
+	<alias name="defaultAdyenCardPaymentService" alias="cardPaymentService" />
+	<bean id="defaultAdyenCardPaymentService" class="com.adyen.services.payment.impl.AdyenCardPaymentServiceImpl">
+		<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />
+	</bean>
+
+	<alias name="defaultAdyenBoletoPaymentService" alias="boletoPaymentService" />
+	<bean id="defaultAdyenBoletoPaymentService" class="com.adyen.services.payment.impl.AdyenBoletoPaymentServiceImpl">
+		<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />
+	</bean>
+	
+	<alias name="defaultAdyenDebitPaymentService" alias="adyenDebitPaymentService" />
+	<bean id="defaultAdyenDebitPaymentService" class="com.adyen.services.payment.impl.AdyenDebitPaymentServiceImpl">
+		<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />
+	</bean>
+	<!-- END Adyen Payment Provider -->
+
+	<!-- Facades -->
+	<alias name="defaultHeringCheckoutFacade" alias="acceleratorCheckoutFacade" />
+	<bean id="defaultHeringCheckoutFacade"
+		class="br.hering.facades.facades.order.impl.DefaultHeringCheckoutFacade"
+		parent="defaultAcceleratorCheckoutFacade">
+		<property name="boletoPaymentInfoReversePopulator" ref="boletoPaymentInfoReversePopulator" />
+		<property name="cartPaymentModePopulator" ref="cartPaymentModePopulator" />
+		<property name="voucherPaymentInfoReversePopulator" ref="voucherPaymentInfoReversePopulator" />
+		<property name="voucherPaymentInfoPopulator" ref="voucherPaymentInfoPopulator" />		
+		<property name="sessionService" ref="sessionService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="paymentModeService" ref="paymentModeService"/>
+		<property name="customerPopulator" ref="customerPopulator"/>
+<!-- 		<property name="debitPaymentInfoConverter" ref="debitPaymentInfoConverter"/> -->
+	</bean>
+	
+	<alias alias="simpleSuggestionFacade" name="defaultSimpleSuggestionFacade"/>
+	<bean id="defaultSimpleSuggestionFacade" class="br.hering.facades.suggestion.impl.DefaultSimpleSuggestionFacade" >
+		<property name="simpleSuggestionService" ref="simpleSuggestionService"/>
+		<property name="userService" ref="userService"/>
+		<property name="categoryService" ref="categoryService"/>
+		<property name="productService" ref="productService"/>
+		<property name="productPricePopulator" ref="productPricePopulator"/>
+		<property name="productPrimaryImagePopulator" ref="productPrimaryImagePopulator"/>
+		<property name="productConverter" ref="productConverter"/>
+	</bean>
+
+	<alias name="defaultHeringOrderFacade" alias="heringOrderFacade"/>
+	<bean id="defaultHeringOrderFacade" class="br.hering.facades.order.impl.DefaultHeringOrderFacade"
+		parent="defaultOrderFacade">
+		<property name="customerAccountService" ref="heringCustomerAccountService"/>
+		<property name="orderService" ref="heringOrderService"/>
+	</bean>
+	
+	<alias name="acceleratorVariantOptionDataConverter" alias="variantOptionDataConverter"/> 
+	<bean id="acceleratorVariantOptionDataConverter" parent="abstractPopulatingConverter">
+			<lookup-method name="createTarget" bean="variantOptionData"/>
+			<property name="populators">
+				<list>
+					<ref bean="acceleratorVariantOptionDataPopulator"/>
+				</list>
+			</property>
+	</bean>
+	
+	<bean id="productPreviewData" class="br.hering.facades.product.preview.data.ProductPreviewData"	scope="prototype" />
+	<alias name="defaultProductPreviewConverter" alias="productPreviewConverter"/> 
+	<bean id="defaultProductPreviewConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="productPreviewData"/>
+		<property name="populators">
+			<list>
+				<ref bean="heringProductPreviewPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- PaymentMode Data end Populator -->
+	<bean id="paymentModeData" class="br.hering.facades.order.data.PaymentModeData"
+		scope="prototype" />
+		
+	<alias name="defaultHeringAddressPopulator" alias="addressPopulator"/>
+	<bean id="defaultHeringAddressPopulator" parent="defaultAddressPopulator" class="br.hering.facades.populators.HeringAddressPopulator" />
+	
+	<alias alias="addressReversePopulator" name="defaultHeringAddressReversePopulator" />
+	<bean id="defaultHeringAddressReversePopulator" class="br.hering.facades.populators.HeringAddressReversePopulator" parent="defaultAddressReversePopulator" />
+	
+	<alias name="defaultAddressTypeConverter" alias="addressTypeConverter"/> 
+	<bean id="defaultAddressTypeConverter" parent="abstractPopulatingConverter">
+			<lookup-method name="createTarget" bean="addressTypeData"/>
+			<property name="populators">
+				<list>
+					<ref bean="addressTypeDataPopulator"/>
+				</list>
+			</property>
+	</bean>
+	
+	<alias name="defaultAddressTypeDataPopulator" alias="addressTypeDataPopulator"/>
+	<bean id="defaultAddressTypeDataPopulator" class="br.hering.facades.populators.AddressTypeDataPopulator" >
+		<property name="typeService" ref="typeService"/>
+	</bean>
+	
+	<alias name="defaultAcceleratorVariantOptionDataPopulator" alias="acceleratorVariantOptionDataPopulator"/>
+	<bean id="defaultAcceleratorVariantOptionDataPopulator"  class="br.hering.facades.populators.AcceleratorVariantOptionDataPopulator"
+	      parent="variantOptionDataPopulator" >
+		<property name="mediaService" ref="mediaService"/>
+		<property name="mediaContainerService" ref="mediaContainerService"/>
+		<property name="typeService" ref="typeService"/>
+		<property name="imageFormatMapping" ref="imageFormatMapping"/>
+		<property name="variantAttributeMapping">
+			<map>
+				<entry key="HeringStyleVariantProduct.style" value="styleSwatch"/>
+			</map>
+		</property>
+	</bean>
+
+
+	<alias name="acceleratorGenderConverter" alias="genderConverter"/> 
+	<bean id="acceleratorGenderConverter" parent="abstractPopulatingConverter">
+			<lookup-method name="createTarget" bean="genderData"/>
+			<property name="populators">
+				<list>
+					<ref bean="genderDataPopulator"/>
+				</list>
+			</property>
+	</bean>
+	
+	<alias name="defaultMeasurementsConverter" alias="measurementsConverter"/> 
+	<bean id="defaultMeasurementsConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="measurementData"/>
+		<property name="populators">
+			<list>
+				<ref bean="measurementsDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultGenderDataPopulator" alias="genderDataPopulator"/>
+	<bean id="defaultGenderDataPopulator" class="br.hering.facades.populators.GenderDataPopulator" >
+		<property name="typeService" ref="typeService"/>
+	</bean>
+	
+	<alias name="defaultMeasurementsDataPopulator" alias="measurementsDataPopulator"/>
+	<bean id="defaultMeasurementsDataPopulator" class="br.hering.facades.populators.MeasurementsDataPopulator" />
+
+	<bean id="heringProductPopulator" class="br.hering.facades.populators.HeringProductPopulator" >
+		<property name="genderConverter" ref="genderConverter"/>
+		<property name="sizeAttributeComparator" ref="sizeAttributeComparator" />
+	</bean>
+	
+	<bean id="heringProductPreviewPopulator" class="br.hering.facades.populators.HeringProductPreviewPopulator" />
+
+	<!-- Add the heringProductPopulator to the productConverter -->
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter"/>
+		<property name="add" ref="heringProductPopulator"/>
+	</bean>
+
+	<bean parent="defaultOrderEntryProductConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="productBasicPopulator"/>
+				<ref bean="productPricePopulator"/>
+				<ref bean="productCategoriesPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="domainImageMapping" class="br.hering.facades.utils.DomainHashMap">
+		<property name="maps">
+			<map>
+				<entry key="hering">
+					<map>
+						<entry key="superZoom" 		value="1600Wx900H" />
+						<entry key="zoom" 			value="896Wx1200H" />
+						<entry key="product" 		value="115Wx154H" />
+						<entry key="store" 			value="296Wx396H" />
+						<entry key="thumbnail" 		value="68Wx91H" />
+						<entry key="cartIcon" 		value="110Wx147H" />
+						<entry key="styleSwatch"	value="119Wx159H" />
+					</map>
+				</entry>
+				<entry key="dzarm">
+					<map>
+						<entry key="superZoom" 		value="1600Wx900H" />
+						<entry key="zoom" 			value="896Wx1200H" />
+						<entry key="store" 			value="237Wx357H" />
+						<entry key="product" 		value="115Wx154H" />
+						<entry key="styleSwatch"	value="119Wx159H" />
+						<entry key="cartIcon" 		value="110Wx147H" />
+						<entry key="thumbnail" 		value="68Wx91H" />
+					</map>
+				</entry>
+				<entry key="foryou">
+					<map>
+						<entry key="superZoom" 		value="1600Wx900H" />
+						<entry key="zoom" 			value="788Wx514H" />
+						<entry key="product" 		value="388Wx517H" />
+						<entry key="smallProduct" 	value="379Wx253H" />
+						<entry key="store" 			value="296Wx396H" />
+						<entry key="thumbnail" 		value="68Wx91H" />
+						<entry key="cartIcon" 		value="110Wx147H" />
+						<entry key="styleSwatch"	value="119Wx159H" />
+					</map>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="heringProductFacade" parent="accProductFacade">
+		<property name="productConfiguredPopulator" ref="heringProductConfiguredPopulator"/>
+		<property name="referenceProductConfiguredPopulator" ref="heringProductConfiguredPopulator"/>
+	</bean>
+	<bean id="heringProductConfiguredPopulator" parent="accProductConfiguredPopulator">
+		<property name="populators">
+			<map key-type="de.hybris.platform.commercefacades.product.ProductOption" merge="true">
+				<entry key="VARIANT_AVAILABLE" value-ref="productVariantAvailablePopulatorList"/>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="defaultProductVariantAvailablePopulatorList" alias="productVariantAvailablePopulatorList"/>
+	<bean id="defaultProductVariantAvailablePopulatorList" parent="abstractPopulatorList">
+		<property name="populators">
+			<list>
+				<ref bean="variantAvailablePopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultVariantAvailablePopulator" alias="variantAvailablePopulator"/>
+	<bean id="defaultVariantAvailablePopulator"
+	      class="br.hering.facades.populators.VariantAvailablePopulator"
+	      scope="prototype">
+		<property name="variantOptionDataConverter" ref="variantOptionDataConverter"/>
+		<property name="baseOptionDataConverter" ref="baseOptionDataConverter"/>
+		<property name="variantsUtils" ref="variantsUtils" />
+	</bean>
+
+	<!-- accelerator Image Format Mappings -->
+	<alias name="acceleratorImageFormatMapping" alias="imageFormatMapping"/>
+	<bean id="acceleratorImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping" ref="domainImageMapping"/>
+	</bean>
+	
+	<bean id="heringImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="superZoom" value="1600Wx900H" />
+				<entry key="zoom" value="896Wx1200H" />
+				<entry key="product" value="115Wx154H" />
+				<entry key="store" value="296Wx396H" />
+				<entry key="thumbnail" value="68Wx91H" />
+				<entry key="cartIcon" value="110Wx147H" />
+				<entry key="styleSwatch" value="119Wx159H" />
+			</map>
+		</property>
+	</bean>
+	<bean id="dzarmImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="superZoom" 		value="1600Wx900H" />
+				<entry key="zoom" 			value="896Wx1200H" />
+				<entry key="store" 			value="237Wx357H" />
+				<entry key="product" 		value="115Wx154H" />
+				<entry key="thumbnail" 		value="68Wx91H" />
+				<entry key="cartIcon" 		value="110Wx147H" />
+				<entry key="styleSwatch"	value="119Wx159H" />
+			</map>
+		</property>
+	</bean>
+	<bean id="foryouImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="superZoom" 		value="1600Wx900H" />
+				<entry key="zoom" 			value="788Wx514H" />
+				<entry key="product" 		value="388Wx517H" />
+				<entry key="smallProduct" 	value="379Wx253H" />
+				<entry key="store" 			value="296Wx396H" />
+				<entry key="thumbnail" 		value="68Wx91H" />
+				<entry key="cartIcon" 		value="110Wx147H" />
+				<entry key="styleSwatch"	value="119Wx159H" />
+			</map>
+		</property>
+	</bean>
+	
+
+	<alias name="acceleratorProductPrimaryImagePopulator" alias="productPrimaryImagePopulator" />
+	<bean id="acceleratorProductPrimaryImagePopulator" class="br.hering.facades.product.impl.HeringProductPrimaryImagePopulator" parent="defaultProductPrimaryImagePopulator">
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>superZoom</value>
+				<value>product</value>
+				<value>smallProduct</value>
+				<value>store</value>
+				<value>thumbnail</value>
+				<value>cartIcon</value>
+			</list>
+		</property>
+		<property name="imageFormatMappingMap">
+			<map>
+				<entry key="dzarm" value-ref="dzarmImageFormatMapping" />
+				<entry key="hering" value-ref="heringImageFormatMapping" />
+				<entry key="foryou" value-ref="foryouImageFormatMapping" />
+			</map>
+		</property>
+	</bean>
+
+	<alias name="acceleratorProductGalleryImagesPopulator" alias="productGalleryImagesPopulator" />
+	<bean id="acceleratorProductGalleryImagesPopulator" class="br.hering.facades.product.impl.HeringProductGalleryImagePopulator" parent="defaultProductGalleryImagesPopulator">
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>superZoom</value>
+				<value>product</value>
+				<value>smallProduct</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+		<property name="imageFormatMappingMap">
+			<map>
+				<entry key="dzarm" value-ref="dzarmImageFormatMapping" />
+				<entry key="hering" value-ref="heringImageFormatMapping" />
+				<entry key="foryou" value-ref="foryouImageFormatMapping" />
+			</map>
+		</property>
+	</bean>
+	<alias alias="heringWishlistFacade" name="defaultHeringWishlistFacade"/>
+	<bean id="defaultHeringWishlistFacade" class="br.hering.facades.wishlist.impl.DefaultHeringWishlistFacade">
+		<!-- <property name="simpleSuggestionService" ref="simpleSuggestionService"/>-->
+		<property name="userService" ref="userService"/>
+		<property name="heringWishlistService" ref="heringWishlistService"/>
+		<property name="productService" ref="productService"/>
+                <property name="productFacade" ref="productFacade"/>
+		<property name="heringWishlistConverter" ref="heringWishlistConverter"/>
+                <property name="heringWishlistEntryConverter" ref="heringWishlistEntryConverter"/>
+		<!-- <property name="productPrimaryImagePopulator" ref="productPrimaryImagePopulator"/>
+		<property name="productConverter" ref="productConverter"/> --> 
+	</bean>
+	
+	<bean id="heringWishlistData" class="br.hering.facades.wishlist.data.HeringWishlistData" scope="prototype"/>
+	
+	<bean id="heringWishlistEntryData" class="br.hering.facades.wishlist.data.HeringWishlistEntryData" scope="prototype"/>
+        
+    <bean id="heringWishlistEntryPriorityData" class="br.hering.facades.wishlist.data.HeringWishlistEntryPriorityData" scope="prototype"/>
+	
+		<!-- KPfamily Definitions -->
+	<!-- Wishlist populators definitions -->
+	<alias name="defaultHeringWishlistConverter" alias="heringWishlistConverter"/>
+	<bean id="defaultHeringWishlistConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="heringWishlistData"/>
+		<property name="populators">
+			<list>
+				<ref bean="heringWishlistPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultHeringWishlistPopulator" alias="heringWishlistPopulator"/>
+	<bean id="defaultHeringWishlistPopulator" class="br.hering.facades.populators.HeringWishlistPopulator">
+		<property name="heringWishlistEntryConverter" ref="heringWishlistEntryConverter"/>
+	</bean>
+	
+	<alias name="defaultheringWishlistEntryConverter" alias="heringWishlistEntryConverter"/>
+	<bean id="defaultheringWishlistEntryConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="heringWishlistEntryData"/>
+		<property name="populators">
+			<list>
+				<ref bean="heringWishlistEntryPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultHeringWishlistEntryPopulator" alias="heringWishlistEntryPopulator"/>
+	<bean id="defaultHeringWishlistEntryPopulator" class="br.hering.facades.populators.HeringWishlistEntryPopulator">
+		<property name="heringWishlistEntryPriorityConverter" ref="heringWishlistEntryPriorityConverter"/>
+		<property name="productConverter" ref="productConverter"/>
+	</bean>
+	
+	<alias name="defaultHeringWishlistEntryPriorityConverter" alias="heringWishlistEntryPriorityConverter"/>
+	<bean id="defaultHeringWishlistEntryPriorityConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="heringWishlistEntryPriorityData"/>
+		<property name="populators">
+			<list>
+				<ref bean="priorityPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultHeringWishlistEntryPriorityPopulator" alias="priorityPopulator"/>
+	<bean id="defaultHeringWishlistEntryPriorityPopulator" class="br.hering.facades.populators.HeringWishlistEntryPriorityPopulator" >
+		<property name="typeService" ref="typeService"/>
+	</bean>
+	
+	<alias name="defaultHeringWishlistService" alias="heringWishlistService"/>
+	<bean id="defaultHeringWishlistService" 
+			class="br.hering.core.wishlist.impl.DefaultHeringWishlistService" parent="defaultWishlistService" scope="tenant">
+	</bean>
+   
+   <!--  End Wishlist reverse populators definitions -->
+	<bean id="customerEmailContext" class="br.hering.facades.process.email.context.CustomerEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="customerConverter" ref="customerConverter"/>
+	</bean>
+	
+	<bean id="forgottenPasswordEmailContext" class="br.hering.facades.process.email.context.ForgottenPasswordEmailContext" parent="customerEmailContext" scope="prototype" >
+		<property name="customerConverter" ref="customerConverter"/>
+	</bean>
+	
+	<bean id="orderNotificationEmailContext" class="br.hering.facades.process.email.context.OrderNotificationEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	
+	<bean id="deliverySentEmailContext" class="br.hering.facades.process.email.context.DeliverySentEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+	</bean>
+	
+	<bean id="readyForPickupEmailContext" class="br.hering.facades.process.email.context.ReadyForPickupEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+	</bean>
+	
+	<bean id="orderCancelledEmailContext" class="br.hering.facades.process.email.context.OrderCancelledEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	
+	<bean id="orderRefundEmailContext" class="br.hering.facades.process.email.context.OrderRefundEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	<bean id="consignmentCollectionReminderEmailContext" class="br.hering.facades.process.email.context.ConsignmentCollectionReminderEmailContext" parent="abstractEmailContext" scope="prototype">
+        <property name="consignmentConverter" ref="consignmentConverter"/>
+        <property name="formatFactory" ref="formatFactory"/>
+        <property name="customerServiceUncollectedConsignmentStrategy" ref="customerServiceUncollectedConsignmentStrategy" />
+        <property name="orderConverter" ref="orderConverter"/>
+    </bean>
+
+	<bean id="orderPartiallyModifiedEmailContext" class="br.hering.facades.process.email.context.OrderPartiallyModifiedEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+		<property name="orderEntryConverter" ref="orderEntryConverter"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>		
+	</bean>
+
+	<bean id="orderPartiallyCanceledEmailContext" class="br.hering.facades.process.email.context.OrderPartiallyCanceledEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype" >
+	</bean>
+
+	<bean id="orderPartiallyRefundedEmailContext" class="br.hering.facades.process.email.context.OrderPartiallyRefundedEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype" >
+	</bean>
+
+	<bean id="notPickedUpConsignmentCanceledEmailContext" class="br.hering.facades.process.email.context.NotPickedUpConsignmentCanceledEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>
+	</bean>
+
+	<alias name="defaultCheckoutFlowFacade" alias="checkoutFlowFacade"/>
+	<bean id="defaultCheckoutFlowFacade" class="br.hering.facades.flow.impl.DefaultCheckoutFlowFacade" parent="defaultAcceleratorCheckoutFacade" >
+		<property name="checkoutFlowStrategy" ref="checkoutFlowStrategy"/>
+		<property name="checkoutPciStrategy" ref="checkoutPciStrategy"/>
+	</bean>
+
+	<!--
+	The SessionOverrideCheckoutFlowFacade allows the CheckoutFlow and the SubscriptionPciOption to be overridden in the session.
+	This is typically done for demonstration purposes and you may not need this behaviour in your environment, in which case the
+	defaultCheckoutFlowFacade should be sufficient.
+	 -->
+	<alias name="sessionOverrideCheckoutFlowFacade" alias="checkoutFlowFacade"/>
+	<bean id="sessionOverrideCheckoutFlowFacade" class="br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade" parent="defaultCheckoutFlowFacade" >
+		<property name="sessionService" ref="sessionService"/>
+	</bean>
+
+	<alias name="yacceleratorSearchPagePointOfServiceDistancePopulator" alias="searchPagePointOfServiceDistancePopulator" />
+	<bean id="yacceleratorSearchPagePointOfServiceDistancePopulator" class="br.hering.facades.storefinder.populators.SearchPagePointOfServiceDistancePopulator" >
+		<property name="pointOfServiceDistanceConverter" ref="pointOfServiceDistanceConverter"/>
+	</bean>
+
+	<bean id="addressTypeData" class="br.hering.facades.product.data.AddressTypeData" scope="prototype"/>
+
+	<bean id="genderData" class="br.hering.facades.product.data.GenderData" scope="prototype"/>
+	
+	<bean id="measurementData" class="br.hering.facades.product.data.MeasurementsData" scope="prototype"/>
+
+    <alias name="brCustomerPopulator" alias="customerPopulator"/>
+	<bean id="brCustomerPopulator" class="br.hering.facades.populators.HeringCustomerPopulator" parent="defaultCustomerPopulator"></bean>
+	
+	<alias name="brCustomerReversePopulator" alias="customerReversePopulator"/>
+	<bean id="brCustomerReversePopulator" class="br.hering.facades.populators.HeringCustomerReversePopulator" parent="defaultCustomerReversePopulator"></bean>
+	
+	<alias name="defaultDiscountConverter" alias="discountConverter"/>
+	<bean id="defaultDiscountConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="discountData"/>
+		<property name="populators">
+			<list>
+				<ref bean="discountPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="discountPopulator" class="br.hering.facades.populators.DiscountPopulator">
+		<property name="currencyConverter" ref="currencyConverter" />
+	</bean>
+
+	<bean id="boletoPaymentInfoData" class="com.flieger.payment.data.BoletoPaymentInfoData"	scope="prototype" />		
+	<bean id="voucherPaymentInfoData" class="br.hering.facades.order.data.VoucherPaymentInfoData" scope="prototype" />
+	<bean id="debitPaymentInfoData" class="com.flieger.payment.data.HeringDebitPaymentInfoData" scope="prototype" />		
+
+	<bean id="boletoPaymentInfoPopulator"
+		class="br.hering.facades.populators.order.BoletoPaymentInfoPopulator">
+		<property name="addressConverter" ref="addressConverter" />
+	</bean>
+
+	<bean id="boletoPaymentInfoReversePopulator"
+		class="br.hering.facades.populators.order.BoletoPaymentInfoReversePopulator">
+		<property name="addressReversePopulator" ref="addressReversePopulator" />
+	</bean>
+	
+	<bean id="voucherPaymentInfoReversePopulator"
+		class="br.hering.facades.populators.VoucherPaymentInfoReversePopulator">		
+		<property name="addressReversePopulator" ref="addressReversePopulator" />				
+	</bean>
+	
+	<bean id="voucherPaymentInfoPopulator"
+		class="br.hering.facades.populators.VoucherPaymentInfoPopulator">		
+		<property name="addressConverter" ref="addressConverter" />
+		<property name="voucherPaymentInfoConverter" ref="voucherPaymentInfoConverter" />						
+	</bean>	
+
+	<bean	id="debitPaymentInfoReversePopulator"
+			class="br.hering.facades.populators.DebitPaymentInfoReversePopulator">
+		<property name="addressReversePopulator"	ref="addressReversePopulator" />
+		<property name="customerReversePopulator"	ref="customerReversePopulator" />
+		<property name="modelService"					ref="modelService"/>					
+	</bean>
+	
+	<bean id="debitPaymentInfoPopulator"
+		class="br.hering.facades.populators.DebitPaymentInfoPopulator">		
+		<property name="addressConverter"	ref="addressConverter" />
+		<property name="customerConverter"	ref="customerConverter" />						
+	</bean>
+
+	<bean id="cartCustomPaymentInfoPopulator"
+		class="br.hering.facades.populators.order.CartCustomPaymentInfoPopulator">
+		<property name="boletoPaymentInfoConverter" ref="boletoPaymentInfoConverter" />
+	</bean>
+
+	<bean id="cartBillingAddressPopulator" class="br.hering.facades.populators.order.CartBillingAddressPopulator">
+		<property name="addressConverter" ref="addressConverter"/>
+	</bean>
+	
+	<bean id="defaultOrderPopulator"
+	      class="br.hering.facades.populators.HeringOrderPopulator"
+	      parent="baseOrderPopulator"/>
+	      
+	<!-- Converters -->
+	<alias name="heringExtendedOrderConverter" alias="orderConverter" />
+	<bean id="heringExtendedOrderConverter" parent="accOrderConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="cartCustomPaymentInfoPopulator" />
+				<ref bean="cartPaymentModePopulator" />
+				<ref bean="cartBillingAddressPopulator" />
+			</list>
+		</property>
+	</bean>
+	<alias name="heringExtendedCartConverter" alias="extendedCartConverter" />
+	<bean id="heringExtendedCartConverter" parent="accExtendedCartConverter">
+		<property name="populators">
+			<list merge="true">
+<!-- 			<ref bean="voucherDiscountsPopulator" /> -->
+				<ref bean="cartCustomPaymentInfoPopulator" />
+				<ref bean="cartPaymentModePopulator" />
+				<ref bean="cartBillingAddressPopulator" />
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultBoletoPaymentInfoConverter" alias="boletoPaymentInfoConverter" />
+	<bean id="defaultBoletoPaymentInfoConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="boletoPaymentInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="boletoPaymentInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	<alias name="defaultVoucherPaymentInfoConverter" alias="voucherPaymentInfoConverter" />
+	<bean id="defaultVoucherPaymentInfoConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="voucherPaymentInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="voucherPaymentInfoPopulator" />
+			</list>
+		</property>
+	</bean>	
+	
+	<alias name="defaultDebitPaymentInfoConverter" alias="debitPaymentInfoConverter" />
+	<bean id="defaultDebitPaymentInfoConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="debitPaymentInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="debitPaymentInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+<!-- 	<alias name="defaultDebitPaymentInfoReverseConverter" alias="debitPaymentInfoReverseConverter" /> -->
+<!-- 	<bean id="defaultDebitPaymentInfoReverseConverter" parent="abstractPopulatingConverter"> -->
+<!-- 		<lookup-method name="createTarget" bean="debitPaymentInfoModel" /> -->
+<!-- 		<property name="populators"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="debitPaymentInfoReversePopulator" /> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+	
+	<alias name="heringCustomerFacade" alias="customerFacade"/>
+	<bean id="heringCustomerFacade" class="br.hering.facades.customer.impl.DefaultHeringCustomerFacade" parent="defaultCustomerFacade">
+	</bean>
+	
+	<alias name="defaultCarrierDeliveryCalculationFacade" alias="carrierDeliveryCalculationFacade"/>
+	<bean id="defaultCarrierDeliveryCalculationFacade" class="br.hering.facades.delivery.impl.DefaultCarrierDeliveryCalculationFacade"/>
+	
+	<alias name="defaultHeringOrderHistoryPopulator" alias="orderHistoryPopulator"/>
+	<bean id="defaultHeringOrderHistoryPopulator"
+	      class="br.hering.facades.populators.HeringOrderHistoryPopulator" parent="defaultOrderHistoryPopulator">
+		<property name="heringOrderService" ref="heringOrderService"/>
+	</bean>
+
+	<alias name="defaultHeringProductFeatureListPopulator" alias="productFeatureListPopulator"/>
+	<bean id="defaultHeringProductFeatureListPopulator" class="br.hering.facades.populators.HeringProductFeatureListPopulator" parent="defaultProductFeatureListPopulator"/>
+
+	<alias name="defaultHeringSearchResultProductPopulator" alias="commerceSearchResultProductPopulator"/>
+	<bean id="defaultHeringSearchResultProductPopulator" class="br.hering.facades.populators.HeringSearchResultProductPopulator" parent="defaultCommerceSearchResultProductPopulator">
+		<property name="sizeAttributeComparator" ref="sizeAttributeComparator" />
+	</bean>
+
+	<!-- PaymentModeFacade definitions -->
+	<alias name="defaultPaymentModeFacade" alias="paymentModeFacade" />
+	<bean id="defaultPaymentModeFacade" class="br.hering.facades.checkout.payment.impl.DefaultHeringPaymentModeFacade">
+		<property name="paymentModeService" ref="paymentModeService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="cartService" ref="cartService"/>
+		<property name="calculationService" ref="calculationService"/>
+		<property name="paymentModeConverter" ref="paymentModeConverter"/>
+	</bean>
+	
+	<bean id="paymentModePopulator" class="br.hering.facades.populators.PaymentModePopulator" />
+	
+	<alias name="defaultPaymentModeConverter" alias="paymentModeConverter"/>
+	<bean id="defaultPaymentModeConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="paymentModeData"/>
+		<property name="populators">
+			<list>
+				<ref bean="paymentModePopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!--end-->
+<bean id="cartPaymentModePopulator" class="br.hering.facades.populators.CartPaymentModePopulator" >
+		<property name="paymentModeConverter" ref="paymentModeConverter"/>
+</bean>
+
+<!-- Chages for user facade -->
+	<alias name="defaultHeringUserFacade" alias="userFacade"/>
+	<bean id="defaultHeringUserFacade" class="br.hering.facades.user.impl.DefaultHeringUserFacade" parent="defaultUserFacade">	
+	</bean>
+<!--  -->
+
+     <alias name="defaultHeringCreditCardPaymentInfoPopulator" alias="creditCardPaymentInfoPopulator"/>
+	<bean id="defaultHeringCreditCardPaymentInfoPopulator"
+		  class="br.hering.facades.populators.HeringCreditCardPaymentInfoPopulator"
+                  parent="defaultCreditCardPaymentInfoPopulator">
+	</bean>
+
+     <alias name="defaultHeringCreditCardPaymentInfoReversePopulator" alias="cardPaymentInfoReversePopulator"/>
+	<bean id="defaultHeringCreditCardPaymentInfoReversePopulator"
+		  class="br.hering.facades.populators.HeringCreditCardPaymentInfoReversePopulator"
+                  parent="defaultCardPaymentInfoReversePopulator">
+	</bean>
+	
+	<alias name="defaultHeringImagePopulator" alias="imagePopulator"/>
+	<bean id="defaultHeringImagePopulator" class="br.hering.facades.populators.HeringImagePopulator" parent="defaultImagePopulator"/>
+	
+	<alias name="defaultHeringProductFacade" alias="productFacade" />
+	<bean id="defaultHeringProductFacade"
+		class="br.hering.facades.product.impl.DefaultHeringProductFacade"
+		parent="defaultProductFacade">
+		<property name="variantsUtils" ref="variantsUtils" />
+	</bean>
+
+	<alias name="defaultHeringCartFacade" alias="cartFacade"/>
+	<bean id="defaultHeringCartFacade" class="br.hering.facades.cart.DefaultHeringCartFacade" parent="defaultCartFacade">
+	</bean>
+	
+	<alias name="defaultHeringCustomerGroupFacade" alias="heringCustomerGroupFacade"/>
+	<bean id="defaultHeringCustomerGroupFacade"
+	      class="br.hering.facades.usergroup.impl.DefaultHeringCustomerGroupFacade"
+	      parent="customerGroupFacade">
+	</bean>
+</beans>

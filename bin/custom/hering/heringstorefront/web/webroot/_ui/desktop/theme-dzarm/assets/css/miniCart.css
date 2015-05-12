@@ -1,0 +1,64 @@
+#carrinho .bag .count {
+  background-color: #e01776;
+  color: #FFF;
+  min-width: 13px;
+  position: absolute;
+  bottom: 0;
+  right: -8px;
+  font-size: 14px;
+  text-align: center;
+  padding: 3px;
+  border-radius: 50px;
+}
+
+#carrinho .price {
+  padding: 6px 0;
+  float: left;
+  width: 80px;
+  margin-right: 5px;
+}
+
+#carrinho .price a {
+  color: #FFF;
+  display: block;
+  font-weight: bold;
+  margin-top: 3px;
+}
+
+.mini-carrinho .submitRemoveProduct {
+  background: #dedede;
+  color: #727272;
+  position: absolute;
+  right: 0;
+  float: right;
+  bottom: 10px;
+  font-size: 22px;
+  padding: 3px 5px;
+  border-radius: 0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  opacity: 0.7;
+   -webkit-transition: all 0.3s;
+   -moz-transition: all 0.3s;
+   -o-transition: all 0.3s;
+   transition: all 0.3s;
+}
+
+.mini-carrinho .submitRemoveProduct:hover {
+  opacity: 1;
+}
+
+.mini-carrinho .products .thumbMiniCart {
+  background: #FFF;
+  width: 68px;
+  height: 91px;
+  float: left;
+  margin-right: 10px;
+  border: 1px solid #cbcaca;
+}
+
+.mini-carrinho.logo-bar .empty-popup-cart{
+	font-size: 18px;
+	padding: 40px 20px;
+	text-align: center;
+}

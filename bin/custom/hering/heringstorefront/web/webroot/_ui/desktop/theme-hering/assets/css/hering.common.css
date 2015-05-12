@@ -1,0 +1,31 @@
+.ui-helper-hidden-accessible{
+	display:none;
+}
+
+.siteSearch input{
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    color: #727272;
+    float: left;
+    font-size: 14px;
+    height: 33px;
+    outline: 0 none !important;
+    padding: 0 40px 0 10px;
+    width: 290px;
+}
+
+.search-autocomplete-results ul.keywords-suggestions li {
+    border-bottom: 1px dotted #c6c6c6;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+@media (max-width: 1199px) {
+	.siteSearch input{
+		width: 100%;
+	}
+	#search > .container > .actions .input-group form button {
+		margin-top: -15px !important;
+	}
+}

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://hering.fliegersoftware.de/interface/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://hering.fliegersoftware.de/interface/soap/" targetNamespace="http://hering.fliegersoftware.de/interface/soap/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:h="http://hering.fliegersoftware.de/interface/soap/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://hering.fliegersoftware.de/interface/soap/">
+  <xs:element name="importarProdutoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="h:produto"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="h:variacao"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="produto">
+    <xs:complexType>
+      <xs:sequence>
+      	<xs:element name="codigoSite" type="xs:string"/>
+        <xs:element name="codigo" type="xs:string"/>
+        <xs:element name="titulo" type="xs:string"/>
+        <xs:element name="descricaoFiscal" type="xs:string"/>
+        <xs:element name="descricaoB2C" type="xs:string"/>
+        <xs:element name="griffe" type="xs:string"/>
+        <xs:element name="linha" type="xs:string"/>
+        <xs:element name="tipoTecido" type="xs:string"/>
+        <xs:element name="composicao" type="xs:string"/>
+        <xs:element name="sexo" type="xs:string"/>
+        <xs:element name="parte" type="xs:string"/>
+        <xs:element minOccurs="0" name="tags" type="xs:string"/>
+        <xs:element name="codigoCategoria" type="xs:string"/>
+        <xs:element name="codigoSubCategoria" type="xs:string"/>
+        <xs:element name="codigoGrupo" type="xs:string"/>
+        <xs:element name="codigoSubGrupo" type="xs:string"/>
+        <xs:element minOccurs="0" name="ocasiao" type="xs:string" />
+        <xs:element minOccurs="0" name="tendencia" type="xs:string" />
+        <xs:element minOccurs="0" name="tipoMaterial" type="xs:string" />
+        <xs:element ref="h:colecao"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="variacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sku" type="xs:string"/>
+        <xs:element name="ean" type="xs:string"/>
+        <xs:element name="ordem" type="xs:int"/>
+        <xs:element name="tamanho" type="xs:string"/>
+        <xs:element name="peso" type="xs:double"/>
+        <xs:element ref="h:cor"/>
+        <xs:element name="dataOnline" type="xs:string"/>
+        <xs:element name="dataOffline" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="colecao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="codigo" type="xs:string"/>
+        <xs:element name="descricao" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="codigo" type="xs:string"/>
+        <xs:element name="descricao" type="xs:string"/>
+        <xs:element name="descricaoCorBasica" type="xs:string"/>
+        <xs:element name="rgb" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="importarProdutoRequest">
+    <wsdl:part element="tns:importarProdutoRequest" name="importarProdutoRequest"/>
+  </wsdl:message>
+  <wsdl:portType name="HeringWebservicesResource">
+    <wsdl:operation name="importarProduto">
+      <wsdl:input message="tns:importarProdutoRequest" name="importarProdutoRequest"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HeringWebservicesResourceSoap11" type="tns:HeringWebservicesResource">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="importarProduto">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="importarProdutoRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HeringWebservicesResourceService">
+    <wsdl:port binding="tns:HeringWebservicesResourceSoap11" name="HeringWebservicesResourceSoap11">
+      <soap:address location="http://dzarm.local:9001/interface/soap"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

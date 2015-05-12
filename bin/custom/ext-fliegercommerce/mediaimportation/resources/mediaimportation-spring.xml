@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/util
+		   http://www.springframework.org/schema/util/spring-util.xsd">
+           
+    <import resource="mediaimportation-hotfolder.xml"/>
+           
+    <!-- Services -->
+    <alias name="mediaImportationMediaConversionService" alias="mediaConversionService"/>
+    <bean id="mediaImportationMediaConversionService" parent="defaultMediaConversionService" 
+    	class="com.fliegersoftware.media.services.impl.MediaImportationMediaConversionService"/>
+    
+	<!-- Strategies -->
+	<alias name="defaultFindMediaContainersStrategy" alias="findMediaContainersStrategy"/>
+	<bean id="defaultFindMediaContainersStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindMediaContainersStrategy"/>
+
+	<alias name="defaultFindMainMediaContainerStrategy" alias="findMainMediaContainerStrategy"/>
+	<bean id="defaultFindMainMediaContainerStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindMainMediaContainerStrategy">
+		<property name="findMediaContainersStrategy" ref="findMediaContainersStrategy" />
+	</bean>
+		
+	<alias name="defaultConvertMediaContainerMediasStrategy" alias="convertMediaContainerMediasStrategy"/>
+	<bean id="defaultConvertMediaContainerMediasStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultConvertMediaContainerMediasStrategy">
+		<property name="mediaConversionService" ref="mediaConversionService" />
+	</bean>
+	
+	<alias name="defaultFindImageFilesToImportStrategy" alias="findImageFilesToImportStrategy"/>
+	<bean id="defaultFindImageFilesToImportStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindImageFilesToImportStrategy">
+		<property name="acceptedFileFormatList">
+			<list>
+				<value>jpg</value>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultFindMediaFormatFromImageStrategy" alias="findMediaFormatFromImageStrategy"/>
+	<bean id="defaultFindMediaFormatFromImageStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindMediaFormatFromImageStrategy"/>
+	
+	<alias name="defaultFindProductCodeFromImageStrategy" alias="findProductCodeFromImageStrategy"/>
+	<bean id="defaultFindProductCodeFromImageStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultFindProductCodeFromImageStrategy"/>
+	
+	<!-- Events -->
+	<alias name="defaultGalleryChangedListener" alias="galleryChangedListener"/>
+	<bean id="defaultGalleryChangedListener" class="com.fliegersoftware.media.events.GalleryChangedListener" parent="abstractEventListener">
+		<property name="productGalleryChangedListenerStrategy" ref="productGalleryChangedListenerStrategy"/>
+	</bean>
+	
+	<alias name="defaultProductGalleryChangedListenerStrategy" alias="productGalleryChangedListenerStrategy"/>
+	<bean id="defaultProductGalleryChangedListenerStrategy" class="com.fliegersoftware.media.strategies.impl.DefaultProductGalleryChangedListenerStrategy">
+		<property name="modelService" ref="modelService"/>
+		<property name="findMediaContainersStrategy" ref="findMediaContainersStrategy"/>
+		<property name="findMainMediaContainerStrategy" ref="findMainMediaContainerStrategy"/>
+		<property name="imageFormatMapping" ref="imageFormatMapping"/>
+		<property name="mediaContainerService" ref="mediaContainerService"/>
+		<property name="mediaService" ref="mediaService"/>
+		<property name="mediasFromMainContainerFormatMapping">
+			<map>
+				<entry key="picture" value="product"/>
+				<entry key="thumbnail" value="thumbnail"/>
+			</map>
+		</property>
+		<property name="mediasFromAllContainersFormatMapping">
+			<map>
+				<entry key="thumbnails" value-ref="thumbnailsImageFormatList"/>
+				<entry key="others" value-ref="othersImageFormatList"/>
+				<entry key="normal" value-ref="normalImageFormatList"/>
+			</map>
+		</property>
+	</bean>
+	
+	<alias name="defaultThumbnailsImageFormatList" alias="thumbnailsImageFormatList"/>
+	<util:list id="defaultThumbnailsImageFormatList">
+		<value>thumbnail</value>
+	</util:list>
+	
+	<alias name="defaultOthersImageFormatList" alias="othersImageFormatList"/>
+	<util:list id="defaultOthersImageFormatList">
+		<value>zoom</value>
+	</util:list>
+	
+	<alias name="defaultNormalImageFormatList" alias="normalImageFormatList"/>
+	<util:list id="defaultNormalImageFormatList">
+		<value>product</value>
+	</util:list>
+	
+	<alias name="defaultMediaContainerAfterSaveListener" alias="mediaContainerAfterSaveListener"/>
+	<bean id="defaultMediaContainerAfterSaveListener" class="com.fliegersoftware.media.listeners.MediaContainerAfterSaveListener" >
+	    <property name="modelService" ref="modelService" />
+	    <property name="convertMediaContainerMediasStrategy" ref="convertMediaContainerMediasStrategy" />
+	</bean>
+	
+	<!-- Interceptors -->
+	<alias name="defaultProductGalleryImagesInterceptor" alias="productGalleryImagesInterceptor"/>
+	<bean id="defaultProductGalleryImagesInterceptor" class="com.fliegersoftware.media.interceptors.ProductGalleryImagesInterceptor">
+		<property name="eventService" ref="eventService" />
+	</bean>	
+	
+	<alias name="defaultMediaContainerModificationsInterceptor" alias="mediaContainerModificationsInterceptor"/>
+	<bean id="defaultMediaContainerModificationsInterceptor" class="com.fliegersoftware.media.interceptors.MediaContainerModificationsInterceptor">
+		<property name="mediaConversionService" ref="mediaConversionService"/>
+	</bean>
+			
+	<!-- Interceptors mapping -->
+	<bean id="productGalleryImagesInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+	    <property name="interceptor" ref="productGalleryImagesInterceptor" />
+	    <property name="typeCode" value="Product" />
+	</bean>
+	
+	<bean id="mediaContainerMediasInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+	    <property name="interceptor" ref="mediaContainerModificationsInterceptor" />
+	    <property name="typeCode" value="MediaContainer" />
+	</bean>
+	
+	<!-- Daos -->
+	<alias name="defaultMediaImportationDao" alias="mediaConversionServiceDao" />
+	<bean id="defaultMediaImportationDao" class="com.fliegersoftware.media.daos.impl.DefaultMediaImportationDao" parent="defaultMediaConversionServiceDao"/>
+	
+	<!-- Jobs -->
+	<bean id="mediaImportationCsvGeneratorJobPerformable" name="defaultMediaImportationCsvGeneratorJobPerformable" parent="abstractJobPerformable"
+		class="com.fliegersoftware.media.jobs.performable.MediaImportationCsvGeneratorJobPerformable">
+		<property name="batchImportationMediaConverterMapping" ref="batchImportationMediaConverterMapping" />
+		<property name="batchImportationMediaContainerConverterMapping" ref="batchImportationMediaContainerConverterMapping"/>
+		<property name="findImageFilesToImportStrategy" ref="findImageFilesToImportStrategy"/>
+		<property name="findMediaFormatFromImageStrategy" ref="findMediaFormatFromImageStrategy"/>
+		<property name="findProductCodeFromImageStrategy" ref="findProductCodeFromImageStrategy"/>
+		<property name="tempDir" value="#{systemProperties['HYBRIS_TEMP_DIR']}"/>
+	</bean>
+</beans>

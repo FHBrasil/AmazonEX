@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+	<collectiontypes>
+		<collectiontype code="BonusSystemLogList" elementtype="BonusSystemLog" autocreate="true" type="list"/>
+	</collectiontypes>
+	<itemtypes>
+		<typegroup name="bonussystem">
+			<itemtype code="BonusSystem" jaloclass="com.flieger.jalo.user.BonusSystem">
+				<deployment table="BonusSystem" typecode="10000"/>
+				<attributes>
+					<attribute qualifier="log" type="BonusSystemLogList">
+						<description>A List of log entries.</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="points" type="java.lang.Double">
+						<description> The actual points of the user. </description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="BonusSystemLog" jaloclass="com.flieger.jalo.user.BonusSystemLog">
+				<deployment table="BonusSystemLog" typecode="10001"/>
+				<attributes>
+					<attribute qualifier="date" type="java.util.Date">
+						<description> The date of the log entry. </description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="description" type="java.lang.String">
+						<description> The description of the log entry. </description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="points" type="java.lang.Double">
+						<description> The points that are moved for the protocol entry. </description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="type" type="java.lang.String">
+						<description> A type, which specifies the type of bonus. For example register, order, evaluation. </description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="reference" type="java.lang.String">
+						<description>A reference to a item.</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="Customer">
+			<itemtype code="Customer" autocreate="false" generate="false">
+				<description>Extending Customer type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="bonusSystem" type="BonusSystem">
+						<description> The bonus system for the user. </description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

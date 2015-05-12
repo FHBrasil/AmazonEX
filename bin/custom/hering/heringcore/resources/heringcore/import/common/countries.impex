@@ -1,0 +1,35 @@
+#
+# Import Countries
+# Full country list conforming to ISO 3166-1 alpha-2
+#
+INSERT_UPDATE Country;isocode[unique=true];name[lang=pt];active[default=true]
+;BR;"Brasil"
+
+INSERT_UPDATE Region;country(isocode);isocode[unique=true];isocodeShort;name[lang=pt];active[default=true]
+;BR;BR-DF;DF;"Distrito Federal"
+;BR;BR-AC;AC;"Acre"
+;BR;BR-AL;AL;"Alagoas"
+;BR;BR-AP;AP;"Amapa"
+;BR;BR-AM;AM;"Amazonas"
+;BR;BR-BA;BA;"Bahia"
+;BR;BR-CE;CE;"Ceara"
+;BR;BR-ES;ES;"Espirito Santo"
+;BR;BR-GO;GO;"Goias"
+;BR;BR-MA;MA;"Maranhao"
+;BR;BR-MT;MT;"Mato Grosso"
+;BR;BR-MS;MS;"Mato Grosso do Sul"
+;BR;BR-MG;MG;"Minas Gerais"
+;BR;BR-PA;PA;"Para"
+;BR;BR-PB;PB;"Paraiba"
+;BR;BR-PR;PR;"Parana"
+;BR;BR-PE;PE;"Pernambuco"
+;BR;BR-PI;PI;"Piaui"
+;BR;BR-RJ;RJ;"Rio de Janeiro"
+;BR;BR-RN;RN;"Rio Grande do Norte"
+;BR;BR-RS;RS;"Rio Grande do Sul"
+;BR;BR-RO;RO;"Rondonia"
+;BR;BR-RR;RR;"Roraima"
+;BR;BR-SC;SC;"Santa Catarina"
+;BR;BR-SP;SP;"Sao Paulo"
+;BR;BR-SE;SE;"Sergipe"
+;BR;BR-TO;TO;"Tocantins"

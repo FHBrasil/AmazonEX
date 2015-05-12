@@ -1,0 +1,15 @@
+/*
+Author: Elo Digital;
+URL: http://www.elodigital.cc;
+*/
+
+@import url("reset.css");
+
+@import url("base.css");
+@import url("header.css");
+@import url("footer.css");
+@import url("products.css");
+@import url("sliders.css");
+@import url("miniCart.css");
+
+@import url("../js/fancybox/jquery.fancybox.css");

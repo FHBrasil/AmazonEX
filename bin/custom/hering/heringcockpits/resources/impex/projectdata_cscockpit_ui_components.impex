@@ -1,0 +1,20 @@
+$jarResource=jar:br.hering.cockpits.constants.HeringCockpitsConstants&/heringcockpits/cscockpit
+
+#
+# Load medias
+#
+INSERT_UPDATE CockpitUIConfigurationMedia;code[unique=true];mime;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true]
+
+;HeringProduct_ProductDetails_cockpitgroup_ui_config;text/xml;HeringProduct_ProductDetails.xml;$jarResource/xml/HeringProduct_ProductDetails.xml
+;HeringStyleVariantProduct_ProductDetails_cockpitgroup_ui_config;text/xml;HeringStyleVariantProduct_ProductDetails.xml;$jarResource/xml/HeringStyleVariantProduct_ProductDetails.xml
+;HeringSizeVariantProduct_ProductDetails_cockpitgroup_ui_config;text/xml;HeringSizeVariantProduct_ProductDetails.xml;$jarResource/xml/HeringSizeVariantProduct_ProductDetails.xml
+
+
+#
+# Setup cockpit configuration
+#
+INSERT_UPDATE CockpitUIComponentConfiguration;code[unique=true];factoryBean;objectTemplateCode[unique=true];principal(uid)[unique=true];media(code);
+
+;productDetails;listViewConfigurationFactory;HeringProduct;cockpitgroup;HeringProduct_ProductDetails_cockpitgroup_ui_config;
+;productDetails;listViewConfigurationFactory;HeringStyleVariantProduct;cockpitgroup;HeringStyleVariantProduct_ProductDetails_cockpitgroup_ui_config;
+;productDetails;listViewConfigurationFactory;HeringSizeVariantProduct;cockpitgroup;HeringSizeVariantProduct_ProductDetails_cockpitgroup_ui_config;

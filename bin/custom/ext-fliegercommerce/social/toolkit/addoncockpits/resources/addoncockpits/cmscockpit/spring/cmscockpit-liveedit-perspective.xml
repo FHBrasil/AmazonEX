@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+
+<!-- WARNING: This is the Spring WEB configuration file. If you want to replace 
+	items or managers you have to do this from the extensions core configuration 
+	file (cmscockpit/resources/cmscockpit-application-context.xml) -->
+
+<!-- WARNING: This file is imported in cmscockpit-web-spring.xml therefore you don't need
+	to list it in your deployment descriptor -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util-3.1.xsd"
+	default-autowire="byName">
+
+	<!--#### LiveEdit perspective start #### -->
+	<alias alias="liveEditBrowserCockpitEventHandlers" name="defaultLiveEditBrowserCockpitEventHandlers" />
+	<util:list id="defaultLiveEditBrowserCockpitEventHandlers" />
+
+
+	<alias alias="LiveEditPerspectiveBrowserModel" name="AddOnLiveEditPerspectiveBrowserModel" />
+	<bean id="AddOnLiveEditPerspectiveBrowserModel" scope="session" class="com.hybris.addon.cockpits.session.liveedit.impl.AddOnLiveEditBrowserArea">
+		<property name="viewURI" value="/cmscockpit/liveeditBrowser.zul"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="liveEditBrowserCockpitEventHandlers" ref="liveEditBrowserCockpitEventHandlers" />
+	</bean>
+	
+
+	<bean id="LiveEditPerspective"
+		class="de.hybris.platform.cmscockpit.session.impl.LiveEditPerspective"
+		scope="session" parent="BasePerspective">
+		<property name="uid" value="cmscockpit.perspective.liveedit"/>
+		<property name="label" value="cmscockpit.perspective.liveedit"/>
+		<property name="customCsaURI" value="/cmscockpit/dynamicLiveEditCSA.zul"/>
+		<!-- default site to be activated -->
+		<!-- <property name="activeSiteCode" value="site"/> -->
+		<property name="navigationArea" ref="LiveEditNavigationArea"/>
+		<property name="browserArea">
+			<ref bean="LiveEditPerspectiveBrowserModel" />
+		</property>
+		<property name="editorArea">
+			<bean id="LiveEditEditorAreaModel" parent="BaseEditorAreaModel"/>
+		</property>
+		<property name="popupEditorArea">
+			<bean id="LiveProductPopupEditor" parent="BasePopupEditor">
+				<property name="editorAreaController" ref="CmsPopupEditorAreaController"/>
+			</bean>
+		</property>
+		<property name="cockpitTypeService" ref="cockpitTypeService"/>
+	</bean>
+
+</beans>

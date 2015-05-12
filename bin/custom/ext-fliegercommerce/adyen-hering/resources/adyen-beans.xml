@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">    
+    <bean	class="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData"
+    			extends="de.hybris.platform.acceleratorservices.payment.cybersource.data.PaymentInfoData">
+    	<property name="installment" type="java.lang.String" />
+    	<property name="cardBrand" type="java.lang.String" />
+    	<property name="cv2Number" type="java.lang.String" />
+    </bean>
+    
+    <bean 	class="com.flieger.payment.data.BoletoPaymentInfoData"
+    			extends="br.hering.facades.order.data.CustomPaymentInfoData">
+    	<property name="transactionReference"	type="java.lang.String"/>										
+		<property name="nossoNumero"				type="java.lang.String"/>
+		<property name="cpf"							type="java.lang.String" />
+		<property name="daysToAddInBoletoExpirationDate"	type="java.lang.String"/>
+      <property name="saved" type="java.lang.Boolean"/>				
+    </bean>
+    
+    <bean 	class="com.flieger.payment.data.HeringDebitPaymentInfoData"
+    			extends="br.hering.facades.order.data.CustomPaymentInfoData">
+    	<property name="accountNumber"	type="java.lang.String" />
+    	<property name="baOwner"			type="java.lang.String" />
+    	<property name="bank"				type="java.lang.String" />
+    	<property name="bankIDNumber"		type="java.lang.String" />
+    	<property name="code"				type="java.lang.String" />
+    	<property name="customerData"		type="de.hybris.platform.commercefacades.user.data.CustomerData" />
+      <property name="saved"				type="boolean"/>	
+      <property name="subscriptionId"	type="java.lang.String" />
+      
+		<property name="accept"				type="java.lang.String" />
+		<property name="userAgent"			type="java.lang.String" />
+		<property name="shopperIP"			type="java.lang.String" />
+		
+		<property name="returnUrl"			type="java.lang.String" />
+		<property name="issuerUrl"			type="java.lang.String" />
+		<property name="md"					type="java.lang.String" />
+		<property name="paRequest"			type="java.lang.String" />
+		
+		<property name="merchantTransactionCode"	type="java.lang.String" />
+		<property name="mpiImplementationType"		type="java.lang.String" />
+		
+		<property name="currency"	type="java.util.Currency" />
+		<property name="amount"	type="java.math.BigDecimal" />
+		
+    </bean>
+</beans>
