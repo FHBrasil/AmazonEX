@@ -44,13 +44,13 @@ $baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalo
 $approvalstatus=approvalstatus(code)[default='approved']
 $varianttype=varianttype(code)[default='BabyartikelSizeVariantProduct']
 # 
-insert_update Product;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
+insert_update HeringProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
 # 
-insert_update Product;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttype;
+insert_update HeringProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttype;
 "#% impex.includeExternalDataMedia(""Product_bas.csv"", ""UTF-8"", ';', 1, -1);"
 # 
-insert_update BabyartikelSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$baseProduct     ;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];size[lang=de];
+insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$baseProduct     ;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];size[lang=de];
 "#% impex.includeExternalDataMedia(""VariantProduct.csv"", ""UTF-8"", ';', 1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
