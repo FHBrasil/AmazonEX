@@ -84,6 +84,8 @@
 		
 		
 		<extension name="babyartikelstore"/>
+		
+		<extension name="kpfamilycore"/>
 
 	</extensions>
 </hybrisconfig>
