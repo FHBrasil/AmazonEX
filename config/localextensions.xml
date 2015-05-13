@@ -54,13 +54,7 @@
         <extension name="acceleratorstorefrontcommons" />
         <extension name="mediaconversion" />
 
-        <!-- custom extensions -->
-        <extension name="newsletter" />
-        <extension name="carrier" />
-        <extension name="exacttarget" />
-        <extension name="notificationservices" />
-        <extension name="wishlist" />
-        <extension name="storecatalogfeed" />
+        <!-- Flieger Commerce extensions -->
         <extension name="heringfulfilmentprocess" />
         <extension name="heringcore" />
         <extension name="heringfacades" />
@@ -69,8 +63,18 @@
         <extension name="heringws" />
         <extension name="heringstorefrontcommons" />
         <extension name="textboxinfoaddon" />
+        <extension name="carrier" />
+        <extension name="exacttarget" />
+        <extension name="notificationservices" />
+        <extension name="wishlist" />
+        
+        
+        <!-- KPFamily custom extensions -->
+        <extension name="newsletter" />
+        <extension name="storecatalogfeed" />
         <extension name="babyartikelstore" />
         <extension name="kpfamilycore" />
+        <extension name="kpfamilyhmc" />
 
         <!-- CheckOut Addon -->
         <extension name="heringcheckoutaddon" />
