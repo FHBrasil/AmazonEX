@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="eclipsebin/classes" path="gensrc"/>
 	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
 	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
 	<classpathentry kind="src" output="eclipsebin/web/webroot/WEB-INF/classes" path="web/src"/>
@@ -12,5 +11,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/payment"/>
 	<classpathentry kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorservices"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/commerceservices"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

@@ -3,7 +3,7 @@
 	<name>wishlist</name>
 	<comment></comment>
 	<projects>
-	</projects>
+	</projects> 
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>

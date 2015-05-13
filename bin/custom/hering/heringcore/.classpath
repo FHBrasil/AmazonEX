@@ -15,6 +15,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/exacttarget"/>
 	<classpathentry kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/notificationservices"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/adyen"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

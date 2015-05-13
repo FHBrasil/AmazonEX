@@ -19,7 +19,6 @@
 	<classpathentry kind="lib" path="/platform/ext/core/lib/commons-discovery-0.5.jar"/>
 	<classpathentry kind="lib" path="/platform/ext/core/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/platform/ext/core/lib/wss4j-1.6.4.jar"/>
-	<classpathentry kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/adyen"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

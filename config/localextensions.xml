@@ -1,91 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<hybrisconfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="resources/schemas/extensions.xsd">
-	<extensions>
-				
-		<path dir="${HYBRIS_BIN_DIR}" />
-							
-		<!-- ext-platform -->
-		<extension name="admincockpit" />
-		<extension name="backoffice" />
-		<extension name="cockpit" />
-		<extension name="hmc" />
-		<extension name="mcc" />
-		<extension name="platformhmc" />
+<hybrisconfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="resources/schemas/extensions.xsd">
+    <extensions>
 
-		<extension name="btg"/>
-		<extension name="btgcockpit"/>
-		
-		<!-- ext-commerce -->
-		<extension name="commercesearch" />
-		<extension name="commercesearchbackoffice" />
-		<extension name="commercesearchhmc" />
-		<extension name="commerceservices" />
-		<extension name="basecommerce" />
-		<extension name="payment" />
-		<extension name="promotions" />
-		<extension name="voucher" />
-		<extension name="customerreview" />
-		<extension name="ticketsystem" />
-		<extension name="solrfacetsearch" />
-		<extension name="solrfacetsearchhmc" />
-		<extension name="commercefacades" />
-										
-		<!-- ext-content -->
-		<extension name="productcockpit" />
-		<extension name="cms2" />
-		<extension name="cms2lib" />
-		<extension name="cmscockpit" />
-										
-		<!-- ext-channel -->
-		<extension name="cscockpit" />
-		<extension name="instore" />
-										
-		<!-- ext-addon -->
-		<extension name="addonsupport" />
-		<extension name="b2ccheckoutaddon" />
-			
- 		<extension name="ycommercewebservices" />
-		<extension name="ycommercewebserviceshmc" />
-					
-		<!-- ext-accelerator -->
-		<extension name="acceleratorservices" />
-		<extension name="acceleratorfacades" />
-		<extension name="acceleratorcms" />
-		<extension name="acceleratorstorefrontcommons" />
+        <path dir="${HYBRIS_BIN_DIR}" />
 
-		<extension name="mediaconversion" />
-		
+        <!-- ext-platform -->
+        <extension name="admincockpit" />
+        <extension name="backoffice" />
+        <extension name="cockpit" />
+        <extension name="hmc" />
+        <extension name="mcc" />
+        <extension name="platformhmc" />
+        <extension name="btg" />
+        <extension name="btgcockpit" />
 
-		<extension name="newsletter"/>
-		<extension name="carrier"/>
-		<extension name="exacttarget"/>
-		<extension name="notificationservices"/>
-		<extension name="wishlist"/>		
-		<extension name="storecatalogfeed"/>
+        <!-- ext-commerce -->
+        <extension name="commercesearch" />
+        <extension name="commercesearchbackoffice" />
+        <extension name="commercesearchhmc" />
+        <extension name="commerceservices" />
+        <extension name="basecommerce" />
+        <extension name="payment" />
+        <extension name="promotions" />
+        <extension name="voucher" />
+        <extension name="customerreview" />
+        <extension name="ticketsystem" />
+        <extension name="solrfacetsearch" />
+        <extension name="solrfacetsearchhmc" />
+        <extension name="commercefacades" />
 
-		<extension name="heringfulfilmentprocess"/>
-		<extension name="heringcore"/>
-		<extension name="heringfacades"/>
-		<extension name="heringstorefront"/>
-		<extension name="heringcockpits"/>
-		<extension name="heringws" />
-		<extension name="heringstorefrontcommons"/>
+        <!-- ext-content -->
+        <extension name="productcockpit" />
+        <extension name="cms2" />
+        <extension name="cms2lib" />
+        <extension name="cmscockpit" />
 
-		<!-- CheckOut Addon -->
-		<extension name="heringcheckoutaddon"/>
+        <!-- ext-channel -->
+        <extension name="cscockpit" />
+        <extension name="instore" />
 
-		<!-- Modulo de pagamento -->
-		<extension name="adyen"/>
+        <!-- ext-addon -->
+        <extension name="addonsupport" />
+        <extension name="b2ccheckoutaddon" />
 
-		<!-- AntiFraude -->
-		<extension name="clearsaleantifraude"/>
+        <extension name="ycommercewebservices" />
+        <extension name="ycommercewebserviceshmc" />
 
-		<extension name="textboxinfoaddon"/>
-		
-		
-		<extension name="babyartikelstore"/>
-		
-		<extension name="kpfamilycore"/>
+        <!-- ext-accelerator -->
+        <extension name="acceleratorservices" />
+        <extension name="acceleratorfacades" />
+        <extension name="acceleratorcms" />
+        <extension name="acceleratorstorefrontcommons" />
+        <extension name="mediaconversion" />
 
-	</extensions>
+        <!-- custom extensions -->
+        <extension name="newsletter" />
+        <extension name="carrier" />
+        <extension name="exacttarget" />
+        <extension name="notificationservices" />
+        <extension name="wishlist" />
+        <extension name="storecatalogfeed" />
+        <extension name="heringfulfilmentprocess" />
+        <extension name="heringcore" />
+        <extension name="heringfacades" />
+        <extension name="heringstorefront" />
+        <extension name="heringcockpits" />
+        <extension name="heringws" />
+        <extension name="heringstorefrontcommons" />
+        <extension name="textboxinfoaddon" />
+        <extension name="babyartikelstore" />
+        <extension name="kpfamilycore" />
+
+        <!-- CheckOut Addon -->
+        <extension name="heringcheckoutaddon" />
+
+        <!-- Modulo de pagamento -->
+        <extension name="adyen" />
+
+        <!-- AntiFraude -->
+        <extension name="clearsaleantifraude" />
+
+    </extensions>
 </hybrisconfig>

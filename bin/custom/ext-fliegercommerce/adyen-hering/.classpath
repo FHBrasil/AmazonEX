@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="lib/jaxrpc.jar"/>
 	<classpathentry kind="lib" path="lib/saaj.jar"/>
 	<classpathentry kind="lib" path="lib/wsdl4j.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorservices"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
