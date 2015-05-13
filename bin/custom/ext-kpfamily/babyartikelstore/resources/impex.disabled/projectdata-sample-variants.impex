@@ -2,17 +2,22 @@ $productCatalog=babyartikelProductCatalog
 $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
 $baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged']))
 $approved=approvalstatus(code)[default='approved']
-$varianttype=varianttype(code)[default='BabyartikelSizeVariantProduct']
+$varianttype=varianttype(code)
 
 #esse vem do KPProduct, todos os base products possuem 'bas' no final do código
-insert_update Product;code[unique=true];name[lang=de];$approved;$catalogVersion;$varianttype
-;201100001159bas;Kugelschlafsack Mäxchen Thermo Gr. 70 - 110 cm Dots Grau;
+insert_update HeringProduct;code[unique=true];name[lang=de];$approved;$catalogVersion;$varianttype
+;201100001159bas;Kugelschlafsack Mäxchen Thermo Gr. 70 - 110 cm Dots Grau;;;HeringStyleVariantProduct
 
 #esse vem do KPVariantProduct
-insert_update BabyartikelSizeVariantProduct;code[unique=true];name[lang=de];$baseProduct;size[lang=de];$approved;$catalogVersion
-;201100001159;Kugelschlafsack Mäxchen Thermo Gr. 70cm - Dots Grau;201100001159bas;70 cm;;
-;201100001160;Kugelschlafsack Mäxchen Thermo Gr. 90cm - Dots Grau;201100001159bas;90 cm;;
-;201100001161;Kugelschlafsack Mäxchen Thermo Gr. 110cm - Dots Grau;201100001159bas;110 cm;;
+insert_update HeringStyleVariantProduct;code[unique=true];name[lang=de];$baseProduct;style[lang=de];$approved;$catalogVersion;$varianttype
+;201100001159-style;Kugelschlafsack Mäxchen Thermo Gr.Grau;201100001159bas;Grau;;;HeringSizeVariantProduct
+
+
+#esse vem do KPVariantProduct
+insert_update HeringSizeVariantProduct;code[unique=true];name[lang=de];$baseProduct;size[lang=de];$approved;$catalogVersion
+;201100001159;Kugelschlafsack Mäxchen Thermo Gr. 70cm - Dots Grau;201100001159-style;70 cm;;
+;201100001160;Kugelschlafsack Mäxchen Thermo Gr. 90cm - Dots Grau;201100001159-style;90 cm;;
+;201100001161;Kugelschlafsack Mäxchen Thermo Gr. 110cm - Dots Grau;201100001159-style;110 cm;;
 
 INSERT_UPDATE CatalogVersionSyncCronJob; code[unique=true];job(code);sessionLanguage(isoCode[default=de]);logToFile[default=false];logToDataBase[default=false];forceUpdate[default=false]
 ;babySyncProductsJob;sync babyartikelProductCatalog\:Staged->Online;

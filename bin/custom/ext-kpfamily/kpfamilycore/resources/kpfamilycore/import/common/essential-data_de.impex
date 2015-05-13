@@ -39,15 +39,15 @@ UPDATE DistanceUnit;code[unique=true];name[lang=$lang]
  ;miles;"miles"
 
 # MediaFormats
-UPDATE MediaFormat;qualifier[unique=true];name[lang=$lang];
-;original;"Originalformat vom Bild"
+#UPDATE MediaFormat;qualifier[unique=true];name[lang=$lang];
+#;original;"Originalformat vom Bild"
 
-UPDATE ConversionMediaFormat;qualifier[unique=true];name[lang=$lang];
- ;1200Wx1200H;"super zoom"
- ;539Wx539H;"zoom"
- ;190Wx190H;"product"
- ;85Wx85H;"cart icon"
- ;60Wx60H;"thumbnail"
+#UPDATE ConversionMediaFormat;qualifier[unique=true];name[lang=$lang];
+# ;1200Wx1200H;"super zoom"
+# ;539Wx539H;"zoom"
+# ;190Wx190H;"product"
+# ;85Wx85H;"cart icon"
+# ;60Wx60H;"thumbnail"
 
 # Product Tax Groups
 UPDATE ProductTaxGroup;code[unique=true];name[lang=$lang]
