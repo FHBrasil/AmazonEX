@@ -3,7 +3,7 @@
 #
 $contentCatalog=babyartikelContentCatalog
 $contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
-$jarResourceCms=jar:com.kpfamily.core.setup.CoreSystemSetup&/kpfamilycore/import/cockpits/cmscockpit
+$jarResourceCms=jar:br.hering.core.setup.CoreSystemSetup&/heringcore/import/cockpits/cmscockpit
 
 # Create PageTemplates
 # These define the layout for pages

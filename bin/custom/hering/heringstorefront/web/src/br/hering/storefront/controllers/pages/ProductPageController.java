@@ -149,7 +149,6 @@ public class ProductPageController extends AbstractPageController
 	{
 		final ProductModel productModel = productService.getProductForCode(productCode);
 		final String redirection = checkRequestUrl(request, response, productModel);
-		final String cartCode = getCartService().getSessionCart().getCode();
 		final CartData cartData = getCartFacade().getSessionCart();
 		model.addAttribute("cartData", cartData);
 		
@@ -292,7 +291,7 @@ public class ProductPageController extends AbstractPageController
 	{
 		final ProductModel productModel = productService.getProductForCode(productCode);
 		
-		String msg = "<font color=\"#FF0000\">Informação indisponível no momento</font>";
+		String msg = "<font color=\"#FF0000\">Informa����o indispon��vel no momento</font>";
 		
 		if(productModel instanceof HeringSizeVariantProductModel)
 		{
@@ -303,7 +302,7 @@ public class ProductPageController extends AbstractPageController
 			
 			if(threshold != null && priceRow.getPrice().doubleValue() >= threshold.doubleValue())
 			{
-				msg = "<font color=\"#3E9C00\">Frete: Grátis</font>";
+				msg = "<font color=\"#3E9C00\">Frete: Gr��tis</font>";
 			}
 			else{
 				
@@ -373,7 +372,7 @@ public class ProductPageController extends AbstractPageController
 		
 		if (error) {
 			response.put("success", "false");
-			response.put("msg", "Por favor complete todos os campos mandatórios da avaliação");
+			response.put("msg", "Por favor complete todos os campos mandat��rios da avalia����o");
 		} else {
 			
 			final ReviewData review = new ReviewData();
@@ -384,7 +383,7 @@ public class ProductPageController extends AbstractPageController
 			productFacade.postReview(productCode, review);
 			
 			response.put("success", "true");
-			response.put("msg", "Obrigado, caso sua avaliação seja aprovada nós iremos publicá-la.");
+			response.put("msg", "Obrigado, caso sua avalia����o seja aprovada n��s iremos public��-la.");
 		}
 			
 		return JSONUtil.toJSON(response);

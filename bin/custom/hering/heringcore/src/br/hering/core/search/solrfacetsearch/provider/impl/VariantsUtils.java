@@ -297,6 +297,6 @@ public class VariantsUtils
 	
 	private WarehouseModel getDefaultWarehouse()
 	{
-		return warehouseService.getWarehouseForCode("hering_estoque_default");
+		return warehouseService.getWarehouseForCode("default");
 	}
 }
