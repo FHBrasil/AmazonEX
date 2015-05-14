@@ -72,15 +72,17 @@
         <extension name="clearsaleantifraude" />
 
         <!-- KPFamily custom extensions -->
+        <extension name="kpfamilycore" />
+        <extension name="babyartikelstore" />
+        <extension name="kpfamilyhmc" />
+        <extension name="kpfamilycockpits" />
+        <extension name="kpfamilyfacades" />
+                
         <extension name="newsletter" />
         <extension name="storecatalogfeed" />
-        <extension name="babyartikelstore" />
-        <extension name="kpfamilycore" />
-        <extension name="kpfamilyhmc" />
         <extension name="pixicore" />
         <extension name="pixiapi" />
 <!--         <extension name="pixiwebservices" /> -->
-        <extension name="kpfamilycockpits" />
-
+        
     </extensions>
 </hybrisconfig>
