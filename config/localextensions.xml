@@ -80,6 +80,7 @@
         <extension name="pixicore" />
         <extension name="pixiapi" />
 <!--         <extension name="pixiwebservices" /> -->
+        <extension name="kpfamilycockpits" />
 
     </extensions>
 </hybrisconfig>

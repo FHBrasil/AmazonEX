@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2014 hybris AG All rights reserved. This software 
+    is the confidential and proprietary information of hybris ("Confidential Information"). You 
+    shall not disclose such Confidential Information and shall use it only in accordance with the 
+    terms of the license agreement you entered into with hybris. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="items.xsd">
+    
+    <collectiontypes>
+        <collectiontype code="cmsComponentCollection" elementtype="SimpleCMSComponent"
+                autocreate="true" generate="true" type="list" />
+    </collectiontypes>
+    
+    <itemtypes>
+        <itemtype code="KPContainerComponent" autocreate="true" generate="true"
+                extends="SimpleCMSComponent"
+                jaloclass="de.kpfamily.cockpits.jalo.KPContainerComponent">
+            <attributes>
+                <attribute qualifier="cssClass" type="java.lang.String">
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="components" type="cmsComponentCollection">
+                    <persistence type="property" />
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="KPCategoryImageComponent" autocreate="true" generate="true"
+                extends="CMSImageComponent" abstract="false">
+            <attributes>
+                <attribute qualifier="title" type="localized:java.lang.String">
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="text" type="localized:java.lang.String">
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="cssClass" type="java.lang.String">
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="hyperlink" type="java.lang.String">
+                    <persistence type="property" />
+                </attribute>
+            </attributes>
+        </itemtype>
+
+
+    </itemtypes>
+</items>
