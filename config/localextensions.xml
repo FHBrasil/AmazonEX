@@ -62,28 +62,24 @@
         <extension name="heringcockpits" />
         <extension name="heringws" />
         <extension name="heringstorefrontcommons" />
+        <extension name="heringcheckoutaddon" />
         <extension name="textboxinfoaddon" />
         <extension name="carrier" />
         <extension name="exacttarget" />
         <extension name="notificationservices" />
         <extension name="wishlist" />
-        
-        
+        <extension name="adyen" />
+        <extension name="clearsaleantifraude" />
+
         <!-- KPFamily custom extensions -->
         <extension name="newsletter" />
         <extension name="storecatalogfeed" />
         <extension name="babyartikelstore" />
         <extension name="kpfamilycore" />
         <extension name="kpfamilyhmc" />
-
-        <!-- CheckOut Addon -->
-        <extension name="heringcheckoutaddon" />
-
-        <!-- Modulo de pagamento -->
-        <extension name="adyen" />
-
-        <!-- AntiFraude -->
-        <extension name="clearsaleantifraude" />
+        <extension name="pixicore" />
+        <extension name="pixiapi" />
+<!--         <extension name="pixiwebservices" /> -->
 
     </extensions>
 </hybrisconfig>

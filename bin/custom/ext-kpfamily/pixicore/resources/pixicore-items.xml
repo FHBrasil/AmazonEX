@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+	<itemtypes>
+		<itemtype code="PixiSyncRecord" extends="GenericItem" jaloclass="com.pixi.core.jalo.PixiSyncRecord">
+			<description>Contains the record of the last time that a given product was exported to PIXI</description>
+			<deployment table="PixiSyncRecord" typecode="11000"/>
+			<attributes>
+				<attribute qualifier="productCode" type="java.lang.String">
+					<description>The code of the product that this history belongs to</description>
+					<persistence type="property" />
+					<modifiers optional="false" />
+				</attribute>
+				<attribute qualifier="sessionID" type="java.lang.String">
+					<description>The session ID of the last time that this product was exported to PIXI</description>
+					<persistence type="property"/>
+					<modifiers />
+				</attribute>
+				<attribute qualifier="exportDate" type="java.util.Date">
+					<description>The date of the last time that this product was exported to PIXI</description>
+					<persistence type="property"/>
+					<modifiers />
+				</attribute>
+			</attributes>
+			<indexes>
+				<index name="productCodeIdx">
+					<key attribute="productCode" />
+				</index>
+			</indexes>
+		</itemtype>
+	</itemtypes>
+</items>

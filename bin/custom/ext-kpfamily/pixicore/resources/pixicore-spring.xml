@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+    <!-- Pixi services -->
+	<alias alias="pixiOrderService" name="defaultPixiOrderService"/>
+	<alias alias="pixiProductService" name="defaultPixiProductService"/>
+	
+	<!-- Pixi Daos -->
+	<alias alias="pixiOrderDao" name="defaultPixiOrderDao"/>
+	<alias alias="pixiProductDao" name="defaultPixiProductDao"/>
+
+	<!-- Pixi services definition -->
+	<bean id="defaultPixiOrderService" class="com.pixi.core.services.impl.DefaultPixiOrderService" parent="abstractBusinessService" />
+	<bean id="defaultPixiProductService" class="com.pixi.core.services.impl.DefaultPixiProductService" parent="abstractBusinessService" />
+	
+	<!-- Pixi Daos definition -->
+	<bean id="defaultPixiOrderDao" class="com.pixi.core.daos.impl.DefaultPixiOrderDao">
+		<constructor-arg value="Order"/>
+	</bean>
+	<bean id="defaultPixiProductDao" class="com.pixi.core.daos.impl.DefaultPixiProductDao">
+		<constructor-arg value="Product"/>
+	</bean>
+</beans>

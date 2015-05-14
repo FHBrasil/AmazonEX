@@ -1,0 +1,161 @@
+<?com.pixi.webservices.jaxb version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Pixi Converters, used to transform Hybris Model objects into Pixi WS objects -->
+	<!-- Order converters -->
+	<alias name="defaultPixiOrderConverter" alias="pixiOrderConverter"/>
+	<alias name="defaultPixiOrderInfoConverter" alias="pixiOrderInfoConverter"/>
+	<alias name="defaultPixiAddressConverter" alias="pixiAddressConverter"/>
+	
+	<!-- Catalog converters -->
+	<alias name="defaultPixiBMEcatConverter" alias="pixiBMEcatConverter"/>
+	<alias name="defaultPixiBMEcatHeaderConverter" alias="pixiBMEcatHeaderConverter"/>
+	<alias name="defaultPixiBMEcatProductConverter" alias="pixiBMEcatProductConverter"/>
+	
+	<!-- end of Pixi Converters -->
+	
+	<!-- Pixi populators, used during the model convert phase to populate the target instance-->
+	<!-- Order populators -->
+	<alias name="defaultPixiOrderPaymentInfoPopulator" alias="pixiOrderPaymentInfoPopulator"/>
+	<alias name="defaultPixiOrderInfoPopulator" alias="pixiOrderInfoPopulator"/>
+	<alias name="defaultPixiOrderRemarksPopulator" alias="pixiOrderRemarksPopulator"/>
+	<alias name="defaultPixiOrderHeaderPopulator" alias="pixiOrderHeaderPopulator"/>
+	<alias name="defaultPixiOrderEntriesPopulator" alias="pixiOrderEntriesPopulator"/>
+	<alias name="defaultPixiOrderShopNotePopulator" alias="pixiOrderShopNotePopulator"/>
+	<alias name="defaultPixiAddressPopulator" alias="pixiAddressPopulator"/>
+	
+	<!-- BMECAT populators -->
+	<alias name="defaultPixiBMEcatPopulator" alias="pixiBMEcatPopulator"/>
+
+	<alias name="defaultPixiBMEcatHeaderBuyerPopulator" alias="pixiBMEcatHeaderBuyerPopulator"/>
+	<alias name="defaultPixiBMEcatHeaderSupplierPopulator" alias="pixiBMEcatHeaderSupplierPopulator"/>
+	<alias name="defaultPixiBMEcatHeaderCatalogPopulator" alias="pixiBMEcatHeaderCatalogPopulator"/>
+	<alias name="defaultPixiBMEcatHeaderPopulator" alias="pixiBMEcatHeaderPopulator"/>
+
+	<!-- Product populators -->
+	<alias name="defaultPixiBMEcatProductDetailsPopulator" alias="pixiBMEcatProductDetailsPopulator"/>
+	<alias name="defaultPixiBMEcatProductFeaturesPopulator" alias="pixiBMEcatProductFeaturesPopulator"/>
+	<alias name="defaultPixiBMEcatProductPicturePopulator" alias="pixiBMEcatProductPicturePopulator"/>
+	<alias name="defaultPixiBMEcatProductPopulator" alias="pixiBMEcatProductPopulator"/>
+	<alias name="defaultPixiBMEcatProductPricePopulator" alias="pixiBMEcatProductPricePopulator"/>
+	<alias name="defaultPixiBMEcatProductTagPopulator" alias="pixiBMEcatProductTagPopulator"/>
+	<!-- end of Pixi populators -->
+	
+	
+	<!-- Populators definitions -->
+	<!-- Order populators definition -->
+	<bean id="defaultPixiOrderPaymentInfoPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderPaymentInfoPopulator"/>
+	<bean id="defaultPixiOrderInfoPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderInfoPopulator"/>
+	<bean id="defaultPixiOrderRemarksPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderRemarksPopulator"/>
+	<bean id="defaultPixiOrderEntriesPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderEntriesPopulator"/>
+	<bean id="defaultPixiOrderShopNotePopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderShopNotePopulator"/>
+	<bean id="defaultPixiOrderHeaderPopulator" class="com.pixi.webservices.converters.populators.order.DefaultPixiOrderHeaderPopulator"/>
+
+	<!--  -->
+	<bean id="defaultPixiAddressPopulator" class="com.pixi.webservices.converters.populators.order.address.DefaultPixiAddressPopulator"/>
+
+	<!-- BMECAT populators definition -->
+	<bean id="defaultPixiBMEcatPopulator" class="com.pixi.webservices.converters.populators.bmecat.DefaultPixiBMEcatPopulator"/>
+
+	<bean id="defaultPixiBMEcatHeaderBuyerPopulator" class="com.pixi.webservices.converters.populators.bmecat.header.DefaultPixiBMEcatHeaderBuyerPopulator"/>
+	<bean id="defaultPixiBMEcatHeaderSupplierPopulator" class="com.pixi.webservices.converters.populators.bmecat.header.DefaultPixiBMEcatHeaderSupplierPopulator"/>
+	<bean id="defaultPixiBMEcatHeaderCatalogPopulator" class="com.pixi.webservices.converters.populators.bmecat.header.DefaultPixiBMEcatHeaderCatalogPopulator"/>
+	<bean id="defaultPixiBMEcatHeaderPopulator" class="com.pixi.webservices.converters.populators.bmecat.header.DefaultPixiBMEcatHeaderPopulator"/>
+	
+	<!-- Product populators definitions -->
+	<bean id="defaultPixiBMEcatProductDetailsPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiBMEcatProductDetailsPopulator"/>
+	<bean id="defaultPixiBMEcatProductFeaturesPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiBMEcatProductFeaturesPopulator"/>
+	<bean id="defaultPixiBMEcatProductPicturePopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiBMEcatProductPicturePopulator"/>
+	<bean id="defaultPixiBMEcatProductPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiBMEcatProductPopulator"/>
+	<bean id="defaultPixiBMEcatProductPricePopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiBMEcatProductPricePopulator"/>
+	<bean id="defaultPixiBMEcatProductTagPopulator" class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiBMEcatProductTagPopulator"/>
+	<!-- end of Populators definitions -->
+	
+	<!-- Converters definitions -->
+	<bean id="defaultPixiOrderConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.order.export.Order"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiOrderHeaderPopulator" />
+				<ref bean="pixiOrderEntriesPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="defaultPixiOrderInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.order.export.OrderInfo"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiOrderInfoPopulator" />
+				<ref bean="pixiOrderShopNotePopulator" />
+				<ref bean="pixiOrderPaymentInfoPopulator" />
+				<ref bean="pixiOrderRemarksPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="defaultPixiAddressConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.order.export.Address"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiAddressPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Catalog converters -->
+	
+	<bean id="defaultPixiBMEcatConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.product.export.BMECAT"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiBMEcatPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="defaultPixiBMEcatHeaderConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.product.export.Header"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiBMEcatHeaderPopulator" />
+				<ref bean="pixiBMEcatHeaderCatalogPopulator" />
+				<ref bean="pixiBMEcatHeaderSupplierPopulator" />
+				<!-- <ref bean="pixiBMEcatHeaderBuyerPopulator" /> -->
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="defaultPixiBMEcatProductConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.pixi.webservices.jaxb.product.export.Article"/>
+		<property name="populators">
+			<list>
+				<ref bean="pixiBMEcatProductPopulator" />
+				<ref bean="pixiBMEcatProductDetailsPopulator" />
+				<ref bean="pixiBMEcatProductFeaturesPopulator" />
+				<ref bean="pixiBMEcatProductPricePopulator" />
+				<ref bean="pixiBMEcatProductTagPopulator" />
+				<ref bean="pixiBMEcatProductPicturePopulator" />
+			</list>
+		</property>
+	</bean>
+	<!-- end of Converters definitions -->
+</beans>
