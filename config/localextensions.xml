@@ -53,6 +53,7 @@
         <extension name="acceleratorcms" />
         <extension name="acceleratorstorefrontcommons" />
         <extension name="mediaconversion" />
+        <extension name="mediaimportation" />
         
 
         <!-- Flieger Commerce extensions -->
