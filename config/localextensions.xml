@@ -77,6 +77,7 @@
         <extension name="kpfamilyhmc" />
         <extension name="kpfamilycockpits" />
         <extension name="kpfamilyfacades" />
+        <extension name="kpfamilyservices" />
                 
         <extension name="newsletter" />
         <extension name="storecatalogfeed" />

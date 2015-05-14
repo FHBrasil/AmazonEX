@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- Services  -->
+	<alias name="defaultExpressDeliveryService" alias="expressDeliveryService"/>
+	<bean id="defaultExpressDeliveryService" class="de.kpfamily.services.logistics.impl.DefaultExpressDeliveryService" parent="abstractBusinessService"/>
+	
+	<alias name="defaultLogisticsService" alias="logisticsService"/>
+	<bean id="defaultLogisticsService" class="de.kpfamily.services.logistics.impl.DefaultLogisticsService" parent="abstractBusinessService"/>
+	
+	<alias name="defaultPixiOrderEntryService" alias="pixiOrderEntryService"/>
+	<bean id="defaultPixiOrderEntryService" class="de.kpfamily.services.pixi.impl.DefaultPixiOrderEntryService" parent="abstractBusinessService"/>
+	
+	<alias name="defaultKPOrderEntryService" alias="orderEntryService"/>
+	<bean id="defaultKPOrderEntryService" class="de.kpfamily.services.order.impl.DefaultKPOrderEntryService" parent="defaultOrderEntryService" />
+	
+	<alias name="defaultSerialVoucherProductService" alias="serialVoucherProductService"/>
+	<bean id="defaultSerialVoucherProductService" class="de.kpfamily.services.product.impl.DefaultSerialVoucherProductService" parent="abstractBusinessService" />
+	
+	<!-- Daos -->
+	<alias name="defaultSerialVoucherProductDao" alias="serialVoucherProductDao"/>
+	<bean id="defaultSerialVoucherProductDao" class="de.kpfamily.services.daos.product.impl.DefaultSerialVoucherProductDao">
+		<constructor-arg value="BabyartikelSerialVoucherProductModel"/>
+	</bean>
+	
+	<!-- Strategies -->
+	<alias name="defaultOrderEntryStatusProcessUIDGeneratorStrategy" alias="orderEntryStatusProcessUIDGeneratorStrategy"/>
+	<bean id="defaultOrderEntryStatusProcessUIDGeneratorStrategy" class="de.kpfamily.services.strategies.impl.DefaultOrderEntryStatusProcessUIDGeneratorStrategy"/>
+	
+	<alias name="defaultPixiProductUpdateNextDeliveryDateStrategy" alias="pixiProductUpdateNextDeliveryDateStrategy"/>
+	<bean id="defaultPixiProductUpdateNextDeliveryDateStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductUpdateNextDeliveryDateStrategy"/>
+	
+	<alias name="defaultPixiProductGetWeightStrategy" alias="pixiProductGetWeightStrategy"/>
+	<bean id="defaultPixiProductGetWeightStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetWeightStrategy"/>
+	
+	<alias name="defaultPixiProductGetMinimumStockLevelStrategy" alias="pixiProductGetMinimumStockLevelStrategy"/>
+	<bean id="defaultPixiProductGetMinimumStockLevelStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetMinimumStockLevelStrategy"/>
+	
+	<alias name="defaultPixiProductGetSuppliersCodeStrategy" alias="pixiProductGetSuppliersCodeStrategy"/>
+	<bean id="defaultPixiProductGetSuppliersCodeStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetSuppliersCodeStrategy"/>
+	
+	<alias name="defaultPixiProductGetItemTagsStrategy" alias="pixiProductGetItemTagsStrategy"/>
+	<bean id="defaultPixiProductGetItemTagsStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetItemTagsStrategy"/>
+	
+	<alias name="defaultPixiProductGetSupplierPriceStrategy" alias="pixiProductGetSupplierPriceStrategy"/>
+	<bean id="defaultPixiProductGetSupplierPriceStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiProductGetSupplierPriceStrategy"/>
+	
+	<alias name="defaultPixiOrderGetShopNoteStrategy" alias="pixiOrderGetShopNoteStrategy"/>
+	<bean id="defaultPixiOrderGetShopNoteStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiOrderGetShopNoteStrategy"/>
+	
+	<alias name="defaultPixiOrderGetItemNoteStrategy" alias="pixiOrderGetItemNoteStrategy"/>
+	<bean id="defaultPixiOrderGetItemNoteStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiOrderGetItemNoteStrategy"/>
+	
+	<alias name="defaultPixiOrderGetTransportRemarksStrategy" alias="pixiOrderGetTransportRemarksStrategy"/>
+	<bean id="defaultPixiOrderGetTransportRemarksStrategy" class="de.kpfamily.services.strategies.pixi.impl.DefaultPixiOrderGetTransportRemarksStrategy"/>
+</beans>
