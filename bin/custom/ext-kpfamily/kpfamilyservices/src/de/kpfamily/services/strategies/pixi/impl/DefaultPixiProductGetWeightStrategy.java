@@ -15,7 +15,7 @@ public class DefaultPixiProductGetWeightStrategy implements PixiProductGetWeight
 	{
 		Assert.notNull(product);
 		
-//		double weight = product.get getWeight();
+//		double weight = product.getWeight();
 		double weight = 0.0;
 
 		return BigDecimal.valueOf(weight);

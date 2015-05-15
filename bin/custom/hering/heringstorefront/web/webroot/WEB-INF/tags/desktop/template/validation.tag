@@ -2,7 +2,6 @@
 <%@ tag body-content="empty" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template"%>
-
 <script>
 	$(document).ready(function() { 
 		$('.submit_form').click(function() {
@@ -67,34 +66,12 @@
 		<c:choose>
 			<c:when test="${pageType == 'ORDERCONFIRMATION'}">
 				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-				<c:if test="${themeName == 'black'}">
-					ga('create', 'UA-1100733-11', 'dzarm.com.br');
-				</c:if>
-				<c:if test="${themeName == 'hering'}">
 					ga('create', 'UA-1100733-8', 'auto');
-				</c:if>
-				<c:if test="${themeName == 'dzarm'}">
-					ga('create', 'UA-1100733-11', 'auto');
-				</c:if>
-				<c:if test="${themeName == 'foryou'}">
-					ga('create', 'UA-1100733-19', 'auto');
-				</c:if>
 				ga('send', 'pageview');
 				ga('require','ecommerce','ecommerce.js');
 				ga('ecommerce:addTransaction',{ 
 					id: '${orderData.code}',
-					<c:if test="${themeName == 'black'}">
-						affiliation: 'dzarm.com.br',
-					</c:if>
-					<c:if test="${themeName == 'hering'}">
 						affiliation: 'hering.com.br',
-					</c:if>
-					<c:if test="${themeName == 'dzarm'}">
-						affiliation: 'dzarm.com.br',
-					</c:if>
-					<c:if test="${themeName == 'foryou'}">
-						affiliation: 'heringforyou.com.br',
-					</c:if>
 					revenue: '${orderData.totalPrice.value}', 
 					shipping: '${orderData.deliveryCost.value}', 
 					tax: '${orderData.totalTax.value}'
