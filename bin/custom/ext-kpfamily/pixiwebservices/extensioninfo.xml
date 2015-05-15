@@ -5,12 +5,18 @@
     you entered into with hybris. -->
 <extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+
     <extension abstractclassprefix="Generated" classprefix="Pixiwebservices" managername="PixiwebservicesManager"
-            managersuperclass="de.hybris.platform.jalo.extension.Extension" name="pixiwebservices">
+        managersuperclass="de.hybris.platform.jalo.extension.Extension" name="pixiwebservices">
+
         <requires-extension name="pixicore" />
         <requires-extension name="acceleratorcms" />
+
         <coremodule generated="true" manager="com.pixi.webservices.jalo.PixiwebservicesManager"
             packageroot="com.pixi.webservices" />
+
         <webmodule jspcompile="false" webroot="/pixiwebservices" />
+
     </extension>
+
 </extensioninfo>
