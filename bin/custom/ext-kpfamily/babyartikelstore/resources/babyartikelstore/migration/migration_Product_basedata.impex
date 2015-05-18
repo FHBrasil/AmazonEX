@@ -42,7 +42,7 @@ $version=Staged
 $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='$version'])[unique=true,default=$productCatalog:$version]
 $baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='$version']))
 $approvalstatus=approvalstatus(code)[default='approved']
-$varianttype=varianttype(code)[default='BabyartikelSizeVariantProduct']
+$varianttype=varianttype(code)[default='HeringSizeVariantProduct']
 # 
 insert_update HeringProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
