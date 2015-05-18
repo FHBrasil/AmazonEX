@@ -7,3 +7,4 @@ $lang=de
 
 # Create Catalog
 UPDATE Catalog;id[unique=true];name[lang=$lang]
+ ;babyartikelProductCatalog;"Babyartikel Product Catalog"

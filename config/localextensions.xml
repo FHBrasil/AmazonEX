@@ -80,7 +80,7 @@
         <extension name="kpfamilycockpits" />
         <extension name="kpfamilyfacades" />
         <extension name="kpfamilyservices" />
-        <extension name="kpfamilytest" />
+       <!--  <extension name="kpfamilytest" /> -->
                 
         <extension name="newsletter" />
         <extension name="storecatalogfeed" />

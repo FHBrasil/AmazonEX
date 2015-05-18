@@ -1,24 +1,33 @@
-#
-# Import the Solr configuration for the store
-#
-$productCatalog=babyartikelProductCatalog
-$catalogVersions=catalogVersions(catalog(id),version);
-$serverConfigName=babyartikelSolrServerConfig
-$indexConfigName=babyartikelSolrIndexConfig
-$searchConfigName=babyartikelPageSize
-$facetSearchConfigName=babyartikelIndex
-$facetSearchConfigDescription=Babyartikel solr index
-$searchIndexNamePrefix=babyartikel
-$solrIndexedType=babyartikelProductType
-$indexBaseSite=babyartikel
+#;;;;;;;;;;;;;;;;;;;
+# Import the Solr configuration for the Babyartikel  store;;;;;;;;;;;;;;;;;;;
+#;;;;;;;;;;;;;;;;;;;
+$productCatalog=babyartikelProductCatalog;;;;;;;;;;;;;;;;;;;
+$catalogVersions=catalogVersions(catalog(id),version);;;;;;;;;;;;;;;;;;;
+$serverConfigName=babyartikelSolrServerConfig;;;;;;;;;;;;;;;;;;;
+$indexConfigName=babyartikelSolrIndexConfig;;;;;;;;;;;;;;;;;;;
+$searchConfigName=babyartikelPageSize;;;;;;;;;;;;;;;;;;;
+$facetSearchConfigName=babyartikelIndex;;;;;;;;;;;;;;;;;;;
+$facetSearchConfigDescription=Babyartikel  Solr Index;;;;;;;;;;;;;;;;;;;
+$searchIndexNamePrefix=babyartikel;;;;;;;;;;;;;;;;;;;
+$solrIndexedType=babyartikelProductType;;;;;;;;;;;;;;;;;;;
+$indexBaseSite=babyartikel;;;;;;;;;;;;;;;;;;;
 $indexLanguages=de,en
 $indexCurrencies=EUR
+
+$classSystemVersion=systemVersion(catalog(id[default='BabyartikelCoClassification']),version[default='1.0']);;;;;;;;;;;;;;;;;;;
+$classCatalogVersion=catalogVersion(catalog(id[default='BabyartikelCoClassification']),version[default='1.0']);;;;;;;;;;;;;;;;;;;
+$classAttribute=classificationAttribute(code,$classSystemVersion);;;;;;;;;;;;;;;;;;;
+$classClass=classificationClass(code,$classCatalogVersion);;;;;;;;;;;;;;;;;;;
+$classAttributeAssignment=classAttributeAssignment($classClass,$classAttribute,$classSystemVersion);;;;;;;;;;;;;;;;;;;
+$contentCatalog=babyartikelContentCatalog;;;;;;;;;;;;;;;;;;;
+$contentCatalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged];;;;;;;;;;;;;;;;;;;
+$productCatalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged];;;;;;;;;;;;;;;;;;;
 
 # Define price range set
 INSERT_UPDATE SolrValueRangeSet;name[unique=true];qualifier;type;solrValueRanges(&rangeValueRefID)
 ;babyartikelPriceRangeEUR;EUR;double;rangeRefEUR1,rangeRefEUR2,rangeRefEUR3,rangeRefEUR4,rangeRefEUR5,rangeRefEUR6,rangeRefEUR7,rangeRefEUR8,rangeRefEUR9,rangeRefEUR10,rangeRefEUR11,rangeRefEUR12,rangeRefEUR13
-
-# Define price ranges
+;;;;;;;;;;;;;;;;;;;
+# Define price ranges;;;;;;;;;;;;;;;;;;;
 INSERT_UPDATE SolrValueRange;&rangeValueRefID;solrValueRangeSet(name)[unique=true];name[unique=true];from;to
 ;rangeRefEUR1 ;babyartikelPriceRangeEUR;    €0-€19.99;   0; 19.99
 ;rangeRefEUR2 ;babyartikelPriceRangeEUR;   €20-€49.99;  20; 49.99
@@ -34,104 +43,113 @@ INSERT_UPDATE SolrValueRange;&rangeValueRefID;solrValueRangeSet(name)[unique=tru
 ;rangeRefEUR12;babyartikelPriceRangeEUR; €900-€999.99; 900;999.99
 ;rangeRefEUR13;babyartikelPriceRangeEUR;€1,000-€100,000;1000;100000
 
-# Non-facet properties
-INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;valueProviderParameter
-;$solrIndexedType; itemtype               ;string ;            ;    ;    ;    ;    ;    ;
-;$solrIndexedType; code                   ;string ;            ;    ;    ;    ;true;true;
-;$solrIndexedType; name                   ;text   ;sortabletext;    ;true;    ;true;true;
-;$solrIndexedType; description            ;text   ;            ;    ;true;    ;    ;    ;
-;$solrIndexedType; summary                ;text   ;            ;    ;true;    ;    ;    ;
-;$solrIndexedType; manufacturerName       ;text   ;            ;    ;    ;    ;true;true;
-;$solrIndexedType; manufacturerAID        ;string ;            ;    ;    ;    ;    ;    ;
-;$solrIndexedType; ean                    ;string ;            ;    ;    ;    ;true;true;
+;;;;;;;;;;;;;;;;;;;
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;facetDisplayNameProvider
+;$solrIndexedType; itemtype               ;string ;            ;    ;    ;    ;    ;    ;;
+;$solrIndexedType; code                   ;string ;            ;    ;    ;;;;;
+;$solrIndexedType; name                   ;text   ;sortabletext;    ;true;    ;;;;
+;$solrIndexedType; freeTextQuery          ;text   ;sortabletext;    ;true;    ;true;true;babyartikelFreeTextValueProvider;
+;$solrIndexedType; description            ;text   ;            ;    ;true;    ;    ;    ;;
+;$solrIndexedType; oldPrice          	  ;double ;            ;	;    ;    ;    ;    ;;
 ;$solrIndexedType; priceValue             ;double ;            ;true;    ;    ;    ;    ;productPriceValueProvider;
-;$solrIndexedType; keywords               ;text   ;            ;    ;true;    ;true;true;productKeywordsValueProvider
-;$solrIndexedType; reviewAvgRating        ;double ;            ;    ;true;    ;    ;    ;productReviewAverageRatingValueProvider
-;$solrIndexedType; img-539Wx539H          ;string ;            ;    ;    ;    ;    ;    ;image539ValueProvider
-;$solrIndexedType; img-190Wx190H          ;string ;            ;    ;    ;    ;    ;    ;image190ValueProvider
-;$solrIndexedType; img-60Wx60H            ;string ;            ;    ;    ;    ;    ;    ;image60ValueProvider
-;$solrIndexedType; img-85Wx85H            ;string ;            ;    ;    ;    ;    ;    ;image85ValueProvider
-;$solrIndexedType; url                    ;string ;            ;    ;true;    ;    ;    ;productUrlValueProvider
-;$solrIndexedType; primaryPromotionCode   ;string ;            ;    ;    ;    ;    ;    ;promotionCodeValueProvider
-;$solrIndexedType; primaryPromotionBanner ;string ;            ;    ;    ;    ;    ;    ;promotionImageValueProvider
-;$solrIndexedType; stockLevelStatus       ;string ;            ;    ;    ;    ;    ;    ;productStockLevelStatusValueProvider
+;$solrIndexedType; keywords               ;text   ;            ;    ;true;    ;	   ;	;productKeywordsValueProvider;
+;$solrIndexedType; reviewAvgRating        ;double ;            ;    ;true;    ;    ;    ;productReviewAverageRatingValueProvider;
+;$solrIndexedType; img-296Wx396H            ;string ;            ;    ;    ;  true  ;    ;  ;image296ValueProvider;
+;$solrIndexedType; img-68Wx91H          	;string ;            ;    ;    ;    ;    ;  ;image68ValueProvider;
+;$solrIndexedType; img-115Wx154H            ;string ;            ;    ;    ;    ;    ;  ;image115ValueProvider;
+;$solrIndexedType; url                    ;string ;            ;    ;true;    ;    ;    ;productUrlValueProvider;
+;$solrIndexedType; stockLevelStatus       ;string ;            ;    ;    ;    ;    ;    ;productStockLevelStatusValueProvider;
 ;$solrIndexedType; inStockFlag            ;boolean;            ;    ;    ;    ;    ;    ;productInStockFlagValueProvider;
-;$solrIndexedType; pickupAvailableFlag    ;boolean;            ;    ;    ;    ;    ;    ;productPickupAvailabilityValueProvider
+;$solrIndexedType; sales            ;boolean;            ;    ;    ;    ;    ;    ;productSalesFlagValueProvider;salesFacetDisplayNameProvider
+;$solrIndexedType; blackfriday      ;boolean;            ;    ;    ;    ;    ;    ;productBlackfridayValueProvider;
+;$solrIndexedType; onlineDate         	  ;date;          	   ;    ;    ;    ;    ;    ;;;;;;;;;;
+;$solrIndexedType; quantitySold            ;double;            ;    ;    ;    ;    ;    ;productQuantitySoldValueProvider;
 
-# Category fields
-INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);localized[default=false];multiValue[default=true];categoryField[default=true];useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider
-;$solrIndexedType; categoryName     ;text   ;true;;;true;true;babyartikelCategoryNameValueProvider
-;$solrIndexedType; brandName        ;text   ;true;;;    ;    ;babyartikelBrandCategoryNameValueProvider
-;$solrIndexedType; collectionName   ;text   ;true;;;    ;    ;babyartikelCollectionCategoryNameValueProvider
-
-# Category facets
-INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);multiValue[default=true];facet[default=true];facetType(code);facetSort(code);priority;visible;categoryField[default=true];fieldValueProvider;facetDisplayNameProvider;topValuesProvider
-;$solrIndexedType; allCategories ;string;;;Refine;Alpha;-9999;false;;categoryCodeValueProvider                 ;
-;$solrIndexedType; categoryPath  ;string;;;Refine;Alpha;-9999;false;false;categoryPathValueProvider                 ;
-;$solrIndexedType; category      ;string;;;Refine;Alpha; 6000;true;;babyartikelCategoryCodeValueProvider          ;categoryFacetDisplayNameProvider;defaultTopValuesProvider
-;$solrIndexedType; collection    ;string;;;Refine;Alpha; 5500;true;;babyartikelCollectionCategoryCodeValueProvider;categoryFacetDisplayNameProvider;defaultTopValuesProvider
-;$solrIndexedType; brand         ;string;;;Refine;Alpha; 5000;true;;babyartikelBrandCategoryCodeValueProvider     ;categoryFacetDisplayNameProvider;defaultTopValuesProvider
-;$solrIndexedType; gender        ;string;;;Refine;Alpha; 4500;true;false;genderValueProvider                       ;genderFacetDisplayNameProvider
-
-# Other facet properties
-INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];facet[default=true];facetType(code);facetSort(code);priority;visible;useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;facetDisplayNameProvider;customFacetSortProvider;topValuesProvider;rangeSets(name)
-;$solrIndexedType; price            ;double ; ;true ;    ;    ; ;MultiSelectOr ;Alpha ; 4000;true;    ;    ;productPriceValueProvider              ;                                             ;                             ;defaultTopValuesProvider ;babyartikelPriceRangeEUR
-;$solrIndexedType; style            ;string ; ;     ;true;    ; ;MultiSelectOr ;Alpha ;-1   ;false;    ;    ;optionalModelPropertyFieldValueProvider;                                             ;                             ;
-;$solrIndexedType; size             ;string ; ;     ;true;    ; ;MultiSelectOr ;Custom; 2000;true;    ;    ;optionalModelPropertyFieldValueProvider;                                             ;sizeAttributeSortProvider    ;
-;$solrIndexedType; allPromotions    ;string ; ;false;    ;true; ;MultiSelectOr ;Alpha ; 0   ;false;    ;    ;promotionCodeValueProvider             ;promotionFacetDisplayNameProvider            ;                             ;
-
-# Create the queries that will be used to extract data for Solr
-INSERT_UPDATE SolrIndexerQuery;solrIndexedType(identifier)[unique=true];identifier[unique=true];type(code);injectCurrentDate[default=true];injectCurrentTime[default=true];injectLastIndexTime[default=true];query;user(uid)
-;$solrIndexedType;$searchIndexNamePrefix-fullQuery;full;;;false;"SELECT {p:PK} FROM {Product AS p} WHERE {p:varianttype} IS NULL";anonymous
+;;;;;;;;;;;;;;;;;;;
+# Category fields;;;;;;;;;;;;;;;;;;;
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);localized[default=false];multiValue[default=true];categoryField[default=true];useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;;;;;;;;;;
+;$solrIndexedType; categoryName     ;text   ;true;;;true;true;dzarmCategoryNameValueProvider;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;
+# Category facets;;;;;;;;;;;;;;;;;;;
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);multiValue[default=true];facet[default=true];facetType(code);facetSort(code);priority;visible;categoryField[default=true];fieldValueProvider;facetDisplayNameProvider;topValuesProvider;;;;;;
+;$solrIndexedType; allCategories ;string;;;Refine;Alpha;-9999;false;;dzarmCategoryCodeValueProvider                 ;;;;;;;;
+;$solrIndexedType; categoryPath  ;string;;;Refine;Alpha;-9999;false;false;categoryPathValueProvider                 ;;;;;;;;
+;$solrIndexedType; category      ;string;;;Refine;Alpha; 8000;true;;dzarmCategoryCodeValueProvider          ;categoryFacetDisplayNameProvider;defaultTopValuesProvider;;;;;;
+;$solrIndexedType; gender        ;string;;;Refine;Alpha; 7000;true;false;genderValueProvider                       ;genderFacetDisplayNameProvider;;;;;;;
+;;;;;;;;;;;;;;;;;;;
+# Other facet properties;;;;;;;;;;;;;;;;;;;
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];facet[default=false];facetType(code);facetSort(code);priority;visible;useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;facetDisplayNameProvider;customFacetSortProvider;topValuesProvider;rangeSets(name)
+;$solrIndexedType; price            ;double ; ;true ;    ;    ;true;MultiSelectOr ;Alpha ; 5000;true;    ;    ;productPriceValueProvider              ;                                             ;                             ;defaultTopValuesProvider ;babyartikelPriceRangeBRL
+;$solrIndexedType; style            ;string ; ;     ;true;    ; ;MultiSelectOr ;Alpha ;-1   ;false;    ;    ;optionalModelPropertyFieldValueProvider;                                             ;                             ;;
+;$solrIndexedType; size             ;string ; ;     ;true;true;true;MultiSelectOr;Custom; 9999;true;    ;    ;babyartikelProductSizeValueProvider;                                             ;sizeAttributeSortProvider    ;;
+;;;;;;;;;;;;;;;;;;;
+# Create the queries that will be used to extract data for Solr;;;;;;;;;;;;;;;;;;;
+INSERT_UPDATE SolrIndexerQuery;solrIndexedType(identifier)[unique=true];identifier[unique=true];type(code);injectCurrentDate[default=true];injectCurrentTime[default=true];injectLastIndexTime[default=true];query;user(uid);;;;;;;;;;;
+;$solrIndexedType;$searchIndexNamePrefix-fullQuery;full;;;false;SELECT {p:PK} FROM {Product AS p} WHERE {p:varianttype} IS NOT NULL ORDER BY {p:code};anonymous;;;;;;;;;;;
 ;$solrIndexedType;$searchIndexNamePrefix-updateQuery;update;;;;"
 SELECT DISTINCT tbl.pk, tbl.code FROM (
-   {{
-      SELECT DISTINCT {p:PK} AS pk, {p:code} AS code
-      FROM {Product AS p LEFT JOIN CustomerReview AS cr ON {cr:product}={p:PK} }
-      WHERE {p:varianttype} IS NULL AND ({p:modifiedtime} >= ?lastIndexTime OR {cr:modifiedtime} >= ?lastIndexTime)
-   }}
-   UNION
-   {{
-      SELECT DISTINCT {p:PK} AS pk, {p:code} AS code
-      FROM {VariantProduct AS p JOIN Product AS bp1 ON {p:baseProduct}={bp1:PK} LEFT JOIN CustomerReview AS cr ON {cr:product}={bp1:PK} }
-      WHERE {p:varianttype} IS NULL AND ({bp1:modifiedtime} >= ?lastIndexTime OR {cr:modifiedtime} >= ?lastIndexTime)
-   }}
-   UNION
-   {{
-      SELECT DISTINCT {p:PK} AS pk, {p:code} AS code
-      FROM {VariantProduct AS p JOIN VariantProduct AS bp1 ON {p:baseProduct}={bp1:PK} JOIN Product AS bp2 ON {bp1:baseProduct}={bp2:PK} LEFT JOIN CustomerReview AS cr ON {cr:product}={bp2:PK} }
-      WHERE {p:varianttype} IS NULL AND ({bp2:modifiedtime} >= ?lastIndexTime OR {cr:modifiedtime} >= ?lastIndexTime)
-   }}
-   UNION
-   {{
-      SELECT {p:PK}  AS pk, {p:code} AS code FROM {Product AS p} WHERE {p:code} IN (
-         {{
-            SELECT DISTINCT {sl:productCode} FROM {StockLevel AS sl} WHERE {sl:modifiedtime} >= ?lastIndexTime
-         }}
-      )
-   }}
+	{{
+		SELECT DISTINCT {bp2:PK} AS pk, {bp2:code} AS code FROM {VariantProduct AS p 
+			JOIN VariantProduct AS bp1 ON {p:baseProduct}={bp1:PK} 
+			JOIN Product AS bp2 ON {bp1:baseProduct}={bp2:PK} 
+			LEFT JOIN CustomerReview AS cr ON ({cr:product}={p:PK} OR {cr:product}={bp1:PK}) }
+		WHERE {p:varianttype} IS NULL 
+			AND (
+				{p:modifiedtime} >= ?lastIndexTime 
+				OR {bp1:modifiedtime} >= ?lastIndexTime 
+				OR {cr:modifiedtime} >= ?lastIndexTime
+			)
+	}}
+	UNION
+	{{
+		SELECT DISTINCT {bp2:PK} AS pk, {bp2:code} AS code FROM {VariantProduct AS p 
+			JOIN VariantProduct AS bp1 ON {p:baseProduct}={bp1:PK} 
+			JOIN Product AS bp2 ON {bp1:baseProduct}={bp2:PK}}
+		WHERE {p:code} IN ({{
+				SELECT DISTINCT {sl:productCode} FROM {StockLevel AS sl} WHERE {sl:modifiedtime} >= ?lastIndexTime
+			}})
+			OR {bp1:code} IN ({{
+				SELECT DISTINCT {sl:productCode} FROM {StockLevel AS sl} WHERE {sl:modifiedtime} >= ?lastIndexTime
+			}})
+	}}
 ) tbl ORDER BY tbl.code
-";anonymous
+";anonymous;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;
+# Define the available sorts;;;;;;;;;;;;;;;;;;;
+INSERT_UPDATE SolrSort;&sortRefID;indexedType(identifier)[unique=true];code[unique=true];useBoost;;;;;;;;;;;;;;;
+;sortRef1;$solrIndexedType;relevance;false;;;;;;;;;;;;;;;
+;sortRef3;$solrIndexedType;name-asc;false;;;;;;;;;;;;;;;
+;sortRef4;$solrIndexedType;name-desc;false;;;;;;;;;;;;;;;
+;sortRef5;$solrIndexedType;price-asc;false;;;;;;;;;;;;;;;
+;sortRef6;$solrIndexedType;price-desc;false;;;;;;;;;;;;;;;
+;sortRef2;$solrIndexedType;topRated;false;;;;;;;;;;;;;;;
+;sortRef7;$solrIndexedType;bestSeller;false;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;
+# Define the sort fields;;;;;;;;;;;;;;;;;;;
+INSERT_UPDATE SolrSortField;sort(indexedType(identifier),code)[unique=true];fieldName[unique=true];ascending[unique=true];;;;;;;;;;;;;;;;
+;$solrIndexedType:relevance;onlineDate;false;;;;;;;;;;;;;;;;
+;$solrIndexedType:name-asc;name;true;;;;;;;;;;;;;;;;
+;$solrIndexedType:name-desc;name;false;;;;;;;;;;;;;;;;
+;$solrIndexedType:price-asc;priceValue;true;;;;;;;;;;;;;;;;
+;$solrIndexedType:price-desc;priceValue;false;;;;;;;;;;;;;;;;
+;$solrIndexedType:topRated;inStockFlag;false;;;;;;;;;;;;;;;;
+;$solrIndexedType:topRated;reviewAvgRating;false;;;;;;;;;;;;;;;;
+;$solrIndexedType:bestSeller;quantitySold;false;;;;;;;;;;;;;;;;
 
-# Define the available sorts
-INSERT_UPDATE SolrSort;&sortRefID;indexedType(identifier)[unique=true];code[unique=true];useBoost
-;sortRef1;$solrIndexedType;relevance;true
-;sortRef2;$solrIndexedType;topRated;false
-;sortRef3;$solrIndexedType;name-asc;false
-;sortRef4;$solrIndexedType;name-desc;false
-;sortRef5;$solrIndexedType;price-asc;false
-;sortRef6;$solrIndexedType;price-desc;false
-
-# Define the sort fields
-INSERT_UPDATE SolrSortField;sort(indexedType(identifier),code)[unique=true];fieldName[unique=true];ascending[unique=true]
-;$solrIndexedType:relevance;inStockFlag;false
-;$solrIndexedType:relevance;score;false
-;$solrIndexedType:topRated;inStockFlag;false
-;$solrIndexedType:topRated;reviewAvgRating;false
-;$solrIndexedType:name-asc;name;true
-;$solrIndexedType:name-desc;name;false
-;$solrIndexedType:price-asc;priceValue;true
-;$solrIndexedType:price-desc;priceValue;false
-
-UPDATE SolrIndexedType;identifier[unique=true];sorts(&sortRefID)
-;$solrIndexedType;sortRef1,sortRef2,sortRef3,sortRef4,sortRef5,sortRef6
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=true];facet[default=false];facetType(code);facetSort(code);priority;visible;fieldValueProvider;customFacetSortProvider;rangeSets(name);$classAttributeAssignment;topValuesProvider;useForSpellchecking[default=false];useForAutocomplete[default=false]
+;babyartikelProductType;grupo;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Grupo, 1001::::;;;
+;babyartikelProductType;subgrupo;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Subgrupo, 1002::::;;;
+;babyartikelProductType;griffe;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Griffe, 1003::::;;;
+;babyartikelProductType;linha;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Linha, 1004::::;;;
+;babyartikelProductType;subcategoria;string;; ;true; ;;MultiSelectOr;Alpha;7000;true;commerceClassificationPropertyValueProvider;;;0001:::Subcategoria, 1005::::;defaultTopValuesProvider;;
+;babyartikelProductType;colecao;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0002:::Colecao, 2001::::;;;
+;babyartikelProductType;tecido;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0003:::Tipo tecido, 3001::::;;;
+;babyartikelProductType;composicao;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0003:::Composicao, 3002::::;;;
+;babyartikelProductType;tag;semicolonDelimited;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0005:::Tag, 5001::::;;;
+;babyartikelProductType;corDescricao;text;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0006:::Descricao cor, 6002::::;;true;true
+;babyartikelProductType;corDescricaoBasica;text;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0006:::Descricao cor basica, 6003::::;;;
+;babyartikelProductType;cor;string;; ;; ;true;MultiSelectOr;Alpha;6000;true;productRGBColorValueProvider;;;0006:::RGB, 6004::::;colorTopValuesProvider;;
+;babyartikelProductType;codigoCor;text;; ;;true;false;MultiSelectOr;Alpha;6000;true;babyartikelShowCaseVariantsProvider;;;0006:::RGB, 6004::::;;;
+;babyartikelProductType;ocasiao;string;; ;true; ;true;MultiSelectOr;Alpha;4000;true;commerceClassificationPropertyValueProvider;;;0007:::Ocasiao, 7001::::;;;
+;babyartikelProductType;tendencia;string;; ;true; ;true;MultiSelectOr;Alpha;2000;true;commerceClassificationPropertyValueProvider;;;0008:::Tendencia, 8001::::;;;
+;babyartikelProductType;tipoMaterial;string;; ;true; ;true;MultiSelectOr;Alpha;3000;true;commerceClassificationPropertyValueProvider;;;0009:::TipoMaterial, 9001::::;;;
