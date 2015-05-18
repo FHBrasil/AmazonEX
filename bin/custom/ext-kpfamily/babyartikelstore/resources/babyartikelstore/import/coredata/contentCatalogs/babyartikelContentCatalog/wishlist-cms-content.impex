@@ -1,0 +1,13 @@
+# Import the CMS content for the Babyartikel  site
+#
+$contentCatalog=babyartikelContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$jarResourceCms=jar:br.hering.core.setup.CoreSystemSetup&/heringcore/import/cockpits/cmscockpit
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
+;;PublicWishlistPageTemplate;Public Wishlist Page Template;wishlist/productListPage
+
+# Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];
+;;my-wishlist;My Wishlist Page;AccountPageTemplate;my-wishlist
+;;public-wishlist;Public Wishlist Page;PublicWishlistPageTemplate;public-wishlist

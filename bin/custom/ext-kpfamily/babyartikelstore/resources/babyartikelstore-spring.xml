@@ -15,15 +15,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
            http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd">
-           
-	<bean id="babyartikelCoreDataImportService"
-			class="de.kpfamily.services.BabyartikelCoreDataImportService"
-			parent="defaultCoreDataImportService"/>
-           
-   <bean id="babyartikelStoreSystemSetup" class="de.kpfamily.setup.BabyartikelStoreSystemSetup" parent="abstractCoreSystemSetup">
-      <property name="coreDataImportService" ref="babyartikelCoreDataImportService"/>
-   </bean>			
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	 <bean id="babyartikelstoreSystemSetup" class="de.kpfamily.setup.BabyartikelstoreSystemSetup" parent="abstractCoreSystemSetup">
+		<property name="coreDataImportService" ref="coreDataImportService"/>
+		<property name="sampleDataImportService" ref="sampleDataImportService"/>
+	</bean>		
 </beans>

@@ -1,62 +1,8 @@
-####
-# Criando job para sync do conteudo do apparel-de para babyartikel
-####
-$contentCatalog=apparel-deContentCatalog
-$targetContentCatalog=babyartikelContentCatalog 
-$sourceContentCV=sourceVersion(catalog(id[default=$contentCatalog]),version[default='Staged'])[unique=true,default='$contentCatalog:Staged'] 
-$targetContentCV=targetVersion(catalog(id[default=$targetContentCatalog]),version[default='Online'])[unique=true,default='$targetContentCatalog:Online']
-$syncJobContentJobCode = syncContentApparelDe2Babyartikel;
+$storeUid=babyartikel
+$defaultCurrency=EUR
+$defaultLanguage=de
+$productCatalog=babyartikelProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
 
-INSERT_UPDATE CatalogVersionSyncJob;code[unique=true];$sourceContentCV;$targetContentCV;removeMissingItems[default='false']
-#;$syncJobContentJobCode;;;;
-
-
-INSERT_UPDATE SyncJob2TypeRel;source(code)[unique=true][default=$syncJobContentJobCode];target(code)[unique=true];
-#;;Product;
-#;;Category;
-#;;Media;
-#;;Keyword;
-#;;TaxRow;
-#;;PriceRow;
-#;;DiscountRow;
-#;;MediaContainer;
-#;;CMSItem;
-#;;CMSRelation;
-#;;BTGItem
-
-####
-# Criando job para sync do conteudo do apparel-uk para babyartikel
-####
-$contentUKCatalog=apparel-ukContentCatalog
-$sourceContentUKCV=sourceVersion(catalog(id[default=$contentUKCatalog]),version[default='Staged'])[unique=true,default='$contentUKCatalog:Staged'] 
-$syncJobContentUKJobCode = syncContentApparelUk2Babyartikel;
-
-INSERT_UPDATE CatalogVersionSyncJob;code[unique=true];$sourceContentUKCV;$targetContentCV;removeMissingItems[default='false']
-#;$syncJobContentUKJobCode;;;;
-
-
-INSERT_UPDATE SyncJob2TypeRel;source(code)[unique=true][default=$syncJobContentUKJobCode];target(code)[unique=true];
-#;;Product;
-#;;Category;
-#;;Media;
-#;;Keyword;
-#;;TaxRow;
-#;;PriceRow;
-#;;DiscountRow;
-#;;MediaContainer;
-#;;CMSItem;
-#;;CMSRelation;
-#;;BTGItem
-
-
-####
-# Criando job para sync dos produtos do apparel para babyartikel
-####
-
-$productCatalog=apparelProductCatalog
-$targetProductCatalog=babyartikelProductCatalog 
-$sourceProductCV=sourceVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default='$productCatalog:Staged'] 
-$targetProductCV=targetVersion(catalog(id[default=$targetProductCatalog]),version[default='Online'])[unique=true,default='$targetProductCatalog:Online']
-
-INSERT_UPDATE CatalogVersionSyncJob;code[unique=true];$sourceProductCV;$targetProductCV;removeMissingItems[default='false']
-#;syncProductsApparelDe2Babyartikel;;;;
+INSERT_UPDATE ExportStoreFeedJob;code[unique=true];$catalogVersion;job(code);sessionLanguage(isocode);sessionCurrency(isocode);sessionUser(uid);
+;babyartikelExportStoreFeed;;exportStoreFeedJobPerformable;$defaultLanguage;$defaultCurrency;admin;
