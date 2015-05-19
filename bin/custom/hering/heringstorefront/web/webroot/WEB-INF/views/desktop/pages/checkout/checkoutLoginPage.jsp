@@ -45,9 +45,8 @@
                 </c:if>
             </div>
             <div class="banner">
-                <img src="/store/_ui/desktop/theme-hering/images/identificacao-banner-wide.jpg"
-                    alt="Cia. Hering">
-                <p>Faï¿½a o seu cadastro e aproveite as vantagens em ser o nosso cliente.</p>
+                <img src="/store/_ui/desktop/theme-hering/images/identificacao-banner-wide.jpg">
+                <p>Faça o seu cadastro e aproveite as vantagens em ser o nosso cliente.</p>
                 <p>
                     <strong>Seguranï¿½a:</strong> Site 100% seguro.
                 </p>
