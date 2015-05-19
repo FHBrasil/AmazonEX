@@ -9,6 +9,6 @@ package br.hering.core.order.impl;
  */
 public interface HeringCartConstants
 {
-	public static final String COMMON_SITE = "hering";
-	public static final String COMMON_STORE = "hering";
+	public static final String COMMON_SITE = "babyartikel";
+	public static final String COMMON_STORE = "babyartikel";
 }
