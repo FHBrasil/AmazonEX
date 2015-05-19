@@ -35,22 +35,22 @@
 </ul>
 <c:choose>
     <c:when test="${component.uid == 'FemininoBarComponent'}">
-        <img src="/store/_ui/desktop/theme-hering/images/campanha/nav-feminino.jpg" />
+        <img src="/store/_ui/desktop/theme-${themeName}/images/campanha/nav-feminino.jpg" />
     </c:when>
     <c:when test="${component.uid == 'MasculinoBarComponent'}">
-        <img src="/store/_ui/desktop/theme-hering/images/campanha/nav-masculino.jpg" />
+        <img src="/store/_ui/desktop/theme-${themeName}/images/campanha/nav-masculino.jpg" />
     </c:when>
     <c:when test="${component.uid == 'JeansBarComponent'}">
-        <img src="/store/_ui/desktop/theme-hering/images/campanha/nav-jeans.jpg" />
+        <img src="/store/_ui/desktop/theme-${themeName}/images/campanha/nav-jeans.jpg" />
     </c:when>
     <c:when test="${component.uid == 'AcessoriosBarComponent'}">
-        <img src="/store/_ui/desktop/theme-hering/images/campanha/nav-acessorios.jpg" />
+        <img src="/store/_ui/desktop/theme-${themeName}/images/campanha/nav-acessorios.jpg" />
     </c:when>
     <c:when test="${component.uid == 'PromocaoBarComponent'}">
-        <img src="/store/_ui/desktop/theme-hering/images/campanha/nav-promocao.jpg" />
+        <img src="/store/_ui/desktop/theme-${themeName}/images/campanha/nav-promocao.jpg" />
     </c:when>
     <c:when test="${component.uid == 'HeringKidsBarComponent'}">
-        <img src="/store/_ui/desktop/theme-hering/images/campanha/nav-infantil.jpg" />
+        <img src="/store/_ui/desktop/theme-${themeName}/images/campanha/nav-infantil.jpg" />
     </c:when>
 </c:choose>
 </div>
