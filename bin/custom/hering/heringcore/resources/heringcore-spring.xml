@@ -116,6 +116,13 @@
 	<bean id="image1600ValueProvider" parent="abstractImageValueProvider" >
 		<property name="mediaFormat" value="1600Wx900H"/>
 	</bean>
+	
+	<bean id="image60ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="60Wx60H"/>
+	</bean>
+	<bean id="image190ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="190Wx190H"/>
+	</bean>
 
 	<bean id="productUrlValueProvider"
 	      class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.ProductUrlValueProvider"
@@ -191,13 +198,13 @@
 	</bean>
 	
 	<!--  -->
-	<alias name="defaultSolrQueryPostProcessors" alias="solrQueryPostProcessors"/>
+	<!-- <alias name="defaultSolrQueryPostProcessors" alias="solrQueryPostProcessors"/>
 	<util:list id="defaultSolrQueryPostProcessors">
 		<ref bean="kidsClothingFacetAppender"/>
 		<ref bean="accessoriesFacetAppender"/>
 		<ref bean="jeansFacetAppender"/>
 		<ref bean="saleFacetAppender"/>
-	</util:list>
+	</util:list> -->
 	
 	<alias name="defaultKidsClothingFacetAppender" alias="kidsClothingFacetAppender"/>
 	<bean name="defaultKidsClothingFacetAppender" class="br.hering.core.search.solrfacetsearch.processors.DefaultKidsClothingFacetAppender"/>
