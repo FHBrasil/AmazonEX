@@ -38,15 +38,15 @@ UPDATE DistanceUnit;code[unique=true];name[lang=$lang]
  ;km;"km"
 
 # MediaFormats
-UPDATE MediaFormat;qualifier[unique=true];name[lang=$lang];
- ;1200Wx1200H;"1200Wx1200H"
- ;300Wx300H;"300Wx300H"
- ;220Wx220H;";220Wx220H"
- ;30Wx30H;"30Wx30H"
- ;365Wx246H;"365Wx246H"
- ;515Wx515H;"515Wx515H"
- ;65Wx65H;"65Wx65H"
- ;96Wx96H;"96Wx96H"
+#UPDATE MediaFormat;qualifier[unique=true];name[lang=$lang];
+# ;1200Wx1200H;"1200Wx1200H"
+# ;300Wx300H;"300Wx300H"
+# ;220Wx220H;";220Wx220H"
+# ;30Wx30H;"30Wx30H"
+# ;365Wx246H;"365Wx246H"
+# ;515Wx515H;"515Wx515H"
+# ;65Wx65H;"65Wx65H"
+# ;96Wx96H;"96Wx96H"
 
 # Consginment statuses
 UPDATE ConsignmentStatus;code[unique=true];name[lang=$lang]
