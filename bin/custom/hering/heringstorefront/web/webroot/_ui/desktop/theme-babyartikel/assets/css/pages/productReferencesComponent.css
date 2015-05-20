@@ -1,0 +1,35 @@
+.similarProducts {
+	float: right;
+ 	margin-left: 43px;
+ 	margin-right: 15px;
+}
+
+.othersProducts {
+	float: right;
+	margin-left: 143px;
+ 	margin-right: 94px;
+}
+
+.similarTitle {
+  	float: right;
+  	margin-right: 315px;
+  	margin-top: 35px;
+}
+
+.othersTitle {
+  	float: right;
+  	margin-right: 482px;
+  	margin-top: 35px;
+}
+
+.similarButton {
+  	float: right !important;
+  	margin-left: 100px; 
+  	width: 560px;
+}
+
+.othersButton {
+  	float: right !important;
+	margin-left: 280px;
+	width: 560px;
+}

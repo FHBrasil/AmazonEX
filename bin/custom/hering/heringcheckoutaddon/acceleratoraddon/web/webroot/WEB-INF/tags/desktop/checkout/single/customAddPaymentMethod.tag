@@ -114,7 +114,7 @@
                                 <ul class="code-information">
                                     <li>
                                         <h3>Visa, Mastercard, DinersClub, Hipercard</h3> <img
-                                        src="/store/_ui/desktop/theme-hering/images/card-safe-code.png"
+                                        src="/store/_ui/desktop/theme-${themeName}/images/card-safe-code.png"
                                         alt="">
                                         <p>
                                             <spring:theme code="checkout.tooltip.tresDigitos"
@@ -123,7 +123,7 @@
                                     </li>
                                     <li class="amex">
                                         <h3>American Express</h3> <img
-                                        src="/store/_ui/desktop/theme-hering/images/card-safe-code-american-express.png"
+                                        src="/store/_ui/desktop/theme-${themeName}/images/card-safe-code-american-express.png"
                                         alt="">
                                         <p>
                                             <spring:theme code="checkout.tooltip.quatroDigitos"

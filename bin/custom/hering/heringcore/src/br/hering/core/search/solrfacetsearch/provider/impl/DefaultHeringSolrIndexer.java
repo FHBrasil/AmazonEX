@@ -72,7 +72,7 @@ public class DefaultHeringSolrIndexer extends DefaultIndexer
 				
 				if(itemModel == null)
 				{
-					LOG.debug("null, skipping: " + originalCode);
+					LOG.debug("there's no avaibale size variant to be indexed, skipping: " + originalCode);
 					continue;
 				}
 				

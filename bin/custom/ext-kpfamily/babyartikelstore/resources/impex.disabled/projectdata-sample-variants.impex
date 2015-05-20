@@ -19,10 +19,15 @@ insert_update HeringSizeVariantProduct;code[unique=true];name[lang=de];$baseProd
 ;201100001160;Kugelschlafsack Mäxchen Thermo Gr. 90cm - Dots Grau;201100001159-style;90 cm;;
 ;201100001161;Kugelschlafsack Mäxchen Thermo Gr. 110cm - Dots Grau;201100001159-style;110 cm;;
 
-INSERT_UPDATE CatalogVersionSyncCronJob; code[unique=true];job(code);sessionLanguage(isoCode[default=de]);logToFile[default=false];logToDataBase[default=false];forceUpdate[default=false]
-;babySyncProductsJob;sync babyartikelProductCatalog\:Staged->Online;
- 
-#% import de.hybris.platform.core.Registry
-#% import de.hybris.platform.servicelayer.cronjob.CronJobService
-#% CronJobService cronJobService = Registry.getApplicationContext().getBean("cronJobService")
-#% cronJobService.performCronJob(cronJobService.getCronJob("babySyncProductsJob"),true)
+insert_update HeringSizeVariantProduct;code[unique=true];name[lang=en];size[lang=en];$catalogVersion
+;201100001159;Kugelschlafsack Mäxchen Thermo Gr. 70cm - Dots Grau;70 cm;;
+;201100001160;Kugelschlafsack Mäxchen Thermo Gr. 90cm - Dots Grau;90 cm;;
+;201100001161;Kugelschlafsack Mäxchen Thermo Gr. 110cm - Dots Grau;110 cm;;
+
+INSERT_UPDATE StockLevel;productCode[unique=true];available;warehouse(code)[unique=true];inStockStatus(code);
+;201100001159;666;default;forceInStock;
+;201100001160;666;default;forceInStock;
+;201100001161;666;default;forceInStock;
+
+INSERT_UPDATE PriceRow;product(code,$catalogVersion)[unique=true];$catalogVersion;price(value);unit(code)[unique=true,default=pieces];currency(isocode)[unique=true,default=EUR];minqtd[default=1];unitFactor[default=1];net[default=false];
+;201100001159;;50;;;;;;
