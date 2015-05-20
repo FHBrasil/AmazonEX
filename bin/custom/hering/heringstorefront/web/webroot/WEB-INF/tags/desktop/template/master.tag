@@ -37,7 +37,7 @@
 <%-- Favourite Icon --%>
 <spring:theme code="img.favIcon" text="/" var="favIconPath" />
 <link rel="shortcut icon"
-    href="${originalContextPath}/_ui/desktop/theme-hering/assets/images/favicon.ico" />
+    href="${originalContextPath}/_ui/desktop/theme-${themeName}/assets/images/favicon.ico" />
 <%-- CSS Files Are Loaded First as they can be downloaded in parallel --%>
 <template:styleSheets />
 <%-- Inject any additional CSS required by the page --%>

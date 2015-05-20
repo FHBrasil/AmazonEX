@@ -45,7 +45,7 @@
                 </c:if>
             </div>
             <div class="banner">
-                <img src="/store/_ui/desktop/theme-hering/images/identificacao-banner-wide.jpg">
+                <img src="/store/_ui/desktop/theme-${themeName}/images/identificacao-banner-wide.jpg">
                 <p>Faça o seu cadastro e aproveite as vantagens em ser o nosso cliente.</p>
                 <p>
                     <strong>Seguranï¿½a:</strong> Site 100% seguro.

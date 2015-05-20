@@ -1,0 +1,17 @@
+#acc-email-form form label {
+	min-width: 215px;
+}
+#acc-password-form form label {
+	min-width: 200px;
+}
+
+@media (min-width: 980px) {
+	#acc-address-form input[id="address.line1"] { width: 450px; }
+	#acc-address-form input[id="address.number"] { width: 77px; }
+	#acc-address-form input[id="address.postcode"] { width: 105px; }
+	#acc-address-form input[id="address.phone1"] { width: 180px; }
+	#acc-address-form input[id="address.phone2"] { width: 180px; }
+	#acc-address-form input[id="address.receiver"] { width: 670px; }
+	#acc-address-form input[id="address.complement"] { width: 207px; }
+	#acc-address-form input[id="address.reference"] { width: 221px; }
+}
