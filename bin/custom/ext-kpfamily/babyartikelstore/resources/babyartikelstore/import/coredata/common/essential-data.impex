@@ -73,3 +73,17 @@ INSERT_UPDATE Tax;code[unique=true];value;currency(isocode)
 INSERT_UPDATE ServicelayerJob;code[unique=true];springId[unique=true]
 ;cartRemovalJob;cartRemovalJob
 ;siteMapMediaJob;siteMapMediaJob
+
+# Conversion Media Format
+INSERT_UPDATE ConversionMediaFormat;qualifier[unique=true];name[lang=de][lang=en];conversionStrategy[default='imageMagickMediaConversionStrategy'];inputFormat(qualifier);conversion;mimeType[default='image/jpeg'];
+;base;Foto Original Normal;;;;;
+;background;Foto Original -B;;;;;
+;1200Wx1200H;superZoom;;background;-resize 1200x1200;
+;539Wx539H;zoom;;background;-resize 539x539;
+;190Wx190H;product;;base;-resize 190x190;
+;85Wx85H;cartIcon;;base;-resize 85x85;
+;60Wx60H;thumbnail;;base;-resize 60x60;
+
+# Conversion Group
+INSERT_UPDATE ConversionGroup;code[unique=true];name[lang=de][lang=en];supportedFormats(qualifier)
+;defaultConversionGroup;Default Conversion Group;1200Wx1200H,539Wx539H,190Wx190H,85Wx85H,60Wx60H
