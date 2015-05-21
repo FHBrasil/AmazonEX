@@ -58,22 +58,6 @@ INSERT_UPDATE MiniCartComponent;$contentCV[unique=true];uid[unique=true];name;&c
 # Navigation Bar Component
 INSERT_UPDATE NavigationBarComponent;$contentCV[unique=true];uid[unique=true];name;wrapAfter;link(uid, $contentCV);styleClass;&componentRef
 
-# Navigation Bar Component
-INSERT_UPDATE AccountNavigationComponent;$contentCV[unique=true];uid[unique=true];name;navigationNode(&nodeRef);styleClass;&componentRef
-;;AccountLeftNavigationComponent;Account Left Navigation Component;AccountLeftNavNode;;AccountLeftNavigationComponent
-;;AccountProfileNavigationComponent;Account Profile Navigation Component;AccountProfileNavNode;;AccountProfileNavigationComponent
-;;AccountAddressBookNavigationComponent;Account Address Book NavigationComponent;AccountAddressBookNavNode;;AccountAddressBookNavigationComponent
-;;AccountPaymentDetailsNavigationComponent;Account Payment Details Navigation Component;AccountPaymentDetailsNavNode;;AccountPaymentDetailsNavigationComponent
-;;AccountOrderHistoryNavigationComponent;Account Order History Navigation Component;AccountOrderHistoryNavNode;;AccountOrderHistoryNavigationComponent
-
-# Account Navigation Bar Component
-INSERT_UPDATE AccountNavigationCollectionComponent;$contentCV[unique=true];uid[unique=true];name;components(uid, $contentCV);&componentRef
-;;AccountHomepageComponent;Account Homepage Component;AccountProfileNavigationComponent,AccountAddressBookNavigationComponent,AccountPaymentDetailsNavigationComponent,AccountOrderHistoryNavigationComponent;AccountHomepageComponent
-
-# Navigation Bar Component
-INSERT_UPDATE NavigationBarCollectionComponent;$contentCV[unique=true];uid[unique=true];name;components(uid, $contentCV);&componentRef
-;;NavBarComponent;Navigation Bar Collection Componeent;;NavBarComponent
-
 # CMS tabs components
 INSERT_UPDATE CMSTabParagraphComponent;$contentCV[unique=true];uid[unique=true];name;visible;&componentRef
 ;;deliveryTab;Delivery tab;true;deliveryTab
@@ -94,28 +78,8 @@ INSERT_UPDATE ProductVariantSelectorComponent;$contentCV[unique=true];uid[unique
 ;;VariantSelector;Product Variant Selector;VariantSelector
 
 # CMS ProductAddToCart Components
-INSERT_UPDATE ProductAddToCartComponent;$contentCV[unique=true];uid[unique=true];name;actions(&actionRef);&componentRef
-;;AddToCart;Product Add To Cart;AddToCartAction,ShareOnSocialNetworkAction;AddToCart
-
-# CMS AddToCart Action
-INSERT_UPDATE AddToCartAction;$contentCV[unique=true];uid[unique=true];url;name;restrictions(uid,$contentCV);&actionRef
-;;AddToCartAction;/cart/add;Product Add To Cart Action;ActionRestriction;AddToCartAction
-
-INSERT_UPDATE ListAddToCartAction;$contentCV[unique=true];uid[unique=true];url;name;restrictions(uid,$contentCV);&actionRef
-;;ListAddToCartAction;/cart/add;Product Add To Cart Action;ActionRestriction;ListAddToCartAction
-
-INSERT_UPDATE ListPickUpInStoreAction;$contentCV[unique=true];uid[unique=true];url;name;restrictions(uid,$contentCV);&actionRef
-
-# CMS PickUpInStoreAction Action
-INSERT_UPDATE PickUpInStoreAction;$contentCV[unique=true];uid[unique=true];url;name;restrictions(uid,$contentCV);&actionRef
-
-# CMS ShareOnSocialNetwork Action
-INSERT_UPDATE ShareOnSocialNetworkAction;$contentCV[unique=true];uid[unique=true];url;name;restrictions(uid,$contentCV);&actionRef
-;;ShareOnSocialNetworkAction;/;Share On Social Network Action;ActionRestriction;ShareOnSocialNetworkAction
-
-# CMS Action Restrictions
-INSERT_UPDATE CMSActionRestriction;$contentCV[unique=true];uid[unique=true];name;
-;;ActionRestriction;A CMSAction restriction;
+INSERT_UPDATE ProductAddToCartComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;AddToCart;Product Add To Cart;AddToCart
 
 # CMS ProductReferences Components
 INSERT_UPDATE ProductReferencesComponent;$contentCV[unique=true];uid[unique=true];name;productReferenceTypes(code);maximumNumberProducts;&componentRef
@@ -135,40 +99,19 @@ INSERT_UPDATE CartSuggestionComponent;$contentCV[unique=true];uid[unique=true];n
 INSERT_UPDATE SearchBoxComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
 ;;SearchBox;Search Box;SearchBox
 
-# CMS Language and Currency Component
-INSERT_UPDATE LanguageCurrencyComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
-;;LangCurrencyComponent;Language and Currency Component;LangCurrencyComponent
-
-INSERT_UPDATE ProductRefinementComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
-;;RefinementFacetComponent;Product Refinement Facet Component;RefinementFacetComponent
-
-INSERT_UPDATE CMSProductListComponent;$contentCV[unique=true];uid[unique=true];name;actions(uid,$contentCV);&componentRef
-;;ProductListComponent;Product List Component;ListAddToCartAction;ProductListComponent
-
-INSERT_UPDATE ProductGridComponent;$contentCV[unique=true];uid[unique=true];name;actions(uid,$contentCV);&componentRef
-;;ProductGridComponent;Product Grid Component;ListAddToCartAction;ProductGridComponent
-
-INSERT_UPDATE SearchResultsListComponent;$contentCV[unique=true];uid[unique=true];name;actions(uid,$contentCV);&componentRef
-;;SearchResultsList;Search Result List Component;ListAddToCartAction;SearchResultsList
-
-INSERT_UPDATE SearchResultsListComponent;$contentCV[unique=true];uid[unique=true];name;actions(uid,$contentCV);&componentRef
-;;SearchResultsGrid;Search Result Grid Component;ListAddToCartAction;SearchResultsGrid
-
 # Content Slots
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(&componentRef)
 ;;SiteLogoSlot;SiteLogoComponent
 ;;HomepageNavLinkSlot;HomepageNavLink
 ;;MiniCartSlot;MiniCart
-;;NavigationBarSlot;NavBarComponent,breadcrumbComponent
 ;;TabsSlot;TabPanelContainer
 ;;FooterSlot;FooterComponent
 ;;HeaderLinksSlot;ContactInfo
-;;SearchBoxSlot;SearchBox,LangCurrencyComponent
+;;SearchBoxSlot;SearchBox
 ;;VariantSelectorSlot;VariantSelector
 ;;AddToCartSlot;AddToCart
 ;;UpSellingSlot;Similar
 ;;CrossSellingSlot;accessories
-;;ProductLeftRefinements;RefinementFacetComponent
 
 INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];mime;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true];folder(qualifier)[default='images']
 
@@ -345,11 +288,11 @@ INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];nam
 ;;HelpParagraphComponent;Help Paragraph Component;HelpParagraphComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
-;;TopContent-cartPage;Top Slot for Cart Page;true;CartComponent
+;;TopContent-cartPage;Top Slot for Cart Page;true;
 ;;EmptyCartMiddleContent-cartPage;Empty Cart Middle Slot for Cart Page;true;EmptyCartParagraphComponent
-;;CenterLeftContentSlot-cartPage;Center Left Content Slot for Cart Page;true;PromotionsComponent,PotentialPromotionsComponent
-;;CenterRightContentSlot-cartPage;Center Right Content Slot for Cart Page;true;CartTotalsComponent
-;;BottomContentSlot-cartPage;Bottom Content Slot for Cart Page;true;CheckoutComponent,CartSuggestions
+;;CenterLeftContentSlot-cartPage;Center Left Content Slot for Cart Page;true;
+;;CenterRightContentSlot-cartPage;Center Right Content Slot for Cart Page;true;
+;;BottomContentSlot-cartPage;Bottom Content Slot for Cart Page;true;
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='cartPage'];contentSlot(uid,$contentCV)[unique=true]
 ;;TopContentSlotForCartPage;TopContent;;TopContent-cartPage
@@ -431,46 +374,11 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ;;Section2A-TermsAndConditions;Section2A;;Section2ASlot-TermsAndConditions;;;
 ;;Section2B-TermsAndConditions;Section2B;;Section2BSlot-TermsAndConditions;;;
 
-
-INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
-;;AccountPaymentDetailsComponent;Account Payment Details Component;accountPaymentInfoPage.jsp;;AccountPaymentDetailsComponent
-;;AccountOrderDetailsHeadlineComponent;Account Order Details Headline Component;accountOrderDetailHeadline.jsp;;AccountOrderDetailsHeadlineComponent
-;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;accountOrderDetailOrderTotals.jsp;;AccountOrderDetailsTotalsComponent
-;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;accountOrderDetailShippingInfo.jsp;;AccountOrderDetailsShippingComponent
-;;AccountOrderDetailsItemsComponent;Account Order Details Items Info Component;accountOrderDetailItems.jsp;;AccountOrderDetailsItemsComponent
-;;AccountOrderHistoryComponent;Account History Component;accountOrderHistoryPage.jsp;ViewOrderAction;AccountOrderHistoryComponent
-;;AccountProfileComponent;Account Profile Component;accountProfilePage.jsp;;AccountProfileComponent
-;;AccountAddressBookComponent;Account Address Book Component;accountAddressBookPage.jsp;;AccountAddressBookComponent
-;;AccountAddEditAddressComponent;Account Add Edit Address Component;accountEditAddressPage.jsp;;AccountAddEditAddressComponent
-;;UpdatePasswordComponent;Update Password Component;accountChangePasswordPage.jsp;;UpdatePasswordComponent
-;;UpdateProfileComponent;Update Profile Component;accountProfileEditPage.jsp;;UpdateProfileComponent
-;;UpdateEmailComponent;Update Email Component;accountProfileEmailEditPage.jsp;;UpdateEmailComponent
-;;CartComponent;Cart Display Component;cartDisplay.jsp;;CartComponent
-;;CartTotalsComponent;Cart Totals Display Component;cartTotalsDisplay.jsp;;CartTotalsComponent
-;;PromotionsComponent;Promotions Component;cartPromotionsDisplay.jsp;;PromotionsComponent
-;;PotentialPromotionsComponent;Potential Promotions Component;potentialPromotionsDisplay.jsp;;PotentialPromotionsComponent
-;;CheckoutComponent;Checkout Display Component;checkoutDisplay.jsp;;CheckoutComponent
-;;NewCustomerLoginComponent;New Customer Login Component;accountNewCustomerLogin.jsp;;NewCustomerLoginComponent
-;;ReturningCustomerLoginComponent;Returning Customer Login Component;accountReturningCustomerLogin.jsp;;ReturningCustomerLoginComponent
-;;NewCustomerCheckoutLoginComponent;New Customer Checkout Login Component;checkoutNewCustomerLogin.jsp;;NewCustomerCheckoutLoginComponent
-;;ReturningCustomerCheckoutLoginComponent;Returning Customer Checkout Login Component;checkouReturningCustomerLogin.jsp;;ReturningCustomerCheckoutLoginComponent
-;;GuestCheckoutLoginComponent;Guest Checkout Login Component;checkoutGuestLogin.jsp;;GuestCheckoutLoginComponent
-
-INSERT_UPDATE BreadcrumbComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
-;;breadcrumbComponent;Breadcrumb CMS Component;breadcrumbComponent
-
-# CMS View Order Action
-INSERT_UPDATE ViewOrderAction;$contentCV[unique=true];uid[unique=true];url;name;restrictions(uid,$contentCV);&actionRef
-;;ViewOrderAction;/my-account/order/{orderCode};View Order Action;ActionRestriction;ViewOrderAction
-
-# CMS View Store Action
-INSERT_UPDATE ViewStoreAction;$contentCV[unique=true];uid[unique=true];url;name;restrictions(uid,$contentCV);&actionRef
-
 ###### Account Homepage
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-Account;Side Content Slot for My Account Homepage;true;AccountLeftNavigationComponent;;;
-;;BodyContent-Account;Body Content Slot for My Account Homepage;true;AccountHomepageComponent;;;
+;;SideContent-Account;Side Content Slot for My Account Homepage;true;;;;
+;;BodyContent-Account;Body Content Slot for My Account Homepage;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='account'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -480,8 +388,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ###### Account Profile
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-profile;Side Content Slot for My Account Profile;true;AccountLeftNavigationComponent;;;
-;;BodyContent-profile;Body Content Slot for My Account Profile;true;AccountProfileComponent;;;
+;;SideContent-profile;Side Content Slot for My Account Profile;true;;;;
+;;BodyContent-profile;Body Content Slot for My Account Profile;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='profile'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -491,8 +399,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ###### Account Address Book
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-address-book;Side Content Slot for Account Address Book;true;AccountLeftNavigationComponent;;;
-;;BodyContent-address-book;Body Content Slot for Account Address Book;true;AccountAddressBookComponent;;;
+;;SideContent-address-book;Side Content Slot for Account Address Book;true;;;;
+;;BodyContent-address-book;Body Content Slot for Account Address Book;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='address-book'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -502,8 +410,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ###### Account Add Edit Address
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-add-edit-address;Side Content Slot for Add Edit Address;true;AccountLeftNavigationComponent;;;
-;;BodyContent-add-edit-address;Body Content Slot for Add Edit Address;true;AccountAddEditAddressComponent;;;
+;;SideContent-add-edit-address;Side Content Slot for Add Edit Address;true;;;;
+;;BodyContent-add-edit-address;Body Content Slot for Add Edit Address;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='add-edit-address'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -513,8 +421,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ######  Account payment detail page
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-payment-details;Side Content Slot for My Account payment-details;true;AccountLeftNavigationComponent;;;
-;;BodyContent-payment-details;Body Content Slot for My Account payment-details;true;AccountPaymentDetailsComponent;;;
+;;SideContent-payment-details;Side Content Slot for My Account payment-details;true;;;;
+;;BodyContent-payment-details;Body Content Slot for My Account payment-details;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='payment-details'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -526,8 +434,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-orders;Side Content Slot for My Account Order History;true;AccountLeftNavigationComponent;;;
-;;BodyContent-orders;Body Content Slot for My Account Order History;true;AccountOrderHistoryComponent;;;
+;;SideContent-orders;Side Content Slot for My Account Order History;true;;;;
+;;BodyContent-orders;Body Content Slot for My Account Order History;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='orders'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -539,8 +447,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-orderdetail;Side Content Slot for My Account Order Details;true;AccountLeftNavigationComponent;;;
-;;BodyContent-orderdetail;Body Content Slot for My Account Order Details;true;AccountOrderDetailsHeadlineComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsItemsComponent;;;
+;;SideContent-orderdetail;Side Content Slot for My Account Order Details;true;;;;
+;;BodyContent-orderdetail;Body Content Slot for My Account Order Details;true;,,,;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='order'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -551,8 +459,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 # ContentSlot
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-updatePassword;Side Content Slot for Update Password;true;AccountLeftNavigationComponent;;;
-;;BodyContent-updatePassword;Body Content Slot for Update Password;true;UpdatePasswordComponent;;;
+;;SideContent-updatePassword;Side Content Slot for Update Password;true;;;;
+;;BodyContent-updatePassword;Body Content Slot for Update Password;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='updatePassword'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -563,8 +471,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 # ContentSlot
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-update-profile;Side Content Slot for Update Profile;true;AccountLeftNavigationComponent;;;
-;;BodyContent-update-profile;Body Content Slot for Update Profile;true;UpdateProfileComponent;;;
+;;SideContent-update-profile;Side Content Slot for Update Profile;true;;;;
+;;BodyContent-update-profile;Body Content Slot for Update Profile;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='update-profile'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -575,8 +483,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 # ContentSlot
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContent-update-email;Side Content Slot for Update Email;true;AccountLeftNavigationComponent;;;
-;;BodyContent-update-email;Body Content Slot for Update Email;true;UpdateEmailComponent;;;
+;;SideContent-update-email;Side Content Slot for Update Email;true;;;;
+;;BodyContent-update-email;Body Content Slot for Update Email;true;;;;
 
 # ContentSlotForPage
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='update-email'];contentSlot(uid,$contentCV)[unique=true];;;
@@ -585,24 +493,24 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 
 #### ProductListPage
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;ProductListSlot;Product List Slot for Product List;true;ProductListComponent;;;
+;;ProductListSlot;Product List Slot for Product List;true;;;;
 
 #### ProductGridPage
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;ProductGridSlot;Product Grid Slot for Product List;true;ProductGridComponent;;;
+;;ProductGridSlot;Product Grid Slot for Product List;true;;;;
 
 #### SearchResultListPage
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SearchResultsListSlot;Search Result List Slot for Search List;true;SearchResultsList;;;
+;;Slot;Search Result List Slot for Search List;true;;;;
 
 #### SearchResultGridPage
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SearchResultsGridSlot;Search Result Grid Slot for Search List;true;SearchResultsGrid;;;
+;;Slot;Search Result Grid Slot for Search List;true;;;;
 
 ### Customer Login
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;LeftContentSlot-login;Left Content Slot for Customer Login;true;ReturningCustomerLoginComponent;;;
-;;RightContentSlot-login;Right Content Slot for Customer Login;true;NewCustomerLoginComponent;;;
+;;LeftContentSlot-login;Left Content Slot for Customer Login;true;;;;
+;;RightContentSlot-login;Right Content Slot for Customer Login;true;;;;
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='login'];contentSlot(uid,$contentCV)[unique=true];;;
 ;;LeftContentSlot-login;LeftContentSlot;;LeftContentSlot-login;;;
@@ -610,9 +518,9 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 
 ### Checkout Login
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;LeftContentSlot-checkout-login;Left Content Slot for Checkout Login;true;ReturningCustomerCheckoutLoginComponent;;;
-;;CenterContentSlot-checkout-login;Center Content Slot for Checkout Login;true;NewCustomerCheckoutLoginComponent;;;
-;;RightContentSlot-checkout-login;Right Content Slot for Checkout Login;true;GuestCheckoutLoginComponent;;;
+;;LeftContentSlot-checkout-login;Left Content Slot for Checkout Login;true;;;;
+;;CenterContentSlot-checkout-login;Center Content Slot for Checkout Login;true;;;;
+;;RightContentSlot-checkout-login;Right Content Slot for Checkout Login;true;;;;
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='checkout-login'];contentSlot(uid,$contentCV)[unique=true];;;
 ;;LeftContentSlot-checkout-login;LeftContentSlot;;LeftContentSlot-checkout-login;;;
