@@ -48,15 +48,14 @@ INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[
 ;$solrIndexedType; itemtype               ;string ;            ;    ;    ;    ;    ;    ;;
 ;$solrIndexedType; code                   ;string ;            ;    ;    ;;;;;
 ;$solrIndexedType; name                   ;text   ;sortabletext;    ;true;    ;;;;
-;$solrIndexedType; freeTextQuery          ;text   ;sortabletext;    ;true;    ;true;true;babyartikelFreeTextValueProvider;
+;$solrIndexedType; freeTextQuery          ;text   ;sortabletext;    ;true;    ;true;true;heringFreeTextValueProvider;
 ;$solrIndexedType; description            ;text   ;            ;    ;true;    ;    ;    ;;
 ;$solrIndexedType; oldPrice          	  ;double ;            ;	;    ;    ;    ;    ;;
 ;$solrIndexedType; priceValue             ;double ;            ;true;    ;    ;    ;    ;productPriceValueProvider;
 ;$solrIndexedType; keywords               ;text   ;            ;    ;true;    ;	   ;	;productKeywordsValueProvider;
 ;$solrIndexedType; reviewAvgRating        ;double ;            ;    ;true;    ;    ;    ;productReviewAverageRatingValueProvider;
-;$solrIndexedType; img-296Wx396H            ;string ;            ;    ;    ;  true  ;    ;  ;image296ValueProvider;
-;$solrIndexedType; img-68Wx91H          	;string ;            ;    ;    ;    ;    ;  ;image68ValueProvider;
-;$solrIndexedType; img-115Wx154H            ;string ;            ;    ;    ;    ;    ;  ;image115ValueProvider;
+;$solrIndexedType; img-60Wx60H          	;string ;            ;    ;    ;    ;    ;  ;image60ValueProvider;
+;$solrIndexedType; img-190Wx190H            ;string ;            ;    ;    ;    ;    ;  ;image190ValueProvider;
 ;$solrIndexedType; url                    ;string ;            ;    ;true;    ;    ;    ;productUrlValueProvider;
 ;$solrIndexedType; stockLevelStatus       ;string ;            ;    ;    ;    ;    ;    ;productStockLevelStatusValueProvider;
 ;$solrIndexedType; inStockFlag            ;boolean;            ;    ;    ;    ;    ;    ;productInStockFlagValueProvider;
@@ -79,13 +78,13 @@ INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[
 ;;;;;;;;;;;;;;;;;;;
 # Other facet properties;;;;;;;;;;;;;;;;;;;
 INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];facet[default=false];facetType(code);facetSort(code);priority;visible;useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;facetDisplayNameProvider;customFacetSortProvider;topValuesProvider;rangeSets(name)
-;$solrIndexedType; price            ;double ; ;true ;    ;    ;true;MultiSelectOr ;Alpha ; 5000;true;    ;    ;productPriceValueProvider              ;                                             ;                             ;defaultTopValuesProvider ;babyartikelPriceRangeBRL
+;$solrIndexedType; price            ;double ; ;true ;    ;    ;true;MultiSelectOr ;Alpha ; 5000;true;    ;    ;productPriceValueProvider              ;                                             ;                             ;defaultTopValuesProvider ;babyartikelPriceRangeEUR
 ;$solrIndexedType; style            ;string ; ;     ;true;    ; ;MultiSelectOr ;Alpha ;-1   ;false;    ;    ;optionalModelPropertyFieldValueProvider;                                             ;                             ;;
-;$solrIndexedType; size             ;string ; ;     ;true;true;true;MultiSelectOr;Custom; 9999;true;    ;    ;babyartikelProductSizeValueProvider;                                             ;sizeAttributeSortProvider    ;;
+;$solrIndexedType; size             ;string ; ;     ;true;true;true;MultiSelectOr;Custom; 9999;true;    ;    ;heringProductSizeValueProvider;                                             ;sizeAttributeSortProvider    ;;
 ;;;;;;;;;;;;;;;;;;;
 # Create the queries that will be used to extract data for Solr;;;;;;;;;;;;;;;;;;;
 INSERT_UPDATE SolrIndexerQuery;solrIndexedType(identifier)[unique=true];identifier[unique=true];type(code);injectCurrentDate[default=true];injectCurrentTime[default=true];injectLastIndexTime[default=true];query;user(uid);;;;;;;;;;;
-;$solrIndexedType;$searchIndexNamePrefix-fullQuery;full;;;false;SELECT {p:PK} FROM {Product AS p} WHERE {p:varianttype} IS NOT NULL ORDER BY {p:code};anonymous;;;;;;;;;;;
+;$solrIndexedType;$searchIndexNamePrefix-fullQuery;full;;;false;SELECT {p:PK} FROM {HeringProduct AS p} WHERE {p:varianttype} IS NOT NULL ORDER BY {p:code};anonymous;;;;;;;;;;;
 ;$solrIndexedType;$searchIndexNamePrefix-updateQuery;update;;;;"
 SELECT DISTINCT tbl.pk, tbl.code FROM (
 	{{
@@ -136,20 +135,20 @@ INSERT_UPDATE SolrSortField;sort(indexedType(identifier),code)[unique=true];fiel
 ;$solrIndexedType:topRated;reviewAvgRating;false;;;;;;;;;;;;;;;;
 ;$solrIndexedType:bestSeller;quantitySold;false;;;;;;;;;;;;;;;;
 
-INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=true];facet[default=false];facetType(code);facetSort(code);priority;visible;fieldValueProvider;customFacetSortProvider;rangeSets(name);$classAttributeAssignment;topValuesProvider;useForSpellchecking[default=false];useForAutocomplete[default=false]
-;babyartikelProductType;grupo;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Grupo, 1001::::;;;
-;babyartikelProductType;subgrupo;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Subgrupo, 1002::::;;;
-;babyartikelProductType;griffe;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Griffe, 1003::::;;;
-;babyartikelProductType;linha;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Linha, 1004::::;;;
-;babyartikelProductType;subcategoria;string;; ;true; ;;MultiSelectOr;Alpha;7000;true;commerceClassificationPropertyValueProvider;;;0001:::Subcategoria, 1005::::;defaultTopValuesProvider;;
-;babyartikelProductType;colecao;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0002:::Colecao, 2001::::;;;
-;babyartikelProductType;tecido;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0003:::Tipo tecido, 3001::::;;;
-;babyartikelProductType;composicao;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0003:::Composicao, 3002::::;;;
-;babyartikelProductType;tag;semicolonDelimited;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0005:::Tag, 5001::::;;;
-;babyartikelProductType;corDescricao;text;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0006:::Descricao cor, 6002::::;;true;true
-;babyartikelProductType;corDescricaoBasica;text;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0006:::Descricao cor basica, 6003::::;;;
-;babyartikelProductType;cor;string;; ;; ;true;MultiSelectOr;Alpha;6000;true;productRGBColorValueProvider;;;0006:::RGB, 6004::::;colorTopValuesProvider;;
-;babyartikelProductType;codigoCor;text;; ;;true;false;MultiSelectOr;Alpha;6000;true;babyartikelShowCaseVariantsProvider;;;0006:::RGB, 6004::::;;;
-;babyartikelProductType;ocasiao;string;; ;true; ;true;MultiSelectOr;Alpha;4000;true;commerceClassificationPropertyValueProvider;;;0007:::Ocasiao, 7001::::;;;
-;babyartikelProductType;tendencia;string;; ;true; ;true;MultiSelectOr;Alpha;2000;true;commerceClassificationPropertyValueProvider;;;0008:::Tendencia, 8001::::;;;
-;babyartikelProductType;tipoMaterial;string;; ;true; ;true;MultiSelectOr;Alpha;3000;true;commerceClassificationPropertyValueProvider;;;0009:::TipoMaterial, 9001::::;;;
+#INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=true];facet[default=false];facetType(code);facetSort(code);priority;visible;fieldValueProvider;customFacetSortProvider;rangeSets(name);$classAttributeAssignment;topValuesProvider;useForSpellchecking[default=false];useForAutocomplete[default=false]
+#;babyartikelProductType;grupo;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Grupo, 1001::::;;;
+#;babyartikelProductType;subgrupo;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Subgrupo, 1002::::;;;
+#;babyartikelProductType;griffe;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Griffe, 1003::::;;;
+#;babyartikelProductType;linha;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0001:::Linha, 1004::::;;;
+#;babyartikelProductType;subcategoria;string;; ;true; ;;MultiSelectOr;Alpha;7000;true;commerceClassificationPropertyValueProvider;;;0001:::Subcategoria, 1005::::;defaultTopValuesProvider;;
+#;babyartikelProductType;colecao;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0002:::Colecao, 2001::::;;;
+#;babyartikelProductType;tecido;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0003:::Tipo tecido, 3001::::;;;
+#;babyartikelProductType;composicao;string;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0003:::Composicao, 3002::::;;;
+#;babyartikelProductType;tag;semicolonDelimited;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0005:::Tag, 5001::::;;;
+#;babyartikelProductType;corDescricao;text;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0006:::Descricao cor, 6002::::;;true;true
+#;babyartikelProductType;corDescricaoBasica;text;; ;true; ;;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;0006:::Descricao cor basica, 6003::::;;;
+#;babyartikelProductType;cor;string;; ;; ;true;MultiSelectOr;Alpha;6000;true;productRGBColorValueProvider;;;0006:::RGB, 6004::::;colorTopValuesProvider;;
+#;babyartikelProductType;codigoCor;text;; ;;true;false;MultiSelectOr;Alpha;6000;true;babyartikelShowCaseVariantsProvider;;;0006:::RGB, 6004::::;;;
+#;babyartikelProductType;ocasiao;string;; ;true; ;true;MultiSelectOr;Alpha;4000;true;commerceClassificationPropertyValueProvider;;;0007:::Ocasiao, 7001::::;;;
+#;babyartikelProductType;tendencia;string;; ;true; ;true;MultiSelectOr;Alpha;2000;true;commerceClassificationPropertyValueProvider;;;0008:::Tendencia, 8001::::;;;
+#;babyartikelProductType;tipoMaterial;string;; ;true; ;true;MultiSelectOr;Alpha;3000;true;commerceClassificationPropertyValueProvider;;;0009:::TipoMaterial, 9001::::;;;
