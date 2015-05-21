@@ -56,7 +56,7 @@ insert_update HeringStyleVariantProduct;code[unique=true];$catalogVersion;name[l
 "
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
 # 
-insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;$baseProduct;size[default='unique']
+insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;$baseProduct;size[lang=de][default='unique']
 "#% beforeEach: line.put(12, line.get(12)+""-style""); "
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
 # ------------------------------------------------------------------------------
