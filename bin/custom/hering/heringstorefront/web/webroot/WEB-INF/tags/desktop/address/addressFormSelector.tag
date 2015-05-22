@@ -86,7 +86,7 @@
     <form:hidden path="addressId" class="add_edit_delivery_address_id"
         status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
     <input type="hidden" name="bill_state" id="address.billstate" />
-    <address:addressFormElements regions="${regions}" country="BR" page="${page}" />
+    <address:addressFormElements regions="${regions}" country="DE" page="${page}" />
     <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
         <div class="form-additionals">
             <c:choose>

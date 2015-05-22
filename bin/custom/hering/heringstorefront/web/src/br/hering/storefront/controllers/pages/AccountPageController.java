@@ -643,7 +643,7 @@ public class AccountPageController extends AbstractSearchPageController
 				newAuthentication.setDetails(oldAuthentication.getDetails());
 				SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
-				//atualização de newsletter
+				//atualiza����o de newsletter
 				newsletterSubscriptionFacade.changeEmail(oldEmail, updateEmailForm.getEmail());
 				
 
@@ -754,14 +754,14 @@ public class AccountPageController extends AbstractSearchPageController
 				}
 				catch (Exception e)
 				{
-					LOG.error("Erro ao executar serviço Newsletter", e);
+					LOG.error("Erro ao executar servi��o Newsletter", e);
 				}
 			}
 		}
 		updateProfileForm.setCpfcnpj(customerData.getCpfcnpj());
 		updateProfileForm.setGender(customerData.getGender());
 		model.addAttribute("updateProfileForm", updateProfileForm);
-		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 
 		storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
@@ -798,7 +798,7 @@ public class AccountPageController extends AbstractSearchPageController
 	}
 
 	/**
-	 * @return Retorna os códigos dos Base Store registrados, separados por ",".
+	 * @return Retorna os c��digos dos Base Store registrados, separados por ",".
 	 */
 	private String getBasesCode()
 	{
@@ -907,7 +907,7 @@ public class AccountPageController extends AbstractSearchPageController
 		}
 		else
 		{
-			model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("BR"));
+			model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		}
 
 		storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
@@ -1022,7 +1022,7 @@ public class AccountPageController extends AbstractSearchPageController
 		model.addAttribute("countryData", checkoutFacade.getDeliveryCountries());
 		model.addAttribute("titleData", userFacade.getTitles());
 		model.addAttribute("addressTypes", getAddressTypes());
-		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("DE"));
 		final HeringAddressForm addressForm = getPreparedAddressForm();
 		model.addAttribute("heringAddressForm", addressForm);
 		model.addAttribute("addressBookEmpty", Boolean.valueOf(userFacade.isAddressBookEmpty()));
@@ -1049,7 +1049,7 @@ public class AccountPageController extends AbstractSearchPageController
 		addressForm.setFirstName(currentCustomerData.getFirstName());
 		addressForm.setLastName(currentCustomerData.getLastName());
 		addressForm.setTitleCode(currentCustomerData.getTitleCode());
-		addressForm.setCountryIso("BR");
+		addressForm.setCountryIso("DE");
 		addressForm.setAddressType("RESIDENCIAL");
 		
 		/*final AddressData defaultAddress = getDefaultHeringCustomerFacade().getCurrentCustomer().getDefaultBillingAddress();
@@ -1561,7 +1561,7 @@ public class AccountPageController extends AbstractSearchPageController
 		model.addAttribute("customerData", customerFacade.getCurrentCustomer());
 		model.addAttribute("heringPaymentDetailsForm", heringPaymentDetailsForm);
 		model.addAttribute("regions", getI18NFacade()
-				.getRegionsForCountryIso("BR"));
+				.getRegionsForCountryIso("DE"));
 		storeCmsPageInModel(model, getContentPageForLabelOrId(
 				PAYMENT_DETAILS_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(
@@ -1587,7 +1587,7 @@ public class AccountPageController extends AbstractSearchPageController
 			model.addAttribute("heringPaymentDetailsForm",	heringPaymentDetailsForm);
 			model.addAttribute("customerData", customerFacade.getCurrentCustomer());
 			model.addAttribute("heringPaymentDetailsForm",	heringPaymentDetailsForm);
-			model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("BR"));
+			model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("DE"));
 			model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.paymentDetails"));
 			model.addAttribute("metaRobots", "no-index,no-follow");
 			model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
@@ -1635,7 +1635,7 @@ public class AccountPageController extends AbstractSearchPageController
 		newPaymentInfo.setBillingAddress(newBillingAddress);
 		//userFacade.registerCustomerPaymentInfo(newPaymentInfo);
 		
-		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("DE"));
 		storeCmsPageInModel(model, getContentPageForLabelOrId(PAYMENT_DETAILS_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(PAYMENT_DETAILS_CMS_PAGE));
 		model.addAttribute("customerData", customerFacade.getCurrentCustomer());
@@ -1687,7 +1687,7 @@ public class AccountPageController extends AbstractSearchPageController
 	private CountryData getCountryData()
 	{
 		final CountryData data = new CountryData();
-		data.setIsocode("BR");
+		data.setIsocode("DE");
 		data.setName("Brasil");
 		return data;
 	}
@@ -1879,7 +1879,7 @@ public class AccountPageController extends AbstractSearchPageController
             BufferedReader buferReader = new BufferedReader(inputStreamReader);
             result = buferReader.readLine();
         } catch (Exception e) {
-            LOG.info("Erro ao buscar endereço por cep.", e);
+            LOG.info("Erro ao buscar endere��o por cep.", e);
         }
         return result;
     }

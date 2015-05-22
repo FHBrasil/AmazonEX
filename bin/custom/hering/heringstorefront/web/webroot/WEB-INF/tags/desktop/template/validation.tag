@@ -446,7 +446,7 @@
 	            		if(obj){
 	            			var street = obj.logradouro;
 		            		var city = obj.cidade;
-		            		var state = "BR-"+obj.estado;
+		            		var state = "DE-"+obj.estado;
 		            		var neighborhood = obj.bairro;
 		            		$(parentForm + ' input[id="address.district"]')
 		            				.val(neighborhood);
