@@ -22,6 +22,7 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:component-scan base-package="com.fliegersoftware.addons.newsletteraddon.controllers" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
 
 	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
 	<bean id="defaultNewsletteraddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
@@ -42,24 +43,34 @@
 	</bean>
 		
 		
-	<bean id="newsletterSubscriptionInputTypeParagraphComponentRenderer"   
-	          class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionInputTypeParagraphComponentRenderer"
+	<!-- Newsletter Subscription Management -->	
+	<bean id="newsletterSubscriptionManagementParagraphComponentRenderer"   
+	          class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionManagementParagraphComponentRenderer"
 	          parent="addOnJspIncludeCMSComponentRenderer" />
 	     
-	<bean id="newsletterSubscriptionInputTypeParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
-	        <property name="typeCode" value="NewsletterSubscriptionInputTypeParagraphComponent" />
-	        <property name="renderer" ref="newsletterSubscriptionInputTypeParagraphComponentRenderer" />
+	<bean id="newsletterSubscriptionManagementParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
+	        <property name="typeCode" value="NewsletterSubscriptionManagementParagraphComponent" />
+	        <property name="renderer" ref="newsletterSubscriptionManagementParagraphComponentRenderer" />
 	</bean>
 	
 	
-	<bean id="newsletterSubscriptionParagraphComponentRenderer"   
-	         class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionParagraphComponentRenderer"
-	         parent="addOnJspIncludeCMSComponentRenderer" />
+	<!-- Newsletter Subscription Form -->
+<!-- 	<alias name="newsletterSubscriptionFormParagraphComponentRenderer" alias="newsletterSubscriptionFormParagraphComponentRenderer" /> -->
+	<bean id="newsletterSubscriptionFormParagraphComponentRenderer" class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionFormParagraphComponentRenderer"
+	         parent="addOnJspIncludeCMSComponentRenderer" > 
+	         <property name="userFacade" ref="userFacade" />
+	         <property name="typeService" ref="typeService" />
+	</bean>
 	     
-	<bean id="newsletterSubscriptionParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
-	        <property name="typeCode" value="NewsletterSubscriptionParagraphComponent" />
-	        <property name="renderer" ref="newsletterSubscriptionParagraphComponentRenderer" />
+	<bean id="newsletterSubscriptionFormParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
+	        <property name="typeCode" value="NewsletterSubscriptionFormParagraphComponent" />
+	        <property name="renderer" ref="newsletterSubscriptionFormParagraphComponentRenderer" />
 	</bean>
 	
+	
+	<!-- Controller -->
+	<bean id="newsletterSubscriptionAddOnController" class="com.fliegersoftware.addons.newsletteraddon.controllers.cms.NewsletterSubscriptionAddOnController">
+		<property name="newsletterSubscriptionFacade" ref="newsletterSubscriptionFacade" />
+	</bean>
 
 </beans>

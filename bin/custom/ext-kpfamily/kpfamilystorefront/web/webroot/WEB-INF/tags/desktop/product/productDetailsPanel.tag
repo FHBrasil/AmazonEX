@@ -13,7 +13,10 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 
+
 <div class="productDetailsPanel container">
+
+
     <div class="margin-top">
         <div class="col-xs-12 col-sm-6 v-bottom">
             <product:productImagePanel product="${product}" galleryImages="${galleryImages}" />

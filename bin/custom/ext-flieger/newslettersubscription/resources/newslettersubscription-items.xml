@@ -19,12 +19,24 @@
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
+
+	<relations>
+		<relation code="Customer2NewsletterSubscriptionRelation" generate="true" localized="false" autocreate="true">		
+			<sourceElement type="Customer" qualifier="customer" cardinality="one">
+               <modifiers />
+			</sourceElement>			
+			<targetElement type="NewsletterSubscription" qualifier="newsletterSubscriptions" cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>			
+		</relation>
+	</relations>
+
+
 	<itemtypes>
 
-		<typegroup name="newslettersubscription">		
-			
+		<typegroup name="newslettersubscription">				
 			<itemtype code="NewsletterSubscription" autocreate="true" generate="true">
-				<deployment table="NewsletterSubscription" typecode="29999"/>
+			<deployment table="NewsletterSubscription" typecode="20999"/>
 				<attributes>
 					<attribute qualifier="firstName" type="java.lang.String">
 						<persistence type="property" />
@@ -48,8 +60,7 @@
 						<persistence type="property" />
 					</attribute>
 				</attributes>
-			</itemtype>	
-				
+			</itemtype>					
 		</typegroup>
 		
 	</itemtypes>

@@ -13,10 +13,14 @@
 --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
 
 	<extension abstractclassprefix="Generated" classprefix="KpfamilyStorefront" name="kpfamilystorefront">
-		<requires-extension name="b2ccheckoutaddon"/>
+		
+		
+		<requires-extension name="newsletteraddon"/>
+<requires-extension name="b2ccheckoutaddon"/>
 		<requires-extension name="btg"/>
 		<requires-extension name="acceleratorstorefrontcommons"/>
-		<requires-extension name="kpfamilyfacades"/>
+		<requires-extension name="kpfamilyfacades"/>	
+		
 
 		<webmodule jspcompile="false" webroot="/kpfamilystorefront"/>
 			

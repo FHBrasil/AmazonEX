@@ -19,13 +19,12 @@
 		<requires-extension name="hmc"/>
 		<requires-extension name="addonsupport"/>
 		<requires-extension name="cms2"/>
-
+		<requires-extension name="newslettersubscription"/>
+		
 		<coremodule generated="true" manager="com.fliegersoftware.addons.newsletteraddon.jalo.NewsletteraddonManager" packageroot="com.fliegersoftware.addons.newsletteraddon"/>
 
 		<hmcmodule extensionclassname="com.fliegersoftware.addons.newsletteraddon.hmc.NewsletteraddonHMCExtension"/>
 					
-		
-
 	</extension>
 
 </extensioninfo>

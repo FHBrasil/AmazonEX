@@ -17,22 +17,18 @@
 
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
 
-	<!--
-		Example Data POJO
-	
-	<bean class="com.fliegersoftware.newslettersubscription.data.MyPojo">
-		<property name="id" type="String"/>
-		<property name="flag" type="boolean"/>
-	</bean>
-	-->
-	
-<!-- 	<bean class="com.flieger.data.NewsletterSubscriptionData">
+	<bean class="com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData">
 		<property name="firstName" type="java.lang.String"/>
 		<property name="lastName" type="java.lang.String"/>
 		<property name="titleCode" type="java.lang.String"/>
 		<property name="genderCode" type="java.lang.String"/>
+		<property name="email" type="java.lang.String"/>
 		<property name="storeCode" type="java.lang.String"/>
-		<property name="languageIsocode" type="java.lang.String"/>
-	</bean> -->
+		<property name="languageIsoCode" type="java.lang.String"/>		
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData">
+		<property name="newsletterSubscriptions" type="java.util.List&lt;com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData>"/>	
+	</bean>
 
 </beans>

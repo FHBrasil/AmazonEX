@@ -315,7 +315,7 @@ public class DefaultNewsletterSubscriberFacade implements NewsletterSubscriberFa
 
 		NewsletterSubscriberData newsletterData = null;
 
-		o: for (final NewsletterSubscriberModel oldModel : listOldModel)
+		for (final NewsletterSubscriberModel oldModel : listOldModel)
 		{
 			for (final NewsletterSubscriberModel newModel : listNewModel)
 			{

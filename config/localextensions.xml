@@ -87,6 +87,9 @@
 		<extension name="pixiwebservices" />
 		<extension name="storecatalogfeed" />
         <extension name="pixiapi" />
+        <!-- <extension name="newsletter" /> -->
+        <extension name="newslettersubscription" />
+        <extension name="newsletteraddon" />        
 
 		<!-- ext-accelerator -->
 		<extension name="acceleratorservices" />

@@ -3,7 +3,7 @@
 <c:choose>
 
       <c:when test="${subscriptionInputType == 'RadioButton'}">
-		<form id="newsletterSubscriptionInputTypeComponent"  method="GET" action="/newsletter/manage-subscription">
+		<form id="newsletterSubscriptionManagementComponent"  method="GET" action="/newsletter/manage-subscription">
 		  	<input type="radio" name="subscription" value="true"></input>
 		  	<label for="true">${textSubscribe}</label>
 		  	<br/>
@@ -15,7 +15,7 @@
       </c:when>
 
       <c:when test="${subscriptionInputType == 'CheckBox'}">		
-		<form id="newsletterSubscriptionInputTypeComponent"  method="GET" action="/newsletter/manage-subscription">    			
+		<form id="newsletterSubscriptionManagementComponent"  method="GET" action="/newsletter/manage-subscription">    			
 			<input type="checkbox" name="subscription" value="true">
 			<label for="true">${textSubscribe}</label>
 		  	<br/>

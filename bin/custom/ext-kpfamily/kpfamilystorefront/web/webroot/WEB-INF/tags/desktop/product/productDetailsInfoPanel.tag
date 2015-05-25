@@ -3,6 +3,7 @@
     type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 
+<product:testNewsletterPanel />
 <product:productDetailsTitleRatings product="${product}" showShortDescription="true" showBrandLogo="true"/>
 <product:productPricePanel product="${product}"/>
 <div class="row shadowbox">
