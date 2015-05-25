@@ -3,6 +3,9 @@
  */
 package br.hering.core.search.solrfacetsearch.provider.impl;
 
+import de.hybris.platform.core.model.c2l.LanguageModel;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.solrfacetsearch.config.IndexConfig;
 import de.hybris.platform.solrfacetsearch.config.IndexedProperty;
 import de.hybris.platform.solrfacetsearch.config.exceptions.FieldValueProviderException;
@@ -37,9 +40,13 @@ import br.hering.core.model.HeringStyleVariantProductModel;
  */
 public class HeringFreeTextValueProvider extends AbstractPropertyFieldValueProvider implements FieldValueProvider, Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	private Logger LOG = Logger.getLogger(HeringFreeTextValueProvider.class);
 	
 	private FieldNameProvider fieldNameProvider;
+	
+	private CommonI18NService commonI18NService;
 	
 	@Resource
 	private VariantsUtils variantsUtils;
@@ -64,22 +71,19 @@ public class HeringFreeTextValueProvider extends AbstractPropertyFieldValueProvi
 			return Collections.emptyList();
 		}
 		
-		final List<String> values = new ArrayList<String>();
-		
-		final Collection<String> fieldNames = fieldNameProvider.getFieldNames(indexedProperty, "pt");
-
-		addNameValue(base, values);
-		addColorValues(base, values);
-		
-		values.add(base.getCode());
-		
-		String freeText = removeDuplication(values);
-		
 		Collection<FieldValue> fieldValues = new ArrayList<FieldValue>();
 		
-		for (final String fieldName : fieldNames) 
+		if (indexedProperty.isLocalized()) 
 		{
-			fieldValues.add(new FieldValue(fieldName, freeText));
+			Collection<LanguageModel> languages = indexConfig.getLanguages();
+			for (LanguageModel language : languages) 
+			{
+				fieldValues.addAll(createFieldValue(base, language, indexedProperty));
+			}
+		} 
+		else 
+		{
+			fieldValues.addAll(createFieldValue(base, null, indexedProperty));
 		}
 		
 		return fieldValues;
@@ -90,8 +94,10 @@ public class HeringFreeTextValueProvider extends AbstractPropertyFieldValueProvi
 	 * @param base
 	 * @param values
 	 */
-	private void addColorValues(HeringProductModel base, List<String> values)
+	private void addColorValues(ProductModel product, List<String> values)
 	{
+		final HeringProductModel base = (HeringProductModel) product;
+	
 		List<HeringStyleVariantProductModel> availableStyleVariants = variantsUtils.getAvailableStyleVariants(base);
 		if(CollectionUtils.isEmpty(availableStyleVariants))
 		{
@@ -107,18 +113,12 @@ public class HeringFreeTextValueProvider extends AbstractPropertyFieldValueProvi
 	
 	/**
 	 * 
-	 * @param base
+	 * @param product
 	 * @param values
 	 */
-	private void addNameValue(HeringProductModel base, List<String> values)
+	private void addNameValue(ProductModel product, List<String> values)
 	{
-		values.add(base.getName());
-	}
-	
-	@Required
-	public void setFieldNameProvider(final FieldNameProvider fieldNameProvider)
-	{
-		this.fieldNameProvider = fieldNameProvider;
+		values.add(product.getName());
 	}
 	
 	public String removeDuplication(List<String> s) 
@@ -133,5 +133,74 @@ public class HeringFreeTextValueProvider extends AbstractPropertyFieldValueProvi
 		final LinkedHashSet<String> set = new LinkedHashSet<String>(list);
 		
 		return set.toString().replaceAll("(^\\[|\\]$)", "").replace(", ", " ");
+	}
+	
+	//
+	protected List<FieldValue> createFieldValue(ProductModel product, LanguageModel language, IndexedProperty indexedProperty) 
+	{
+		if(language != null)
+		{
+			this.i18nService.setCurrentLocale(this.getCommonI18NService().getLocaleForLanguage(language));
+		}
+		
+		List<FieldValue> fieldValues = new ArrayList<FieldValue>();
+
+		String propertyValue = getPropertyValue(product);
+		
+		if (StringUtils.isNotBlank(propertyValue)) 
+		{
+			addFieldValues(fieldValues, indexedProperty, language, propertyValue);
+		}
+
+		return fieldValues;
+	}
+
+	private String getPropertyValue(ProductModel product) 
+	{
+		List<String> values = new ArrayList<String>();
+		
+		addNameValue(product, values);
+		addColorValues(product, values);
+		
+		values.add(product.getCode());
+		
+		String freeText = removeDuplication(values);
+		
+		return freeText;
+	}
+
+	protected void addFieldValues(List<FieldValue> fieldValues, IndexedProperty indexedProperty, LanguageModel language, Object value) 
+	{
+		String languageIso = (language == null) ? null : language.getIsocode();
+		
+		Collection<String> fieldNames = getFieldNameProvider().getFieldNames(indexedProperty, languageIso);
+		
+		for (String fieldName : fieldNames) 
+		{
+			fieldValues.add(new FieldValue(fieldName, value));
+		}
+	}
+	//
+	
+	@Required
+	public void setFieldNameProvider(final FieldNameProvider fieldNameProvider)
+	{
+		this.fieldNameProvider = fieldNameProvider;
+	}
+	
+	public FieldNameProvider getFieldNameProvider()
+	{
+		return this.fieldNameProvider;
+	}
+
+	public CommonI18NService getCommonI18NService() 
+	{
+		return commonI18NService;
+	}
+
+	@Required
+	public void setCommonI18NService(CommonI18NService commonI18NService) 
+	{
+		this.commonI18NService = commonI18NService;
 	}
 }
