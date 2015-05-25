@@ -62,7 +62,6 @@
         <extension name="heringfacades" />
         <extension name="heringstorefront" />
         <extension name="heringcockpits" />
-        <extension name="heringws" />
         <extension name="heringstorefrontcommons" />
         <extension name="heringcheckoutaddon" />
         <extension name="textboxinfoaddon" />

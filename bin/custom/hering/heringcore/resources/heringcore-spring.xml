@@ -639,6 +639,7 @@
 	
 	<bean id="heringFreeTextValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.HeringFreeTextValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 	
 	<bean id="sizeAttributeComparator" class="de.hybris.platform.acceleratorservices.search.comparators.SizeAttributeComparator">

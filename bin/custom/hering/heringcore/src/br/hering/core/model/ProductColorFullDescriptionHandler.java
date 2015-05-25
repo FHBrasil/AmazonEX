@@ -24,7 +24,7 @@ public class ProductColorFullDescriptionHandler extends AbstractFeatureValueHand
 	{
 		Assert.notNull(product);
 		
-		Object featureValue = getFeatureValue(product, "DescriÃ§Ã£o cor");
+		Object featureValue = getFeatureValue(product, "Descrição cor");
 
 		return featureValue == null ? null : featureValue.toString();
 	}

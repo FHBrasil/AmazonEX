@@ -65,7 +65,7 @@ public class ProductJeansFlagValueProvider extends AbstractPropertyFieldValuePro
 		}
 		
 		JaloSession.getCurrentSession().setUser(UserManager.getInstance().getAdminEmployee());
-
+		//TODO FIX LANGUAGE
 		commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("pt"));
 		commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("BRL"));
 		
