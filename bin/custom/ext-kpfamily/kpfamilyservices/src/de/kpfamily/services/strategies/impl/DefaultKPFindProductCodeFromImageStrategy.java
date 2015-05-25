@@ -17,6 +17,7 @@ public class DefaultKPFindProductCodeFromImageStrategy implements
 		final File temp = new File(fullImagePath);
 		final String[] slices = StringUtils.split(temp.getName(), "_");
 		// First position must have the productCode
-		return slices[0];
+		final String productCode = slices[0] + "-style";
+		return productCode;
 	}
 }
