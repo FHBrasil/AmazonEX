@@ -56,17 +56,19 @@ public final class HeringComparatorFactory
 			
 			public int compare(final Map<String, ImageData> imageLeft, final Map<String, ImageData> imageRight)
 			{
-				ImageData imageDataLeft = imageLeft.get(PRODUCT);
-				ImageData imageDataRight = imageRight.get(PRODUCT);
-				
-				if(imageDataLeft != null && imageDataRight != null){
-   				String nameLeft = StringUtils.getSubNameImagem(imageDataLeft.getUrl());
-   				String nameRight = StringUtils.getSubNameImagem(imageDataRight.getUrl());
-   				
-   				return nameLeft.compareTo(nameRight);
-				} 
-				
 				return 0;
+				//TODO bug no codigo abaixo.
+//				ImageData imageDataLeft = imageLeft.get(PRODUCT);
+//				ImageData imageDataRight = imageRight.get(PRODUCT);
+//				
+//				if(imageDataLeft != null && imageDataRight != null){
+//   				String nameLeft = StringUtils.getSubNameImagem(imageDataLeft.getUrl());
+//   				String nameRight = StringUtils.getSubNameImagem(imageDataRight.getUrl());
+//   				
+//   				return nameLeft.compareTo(nameRight);
+//				} 
+//				
+//				return 0;
 			}
 		};
 	}

@@ -143,10 +143,6 @@ public class HeringSearchResultProductPopulator extends SearchResultProductPopul
 			target.setColors(colors);
 			target.setSizes(sizes);
 		}
-		else{
-			LOG.error("no index variants");
-			LOG.error(source.toString());
-		}
 	}
 	
 	private VariantColorData populateColor( String[] colorOptions )
@@ -254,11 +250,6 @@ public class HeringSearchResultProductPopulator extends SearchResultProductPopul
 			{
 				images.add(getImage(type, imageFormat, value));
 			}
-		}
-		else
-		{
-			LOG.info("Error on addImageData. Facet not found: facet:{" 
-					+ facetId + "}, source:{" + source + "}, imageFormat:{" + imageFormat + "}");
 		}
 	}
 	
