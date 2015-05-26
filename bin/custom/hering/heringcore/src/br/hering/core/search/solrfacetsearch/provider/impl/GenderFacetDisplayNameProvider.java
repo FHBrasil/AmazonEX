@@ -37,6 +37,7 @@ public class GenderFacetDisplayNameProvider extends AbstractFacetValueDisplayNam
 {
 	private EnumerationService enumerationService;
 	private I18NService i18nService;
+	
 	private CommonI18NService commonI18NService;
 	
 	@Resource

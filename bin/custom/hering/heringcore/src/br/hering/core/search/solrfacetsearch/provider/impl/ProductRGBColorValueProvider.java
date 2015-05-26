@@ -13,24 +13,6 @@
  */
 package br.hering.core.search.solrfacetsearch.provider.impl;
 
-import de.hybris.platform.classification.ClassificationService;
-import de.hybris.platform.classification.features.Feature;
-import de.hybris.platform.classification.features.FeatureList;
-import de.hybris.platform.core.model.product.ProductModel;
-import de.hybris.platform.jalo.JaloSession;
-import de.hybris.platform.jalo.user.UserManager;
-import de.hybris.platform.servicelayer.i18n.CommonI18NService;
-import de.hybris.platform.solrfacetsearch.config.IndexConfig;
-import de.hybris.platform.solrfacetsearch.config.IndexedProperty;
-import de.hybris.platform.solrfacetsearch.config.exceptions.FieldValueProviderException;
-import de.hybris.platform.solrfacetsearch.provider.FieldNameProvider;
-import de.hybris.platform.solrfacetsearch.provider.FieldValue;
-import de.hybris.platform.solrfacetsearch.provider.FieldValueProvider;
-import de.hybris.platform.solrfacetsearch.provider.impl.AbstractPropertyFieldValueProvider;
-import de.hybris.platform.store.services.BaseStoreService;
-import de.hybris.platform.util.Config;
-import de.hybris.platform.variants.model.VariantProductModel;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +29,21 @@ import org.springframework.beans.factory.annotation.Required;
 
 import br.hering.core.model.HeringProductModel;
 import br.hering.core.model.HeringSizeVariantProductModel;
+import de.hybris.platform.classification.ClassificationService;
+import de.hybris.platform.classification.features.Feature;
+import de.hybris.platform.classification.features.FeatureList;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.servicelayer.i18n.CommonI18NService;
+import de.hybris.platform.solrfacetsearch.config.IndexConfig;
+import de.hybris.platform.solrfacetsearch.config.IndexedProperty;
+import de.hybris.platform.solrfacetsearch.config.exceptions.FieldValueProviderException;
+import de.hybris.platform.solrfacetsearch.provider.FieldNameProvider;
+import de.hybris.platform.solrfacetsearch.provider.FieldValue;
+import de.hybris.platform.solrfacetsearch.provider.FieldValueProvider;
+import de.hybris.platform.solrfacetsearch.provider.impl.AbstractPropertyFieldValueProvider;
+import de.hybris.platform.store.services.BaseStoreService;
+import de.hybris.platform.util.Config;
+import de.hybris.platform.variants.model.VariantProductModel;
 
 
 public class ProductRGBColorValueProvider extends AbstractPropertyFieldValueProvider implements FieldValueProvider, Serializable
@@ -56,8 +53,7 @@ public class ProductRGBColorValueProvider extends AbstractPropertyFieldValueProv
 	@Resource
 	protected ClassificationService classificationService;
 	
-	@Resource
-	protected CommonI18NService commonI18NService;
+	private CommonI18NService commonI18NService;
 	
 	@Resource
 	protected BaseStoreService baseStoreService;
@@ -73,11 +69,6 @@ public class ProductRGBColorValueProvider extends AbstractPropertyFieldValueProv
 		{
 			return Collections.emptyList();
 		}
-		
-		JaloSession.getCurrentSession().setUser(UserManager.getInstance().getAdminEmployee());
-		//TODO FIX LANGUAGE
-		commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("pt"));
-		commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("BRL"));
 		
 		final HeringProductModel base = variantsUtils.getAvailableBaseProduct(model);
 		
@@ -172,5 +163,14 @@ public class ProductRGBColorValueProvider extends AbstractPropertyFieldValueProv
 	public void setFieldNameProvider(final FieldNameProvider fieldNameProvider)
 	{
 		this.fieldNameProvider = fieldNameProvider;
+	}
+
+	public CommonI18NService getCommonI18NService() {
+		return commonI18NService;
+	}
+
+	@Required
+	public void setCommonI18NService(CommonI18NService commonI18NService) {
+		this.commonI18NService = commonI18NService;
 	}
 }

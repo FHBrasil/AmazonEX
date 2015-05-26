@@ -175,6 +175,7 @@
 	
 	<bean id="genderValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.GenderValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 
 	<bean id="genderFacetDisplayNameProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.GenderFacetDisplayNameProvider">
@@ -185,6 +186,7 @@
 	
 	<bean id="productBlackfridayValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductBlackfridayValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 	
 	<bean id="salesFacetDisplayNameProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.SalesFacetDisplayNameProvider"/>
@@ -520,7 +522,7 @@
 	<bean id="defaultHeringProductQuantitySoldStrategy" class="br.hering.core.strategies.impl.DefaultHeringProductQuantitySoldStrategy" />
 	
 	<alias alias="heringKidsClothingFlagStrategy" name="defaultHeringKidsClothingFlagStrategy"/>
-	<bean id="defaultHeringKidsClothingFlagStrategy" class="br.hering.core.strategies.impl.DefaultHeringKidsClothingFlagStrategy" />
+	<bean id="defaultHeringKidsClothingFlagStrategy" class="br.hering.core.strategies.impl.DefaultHeringKidsClothingFlagStrategy"/>
 	
 	<alias alias="customerAccountService" name="defaultKPCustomerAccountService" />
 	<bean id="defaultKPCustomerAccountService" class="br.hering.core.customer.impl.DefaultKPCustomerAccountService" parent="defaultCustomerAccountService">
@@ -607,6 +609,7 @@
 	
 	<bean id="productJeansFlagValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductJeansFlagValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 	
 	<bean id="productKidsClothingFlagValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductKidsClothingFlagValueProvider" parent="abstractPropertyFieldValueProvider">
@@ -619,18 +622,22 @@
 	
 	<bean id="productRGBColorValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductRGBColorValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 	
 	<bean id="productColorCodeValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductColorCodeValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 	
 	<bean id="productDescricaoCorValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductDescricaoCorValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 	
 	<bean id="productSelectedColorValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductSelectedColorValueProvider" parent="abstractPropertyFieldValueProvider">
 		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
 	</bean>
 	
 	<bean id="productCodeValueProvider" class="br.hering.core.search.solrfacetsearch.provider.impl.ProductCodeValueProvider" parent="abstractPropertyFieldValueProvider">
