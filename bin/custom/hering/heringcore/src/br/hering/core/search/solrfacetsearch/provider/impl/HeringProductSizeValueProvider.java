@@ -30,7 +30,7 @@ import br.hering.core.model.HeringSizeVariantProductModel;
  * @author franthescollymaneira
  *
  */
-public class HeringProductSizeValueProvider extends OptionalModelPropertyFieldValueProvider
+public class GenderValueProvider extends OptionalModelPropertyFieldValueProvider
 {
 	@Resource
 	private VariantsUtils variantsUtils;

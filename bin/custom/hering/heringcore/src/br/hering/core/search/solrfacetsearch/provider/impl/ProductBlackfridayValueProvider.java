@@ -32,15 +32,14 @@ import br.hering.core.model.HeringSizeVariantProductModel;
 
 /**
  * @author Vinicius de Souza
+ * @author franthescollymaneira
  *
  */
-public class ProductBlackfridayValueProvider extends AbstractPropertyFieldValueProvider implements Serializable,
-		FieldValueProvider
+public class ProductBlackfridayValueProvider extends AbstractPropertyFieldValueProvider implements Serializable, FieldValueProvider
 {
 	private FieldNameProvider fieldNameProvider;
 
-	@Resource
-	protected CommonI18NService commonI18NService;
+	private CommonI18NService commonI18NService;
 	
 	@Resource
 	private ClassificationService classificationService;
@@ -56,8 +55,8 @@ public class ProductBlackfridayValueProvider extends AbstractPropertyFieldValueP
 			JaloSession.getCurrentSession().setUser(UserManager.getInstance().getAdminEmployee());
 
 			//TODO FIX LANGUAGE
-			commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("pt"));
-			commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("BRL"));
+			getCommonI18NService().setCurrentLanguage(getCommonI18NService().getLanguage("pt"));
+			getCommonI18NService().setCurrentCurrency(getCommonI18NService().getCurrency("BRL"));
 			
 			final HeringSizeVariantProductModel product = (HeringSizeVariantProductModel) model;
 			String tag = getFeatureValue(product, "Tag");
@@ -107,5 +106,16 @@ public class ProductBlackfridayValueProvider extends AbstractPropertyFieldValueP
 	public void setFieldNameProvider(final FieldNameProvider fieldNameProvider)
 	{
 		this.fieldNameProvider = fieldNameProvider;
+	}
+
+	public CommonI18NService getCommonI18NService() 
+	{
+		return commonI18NService;
+	}
+
+	@Required
+	public void setCommonI18NService(CommonI18NService commonI18NService) 
+	{
+		this.commonI18NService = commonI18NService;
 	}
 }

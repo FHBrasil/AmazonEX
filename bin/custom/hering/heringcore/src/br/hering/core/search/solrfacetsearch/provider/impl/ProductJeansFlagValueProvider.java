@@ -49,8 +49,7 @@ public class ProductJeansFlagValueProvider extends AbstractPropertyFieldValuePro
 	@Resource
 	private ClassificationService classificationService;
 	
-	@Resource
-	protected CommonI18NService commonI18NService;
+	private CommonI18NService commonI18NService;
 	
 	@Resource
 	protected BaseStoreService baseStoreService;
@@ -66,14 +65,8 @@ public class ProductJeansFlagValueProvider extends AbstractPropertyFieldValuePro
 		
 		JaloSession.getCurrentSession().setUser(UserManager.getInstance().getAdminEmployee());
 		//TODO FIX LANGUAGE
-		commonI18NService.setCurrentLanguage(commonI18NService.getLanguage("pt"));
-		commonI18NService.setCurrentCurrency(commonI18NService.getCurrency("BRL"));
-		
-//		LanguageModel currentLanguage = commonI18NService.getCurrentLanguage();
-//		CurrencyModel currentCurrency = commonI18NService.getCurrentCurrency();
-//		User user = JaloSession.getCurrentSession().getUser();
-//		
-//		System.out.println("user: " + user.getLogin() + " lang: " + currentLanguage.getIsocode() + " curr: " + currentCurrency.getIsocode() + " store: " + baseStoreService.getCurrentBaseStore().getUid());
+		getCommonI18NService().setCurrentLanguage(getCommonI18NService().getLanguage("pt"));
+		getCommonI18NService().setCurrentCurrency(getCommonI18NService().getCurrency("BRL"));
 		
 		final HeringSizeVariantProductModel product = (HeringSizeVariantProductModel) model;
 		
@@ -134,6 +127,15 @@ public class ProductJeansFlagValueProvider extends AbstractPropertyFieldValuePro
 	public void setFieldNameProvider(final FieldNameProvider fieldNameProvider)
 	{
 		this.fieldNameProvider = fieldNameProvider;
+	}
+
+	public CommonI18NService getCommonI18NService() {
+		return commonI18NService;
+	}
+
+	@Required
+	public void setCommonI18NService(CommonI18NService commonI18NService) {
+		this.commonI18NService = commonI18NService;
 	}
 
 }

@@ -15,6 +15,7 @@ package br.hering.core.search.solrfacetsearch.provider.impl;
 
 import de.hybris.platform.core.enums.Gender;
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.solrfacetsearch.config.IndexConfig;
 import de.hybris.platform.solrfacetsearch.config.IndexedProperty;
 import de.hybris.platform.solrfacetsearch.config.exceptions.FieldValueProviderException;
@@ -46,6 +47,8 @@ public class GenderValueProvider extends AbstractPropertyFieldValueProvider impl
 	protected static final String BABY_GENDER_PREFIX = "baby.";
 
 	private FieldNameProvider fieldNameProvider;
+	
+	private CommonI18NService commonI18NService;
 	
 	@Resource
 	private HeringKidsClothingFlagStrategy heringKidsClothingFlagStrategy;
@@ -142,4 +145,12 @@ public class GenderValueProvider extends AbstractPropertyFieldValueProvider impl
 		this.fieldNameProvider = fieldNameProvider;
 	}
 
+	public CommonI18NService getCommonI18NService() {
+		return commonI18NService;
+	}
+
+	@Required
+	public void setCommonI18NService(CommonI18NService commonI18NService) {
+		this.commonI18NService = commonI18NService;
+	}
 }
