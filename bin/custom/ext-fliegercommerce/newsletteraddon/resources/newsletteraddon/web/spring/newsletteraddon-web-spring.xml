@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2014 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.fliegersoftware.addons.newsletteraddon.controllers" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	<bean id="defaultNewsletteraddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="newsletteraddon"/>
+	</bean>
+
+	<bean id="defaultNewsletteraddonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultNewsletteraddonJavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getNewsletteraddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultNewsletteraddonBeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="NewsletteraddonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getNewsletteraddonBeforeViewHandler"/>
+	</bean>
+		
+		
+	<!-- Newsletter Subscription Management -->	
+	<bean id="newsletterSubscriptionManagementParagraphComponentRenderer"   
+	          class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionManagementParagraphComponentRenderer"
+	          parent="addOnJspIncludeCMSComponentRenderer" />
+	     
+	<bean id="newsletterSubscriptionManagementParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
+	        <property name="typeCode" value="NewsletterSubscriptionManagementParagraphComponent" />
+	        <property name="renderer" ref="newsletterSubscriptionManagementParagraphComponentRenderer" />
+	</bean>
+	
+	
+	<!-- Newsletter Subscription Form -->
+<!-- 	<alias name="newsletterSubscriptionFormParagraphComponentRenderer" alias="newsletterSubscriptionFormParagraphComponentRenderer" /> -->
+	<bean id="newsletterSubscriptionFormParagraphComponentRenderer" class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionFormParagraphComponentRenderer"
+	         parent="addOnJspIncludeCMSComponentRenderer" > 
+	         <property name="userFacade" ref="userFacade" />
+	         <property name="typeService" ref="typeService" />
+	</bean>
+	     
+	<bean id="newsletterSubscriptionFormParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
+	        <property name="typeCode" value="NewsletterSubscriptionFormParagraphComponent" />
+	        <property name="renderer" ref="newsletterSubscriptionFormParagraphComponentRenderer" />
+	</bean>
+	
+	
+	<!-- Controller -->
+	<bean id="newsletterSubscriptionAddOnController" class="com.fliegersoftware.addons.newsletteraddon.controllers.cms.NewsletterSubscriptionAddOnController">
+		<property name="newsletterSubscriptionFacade" ref="newsletterSubscriptionFacade" />
+	</bean>
+
+</beans>

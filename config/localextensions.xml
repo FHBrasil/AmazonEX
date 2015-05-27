@@ -65,7 +65,6 @@
         <extension name="heringstorefrontcommons" />
         <extension name="heringcheckoutaddon" />
         <extension name="textboxinfoaddon" />
-        <extension name="carrier" />
         <extension name="exacttarget" />
         <extension name="notificationservices" />
         <extension name="wishlist" />

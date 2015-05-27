@@ -22,7 +22,7 @@
     </bean>
 
     <bean id="baseDirectorySourceImages" class="java.lang.String">
-        <constructor-arg value="/HYBRIS/medias/ftp/babyartikel" />
+        <constructor-arg value="/HYBRIS/fliegercommerce/medias/ftp/babyartikel" />
     </bean>
 
     <!-- 1) Scan for files -->

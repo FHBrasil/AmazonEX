@@ -5,37 +5,7 @@ package br.hering.facades.facades.order.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
 
-import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
-import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
-import de.hybris.platform.commercefacades.order.data.CartData;
-import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
-import de.hybris.platform.commercefacades.product.data.PriceData;
-import de.hybris.platform.commercefacades.product.data.PriceDataType;
-import de.hybris.platform.commercefacades.user.data.AddressData;
-import de.hybris.platform.commercefacades.user.data.CustomerData;
-import de.hybris.platform.commercefacades.voucher.data.VoucherData;
-import de.hybris.platform.commerceservices.order.CommerceCartCalculationStrategy;
-import de.hybris.platform.core.enums.CreditCardType;
-import de.hybris.platform.core.model.c2l.CurrencyModel;
-import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.core.model.order.delivery.DeliveryModeModel;
-import de.hybris.platform.core.model.order.payment.CreditCardPaymentInfoModel;
-import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
-import de.hybris.platform.core.model.order.payment.PaymentModeModel;
-import de.hybris.platform.core.model.user.AddressModel;
-import de.hybris.platform.core.model.user.CustomerModel;
-import de.hybris.platform.order.PaymentModeService;
-import de.hybris.platform.payment.dto.CardType;
-import de.hybris.platform.payment.dto.TransactionStatus;
-import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
-import de.hybris.platform.servicelayer.dto.converter.Converter;
-import de.hybris.platform.servicelayer.session.SessionService;
-import de.hybris.platform.store.services.BaseStoreService;
-import de.hybris.platform.util.PriceValue;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,8 +21,8 @@ import br.hering.core.order.impl.DefaultHeringCommerceCheckoutService;
 import br.hering.core.payment.dto.HeringBillingInfo;
 import br.hering.core.payment.dto.KpCardInfo;
 import br.hering.facades.facades.order.HeringCheckoutFacade;
-import br.hering.facades.order.data.PaymentModeData;
 import br.hering.facades.order.data.CustomPaymentInfoData;
+import br.hering.facades.order.data.PaymentModeData;
 import br.hering.facades.order.data.VoucherPaymentInfoData;
 import br.hering.facades.populators.CartPaymentModePopulator;
 import br.hering.facades.populators.DebitPaymentInfoReversePopulator;
@@ -64,16 +34,38 @@ import br.hering.facades.populators.order.BoletoPaymentInfoPopulator;
 import br.hering.facades.populators.order.BoletoPaymentInfoReversePopulator;
 
 import com.adyen.services.payment.impl.AdyenCardInstallmentsService;
-import com.flieger.carrier.constants.CarrierConstants;
-import com.flieger.carrier.dao.CarrierDeliveryModeDAO;
-import com.flieger.carrier.model.CarrierZoneDeliveryModeModel;
-import com.flieger.carrier.services.CarrierDeliveryService;
 import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
 import com.flieger.payment.model.BoletoPaymentInfoModel;
 import com.flieger.payment.model.HeringDebitPaymentInfoModel;
 
+import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
 import de.hybris.platform.acceleratorservices.payment.cybersource.data.PaymentInfoData;
+import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
+import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
+import de.hybris.platform.commercefacades.product.data.PriceData;
+import de.hybris.platform.commercefacades.product.data.PriceDataType;
+import de.hybris.platform.commercefacades.user.data.AddressData;
+import de.hybris.platform.commercefacades.user.data.CustomerData;
+import de.hybris.platform.commercefacades.voucher.data.VoucherData;
+import de.hybris.platform.commerceservices.order.CommerceCartCalculationStrategy;
+import de.hybris.platform.core.enums.CreditCardType;
+import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.core.model.order.delivery.DeliveryModeModel;
+import de.hybris.platform.core.model.order.payment.CreditCardPaymentInfoModel;
+import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
+import de.hybris.platform.core.model.order.payment.PaymentModeModel;
+import de.hybris.platform.core.model.user.AddressModel;
+import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.order.PaymentModeService;
+import de.hybris.platform.payment.dto.CardType;
+import de.hybris.platform.payment.dto.TransactionStatus;
+import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
+import de.hybris.platform.servicelayer.session.SessionService;
+import de.hybris.platform.store.services.BaseStoreService;
+import de.hybris.platform.util.PriceValue;
 
 /**
  * @author Vinicius de Souza
@@ -109,13 +101,7 @@ implements HeringCheckoutFacade
 	private SessionService sessionService;
 
 	@Resource
-	private CarrierDeliveryService deliveryService;
-	
-	@Resource
 	protected BaseStoreService baseStoreService;
-	
-	@Resource
-	private CarrierDeliveryModeDAO countryZoneDeliveryModeDao;
 	
 	private PaymentModeService paymentModeService;
 	
@@ -429,10 +415,11 @@ implements HeringCheckoutFacade
 	@Override
 	public void resetDeliveryMode()
 	{
-		if(sessionService.getAttribute(CarrierConstants.SESSION_ATTR_POSTALCODE) == null)
-		{
-			return;
-		}
+//		XXX remoção de dependencia com extension carrier
+//		if(getSessionService().getAttribute(CarrierConstants.SESSION_ATTR_POSTALCODE) == null)
+//		{
+//			return;
+//		}
 		
 		final CartModel cartModel = super.getCart();
 		cartModel.setDeliveryMode(null);
@@ -448,55 +435,31 @@ implements HeringCheckoutFacade
 	@Override
 	public List<? extends DeliveryModeData> getSupportedDeliveryModes()
 	{
-		final List<DeliveryModeData> result = getSupportedDeliveryModes(getCart());
+//		XXX remoção de dependencia com extension carrier
+//		boolean isCarrierDeliveryModeEnabled = true;
+//		
+//		if(isCarrierDeliveryModeEnabled)
+//		{
+//			final List<DeliveryModeData> result = carrierDeliveryCalculationFacade.getSupportedDeliveryModes(getCart());
+//			
+//			if(CollectionUtils.isEmpty(result))
+//			{
+//				return Collections.emptyList();
+//			}
+//			
+//			prepareCheaper(result);
+//			
+//			prepareFaster(result);
+//			
+//			for(final DeliveryModeData r : result)
+//			{
+//				LOG.debug(r.getCode() + " - " + r.getDeliveryCost().getFormattedValue() + " - " + r.getEstimatedDeliveryDays());
+//			}
+//			
+//			return result;
+//		}
 		
-		if(CollectionUtils.isEmpty(result))
-		{
-			return Collections.emptyList();
-		}
-		
-		prepareCheaper(result);
-		
-		prepareFaster(result);
-		
-		for(final DeliveryModeData r : result)
-		{
-			LOG.debug(r.getCode() + " - " + r.getDeliveryCost().getFormattedValue() + " - " + r.getEstimatedDeliveryDays());
-		}
-		
-		return result;
-	}
-
-	/**
-	 * @param cartModel
-	 * @return
-	 */
-	private List<DeliveryModeData> getSupportedDeliveryModes(final CartModel cartModel)
-	{
-		if (cartModel == null || cartModel.getDeliveryAddress() == null)
-		{
-			return Collections.emptyList();
-		}
-		
-		final double weight = deliveryService.calculateTotalWeight(cartModel);
-		final double amount = cartModel.getSubtotal().doubleValue();
-		final String postalCode = cartModel.getDeliveryAddress().getPostalcode();
-		
-		final List<CarrierZoneDeliveryModeModel> supportedDeliveryModes = countryZoneDeliveryModeDao.findDeliveryModes(postalCode, weight, amount);
-
-		if(CollectionUtils.isEmpty(supportedDeliveryModes))
-		{
-			return Collections.emptyList();
-		}
-		
-		final List<DeliveryModeData> result = new ArrayList<DeliveryModeData>();
-		
-		for (final CarrierZoneDeliveryModeModel zoneDeliveryModeModel : supportedDeliveryModes)
-		{
-			result.add(convert(zoneDeliveryModeModel, postalCode, weight));
-		}
-		
-		return result;
+		return super.getSupportedDeliveryModes();
 	}
 
 	/**
@@ -541,61 +504,14 @@ implements HeringCheckoutFacade
 	@Override
 	protected DeliveryModeData convert(final DeliveryModeModel deliveryModeModel)
 	{
-		if (!(deliveryModeModel instanceof CarrierZoneDeliveryModeModel))
-		{
-			return super.convert(deliveryModeModel);
-		}
-		
-		final CartModel cartModel = getCart();
-		if (cartModel == null)
-		{
-			return null;
-		}
-		
-		if(cartModel.getDeliveryAddress() == null)
-		{
-			return null;
-		}
-		
-		String postalCode = cartModel.getDeliveryAddress().getPostalcode();
-		double weight = deliveryService.calculateTotalWeight(cartModel);
-
-		return convert((CarrierZoneDeliveryModeModel) deliveryModeModel, postalCode, weight);
-	}
-
-	/**
-	 * 
-	 * @param deliveryModeModel
-	 * @param postalCode
-	 * @param weight
-	 * @return
-	 */
-	protected DeliveryModeData convert(final CarrierZoneDeliveryModeModel deliveryModeModel, String postalCode, double weight)
-	{
-		if (super.getCart() == null)
-		{
-			return null;
-		}
-		
-		final DeliveryModeData zoneDeliveryModeData = getZoneDeliveryModeConverter().convert(deliveryModeModel);
-
-		double totalCost = super.getCart().getSubtotal().doubleValue();
-		CurrencyModel currency = super.getCart().getCurrency();
-
-		final PriceValue deliveryCost = deliveryService.getZipDeliveryCostAndDays(deliveryModeModel, totalCost, currency, postalCode, weight, zoneDeliveryModeData);
-		if (deliveryCost != null)
-		{
-			zoneDeliveryModeData.setDescription("Entrega em at&eacute; " 
-					+ zoneDeliveryModeData.getEstimatedDeliveryDays() 
-					+ " dias &uacute;teis ap&oacute;s a emiss&atilde;o da nota fiscal");
-			zoneDeliveryModeData.setDeliveryCost(
-					getPriceDataFactory().create(
-							PriceDataType.BUY, 
-							BigDecimal.valueOf(deliveryCost.getValue()), 
-							deliveryCost.getCurrencyIso()));
-		}
-
-		return zoneDeliveryModeData;
+		return super.convert(deliveryModeModel);
+//		XXX remoção de dependencia com extension carrier
+//		if (!(deliveryModeModel instanceof CarrierZoneDeliveryModeModel))
+//		{
+//			return super.convert(deliveryModeModel);
+//		}
+//		
+//		return carrierDeliveryCalculationFacade.convert((CarrierZoneDeliveryModeModel) deliveryModeModel, getCart());
 	}
 	
 	/* (non-Javadoc)

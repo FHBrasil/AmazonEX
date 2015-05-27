@@ -7,7 +7,6 @@ $lang=en
 
 # Zone Delivery Modes
 UPDATE ZoneDeliveryMode;code[unique=true];name[lang=$lang];description[lang=$lang]
- ;premium-gross;"Premium Delivery Mode";"1-2 business days"
- ;premium-net;"Premium Delivery Mode";"1-2 business days"
- ;standard-gross;"Standard Delivery Mode";"3-5 business days"
- ;standard-net;"Standard Delivery Mode";"3-5 business days"
+;dhl;"DHL";"For more than 35 years, DHL has built the world's premier global delivery network by trailblazing express shipping in one country after another. Over 220 countries and territories later, DHL is the global market leader of the international express and logistics industry. DHL specializes in providing customers with innovative and customized transportation solutions from a single source.  www.dhl.com"
+;dhl_nachname;"DHL";"For more than 35 years, DHL has built the world's premier global delivery network by trailblazing express shipping in one country after another. Over 220 countries and territories later, DHL is the global market leader of the international express and logistics industry. DHL specializes in providing customers with innovative and customized transportation solutions from a single source. www.dhl.com"
+;ups;"DHL Europe";"DHL Europe";

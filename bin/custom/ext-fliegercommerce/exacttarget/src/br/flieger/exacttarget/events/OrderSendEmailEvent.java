@@ -3,16 +3,6 @@
  */
 package br.flieger.exacttarget.events;
 
-import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
-import de.hybris.platform.core.model.order.OrderModel;
-import de.hybris.platform.core.model.order.delivery.DeliveryModeModel;
-import de.hybris.platform.core.model.order.payment.CreditCardPaymentInfoModel;
-import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
-import de.hybris.platform.core.model.order.payment.PaymentModeModel;
-import de.hybris.platform.servicelayer.i18n.CommonI18NService;
-import de.hybris.platform.util.Config;
-import de.hybris.platform.util.PriceValue;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +14,12 @@ import br.flieger.exacttarget.wsdl.api.APIProperty;
 import br.flieger.exacttarget.wsdl.api.Attribute;
 
 import com.adyen.services.payment.impl.AdyenCardInstallmentsService;
-import com.flieger.carrier.services.CarrierZoneDeliveryModeService;
+
+import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
+import de.hybris.platform.core.model.order.delivery.DeliveryModeModel;
+import de.hybris.platform.core.model.order.payment.PaymentModeModel;
+import de.hybris.platform.servicelayer.i18n.CommonI18NService;
+import de.hybris.platform.util.Config;
 
 /**
  * @author Vinicius de Souza
@@ -40,9 +35,6 @@ public class OrderSendEmailEvent extends AbstractExacttargetOrderEvent
 	
 	@Resource
 	protected AdyenCardInstallmentsService adyenCardInstallmentsService;
-	
-	@Resource
-	protected CarrierZoneDeliveryModeService zoneDeliveryModeService;
 	
 	private static final Logger LOG = Logger.getLogger(OrderSendEmailEvent.class);
 

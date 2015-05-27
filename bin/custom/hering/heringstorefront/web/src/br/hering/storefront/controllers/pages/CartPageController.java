@@ -13,31 +13,6 @@
  */
 package br.hering.storefront.controllers.pages;
 
-import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
-import de.hybris.platform.acceleratorservices.config.SiteConfigService;
-import de.hybris.platform.acceleratorservices.controllers.page.PageType;
-import de.hybris.platform.acceleratorservices.enums.CheckoutFlowEnum;
-import de.hybris.platform.acceleratorservices.enums.CheckoutPciOptionEnum;
-import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
-import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.ResourceBreadcrumbBuilder;
-import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController.SelectOption;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateQuantityForm;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
-import de.hybris.platform.commercefacades.order.CartFacade;
-import de.hybris.platform.commercefacades.order.data.CartData;
-import de.hybris.platform.commercefacades.order.data.CartModificationData;
-import de.hybris.platform.commercefacades.order.data.CartRestorationData;
-import de.hybris.platform.commercefacades.order.data.OrderEntryData;
-import de.hybris.platform.commercefacades.product.PriceDataFactory;
-import de.hybris.platform.commercefacades.voucher.VoucherFacade;
-import de.hybris.platform.commercefacades.voucher.data.VoucherData;
-import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
-import de.hybris.platform.order.CartService;
-import de.hybris.platform.servicelayer.session.SessionService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,13 +34,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.hering.facades.delivery.CarrierDeliveryCalculationFacade;
 import br.hering.facades.facades.order.HeringCheckoutFacade;
 import br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
-
-import com.flieger.carrier.services.CarrierDeliveryService;
+import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
+import de.hybris.platform.acceleratorservices.config.SiteConfigService;
+import de.hybris.platform.acceleratorservices.enums.CheckoutFlowEnum;
+import de.hybris.platform.acceleratorservices.enums.CheckoutPciOptionEnum;
+import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
+import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.ResourceBreadcrumbBuilder;
+import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateQuantityForm;
+import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.commercefacades.order.CartFacade;
+import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.order.data.CartModificationData;
+import de.hybris.platform.commercefacades.order.data.CartRestorationData;
+import de.hybris.platform.commercefacades.order.data.OrderEntryData;
+import de.hybris.platform.commercefacades.product.PriceDataFactory;
+import de.hybris.platform.commercefacades.voucher.VoucherFacade;
+import de.hybris.platform.commercefacades.voucher.data.VoucherData;
+import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
+import de.hybris.platform.order.CartService;
+import de.hybris.platform.servicelayer.session.SessionService;
 
 
 /**
@@ -101,12 +95,6 @@ public class CartPageController extends AbstractPageController
 	@Resource(name = "simpleBreadcrumbBuilder")
 	private ResourceBreadcrumbBuilder resourceBreadcrumbBuilder;
 
-	@Resource(name = "carrierDeliveryCalculationFacade")
-	private CarrierDeliveryCalculationFacade calculateDeliveryFacade;
-	
-	@Resource
-	private CarrierDeliveryService deliveryService;
-	
 	@Resource
 	private CartService cartService;
 	
@@ -150,13 +138,10 @@ public class CartPageController extends AbstractPageController
 	@RequireHardLogIn
 	public String cartCheck(final Model model, final RedirectAttributes redirectModel) throws CommerceCartModificationException
 	{
-		LOG.info("caiu no checkout");
 		SessionOverrideCheckoutFlowFacade.resetSessionOverrides();
 
 		if (!cartFacade.hasSessionCart() || cartFacade.getSessionCart().getEntries().isEmpty())
 		{
-			LOG.info("Missing or empty cart");
-
 			// No session cart or empty session cart. Bounce back to the cart page.
 			return REDIRECT_PREFIX + "/cart";
 		}
@@ -164,12 +149,9 @@ public class CartPageController extends AbstractPageController
 
 		if (validateCart(redirectModel))
 		{
-			LOG.info("invalido");
 			return REDIRECT_PREFIX + "/cart";
 		}
 
-		LOG.info("valido");
-		
 		// Redirect to the start of the checkout flow to begin the checkout process
 		// We just redirect to the generic '/checkout' page which will actually select the checkout flow
 		// to use. The customer is not necessarily logged in on this request, but will be forced to login
@@ -190,8 +172,6 @@ public class CartPageController extends AbstractPageController
 
 		if (!cartFacade.hasSessionCart() || cartFacade.getSessionCart().getEntries().isEmpty())
 		{
-			LOG.info("Missing or empty cart");
-
 			// No session cart or empty session cart. Bounce back to the cart page.
 			return REDIRECT_PREFIX + "/cart";
 		}
@@ -275,20 +255,21 @@ public class CartPageController extends AbstractPageController
 		return REDIRECT_PREFIX + "/cart";
 	}
 
-	@RequestMapping(value = "/calculateDelivery", method = RequestMethod.POST)
-	public String calculateDelivery(@RequestParam final String postalCode, final RedirectAttributes redirectModel) throws Exception 
-	{
-		final CartData cartData = cartFacade.getSessionCart();
-		final double weight = deliveryService.calculateTotalWeight(cartService.getSessionCart());
-		final double totalCost = cartData.getTotalPrice().getValue().doubleValue();
-		boolean existDelivery = calculateDeliveryFacade.setCheaperDeliveryMode(postalCode, weight, totalCost);
-
-		if(!existDelivery){
-			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.shipping.postcode.notfound");
-		}
-		
-		return REDIRECT_PREFIX + "/cart";
-	}
+//	XXX remoção de dependencia com extension carrier
+//	@RequestMapping(value = "/calculateDelivery", method = RequestMethod.POST)
+//	public String calculateDelivery(@RequestParam final String postalCode, final RedirectAttributes redirectModel) throws Exception 
+//	{
+//		final CartData cartData = cartFacade.getSessionCart();
+//		final double weight = deliveryService.calculateTotalWeight(cartService.getSessionCart());
+//		final double totalCost = cartData.getTotalPrice().getValue().doubleValue();
+//		boolean existDelivery = calculateDeliveryFacade.setCheaperDeliveryMode(postalCode, weight, totalCost);
+//
+//		if(!existDelivery){
+//			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.shipping.postcode.notfound");
+//		}
+//		
+//		return REDIRECT_PREFIX + "/cart";
+//	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String updateCartQuantities(@RequestParam("entryNumber") final long entryNumber, final Model model,

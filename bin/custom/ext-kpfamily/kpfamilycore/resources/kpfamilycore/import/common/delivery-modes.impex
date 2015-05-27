@@ -1,49 +1,44 @@
-#
-# Import Delivery Modes / Zones
-#
-#% impex.setLocale(Locale.GERMAN)
+#%impex.setLocale(Locale.GERMAN)
 
-# Currencies
+#Currencies
 $europeCurrency=EUR
 
-# Delivery Zones
-INSERT_UPDATE Zone                  ; code[unique=true]               ; countries(isocode)
-                                    ; uk                              ; GB,GG,IM,JE
-                                    ; continentalEurope               ; AD,AL,AT,BA,BE,BG,BY,CH,CY,CZ,DE,DK,EE,ES,FI,FO,FR,GI,GL,GR,HR,HU,IE,IS,IT,LI,LT,LU,LV,MC,MD,ME,MK,MT,NL,NO,PL,PT,RO,RS,RU,SE,SI,SK,SM,TR,UA,VA
+#DeliveryZones
+INSERT_UPDATE Zone;code[unique=true];countries(isocode)
+;at;AT
+;de;DE
+;zone3;BE,DK,LU,NL
+;zone31;PL,SK,SI,CZ,FR,ES,SE,GB
+;zone4;FI,EE,HU,IE,IT
+;zone41;
+;zone5;BG,LV,LT,RO,GR,PT,MT,CY
+;zone6;HR
 
-# Zone Delivery Modes
-INSERT_UPDATE ZoneDeliveryMode      ; code[unique=true]               ; net                                                                                                                                             ; active[default=true]
-                                    ; premium-net                     ; true
-                                    ; standard-net                    ; true
-                                    ; premium-gross                   ; false
-                                    ; standard-gross                  ; false
-                                    ; free-standard-shipping          ; true                                                                                                                                            ; false                          ;
+#ZoneDeliveryModes
+INSERT_UPDATE ZoneDeliveryMode;code[unique=true];net[default=false];active[default=true]
+;dhl;;
+;dhl_nachname;;
+;ups;;
 
-
-# UK
-INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='uk'][unique=true]                                                                                                           ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
-                                    ; premium-gross                   ;                                                                                                                                                 ; $europeCurrency                ; 19,99  ; 0,00
-                                    ; standard-gross                  ;                                                                                                                                                 ; $europeCurrency                ; 9,99   ; 0,00
-
-
-
-# Continental Europe
-INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='continentalEurope'][unique=true]                                                                                            ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
-                                    ; premium-gross                   ;                                                                                                                                                 ; $europeCurrency                ; 14,99  ; 0,00
-                                    ; standard-gross                  ;                                                                                                                                                 ; $europeCurrency                ; 7,99   ; 0,00
-
-# Pickup Delivery Mode
-INSERT_UPDATE PickUpDeliveryMode    ; code[unique=true]               ; active[default=true]                                                                                                                            ; supportedMode(code)
-                                    ; pickup                          ;                                                                                                                                                 ; BUY_AND_COLLECT
+INSERT_UPDATE ZoneDeliveryModeValue;deliveryMode(code)[unique=true];zone(code)[default='de'][unique=true];currency(isocode)[unique=true,default=$europeCurrency];value;minimum[unique=true]
+;dhl;de;;3,95;0,00;
+;dhl;de;;0,00;40,00;
+;dhl_nachname;de;;9,40;0,00;
+;dhl_nachname;de;;5,95;40,00;
+;ups;zone5;;19,95;0,00;
+;ups;zone3;;9,95;0,00;
+;ups;zone31;;12,95;0,00;
+;ups;zone4;;16,95;0,00;
+;ups;zone41;;15,90;0,00;
+;ups;zone6;;29,95;0,00;
+;ups;at;;6,95;0,00;
+;ups;at;;3,95;40,00;
 
 ##############################
-# Insert DeliveryMode taxes
+#InsertDeliveryModetaxes
 ##############################
-INSERT_UPDATE ProductTaxCode        ; productCode[unique=true]        ; taxCode                                                                                                                                         ; taxArea[unique=true]
-                                    ; premium-gross                   ; FR000000                                                                                                                                        ; DE
-                                    ; standard-gross                  ; FR000000                                                                                                                                        ; DE
-                                    ; standard-net                    ; FR000000                                                                                                                                        ; DE
-                                    ; pickup                          ; FR000000                                                                                                                                        ; DE
-                                    ; premium-net                     ; FR000000                                                                                                                                        ; DE
-
-
+INSERT_UPDATE ProductTaxCode;productCode[unique=true];taxCode;taxArea[unique=true]
+#;premium-gross;FR000000;DE
+#;standard-gross;FR000000;DE
+#;standard-net;FR000000;DE
+#;premium-net;FR000000;DE

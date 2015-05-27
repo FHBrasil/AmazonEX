@@ -78,7 +78,6 @@ import br.hering.core.model.HeringSizeVariantProductModel;
 import br.hering.core.model.HeringStyleVariantProductModel;
 import br.hering.core.search.solrfacetsearch.provider.impl.VariantsUtils;
 import br.hering.core.util.HeringComparatorFactory;
-import br.hering.facades.delivery.CarrierDeliveryCalculationFacade;
 import br.hering.facades.wishlist.impl.DefaultHeringWishlistFacade;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
@@ -126,9 +125,6 @@ public class ProductPageController extends AbstractPageController
 	
 	@Resource(name = "heringWishlistFacade")
 	private DefaultHeringWishlistFacade heringWishlistFacade;
-	
-	@Resource(name = "carrierDeliveryCalculationFacade")
-	private CarrierDeliveryCalculationFacade calculateDeliveryFacade;
 	
 	@Resource
 	private VariantsUtils variantsUtils;
@@ -304,14 +300,15 @@ public class ProductPageController extends AbstractPageController
 			{
 				msg = "<font color=\"#3E9C00\">Frete: Gr��tis</font>";
 			}
-			else{
-				
-				DeliveryModeData deliveryMode = calculateDeliveryFacade.getCheaperDeliveryMode(zipCode, weight, priceRow.getPrice().doubleValue());
-				if(deliveryMode != null)
-				{
-					msg = "<font color=\"#3E9C00\">Frete: " + deliveryMode.getDeliveryCost().getFormattedValue()+"</font>";
-				}
-			}
+			//XXX remoção de dependencia com extension carrier
+//			else{
+//				
+//				DeliveryModeData deliveryMode = calculateDeliveryFacade.getCheaperDeliveryMode(zipCode, weight, priceRow.getPrice().doubleValue());
+//				if(deliveryMode != null)
+//				{
+//					msg = "<font color=\"#3E9C00\">Frete: " + deliveryMode.getDeliveryCost().getFormattedValue()+"</font>";
+//				}
+//			}
 		}
 		
 		

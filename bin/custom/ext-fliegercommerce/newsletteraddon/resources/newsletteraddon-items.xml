@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2014 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+
+	<enumtypes> 	
+        <enumtype code="SubscriptionInputType" autocreate="true" generate="true" dynamic="true">
+            <value code="CheckBox"/>
+            <value code="RadioButton"/>
+        </enumtype>   
+    </enumtypes>
+ 
+ 
+    <itemtypes>    
+        <itemtype code="NewsletterSubscriptionManagementParagraphComponent" autocreate="true" generate="true" extends="CMSParagraphComponent">
+            <attributes>
+                <attribute qualifier="subscriptionInputType" type="SubscriptionInputType">
+                    <description>Subscription input type</description>
+                    <modifiers read="true" write="true" search="true" optional="false" />
+                    <persistence type="property" />
+                </attribute>                             
+                <attribute type="localized:java.lang.String" qualifier="textSubscribe">
+                	<description>Text for the Subscribe Radio Button or Check Box</description>
+                    <modifiers read="true" write="true" search="true" optional="true" />
+                    <persistence type="property" />
+                </attribute>
+                <attribute type="localized:java.lang.String" qualifier="textUnsubscribe">
+                	<description>Text for the Unsubscribe Radio Button</description>
+                    <modifiers read="true" write="true" search="true" optional="true" />
+                    <persistence type="property" />
+                </attribute>
+            </attributes>
+        </itemtype>
+        
+        <itemtype code="NewsletterSubscriptionFormParagraphComponent" autocreate="true" generate="true" extends="CMSParagraphComponent" />
+     
+    </itemtypes>
+
+
+</items>
