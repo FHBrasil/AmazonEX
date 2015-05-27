@@ -53,4 +53,9 @@
 	<!-- VALIDATOR -->
 	<alias name="carrierZoneDeliveryModeValueValidator" alias="zoneDeliveryModeValueValidator"/>
 	<bean id="carrierZoneDeliveryModeValueValidator" class="com.flieger.carrier.order.interceptors.CarrierZoneDeliveryModeValueValidator"/>
+	
+	<!-- Facade -->
+	<alias name="defaultCarrierDeliveryCalculationFacade" alias="carrierDeliveryCalculationFacade"/>
+	<bean id="defaultCarrierDeliveryCalculationFacade" class="com.flieger.carrier.facades.impl.DefaultCarrierDeliveryCalculationFacade"/>
+	
 </beans>

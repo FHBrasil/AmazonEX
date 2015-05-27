@@ -25,9 +25,6 @@ import br.hering.fulfilmentprocess.message.order.Itens;
 import br.hering.fulfilmentprocess.message.order.Pagamento;
 import br.hering.fulfilmentprocess.message.order.Pedido;
 
-import com.flieger.carrier.model.CarrierZoneDeliveryModeModel;
-import com.flieger.carrier.services.CarrierDeliveryService;
-import com.flieger.carrier.services.CarrierZoneDeliveryModeService;
 import com.flieger.data.NewsletterSubscriberData;
 import com.flieger.facades.NewsletterSubscriberFacade;
 import com.flieger.payment.model.BoletoPaymentInfoModel;
@@ -86,12 +83,6 @@ public class DefaultExportOrderService extends AbstractHeringOrderService {
 
 	@Resource(name = "newsletterSubscriptionFacade")
 	private NewsletterSubscriberFacade newsletterSubscriptionFacade;
-	
-	@Resource
-	CarrierDeliveryService deliveryService;
-
-	@Resource
-	private CarrierZoneDeliveryModeService zoneDeliveryModeService;
 	
 	@Resource
 	private VoucherService voucherService;
@@ -451,16 +442,16 @@ public class DefaultExportOrderService extends AbstractHeringOrderService {
 	 * @param order
 	 * @param pedido
 	 */
+	//XXX remoção de dependencia com extension carrier
 	private void buildCarrierData(final OrderModel order,
 			final DadosPedido dadosPedido) {
-		Pedido pedido = dadosPedido.getPedido();
-
-		CarrierZoneDeliveryModeModel deliveryMode = (CarrierZoneDeliveryModeModel) order.getDeliveryMode();
-		pedido.setFormaEntrega(deliveryMode.getTransportMode());
-		pedido.setTransportadora(deliveryMode.getCode());
-		pedido.setPeso(BigDecimal.valueOf(deliveryService.calculateTotalWeight(order)));
-		pedido.setValorFrete(BigDecimal.valueOf(order.getDeliveryCost().doubleValue()));
-		pedido.setPrazoMaximoEntrega(order.getEstimatedDeliveryDays());
+//		Pedido pedido = dadosPedido.getPedido();
+//		CarrierZoneDeliveryModeModel deliveryMode = (CarrierZoneDeliveryModeModel) order.getDeliveryMode();
+//		pedido.setFormaEntrega(deliveryMode.getTransportMode());
+//		pedido.setTransportadora(deliveryMode.getCode());
+//		pedido.setPeso(BigDecimal.valueOf(deliveryService.calculateTotalWeight(order)));
+//		pedido.setValorFrete(BigDecimal.valueOf(order.getDeliveryCost().doubleValue()));
+//		pedido.setPrazoMaximoEntrega(order.getEstimatedDeliveryDays());
 	}
 
 	/**

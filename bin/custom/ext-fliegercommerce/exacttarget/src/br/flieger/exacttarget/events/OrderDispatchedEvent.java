@@ -3,12 +3,6 @@
  */
 package br.flieger.exacttarget.events;
 
-import de.hybris.platform.ordersplitting.model.ConsignmentModel;
-import de.hybris.platform.servicelayer.i18n.CommonI18NService;
-import de.hybris.platform.util.Config;
-
-import java.util.LinkedList;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,8 +11,9 @@ import org.apache.log4j.Logger;
 import br.flieger.exacttarget.wsdl.api.APIProperty;
 import br.flieger.exacttarget.wsdl.api.Attribute;
 import br.hering.fulfilmentprocess.model.OrderInvoiceModel;
-
-import com.flieger.carrier.services.CarrierZoneDeliveryModeService;
+import de.hybris.platform.ordersplitting.model.ConsignmentModel;
+import de.hybris.platform.servicelayer.i18n.CommonI18NService;
+import de.hybris.platform.util.Config;
 
 /**
  * @author Vinicius de Souza
@@ -27,9 +22,6 @@ import com.flieger.carrier.services.CarrierZoneDeliveryModeService;
 @SuppressWarnings("serial")
 public class OrderDispatchedEvent extends AbstractExacttargetOrderEvent
 {
-	@Resource
-	protected CarrierZoneDeliveryModeService zoneDeliveryModeService;
-	
 	@Resource
 	protected CommonI18NService commonI18NService;
 	

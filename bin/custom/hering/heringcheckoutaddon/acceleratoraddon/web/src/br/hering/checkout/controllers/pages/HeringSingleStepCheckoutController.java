@@ -60,7 +60,6 @@ import br.hering.checkout.controllers.HeringcheckoutaddonControllerConstants;
 import br.hering.core.enums.TipoDeEndereco;
 import br.hering.core.util.HeringPageType;
 import br.hering.core.util.SelectOption;
-import br.hering.facades.delivery.CarrierDeliveryCalculationFacade;
 import br.hering.facades.order.data.CustomPaymentInfoData;
 import br.hering.facades.order.data.PaymentModeData;
 import br.hering.facades.order.data.VoucherPaymentInfoData;
@@ -103,9 +102,6 @@ public class HeringSingleStepCheckoutController extends
 	
 	@Resource
 	private I18NService i18nService;
-	
-	@Resource
-	protected CarrierDeliveryCalculationFacade carrierDeliveryCalculationFacade;
 	
 	@Resource
 	protected HeringVoucherFacade heringVoucherFacade;

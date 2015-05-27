@@ -639,9 +639,6 @@
 	<bean id="heringCustomerFacade" class="br.hering.facades.customer.impl.DefaultHeringCustomerFacade" parent="defaultCustomerFacade">
 	</bean>
 	
-	<alias name="defaultCarrierDeliveryCalculationFacade" alias="carrierDeliveryCalculationFacade"/>
-	<bean id="defaultCarrierDeliveryCalculationFacade" class="br.hering.facades.delivery.impl.DefaultCarrierDeliveryCalculationFacade"/>
-	
 	<alias name="defaultHeringOrderHistoryPopulator" alias="orderHistoryPopulator"/>
 	<bean id="defaultHeringOrderHistoryPopulator"
 	      class="br.hering.facades.populators.HeringOrderHistoryPopulator" parent="defaultOrderHistoryPopulator">

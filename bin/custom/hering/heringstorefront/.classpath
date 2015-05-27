@@ -24,5 +24,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/exacttarget"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/notificationservices"/>
 	<classpathentry kind="lib" path="lib/SintegraIE-0.2.jar"/>
+	<classpathentry kind="src" path="/carrier"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

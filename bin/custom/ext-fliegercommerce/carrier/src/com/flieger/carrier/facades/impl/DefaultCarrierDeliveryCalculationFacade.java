@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.hering.facades.delivery.impl;
+package com.flieger.carrier.facades.impl;
 
 import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
@@ -10,6 +10,7 @@ import de.hybris.platform.commercefacades.product.PriceDataFactory;
 import de.hybris.platform.commercefacades.product.data.PriceData;
 import de.hybris.platform.commercefacades.product.data.PriceDataType;
 import de.hybris.platform.core.model.c2l.CurrencyModel;
+import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.deliveryzone.model.ZoneDeliveryModeModel;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
@@ -28,10 +29,9 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 
-import br.hering.facades.delivery.CarrierDeliveryCalculationFacade;
-
 import com.flieger.carrier.constants.CarrierConstants;
 import com.flieger.carrier.dao.CarrierDeliveryModeDAO;
+import com.flieger.carrier.facades.CarrierDeliveryCalculationFacade;
 import com.flieger.carrier.model.CarrierZoneDeliveryModeModel;
 import com.flieger.carrier.services.CarrierDeliveryService;
 
@@ -67,7 +67,7 @@ public class DefaultCarrierDeliveryCalculationFacade implements CarrierDeliveryC
 	
 	@Resource(name = "acceleratorCheckoutFacade")
 	private AcceleratorCheckoutFacade checkoutFacade; 
-
+	
 	/**
 	 * 
 	 * @param postalCode
@@ -212,5 +212,82 @@ public class DefaultCarrierDeliveryCalculationFacade implements CarrierDeliveryC
 		}
 
 		return data;
+	}
+	
+	/**
+	 * 
+	 * @param deliveryModeModel
+	 * @param postalCode
+	 * @param weight
+	 * @return
+	 */
+	@Override
+	public DeliveryModeData convert(final CarrierZoneDeliveryModeModel deliveryModeModel, CartModel cart)
+	{
+		if (cart == null)
+		{
+			return null;
+		}
+		
+		if(cart.getDeliveryAddress() == null)
+		{
+			return null;
+		}
+		
+		String postalCode = cart.getDeliveryAddress().getPostalcode();
+		double weight = deliveryService.calculateTotalWeight(cart);
+		
+		final DeliveryModeData zoneDeliveryModeData = zoneDeliveryModeConverter.convert(deliveryModeModel);
+
+		double totalCost = cart.getSubtotal().doubleValue();
+		CurrencyModel currency = cart.getCurrency();
+
+		final PriceValue deliveryCost = deliveryService.getZipDeliveryCostAndDays(deliveryModeModel, totalCost, currency, postalCode, weight, zoneDeliveryModeData);
+		if (deliveryCost != null)
+		{
+			zoneDeliveryModeData.setDescription("Entrega em at&eacute; " 
+					+ zoneDeliveryModeData.getEstimatedDeliveryDays() 
+					+ " dias &uacute;teis ap&oacute;s a emiss&atilde;o da nota fiscal");
+			zoneDeliveryModeData.setDeliveryCost(
+					priceDataFactory.create(
+							PriceDataType.BUY, 
+							BigDecimal.valueOf(deliveryCost.getValue()), 
+							deliveryCost.getCurrencyIso()));
+		}
+
+		return zoneDeliveryModeData;
+	}
+	
+	/**
+	 * @param cartModel
+	 * @return
+	 */
+	@Override
+	public List<DeliveryModeData> getSupportedDeliveryModes(final CartModel cartModel)
+	{
+		if (cartModel == null || cartModel.getDeliveryAddress() == null)
+		{
+			return Collections.emptyList();
+		}
+		
+		final double weight = deliveryService.calculateTotalWeight(cartModel);
+		final double amount = cartModel.getSubtotal().doubleValue();
+		final String postalCode = cartModel.getDeliveryAddress().getPostalcode();
+		
+		final List<CarrierZoneDeliveryModeModel> supportedDeliveryModes = countryZoneDeliveryModeDao.findDeliveryModes(postalCode, weight, amount);
+
+		if(CollectionUtils.isEmpty(supportedDeliveryModes))
+		{
+			return Collections.emptyList();
+		}
+		
+		final List<DeliveryModeData> result = new ArrayList<DeliveryModeData>();
+		
+		for (final CarrierZoneDeliveryModeModel zoneDeliveryModeModel : supportedDeliveryModes)
+		{
+			result.add(convert(zoneDeliveryModeModel, cartModel));
+		}
+		
+		return result;
 	}
 }
