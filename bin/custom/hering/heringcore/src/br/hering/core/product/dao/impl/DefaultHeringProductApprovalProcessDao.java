@@ -52,7 +52,7 @@ public class DefaultHeringProductApprovalProcessDao extends AbstractItemDao impl
 		final FlexibleSearchQuery fsQuery = new FlexibleSearchQuery(query);
 		fsQuery.setStart(0);
 		fsQuery.setCount(count);
-		fsQuery.setNeedTotal(true);
+		fsQuery.setNeedTotal(false);
 		fsQuery.setResultClassList(Arrays.asList(HeringStyleVariantProductModel.class));
 		fsQuery.addQueryParameter("as", ArticleApprovalStatus.APPROVED);
 		fsQuery.addQueryParameter("cvl", versions);
@@ -80,7 +80,7 @@ public class DefaultHeringProductApprovalProcessDao extends AbstractItemDao impl
 		final FlexibleSearchQuery fsQuery = new FlexibleSearchQuery(query);
 		fsQuery.setStart(0);
 		fsQuery.setCount(count);
-		fsQuery.setNeedTotal(true);
+		fsQuery.setNeedTotal(false);
 		fsQuery.setResultClassList(Arrays.asList(HeringProductModel.class));
 		fsQuery.addQueryParameter("as", ArticleApprovalStatus.APPROVED);
 		fsQuery.addQueryParameter("cvl", versions);
@@ -109,7 +109,7 @@ public class DefaultHeringProductApprovalProcessDao extends AbstractItemDao impl
 		final FlexibleSearchQuery fsQuery = new FlexibleSearchQuery(query);
 		fsQuery.setStart(0);
 		fsQuery.setCount(count);
-		fsQuery.setNeedTotal(true);
+		fsQuery.setNeedTotal(false);
 		fsQuery.setResultClassList(Arrays.asList(HeringProductModel.class));
 		fsQuery.addQueryParameter("cs", ArticleApprovalStatus.CHECK);
 		fsQuery.addQueryParameter("cvl", versions);
