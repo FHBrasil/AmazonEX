@@ -62,14 +62,14 @@ insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[la
 # ------------------------------------------------------------------------------
 insert_update HeringProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttypeStyle;
 "#% beforeEach: line.put(1,line.get(1)+""-base""); "
-"#% impex.includeExternalDataMedia(""Product_bas.csv"", ""UTF-8"", ';', 1, -1);"
+"#% impex.includeExternalDataMedia(""VariantProduct.csv"", ""UTF-8"", ';', 1, -1);"
 #
 insert_update HeringStyleVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttypeSize;$baseProduct
 "#% beforeEach: 
         line.put(1, line.get(1)+""-style"");
         line.put(12, line.get(12)+""-base"");
 "
-"#% impex.includeExternalDataMedia(""Product_bas.csv"", ""UTF-8"", ';', 1, -1);"
+"#% impex.includeExternalDataMedia(""VariantProduct.csv"", ""UTF-8"", ';', 1, -1);"
 # 
 insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$baseProduct;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];size[lang=de][default='unique'];;
 "#%beforeEach: line.put(5, line.get(5)+""-style""); "
