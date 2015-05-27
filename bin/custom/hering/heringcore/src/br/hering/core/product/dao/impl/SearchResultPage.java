@@ -34,7 +34,7 @@ public class SearchResultPage<E>
 	
 	public Collection<E> nextPage() 
 	{
-		LOG.debug(String.format("Requesting page %s", ++currentPage));
+		LOG.info(String.format("Requesting page %s", ++currentPage));
 		return fsService.<E>search(fsQuery).getResult();
 	}
 }
