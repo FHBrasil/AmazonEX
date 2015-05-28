@@ -16,15 +16,11 @@
 <%@ taglib prefix="multi-checkout"
     tagdir="/WEB-INF/tags/addons/b2ccheckoutaddon/desktop/checkout/multi"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%--c:url value="/checkout/multi/add-payment-method" var="choosePaymentMethodUrl"/--%>
 <header>
     <h2>
         <spring:theme code="checkout.single.payment.title" />
     </h2>
 </header>
-<%--     <form:form method="post" commandName="paymentDetailsForm" --%>
-<%--             class="create_update_payment_form" --%>
-<%--             action="${request.contextPath}/checkout/single/placeOrder"> --%>
 <c:forEach items="${paymentModes}" var="paymentMode">
     <input type="hidden" name="voucherAmountEqualsOrderAmount"
         value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
@@ -184,6 +180,18 @@
                 </div>
             </section>
         </c:if>
+        <c:if test="${paymentMode.code == 'Advance'}">
+            <section id="payment-advance">
+                <header>
+                    <label> <input type="radio" name="paymentMode"
+                        value="${paymentMode.code}" ${checked} id="${paymentMode.name}" />
+                        ${paymentMode.name}
+                    </label>
+                </header>
+                <p>
+                   ${paymentMode.description}
+                </p>
+            </section>
+        </c:if>
     </div>
 </c:forEach>
-<%--     </form:form> --%>
