@@ -16,6 +16,7 @@
 	<classpathentry exported="true" kind="lib" path="resources"/>
 	<classpathentry kind="src" output="eclipsebin/web/classes" path="web/src"/>
 	<classpathentry kind="src" output="eclipsebin/web/classes" path="web/testsrc"/>
+	<classpathentry kind="src" path="web/addonsrc"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/heringcheckoutaddon"/>
 	<classpathentry kind="src" path="/newsletter"/>
