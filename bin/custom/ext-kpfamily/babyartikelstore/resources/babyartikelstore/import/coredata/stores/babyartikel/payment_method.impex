@@ -1,4 +1,0 @@
-$lang=de
-update PaymentMode;code[unique=true];description[lang=$lang];name[lang=$lang];
-;"CreditCard";"Credit card description";"Credit Card";
-;"OnlineDebit";"Débito online description";"Debito";
