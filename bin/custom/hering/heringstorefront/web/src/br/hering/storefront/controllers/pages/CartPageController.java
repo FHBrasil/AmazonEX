@@ -424,8 +424,6 @@ public class CartPageController extends AbstractPageController
 			return true;
 		}
 		
-		LOG.info("no errors");
-		
 		return false;
 	}
 	

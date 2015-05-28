@@ -118,24 +118,18 @@ public class CheckoutController extends AbstractCheckoutController
 	@RequestMapping(method = RequestMethod.GET)
 	public String checkout(final RedirectAttributes redirectModel)
 	{
-		LOG.info("caiu no checkout");
 		if (hasValidCart())
 		{
-			LOG.info("hasValidCart true");
 			if (validateCart(redirectModel))
 			{
-				LOG.info("validateCart true");
 				return REDIRECT_PREFIX + "/cart";
 			}
 			else
 			{
-				LOG.info("validateCart false");
 				checkoutFacade.prepareCartForCheckout();
 				return getCheckoutRedirectUrl();
 			}
 		}
-		LOG.info("hasValidCart false");
-		LOG.info("Missing, empty or unsupported cart");
 
 		// No session cart or empty session cart. Bounce back to the cart page.
 		return REDIRECT_PREFIX + "/cart";
