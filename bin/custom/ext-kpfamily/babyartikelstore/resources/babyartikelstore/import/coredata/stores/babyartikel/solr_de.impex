@@ -10,18 +10,14 @@ $lang=de
 
 # Solr Indexed Property
 UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
- ;$solrIndexedType;brand;"Marke"
  ;$solrIndexedType;category;"Kategorie"
  ;$solrIndexedType;code;"Code"
- ;$solrIndexedType;collection;"Kollektion"
  ;$solrIndexedType;description;"Beschreibung"
  ;$solrIndexedType;itemtype;"Typ"
- ;$solrIndexedType;manufacturerName;"Name des Herstellers"
  ;$solrIndexedType;name;"Name"
  ;$solrIndexedType;price;"Preis"
  ;$solrIndexedType;size;"Größe"
  ;$solrIndexedType;style;"Stil"
- ;$solrIndexedType;summary;"Zusammenfassung"
  
 # Define the available sorts
 UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang]
