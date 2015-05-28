@@ -18,13 +18,4 @@
 			</c:choose>
 		</div>
 	</div>
-	<!--
-	<div class="f-row">
-		<div class="left"><i class="fa fa-user"></i> <b>Consultora<br>Online</b></div>
-		<div class="right">
-			<a href="#">n�s ajudamos a montar seu look</a>
-			<a href="#">d�vidas sobre nossas pe�as</a>
-		</div>
-	</div>
-	-->
 </div>

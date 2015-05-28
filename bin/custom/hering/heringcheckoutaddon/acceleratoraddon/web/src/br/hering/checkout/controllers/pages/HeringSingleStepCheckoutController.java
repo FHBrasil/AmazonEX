@@ -371,7 +371,7 @@ public class HeringSingleStepCheckoutController extends
 		addressForm.setFirstName(userData.getFirstName());
 		addressForm.setLastName(userData.getLastName());
 		addressForm.setReceiver(userData.getName());
-		addressForm.setCountryIso("BR");
+		addressForm.setCountryIso("DE");
 		addressForm.setShippingAddress(Boolean.TRUE);
 	}
 	
@@ -1081,7 +1081,7 @@ public class HeringSingleStepCheckoutController extends
 	protected HeringAddressForm getPreparedAddressForm() {
 		final CustomerData currentCustomerData = getUser();
 		final HeringAddressForm addressForm = new HeringAddressForm();
-		addressForm.setCountryIso("BR");
+		addressForm.setCountryIso("DE");
 		if (getCheckoutCustomerStrategy().isAnonymousCheckout()) {
 			return addressForm;
 		}
