@@ -31,6 +31,13 @@ INSERT_UPDATE BaseStore2DeliveryModeRel;source(uid)[unique=true, default=$storeU
 ;;dhl_nachname
 ;;ups
 
-
 INSERT_UPDATE BaseStore2WarehouseRel;source(uid)[unique=true];target(code)[unique=true]
 ;$storeUid;default
+
+INSERT_UPDATE StandardPaymentMode;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];active;paymentinfotype(code)
+;creditcard;"Kreditkarte";"creditcard";"Nach dem Absenden Ihrer Bestellung werden Ihre Kartendaten abgefragt. Nach erfolgreicher Prüfung erhalten Sie eine E-Mail mit Ihrer Bestellbestätigung.";"payment with creditcard";true;CreditCardPaymentInfo
+;advance;"Vorauskasse";"Prepaid / Debit";"Mit Ihrer Bestellbestätigung senden wir Ihnen per Mail unsere Bankverbindung sowie den Verwendungszweck für Ihre Überweisung. Nach Eingang Ihrer Zahlung wird Ihre Bestellung verschickt.";"payment in advance";true;AdvancePaymentInfo
+
+UPDATE DeliveryMode;code[unique=true];supportedpaymentmodes(code);
+;dhl;creditcard,advance;
+;ups;creditcard,advance;
