@@ -5,6 +5,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%-- 
+XXX removendo carrier, isso precisa virar addon     
 <c:url value="${product.url}/calculateDelivery" var="productCalculateDeliveryActionUrl" />
 <a class="fancybox prazos-entrega" href="#modal-prazos-entrega"><spring:theme
         code="product.shipping.price.check" /></a>
@@ -23,4 +25,4 @@
             <font color="#3E9C00">Frete:</font>
         </div>
     </div>
-</div>
+</div> --%>
