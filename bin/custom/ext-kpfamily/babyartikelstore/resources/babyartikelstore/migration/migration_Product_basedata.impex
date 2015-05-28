@@ -23,7 +23,7 @@ $baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalo
 $approvalstatus=approvalstatus(code)[default='approved']
 # 
 "#% impex.setTargetFile(""Product.csv"");"
-insert_update Product;code[unique=true];;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;code;
+insert_update Product;code[unique=true];;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;code;;
 "#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$productCatalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }}) AND {p:code} NOT LIKE '%bas'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 #
 "#% impex.setTargetFile(""Product_bas.csv"");"
@@ -31,8 +31,8 @@ insert_update Product;code[unique=true];;name[lang=de];name[lang=en];$approvalst
 "#% impex.exportItems(""SELECT {p:pk} FROM {KPProduct AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$productCatalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }}) AND {p:code} LIKE '%bas'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # 
 "#% impex.setTargetFile(""VariantProduct.csv"");"
-insert_update Allgemein;code[unique=true];;name[lang=de];name[lang=en];baseProduct(code);$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];groesse[lang=de];;
-"#% impex.exportItems(""SELECT {v:pk} FROM {Allgemein AS v JOIN KPProduct AS p ON {p:pk} = {v:baseProduct} JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$productCatalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+insert_update KPVariantProduct;code[unique=true];;name[lang=de];name[lang=en];code;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;
+"#% impex.exportItems(""SELECT {v:pk} FROM {KPVariantProduct AS v JOIN KPProduct AS p ON {p:pk} = {v:baseProduct} JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$productCatalog'} WHERE {p:code} NOT IN({{ SELECT {code} FROM {KPVoucherProduct} }})"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # ---- -------------------------------------------------------------------------
 # 
 # 
@@ -56,22 +56,22 @@ insert_update HeringStyleVariantProduct;code[unique=true];$catalogVersion;name[l
 "
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
 # 
-insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;$baseProduct;size[lang=de][default='unique']
-"#% beforeEach: line.put(12, line.get(12)+""-style""); "
+insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;$baseProduct;size[lang=de][default='unique'];
+"#% beforeEach: line.put(12, line.get(12)+""-style"");; "
 "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
 # ------------------------------------------------------------------------------
-insert_update HeringProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttypeStyle;
+insert_update HeringProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;;$varianttypeStyle;
 "#% beforeEach: line.put(1,line.get(1)+""-base""); "
 "#% impex.includeExternalDataMedia(""VariantProduct.csv"", ""UTF-8"", ';', 1, -1);"
 #
-insert_update HeringStyleVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttypeSize;$baseProduct
+insert_update HeringStyleVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$baseProduct;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];$varianttypeSize;$baseProduct
 "#% beforeEach: 
         line.put(1, line.get(1)+""-style"");
-        line.put(12, line.get(12)+""-base"");
+        line.put(5, line.get(5)+""-base"");
 "
 "#% impex.includeExternalDataMedia(""VariantProduct.csv"", ""UTF-8"", ';', 1, -1);"
 # 
-insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$baseProduct;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];size[lang=de][default='unique'];;
+insert_update HeringSizeVariantProduct;code[unique=true];$catalogVersion;name[lang=de];name[lang=en];$baseProduct;$approvalstatus;description[lang=de];description[lang=en];shortDescription[lang=de];shortDescription[lang=en];unit(code)[default='pieces'];;
 "#%beforeEach: line.put(5, line.get(5)+""-style""); "
 "#% impex.includeExternalDataMedia(""VariantProduct.csv"", ""UTF-8"", ';', 1, -1);"
 # ---- -------------------------------------------------------------------------
