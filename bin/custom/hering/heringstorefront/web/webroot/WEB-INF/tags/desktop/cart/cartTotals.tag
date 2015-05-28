@@ -46,7 +46,7 @@
         <%-- RESUMO DO PEDIDO // --%>
         <div class="right">
             <ul>
-                <li><a href="/store"><i class="fa fa-angle-left"></i> Continuar comprando</a></li>
+                <li><a href="/"><i class="fa fa-angle-left"></i> Continuar comprando</a></li>
                 <li class="right">Resumo do pedido</li>
             </ul>
             <div>

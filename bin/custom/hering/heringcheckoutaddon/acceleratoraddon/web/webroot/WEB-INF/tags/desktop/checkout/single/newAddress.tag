@@ -16,8 +16,9 @@
      
 <section id="new-address"
     style="${empty showEditAddress || showEditAddress eq false ? 'display: none' : 'display: block'};">
+    <c:url value="/checkout/single/add-address" var="addNewAddressUrl"/>
     <form:form method="post"
-            action="/store/pt/checkout/single/add-address"
+            action="${addNewAddressUrl}"
             commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm">
         <input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
         <form:hidden path="addressId" class="add_edit_delivery_address_id"

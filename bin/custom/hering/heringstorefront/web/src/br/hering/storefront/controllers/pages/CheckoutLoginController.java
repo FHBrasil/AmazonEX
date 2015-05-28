@@ -112,7 +112,7 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 	{
 		model.addAttribute("pageType", "CHECKOUT");
 		model.addAttribute("expressCheckoutAllowed", Boolean.valueOf(checkoutFlowFacade.isExpressCheckoutEnabledForStore()));
-		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.TRUE);
 		
 		return getDefaultLoginPage(loginError, session, model);
@@ -135,7 +135,7 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 			bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
 		}
 		
-		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.parseBoolean(form.getPessoaFisica()));
 		
 		if(!Boolean.parseBoolean(form.getPessoaFisica()))

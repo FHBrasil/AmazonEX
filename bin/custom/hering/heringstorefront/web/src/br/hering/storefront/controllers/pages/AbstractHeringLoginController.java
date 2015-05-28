@@ -150,11 +150,10 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 			model.addAttribute(form);
 			model.addAttribute(new LoginForm());
 			model.addAttribute(new HeringGuestForm());
-			model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("BR"));
+			model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 			model.addAttribute("pf", Boolean.valueOf(form.getPessoaFisica()));
 			model.addAttribute("basesCode", getBasesCode());
 			model.addAttribute("basesChecked", form.getBaseStore());
-//			GlobalMessages.addErrorMessage(model, "form.global.error");
 			return handleRegistrationError(model);
 		}
 		

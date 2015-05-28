@@ -169,7 +169,7 @@ public class LoginPageController extends AbstractHeringLoginController
 		}
 		model.addAttribute("forgotPassword", result);
 		model.addAttribute("pageType", "LOGIN");
-		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.TRUE);
 
 		if (!loginError)
@@ -328,7 +328,7 @@ public class LoginPageController extends AbstractHeringLoginController
 		}
 
 		model.addAttribute("pageType", "LOGIN");
-		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.parseBoolean(form.getPessoaFisica()));
 		
 		if(!Boolean.parseBoolean(form.getPessoaFisica()))

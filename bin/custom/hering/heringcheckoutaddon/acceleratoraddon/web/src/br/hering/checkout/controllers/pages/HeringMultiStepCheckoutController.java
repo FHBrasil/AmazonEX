@@ -1670,7 +1670,7 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 
 		final HeringAddressForm addressForm = new HeringAddressForm();
 
-		addressForm.setCountryIso("BR");
+		addressForm.setCountryIso("DE");
 
 		if (getCheckoutCustomerStrategy().isAnonymousCheckout())
 		{
@@ -1770,7 +1770,7 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 		model.addAttribute("expressCheckoutAllowed", Boolean.valueOf(getCheckoutFacade().isExpressCheckoutAllowedForCart()));
 		model.addAttribute("taxEstimationEnabled", Boolean.valueOf(getCheckoutFacade().isTaxEstimationEnabledForCart()));
 
-		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("BR"));
+		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("DE"));
 	}
 
 	@ModelAttribute("hasAppliedVoucher")

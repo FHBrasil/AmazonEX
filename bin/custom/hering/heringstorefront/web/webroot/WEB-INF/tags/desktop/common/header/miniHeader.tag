@@ -28,7 +28,7 @@
 	<div class="container">
 		<div class="content">
 			<h2>
-				<a href="/store" title="Hering">Hering</a>
+				<a href="/" title="Hering">Hering</a>
 			</h2>
 			<cms:pageSlot position="SearchBox" var="component">
 				<cms:component component="${component}"/>
