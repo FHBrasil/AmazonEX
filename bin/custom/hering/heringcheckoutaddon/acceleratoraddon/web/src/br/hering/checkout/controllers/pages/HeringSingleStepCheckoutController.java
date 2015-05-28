@@ -20,6 +20,7 @@ import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.voucher.data.VoucherData;
 import de.hybris.platform.commercefacades.voucher.exceptions.VoucherOperationException;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
+import de.hybris.platform.core.model.order.payment.AdvancePaymentInfoModel;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.InvalidCartException;
@@ -690,6 +691,13 @@ public class HeringSingleStepCheckoutController extends
 								"checkout.error.verifyFields");
 						return this.prepareSingleStepCheckout(model);
 					}
+				} 
+				else //FIXME isso esta errado, tem q implementar o advance aqqui
+				{
+					LOG.warn("TEM QUE IMPLEMENTAR O ADVANCE");
+					isPaymentAuthorized = true;
+					final OrderData orderData = getCheckoutFacade().placeOrder();
+					return redirectToOrderConfirmationPage(orderData);
 				}
 			} else if(ccPaymentInfo != null){
 				isPaymentAuthorized = getCheckoutFacade().authorizePayment(/*paymentDetailsForm.getCv2Number()*/);
@@ -744,7 +752,13 @@ public class HeringSingleStepCheckoutController extends
 					paymentMode.getCode())) {
 				success = this.saveDebitPaymentMethod(paymentDetailsForm,
 						request);
-			} else {
+			} 
+			else if(HeringcheckoutaddonWebConstants.ADVANCE.equalsIgnoreCase(paymentMode.getCode()))
+			{
+				LOG.warn("FALTA IMPLEMENTAR PLACE ORDER PARA ADVANCE");
+				success = true;
+			}
+			else {
 				success = false;
 			}
 			return success;
