@@ -9,9 +9,7 @@ $storeUid=babyartikel
 $defaultCurrency=EUR
 $languages=de,en
 $defaultLanguage=de
-$unitedKingdom=GB,GG,IM,JE
-$europeNotUK=AD,AL,AT,BA,BE,BG,BY,CH,CY,CZ,DE,DK,EE,ES,FI,FO,FR,GI,GL,GR,HR,HU,IE,IS,IT,LI,LT,LU,LV,MC,MD,ME,MK,MT,NL,NO,PL,PT,RO,RS,RU,SE,SI,SK,SM,TR,UA,VA
-$deliveryCountries=$unitedKingdom,$europeNotUK
+$deliveryCountries=AT,DE,BE,DK,LU,NL,PL,SK,SI,CZ,FR,ES,SE,GB,FI,EE,HU,IE,IT,BG,LV,LT,RO,GR,PT,MT,CY,HR
 $orderProcessCode=order-process
 $pickupInStoreMode=DISABLED
 $paymentProvider=Mockup
@@ -22,18 +20,24 @@ INSERT_UPDATE PromotionGroup;Identifier[unique=true];
 ;$promoGrp;
 
 # Base Store
-INSERT_UPDATE BaseStore;uid[unique=true];catalogs(id);currencies(isocode);net;taxGroup(code);storelocatorDistanceUnit(code);defaultCurrency(isocode);languages(isocode);defaultLanguage(isocode);deliveryCountries(isocode);submitOrderProcessCode;pickupInStoreMode(code);paymentProvider;expressCheckoutEnabled;freeDeliveryThreshold;
-;$storeUid;$productCatalog,$classificationCatalog;$currencies;$net;de-taxes;km;$defaultCurrency;$languages;$defaultLanguage;$deliveryCountries;$orderProcessCode;$pickupInStoreMode;$paymentProvider;$expressCheckoutEnabled;49.99;
+INSERT_UPDATE BaseStore;uid[unique=true];catalogs(id);currencies(isocode);net;taxGroup(code);storelocatorDistanceUnit(code);defaultCurrency(isocode);languages(isocode);defaultLanguage(isocode);deliveryCountries(isocode);submitOrderProcessCode;pickupInStoreMode(code);paymentProvider;expressCheckoutEnabled;
+;$storeUid;$productCatalog,$classificationCatalog;$currencies;$net;de-taxes;km;$defaultCurrency;$languages;$defaultLanguage;$deliveryCountries;$orderProcessCode;$pickupInStoreMode;$paymentProvider;$expressCheckoutEnabled;
 
 UPDATE Employee;uid[unique=true];sessionLanguage(isoCode);sessionCurrency(isocode)
 ;admin;$defaultLanguage;$defaultCurrency
 
 INSERT_UPDATE BaseStore2DeliveryModeRel;source(uid)[unique=true, default=$storeUid];target(code)[unique=true]
-;;premium-net
-;;standard-net
-;;premium-gross
-;;standard-gross
-;;free-standard-shipping
+;;dhl
+;;dhl_nachname
+;;ups
 
 INSERT_UPDATE BaseStore2WarehouseRel;source(uid)[unique=true];target(code)[unique=true]
 ;$storeUid;default
+
+INSERT_UPDATE StandardPaymentMode;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];active;paymentinfotype(code)
+;creditcard;"Kreditkarte";"creditcard";"Nach dem Absenden Ihrer Bestellung werden Ihre Kartendaten abgefragt. Nach erfolgreicher Prüfung erhalten Sie eine E-Mail mit Ihrer Bestellbestätigung.";"payment with creditcard";true;CreditCardPaymentInfo
+;advance;"Vorauskasse";"Prepaid / Debit";"Mit Ihrer Bestellbestätigung senden wir Ihnen per Mail unsere Bankverbindung sowie den Verwendungszweck für Ihre Überweisung. Nach Eingang Ihrer Zahlung wird Ihre Bestellung verschickt.";"payment in advance";true;AdvancePaymentInfo
+
+UPDATE DeliveryMode;code[unique=true];supportedpaymentmodes(code);
+;dhl;creditcard,advance;
+;ups;creditcard,advance;

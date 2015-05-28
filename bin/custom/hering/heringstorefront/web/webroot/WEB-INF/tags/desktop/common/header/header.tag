@@ -16,7 +16,7 @@
         <%-- STORE LOGO --%>
         <h1>
             <span id="menu-toggle"> <span></span>
-            </span> <a href="/store" title="${siteName}">${siteName}</a>
+            </span> <a href="/" title="${siteName}">${siteName}</a>
         </h1>
         <c:if test="${pageType != 'SINGLESTEPCHECKOUT'}">
             <%-- NAVIGATION MENU --%>

@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/platform"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/carrier"/>
 	<classpathentry exported="true" kind="lib" path="resources"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/axis.jar"/>

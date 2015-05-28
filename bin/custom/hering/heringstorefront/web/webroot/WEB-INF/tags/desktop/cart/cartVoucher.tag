@@ -12,10 +12,11 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%-- caso NAO tenha sido carregado o voucher --%>
 <c:if test="${not hasAppliedVoucher}">
-    <form:form action="/store/pt/cart/redeemVoucher" method="get" class="discount-coupon">
+	<c:url value="/cart/redeemVoucher" var="cartRedeemVoucherFormAction" />
+    <form:form action="${cartRedeemVoucherFormAction}" method="get" class="discount-coupon">
         <h3>Cupom de Desconto</h3>
         <div>
-            <label>Digite o cï¿½digo:</label> <input type="text" name="voucherCode"
+            <label>Digite o código:</label> <input type="text" name="voucherCode"
                 id="cupom-desconto" required />
             <button class="btn-ok btn" type="submit">
                 <spring:theme code="voucher.calculate" />
@@ -25,7 +26,8 @@
 </c:if>
 <%-- caso tenha sido carregado o voucher --%>
 <c:if test="${hasAppliedVoucher}">
-    <form:form action="/store/pt/cart/releaseVoucher" method="get">
+	<c:url value="/cart/releaseVoucher" var="releaseVoucherFormAction" />
+    <form:form action="${releaseVoucherFormAction}" method="get">
         <h3>Cupom de Desconto</h3>
         <div>
             <button class="btn-ok btn" type="submit">

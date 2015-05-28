@@ -11,7 +11,6 @@
         <requires-extension name="acceleratorfacades" />
         <requires-extension name="heringcore" />
         <requires-extension name="adyen" />
-        <requires-extension name="carrier" />
         <requires-extension name="exacttarget" />
         <requires-extension name="newsletter" />
         <coremodule generated="true" manager="de.hybris.platform.jalo.extension.GenericManager"

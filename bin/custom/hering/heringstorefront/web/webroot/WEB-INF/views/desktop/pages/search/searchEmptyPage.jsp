@@ -36,22 +36,9 @@
                         <h1>Procure em nossas categorias</h1>
                     </header>
                     <ul class="categorias-tile">
-                        <li><a href="/store/pt/search?q=:relevance:grupo:Acess�rios"
-                            title="Acess�rios"><img alt=""
-                                src="/store/_ui/desktop/theme-${themeName}/images/campanha/Busca-nao-encontrada-ACESSORIOS.jpg"></a></li>
-                        <li><a
-                            href="/store/pt/Categorias/Blusas/c/016?q=:relevance:gender:FEMALE"
-                            title="Blusas"><img alt=""
-                                src="/store/_ui/desktop/theme-${themeName}/images/campanha/Busca-nao-encontrada-BLUSAS.jpg"></a></li>
-                        <li><a
-                            href="/store/pt/Categorias/Camisas/c/038?q=:relevance:gender:MALE"
-                            title="Camisas"><img alt=""
-                                src="/store/_ui/desktop/theme-${themeName}/images/campanha/Busca-nao-encontrada-CAMISAS.jpg"></a></li>
-                        <li><a
-                            href="/store/pt/Categorias/Vestidos/c/037?q=:relevance:gender:FEMALE"
-                            title="Vestidos"><img alt=""
-                                src="/store/_ui/desktop/theme-${themeName}/images/campanha/Busca-nao-encontrada-VESTIDOS.jpg"></a></li>
-                        <li class="join"></li>
+                        <li><a href="/" title="">
+                        	<img alt="" src="/"></a>
+                       	</li>
                     </ul>
                 </section>
             </div>

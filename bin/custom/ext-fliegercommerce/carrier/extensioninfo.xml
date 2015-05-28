@@ -8,6 +8,8 @@
     <extension abstractclassprefix="Generated" classprefix="Carrier" managername="CarrierManager"
         managersuperclass="de.hybris.platform.jalo.extension.Extension" name="carrier">
         <requires-extension name="commerceservices" />
+         <requires-extension name="commercefacades" />
+          <requires-extension name="acceleratorfacades" />
         <coremodule generated="true" manager="com.flieger.carrier.jalo.CarrierManager"
             packageroot="com.flieger.carrier" />
     </extension>

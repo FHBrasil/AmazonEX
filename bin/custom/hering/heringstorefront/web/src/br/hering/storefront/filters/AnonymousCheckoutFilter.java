@@ -13,12 +13,6 @@
  */
 package br.hering.storefront.filters;
 
-import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
-import de.hybris.platform.commerceservices.strategies.CheckoutCustomerStrategy;
-import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.order.CartService;
-import de.hybris.platform.servicelayer.session.SessionService;
-
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -26,11 +20,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.flieger.carrier.constants.CarrierConstants;
+import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
+import de.hybris.platform.commerceservices.strategies.CheckoutCustomerStrategy;
+import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.order.CartService;
+import de.hybris.platform.servicelayer.session.SessionService;
 
 /**
  *
@@ -52,11 +49,11 @@ public class AnonymousCheckoutFilter extends OncePerRequestFilter
 			final CartModel cartModel = getCartService().getSessionCart();
 			cartModel.setDeliveryAddress(null);
 			cartModel.setPaymentInfo(null);
-
-			if(getSessionService().getAttribute(CarrierConstants.SESSION_ATTR_POSTALCODE) == null)
-			{
-				cartModel.setDeliveryMode(null);
-			}
+//XXX remoção de dependencia com extension carrier
+//			if(getSessionService().getAttribute(CarrierConstants.SESSION_ATTR_POSTALCODE) == null)
+//			{
+//				cartModel.setDeliveryMode(null);
+//			}
 			
 			getCartService().saveOrder(cartModel);
 			

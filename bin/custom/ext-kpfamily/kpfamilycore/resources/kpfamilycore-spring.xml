@@ -382,5 +382,4 @@
     <bean id="defaultProductSupplierService"
             class="de.kpfamily.core.service.impl.DefaultProductSupplierService"
             parent="abstractBusinessService"/>
-    
 </beans>

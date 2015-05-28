@@ -80,7 +80,7 @@ public class HeringPaymentBillingAddressValidator implements Validator
 	 */
 	protected void validateCountrySpecificFields(final AddressForm addressForm, final Errors errors)
 	{
-		if (StringUtils.equalsIgnoreCase("br", addressForm.getCountryIso()))
+		if (StringUtils.equalsIgnoreCase("de", addressForm.getCountryIso()))
 		{
 
 			final HeringAddressForm heringForm = (HeringAddressForm) addressForm;

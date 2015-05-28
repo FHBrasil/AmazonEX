@@ -25,8 +25,9 @@
 <section id="cart-bottom">
     <div class="container">
         <div class="left">
-            <%-- \\ CALCULE O FRETE --%>
-            <form:form action="${request.contextPath}/cart/calculateDelivery" method="POST"
+<%--        
+		XXX removendo carrier, isso precisa virar addon     
+		<form:form action="${request.contextPath}/cart/calculateDelivery" method="POST"
                 class="calculate-freight" id="calculateFrete">
                 <h3>
                     <spring:theme code="basket.page.totals.delivery.calculate" />
@@ -39,15 +40,13 @@
                         style="width: 110px" />
                     <button type="submit" onclick="cepFunction()" class="btn-ok btn">ok</button>
                 </div>
-            </form:form>
-            <%-- CUPOM DE DESCONTO --%>
-            <%-- cartVoucher.tag --%>
+            </form:form> --%>
             <cart:cartVoucher />
         </div>
         <%-- RESUMO DO PEDIDO // --%>
         <div class="right">
             <ul>
-                <li><a href="/store"><i class="fa fa-angle-left"></i> Continuar comprando</a></li>
+                <li><a href="/"><i class="fa fa-angle-left"></i> Continuar comprando</a></li>
                 <li class="right">Resumo do pedido</li>
             </ul>
             <div>
