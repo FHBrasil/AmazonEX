@@ -75,3 +75,5 @@
 <%-- Babyartikel Customs --%>
 <link rel="stylesheet" type="text/css" media="all"
     href="${themeResourcePath}/css/babyartikel-main.css" />
+<link rel="stylesheet" type="text/css" media="all"
+    href="${themeResourcePath}/fonts/babyartikel-fonts.css" />
