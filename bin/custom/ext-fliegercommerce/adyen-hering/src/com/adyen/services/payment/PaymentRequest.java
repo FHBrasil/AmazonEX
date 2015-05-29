@@ -7,6 +7,8 @@
 
 package com.adyen.services.payment;
 
+import java.util.Arrays;
+
 public class PaymentRequest  implements java.io.Serializable {
     private com.adyen.services.common.Amount additionalAmount;
 
@@ -1310,4 +1312,186 @@ public class PaymentRequest  implements java.io.Serializable {
             _javaType, _xmlType, typeDesc);
     }
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PaymentRequest [");
+		if (additionalAmount != null) {
+			builder.append("additionalAmount=");
+			builder.append(additionalAmount);
+			builder.append(", ");
+		}
+		if (additionalData != null) {
+			builder.append("additionalData=");
+			builder.append(Arrays.toString(additionalData));
+			builder.append(", ");
+		}
+		if (amount != null) {
+			builder.append("amount=");
+			builder.append(amount);
+			builder.append(", ");
+		}
+		if (bankAccount != null) {
+			builder.append("bankAccount=");
+			builder.append(bankAccount);
+			builder.append(", ");
+		}
+		if (billingAddress != null) {
+			builder.append("billingAddress=");
+			builder.append(billingAddress);
+			builder.append(", ");
+		}
+		if (browserInfo != null) {
+			builder.append("browserInfo=");
+			builder.append(browserInfo);
+			builder.append(", ");
+		}
+		if (card != null) {
+			builder.append("card=");
+			builder.append(card);
+			builder.append(", ");
+		}
+		if (dccQuote != null) {
+			builder.append("dccQuote=");
+			builder.append(dccQuote);
+			builder.append(", ");
+		}
+		if (deliveryAddress != null) {
+			builder.append("deliveryAddress=");
+			builder.append(deliveryAddress);
+			builder.append(", ");
+		}
+		if (deliveryDate != null) {
+			builder.append("deliveryDate=");
+			builder.append(deliveryDate);
+			builder.append(", ");
+		}
+		if (deviceFingerprint != null) {
+			builder.append("deviceFingerprint=");
+			builder.append(deviceFingerprint);
+			builder.append(", ");
+		}
+		if (elv != null) {
+			builder.append("elv=");
+			builder.append(elv);
+			builder.append(", ");
+		}
+		if (fraudOffset != null) {
+			builder.append("fraudOffset=");
+			builder.append(fraudOffset);
+			builder.append(", ");
+		}
+		if (installments != null) {
+			builder.append("installments=");
+			builder.append(installments);
+			builder.append(", ");
+		}
+		if (merchantAccount != null) {
+			builder.append("merchantAccount=");
+			builder.append(merchantAccount);
+			builder.append(", ");
+		}
+		if (mpiData != null) {
+			builder.append("mpiData=");
+			builder.append(mpiData);
+			builder.append(", ");
+		}
+		if (orderReference != null) {
+			builder.append("orderReference=");
+			builder.append(orderReference);
+			builder.append(", ");
+		}
+		if (persistentCookie != null) {
+			builder.append("persistentCookie=");
+			builder.append(persistentCookie);
+			builder.append(", ");
+		}
+		if (recurring != null) {
+			builder.append("recurring=");
+			builder.append(recurring);
+			builder.append(", ");
+		}
+		if (reference != null) {
+			builder.append("reference=");
+			builder.append(reference);
+			builder.append(", ");
+		}
+		if (referrer != null) {
+			builder.append("referrer=");
+			builder.append(referrer);
+			builder.append(", ");
+		}
+		if (selectedBrand != null) {
+			builder.append("selectedBrand=");
+			builder.append(selectedBrand);
+			builder.append(", ");
+		}
+		if (selectedRecurringDetailReference != null) {
+			builder.append("selectedRecurringDetailReference=");
+			builder.append(selectedRecurringDetailReference);
+			builder.append(", ");
+		}
+		if (sessionId != null) {
+			builder.append("sessionId=");
+			builder.append(sessionId);
+			builder.append(", ");
+		}
+		if (shopperEmail != null) {
+			builder.append("shopperEmail=");
+			builder.append(shopperEmail);
+			builder.append(", ");
+		}
+		if (shopperIP != null) {
+			builder.append("shopperIP=");
+			builder.append(shopperIP);
+			builder.append(", ");
+		}
+		if (shopperInteraction != null) {
+			builder.append("shopperInteraction=");
+			builder.append(shopperInteraction);
+			builder.append(", ");
+		}
+		if (shopperLocale != null) {
+			builder.append("shopperLocale=");
+			builder.append(shopperLocale);
+			builder.append(", ");
+		}
+		if (shopperName != null) {
+			builder.append("shopperName=");
+			builder.append(shopperName);
+			builder.append(", ");
+		}
+		if (shopperReference != null) {
+			builder.append("shopperReference=");
+			builder.append(shopperReference);
+			builder.append(", ");
+		}
+		if (shopperStatement != null) {
+			builder.append("shopperStatement=");
+			builder.append(shopperStatement);
+			builder.append(", ");
+		}
+		if (skinCode != null) {
+			builder.append("skinCode=");
+			builder.append(skinCode);
+			builder.append(", ");
+		}
+		if (socialSecurityNumber != null) {
+			builder.append("socialSecurityNumber=");
+			builder.append(socialSecurityNumber);
+			builder.append(", ");
+		}
+		if (__equalsCalc != null) {
+			builder.append("__equalsCalc=");
+			builder.append(__equalsCalc);
+			builder.append(", ");
+		}
+		builder.append("__hashCodeCalc=");
+		builder.append(__hashCodeCalc);
+		builder.append("]");
+		return builder.toString();
+	}
 }
