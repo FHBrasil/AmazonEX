@@ -24,16 +24,19 @@ import br.hering.facades.facades.order.HeringCheckoutFacade;
 import br.hering.facades.order.data.CustomPaymentInfoData;
 import br.hering.facades.order.data.PaymentModeData;
 import br.hering.facades.order.data.VoucherPaymentInfoData;
+import br.hering.facades.populators.AdvancePaymentInfoPopulator;
 import br.hering.facades.populators.CartPaymentModePopulator;
 import br.hering.facades.populators.DebitPaymentInfoReversePopulator;
 import br.hering.facades.populators.HeringCustomerPopulator;
 import br.hering.facades.populators.PaymentModePopulator;
 import br.hering.facades.populators.VoucherPaymentInfoPopulator;
 import br.hering.facades.populators.VoucherPaymentInfoReversePopulator;
+import br.hering.facades.populators.order.AdvancePaymentInfoReversePopulator;
 import br.hering.facades.populators.order.BoletoPaymentInfoPopulator;
 import br.hering.facades.populators.order.BoletoPaymentInfoReversePopulator;
 
 import com.adyen.services.payment.impl.AdyenCardInstallmentsService;
+import com.flieger.payment.data.AdvancePaymentInfoData;
 import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
 import com.flieger.payment.model.BoletoPaymentInfoModel;
@@ -53,6 +56,7 @@ import de.hybris.platform.commerceservices.order.CommerceCartCalculationStrategy
 import de.hybris.platform.core.enums.CreditCardType;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.delivery.DeliveryModeModel;
+import de.hybris.platform.core.model.order.payment.AdvancePaymentInfoModel;
 import de.hybris.platform.core.model.order.payment.CreditCardPaymentInfoModel;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
 import de.hybris.platform.core.model.order.payment.PaymentModeModel;
@@ -84,7 +88,13 @@ implements HeringCheckoutFacade
 	
 	@Resource(name = "boletoPaymentInfoReversePopulator")
 	private BoletoPaymentInfoReversePopulator boletoPaymentInfoReversePopulator;
+	
+	@Resource
+	private AdvancePaymentInfoReversePopulator advancePaymentInfoReversePopulator;
 
+	@Resource
+	private AdvancePaymentInfoPopulator advancePaymentInfoPopulator;
+	
 	@Resource(name = "cartPaymentModePopulator")
 	private CartPaymentModePopulator cartPaymentModePopulator;
 	
@@ -218,17 +228,42 @@ implements HeringCheckoutFacade
 	public void setCustomPaymentInfo(CartData cartData)
 	{
 		final CartModel cart = getCart();
-		final BoletoPaymentInfoModel boletoPaymentInfoModel = getModelService().create(BoletoPaymentInfoModel.class);
-		boletoPaymentInfoModel.setUser(getCurrentUserForCheckout());
-		boletoPaymentInfoModel.setCode(getCurrentUserForCheckout().getUid() + "_" + UUID.randomUUID());
-		AddressModel addressModel = getModelService().create(AddressModel.class);
-		boletoPaymentInfoModel.setBillingAddress(addressModel);
-		getBoletoPaymentInfoReversePopulator().populate((BoletoPaymentInfoData) cartData.getCustomPaymentInfo(),
-				boletoPaymentInfoModel);
 
-		cart.setPaymentInfo(boletoPaymentInfoModel);
+		if(cartData.getCustomPaymentInfo() instanceof BoletoPaymentInfoData)
+		{
+			final AddressModel addressModel = getModelService().create(AddressModel.class);
 
-		getModelService().save(boletoPaymentInfoModel);
+			final BoletoPaymentInfoModel boletoPaymentInfoModel = getModelService().create(BoletoPaymentInfoModel.class);
+			boletoPaymentInfoModel.setUser(getCurrentUserForCheckout());
+			boletoPaymentInfoModel.setCode(getCurrentUserForCheckout().getUid() + "_" + UUID.randomUUID());
+			boletoPaymentInfoModel.setBillingAddress(addressModel);
+			
+			getBoletoPaymentInfoReversePopulator().populate((BoletoPaymentInfoData) cartData.getCustomPaymentInfo(), boletoPaymentInfoModel);
+			
+			cart.setPaymentInfo(boletoPaymentInfoModel);
+			
+			getModelService().save(boletoPaymentInfoModel);
+		}
+		else if (cartData.getCustomPaymentInfo() instanceof AdvancePaymentInfoData)
+		{
+			final AddressModel addressModel = getModelService().create(AddressModel.class);
+			
+			final AdvancePaymentInfoModel paymentInfoModel = getModelService().create(AdvancePaymentInfoModel.class);
+			paymentInfoModel.setUser(getCurrentUserForCheckout());
+			paymentInfoModel.setCode(getCurrentUserForCheckout().getUid() + "_" + UUID.randomUUID());
+			paymentInfoModel.setBillingAddress(addressModel);
+			
+			getAdvancePaymentInfoReversePopulator().populate((AdvancePaymentInfoData) cartData.getCustomPaymentInfo(), paymentInfoModel);
+			
+			cart.setPaymentInfo(paymentInfoModel);
+			
+			getModelService().save(paymentInfoModel);
+		}
+		else
+		{
+			throw new IllegalArgumentException("wrong payment info");
+		}
+		
 		getModelService().save(cart);
 	}
 	
@@ -688,6 +723,14 @@ implements HeringCheckoutFacade
 			            (VoucherPaymentInfoModel) paymentInfoModel,
 			            voucherPaymentInfoData);
 			    return voucherPaymentInfoData;
+			} 
+			else if(paymentInfoModel instanceof AdvancePaymentInfoModel)
+			{
+				AdvancePaymentInfoData data = new AdvancePaymentInfoData();
+
+				getAdvancePaymentInfoPopulator().populate((AdvancePaymentInfoModel) paymentInfoModel, data);
+			    
+			    return data;
 			}
 		}
 		return null;
@@ -871,6 +914,24 @@ implements HeringCheckoutFacade
 		}
 
 		return null;
+	}
+
+	public AdvancePaymentInfoReversePopulator getAdvancePaymentInfoReversePopulator() {
+		return advancePaymentInfoReversePopulator;
+	}
+
+	public void setAdvancePaymentInfoReversePopulator(
+			AdvancePaymentInfoReversePopulator advancePaymentInfoReversePopulator) {
+		this.advancePaymentInfoReversePopulator = advancePaymentInfoReversePopulator;
+	}
+
+	public AdvancePaymentInfoPopulator getAdvancePaymentInfoPopulator() {
+		return advancePaymentInfoPopulator;
+	}
+
+	public void setAdvancePaymentInfoPopulator(
+			AdvancePaymentInfoPopulator advancePaymentInfoPopulator) {
+		this.advancePaymentInfoPopulator = advancePaymentInfoPopulator;
 	}
 	
 	

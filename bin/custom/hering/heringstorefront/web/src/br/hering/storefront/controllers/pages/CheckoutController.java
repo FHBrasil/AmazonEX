@@ -13,39 +13,6 @@
  */
 package br.hering.storefront.controllers.pages;
 
-import de.hybris.platform.acceleratorservices.controllers.page.PageType;
-import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
-import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.GuestRegisterForm;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.GuestRegisterValidator;
-import de.hybris.platform.acceleratorstorefrontcommons.security.AutoLoginStrategy;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
-import de.hybris.platform.cms2.model.pages.AbstractPageModel;
-import de.hybris.platform.cms2.servicelayer.services.CMSSiteService;
-import de.hybris.platform.commercefacades.order.CheckoutFacade;
-import de.hybris.platform.commercefacades.order.data.OrderData;
-import de.hybris.platform.commercefacades.order.data.OrderEntryData;
-import de.hybris.platform.commercefacades.product.ProductFacade;
-import de.hybris.platform.commercefacades.product.ProductOption;
-import de.hybris.platform.commercefacades.product.data.ProductData;
-import de.hybris.platform.commerceservices.customer.DuplicateUidException;
-import de.hybris.platform.servicelayer.exceptions.ModelNotFoundException;
-import de.hybris.platform.store.services.BaseStoreService;
-import de.hybris.platform.util.Config;
-
-import br.hering.core.customer.exceptions.CustomerAuthenticationException;
-import br.hering.core.util.MccSiteUrlHelper;
-import br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade;
-import br.hering.facades.order.HeringOrderFacade;
-import br.hering.fulfilmentprocess.services.HeringOrderService;
-import br.hering.storefront.controllers.ControllerConstants;
-import br.hering.storefront.util.HeringPageType;
-
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
-
-import java.util.Arrays;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +29,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.hering.core.customer.exceptions.CustomerAuthenticationException;
+import br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade;
+import br.hering.facades.order.HeringOrderFacade;
+import br.hering.storefront.controllers.ControllerConstants;
+import br.hering.storefront.util.HeringPageType;
+
 import com.flieger.payment.data.BoletoPaymentInfoData;
+
+import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
+import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.GuestRegisterForm;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.GuestRegisterValidator;
+import de.hybris.platform.acceleratorstorefrontcommons.security.AutoLoginStrategy;
+import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.cms2.model.pages.AbstractPageModel;
+import de.hybris.platform.cms2.servicelayer.services.CMSSiteService;
+import de.hybris.platform.commercefacades.order.CheckoutFacade;
+import de.hybris.platform.commercefacades.order.data.OrderData;
+import de.hybris.platform.commercefacades.product.ProductFacade;
+import de.hybris.platform.commerceservices.customer.DuplicateUidException;
+import de.hybris.platform.servicelayer.exceptions.ModelNotFoundException;
+import de.hybris.platform.store.services.BaseStoreService;
 
 
 /**
@@ -104,10 +94,6 @@ public class CheckoutController extends AbstractCheckoutController
 	@Resource
 	private CMSSiteService cmsSiteService;
 	
-	@Resource
-	private MccSiteUrlHelper mccSiteUrlHelper;
-	
-
 	@ExceptionHandler(ModelNotFoundException.class)
 	public String handleModelNotFoundException(final ModelNotFoundException exception, final HttpServletRequest request)
 	{
@@ -230,11 +216,7 @@ public class CheckoutController extends AbstractCheckoutController
 		final String uid = orderDetails.getUser().getUid();
 		model.addAttribute("email", uid.replaceAll("[a-z0-9\\-]*\\|", ""));		
 
-		final String siteName = cmsSiteService.getCurrentSite().getName();
-		String siteUrl = mccSiteUrlHelper.getSitesAndUrls().get(siteName);
-		siteUrl = siteUrl.replace("/store/pt", "");
-		final String boletoUrl = siteUrl + "/boleto-img/jpg/boleto-" + orderCode	
-				+ ".jpg";
+		final String boletoUrl = "/boleto-img/jpg/boleto-" + orderCode + ".jpg";
 		
 		model.addAttribute("boletoUrl", boletoUrl);
 		

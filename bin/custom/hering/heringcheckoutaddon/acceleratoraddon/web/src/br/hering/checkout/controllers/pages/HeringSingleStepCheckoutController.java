@@ -68,6 +68,7 @@ import br.hering.facades.voucher.HeringVoucherFacade;
 import br.hering.heringstorefrontcommons.forms.HeringAddressForm;
 import br.hering.heringstorefrontcommons.forms.HeringPaymentDetailsForm;
 
+import com.flieger.payment.data.AdvancePaymentInfoData;
 import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
 import com.flieger.payment.model.HeringDebitPaymentInfoModel;
@@ -692,12 +693,9 @@ public class HeringSingleStepCheckoutController extends
 						return this.prepareSingleStepCheckout(model);
 					}
 				} 
-				else //FIXME isso esta errado, tem q implementar o advance aqqui
+				else if(cartData.getCustomPaymentInfo() instanceof AdvancePaymentInfoData)
 				{
-					LOG.warn("TEM QUE IMPLEMENTAR O ADVANCE");
 					isPaymentAuthorized = true;
-					final OrderData orderData = getCheckoutFacade().placeOrder();
-					return redirectToOrderConfirmationPage(orderData);
 				}
 			} else if(ccPaymentInfo != null){
 				isPaymentAuthorized = getCheckoutFacade().authorizePayment(/*paymentDetailsForm.getCv2Number()*/);
@@ -755,8 +753,7 @@ public class HeringSingleStepCheckoutController extends
 			} 
 			else if(HeringcheckoutaddonWebConstants.ADVANCE.equalsIgnoreCase(paymentMode.getCode()))
 			{
-				LOG.warn("FALTA IMPLEMENTAR PLACE ORDER PARA ADVANCE");
-				success = true;
+				success = this.saveAdvancePaymentMethod(paymentDetailsForm);
 			}
 			else {
 				success = false;
@@ -838,6 +835,34 @@ public class HeringSingleStepCheckoutController extends
 		cartData.setCustomPaymentInfo(paymentInfoData);
 		getCheckoutFacade().setPaymentMode(paymentModeData);
 		getCheckoutFacade().setCustomPaymentInfo(cartData);
+		return Boolean.TRUE.booleanValue();
+	}
+	
+	private boolean saveAdvancePaymentMethod(
+			final HeringPaymentDetailsForm paymentDetailsForm) 
+	{
+		final CartData cartData = getCheckoutFacade().getCheckoutCart();
+		String paymentMode = paymentDetailsForm.getPaymentMode();
+		
+		final HeringAddressForm formBillingAddress = paymentDetailsForm
+				.getBillingAddress();
+		
+		final PaymentModeData paymentModeData = new PaymentModeData();
+		paymentModeData.setCode(paymentMode);
+		
+		final AdvancePaymentInfoData paymentInfoData = new AdvancePaymentInfoData();
+		
+		final AddressData addressData = this.convertAddressFormIntoAddressData(formBillingAddress);
+		getAddressVerificationFacade().verifyAddressData(addressData);
+		
+		cartData.setBillingAddress(addressData);
+		paymentInfoData.setBillingAddress(addressData);
+		
+		cartData.setCustomPaymentInfo(paymentInfoData);
+		
+		getCheckoutFacade().setPaymentMode(paymentModeData);
+		getCheckoutFacade().setCustomPaymentInfo(cartData);
+		
 		return Boolean.TRUE.booleanValue();
 	}
 	
