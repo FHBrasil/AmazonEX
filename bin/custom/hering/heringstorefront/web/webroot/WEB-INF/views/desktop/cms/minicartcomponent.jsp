@@ -19,7 +19,7 @@
 <div id="carrinho" class="show-on-desktop">
     <span class="bag"> <span class="count">${totalItems}</span>
     </span> <span class="price"> <format:price priceData="${totalPrice}" />
-    </span> <a href="${cartUrl}" class="btn btn-checkout">Sacola</a>
+    </span> <a href="${cartUrl}" class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto5"/></a>
     <div id="miniCartLayer" class="miniCartPopup" data-refreshMiniCartUrl="${refreshMiniCartUrl}/?"
         data-rolloverPopupUrl="${rolloverPopupUrl}" style="padding: 0 !important;"></div>
 </div>

@@ -17,7 +17,7 @@
                 <li class="cadastre-se logged-in"><sec:authorize ifAnyGranted="ROLE_ANONYMOUS">
                         <a href="<c:url value="/login"/>"> <i class="sign-in"></i>
                             <div class="hide-on-mobile">
-                                <b>Entre</b> ou<br> <b>Cadastre-se</b>
+                                <spring:theme code="text.fliegercommerce.texto4" />
                             </div>
                         </a>
                     </sec:authorize> <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
@@ -28,7 +28,7 @@
                                     value="${fn:substring(user.firstName, 0, maxNumberChars)}..." />
                             </c:if> <i class="fa-user fa"></i>
                             <div class="hide-on-mobile">
-                                Bem Vindo<br> <b> <c:choose>
+                                <spring:theme code="text.fliegercommerce.texto1" /><br> <b> <c:choose>
                                         <c:when test="${fn:length(user.firstName) >= 10}">
 												${fn:substring(user.firstName,0,7)}...
 											</c:when>
@@ -80,9 +80,9 @@
                                 </div>
                                 <div class="acc-links">
                                     <a href="<c:url value="/login"/>"><i
-                                        class="fa fa-angle-right"></i> crie uma conta</a> <a
+                                        class="fa fa-angle-right"></i> <spring:theme code="text.fliegercommerce.texto2" /></a> <a
                                         href="<c:url value="/login?forgotPassword=true"/>"><i
-                                        class="fa fa-angle-right"></i> esqueci minha senha</a>
+                                        class="fa fa-angle-right"></i> <spring:theme code="text.fliegercommerce.texto3" /></a>
                                 </div>
                             </ycommerce:testId>
                         </div>

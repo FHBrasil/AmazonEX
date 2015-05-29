@@ -80,7 +80,6 @@
         <extension name="kpfamilyservices" />
        <!--  <extension name="kpfamilytest" /> -->
                 
-        <extension name="newsletter" />
         <extension name="storecatalogfeed" />
         <extension name="pixicore" />
         <extension name="pixiapi" />

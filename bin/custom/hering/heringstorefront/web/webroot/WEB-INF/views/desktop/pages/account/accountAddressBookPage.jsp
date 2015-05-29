@@ -26,7 +26,7 @@
                 <nav:accountNav />
                 <div class="right">
                     <header>
-                        <h2>ENDERE�OS CADASTRADOS</h2>
+                        <h2><spring:theme code="text.fliegercommerce.texto14"/></h2>
                     </header>
                     <section id="account-addresses">
                         <div id="globalMessages">
@@ -46,11 +46,11 @@
                                     <c:forEach items="${addressData}" var="address">
                                         <li><c:if test="${address.defaultAddress}">
                                                 <ycommerce:testId code="addressBook_isDefault_label">
-                                                    <h3>Endere�o padr�o</h3>
+                                                    <h3><spring:theme code="text.fliegercommerce.texto26"/></h3>
                                                 </ycommerce:testId>
                                             </c:if> <c:if test="${address.billingAddress}">
                                                 <ycommerce:testId code="addressBook_isDefault_label">
-                                                    <h3>Endere�o de cobran�a</h3>
+                                                    <h3><spring:theme code="text.fliegercommerce.texto27"/></h3>
                                                 </ycommerce:testId>
                                             </c:if>
                                             <h3>${address.type}
@@ -71,30 +71,30 @@
                                                                 title="Remover endere�o"
                                                                 data-address-id="${address.id}"
                                                                 href="remove-address/${address.id}">
-                                                                remover </a>
+                                                                <spring:theme code="text.fliegercommerce.texto28"/> </a>
                                                         </ycommerce:testId>
                                                     </c:if>
                                                 </ycommerce:testId>
                                             </h3> <ycommerce:testId code="addressBook_address_label">
                                                 <p>
-                                                    <strong>Nome:</strong>&nbsp;
+                                                    <strong><spring:theme code="text.fliegercommerce.texto18"/></strong>&nbsp;
                                                     ${fn:escapeXml(address.firstName)}&nbsp;
                                                     ${fn:escapeXml(address.lastName)}
                                                 </p>
                                                 <p>
                                                     <c:if test="${not empty address.receiver}">
-                                                        <strong>Destinat�rio:</strong>&nbsp; ${fn:escapeXml(address.receiver)}</c:if>
+                                                        <strong><spring:theme code="text.fliegercommerce.texto19"/></strong>&nbsp; ${fn:escapeXml(address.receiver)}</c:if>
                                                 </p>
                                                 <p>
-                                                    <strong>Telefone:</strong>&nbsp;
+                                                    <strong><spring:theme code="text.fliegercommerce.texto20"/></strong>&nbsp;
                                                     (${fn:escapeXml(address.dddPhone)})${fn:escapeXml(address.phone)}
                                                 </p>
                                                 <p>
                                                     <c:if test="${not empty address.celPhone}">
-                                                        <strong>Tel Celular:</strong>&nbsp; (${fn:escapeXml(address.dddCelPhone)})${fn:escapeXml(address.celPhone)}</c:if>
+                                                        <strong><spring:theme code="text.fliegercommerce.texto21"/></strong>&nbsp; (${fn:escapeXml(address.dddCelPhone)})${fn:escapeXml(address.celPhone)}</c:if>
                                                 </p>
                                                 <p>
-                                                    <strong>Endere�o:&nbsp;</strong>
+                                                    <strong><spring:theme code="text.fliegercommerce.texto22"/>&nbsp;</strong>
                                                     ${fn:escapeXml(address.line1)},
                                                     ${fn:escapeXml(address.number)} -
                                                     ${fn:escapeXml(address.complement)} &nbsp;
@@ -105,7 +105,7 @@
                                                 </p>
                                                 <p>
                                                     <c:if test="${not empty address.reference}">
-                                                        <strong>Refer�ncia:</strong>&nbsp; ${fn:escapeXml(address.reference)}</c:if>
+                                                        <strong><spring:theme code="text.fliegercommerce.texto23"/></strong>&nbsp; ${fn:escapeXml(address.reference)}</c:if>
                                                 </p>
                                             </ycommerce:testId>
                                             <div class="btns">
@@ -115,7 +115,7 @@
                                                         <a class="btn btn-enderecos"
                                                             style="font-size: 13px;"
                                                             href="set-default-address/${address.id}">
-                                                            Definir como padr�o </a>
+                                                            <spring:theme code="text.fliegercommerce.texto29"/> </a>
                                                     </ycommerce:testId>
                                                 </c:if>
                                                 <c:if test="${not address.billingAddress}">
@@ -124,7 +124,7 @@
                                                         <a class="btn btn-enderecos"
                                                             style="font-size: 13px;"
                                                             href="set-default-billing-address/${address.id}">
-                                                            Definir como endere�o de cobran�a </a>
+                                                            <spring:theme code="text.fliegercommerce.texto30"/></a>
                                                     </ycommerce:testId>
                                                 </c:if>
                                             </div></li>

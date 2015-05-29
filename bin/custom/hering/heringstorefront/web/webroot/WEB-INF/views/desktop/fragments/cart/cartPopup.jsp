@@ -101,11 +101,11 @@
             </c:if>
             <c:if test="${hasItems}">
                 <c:if test="${numberItemsInCart gt 1}">
-                    <p>${totalItems}itens inclusos em sua sacola somam o valor:</p>
+                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto6"/></p>
                     <strong><format:price priceData="${cartData.totalPrice}" /></strong>
                 </c:if>
                 <c:if test="${numberItemsInCart lt 2}">
-                    <p>${totalItems}item incluso em sua sacola soma o valor:</p>
+                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto7"/></p>
                     <strong><format:price priceData="${cartData.totalPrice}" /></strong>
                 </c:if>
                 <c:if test="${numberItemsInCart > numberShowing}">
@@ -117,8 +117,8 @@
         </div>
         <c:if test="${hasItems}">
             <div class="btn-group">
-                <a href="${cartUrl}" class="btn btn-full-bag">Sacola completa</a> <a
-                    href="${checkoutUrl}" class="btn btn-checkout">Finalizar compra</a>
+                <a href="${cartUrl}" class="btn btn-full-bag"><spring:theme code="text.fliegercommerce.texto8"/></a> <a
+                    href="${checkoutUrl}" class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto9"/></a>
             </div>
         </c:if>
     </div>
