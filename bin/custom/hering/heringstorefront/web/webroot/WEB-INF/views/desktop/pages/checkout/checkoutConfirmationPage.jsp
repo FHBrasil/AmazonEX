@@ -35,7 +35,8 @@
                             code="checkout.orderConfirmation.orderNumberInformation" />
                     </small> <big>${orderData.code}</big>
                     <c:if test="${not empty orderData.customPaymentInfo}">
-                        <a class="rb" href="${boletoUrl}" target="_blank"> <spring:theme
+                    	<c:url var="boletoDownloadLink" value="../../${boletoUrl}" />
+                        <a class="rb" href="${boletoDownloadLink}" target="_blank"> <spring:theme
                                 code="checkout.orderConfirmation.reprintBoleto" />
                         </a>
                     </c:if>
