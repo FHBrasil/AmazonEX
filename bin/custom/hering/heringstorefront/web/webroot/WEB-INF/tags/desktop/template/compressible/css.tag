@@ -71,3 +71,7 @@
     <%-- <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/hotsites/hering/blackfriday-2014/css/blackfriday-2014.css"> --%>
 </c:if>
 <%--<link rel="stylesheet" type="text/css"  media="all" href="${commonResourcePath}/assets/css/pages/hotsite-kids.css" />--%>
+
+<%-- Babyartikel Customs --%>
+<link rel="stylesheet" type="text/css" media="all"
+    href="${themeResourcePath}/css/babyartikel-main.css" />
