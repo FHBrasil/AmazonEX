@@ -14,7 +14,7 @@
 	.carousel-control:hover {color: #FFF;text-shadow: 0px 1px 2px #000;}
 	.carousel-indicators li {border-color: #adadad;}
 	.carousel-indicators .active {background-color: #adadad;}
-	.carousel-inner {padding-bottom: 7px; background-image:url('../layout/shad-bot.png');background-position: center bottom;background-repeat: no-repeat; background-size: 380px 5px;}
+	.carousel-inner {padding-bottom: 7px; background-image:url('../assets/images/shad-bot.png');background-position: center bottom;background-repeat: no-repeat; background-size: 380px 5px;}
 	
 	#mainCarousel .carousel-indicators {bottom:-30px;}
 	.breadcrumb {background-color: #fff;margin:0;}
@@ -23,7 +23,7 @@
 	.price {font-size: 36px; font-weight: bold;margin-bottom: -8px;}
 	.price sup {font-size: 50%;top: -0.7em;left: -0.3em}
 	.lead {font-size: 16px;}
-	.shadowbox {padding: 20px 0 10px 0;background-image: url('../layout/shad-top.png'), url('../layout/shad-bot.png'), url('../layout/shad-mid.png');background-repeat: no-repeat, no-repeat, repeat-y;background-position: center top, center bottom, center top;background-size: 380px 5px;}
+	.shadowbox {padding: 20px 0 10px 0;background-image: url('../assets/images/shad-top.png'), url('../assets/images/shad-bot.png'), url('../assets/images/shad-mid.png');background-repeat: no-repeat, no-repeat, repeat-y;background-position: center top, center bottom, center top;background-size: 380px 5px;}
 	.navbar {margin-bottom: 0;}
 	.navbar-default .navbar-nav > li > a {color: #3e3e3e}
 	.navbar-default .navbar-nav > li > a:hover {text-decoration: underline;}
@@ -48,11 +48,11 @@
 	.text-nostock {color: orange}
 	.bluerow {font-size:12px;background-color: #4880c0;text-transform: uppercase;color:#FFF;line-height:25px;padding: 10px 0;}
 	.bluerow a {color: #FFF;}
-	.bluerow .text-left {background-image:url('../layout/sprite-foot.png');background-position: -115px -40px;background-repeat: no-repeat;padding-left:35px;margin-left:15px;margin-right:-15px;background-size: 400px 200px}
+	.bluerow .text-left {background-image:url('../assets/images/sprite-foot.png');background-position: -115px -40px;background-repeat: no-repeat;padding-left:35px;margin-left:15px;margin-right:-15px;background-size: 400px 200px}
 	.greyrow {background-color: #efefef;font-size:12px;}
 	.prehead141211 .alert {margin-bottom:0}
 	.head141217 {z-index:1000;}
-	.home150312 {position: absolute; left:0;top:0px;display:block; height:70px;width:255px;background-image:url('../layout/logo.svg');background-position:30px center;background-size: 80% auto;background-repeat:no-repeat;}
+	.home150312 {position: absolute; left:0;top:0px;display:block; height:70px;width:255px;background-image:url('../assets/images/logo.svg');background-position:30px center;background-size: 80% auto;background-repeat:no-repeat;}
 	@media (max-width:499px) {
 		.home150312 {width:70px;background-size: 350% auto;}
 		}
@@ -99,8 +99,8 @@
 	.stars span {color:#ffa700;position:absolute;left:0;top:0;overflow:hidden;}
 	
 	/* CSS for bonus system icons */
-	.fox24gif150217 {background-image: url("../layout/sparfuchs24.gif");background-repeat: no-repeat;padding-left: 30px;}
-	.fox24png150217 {background-image: url("../layout/sparfuchs24.png");background-repeat: no-repeat;padding-left: 30px;}
+	.fox24gif150217 {background-image: url("../assets/images/sparfuchs24.gif");background-repeat: no-repeat;padding-left: 30px;}
+	.fox24png150217 {background-image: url("../assets/images/sparfuchs24.png");background-repeat: no-repeat;padding-left: 30px;}
 	
 	/* global CSS for legal links (underlined) */
 	.underlinelinks150212 a {text-decoration: underline;}
@@ -232,8 +232,8 @@
 	.cartwrap150127 {border:1px solid #EEE;border-radius:5px;padding-top:5px;padding-bottom:5px;}
 	
 	/* CSS for Login */
-	.panel-secure150203 {margin-bottom:0;background-image:url('../layout/ssl.png');background-repeat:no-repeat;background-position: bottom 15px right 15px;background-color:#f8f8f8;}
-	.trusted150203 {background-image: url("../layout/sprite-foot.png");background-position: -115px -40px;background-repeat: no-repeat;background-size: 400px 200px;display:inline-block;height:25px;padding-left:30px;line-height:25px;}
+	.panel-secure150203 {margin-bottom:0;background-image:url('../assets/images/ssl.png');background-repeat:no-repeat;background-position: bottom 15px right 15px;background-color:#f8f8f8;}
+	.trusted150203 {background-image: url("../assets/images/sprite-foot.png");background-position: -115px -40px;background-repeat: no-repeat;background-size: 400px 200px;display:inline-block;height:25px;padding-left:30px;line-height:25px;}
 	.panel-minicart150203 {margin-top:20px;}
 	.panel-minicart150203 h3 {margin-top:0px;}
 	.sum150203 {background-color:#f8f8f8;}
@@ -241,18 +241,18 @@
 	/* CSS for payment (OLD) */
 	.btn-pay150209 {text-align:left;width: 100%; height:80px;display:block;padding-left:135px;background-position: 15px center; background-repeat: no-repeat;margin-bottom:15px;}
 	.btn-pay150209 span {font-size:18px;display:block;font-weight:bold;}
-	.btn-vorkasse150209 {background-image: url("../layout/pay2-vorkasse.png");}
-	.btn-paypal150209 {background-image: url("../layout/pay2-paypal.png");}
-	.btn-rechnung150209 {background-image: url("../layout/pay2-klarna-rechnung.png");}
-	.btn-kredit150209 {background-image: url("../layout/pay2-kredit.png");}
-	.btn-sofort150209 {background-image: url("../layout/pay2-sofort.png");}
-	.btn-raten150209 {background-image: url("../layout/pay2-klarna-raten.png");}
+	.btn-vorkasse150209 {background-image: url("../assets/images/pay2-vorkasse.png");}
+	.btn-paypal150209 {background-image: url("../assets/images/pay2-paypal.png");}
+	.btn-rechnung150209 {background-image: url("../assets/images/pay2-klarna-rechnung.png");}
+	.btn-kredit150209 {background-image: url("../assets/images/pay2-kredit.png");}
+	.btn-sofort150209 {background-image: url("../assets/images/pay2-sofort.png");}
+	.btn-raten150209 {background-image: url("../assets/images/pay2-klarna-raten.png");}
 	.adv150209 ul {padding-left:0px;font-size:12px;list-style-type:none;margin-top: 10px;margin-bottom: 20px;}
 	.adv150209 ul li:before {content: "\e013";font-family:'Glyphicons Halflings';line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-size:80%;margin-right:5px;color:#4880c0;}
 	
 	/* alternative header style */
 	/*
-	body {background-image:url('../layout/bg.jpg');background-position: center -400px;background-repeat:no-repeat;}
+	body {background-image:url('../assets/images/bg.jpg');background-position: center -400px;background-repeat:no-repeat;}
 	.head141217 {background: none;z-index:1000;border:none;padding:0;}
 	.prehead141211 {border:none;background:none;}
 	.prehead141211 .bluerow  {background: none;color:black}
