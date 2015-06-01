@@ -49,6 +49,7 @@
 		class="br.hering.facades.facades.order.impl.DefaultHeringCheckoutFacade"
 		parent="defaultAcceleratorCheckoutFacade">
 		<property name="boletoPaymentInfoReversePopulator" ref="boletoPaymentInfoReversePopulator" />
+		<property name="advancePaymentInfoReversePopulator" ref="advancePaymentInfoReversePopulator" />
 		<property name="cartPaymentModePopulator" ref="cartPaymentModePopulator" />
 		<property name="voucherPaymentInfoReversePopulator" ref="voucherPaymentInfoReversePopulator" />
 		<property name="voucherPaymentInfoPopulator" ref="voucherPaymentInfoPopulator" />		
@@ -56,7 +57,6 @@
 		<property name="commonI18NService" ref="commonI18NService" />
 		<property name="paymentModeService" ref="paymentModeService"/>
 		<property name="customerPopulator" ref="customerPopulator"/>
-<!-- 		<property name="debitPaymentInfoConverter" ref="debitPaymentInfoConverter"/> -->
 	</bean>
 	
 	<alias alias="simpleSuggestionFacade" name="defaultSimpleSuggestionFacade"/>
@@ -523,6 +523,7 @@
 	<bean id="boletoPaymentInfoData" class="com.flieger.payment.data.BoletoPaymentInfoData"	scope="prototype" />		
 	<bean id="voucherPaymentInfoData" class="br.hering.facades.order.data.VoucherPaymentInfoData" scope="prototype" />
 	<bean id="debitPaymentInfoData" class="com.flieger.payment.data.HeringDebitPaymentInfoData" scope="prototype" />		
+	<bean id="advancePaymentInfoData" class="com.flieger.payment.data.AdvancePaymentInfoData" scope="prototype" />		
 
 	<bean id="boletoPaymentInfoPopulator"
 		class="br.hering.facades.populators.order.BoletoPaymentInfoPopulator">
@@ -557,10 +558,22 @@
 		<property name="addressConverter"	ref="addressConverter" />
 		<property name="customerConverter"	ref="customerConverter" />						
 	</bean>
+	
+	<bean id="advancePaymentInfoPopulator"
+		class="br.hering.facades.populators.AdvancePaymentInfoPopulator">		
+		<property name="addressConverter"	ref="addressConverter" />
+		<property name="customerConverter"	ref="customerConverter" />						
+	</bean>
+	
+	<bean id="advancePaymentInfoReversePopulator"
+		class="br.hering.facades.populators.order.AdvancePaymentInfoReversePopulator">
+		<property name="addressReversePopulator" ref="addressReversePopulator" />
+	</bean>
 
 	<bean id="cartCustomPaymentInfoPopulator"
 		class="br.hering.facades.populators.order.CartCustomPaymentInfoPopulator">
 		<property name="boletoPaymentInfoConverter" ref="boletoPaymentInfoConverter" />
+		<property name="advancePaymentInfoConverter" ref="advancePaymentInfoConverter" />
 	</bean>
 
 	<bean id="cartBillingAddressPopulator" class="br.hering.facades.populators.order.CartBillingAddressPopulator">
@@ -620,6 +633,16 @@
 		<property name="populators">
 			<list>
 				<ref bean="debitPaymentInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultAdvancePaymentInfoConverter" alias="advancePaymentInfoConverter" />
+	<bean id="defaultAdvancePaymentInfoConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="advancePaymentInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="advancePaymentInfoPopulator" />
 			</list>
 		</property>
 	</bean>

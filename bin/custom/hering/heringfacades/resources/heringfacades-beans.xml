@@ -238,4 +238,9 @@
 	<bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
 		<property name="trackingID" type="String"/>
 	</bean>
+	
+	<bean 	class="com.flieger.payment.data.AdvancePaymentInfoData" extends="br.hering.facades.order.data.CustomPaymentInfoData">
+		<property name="code"				type="java.lang.String" />
+		<property name="customerData"		type="de.hybris.platform.commercefacades.user.data.CustomerData" />
+    </bean>
 </beans> 

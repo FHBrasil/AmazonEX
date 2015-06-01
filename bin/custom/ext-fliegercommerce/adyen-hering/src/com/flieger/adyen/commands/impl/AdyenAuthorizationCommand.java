@@ -105,6 +105,8 @@ public class AdyenAuthorizationCommand implements AuthorizationCommand
 //			}
 			try
 			{
+				LOG.info("Adyen payment request\n" + payRequest);
+				
 				payResult = new WebServicesConn().authorise(payRequest);
 			}
 			catch (Exception e)

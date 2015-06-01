@@ -446,4 +446,74 @@ public class Card  implements java.io.Serializable {
             _javaType, _xmlType, typeDesc);
     }
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Card [");
+		if (billingAddress != null) {
+			builder.append("billingAddress=");
+			builder.append(billingAddress);
+			builder.append(", ");
+		}
+		if (brand != null) {
+			builder.append("brand=");
+			builder.append(brand);
+			builder.append(", ");
+		}
+		if (cvc != null) {
+			builder.append("cvc=");
+			builder.append(cvc);
+			builder.append(", ");
+		}
+		if (expiryMonth != null) {
+			builder.append("expiryMonth=");
+			builder.append(expiryMonth);
+			builder.append(", ");
+		}
+		if (expiryYear != null) {
+			builder.append("expiryYear=");
+			builder.append(expiryYear);
+			builder.append(", ");
+		}
+		if (holderName != null) {
+			builder.append("holderName=");
+			builder.append(holderName);
+			builder.append(", ");
+		}
+		if (issueNumber != null) {
+			builder.append("issueNumber=");
+			builder.append(issueNumber);
+			builder.append(", ");
+		}
+		if (number != null) {
+			builder.append("number=");
+			builder.append(number);
+			builder.append(", ");
+		}
+		if (startMonth != null) {
+			builder.append("startMonth=");
+			builder.append(startMonth);
+			builder.append(", ");
+		}
+		if (startYear != null) {
+			builder.append("startYear=");
+			builder.append(startYear);
+			builder.append(", ");
+		}
+		if (__equalsCalc != null) {
+			builder.append("__equalsCalc=");
+			builder.append(__equalsCalc);
+			builder.append(", ");
+		}
+		builder.append("__hashCodeCalc=");
+		builder.append(__hashCodeCalc);
+		builder.append("]");
+		return builder.toString();
+	}
+    
+    
+
 }

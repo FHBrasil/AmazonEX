@@ -18,7 +18,6 @@ import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.order.InvalidCartException;
-import de.hybris.platform.ordersplitting.WarehouseService;
 import de.hybris.platform.ordersplitting.model.WarehouseModel;
 import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -82,9 +81,6 @@ implements HeringCommerceCheckoutService
 	@Resource
 	private StockService stockService;
 
-	@Resource
-	private WarehouseService warehouseService;
-
 	@Override
 	public OrderModel placeOrder(final CartModel cart) throws InvalidCartException
 	{
@@ -144,7 +140,7 @@ implements HeringCommerceCheckoutService
 		Assert.notNull(order, "order is null");
 		Assert.isTrue(CollectionUtils.isNotEmpty(order.getEntries()), "order is empty");
 
-		WarehouseModel warehouse = warehouseService.getWarehouseForCode("hering_estoque_default");
+		WarehouseModel warehouse = order.getStore().getWarehouses().iterator().next();
 
 		for (final AbstractOrderEntryModel entry : order.getEntries())
 		{

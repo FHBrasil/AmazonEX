@@ -148,4 +148,32 @@ public class Amount  implements java.io.Serializable {
             _javaType, _xmlType, typeDesc);
     }
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Amount [");
+		if (currency != null) {
+			builder.append("currency=");
+			builder.append(currency);
+			builder.append(", ");
+		}
+		builder.append("value=");
+		builder.append(value);
+		builder.append(", ");
+		if (__equalsCalc != null) {
+			builder.append("__equalsCalc=");
+			builder.append(__equalsCalc);
+			builder.append(", ");
+		}
+		builder.append("__hashCodeCalc=");
+		builder.append(__hashCodeCalc);
+		builder.append("]");
+		return builder.toString();
+	}
+    
+    
+
 }
