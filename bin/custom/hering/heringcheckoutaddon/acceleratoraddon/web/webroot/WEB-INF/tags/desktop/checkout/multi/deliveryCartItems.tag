@@ -42,14 +42,14 @@
 						
 						<c:if test="${not empty entry.product.size}">
 							<div class="property-1">
-								<strong>Tamanho:</strong>
+								<strong><spring:theme code="text.fliegercommerce.texto51"/></strong>
 								<span>${entry.product.size}</span>
 							</div>
 							<div class="clear"></div>
 						</c:if>
 						<c:if test="${not empty entry.product.color}">
 							<div class="property-2">
-								<strong>Cor:</strong>
+								<strong><spring:theme code="text.fliegercommerce.texto52"/></strong>
 								<span>${entry.product.color.fullDescription}</span>
 							</div>
 							<div class="clear"></div>

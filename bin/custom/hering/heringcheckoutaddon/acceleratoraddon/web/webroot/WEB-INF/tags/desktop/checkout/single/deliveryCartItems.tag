@@ -24,7 +24,7 @@
                         <ul>
                             <li class="titulo">${entry.product.name}</li>
                             <c:if test="${not empty entry.product.size}">
-                                <li class="tamanho">Tamanho: ${entry.product.size}</li>
+                                <li class="tamanho"><spring:theme code="text.fliegercommerce.texto51"/>: ${entry.product.size}</li>
                             </c:if>
                             <c:if test="${not empty entry.product.color}">
                                 <li class="cor"><spring:theme

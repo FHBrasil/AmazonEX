@@ -68,10 +68,10 @@
 			<table class="cart">
 				<thead>
 					<tr>
-						<th colspan="2">Produto</th>
+						<th colspan="2"><spring:theme code="text.fliegercommerce.texto71"/></th>
 						<th><spring:theme code="text.account.viewWishlistEntries.page.itemPrice" text="Price"/></th> 
-						<th>Desejado</th>
-						<th>Comprado</th>
+						<th><spring:theme code="text.fliegercommerce.texto72"/></th>
+						<th><spring:theme code="text.fliegercommerce.texto73"/></th>
 		                <th></th>
 					</tr>
 				</thead>

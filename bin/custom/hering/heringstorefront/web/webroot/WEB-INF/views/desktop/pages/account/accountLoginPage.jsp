@@ -17,7 +17,7 @@
     </cms:pageSlot>
     <div class="container">
         <header id="page-header">
-            <h1>Identifica��o</h1>
+            <h1><spring:theme code="text.fliegercommerce.texto43"/></h1>
         </header>
         <section class="identificacao page">
             <div class="column-wrapper">

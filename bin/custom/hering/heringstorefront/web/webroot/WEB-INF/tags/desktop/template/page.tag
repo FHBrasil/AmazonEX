@@ -37,8 +37,8 @@
 					
 					<header class="co" id="page-header">
 						<div class="container">
-							<h2>Compra Segura</h2>
-							<h1>Finalize Sua Compra</h1>
+							<h2><spring:theme code="text.fliegercommerce.texto63"/></h2>
+							<h1><spring:theme code="text.fliegercommerce.texto9"/></h1>
 						</div>
 					</header>
 					

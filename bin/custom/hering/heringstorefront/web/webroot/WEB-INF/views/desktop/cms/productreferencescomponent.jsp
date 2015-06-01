@@ -18,7 +18,7 @@
             <c:when test="${referenceType == 'CROSSELLING'}">
                 <header>
                     <h1>
-                        Compre tamb&eacute;m estes produtos e <b>tenha um look completo</b>
+                        <spring:theme code="text.fliegercommerce.texto64"/></b>
                     </h1>
                 </header>
             </c:when>
@@ -117,8 +117,8 @@
                             </c:when>
                             <c:otherwise>
                                 <div class="btn-group">
-                                    <div class="btn esgotado">Produto Esgotado</div>
-                                    <a href="#" class="btn avise-me">Avise-me</a>
+                                    <div class="btn esgotado"><spring:theme code="text.fliegercommerce.texto65"/></div>
+                                    <a href="#" class="btn avise-me"><spring:theme code="text.fliegercommerce.texto66"/></a>
                                 </div>
                             </c:otherwise>
                         </c:choose>
@@ -128,14 +128,14 @@
             <div class="comprar-junto hide">
                 <div class="left">
                     <div>
-                        Valor dos <b id="quantity"></b> juntos
+                        <spring:theme code="text.fliegercommerce.texto67"/> <b id="quantity"></b> <spring:theme code="text.fliegercommerce.texto68"/>
                     </div>
                     <div>
-                        fica em <b id="totalPrice"></b>
+                        <spring:theme code="text.fliegercommerce.texto69"/> <b id="totalPrice"></b>
                     </div>
                     <div id="installmentPrice"></div>
                 </div>
-                <button class="btn btn-big comprar">Comprar Junto</button>
+                <button class="btn btn-big comprar"><spring:theme code="text.fliegercommerce.texto70"/></button>
             </div>
         </div>
     </c:when>

@@ -39,7 +39,7 @@
                                     <li><span class="label"><spring:theme
                                                 code="${pf?'profile.lastName':'register.nomeFantasia'}" />:</span><span>${fn:escapeXml(customerData.lastName)}</span></li>
                                     <c:if test="${pf}">
-                                        <li><span class="label">Sexo:</span><span><spring:theme
+                                        <li><span class="label"><spring:theme code="text.fliegercommerce.texto33"/></span><span><spring:theme
                                                     code="profile.gender.${fn:escapeXml(customerData.gender)}" /></span></li>
                                     </c:if>
                                     <li><span class="label"><spring:theme
@@ -49,11 +49,11 @@
                                     <li><span class="label"><spring:theme
                                                 code="register.${pf?'cpf':'cnpj'}" />:</span><span>${fn:escapeXml(customerData.cpfcnpj)}</span></li>
                                     <c:if test="${not pf}">
-                                        <li><span class="label">IE:</span><span>${fn:escapeXml(customerData.rgIe)}</span></li>
-                                        <li><span class="label">UF:</span><span>${fn:substring(customerData.ufIe, 3, 5)}</span></li>
+                                        <li><span class="label"><spring:theme code="text.fliegercommerce.texto36"/></span><span>${fn:escapeXml(customerData.rgIe)}</span></li>
+                                        <li><span class="label"><spring:theme code="text.fliegercommerce.texto37"/></span><span>${fn:substring(customerData.ufIe, 3, 5)}</span></li>
                                     </c:if>
                                     <li><span class="label">E-mail:</span><span>${fn:escapeXml(customerData.displayUid)}</span></li>
-                                    <li><span class="label">Receber Newsletter:</span>
+                                    <li><span class="label"><spring:theme code="text.fliegercommerce.texto38"/></span>
                                         <ul class="newsletters">
                                             <c:forEach var="newsletter"
                                                 items="${customerData.newsletters}">
@@ -65,10 +65,8 @@
                                         </ul></li>
                                 </ul>
                                 <div class="btn-group">
-                                    <a href="update-password" class="btn">Alterar Senha</a> <a
-                                        href="update-profile" class="btn">Atualizar Dados
-                                        Pessoais</a> <a href="update-email" class="btn">Atualizar
-                                        seu E-mail</a>
+                                    <a href="update-password" class="btn"><spring:theme code="text.fliegercommerce.texto39"/></a> <a
+                                        href="update-profile" class="btn"> <spring:theme code="text.fliegercommerce.texto40"/> </a> <a href="update-email" class="btn"><spring:theme code="text.fliegercommerce.texto41"/></a>
                                 </div>
                             </section>
                         </form:form>
