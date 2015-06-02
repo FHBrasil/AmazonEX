@@ -26,7 +26,7 @@
                                 <td class="thumb"><a href="${productUrl}"><product:productPrimaryImage
                                             product="${entry.product}" format="cartIcon" /></a></td>
                                 <td><a href="${entry.product.purchasable ? productUrl : ''}">${entry.product.name}</a></td>
-                                <td>Quantidade: ${entry.quantity}</td>
+                                <td><spring:theme code="text.fliegercommerce.texto97"/>: ${entry.quantity}</td>
                                 <c:set var="option" value="${entry.product.baseOptions[0]}" />
                                 <c:if test="${not empty option.selected}">
                                     <c:forEach items="${option.selected.variantOptionQualifiers}"
@@ -53,17 +53,15 @@
                         </c:forEach>
                         <tr class="tr-btn-group">
                             <td colspan="5" class="btn-group"><a
-                                href="<c:url value="/my-account/order/${order.code}"/>" class="btn">Ver
-                                    Detalhes</a> <c:if
+                                href="<c:url value="/my-account/order/${order.code}"/>" class="btn"><spring:theme code="text.fliegercommerce.texto98"/></a> <c:if
                                     test="${searchPageData.paymentMode == 'Boleto' && !searchPageData.boletoExpired}">
                                     <c:url value="/boleto/${order.code}" var="boletoOrder" />
-                                    <a target="_blank" class="btn" href="${boletoOrder}">Reimprimir
-                                        Boleto</a>
+                                    <a target="_blank" class="btn" href="${boletoOrder}"><spring:theme code="text.fliegercommerce.texto99"/></a>
                                 </c:if> <ycommerce:testId code="orderHistory_orderNumber_link">
                                     <c:if test="${not empty searchPageData.chaveNfe}">
                                         <a target="_blank" class="btn"
                                             href="http://www.nfe.fazenda.gov.br/portal/consulta.aspx?tipoConsulta=completa&tipoConteudo=XbSeqxE8pl8=">
-                                            Imprimir Nota Fiscal </a>
+                                            <spring:theme code="text.fliegercommerce.texto100"/></a>
                                     </c:if>
                                 </ycommerce:testId> <%-- <a href="#" class="btn">Solicitar Troca ou Devolu��o</a> --%>
                             </td>
@@ -77,16 +75,16 @@
 <c:if test="${page == 'orderPage'}">
     <section id="order-products" class="section-block">
         <header>
-            <h2>Itens do pedido</h2>
+            <h2><spring:theme code="text.fliegercommerce.texto101"/></h2>
         </header>
         <table>
             <thead>
                 <tr>
                     <th></th>
-                    <th class="talign-left">Produto</th>
-                    <th>Qtd.</th>
-                    <th>Valor Unit�rio</th>
-                    <th>Valor Total</th>
+                    <th class="talign-left"><spring:theme code="text.fliegercommerce.texto71"/></th>
+                    <th><spring:theme code="text.fliegercommerce.texto97"/></th>
+                    <th><spring:theme code="text.fliegercommerce.texto102"/></th>
+                    <th><spring:theme code="text.fliegercommerce.texto84"/></th>
                 </tr>
             </thead>
             <c:forEach items="${order.unconsignedEntries}" var="entry">
@@ -122,21 +120,21 @@
                                             </c:forEach>
                                         </c:if>
                                     </c:forEach>
-                                    <li class="codigo">C�digo: ${entry.product.code}</li>
+                                    <li class="codigo"><spring:theme code="text.fliegercommerce.texto103"/>: ${entry.product.code}</li>
                                 </ul>
                             </div></td>
                         <td class="quantity"><c:if test="${entry.quantity gt 1}">
-                                <b>${entry.quantity}</b> unidades
+                                <b>${entry.quantity}</b> <spring:theme code="text.fliegercommerce.texto105"/>
 											</c:if> <c:if test="${entry.quantity lt 2}">
-                                <b>${entry.quantity}</b> unidade
+                                <b>${entry.quantity}</b> <spring:theme code="text.fliegercommerce.texto104"/>
 											</c:if></td>
                         <td class="product-price talign-left">
                             <div class="precos">
                                 <c:if test="${not empty order.appliedProductPromotions}">
-                                    <s>de: R$ <fmt:formatNumber
+                                    <s><spring:theme code="text.fliegercommerce.texto106"/>: R$ <fmt:formatNumber
                                             value="${entry.product.oldPrice}" type="number"
                                             minFractionDigits="2" /></s>
-                                    <strong>por: <format:fromPrice
+                                    <strong><spring:theme code="text.fliegercommerce.texto107"/>: <format:fromPrice
                                             priceData="${entry.basePrice}" /></strong>
                                 </c:if>
                                 <c:if test="${empty order.appliedProductPromotions}">
@@ -166,7 +164,7 @@
                         <td class="product-price total">
                             <div class="precos">
                                 <c:if test="${not empty order.appliedProductPromotions}">
-                                    <strong><span>por:</span> <format:price
+                                    <strong><span><spring:theme code="text.fliegercommerce.texto107"/>:</span> <format:price
                                             priceData="${entry.totalPrice}"
                                             displayFreeForZero="true" /></strong>
                                 </c:if>

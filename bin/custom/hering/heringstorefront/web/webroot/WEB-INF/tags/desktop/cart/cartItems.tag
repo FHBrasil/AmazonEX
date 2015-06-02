@@ -67,7 +67,7 @@
                                 </c:forEach>
                             </c:forEach>
                             <%-- CODIGO DO PRODUTO --%>
-                            <li class="codigo"><br>C&oacute;digo: ${entry.product.code}</li>
+                            <li class="codigo"><br><spring:theme code="text.fliegercommerce.texto103"/>: ${entry.product.code}</li>
                         </ul>
                     </div>
                 </td>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="selos">
                             <ul>
-                                <li class="desconto">produto com desconto</li>
+                                <li class="desconto"><spring:theme code="text.fliegercommerce.texto108"/></li>
                             </ul>
                         </div>
                     </c:if> <c:if test="${!entry.product.fromPrice}">
