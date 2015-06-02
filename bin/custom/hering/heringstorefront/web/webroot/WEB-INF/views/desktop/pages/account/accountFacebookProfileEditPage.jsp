@@ -35,10 +35,8 @@
 			<formElement:formCheckbox idKey="profile.subscribeNewsletter" labelKey="profile.subscribeNewsletter" path="subscribeNewsletter"/>
 			<span class="sexo">Sexo</span>
 			<fieldset>
-			<form:radiobutton idKey="register.gender" labelKey="register.gender" path="gender" value="FEMALE" /><spring:theme code="profile.gender.FEMALE"
-				text="Feminino" />
-			<form:radiobutton idKey="register.gender" labelKey="register.gender" path="gender" value="MALE" /><spring:theme code="profile.gender.MALE"
-				text="Masculino" />
+			<form:radiobutton idKey="register.gender" labelKey="register.gender" path="gender" value="FEMALE" /><spring:theme code="profile.gender.FEMALE"/>
+			<form:radiobutton idKey="register.gender" labelKey="register.gender" path="gender" value="MALE" /><spring:theme code="profile.gender.MALE" />
 			</fieldset>
 			<div class="obrigatorio required"><spring:theme code="form.required" text="Fields marked * are required"/></div>
 			<div class="form-actions">

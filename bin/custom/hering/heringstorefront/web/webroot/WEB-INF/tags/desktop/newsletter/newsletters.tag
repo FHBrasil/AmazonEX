@@ -9,7 +9,7 @@
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement" %>
 
 <input type="hidden" name="baseStore" id="baseStore" value="${basesChecked}" />
-<spring:theme code="profile.newsletter" text="Receber Newsletter"/>:
+<spring:theme code="profile.subscribeNewsletter" />:
 <c:forTokens var="base" items="${bases}" delims=",">
 	<formElement:formCheckbox idKey="${base}" labelKey="profile.subscribeNewsletter.${base}" path="subscribeNewsletter" labelCSS="text" mandatory="false"/>
 </c:forTokens>

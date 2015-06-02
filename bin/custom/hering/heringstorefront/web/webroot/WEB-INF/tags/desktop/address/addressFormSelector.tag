@@ -43,7 +43,7 @@
                             <input type="hidden" name="editAddressCode"
                                 value="${deliveryAddress.id}" />
                             <button type="submit" class="adressButtonEditAddress"
-                                tabindex="${status.count + 21}">Editar</button>
+                                tabindex="${status.count + 21}"><spring:theme code="text.fliegercommerce.texto80"/></button>
                         </form:form>
                         <c:if test="${fn:length(deliveryAddresses) > 1}">
                             <form:form action="${request.contextPath}/checkout/multi/remove-address"
@@ -51,7 +51,7 @@
                                 <input type="hidden" name="addressCode"
                                     value="${deliveryAddress.id}" />
                                 <button type="submit" class="adressButtonEraseAddress"
-                                    tabindex="${status.count + 21}">Apagar</button>
+                                    tabindex="${status.count + 21}"><spring:theme code="text.fliegercommerce.texto81"/></button>
                             </form:form>
                         </c:if>
                         <form action="${request.contextPath}/checkout/multi/select-delivery-address"
@@ -60,8 +60,7 @@
                                 value="${deliveryAddress.id}" />
                             <button type="submit" class="adressButtonThisAddress"
                                 tabindex="${status.count + 21}">
-                                <spring:theme code="checkout.deliverThisAddress"
-                                    text="Entregar nesse endereço" />
+                                <spring:theme code="checkout.deliverThisAddress"/>
                             </button>
                         </form>
                     </div>
@@ -73,12 +72,12 @@
 <c:choose>
     <c:when test="${edit eq true}">
         <header>
-            <h2>ALTERAR ENDERE&Ccedil;O</h2>
+            <h2><spring:theme code="text.fliegercommerce.texto82"/></h2>
         </header>
     </c:when>
     <c:otherwise>
         <header>
-            <h2>ADICIONAR ENDERE&Ccedil;O</h2>
+            <h2><spring:theme code="text.fliegercommerce.texto83"/></h2>
         </header>
     </c:otherwise>
 </c:choose>
@@ -135,7 +134,7 @@
             <c:otherwise>
                 <ycommerce:testId code="multicheckout_saveAddress_button">
                     <button class="btn btn-confirmar" type="submit">
-                        <spring:theme code="checkout.checkout.multi.next" text="Continuar" />
+                        <spring:theme code="checkout.checkout.multi.next"/>
                     </button>
                 </ycommerce:testId>
             </c:otherwise>
