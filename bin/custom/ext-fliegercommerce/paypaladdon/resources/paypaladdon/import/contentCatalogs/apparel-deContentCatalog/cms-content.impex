@@ -1,0 +1,60 @@
+$contentCatalog=apparel-deContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$jarResourceCms=jar:com.paypal.hybris.addon.constants.PaypaladdonConstants&/paypaladdon/import/cockpit/cmscockpit
+$siteResource=jar:com.paypal.hybris.addon.constants.PaypaladdonConstants&/paypaladdon/import/contentCatalogs/$contentCatalog
+
+# Language
+$lang=de
+
+# PayPalExpressCheckoutShortcut
+INSERT_UPDATE PayPalExpressCheckoutShortcut;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink;media(code,$contentCV)[lang=$lang]
+;;PayPalExpressCheckoutShortcut;PayPal Express Checkout Shortcut;PayPalExpressCheckoutShortcut;/paypal/checkout/hop/expressCheckoutShortcut;/images/button/checkout-logo-medium.png
+;;PayPalExpressCheckoutShortcutSmall;PayPal Express Checkout Small Shortcut;PayPalExpressCheckoutShortcutSmall;/paypal/checkout/hop/expressCheckoutShortcut;/images/button/checkout-logo-small.png
+
+# PayPalCreditShortcut
+INSERT_UPDATE PayPalCreditShortcut;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink;media(code,$contentCV)[lang=$lang]
+;;PayPalCreditShortcut;PayPal Credit Button;PayPalCreditShortcut;/paypal/checkout/hop/creditCartShortcut;/images/button/ppcredit-logo-medium.png
+;;PayPalCreditShortcutSmall;PayPal Credit Small Button;PayPalCreditShortcutSmall;/paypal/checkout/hop/creditCartShortcut;/images/button/ppcredit-logo-small.png
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;target(code)[default='newWindow'];external;linkName[lang=$lang]
+;;WhatIsPayPalLink;What Is PayPal Link;https://www.paypal.com/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside;WhatIsPayPalLink;;true;What is PayPal?
+
+# PayPalExpressCheckoutMark
+INSERT_UPDATE PayPalExpressCheckoutMark;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink;media(code,$contentCV)[lang=$lang];link(&linkRef)
+;;PayPalExpressCheckoutMark;PayPal Express Checkout Mark;PayPalExpressCheckoutMark;/checkout/multi/payment-method/expressCheckoutMark;/images/mark/pp-acceptance-medium.png;WhatIsPayPalLink
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;PayPalSectionSlot;PayPalExpressCheckoutMark
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;PayPalExpressCheckoutMark-multiStepCheckoutSummaryPage;PayPalSectionSlot;multiStepCheckoutSummaryPage;PayPalSectionSlot
+
+#PayPalCreditFinancingBanner
+INSERT_UPDATE PayPalCreditFinancingBanner;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;PayPalCreditFinancingBanner;PayPal Credit Financing Banner;PayPalCreditFinancingBanner
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;TopContent-cartPage;Top Slot for Cart Page;true;FreeDeliverySimpleBannerComponent,PayPalCreditFinancingBanner,CartComponent
+
+# CMS PayPal Mini Cart Component
+INSERT_UPDATE PayPalMiniCartComponent;$contentCV[unique=true];uid[unique=true];name;title[lang=$lang];&componentRef;totalDisplay(code);shownProductCount;payPalExpressCheckoutShortcut(&componentRef);payPalCreditShortcut(&componentRef)
+;;PayPalMiniCart;PayPal Mini Cart;"IHR EINKAUFSKORB";PayPalMiniCart;SUBTOTAL;3;PayPalExpressCheckoutShortcutSmall;PayPalCreditShortcutSmall
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(&componentRef)
+;;MiniCartSlot;PayPalMiniCart
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
+;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;/WEB-INF/views/addons/paypaladdon/desktop/pages/account/accountOrderDetailShippingInfo.jsp;;AccountOrderDetailsShippingComponent
+
+INSERT_UPDATE PayPalJspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;&componentRef;feature(&componentRef);feature1(&componentRef)
+;;PayPalCheckoutComponent;PayPal Checkout Display Component;/WEB-INF/views/addons/paypaladdon/desktop/pages/cart/checkoutDisplay.jsp;PayPalCheckoutComponent;PayPalExpressCheckoutShortcut;PayPalCreditShortcut
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;BottomContentSlot-cartPage;Bottom Content Slot for Cart Page;true;PayPalCheckoutComponent,CartSuggestions
+
+INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/jpeg'];altText;folder(qualifier)[default='images']
+;;/images/button/checkout-logo-medium.png;checkout-logo-medium.png;$siteResource/images/button/checkout-logo-medium.png;image/png;Checkout with PayPal
+;;/images/button/checkout-logo-small.png;checkout-logo-small.png;$siteResource/images/button/checkout-logo-small.png;image/png;Checkout with PayPal
+;;/images/button/ppcredit-logo-medium.png;ppcredit-logo-medium.png;$siteResource/images/button/ppcredit-logo-medium.png;image/png;PayPal Credit
+;;/images/button/ppcredit-logo-small.png;ppcredit-logo-small.png;$siteResource/images/button/ppcredit-logo-small.png;image/png;PayPal Credit
+;;/images/mark/pp-acceptance-medium.png;pp-acceptance-medium.png;$siteResource/images/mark/pp-acceptance-medium.png;image/png;PayPal Mark

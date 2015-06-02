@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+       default-autowire="byName">
+    
+    <!-- extend call context with PayPal section -->   
+    <alias alias="csCallContextWidgetRenderer" name="ppCallContextWidgetRenderer"/>
+	<bean id="ppCallContextWidgetRenderer" parent="defaultCsCallContextWidgetRenderer" class="com.paypal.hybris.cscockpit.widgets.renderers.impl.PayPalCallContextWidgetRenderer">
+	</bean>
+
+	<!-- extend default order actions widget with new 'Reauthorize' button  -->
+	<alias alias="csOrderActionsWidgetRenderer" name="paypalCsOrderActionsWidgetRenderer"/>
+		<bean id="paypalCsOrderActionsWidgetRenderer" parent="defaultCsOrderActionsWidgetRenderer" class="com.paypal.hybris.cscockpit.widgets.renderers.impl.PayPalOrderManagementActionsWidgetRenderer">
+	</bean>
+	
+	<!-- PayPal transaction search widget -->
+	<alias alias="csPayPalTransactionSearchWidgetConfig" name="defaultCsPayPalTransactionSearchWidgetConfig"/>
+	<bean id="defaultCsPayPalTransactionSearchWidgetConfig" parent="csBaseWidgetConfig">
+		<property name="widgetTitle" value="cscockpit.widget.paypal.transaction.search"/>
+		<property name="widgetRenderer" ref="csPayPalTransactionSearchWidgetRenderer"/>
+		<property name="widgetController" ref="csPayPalTransactionSearchController"/>
+		<property name="widgetClass" value="de.hybris.platform.cockpit.widgets.impl.DefaultListboxWidget"/>
+		<property name="widgetSclass" value="defaultWidgetFrame csOrderSearchWidgetFrame"/>
+		<property name="widgetModel">
+			<bean class="de.hybris.platform.cscockpit.widgets.models.impl.TextSearchWidgetModel"/>
+		</property>
+		<property name="widgetAdapter">
+			<bean class="de.hybris.platform.cscockpit.widgets.adapters.TextSearchResultAdapter">
+				<property name="cockpitTypeService" ref="cockpitTypeService"/>
+			</bean>
+		</property>
+	</bean>
+
+	<alias alias="csPayPalTransactionSearchWidgetRenderer" name="defaultCsPayPalTransactionSearchWidgetRenderer"/>
+	<bean id="defaultCsPayPalTransactionSearchWidgetRenderer" parent="abstractWidgetRenderer" class="com.paypal.hybris.cscockpit.widgets.renderers.impl.PayPalTransactionSearchWidgetRenderer">
+		<property name="listConfigurationCode" value="ppTransactionSearchResult"/>
+		<property name="listConfigurationType" value="PayPalTransaction"/>
+		<property name="itemAppender">
+			<bean class="de.hybris.platform.cscockpit.widgets.controllers.dispatcher.impl.PopupCloseAppender">
+				<property name="popupWidgetHelper" ref="popupWidgetHelper"/>
+				<property name="itemAppender">
+					<bean class="de.hybris.platform.cscockpit.widgets.controllers.dispatcher.impl.OrderAppender" parent="csBaseAppender"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<alias alias="csPayPalTransactionSearchController" name="defaultCsPayPalTransactionSearchController"/>
+	<bean id="defaultCsPayPalTransactionSearchController" parent="csBaseDefaultSearchController" class="com.paypal.hybris.cscockpit.widgets.controllers.search.impl.PayPalSearchCommandController">
+		<property name="searchService" ref="csPayPalTransactionSearchService"/>
+	</bean>
+	
+	<!-- reauthorize request widget -->
+	<alias alias="csReauthorizeRequestCreateWidgetConfig" name="defaultReauthorizeRequestCreateWidgetConfig"/>
+	<bean id="defaultReauthorizeRequestCreateWidgetConfig" parent="csBaseWidgetConfig">
+		<property name="widgetTitle" value="cscockpit.widget.order.reauthorize.create"/>
+		<property name="widgetRenderer" ref="csReauthorizeRequestCreateWidgetRenderer"/>
+		<property name="widgetController" ref="csReauthorizationController"/>
+		<property name="widgetSclass" value="defaultWidgetFrame csReauthorizeCreateWidgetFrame"/>
+		<property name="widgetClass" value="de.hybris.platform.cockpit.widgets.impl.DefaultInputWidget"/>
+		<property name="widgetModel">
+			<bean class="de.hybris.platform.cockpit.widgets.models.impl.DefaultListWidgetModel"/>
+		</property>
+	</bean>
+
+    <!-- order payment transactions widget -->
+    <alias alias="csOrderPaymentTransactionsWidgetConfig" name="payPalCsOrderPaymentTransactionsWidgetConfig"/>
+    <bean id="payPalCsOrderPaymentTransactionsWidgetConfig" parent="csBaseWidgetConfig">
+        <property name="widgetTitle" value="cscockpit.widget.order.paymentTransactions"/>
+        <property name="widgetRenderer" ref="csOrderPaymentTransactionsWidgetRenderer"/>
+        <property name="widgetController" ref="csOrderController"/>
+        <property name="widgetClass" value="de.hybris.platform.cockpit.widgets.impl.DefaultListboxWidget"/>
+        <property name="widgetModel">
+            <bean class="de.hybris.platform.cscockpit.widgets.models.impl.DefaultMasterDetailListWidgetModel"/>
+        </property>
+        <property name="widgetAdapter">
+            <bean class="de.hybris.platform.cscockpit.widgets.adapters.OrderPaymentTransactionsListWidgetAdapter">
+                <property name="cockpitTypeService" ref="cockpitTypeService"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!--
+    <alias alias="csRefundRequestCreateWidgetRenderer" name="payPalCsRefundRequestCreateWidgetRenderer"/>
+    <bean id="payPalCsRefundRequestCreateWidgetRenderer" parent="defaultCsRefundRequestCreateWidgetRenderer" class="com.paypal.hybris.cscockpit.widgets.renderers.impl.PayPalReturnRequestCreateWidgetRenderer">
+        <property name="listEditorConfigurationCode" value="payPalRefundEntryEdit"/>
+        <property name="listConfigurationType" value="RefundEntry"/>
+    </bean>
+    -->
+
+	<alias alias="csReauthorizeRequestCreateWidgetRenderer" name="defaultReauthorizeRequestCreateWidgetRenderer"/>
+	<bean id="defaultReauthorizeRequestCreateWidgetRenderer" parent="abstractWidgetRenderer" class="com.paypal.hybris.cscockpit.widgets.renderers.impl.ReauthorizeRequestCreateWidgetRenderer">
+		<property name="popupWidgetHelper" ref="popupWidgetHelper"/>
+	</bean>
+	
+	<!-- Order reauthorization controller -->
+	<alias alias="csReauthorizationController" name="paypalCsOrderController"/>
+	<bean id="paypalCsOrderController" scope="session" parent="csBaseWidgetController" class="com.paypal.hybris.cscockpit.widgets.controllers.impl.PayPalReauthorizationControllerImpl">
+		<property name="orderManagementActionsWidgetController" ref="csOrderManagementActionsWidgetController"/>
+		<property name="orderReauthorizationService" ref="payPalOrderReauthorizationService"/>
+	</bean>
+	
+	<alias name="payPalCsOrderManagementActionsWidgetController" alias="csOrderManagementActionsWidgetController"/>
+	<bean id="payPalCsOrderManagementActionsWidgetController" class="com.paypal.hybris.cscockpit.widgets.controllers.impl.PayPalOrderManagementActionsWidgetControllerImpl" parent="defaultCsOrderManagementActionsWidgetController">
+		<property name="payPalOrderReauthorizationService" ref="payPalOrderReauthorizationService"/>
+	</bean>
+
+    <alias alias="csReturnsController" name="payPalCsReturnsController"/>
+    <bean id="payPalCsReturnsController" parent="defaultCsReturnsController" class="com.paypal.hybris.cscockpit.widgets.controllers.impl.PayPalReturnsController" scope="session">
+    </bean>
+
+    <!-- Order details controller -->
+    <alias alias="csOrderController" name="payPalCsOrderController"/>
+    <bean id="payPalCsOrderController" scope="session" parent="csAbstractCallContextDependantController" class="com.paypal.hybris.cscockpit.widgets.controllers.impl.DefaultPayPalOrderController">
+        <property name="ticketStrategy" ref="csTicketStrategy"/>
+        <property name="transactionDetailsService" ref="payPalTransactionDetailsService"/>
+    </bean>
+	
+	<alias alias="csOrderPaymentTransactionsWidgetRenderer" name="paypalCsOrderPaymentTransactionsWidgetRenderer"/>
+	<bean id="paypalCsOrderPaymentTransactionsWidgetRenderer" parent="defaultCsOrderPaymentTransactionsWidgetRenderer" class="com.paypal.hybris.cscockpit.widgets.renderers.impl.PayPalPaymentDetailsWidgetRenderer">
+	</bean>
+
+</beans>

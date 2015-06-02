@@ -1,0 +1,23 @@
+.payPalButton {
+	display: block;
+	text-align: right;
+	cursor: pointer;
+	position: relative;
+	margin: .5em 0;
+	padding: 0;
+}
+
+.payPalButton img {
+	margin-top: 3px;
+	margin-right: 10px;
+}
+
+.paymentMethodCCButton .ui-btn-inner {
+	height: 48px;
+}
+
+.paymentMethodCCButton .ui-btn-text {
+	top: 50%;
+	position: absolute;
+	margin-top: -9px;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editor>
+    <group qualifier="General" visible="true" initially-opened="true">
+        <label key="cockpit.config.label.General" />
+        <property qualifier="RefundEntry.expectedQuantity" visible="true"/>
+        <property qualifier="RefundEntry.reason" visible="true" editable="false">
+            <parameter name="defaultValue" value="RefundReason.GOODWILL" />
+            <parameter name="defaultValueResolver" value="defaultEnumValueResolver" />
+        </property>
+        <property qualifier="RefundEntry.action" visible="true">
+            <!--<parameter name="defaultValue" value="ReturnAction.IMMEDIATE" />
+            <parameter name="defaultValueResolver" value="defaultEnumValueResolver" />-->
+        </property>
+        <property qualifier="RefundEntry.notes" visible="true">
+            <parameter>
+                <name>defaultValue</name>
+                <value>PayPal refund</value>
+            </parameter>
+        </property>
+    </group>
+</editor>

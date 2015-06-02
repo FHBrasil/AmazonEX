@@ -1,0 +1,33 @@
+$contentCatalog=apparel-deContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$jarResourceCms=jar:com.paypal.hybris.addon.constants.PaypaladdonConstants&/paypaladdon/import/cockpit/cmscockpit
+$siteResource=jar:com.paypal.hybris.addon.constants.PaypaladdonConstants&/paypaladdon/import/contentCatalogs/$contentCatalog
+
+$lang=de
+
+# PayPalExpressCheckoutShortcut
+INSERT_UPDATE PayPalExpressCheckoutShortcut;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink;media(code,$contentCV)[lang=$lang]
+;;MobilePayPalExpressCheckoutShortcut;Mobile PayPal Express Checkout Shortcut;MobilePayPalExpressCheckoutShortcut;/paypal/checkout/hop/expressCheckoutShortcut;/images/button/_thumb_445769.png
+
+# PayPalExpressCheckoutMark
+INSERT_UPDATE PayPalExpressCheckoutMark;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink;media(code,$contentCV)[lang=$lang]
+;;MobilePayPalExpressCheckoutMark;Mobile PayPal Express Checkout Mark;MobilePayPalExpressCheckoutMark;/checkout/multi/payment-method/expressCheckoutMark;/images/mark/pp-acceptance-medium.png
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;MobilePayPalSectionSlot;MobilePayPalExpressCheckoutMark
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;MobilePayPalExpressCheckoutMark-multiStepCheckoutSummaryPage;MobilePayPalSectionSlot;mobile-multiStepCheckoutSummaryPage;MobilePayPalSectionSlot
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;&componentRef
+;;MobileAccountOrderDetailsShippingComponent;Account Order Details Shipping Info;/WEB-INF/views/addons/paypaladdon/mobile/pages/account/accountOrderDetailShippingInfo.jsp;MobileAccountOrderDetailsShippingComponent
+
+INSERT_UPDATE PayPalJspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;feature(&componentRef);&componentRef
+;;MobilePayPalCheckoutComponent;Mobile PayPal Checkout Component;/WEB-INF/views/addons/paypaladdon/mobile/pages/cart/checkoutDisplay.jsp;MobilePayPalExpressCheckoutShortcut;MobilePayPalCheckoutComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;MobileTopContentSlot-cartPage;Top Content Slot for Cart Page;true;MobileFreeDeliverySimpleBannerComponent,MobileCartComponent,MobileCartTotalsComponent,MobilePayPalCheckoutComponent,MobilePromotionsComponent,MobilePotentialPromotionsComponent,MobileCartSuggestions
+
+INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/jpeg'];altText;folder(qualifier)[default='images']
+;;/images/button/_thumb_445769.png;_thumb_445769.png;$siteResource/images/button/_thumb_445769.png;image/png;Mobile PayPal Express Checkout Button
+;;/images/mark/pp-acceptance-medium.png;pp-acceptance-medium.png;$siteResource/images/mark/pp-acceptance-medium.png;image/png;Mobile PayPal Mark

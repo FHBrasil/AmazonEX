@@ -42,6 +42,7 @@
 
         <!-- ext-addon -->
         <extension name="addonsupport" />
+        <extension name="addoncommon" />
         <extension name="b2ccheckoutaddon" />
 
         <extension name="ycommercewebservices" />
@@ -70,6 +71,7 @@
         <extension name="wishlist" />
         <extension name="adyen" />
         <extension name="clearsaleantifraude" />
+        <extension name="paypal" />
 
         <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />
