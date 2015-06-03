@@ -66,21 +66,6 @@ import de.hybris.platform.util.Config;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import org.apache.commons.lang.StringUtils;
 
 import java.io.BufferedReader;

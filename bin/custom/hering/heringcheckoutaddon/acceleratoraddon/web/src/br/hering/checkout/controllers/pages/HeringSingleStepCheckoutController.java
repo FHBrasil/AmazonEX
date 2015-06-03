@@ -28,7 +28,6 @@ import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.servicelayer.i18n.I18NService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.store.services.BaseStoreService;
-
 import de.hybris.platform.servicelayer.i18n.L10NService;
 
 import java.math.BigDecimal;
@@ -40,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import de.hybris.platform.util.localization.Localization;
 
 import javax.annotation.Resource;
@@ -50,6 +50,8 @@ import org.apache.commons.lang.SerializationUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.noggit.JSONUtil;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.integration.core.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -115,6 +117,8 @@ public class HeringSingleStepCheckoutController extends
 	@Resource
 	private L10NService l10nService; 
 	
+	@Resource(name = "messageSource")
+	private MessageSource messageSource;
 	
 	/**
 	 * 
@@ -481,8 +485,8 @@ public class HeringSingleStepCheckoutController extends
 			model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
 			model.addAttribute("command", "selectDeliveryMethod");
 			model.addAttribute("success", Boolean.TRUE.toString());
-			
-			final String success = l10nService.getLocalizedString("text.fliegercommerce.texto117");
+
+			final String success = getMessageSource.getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());
 			model.addAttribute("successMessage", success);
 		}
 		return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments
@@ -1296,6 +1300,9 @@ public class HeringSingleStepCheckoutController extends
 		
 		LOG.info(error);
 			
+	
+	
+		
 		return error;
 	}
 	
@@ -1310,4 +1317,12 @@ public class HeringSingleStepCheckoutController extends
 		return deliveryModes;
 	}
 
+	
+	
+	protected MessageSource getMessageSource()
+	{
+		return messageSource;
+	}
+	
+	
 }
