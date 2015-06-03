@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
 
 import br.hering.facades.facades.order.HeringCheckoutFacade;
 import br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade;
@@ -61,7 +64,6 @@ import de.hybris.platform.commerceservices.order.CommerceCartModificationExcepti
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.servicelayer.i18n.I18NService;
 import de.hybris.platform.servicelayer.session.SessionService;
-import org.springframework.integration.core.MessageSource;
 
 
 
@@ -105,22 +107,22 @@ public class CartPageController extends AbstractPageController
 	private PriceDataFactory priceDataFactory;
 	
 	
-/*	@Resource
+	@Resource
 	private MessageSource messageSource;
 	
 	
 	@Resource
-	private I18NService i18nService;*/
+	private I18NService i18nService;
 	
 
-/*	public MessageSource getMessageSource() {
+	public MessageSource getMessageSource() {
 		return messageSource;
 	}
 
 	public I18NService getI18nService() {
 		return i18nService;
 	}
-*/
+
 	
 	// Public getter used in a test
 	@Override
@@ -458,10 +460,10 @@ public class CartPageController extends AbstractPageController
 			int size = generatedInstallments.size();
 			String last = generatedInstallments.get(size-1);
 			
-			//final String de = getMessageSource().getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());
-			//final String semjuros = getMessageSource().getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());	
+			final String de = getMessageSource().getMessage("text.fliegercommerce.texto120", null, getI18nService().getCurrentLocale());
+			final String semjuros = getMessageSource().getMessage("text.fliegercommerce.texto121", null, getI18nService().getCurrentLocale());	
 			
-			return "<b>" + size + "x</b> de R$ " + last + " sem juros";
+			return "<b>" + size + de + last + semjuros;
 		}
 		
 		return "";
