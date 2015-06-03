@@ -2,7 +2,7 @@
 <!--
  [y] hybris Platform
 
- Copyright (c) 2000-2014 hybris AG
+ Copyright (c) 2000-2013 hybris AG
  All rights reserved.
 
  This software is the confidential and proprietary information of hybris
@@ -15,148 +15,73 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
            http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-	<bean id="paypaladdonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
-		<property name="supportedChannels">
-			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
-				<value>B2C</value>
-				<!--
-								<value>B2B</value>
-				-->
-			</list>
-		</property>
-		<property name="addonExtensionMetadata">
-			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
-				<property name="suffixChannel" value="false"/>
-				<property name="baseExtensionName" value="paypaladdon"/>
-			</bean>
-		</property>
-	</bean>
-
-	<bean id="paypaladdonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
-		<property name="extensionName" value="paypaladdon" />
-	</bean>
-
-<!--	<bean id="paypalConvertersMap" class="java.util.HashMap">
-		<constructor-arg>
-			<map>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.ebay.api.SetExpressCheckoutReq</value>
-					</key>
-					<ref bean="setExprCheckReqDataConverter"/>
-				</entry>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.paypal.hybris.data.SetExpressCheckoutResultData</value>
-					</key>
-					<ref bean="setExprCheckResConverter"/>
-				</entry>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.ebay.api.GetExpressCheckoutDetailsReq</value>
-					</key>
-					<ref bean="getExprCheckDetReqDataConverter"/>
-				</entry>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.paypal.hybris.data.GetExpressCheckoutDetailsResultData</value>
-					</key>
-					<ref bean="getExprCheckDetResConverter"/>
-				</entry>
-
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.ebay.api.DoExpressCheckoutPaymentReq</value>
-					</key>
-					<ref bean="doExprCheckPaymentReqDataConverter"/>
-				</entry>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.paypal.hybris.data.DoExpressCheckoutPaymentResultData</value>
-					</key>
-					<ref bean="doExprCheckPaymentResConverter"/>
-				</entry>
-
-
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.ebay.api.DoAuthorizationReq</value>
-					</key>
-					<ref bean="doAuthReqDataConverter"/>
-				</entry>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.paypal.hybris.data.DoAuthorizationResultData</value>
-					</key>
-					<ref bean="doAuthResConverter"/>
-				</entry>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.ebay.api.DoCaptureReq</value>
-					</key>
-					<ref bean="doCaptReqDataConverter"/>
-				</entry>
-				<entry>
-					<key>
-						<value type="java.lang.Class">com.paypal.hybris.data.DoCaptureResultData</value>
-					</key>
-					<ref bean="doCaptResConverter"/>
-				</entry>
-			</map>
-		</constructor-arg>
-	</bean>-->
+	<!--
+	The hybris platform provides one single Spring application context for beans located at the jalo layer.
+	Each extension can add beans to this context by specifying them at this configuration file.
+	 
+	You can use and/or redefine beans defined at configuration files of other extensions as well as
+	adding new one.
+		
+	If you want to locate this file at a different location or want to use several files for better,
+	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
+	There you can specify a comma separated list of files where first is tried to find a file per classpath and
+	then per file system.
 	
-	<alias name="defaultPaypalPaymentInfoConverter" alias="paypalPaymentInfoConverter"/>
-	<bean id="defaultPaypalPaymentInfoConverter" parent="abstractPopulatingConverter">
-		<property name="targetClass" value="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData"/>
-		<property name="populators">
-			<list>
-				<ref bean="paypalPaymentInfoPopulator"/>
-			</list>
-		</property>
-	</bean>
+	Please be aware of the special 'tenant' scope. If you have a multi tenant system you mostly have to use this
+	scope instead of the default Spring 'singleton' scope.
 	
-	<alias name="defaultPaypalPaymentInfoPopulator" alias="paypalPaymentInfoPopulator"/>
-	<bean id="defaultPaypalPaymentInfoPopulator"
-			class="com.paypal.hybris.converters.populators.impl.PaypalPaymentInfoPopulator">
-		<property name="addressConverter" ref="addressConverter"/>
+	If you want to configure beans for your web module please have a look at
+	your web/webroot/WEB-INF/<extname>-web-spring.xml.
+	-->
+	
+	<!--  Example how to override a manager -->
+	<!--
+	<bean id="core.productManager"   class="com.fliegersoftware.addon.paypal.jalo.PaypaladdonProductManager" 	init-method="init"	destroy-method="destroy" scope="tenant" />
+	-->
+	
+	
+ 	<!--  Example how to configure the class to use for jalo session creation -->
+	<!--
+	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
+		<property name="targetClassName" value="com.fliegersoftware.addon.paypal.jalo.PaypaladdonJaloSession"/>
 	</bean>
+	-->
 
-	<alias name="payPalCheckoutFacade" alias="acceleratorCheckoutFacade" />
-	<bean id="payPalCheckoutFacade" class="com.paypal.hybris.addon.facades.PayPalCheckoutFacade" parent="defaultAcceleratorCheckoutFacade">
-		<property name="paypalPaymentInfoConverter" ref="paypalPaymentInfoConverter"/>
-		<property name="configurationService" ref="configurationService"/>
-        <property name="sessionService" ref="sessionService"/>
-        <property name="uiExperienceService" ref="uiExperienceService"/>
-	</bean>
+	
+	<!--  Example how to override an item  -->
+	<!-- 
+	<bean id="de.hybris.platform.jalo.product.Product" class="com.fliegersoftware.addon.paypal.jalo.PaypaladdonProduct" scope="prototype" />		
+ 	-->
 
-	<alias name="paypalCheckoutFlowFacade" alias="checkoutFlowFacade"/>
-	<bean id="paypalCheckoutFlowFacade" parent="defaultCheckoutFlowFacade">
-		<replaced-method name="getPaymentDetails" replacer="replacedPaypalCheckoutFlowReplacer"></replaced-method>
-	</bean>
+	<!--  
+	 Example how to register and use an AOP aspect 
+     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html	
+     -->
 	
-	<bean name="replacedPaypalCheckoutFlowReplacer" class="com.paypal.hybris.addon.facades.PayPalCheckoutFlowReplacer">
-		<property name="creditCardPaymentInfoConverter" ref="creditCardPaymentInfoConverter"/>
-		<property name="paypalPaymentInfoConverter" ref="paypalPaymentInfoConverter"/>
-		<property name="cartService" ref="cartService"/>
-	</bean>
-	
-	<alias name="paypalOrderPopulator" alias="orderPopulator"/>
-	<bean id="paypalOrderPopulator"
-			class="com.paypal.hybris.addon.facades.order.converters.populator.PayPalOrderPopulator"
-			parent="defaultOrderPopulator">
-			<property name="paypalPaymentInfoConverter" ref="paypalPaymentInfoConverter"/>
-	</bean>
+	<!-- 
+	<bean id="paypaladdonProfBean" class="com.fliegersoftware.addon.paypal.aop.PaypaladdonProfilingAspect"/>
+	<aop:config proxy-target-class="true">
+  		<aop:aspect id="paypaladdonProfAspect" ref="paypaladdonProfBean" >
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="execution(* getModificationTime(..))" />  	            
+	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
+  		</aop:aspect>
+	</aop:config>
+	 -->
 
-	<!--Changing mapping for Order Status display value for PAYMENT_NOT_CAPTURED-->
-	<bean id="addToOrderStatusDisplay" depends-on="dynamicAttributesOrderStatusDisplay" parent="mapMergeDirective">
-		<property name="fieldName" value="statusDisplayMap" />
-		<property name="key" value="PAYMENT_NOT_CAPTURED" />
-		<property name="value" value="processing" />
-	</bean>
 	
+	<!-- some other examples of a pointcut that matches everything:
+
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp; 
+	      	            !execution(* getPK(..))" />  	            
+	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
+	  -->
+	
+			
+			
 </beans>

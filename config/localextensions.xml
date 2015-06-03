@@ -72,6 +72,9 @@
         <extension name="adyen" />
         <extension name="clearsaleantifraude" />
         <extension name="paypal" />
+        
+        <!-- Flieger Commer AddOn -->
+<!--         <extension name="paypaladdon" /> -->
 
         <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />

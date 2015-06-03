@@ -117,6 +117,9 @@
         </div>
         <c:if test="${hasItems}">
             <div class="btn-group">
+                <c:if test="${not empty payPalExpressCheckoutShortcut}">
+                    <cms:component component="${payPalExpressCheckoutShortcut}" evaluateRestriction="true"  />
+                </c:if>
                 <a href="${cartUrl}" class="btn btn-full-bag">Sacola completa</a> <a
                     href="${checkoutUrl}" class="btn btn-checkout">Finalizar compra</a>
             </div>
