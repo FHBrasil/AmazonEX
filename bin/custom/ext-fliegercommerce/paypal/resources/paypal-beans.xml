@@ -323,7 +323,7 @@
         <property name="formattedPriceWithoutCurrencySymbol" type="java.lang.String"/>
     </bean>
     
-    <bean class="de.hybris.platform.commercefacades.order.data.OrderEntryGroupData">
+    <bean class="de.hybris.platform.acceleratorfacades.order.data.OrderEntryGroupData">
         <property name="totalTax" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
         <property name="totalPrice" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
     </bean>
