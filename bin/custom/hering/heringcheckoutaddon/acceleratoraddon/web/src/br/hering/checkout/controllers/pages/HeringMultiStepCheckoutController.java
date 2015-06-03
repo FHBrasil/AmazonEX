@@ -44,6 +44,7 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.session.SessionService;
+import de.hybris.platform.servicelayer.type.TypeService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.storefront.controllers.pages.checkout.MultiStepCheckoutController;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -182,6 +183,14 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 	@Resource
 	protected CartFacade cartFacade; 
 	
+	@Resource
+	private TypeService typeService;
+
+	
+	public TypeService getTypeService() {
+		return typeService;
+	}
+
 	@ModelAttribute("instalments")
 	public List<SelectOption> getInstalments()
 	{
@@ -200,8 +209,20 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 	public List<SelectOption> getAddressTypes()
 	{
 		final List<SelectOption> addressTypes = new ArrayList<SelectOption>();
-		addressTypes.add(new SelectOption(TipoDeEndereco.RESIDENCIAL.toString(), TipoDeEndereco.RESIDENCIAL.toString()));
-		addressTypes.add(new SelectOption(TipoDeEndereco.COMERCIAL.toString(), TipoDeEndereco.COMERCIAL.toString()));
+		
+		final TipoDeEndereco enderecoResidencial = TipoDeEndereco.RESIDENCIAL;
+		final TipoDeEndereco enderecoComercial = TipoDeEndereco.COMERCIAL;
+		
+		final String residencialCode = enderecoResidencial.getCode();
+		final String residencialName = getTypeService().getEnumerationValue(enderecoResidencial).getName();
+		
+		final String comercialCode = enderecoComercial.getCode();
+		final String comercialName = getTypeService().getEnumerationValue(enderecoComercial).getName();
+				
+		addressTypes.add(new SelectOption(residencialCode, residencialName));
+		addressTypes.add(new SelectOption(comercialCode, comercialName));
+	
+		
 		return addressTypes;
 	}
 

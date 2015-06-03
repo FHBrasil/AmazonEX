@@ -32,7 +32,7 @@
                 <div class="right">
                     <section id="acc-email-form">
                         <header>
-                            <h2>ALTERAR E-MAIL DO CADASTRO</h2>
+                            <h2><spring:theme code="text.fliegercommerce.texto79"/></h2>
                         </header>
                         <form:form action="update-email" method="post" commandName="updateEmailForm">
                             <div class="form-row">

@@ -11,41 +11,41 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <section id="payment-address" class="section-block">
     <header>
-        <h2>Endere�o de faturamento:</h2>
+        <h2><spring:theme code="text.fliegercommerce.texto116"/>:</h2>
     </header>
     <dl>
         <c:if test="${not empty order.billingAddress.firstName}">
-            <dt>Nome:</dt>
+            <dt><spring:theme code="text.fliegercommerce.texto18"/>:</dt>
             <dd>${fn:escapeXml(order.billingAddress.firstName)}&nbsp;
                 ${fn:escapeXml(order.billingAddress.lastName)}</dd>
         </c:if>
         <c:if test="${not empty order.billingAddress.receiver}">
-            <dt>Destinat�rio:</dt>
+            <dt><spring:theme code="text.fliegercommerce.texto19"/>:</dt>
             <dd>${fn:escapeXml(order.billingAddress.receiver)}</dd>
         </c:if>
         <c:if test="${not empty order.billingAddress.dddPhone}">
-            <dt>Telefone:</dt>
+            <dt><spring:theme code="text.fliegercommerce.texto20"/>:</dt>
             <dd>(${fn:escapeXml(order.billingAddress.dddPhone)})${fn:escapeXml(order.billingAddress.phone)}</dd>
         </c:if>
         <c:if test="${not empty order.billingAddress.celPhone}">
-            <dt>Tel Celular:</dt>
+            <dt><spring:theme code="text.fliegercommerce.texto21"/>:</dt>
             <dd>(${fn:escapeXml(order.billingAddress.dddCelPhone)})${fn:escapeXml(order.billingAddress.celPhone)}</dd>
         </c:if>
-        <dt>Endere�o:</dt>
+        <dt><spring:theme code="text.fliegercommerce.texto22"/>:</dt>
         <dd>${fn:escapeXml(order.billingAddress.line1)}&nbsp;
             ${fn:escapeXml(order.billingAddress.number)}</dd>
-        <dt>Complemento:</dt>
+        <dt><spring:theme code="text.fliegercommerce.texto91"/>:</dt>
         <dd>${fn:escapeXml(order.billingAddress.complement)}</dd>
         <c:if test="${not empty order.billingAddress.reference}">
-            <dt>Refer�ncia:</dt>
+            <dt><spring:theme code="text.fliegercommerce.texto23"/>:</dt>
             <dd>${fn:escapeXml(order.billingAddress.reference)}</dd>
         </c:if>
-        <dt>Cep:</dt>
+        <dt><spring:theme code="text.fliegercommerce.texto92"/>:</dt>
         <dd>${fn:escapeXml(order.billingAddress.postalCode)}
             - ${fn:escapeXml(order.billingAddress.town)}
             <c:if test="${not empty order.billingAddress.region.name}">-${fn:escapeXml(order.billingAddress.region.isocodeShort)}</c:if>
         </dd>
-        <dt>Bairro:</dt>
+        <dt><spring:theme code="text.fliegercommerce.texto93"/>:</dt>
         <dd>${fn:escapeXml(order.billingAddress.district)}</dd>
     </dl>
 </section>

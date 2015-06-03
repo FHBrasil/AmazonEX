@@ -15,7 +15,7 @@
         <cms:component component="${feature}" />
     </cms:pageSlot>
     <header id="page-header">
-        <h1>Identificaï¿½ï¿½o</h1>
+        <h1><spring:theme code="text.fliegercommerce.texto43"/></h1>
     </header>
     <section class="identificacao-checkout page">
         <%-- REGISTER --%>
@@ -46,9 +46,9 @@
             </div>
             <div class="banner">
                 <img src="/store/_ui/desktop/theme-${themeName}/images/identificacao-banner-wide.jpg">
-                <p>Faça o seu cadastro e aproveite as vantagens em ser o nosso cliente.</p>
+                <p><spring:theme code="text.fliegercommerce.texto44"/></p>
                 <p>
-                    <strong>Seguranï¿½a:</strong> Site 100% seguro.
+                    <strong><spring:theme code="text.fliegercommerce.texto45"/></strong> 
                 </p>
             </div>
         </section>

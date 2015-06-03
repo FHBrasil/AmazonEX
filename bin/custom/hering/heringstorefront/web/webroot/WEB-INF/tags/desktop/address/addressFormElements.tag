@@ -30,7 +30,7 @@
         inputCSS="text cep" mandatory="true" autocomplete="off" size="8" />
     <a href="javascript:void(0);" class="btn btn-ok">ok</a> <a target="_blank" class="nao-sei"
         href="http://www.buscacep.correios.com.br/servicos/dnec/menuAction.do?Metodo=menuEndereco"><spring:theme
-            code="address.search.dont.know" text="N�o sei meu CEP" /></a>
+            code="address.search.dont.know" /></a>
 </div>
 <div class="form-row" style="display: none">
     <formElement:formInputBox idKey="address.firstName" labelKey="address.firstName"
@@ -78,4 +78,4 @@
             mandatory="false" />
     </c:if>
 </div>
-<p class="required-info">*Campos marcados com * s&atilde;o obrigat&oacute;rios</p>
+<p class="required-info">*<spring:theme code="text.fliegercommerce.texto88"/></p>

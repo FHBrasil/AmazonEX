@@ -14,8 +14,8 @@
             <ycommerce:testId code="header_search_input">
                 <input id="palavra-mini-header" class="form-control searchInput" type="search"
                     name="text" value="" maxlength="100"
-                    data-placefocus="Ol&aacute;, o que est&aacute; procurando hoje?"
-                    placeholder="Ol&aacute;, o que est&aacute; procurando hoje?"
+                    data-placefocus="<spring:theme code="text.fliegercommerce.texto13"/>"
+                    placeholder="<spring:theme code="text.fliegercommerce.texto13"/>"
                     data-options='{"autocompleteUrl" : "${autocompleteUrl}","minCharactersBeforeRequest" : "${component.minCharactersBeforeRequest}","waitTimeBeforeRequest" : "${component.waitTimeBeforeRequest}","displayProductImages" : ${component.displayProductImages}}' />
             </ycommerce:testId>
             <ycommerce:testId code="header_search_button">

@@ -11,7 +11,7 @@
 {
     "subtotalsAmount" : {
         "productsAmount" : "<spring:escapeBody javaScriptEscape="true">
-        						<dt>Subtotal</dt>
+        						<dt><spring:theme code="text.fliegercommerce.texto76"/></dt>
         						<dd class="subtotal">
         							<strong><format:price priceData="${cartData.subTotal}"/></strong>
     							</dd>
@@ -50,13 +50,13 @@
     }
   , "paymentTotalAmount" :"<spring:escapeBody javaScriptEscape="true">
   								<dl class="payment-info">
-  									<dt class="method">Pagamento</dt>
+  									<dt class="method"><spring:theme code="text.fliegercommerce.texto75"/></dt>
   									<dd class="method">
   										<c:if test="${hasAppliedValeCredito}">
 											<spring:theme code="payment.valeCredito"/>
   										</c:if>
 									</dd>
-  									<dt class="total">Total</dt>
+  									<dt class="total"><spring:theme code="text.fliegercommerce.texto77"/></dt>
   									<dd class="total">
   										<strong><format:price priceData="${cartData.totalPrice}"/></strong>
 									</dd>

@@ -208,7 +208,7 @@
 					</c:if>
 					<ycommerce:testId code="editPaymentMethod_savePaymentMethod_button">
 						<button class="positive right change_address_button show_processing_message" tabindex="20" id="lastInTheForm" type="submit">
-							Continuar
+							<spring:theme code="text.fliegercommerce.texto96"/>
 						</button>
 					</ycommerce:testId>
 				</div>

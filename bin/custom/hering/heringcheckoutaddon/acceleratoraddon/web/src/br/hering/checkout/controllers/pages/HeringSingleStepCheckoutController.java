@@ -26,7 +26,9 @@ import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.servicelayer.i18n.I18NService;
+import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.store.services.BaseStoreService;
+import de.hybris.platform.servicelayer.i18n.L10NService;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -38,6 +40,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.hybris.platform.util.localization.Localization;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,6 +50,8 @@ import org.apache.commons.lang.SerializationUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.noggit.JSONUtil;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.integration.core.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -108,6 +114,10 @@ public class HeringSingleStepCheckoutController extends
 	@Resource
 	protected HeringVoucherFacade heringVoucherFacade;
 	
+	@Resource
+	private L10NService l10nService; 
+	
+
 	
 	/**
 	 * 
@@ -474,7 +484,9 @@ public class HeringSingleStepCheckoutController extends
 			model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
 			model.addAttribute("command", "selectDeliveryMethod");
 			model.addAttribute("success", Boolean.TRUE.toString());
-			model.addAttribute("successMessage", "Método de Entrega selecionado com sucesso.");
+
+			final String success = getMessageSource().getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());
+			model.addAttribute("successMessage", success);
 		}
 		return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments
 				.CheckoutOrderDetails;
@@ -1185,7 +1197,8 @@ public class HeringSingleStepCheckoutController extends
 	@ModelAttribute("months")
 	public List<SelectOption> getMonths() {
 		final List<SelectOption> months = new ArrayList<SelectOption>();
-		months.add(new SelectOption("0", "Mês"));
+		final String mes = getMessageSource().getMessage("text.fliegercommerce.texto118", null, getI18nService().getCurrentLocale());
+		months.add(new SelectOption("0", mes));
 		months.add(new SelectOption("1", "01"));
 		months.add(new SelectOption("2", "02"));
 		months.add(new SelectOption("3", "03"));
@@ -1211,7 +1224,8 @@ public class HeringSingleStepCheckoutController extends
 	public List<SelectOption> getExpiryYears() {
 		final List<SelectOption> expiryYears = new ArrayList<SelectOption>();
 		final Calendar calender = new GregorianCalendar();
-		expiryYears.add(new SelectOption("0", "Ano"));
+		final String ano = getMessageSource().getMessage("text.fliegercommerce.texto119", null, getI18nService().getCurrentLocale());
+		expiryYears.add(new SelectOption("0", ano));
 		for (int i = calender.get(Calendar.YEAR);
 				i < (calender.get(Calendar.YEAR) + 11); i++) {
 			expiryYears.add(new SelectOption(String.valueOf(i),
@@ -1287,6 +1301,9 @@ public class HeringSingleStepCheckoutController extends
 		
 		LOG.info(error);
 			
+	
+	
+		
 		return error;
 	}
 	
@@ -1301,4 +1318,9 @@ public class HeringSingleStepCheckoutController extends
 		return deliveryModes;
 	}
 
+	
+	
+
+	
+	
 }

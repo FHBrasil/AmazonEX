@@ -27,7 +27,7 @@
                 <div class="right">
                     <section id="general-info" class="section-block">
                         <header>
-                            <h2>Detalhes do pedido</h2>
+                            <h2><spring:theme code="text.fliegercommerce.texto109"/></h2>
                         </header>
                         <div class="container">
                             <section class="review left">

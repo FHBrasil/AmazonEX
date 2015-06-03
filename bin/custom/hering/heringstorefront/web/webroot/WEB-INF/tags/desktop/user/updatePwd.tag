@@ -14,7 +14,7 @@
 <section class="account-edit-password page with-sidebar">
     <section id="acc-password-form">
         <header>
-            <h2>Alterar Senha</h2>
+            <h2><spring:theme code="text.fliegercommerce.texto78"/></h2>
         </header>
         <form:form method="post" commandName="updatePwdForm">
             <div class="form-row">

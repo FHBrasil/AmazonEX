@@ -21,7 +21,7 @@
 			</div> --%>
         <section class="home page with-sidebar pc">
             <ycommerce:testId code="orderConfirmation_yourOrderResults_text">
-                <h2>O seu pedido foi realizado com sucesso!</h2>
+                <h2><spring:theme code="text.fliegercommerce.texto110"/></h2>
                 <p>
                     <spring:theme code="checkout.orderConfirmation.rememberUs" />
                 </p>
@@ -44,7 +44,7 @@
                             <c:when test="${not orderData.guestCustomer}">
                                 <spring:theme code="checkout.orderConfirmation.seePurchases" />
                                 <br />
-                                <a href="${request.contextPath}/my-account/orders"> Meus pedidos
+                                <a href="${request.contextPath}/my-account/orders"> <spring:theme code="text.fliegercommerce.texto111"/>
                                 </a>
                             </c:when>
                             <c:otherwise>
@@ -61,7 +61,7 @@
                         </li>
                         <%-- <li><a href="#">Texto legal</a></li> --%>
                         <li><a target="_blank" href="/medias/contrato-${themeName}.pdf">
-                                Contrato </a></li>
+                                <spring:theme code="text.fliegercommerce.texto112"/> </a></li>
                     </ul>
                     <ul style="margin-top: 15px;">
                         <li><c:url var="urlTroca" value="../../troca-e-devolucao" /> <a

@@ -9,9 +9,9 @@
 <section class="col-3 column">
     <div class="banner">
         <img src="/store/_ui/desktop/theme-${themeName}/images/identificacao-banner.jpg">
-        <p>Fa�a o seu cadastro e aproveite as vantagens em ser o nosso cliente.</p>
+        <p><spring:theme code="text.fliegercommerce.texto44"/></p>
         <p>
-            <strong>Seguran�a:</strong> Site 100% seguro.
+            <strong><spring:theme code="text.fliegercommerce.texto45"/></strong>
         </p>
     </div>
 </section>

@@ -30,7 +30,7 @@
             <%-- HEADER CART --%>
             <div chaordic="top"></div>
             <header id="page-header">
-                <h1>Minha Sacola</h1>
+                <h1><spring:theme code="text.fliegercommerce.texto10"/></h1>
             </header>
             <%-- SE O CART ESTIVER VAZIO, ADICIONA A CLASSE EMPTY NA DIV --%>
             <section id="cart" <c:if test="${empty cartData.entries}">class="empty"</c:if>>
@@ -47,15 +47,13 @@
                     <div class="container">
                         <header>
                             <h1>
-                                <spring:theme code="basket.page.empty" text="Sua sacola esta vazia" />
+                                <spring:theme code="basket.page.empty" />
                             </h1>
                         </header>
                         <p>
-                            <spring:theme code="basket.page.emptyInfoHering"
-                                text="Sacola vazia informacao" />
+                            <spring:theme code="basket.page.emptyInfoHering" />
                         </p>
-                        <a href="${request.contextPath}" class="btn-continuar-navegando btn">Continuar
-                            navegando</a>
+                        <a href="${request.contextPath}" class="btn-continuar-navegando btn"><spring:theme code="text.fliegercommerce.texto11"/></a>
                     </div>
                 </c:if>
         </div>

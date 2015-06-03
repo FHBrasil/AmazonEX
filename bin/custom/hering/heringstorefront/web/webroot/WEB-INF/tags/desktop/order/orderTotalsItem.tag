@@ -14,21 +14,20 @@
 <%@ attribute name="containerCSS" required="false" type="java.lang.String"%>
 <section id="values" class="right">
     <dl>
-        <dt>Itens (${order.totalItems})</dt>
+        <dt><spring:theme code="text.fliegercommerce.texto85"/> (${order.totalItems})</dt>
         <dd class="subtotal">
             <strong><format:price priceData="${order.subTotal}" displayFreeForZero="true" /></strong>
         </dd>
-        <dt class="freight">Frete</dt>
+        <dt class="freight"><spring:theme code="text.fliegercommerce.texto59"/></dt>
         <dd>
             <format:price priceData="${order.deliveryCost}" displayFreeForZero="true" />
-            <small>Entrega em at&eacute; ${order.estimatedDeliveryDays} dias &uacute;teis
-                ap&oacute;s a emiss&atilde;o da nota fiscal</small>
+            <small><spring:theme code="text.fliegercommerce.texto86"/> ${order.estimatedDeliveryDays} <spring:theme code="text.fliegercommerce.texto87"/></small>
         </dd>
-        <dt class="method">Pagamento</dt>
+        <dt class="method"><spring:theme code="text.fliegercommerce.texto75"/></dt>
         <dd class="method">${orderHistory.paymentMode}</dd>
     </dl>
     <dl class="total">
-        <dt class="total">Total</dt>
+        <dt class="total"><spring:theme code="text.fliegercommerce.texto77"/></dt>
         <dd class="total">
             <strong><format:price priceData="${order.totalPrice}" /></strong>
         </dd>
