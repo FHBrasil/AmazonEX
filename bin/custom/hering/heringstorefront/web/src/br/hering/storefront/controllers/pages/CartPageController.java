@@ -59,7 +59,10 @@ import de.hybris.platform.commercefacades.voucher.VoucherFacade;
 import de.hybris.platform.commercefacades.voucher.data.VoucherData;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.order.CartService;
+import de.hybris.platform.servicelayer.i18n.I18NService;
 import de.hybris.platform.servicelayer.session.SessionService;
+import org.springframework.integration.core.MessageSource;
+
 
 
 /**
@@ -100,7 +103,25 @@ public class CartPageController extends AbstractPageController
 	
 	@Resource
 	private PriceDataFactory priceDataFactory;
+	
+	
+/*	@Resource
+	private MessageSource messageSource;
+	
+	
+	@Resource
+	private I18NService i18nService;*/
+	
 
+/*	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public I18NService getI18nService() {
+		return i18nService;
+	}
+*/
+	
 	// Public getter used in a test
 	@Override
 	public SiteConfigService getSiteConfigService()
@@ -436,9 +457,17 @@ public class CartPageController extends AbstractPageController
 		{
 			int size = generatedInstallments.size();
 			String last = generatedInstallments.get(size-1);
+			
+			//final String de = getMessageSource().getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());
+			//final String semjuros = getMessageSource().getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());	
+			
 			return "<b>" + size + "x</b> de R$ " + last + " sem juros";
 		}
 		
 		return "";
 	}
+	
+	
+	
+	
 }
