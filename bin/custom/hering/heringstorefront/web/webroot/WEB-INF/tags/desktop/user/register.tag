@@ -56,10 +56,10 @@
         <div class="f-row sexo">
             <p class="label"><spring:theme code="text.fliegercommerce.texto33"/></p>
             <form:radiobutton cssClass="registerRadioFemale" idKey="register.female" path="gender"
-                value="FEMALE" label="Female" checked="true" hideInputErrorOnField="true" />
+                value="FEMALE" label="Feminino" checked="true" hideInputErrorOnField="true" />
                 
             <form:radiobutton cssClass="registerRadioMale" idKey="register.male" path="gender"
-                value="MALE" label="Male" />
+                value="MALE" label="Masculino" />
         </div>
         <%-- campo senha --%>
         <div class="f-row">

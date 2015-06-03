@@ -62,7 +62,7 @@
                                 <c:otherwise>
                                 </c:otherwise>
                             </c:choose>
-                            <strong>por: <format:fromPrice priceData="${entry.basePrice}" /></strong>
+                            <strong><spring:theme code="text.fliegercommerce.texto107"/>: <format:fromPrice priceData="${entry.basePrice}" /></strong>
                         </div>
                     </div> <c:url value="/cart/update" var="cartUpdateFormAction" /> <form:form
                         id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}"

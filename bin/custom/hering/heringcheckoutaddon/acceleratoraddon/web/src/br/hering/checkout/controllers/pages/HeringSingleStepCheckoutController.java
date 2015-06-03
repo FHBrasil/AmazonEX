@@ -26,7 +26,10 @@ import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.servicelayer.i18n.I18NService;
+import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.store.services.BaseStoreService;
+
+import de.hybris.platform.servicelayer.i18n.L10NService;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -37,6 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import de.hybris.platform.util.localization.Localization;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -107,6 +111,9 @@ public class HeringSingleStepCheckoutController extends
 	
 	@Resource
 	protected HeringVoucherFacade heringVoucherFacade;
+	
+	@Resource
+	private L10NService l10nService; 
 	
 	
 	/**
@@ -474,7 +481,9 @@ public class HeringSingleStepCheckoutController extends
 			model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
 			model.addAttribute("command", "selectDeliveryMethod");
 			model.addAttribute("success", Boolean.TRUE.toString());
-			model.addAttribute("successMessage", "Método de Entrega selecionado com sucesso.");
+			
+			final String success = l10nService.getLocalizedString("text.fliegercommerce.texto117");
+			model.addAttribute("successMessage", success);
 		}
 		return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments
 				.CheckoutOrderDetails;
