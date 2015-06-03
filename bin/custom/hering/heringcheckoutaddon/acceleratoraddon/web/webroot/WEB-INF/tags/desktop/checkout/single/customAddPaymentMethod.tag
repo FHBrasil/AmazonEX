@@ -142,10 +142,10 @@
                 </header>
                 <p>
                     <i class="fa fa-barcode"></i>
-                    <spring:theme code="checkout.popUpBoleto" text="Texto PopUp para Boleto" />
+                    <spring:theme code="checkout.popUpBoleto" />
                 </p>
                 <p>
-                    <spring:theme code="checkout.infoEntrega" text="Texto Informacao Entrega" />
+                    <spring:theme code="checkout.infoEntrega"  />
                 </p>
             </section>
         </c:if>
