@@ -34,12 +34,12 @@
                             <c:forEach items="${entry.product.baseOptions}" var="option">
                                 <c:forEach items="${option.selected.variantOptionQualifiers}"
                                     var="selectedOption">
-                                    <c:if test="${selectedOption.name == 'Tamanho'}">
+                                    <c:if test="${selectedOption.qualifier eq 'size'}">
                                         <li>${selectedOption.name}: ${selectedOption.value}
                                         <li>
                                     </c:if>
                                     <c:if
-                                        test="${selectedOption.name == 'Cor' && colorIsUsed == false}">
+                                        test="${selectedOption.qualifier eq 'style' && colorIsUsed == false}">
                                         <c:set value="true" var="colorIsUsed" />
                                         <li>
                                             <div style="float: left">${selectedOption.name}:</div>
