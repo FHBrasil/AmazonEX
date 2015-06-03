@@ -58,10 +58,13 @@ import de.hybris.platform.jalo.order.payment.PaymentMode;
 import de.hybris.platform.order.OrderService;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.model.ModelService;
+import de.hybris.platform.servicelayer.type.TypeService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.store.services.BaseStoreService;
 import de.hybris.platform.util.Config;
+
+
 
 
 
@@ -217,6 +220,10 @@ public class AccountPageController extends AbstractSearchPageController
 	@Resource
    private HeringPaymentModeFacade paymentModeFacade;
 	
+	@Resource
+	private TypeService typeService;
+
+	
 	@Resource(name = "defaultHeringCheckoutFacade")
    private DefaultHeringCheckoutFacade defaultHeringCheckoutFacade;
 
@@ -300,20 +307,26 @@ public class AccountPageController extends AbstractSearchPageController
 		}
 		return countryDataMap;
 	}
-
+	
 	@ModelAttribute("addressTypes")
-	public List<AddressTypeData> getAddressTypes()
+	public List<SelectOption> getAddressTypes()
 	{
-		List<AddressTypeData> tipos = new ArrayList<AddressTypeData>();
-		AddressTypeData comercial = new AddressTypeData();
-		comercial.setCode(TipoDeEndereco.COMERCIAL.getCode());
-		comercial.setName(TipoDeEndereco.COMERCIAL.getCode());
-		tipos.add(comercial);
-		AddressTypeData residencial = new AddressTypeData();
-		residencial.setCode(TipoDeEndereco.RESIDENCIAL.getCode());
-		residencial.setName(TipoDeEndereco.RESIDENCIAL.getCode());
-		tipos.add(residencial);
-		return tipos;
+		final List<SelectOption> addressTypes = new ArrayList<SelectOption>();
+		
+		final TipoDeEndereco enderecoResidencial = TipoDeEndereco.RESIDENCIAL;
+		final TipoDeEndereco enderecoComercial = TipoDeEndereco.COMERCIAL;
+		
+		final String residencialCode = enderecoResidencial.getCode();
+		final String residencialName = getTypeService().getEnumerationValue(enderecoResidencial).getName();
+		
+		final String comercialCode = enderecoComercial.getCode();
+		final String comercialName = getTypeService().getEnumerationValue(enderecoComercial).getName();
+				
+		addressTypes.add(new SelectOption(residencialCode, residencialName));
+		addressTypes.add(new SelectOption(comercialCode, comercialName));
+	
+		
+		return addressTypes;
 	}
 
 	@RequestMapping(value = "/addressform", method = RequestMethod.GET)
@@ -1875,6 +1888,10 @@ public class AccountPageController extends AbstractSearchPageController
 	public DefaultHeringCheckoutFacade getDefaultHeringCheckoutFacade()
 	{
 		return defaultHeringCheckoutFacade;
+	}
+	
+	public TypeService getTypeService() {
+		return typeService;
 	}
 
 }
