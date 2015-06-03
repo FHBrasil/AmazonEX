@@ -1197,7 +1197,8 @@ public class HeringSingleStepCheckoutController extends
 	@ModelAttribute("months")
 	public List<SelectOption> getMonths() {
 		final List<SelectOption> months = new ArrayList<SelectOption>();
-		months.add(new SelectOption("0", "Mês"));
+		final String mes = getMessageSource().getMessage("text.fliegercommerce.texto118", null, getI18nService().getCurrentLocale());
+		months.add(new SelectOption("0", mes));
 		months.add(new SelectOption("1", "01"));
 		months.add(new SelectOption("2", "02"));
 		months.add(new SelectOption("3", "03"));
@@ -1223,7 +1224,8 @@ public class HeringSingleStepCheckoutController extends
 	public List<SelectOption> getExpiryYears() {
 		final List<SelectOption> expiryYears = new ArrayList<SelectOption>();
 		final Calendar calender = new GregorianCalendar();
-		expiryYears.add(new SelectOption("0", "Ano"));
+		final String ano = getMessageSource().getMessage("text.fliegercommerce.texto119", null, getI18nService().getCurrentLocale());
+		expiryYears.add(new SelectOption("0", ano));
 		for (int i = calender.get(Calendar.YEAR);
 				i < (calender.get(Calendar.YEAR) + 11); i++) {
 			expiryYears.add(new SelectOption(String.valueOf(i),
