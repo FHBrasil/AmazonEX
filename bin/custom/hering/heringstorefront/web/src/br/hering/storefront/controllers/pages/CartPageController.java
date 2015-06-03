@@ -255,7 +255,7 @@ public class CartPageController extends AbstractPageController
 		return REDIRECT_PREFIX + "/cart";
 	}
 
-//	XXX remoção de dependencia com extension carrier
+//	XXX remoï¿½ï¿½o de dependencia com extension carrier
 //	@RequestMapping(value = "/calculateDelivery", method = RequestMethod.POST)
 //	public String calculateDelivery(@RequestParam final String postalCode, final RedirectAttributes redirectModel) throws Exception 
 //	{

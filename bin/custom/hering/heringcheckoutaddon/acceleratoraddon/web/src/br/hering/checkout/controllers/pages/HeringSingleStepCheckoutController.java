@@ -117,8 +117,7 @@ public class HeringSingleStepCheckoutController extends
 	@Resource
 	private L10NService l10nService; 
 	
-	@Resource(name = "messageSource")
-	private MessageSource messageSource;
+
 	
 	/**
 	 * 
@@ -486,7 +485,7 @@ public class HeringSingleStepCheckoutController extends
 			model.addAttribute("command", "selectDeliveryMethod");
 			model.addAttribute("success", Boolean.TRUE.toString());
 
-			final String success = getMessageSource.getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());
+			final String success = getMessageSource().getMessage("text.fliegercommerce.texto117", null, getI18nService().getCurrentLocale());
 			model.addAttribute("successMessage", success);
 		}
 		return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments
@@ -1319,10 +1318,7 @@ public class HeringSingleStepCheckoutController extends
 
 	
 	
-	protected MessageSource getMessageSource()
-	{
-		return messageSource;
-	}
+
 	
 	
 }
