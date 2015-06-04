@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.flieger.facades.NewsletterSubscriberFacade;
 
 /**
  *
@@ -24,8 +23,6 @@ import com.flieger.facades.NewsletterSubscriberFacade;
 public class HeringCustomerPopulator extends CustomerPopulator
 {
 	
-	@Resource
-	private NewsletterSubscriberFacade defaultNewsletterSubscriberFacade;
 
 	@Override
 	public void populate(final CustomerModel source, final CustomerData target)
@@ -33,7 +30,6 @@ public class HeringCustomerPopulator extends CustomerPopulator
 
 		super.populate(source, target);
 
-		target.setNewsletters(defaultNewsletterSubscriberFacade.getNewsletterSubscriberForCustomer(target));
 		target.setGender(source.getGender());
 		target.setBirthday(source.getBirthday());
 		target.setCpfcnpj(source.getCpfcnpj());

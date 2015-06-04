@@ -33,9 +33,6 @@ import br.hering.webservices.message.client.Cliente;
 import br.hering.webservices.message.client.Endereco;
 import br.hering.webservices.message.client.ImportacaoClienteRequest;
 
-import com.flieger.data.NewsletterSubscriberData;
-import com.flieger.facades.NewsletterSubscriberFacade;
-
 
 /**
  * @author ghayashi
@@ -58,8 +55,6 @@ public class InterfaceImportacaoClienteEndpoint extends AbstractInterfaceEndpoin
 	@Resource
 	private CommonI18NService commonI18NService;
 
-	@Resource(name = "newsletterSubscriptionFacade")
-	private NewsletterSubscriberFacade newsletterSubscriptionFacade;
 
 	@Resource
 	private UserService userService;
@@ -104,7 +99,7 @@ public class InterfaceImportacaoClienteEndpoint extends AbstractInterfaceEndpoin
 
 			prepareCurrentSession(customerRequest.getCodigoSite(), false);
 
-			if (customerRequest.isNewsletter())
+			/*if (customerRequest.isNewsletter())
 			{
 				final NewsletterSubscriberData news = new NewsletterSubscriberData();
 				news.setEmail(customerRequest.getEmail());
@@ -120,7 +115,7 @@ public class InterfaceImportacaoClienteEndpoint extends AbstractInterfaceEndpoin
 					LOG.error("error", e);
 					createErrorMessageList(CHAVE_CLIENTE + "=" + customerRequest.getCodigoCliente(), MENSAGEM + "=" + e.getMessage());
 				}
-			}
+			}*/
 
 			if (userService.isUserExisting(customerRequest.getEmail()))
 			{

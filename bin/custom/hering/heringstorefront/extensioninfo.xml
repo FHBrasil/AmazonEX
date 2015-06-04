@@ -9,7 +9,6 @@
         <requires-extension name="heringstorefrontcommons" />
         <requires-extension name="heringcheckoutaddon" />
         <requires-extension name="b2ccheckoutaddon" />
-        <requires-extension name="newsletter" />
         <requires-extension name="exacttarget" />
         <requires-extension name="notificationservices" />
         <requires-extension name="btg" />

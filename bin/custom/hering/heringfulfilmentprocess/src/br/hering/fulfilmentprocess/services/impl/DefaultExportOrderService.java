@@ -25,8 +25,6 @@ import br.hering.fulfilmentprocess.message.order.Itens;
 import br.hering.fulfilmentprocess.message.order.Pagamento;
 import br.hering.fulfilmentprocess.message.order.Pedido;
 
-import com.flieger.data.NewsletterSubscriberData;
-import com.flieger.facades.NewsletterSubscriberFacade;
 import com.flieger.payment.model.BoletoPaymentInfoModel;
 
 import de.hybris.platform.commerceservices.constants.GeneratedCommerceServicesConstants.Enumerations.CustomerType;
@@ -80,9 +78,6 @@ public class DefaultExportOrderService extends AbstractHeringOrderService {
 	
 	@Autowired
 	private WebServiceTemplate enviarPedidosWSTemplate;
-
-	@Resource(name = "newsletterSubscriptionFacade")
-	private NewsletterSubscriberFacade newsletterSubscriptionFacade;
 	
 	@Resource
 	private VoucherService voucherService;
@@ -198,14 +193,14 @@ public class DefaultExportOrderService extends AbstractHeringOrderService {
    		
    		cliente.setEmail(customer.getUid().replaceAll("[a-z0-9\\-]*\\|", ""));
    
-   		try {
+/*   		try {
    			NewsletterSubscriberData newsLetter = newsletterSubscriptionFacade
    					.findByEmail(customer.getUid().replaceAll("[a-z0-9\\-]*\\|", ""));
    			cliente.setNewsletter(newsLetter != null 
    					&& Boolean.TRUE.equals(newsLetter.getReceive()) );
    		} catch (Exception e) {
    			LOG.error("Not FATAL error", e);
-   		}
+   		}*/
    
    		dadosPedido.setCliente(cliente);
    
@@ -442,7 +437,7 @@ public class DefaultExportOrderService extends AbstractHeringOrderService {
 	 * @param order
 	 * @param pedido
 	 */
-	//XXX remoção de dependencia com extension carrier
+	//XXX remoï¿½ï¿½o de dependencia com extension carrier
 	private void buildCarrierData(final OrderModel order,
 			final DadosPedido dadosPedido) {
 //		Pedido pedido = dadosPedido.getPedido();

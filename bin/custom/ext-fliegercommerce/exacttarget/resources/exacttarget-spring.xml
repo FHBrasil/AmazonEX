@@ -80,9 +80,7 @@
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
 	  -->
 	
-	<bean id="exportNewsletterSubscriptionsJobPerformable" class="br.flieger.exacttarget.job.ExportNewsletterSubscriptionsJobPerformable" parent="abstractJobPerformable"/>
 	<!-- EventListener -->
-	<bean id="newsletterEventListner" 				class="br.flieger.exacttarget.events.listeners.NewsletterEventListener" 			parent="abstractEventListener" />
 	<bean id="orderSendEmailEventListner" 			class="br.flieger.exacttarget.events.listeners.OrderSendEmailEventListener" 		parent="abstractEventListener" />
 	<bean id="forgotPasswordEventListner" 			class="br.flieger.exacttarget.events.listeners.ForgotPasswordEventListener" 		parent="abstractEventListener" />
 	<bean id="customerRegisterEventListner" 		class="br.flieger.exacttarget.events.listeners.CustomerRegisterEventListener" 		parent="abstractEventListener" />
@@ -102,6 +100,5 @@
 	<bean id="notifyMeSimilarProductEvent"	class="br.flieger.exacttarget.events.NotifyMeSimilarProductEvent" />
 	
 	<!-- Services -->
-	<alias name="defaultExacttargetSyncNewsletterService" alias="exacttargetSyncNewsletterService"/>
-	<bean id="defaultExacttargetSyncNewsletterService"	class="br.flieger.exacttarget.services.impl.DefaultExacttargetSyncNewsletterService" />
+
 </beans>

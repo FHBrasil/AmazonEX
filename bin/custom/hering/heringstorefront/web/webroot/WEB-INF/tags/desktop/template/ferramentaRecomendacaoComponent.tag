@@ -13,10 +13,7 @@
 	<input type="hidden" class="userId" value="${user.primaryKey}"/>
 	<input type="hidden" class="userFistName" value="${user.firstName}" />
 	<input type="hidden" class="userLastName" value="${user.lastName}" />	
-	
-	<c:forEach var="newsletter" items="${user.newsletters}">
-		<input type="hidden" class="allow_mail_marketing" value="${fn:escapeXml(newsletter.receive)}" />
-	</c:forEach>
+
 
 </div>
 

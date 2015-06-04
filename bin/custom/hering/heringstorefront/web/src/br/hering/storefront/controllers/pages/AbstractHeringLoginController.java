@@ -42,9 +42,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.flieger.data.NewsletterSubscriberData;
-import com.flieger.facades.NewsletterSubscriberFacade;
-
 import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.Breadcrumb;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.LoginForm;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
@@ -59,8 +56,6 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 {
 	private static final Logger LOG = Logger.getLogger(AbstractHeringLoginController.class);
 	
-	@Resource(name = "newsletterSubscriptionFacade")
-	private NewsletterSubscriberFacade newsletterSubscriptionFacade;
 	
 	@Resource(name = "customerFacade")
 	private CustomerFacade customerFacade;
@@ -181,15 +176,7 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 			{
 				LOG.error("Login Error", e);
 			}
-			if ( StringUtils.isNotBlank(form.getBaseStore()) ) {
-				NewsletterSubscriberData newsletterSubscriber = new NewsletterSubscriberData();
-				//newsletterSubscriber.setBaseStore(baseStoreService.getCurrentBaseStore().getUid());
-				newsletterSubscriber.setName(data.getFirstName() + " " + data.getLastName());
-   			newsletterSubscriber.setEmail(email);
-   			newsletterSubscriber.setGender(form.getGenderType());
-   			newsletterSubscriber.setReceive(Boolean.TRUE);
-   			newsletterSubscriptionFacade.subscribeNewsletter(newsletterSubscriber, getListBaseStore(form.getBaseStore()));   			
-			}
+
 			
 			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER,
 					"registration.confirmation.message.title");

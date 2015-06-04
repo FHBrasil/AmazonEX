@@ -14,7 +14,6 @@
         <requires-extension name="heringfulfilmentprocess" />
         <requires-extension name="commercefacades" />
         <requires-extension name="hmc" />
-        <requires-extension name="newsletter" />
         <requires-extension name="clearsaleantifraude" />
         <requires-extension name="exacttarget" />
         <requires-extension name="notificationservices" />
