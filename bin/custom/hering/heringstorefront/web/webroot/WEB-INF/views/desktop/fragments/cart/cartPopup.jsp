@@ -117,9 +117,9 @@
         </div>
         <c:if test="${hasItems}">
             <div class="btn-group">
-                <c:if test="${not empty payPalExpressCheckoutShortcut}">
+<%--                 <c:if test="${not empty payPalExpressCheckoutShortcut}"> --%>
                     <cms:component component="${payPalExpressCheckoutShortcut}" evaluateRestriction="true"  />
-                </c:if>
+<%--                 </c:if> --%>
                 <a href="${cartUrl}" class="btn btn-full-bag"><spring:theme code="text.fliegercommerce.texto8"/></a> <a
                     href="${checkoutUrl}" class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto9"/></a>
             </div>

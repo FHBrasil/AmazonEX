@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+filho da puta
 <c:url value="${component.urlLink}" var="paypalExpressCheckoutUrl" />
 <a href="${paypalExpressCheckoutUrl}" <c:if test="${inContextCheckoutEnabled}">data-paypal-button="true" data-paypal-id="${merchantId}"</c:if>>
     <img src="${component.media.url}" alt="${component.media.altText}" />

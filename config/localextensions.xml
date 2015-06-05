@@ -74,7 +74,7 @@
         <extension name="paypal" />
         
         <!-- Flieger Commer AddOn -->
-<!--         <extension name="paypaladdon" /> -->
+        <extension name="paypaladdon" />
 
         <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />
