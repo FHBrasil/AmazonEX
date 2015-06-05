@@ -24,16 +24,16 @@
                     <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
                 </div>
                 <h1>
-                    Sua busca por "<b>${searchText}</b>" n�o correspondeu a nenhum produto
+                    <spring:theme code="text.fliegercommerce.texto47"/> "<b>${searchText}</b>" <spring:theme code="text.fliegercommerce.texto48"/>
                 </h1>
-                <h2>Por favor, revise o texto ou se preferir, navegue pelas categorias do site.</h2>
+                <h2><spring:theme code="text.fliegercommerce.texto49"/></h2>
             </header>
         </div>
         <section class="page vertical-sections">
             <div class="container">
                 <section>
                     <header>
-                        <h1>Procure em nossas categorias</h1>
+                        <h1><spring:theme code="text.fliegercommerce.texto50"/></h1>
                     </header>
                     <ul class="categorias-tile">
                         <li><a href="/" title="">

@@ -12,7 +12,7 @@
         code="product.payment.methods" /></a>
 <div id="modal-formas-pagamento">
     <div class="content">
-        <h3>Formas de pagamento</h3>
+        <h3><spring:theme code="text.fliegercommerce.texto16"/></h3>
         <c:set var="allCards"
             value="Visa,MasterCard,Diners,American Express,Boleto,Hering,Hipercard,Elo" />
         <div class="tabs">
@@ -37,7 +37,7 @@
                                             code="product.payment.methods.parcel.max.number" />(${product.priceParcels})</th>
                                     <th align="center"><spring:theme
                                             code="product.payment.methods.each.parcel.value" /></th>
-                                    <th align="center">Valor total</th>
+                                    <th align="center"><spring:theme code="text.fliegercommerce.texto84"/></th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -32,7 +32,7 @@
                 <div class="right">
                     <section id="acc-password-form">
                         <header>
-                            <h2>ALTERAR SENHA</h2>
+                            <h2><spring:theme code="text.fliegercommerce.texto78"/></h2>
                         </header>
                         <form:form action="update-password" method="post"
                             commandName="updatePasswordForm" autocomplete="off">

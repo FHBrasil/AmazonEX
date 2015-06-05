@@ -46,12 +46,12 @@
                             <c:forEach items="${entry.product.baseOptions}" var="option">
                                 <c:forEach items="${option.selected.variantOptionQualifiers}"
                                     var="selectedOption">
-                                    <c:if test="${selectedOption.name == 'Tamanho'}">
+                                    <c:if test="${selectedOption.qualifier eq 'size'}">
                                         <li class="tamanho">${selectedOption.name}:
                                             ${selectedOption.value}</li>
                                     </c:if>
                                     <c:if
-                                        test="${selectedOption.name == 'Cor' && colorIsUsed == false}">
+                                        test="${selectedOption.qualifier eq 'style' && colorIsUsed == false}">
                                         <c:set value="true" var="colorIsUsed" />
                                         <li class="cor">${selectedOption.name}:
                                             <div class="cores">
@@ -67,7 +67,7 @@
                                 </c:forEach>
                             </c:forEach>
                             <%-- CODIGO DO PRODUTO --%>
-                            <li class="codigo"><br>C&oacute;digo: ${entry.product.code}</li>
+                            <li class="codigo"><br><spring:theme code="text.fliegercommerce.texto103"/>: ${entry.product.code}</li>
                         </ul>
                     </div>
                 </td>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="selos">
                             <ul>
-                                <li class="desconto">produto com desconto</li>
+                                <li class="desconto"><spring:theme code="text.fliegercommerce.texto108"/></li>
                             </ul>
                         </div>
                     </c:if> <c:if test="${!entry.product.fromPrice}">

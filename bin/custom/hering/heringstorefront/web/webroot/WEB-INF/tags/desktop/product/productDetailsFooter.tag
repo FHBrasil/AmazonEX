@@ -5,7 +5,7 @@
 
 <div class="features">
 	<div class="f-row">
-		<div class="left"><i class="fa fa-check"></i> <b>Recomendar</b></div>
+		<div class="left"><i class="fa fa-check"></i> <b><spring:theme code="text.fliegercommerce.texto46"/></b></div>
 		<div class="right">
 			<c:choose>
 			<c:when test="${product.purchasable and product.stock.stockLevelStatus.code ne 'outOfStock' }">

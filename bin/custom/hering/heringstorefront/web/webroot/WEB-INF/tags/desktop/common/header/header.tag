@@ -33,7 +33,7 @@
                     <li class="hide-on-desktop"><i class="fa fa-fw fa-shopping-cart"></i></li>
                     <li class="input-group show-on-desktop siteSearch"><span id="sac"
                         style="display: none !important;"> <i class="fa fa-phone"></i> SAC <b>0800-473114</b>
-                            <span> de segunda � sexta das <b>08h00</b> �s <b>18h00</b>
+                            <span> <spring:theme code="text.fliegercommerce.texto62"/> <b>08h00</b> <spring:theme code="text.fliegercommerce.texto25"/> <b>18h00</b>
                         </span>
                     </span> <%-- searchboxcomponent.jsp --%> <cms:pageSlot position="SearchBox"
                             var="component">
@@ -46,8 +46,8 @@
             <div class="right">
                 <h2>Checkout</h2>
                 <p>
-                    Precisa de ajuda para finalizar? <a href="javascript:void(0)"
-                        id="NeoassistOpenLink" class="ai tooltip-link">Clique aqui</a>
+                   <spring:theme code="text.fliegercommerce.texto60"/> <a href="javascript:void(0)"
+                        id="NeoassistOpenLink" class="ai tooltip-link"><spring:theme code="text.fliegercommerce.texto61"/></a>
                 </p>
             </div>
         </c:if>

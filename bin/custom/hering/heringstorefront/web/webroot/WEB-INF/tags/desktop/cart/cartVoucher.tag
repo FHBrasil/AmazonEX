@@ -14,9 +14,9 @@
 <c:if test="${not hasAppliedVoucher}">
 	<c:url value="/cart/redeemVoucher" var="cartRedeemVoucherFormAction" />
     <form:form action="${cartRedeemVoucherFormAction}" method="get" class="discount-coupon">
-        <h3>Cupom de Desconto</h3>
+        <h3><spring:theme code="text.fliegercommerce.texto55"/></h3>
         <div>
-            <label>Digite o código:</label> <input type="text" name="voucherCode"
+            <label><spring:theme code="text.fliegercommerce.texto56"/>:</label> <input type="text" name="voucherCode"
                 id="cupom-desconto" required />
             <button class="btn-ok btn" type="submit">
                 <spring:theme code="voucher.calculate" />
@@ -28,7 +28,7 @@
 <c:if test="${hasAppliedVoucher}">
 	<c:url value="/cart/releaseVoucher" var="releaseVoucherFormAction" />
     <form:form action="${releaseVoucherFormAction}" method="get">
-        <h3>Cupom de Desconto</h3>
+        <h3><spring:theme code="text.fliegercommerce.texto55"/></h3>
         <div>
             <button class="btn-ok btn" type="submit">
                 <spring:theme code="voucher.remove" />

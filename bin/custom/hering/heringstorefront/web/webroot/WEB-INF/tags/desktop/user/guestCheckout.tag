@@ -31,16 +31,16 @@
         </div>
         <%-- sexo --%>
         <div class="f-row sexo">
-            <p class="label">Sexo</p>
+            <p class="label"><spring:theme code="text.fliegercommerce.texto33"/></p>
             <form:radiobutton cssClass="registerRadioFemale" idKey="guest.gender"
                 labelKey="guest.gender" path="gender" value="FEMALE" checked="true" />
-            <spring:theme code="guest.female" text="Feminino" />
+            <spring:theme code="guest.female" />
             <form:radiobutton cssClass="registerRadioMale" idKey="guest.gender"
                 labelKey="guest.gender" path="gender" value="MALE" />
-            <spring:theme code="guest.male" text="Masculino" />
+            <spring:theme code="guest.male" />
         </div>
         <%-- requerido --%>
         <small><spring:theme code="form.required" /></small>
-        <button class="btn btn-registro">Continuar como visitante</button>
+        <button class="btn btn-registro"><spring:theme code="text.fliegercommerce.texto87"/></button>
     </form:form>
 </section>

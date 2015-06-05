@@ -11,10 +11,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <section id="shipping-method" class="section-block">
     <header>
-        <h2>Tipo de entrega:</h2>
+        <h2><spring:theme code="text.fliegercommerce.texto114"/>:</h2>
     </header>
     <dl>
-        <dt>M�todo de entrega:</dt>
+        <dt><spring:theme code="text.fliegercommerce.texto115"/>:</dt>
         <c:if test="${order.deliveryMode.name == 'TFA' && order.trackingID != '' }">
             <dd>
                 <a class=""

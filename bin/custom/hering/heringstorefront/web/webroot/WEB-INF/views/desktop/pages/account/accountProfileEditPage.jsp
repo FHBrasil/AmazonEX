@@ -63,17 +63,14 @@
                                         allowEmpty="true" />
                                 </c:if>
                                 <c:if test="${pf}">
-                                    <label for="form-dados-sobrenome" class="no-min-width">Sexo
-                                        *:</label>
+                                    <label for="form-dados-sobrenome" class="no-min-width"><spring:theme code="text.fliegercommerce.texto33"/></label>
                                     <div class="radio-group">
                                         <label for="form-dados-sexo-feminino"> <form:radiobutton
                                                 idKey="register.gender" labelKey="register.gender"
-                                                path="gender" value="FEMALE" /> <spring:theme
-                                                code="profile.gender.FEMALE" text="Feminino" />
+                                                path="gender" value="FEMALE" /> <spring:theme code="text.fliegercommerce.texto34"/>
                                         </label> <label for="form-dados-sexo-masculino"> <form:radiobutton
                                                 idKey="register.gender" labelKey="register.gender"
-                                                path="gender" value="MALE" /> <spring:theme
-                                                code="profile.gender.MALE" text="Masculino" />
+                                                path="gender" value="MALE" /> <spring:theme code="text.fliegercommerce.texto35"/>
                                         </label>
                                     </div>
                                 </c:if>
@@ -84,8 +81,7 @@
                                     path="birthday" inputCSS="text" mandatory="true" />
                             </div>
                             <div class="form-row newsletters">
-                                <label>Aceito receber novidades por e-mail das seguintes
-                                    marcas:</label>
+                                <label><spring:theme code="text.fliegercommerce.texto42"/></label>
                                 <div class="checkbox-group">
                                     <newsletter:newsletters bases="${basesCode}"
                                         basesChecked="${basesChecked}" />

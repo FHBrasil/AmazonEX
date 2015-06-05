@@ -13,7 +13,7 @@
         <formElement:formPasswordBox idKey="j_password" placeholder="${loginPassword}"
             labelKey="login.password" path="j_password" inputCSS="text password in-o2"
             mandatory="true" />
-        <input type="submit" value="Entrar">
+        <input type="submit" value="<spring:theme code="text.fliegercommerce.texto12"/>">
         <%-- <a href="#" class="facebook facebook-connect-btn" data-scope="">
 				<i class="fa fa-facebook"></i> Login com o Facebook
 			</a> --%>

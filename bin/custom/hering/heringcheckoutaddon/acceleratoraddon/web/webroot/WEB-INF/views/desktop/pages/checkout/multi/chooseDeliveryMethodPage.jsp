@@ -33,29 +33,29 @@
 				<c:set var="deliveryAddress" value="${cartData.deliveryAddress}"/>
 				<h1 class="headline_entrega"><spring:theme code="checkout.entrega" text="deliver"/></h1>
 				<div class="endereco_entrega">
-					<span><spring:theme code="checkout.entrega" text="Continuar"/></span>
+					<span><spring:theme code="checkout.entrega"/></span>
 					<br/>
 					<ul>
-						<li>Nome:&nbsp; ${fn:escapeXml(deliveryAddress.firstName)}&nbsp; ${fn:escapeXml(deliveryAddress.lastName)}</li>
-						<li><c:if test="${not empty deliveryAddress.receiver}">Destinatário:&nbsp; ${fn:escapeXml(deliveryAddress.receiver)}</c:if></li>
-						<li>Telefone:&nbsp; (${fn:escapeXml(deliveryAddress.dddPhone)})${fn:escapeXml(deliveryAddress.phone)}</li>
-						<li><c:if test="${not empty deliveryAddress.celPhone}">Tel Celular:&nbsp; (${fn:escapeXml(deliveryAddress.dddCelPhone)})${fn:escapeXml(deliveryAddress.celPhone)}</c:if></li>
-						<li>Endereço:&nbsp; ${fn:escapeXml(deliveryAddress.line1)}&nbsp; ${fn:escapeXml(deliveryAddress.number)}</li>
-						<li>Complemento:&nbsp; ${fn:escapeXml(deliveryAddress.complement)}</li>
-						<li><c:if test="${not empty deliveryAddress.reference}">Referência:&nbsp; ${fn:escapeXml(deliveryAddress.reference)}</c:if></li>
-						<li>Cep:&nbsp; ${fn:escapeXml(deliveryAddress.postalCode)}</li>
-						<li>Bairro:&nbsp; ${fn:escapeXml(deliveryAddress.district)}</li>
-						<li>Cidade:&nbsp; ${fn:escapeXml(deliveryAddress.town)}<c:if test="${not empty deliveryAddress.region.name}">-${fn:escapeXml(deliveryAddress.region.name)}</c:if></li>
-						<li>País:&nbsp; ${fn:escapeXml(deliveryAddress.country.name)}</li>						
+						<li><spring:theme code="text.fliegercommerce.texto18"/>:&nbsp; ${fn:escapeXml(deliveryAddress.firstName)}&nbsp; ${fn:escapeXml(deliveryAddress.lastName)}</li>
+						<li><c:if test="${not empty deliveryAddress.receiver}"><spring:theme code="text.fliegercommerce.texto19"/>:&nbsp; ${fn:escapeXml(deliveryAddress.receiver)}</c:if></li>
+						<li><spring:theme code="text.fliegercommerce.texto20"/>:&nbsp; (${fn:escapeXml(deliveryAddress.dddPhone)})${fn:escapeXml(deliveryAddress.phone)}</li>
+						<li><c:if test="${not empty deliveryAddress.celPhone}"><spring:theme code="text.fliegercommerce.texto21"/>:&nbsp; (${fn:escapeXml(deliveryAddress.dddCelPhone)})${fn:escapeXml(deliveryAddress.celPhone)}</c:if></li>
+						<li><spring:theme code="text.fliegercommerce.texto22"/>:&nbsp; ${fn:escapeXml(deliveryAddress.line1)}&nbsp; ${fn:escapeXml(deliveryAddress.number)}</li>
+						<li><spring:theme code="text.fliegercommerce.texto91"/>:&nbsp; ${fn:escapeXml(deliveryAddress.complement)}</li>
+						<li><c:if test="${not empty deliveryAddress.reference}"><spring:theme code="text.fliegercommerce.texto23"/>:&nbsp; ${fn:escapeXml(deliveryAddress.reference)}</c:if></li>
+						<li><spring:theme code="text.fliegercommerce.texto92"/>:&nbsp; ${fn:escapeXml(deliveryAddress.postalCode)}</li>
+						<li><spring:theme code="text.fliegercommerce.texto93"/>:&nbsp; ${fn:escapeXml(deliveryAddress.district)}</li>
+						<li><spring:theme code="text.fliegercommerce.texto94"/>:&nbsp; ${fn:escapeXml(deliveryAddress.town)}<c:if test="${not empty deliveryAddress.region.name}">-${fn:escapeXml(deliveryAddress.region.name)}</c:if></li>
+						<li><spring:theme code="text.fliegercommerce.texto95"/>:&nbsp; ${fn:escapeXml(deliveryAddress.country.name)}</li>						
 					</ul>
 					
 					<form:form action="${request.contextPath}/checkout/multi/edit-delivery-address" method="GET">
 						<input type="hidden" name="editAddressCode" value="${deliveryAddress.id}"/>
-						<button type="submit" class="positive left bt-editar">Alterar</button>
+						<button type="submit" class="positive left bt-editar"><spring:theme code="text.fliegercommerce.texto90"/></button>
 					</form:form>
 				</div>
 			</c:if>
-			<h3 class="headline3_entrega">Escolha o Tipo de entrega</h3>
+			<h3 class="headline3_entrega"><spring:theme code="text.fliegercommerce.texto89"/></h3>
 			
 			<form:form id="selectDeliveryMethodForm" action="${continueSelectDeliveryMethodUrl}" method="get">
 				<multi-checkout:deliveryMethodSelector deliveryMethods="${deliveryMethods}" selectedDeliveryMethodId="${cartData.deliveryMode.code}"/>
@@ -64,11 +64,11 @@
 					<div class="form-actions">
 						<c:if test="false">
 							<div id="addressform_button_cancel" class="bt-cancelar">
-								<a class="button" href="${addDeliveryAddressUrl}"><spring:theme code="checkout.multi.cancel" text="Cancelar"/></a>
+								<a class="button" href="${addDeliveryAddressUrl}"><spring:theme code="checkout.multi.cancel"/></a>
 							</div>
 						</c:if>
 						<button id="chooseDeliveryMethod_continue_button" class="positive right change_address_button show_processing_message">
-							<spring:theme code="checkout.multi.deliveryMethod.continue" text="Continuar"/>
+							<spring:theme code="checkout.multi.deliveryMethod.continue"/>
 						</button>
 					</div>
 				</c:if>

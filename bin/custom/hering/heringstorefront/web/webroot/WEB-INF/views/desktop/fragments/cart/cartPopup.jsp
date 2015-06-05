@@ -34,12 +34,12 @@
                             <c:forEach items="${entry.product.baseOptions}" var="option">
                                 <c:forEach items="${option.selected.variantOptionQualifiers}"
                                     var="selectedOption">
-                                    <c:if test="${selectedOption.name == 'Tamanho'}">
+                                    <c:if test="${selectedOption.qualifier eq 'size'}">
                                         <li>${selectedOption.name}: ${selectedOption.value}
                                         <li>
                                     </c:if>
                                     <c:if
-                                        test="${selectedOption.name == 'Cor' && colorIsUsed == false}">
+                                        test="${selectedOption.qualifier eq 'style' && colorIsUsed == false}">
                                         <c:set value="true" var="colorIsUsed" />
                                         <li>
                                             <div style="float: left">${selectedOption.name}:</div>
@@ -62,7 +62,7 @@
                                 <c:otherwise>
                                 </c:otherwise>
                             </c:choose>
-                            <strong>por: <format:fromPrice priceData="${entry.basePrice}" /></strong>
+                            <strong><spring:theme code="text.fliegercommerce.texto107"/>: <format:fromPrice priceData="${entry.basePrice}" /></strong>
                         </div>
                     </div> <c:url value="/cart/update" var="cartUpdateFormAction" /> <form:form
                         id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}"
@@ -101,11 +101,11 @@
             </c:if>
             <c:if test="${hasItems}">
                 <c:if test="${numberItemsInCart gt 1}">
-                    <p>${totalItems}itens inclusos em sua sacola somam o valor:</p>
+                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto6"/></p>
                     <strong><format:price priceData="${cartData.totalPrice}" /></strong>
                 </c:if>
                 <c:if test="${numberItemsInCart lt 2}">
-                    <p>${totalItems}item incluso em sua sacola soma o valor:</p>
+                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto7"/></p>
                     <strong><format:price priceData="${cartData.totalPrice}" /></strong>
                 </c:if>
                 <c:if test="${numberItemsInCart > numberShowing}">
@@ -120,8 +120,8 @@
                 <c:if test="${not empty payPalExpressCheckoutShortcut}">
                     <cms:component component="${payPalExpressCheckoutShortcut}" evaluateRestriction="true"  />
                 </c:if>
-                <a href="${cartUrl}" class="btn btn-full-bag">Sacola completa</a> <a
-                    href="${checkoutUrl}" class="btn btn-checkout">Finalizar compra</a>
+                <a href="${cartUrl}" class="btn btn-full-bag"><spring:theme code="text.fliegercommerce.texto8"/></a> <a
+                    href="${checkoutUrl}" class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto9"/></a>
             </div>
         </c:if>
     </div>

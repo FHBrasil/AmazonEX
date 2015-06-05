@@ -31,7 +31,7 @@
 									<a href="#" title="alterar foto"><spring:theme code="text.account.changePhoto" text="Change Photo" /></a>
 								</div> --%>
                         <header class="temporaryWelcome">
-                            <h2>OL� ${customerData.firstName},</h2>
+                            <h2><spring:theme code="text.fliegercommerce.texto15"/> ${customerData.firstName},</h2>
                             <p>
                                 <spring:theme code="text.account.welcomeHering"
                                     text="Welcome Hering" />
@@ -76,7 +76,7 @@
                                         <th><spring:theme
                                                 code="text.account.lastOrderTotalPrice"
                                                 text="Last Order Total Price" /></th>
-                                        <th>Forma de Pagamento</th>
+                                        <th><spring:theme code="text.fliegercommerce.texto16"/></th>
                                         <th><spring:theme code="text.account.lastOrderStatus"
                                                 text="Last Order Status" /></th>
                                     </tr>
@@ -90,7 +90,7 @@
                                             <td><big><a
                                                     href="${myAccountOrderDetailsUrl}">${order.code}</a></big></td>
                                             <td><fmt:formatDate value="${order.placed}"
-                                                    dateStyle="short" type="date" /><br> �s <fmt:formatDate
+                                                    dateStyle="short" type="date" /><br> <spring:theme code="text.fliegercommerce.texto25"/><fmt:formatDate
                                                     value="${order.placed}" timeStyle="short"
                                                     type="time" /></td>
                                             <td><big>${order.total.formattedValue}</big></td>
@@ -126,7 +126,7 @@
                             </table>
                         </c:if>
                         <c:if test="${empty orderHistoryPreview}">
-									N�o h� pedidos.
+									<spring:theme code="text.fliegercommerce.texto17"/>
 								</c:if>
                     </section>
                     <section id="general-info">
@@ -143,7 +143,7 @@
 								</section> --%>
                         <section id="account-addresses" class="right">
                             <header>
-                                <h2>ENDERE�OS CADASTRADOS</h2>
+                                <h2><spring:theme code="text.fliegercommerce.texto14"/></h2>
                             </header>
                             <c:if test="${not empty addressData}">
                                 <c:choose>
@@ -166,24 +166,24 @@
                                                         </ycommerce:testId>
                                                     </h3>
                                                     <p>
-                                                        <strong>Nome:</strong>&nbsp;
+                                                        <strong><spring:theme code="text.fliegercommerce.texto18"/></strong>&nbsp;
                                                         ${fn:escapeXml(address.firstName)}&nbsp;
                                                         ${fn:escapeXml(address.lastName)}
                                                     </p>
                                                     <p>
                                                         <c:if test="${not empty address.receiver}">
-                                                            <strong>Destinat�rio:</strong>&nbsp; ${fn:escapeXml(address.receiver)}</c:if>
+                                                            <strong><spring:theme code="text.fliegercommerce.texto19"/></strong>&nbsp; ${fn:escapeXml(address.receiver)}</c:if>
                                                     </p>
                                                     <p>
-                                                        <strong>Telefone:</strong>&nbsp;
+                                                        <strong><spring:theme code="text.fliegercommerce.texto20"/></strong>&nbsp;
                                                         (${fn:escapeXml(address.dddPhone)})${fn:escapeXml(address.phone)}
                                                     </p>
                                                     <p>
                                                         <c:if test="${not empty address.celPhone}">
-                                                            <strong>Tel Celular:</strong>&nbsp; (${fn:escapeXml(address.dddCelPhone)})${fn:escapeXml(address.celPhone)}</c:if>
+                                                            <strong><spring:theme code="text.fliegercommerce.texto21"/></strong>&nbsp; (${fn:escapeXml(address.dddCelPhone)})${fn:escapeXml(address.celPhone)}</c:if>
                                                     </p>
                                                     <p>
-                                                        <strong>Endere�o:&nbsp;</strong>
+                                                        <strong><spring:theme code="text.fliegercommerce.texto22"/>&nbsp;</strong>
                                                         ${fn:escapeXml(address.line1)},
                                                         ${fn:escapeXml(address.number)} -
                                                         ${fn:escapeXml(address.complement)} &nbsp;
@@ -195,7 +195,7 @@
                                                     </p>
                                                     <p>
                                                         <c:if test="${not empty address.reference}">
-                                                            <strong>Refer�ncia:</strong>&nbsp; ${fn:escapeXml(address.reference)}</c:if>
+                                                            <strong><spring:theme code="text.fliegercommerce.texto23"/></strong>&nbsp; ${fn:escapeXml(address.reference)}</c:if>
                                                     <p>
                                                 </li>
                                             </ul>
@@ -204,7 +204,7 @@
                                 </c:choose>
                             </c:if>
                             <c:if test="${empty addressData}">
-											N�o h� endere�os cadastrados.
+											<spring:theme code="text.fliegercommerce.texto24"/>
 										</c:if>
                         </section>
                     </section>

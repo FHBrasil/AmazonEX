@@ -35,7 +35,7 @@
                     </label>
                 </header>
                 <div class="obs">
-                    <spring:theme code="checkout.camposObrigatorios" text="Campos Obrigatorios" />
+                    <spring:theme code="checkout.camposObrigatorios" />
                 </div>
                 <form:hidden path="paymentId" class="create_update_payment_id" />
                 <div class="f-row" id="CreditCardInstalment">
@@ -104,8 +104,7 @@
                                 code="checkout.oQueIsso" text="O que e isso" />
                             <div class="tooltip information-content securityCodeInfo">
                                 <h3>
-                                    <spring:theme code="checkout.toolTip.CodSeguranca"
-                                        text="Codigo de seguranca" />
+                                    <spring:theme code="checkout.toolTip.CodSeguranca" />
                                 </h3>
                                 <ul class="code-information">
                                     <li>
@@ -143,10 +142,10 @@
                 </header>
                 <p>
                     <i class="fa fa-barcode"></i>
-                    <spring:theme code="checkout.popUpBoleto" text="Texto PopUp para Boleto" />
+                    <spring:theme code="checkout.popUpBoleto" />
                 </p>
                 <p>
-                    <spring:theme code="checkout.infoEntrega" text="Texto Informacao Entrega" />
+                    <spring:theme code="checkout.infoEntrega"  />
                 </p>
             </section>
         </c:if>

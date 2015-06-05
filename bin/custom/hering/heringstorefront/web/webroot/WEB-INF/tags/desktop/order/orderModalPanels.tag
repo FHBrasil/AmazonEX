@@ -92,8 +92,8 @@
 						<dt class="method"><spring:theme code="general.pagamento"/></dt>
 						<dd class="method">
 							<c:choose>
-								<c:when test="${not empty order.paymentInfo }">Cartão de Crédito</c:when>
-								<c:when test="${not empty order.customPaymentInfo }">Boleto</c:when>
+								<c:when test="${not empty order.paymentInfo }"><spring:theme code="text.fliegercommerce.texto53"/></c:when>
+								<c:when test="${not empty order.customPaymentInfo }"><spring:theme code="text.fliegercommerce.texto54"/></c:when>
 								<c:otherwise>Voucher</c:otherwise>
 							</c:choose>
 						</dd>

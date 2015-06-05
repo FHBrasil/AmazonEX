@@ -16,9 +16,8 @@
         </h2>
     </header>
     <form class="f-row pfpj">
-        <label><input type="radio" id="radiopf" name="tipo" ${pf ? 'checked' : ''}>Pessoa
-            F�sica </label> <label><input type="radio" id="radiopj" name="tipo"
-            ${!pf ? 'checked' : ''}>Pessoa Jur�dica</label>
+        <label><input type="radio" id="radiopf" name="tipo" ${pf ? 'checked' : ''}><spring:theme code="text.fliegercommerce.texto31"/> </label> <label><input type="radio" id="radiopj" name="tipo"
+            ${!pf ? 'checked' : ''}><spring:theme code="text.fliegercommerce.texto32"/></label>
     </form>
     <form:form method="post" cssClass="pf" commandName="heringRegisterForm" action="${action}">
         <form:hidden path="pessoaFisica" value="true" />
@@ -55,9 +54,10 @@
         </div>
         <%-- campo sexo --%>
         <div class="f-row sexo">
-            <p class="label">Sexo</p>
+            <p class="label"><spring:theme code="text.fliegercommerce.texto33"/></p>
             <form:radiobutton cssClass="registerRadioFemale" idKey="register.female" path="gender"
                 value="FEMALE" label="Feminino" checked="true" hideInputErrorOnField="true" />
+                
             <form:radiobutton cssClass="registerRadioMale" idKey="register.male" path="gender"
                 value="MALE" label="Masculino" />
         </div>
@@ -85,7 +85,7 @@
         <%-- bot�o de cadastrar --%>
         <ycommerce:testId code="register_Register_button">
             <button type="submit" class="btn btn-registro">
-                <spring:theme code='Cadastrar' />
+                <spring:theme code="text.fliegercommerce.texto74"/>
             </button>
         </ycommerce:testId>
     </form:form>
@@ -155,7 +155,7 @@
         <%-- bot�o de cadastrar --%>
         <ycommerce:testId code="register_Register_button">
             <button type="submit" class="btn btn-registro">
-                <spring:theme code='Cadastrar' />
+                <spring:theme code="text.fliegercommerce.texto74"/>
             </button>
         </ycommerce:testId>
     </form:form>

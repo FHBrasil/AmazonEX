@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
 
 import br.hering.facades.facades.order.HeringCheckoutFacade;
 import br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade;
@@ -59,7 +62,9 @@ import de.hybris.platform.commercefacades.voucher.VoucherFacade;
 import de.hybris.platform.commercefacades.voucher.data.VoucherData;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.order.CartService;
+import de.hybris.platform.servicelayer.i18n.I18NService;
 import de.hybris.platform.servicelayer.session.SessionService;
+
 
 
 /**
@@ -100,7 +105,25 @@ public class CartPageController extends AbstractPageController
 	
 	@Resource
 	private PriceDataFactory priceDataFactory;
+	
+	
+	@Resource
+	private MessageSource messageSource;
+	
+	
+	@Resource
+	private I18NService i18nService;
+	
 
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public I18NService getI18nService() {
+		return i18nService;
+	}
+
+	
 	// Public getter used in a test
 	@Override
 	public SiteConfigService getSiteConfigService()
@@ -255,7 +278,7 @@ public class CartPageController extends AbstractPageController
 		return REDIRECT_PREFIX + "/cart";
 	}
 
-//	XXX remoção de dependencia com extension carrier
+//	XXX remoï¿½ï¿½o de dependencia com extension carrier
 //	@RequestMapping(value = "/calculateDelivery", method = RequestMethod.POST)
 //	public String calculateDelivery(@RequestParam final String postalCode, final RedirectAttributes redirectModel) throws Exception 
 //	{
@@ -436,9 +459,17 @@ public class CartPageController extends AbstractPageController
 		{
 			int size = generatedInstallments.size();
 			String last = generatedInstallments.get(size-1);
-			return "<b>" + size + "x</b> de R$ " + last + " sem juros";
+			
+			final String de = getMessageSource().getMessage("text.fliegercommerce.texto120", null, getI18nService().getCurrentLocale());
+			final String semjuros = getMessageSource().getMessage("text.fliegercommerce.texto121", null, getI18nService().getCurrentLocale());	
+			
+			return "<b>" + size + de + last + semjuros;
 		}
 		
 		return "";
 	}
+	
+	
+	
+	
 }

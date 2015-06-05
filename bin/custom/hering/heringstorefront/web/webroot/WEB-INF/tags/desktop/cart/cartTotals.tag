@@ -46,8 +46,8 @@
         <%-- RESUMO DO PEDIDO // --%>
         <div class="right">
             <ul>
-                <li><a href="/"><i class="fa fa-angle-left"></i> Continuar comprando</a></li>
-                <li class="right">Resumo do pedido</li>
+                <li><a href="/"><i class="fa fa-angle-left"></i><spring:theme code="text.fliegercommerce.texto57"/></a></li>
+                <li class="right"><spring:theme code="text.fliegercommerce.texto58"/></li>
             </ul>
             <div>
                 <ul class="total-info">
@@ -64,7 +64,7 @@
                     <li class="total"><strong><format:price
                                 priceData="${cartData.totalPrice}" /></strong> <c:if
                             test="${not empty cartData.deliveryCost}">
-								(Frete 
+								(<spring:theme code="text.fliegercommerce.texto59"/> 
 								<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
                             <c:if test="${not empty cartData.deliveryMode}">
                                 <br> ${cartData.deliveryMode.description}
