@@ -27,7 +27,8 @@
 		<property name="languageIsoCode" type="java.lang.String"/>		
 	</bean>
 	
-	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData">
+	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData"
+	      extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
 		<property name="newsletterSubscriptions" type="java.util.List&lt;com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData>"/>	
 	</bean>
 
