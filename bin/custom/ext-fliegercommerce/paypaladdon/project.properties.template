@@ -20,6 +20,7 @@ paypaladdon.key=value
 # Specifies the location of the spring context file added automatically to the global platform application context.
 paypaladdon.application-context=paypaladdon-spring.xml
 
+yacceleratorstorefront.additionalWebSpringConfigs.paypaladdon=classpath:/paypaladdon/web/spring/paypaladdon-web-spring.xml
 yb2bacceleratorstorefront.additionalWebSpringConfigs.paypaladdon=classpath:/paypaladdon/web/spring/paypaladdon-web-spring.xml
 
 storefront.supportedUiExperienceLevels.electronics=DESKTOP,MOBILE
@@ -32,5 +33,3 @@ paypaladdon.javascript.paths.desktop=/desktop/common/js/paypaladdon.js
 paypaladdon.javascript.paths.mobile=/mobile/common/js/paypaladdon.js
 paypaladdon.css.paths.desktop=/desktop/common/css/paypaladdon.css
 paypaladdon.css.paths.mobile=/mobile/common/css/paypaladdon.css
-
-heringstorefront.additionalWebSpringConfigs.paypaladdon=classpath:/paypaladdon/web/spring/paypaladdon-web-spring.xml

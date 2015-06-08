@@ -14,15 +14,5 @@
         <itemtype code="PayPalExpressCheckoutShortcut" extends="SimpleBannerComponent"
             autocreate="true" generate="true">
         </itemtype>
-        
-        <itemtype code="MiniCartComponent" generate="false" autocreate="false">
-                <attributes>
-                    <attribute qualifier="paypalExpressCheckoutShortcut" 
-                            type="PayPalExpressCheckoutShortcut" generate="true" autocreate="true">
-                        <persistence type="property" />
-                        <description>The PayPal Express Checkout Button.</description>
-                    </attribute>
-                </attributes>
-            </itemtype>
     </itemtypes>
 </items>

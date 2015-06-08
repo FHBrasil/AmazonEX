@@ -52,7 +52,7 @@ insert_update CMSTabParagraphContainer;$contentCV[unique=true,allownull=true];na
 "#% impex.exportItems(""SELECT {x:pk} FROM {CMSTabParagraphContainer AS x JOIN CatalogVersion as cv ON {cv:pk} = {x:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$contentCatalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # 
 "#% impex.setTargetFile(""FooterComponent.csv"");"
-insert_update FooterComponent;$contentCV[unique=true,allownull=true];name;navigationNodes($contentCV,uid);notice[lang=de];notice[lang=en];onlyOneRestrictionMustApply[allownull=true];showLanguageCurrency;uid[unique=true,allownull=true];visible[allownull=true];wrapAfter
+insert_update FooterComponent;$contentCV[unique=true,allownull=true];name;navigationNodes($contentCV,uid);notice[lang=de];notice[lang=en];onlyOneRestrictionMustApply[allownull=true];uid[unique=true,allownull=true];visible[allownull=true];wrapAfter
 "#% impex.exportItems(""SELECT {x:pk} FROM {FooterComponent AS x JOIN CatalogVersion as cv ON {cv:pk} = {x:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$contentCatalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # 
 "#% impex.setTargetFile(""CMSParagraphComponent.csv"");"
@@ -83,10 +83,6 @@ insert_update CartSuggestionComponent;$contentCV[unique=true,allownull=true];dis
 insert_update SearchBoxComponent;$contentCV[unique=true,allownull=true];displayProductImages[allownull=true];displayProducts[allownull=true];displaySuggestions[allownull=true];maxProducts[allownull=true];maxSuggestions[allownull=true];minCharactersBeforeRequest[allownull=true];name;onlyOneRestrictionMustApply[allownull=true];uid[unique=true,allownull=true];visible[allownull=true];waitTimeBeforeRequest[allownull=true]
 "#% impex.exportItems(""SELECT {x:pk} FROM {SearchBoxComponent AS x JOIN CatalogVersion as cv ON {cv:pk} = {x:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$contentCatalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # 
-"#% impex.setTargetFile(""ProductRefinementComponent.csv"");"
-insert_update ProductRefinementComponent;$contentCV[unique=true,allownull=true];name;onlyOneRestrictionMustApply[allownull=true];uid[unique=true,allownull=true];visible[allownull=true]
-"#% impex.exportItems(""SELECT {x:pk} FROM {ProductRefinementComponent AS x JOIN CatalogVersion as cv ON {cv:pk} = {x:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$contentCatalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
-# 
 "#% impex.setTargetFile(""ContentSlot.csv"");"
 insert_update ContentSlot;activeFrom[dateformat=dd.MM.yyyy hh:mm:ss];activeUntil[dateformat=dd.MM.yyyy hh:mm:ss];active[allownull=true];$contentCV[unique=true,allownull=true];currentPosition;name;uid[unique=true,allownull=true]
 "#% impex.exportItems(""SELECT {x:pk} FROM {ContentSlot AS x JOIN CatalogVersion as cv ON {cv:pk} = {x:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$contentCatalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
@@ -110,10 +106,6 @@ insert_update ContentPage;approvalStatus(code,itemtype(code))[allownull=true];$c
 "#% impex.setTargetFile(""ProductCarouselComponent.csv"");"
 insert_update ProductCarouselComponent;$contentCV[unique=true,allownull=true];categoryCode;name;onlyOneRestrictionMustApply[allownull=true];popup[allownull=true];scroll(code,itemtype(code))[allownull=true];searchQuery;title[lang=de];title[lang=en];uid[unique=true,allownull=true];visible[allownull=true]
 "#% impex.exportItems(""SELECT {x:pk} FROM {ProductCarouselComponent AS x JOIN CatalogVersion as cv ON {cv:pk} = {x:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$contentCatalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
-# 
-"#% impex.setTargetFile(""BreadcrumbComponent.csv"");"
-insert_update BreadcrumbComponent;$contentCV[unique=true,allownull=true];name;onlyOneRestrictionMustApply[allownull=true];uid[unique=true,allownull=true];visible[allownull=true]
-"#% impex.exportItems(""SELECT {x:pk} FROM {BreadcrumbComponent AS x JOIN CatalogVersion as cv ON {cv:pk} = {x:catalogVersion} AND {cv:version} = '$version' JOIN Catalog as c ON {c:pk} = {cv:catalog} AND {c:id} = '$contentCatalog'}"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
 # 
 "#% impex.setTargetFile(""RotatingImagesComponent.csv"");"
 insert_update RotatingImagesComponent;$contentCV[unique=true,allownull=true];effect(code,itemtype(code));name;onlyOneRestrictionMustApply[allownull=true];timeout;uid[unique=true,allownull=true];visible[allownull=true]
