@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<div id="footer" class="footer">
+<div id="footer">
     <cms:pageSlot position="Footer" var="feature" element="div">
         <cms:component component="${feature}" />
     </cms:pageSlot>

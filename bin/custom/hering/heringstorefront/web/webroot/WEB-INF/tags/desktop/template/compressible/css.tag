@@ -6,74 +6,50 @@
 <link rel="stylesheet" href="${commonResourcePath}/assets/fonts/museo-sans.css">
 <link rel="stylesheet" href="${commonResourcePath}/assets/fonts/steelfish.css">
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/reset.css" />
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/base.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${commonResourcePath}/assets/css/header.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${commonResourcePath}/assets/css/footer.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${commonResourcePath}/assets/css/products.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${commonResourcePath}/assets/css/sliders.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${commonResourcePath}/assets/css/miniCart.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${commonResourcePath}/assets/js/fancybox/jquery.fancybox.css" />
+<%--<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/base.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/header.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/footer.css" />--%>
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/products.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/sliders.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/miniCart.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/js/fancybox/jquery.fancybox.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/colorBox.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${commonResourcePath}/css/jquery.colorbox-1.3.16.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/css/jquery.colorbox-1.3.16.css" />
 <c:if test="${pageType == 'HOMEPAGE'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/home.css" />
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/textBoxInfoParagraphComponent.css" />
+    <%--<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/home.css" />--%>
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/textBoxInfoParagraphComponent.css" />
 </c:if>
 <c:if test="${pageType == 'PRODUCT'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/produto.css" />
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/productReferencesComponent.css" />
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/productVariantSelector.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/produto.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/productReferencesComponent.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/productVariantSelector.css" />
 </c:if>
 <c:if test="${pageType == 'CART'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/sacola.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/sacola.css" />
 </c:if>
 <c:if test="${pageType == 'ACCOUNTPAGE'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/sua-conta.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/sua-conta.css" />
 </c:if>
 <c:if test="${pageType == 'PRODUCTSEARCH' || pageType == 'CATEGORY' || pageType == 'HOMEPAGE'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/busca.css" />
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/heringProductsSearchCategory.css" />
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/jquery.jscrollpane.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/busca.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/heringProductsSearchCategory.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/jquery.jscrollpane.css" />
 </c:if>
 <c:if test="${pageType == 'LOGIN' || pageType == 'CHECKOUT'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/identificacao.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/identificacao.css" />
 </c:if>
 <c:if test="${pageType == 'ORDERCONFIRMATION'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/checkout.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/checkout.css" />
 </c:if>
 <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/checkout.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/checkout.css" />
 </c:if>
 <c:if test="${fn:contains(pageType,'CMS')}">
-    <link rel="stylesheet" type="text/css" media="all"
-        href="${commonResourcePath}/assets/css/pages/institucional.css" />
-    <%-- Blackfriday just on http://www.hering.com.br/store/hering-black-friday-2014 --%>
-    <%-- <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/hotsites/hering/blackfriday-2014/css/blackfriday-2014.css"> --%>
+    <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/pages/institucional.css" />
 </c:if>
 <%--<link rel="stylesheet" type="text/css"  media="all" href="${commonResourcePath}/assets/css/pages/hotsite-kids.css" />--%>
 
 <%-- Babyartikel Customs --%>
-<link rel="stylesheet" type="text/css" media="all"
-    href="${themeResourcePath}/css/babyartikel-main.css" />
-<link rel="stylesheet" type="text/css" media="all"
-    href="${themeResourcePath}/fonts/babyartikel-fonts.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/babyartikel-main.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/fonts/babyartikel-fonts.css" />

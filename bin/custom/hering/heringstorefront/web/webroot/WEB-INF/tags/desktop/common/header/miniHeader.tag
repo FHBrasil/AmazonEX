@@ -23,8 +23,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-<!-- mini header fixo -->
-<div id="mini-header" class="show-on-desktop">
+<%--<div id="mini-header" class="show-on-desktop">
 	<div class="container">
 		<div class="content">
 			<h2>
@@ -38,5 +37,4 @@
 			<cms:component component="${cart}" element="div" class="miniCart" />
 		</cms:pageSlot>
 	</div>
-</div>
-<!-- /mini header fixo -->
+</div>--%>
