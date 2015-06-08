@@ -70,6 +70,9 @@
         <extension name="wishlist" />
         <extension name="adyen" />
         <extension name="clearsaleantifraude" />
+		<extension name="newslettersubscription" />        
+        <extension name="newsletteraddon" />
+
 
         <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />

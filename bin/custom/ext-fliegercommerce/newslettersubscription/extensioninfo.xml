@@ -22,7 +22,7 @@
 		<requires-extension name="basecommerce"/>
 		<requires-extension name="commerceservices"/>
 		<requires-extension name="commercefacades"/>
-      
+		
       <coremodule generated="true" manager="com.fliegersoftware.newslettersubscription.jalo.NewslettersubscriptionManager" packageroot="com.fliegersoftware.newslettersubscription"/>
 
       <webmodule jspcompile="false" webroot="/newslettersubscription"/>

@@ -36,9 +36,9 @@
 		</property>
 	</bean>
 
-	<bean id="newsletteraddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+<!-- 	<bean id="newsletteraddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
 		<property name="extensionName" value="newsletteraddon" />
-	</bean>
+	</bean> -->
 	
 		
 </beans>
