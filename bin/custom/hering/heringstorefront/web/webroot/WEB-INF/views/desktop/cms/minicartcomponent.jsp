@@ -16,10 +16,16 @@
 <c:url value="/cart/miniCart/${totalDisplay}" var="refreshMiniCartUrl" />
 <c:url value="/cart/rollover/${component.uid}" var="rolloverPopupUrl" />
 <c:url value="/cart" var="cartUrl" />
-<div id="carrinho" class="show-on-desktop">
+<%--<div id="carrinho" class="show-on-desktop">
     <span class="bag"> <span class="count">${totalItems}</span>
-    </span> <span class="price"> <format:price priceData="${totalPrice}" />
-    </span> <a href="${cartUrl}" class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto5"/></a>
+    </span><span class="price"> <format:price priceData="${totalPrice}" />
+    </span><a href="${cartUrl}" class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto5"/></a>
     <div id="miniCartLayer" class="miniCartPopup" data-refreshMiniCartUrl="${refreshMiniCartUrl}/?"
         data-rolloverPopupUrl="${rolloverPopupUrl}" style="padding: 0 !important;"></div>
+</div>--%>
+
+<div>
+	<a class="active" href="${cartUrl}">
+		<span class="babicon babicon-babyartikel-basket"></span><span class="count150519">${totalItems}</span>
+	</a>
 </div>
