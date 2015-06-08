@@ -8,7 +8,6 @@ body{/*      background: url(../../images/bg-home-palmeira.jpg) center 676px no-
 }
  
 #section-secondary {
-        /*background: url(../../images/bg_newsletter.jpg) center bottom no-repeat;*/
         background-size: cover;
         overflow: hidden;
 		/*margin-top: -55px;*/
@@ -191,105 +190,7 @@ body{/*      background: url(../../images/bg-home-palmeira.jpg) center 676px no-
         padding: 20px 0;
 }
  
-#banner-newsletter {
-        color: #444;
-}
- 
-#banner-newsletter .container {
-        padding: 14px 0;
-}
- 
-#banner-newsletter .banners {
-        overflow: hidden;
-}
- 
-#banner-newsletter .banner {
-        width: 586px;
-        height: 175px;
-        float: left;
-        margin: 0 7px;
-}
- 
-#banner-newsletter .banners .banner:first-child {
-        margin-left: 0;
-}
- 
-#banner-newsletter .banners .banner:last-child {
-        margin-right: 0;
-}
- 
-#banner-newsletter .banner-cartao {
-        background: url(../../images/banner-cartao.png);
-}
- 
-#banner-newsletter .banner-cancer {
-        background: url(../../images/banner-cancer.png);
-}
- 
-#banner-newsletter .newsletters {
-        padding: 20px 0 8px;
-        overflow: hidden;
-}
- 
-#banner-newsletter .newsletters .left {
-        font-size: 21px;
-        line-height: 1.5em;
-}
- 
-#banner-newsletter .newsletters .right > div,
-#banner-newsletter .newsletters .right div:last-child div {
-        float: left;
-        width: 50%;
-}
- 
-#banner-newsletter .newsletters .right input[type=text],
-#banner-newsletter .newsletters .right input[type=email] {
-        border: 1px solid #eaeaea;
-        padding: 6px;
-        font-size: 12px;
-        background: #f8f8f8;
-}
- 
-#banner-newsletter .newsletters .right input,
-#banner-newsletter .newsletters .right label {
-        width: 90%;
-        display: inline-block;
-        margin: 0 0 5px;
-}
- 
-#banner-newsletter .newsletters .right label {
-        margin: 0;
-        padding: 7px 0;
-}
- 
-#banner-newsletter .newsletters .right input[type='radio'],
-#banner-newsletter .newsletters .right input[type='checkbox'] {
-        width: auto;
-        margin: 0 5px 0 0;
-        float: none;
-}
- 
-#banner-newsletter .newsletters .right button {
-        margin-right: 14px;
-        border: 2px solid #fff;
-        border-radius: 5px;
-        background: #333;
-        background: rgba(0,0,0,0.2);
-        color: #fff;
-        padding: 15px 20px;
-        font-size: 13px;
-        margin-top: 3px;
-        -webkit-transition: background 0.5s;
-        -moz-transition: background 0.5s;
-        -o-transition: background 0.5s;
-        transition: background 0.5s;
-		white-space: nowrap;
-}
- 
-#banner-newsletter .newsletters .right button:hover {
-        background: #111;
-        background: rgba(0,0,0,0.7);
-}
+
  
 #section-social {
         overflow:hidden;
@@ -500,29 +401,6 @@ body{/*      background: url(../../images/bg-home-palmeira.jpg) center 676px no-
                 width: 100%;
         }
  
-        #banner-newsletter .banners {
-                text-align: center;
-        }
- 
-        #banner-newsletter .banner {
-                margin: 10px 0;
-                display: inline-block;
-                float: none;
-        }
- 
-        #banner-newsletter .newsletters .left,
-        #banner-newsletter .newsletters .right {
-                float: none;
-                width: 100%;
-        }
- 
-        #banner-newsletter .newsletters .left {
-                margin-bottom: 20px;
-        }
- 
-        #banner-newsletter .newsletters .right button {
-                margin-right: 0;
-        }
  
         .product-infinite-wrapper:before {
                 display: none;
@@ -589,14 +467,7 @@ body{/*      background: url(../../images/bg-home-palmeira.jpg) center 676px no-
                 float: left;
         }
  
-        #banner-newsletter .banners .banner {
-                width: 100%;
-                height: auto;
-        }
- 
-        #banner-newsletter .banners .banner img {
-                width: 100%;
-        }
+
 }
  
 @media (max-width: 700px) {
@@ -614,11 +485,7 @@ body{/*      background: url(../../images/bg-home-palmeira.jpg) center 676px no-
         #bar-secondary ul li {
                 width: 100%;
                 }
- 
-        #banner-newsletter .newsletters .right > div,
-        #banner-newsletter .newsletters .right input {
-                width: 100%;
-        }
+
 }
 
 @media (min-width: 1670px) {

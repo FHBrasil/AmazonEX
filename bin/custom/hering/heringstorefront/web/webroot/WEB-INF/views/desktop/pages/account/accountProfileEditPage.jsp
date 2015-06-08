@@ -80,13 +80,7 @@
                                     labelKey="${pf?'profile.birthday':'register.dataFundacao'}"
                                     path="birthday" inputCSS="text" mandatory="true" />
                             </div>
-                            <div class="form-row newsletters">
-                                <label><spring:theme code="text.fliegercommerce.texto42"/></label>
-                                <div class="checkbox-group">
-                                    <newsletter:newsletters bases="${basesCode}"
-                                        basesChecked="${basesChecked}" />
-                                </div>
-                            </div>
+                            
                             <div class="required-info">
                                 <spring:theme code="form.required"
                                     text="Fields marked * are required" />

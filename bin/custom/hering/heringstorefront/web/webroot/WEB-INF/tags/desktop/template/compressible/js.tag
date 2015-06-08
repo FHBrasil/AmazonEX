@@ -131,9 +131,9 @@
     <script type="text/javascript" src="${commonResourcePath}/js/acc.track.js"></script>
 </c:if>
 <script type="text/javascript" src="${commonResourcePath}/js/acc.minicart.js"></script>
-<c:if test="${pageType != 'ORDERCONFIRMATION'}">
+<%-- <c:if test="${pageType != 'ORDERCONFIRMATION'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/newsletter.js"></script>
-</c:if>
+</c:if> --%>
 <!-- Descomentar para utilizar o facebook. -->
 <%-- <c:forEach items="${addOnJavaScriptPaths}" var="addOnJavaScript">
 		<c:if test="${not fn:containsIgnoreCase(addOnJavaScript, 'placeorder.js')}">
