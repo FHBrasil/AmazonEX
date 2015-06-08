@@ -88,7 +88,7 @@
         <extension name="storecatalogfeed" />
         <extension name="pixicore" />
         <extension name="pixiapi" />
-        <extension name="newsletteraddon" />
         <extension name="newslettersubscription" />   
+        <extension name="newsletteraddon" />
     </extensions>
 </hybrisconfig>
