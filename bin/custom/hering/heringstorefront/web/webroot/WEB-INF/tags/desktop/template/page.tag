@@ -26,12 +26,12 @@
 				</div>
 			</c:if>
 		
-			<header id="main-header" <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">class="co"</c:if>>
-				<nav:topNavigation />
+			<div class="container" <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">class="co"</c:if>>
+				<%--<nav:topNavigation />--%>
 				<header:header />
-			</header>
+			</div>
 
-			<div id="main-wrapper" <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">class="co"</c:if>>
+			<div class="container" <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">class="co"</c:if>>
 
 				<c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
 					
@@ -56,7 +56,7 @@
 				</c:choose>
 			</div>
 			
-			<footer id="main-footer">
+			<footer>
 				<footer:footer />
 			</footer>
 		

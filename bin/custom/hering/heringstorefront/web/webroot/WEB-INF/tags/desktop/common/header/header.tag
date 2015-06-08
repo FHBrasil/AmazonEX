@@ -11,45 +11,76 @@
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="user" tagdir="/WEB-INF/tags/desktop/user"%>
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
-<nav id="search" class="navbar">
-    <div class="container">
-        <%-- STORE LOGO --%>
-        <h1>
-            <span id="menu-toggle"> <span></span>
-            </span> <a href="/" title="${siteName}">${siteName}</a>
-        </h1>
-        <c:if test="${pageType != 'SINGLESTEPCHECKOUT'}">
-            <%-- NAVIGATION MENU --%>
-            <%-- FILE - navigationbarcomponent.jsp --%>
-            <ul class="menu" id="main-menu">
-                <cms:pageSlot position="NavigationBar" var="component" element="li">
-                    <cms:component component="${component}" />
-                </cms:pageSlot>
-                <li class="join"></li>
-            </ul>
-            <div class="actions">
-                <ul>
-                    <li class="hide-on-desktop"><i class="fa fa-fw fa-search"></i></li>
-                    <li class="hide-on-desktop"><i class="fa fa-fw fa-shopping-cart"></i></li>
-                    <li class="input-group show-on-desktop siteSearch"><span id="sac"
-                        style="display: none !important;"> <i class="fa fa-phone"></i> SAC <b>0800-473114</b>
-                            <span> <spring:theme code="text.fliegercommerce.texto62"/> <b>08h00</b> <spring:theme code="text.fliegercommerce.texto25"/> <b>18h00</b>
-                        </span>
-                    </span> <%-- searchboxcomponent.jsp --%> <cms:pageSlot position="SearchBox"
-                            var="component">
-                            <cms:component component="${component}" />
-                        </cms:pageSlot></li>
-                </ul>
-            </div>
-        </c:if>
-        <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
-            <div class="right">
-                <h2>Checkout</h2>
-                <p>
-                   <spring:theme code="text.fliegercommerce.texto60"/> <a href="javascript:void(0)"
-                        id="NeoassistOpenLink" class="ai tooltip-link"><spring:theme code="text.fliegercommerce.texto61"/></a>
-                </p>
-            </div>
-        </c:if>
+<div class="prehead141211">
+    <div class="row bluerow">
+        <div class="col-sm-4 text-left hidden-xs">Einkaufen ohne Risiko</div>
+        <div class="col-sm-4 col-xs-12 text-center">Kostenloser Versand ab 40 &euro; (D)</div>
+        <div class="col-sm-4 text-right hidden-xs">Kundenservice: 089/904&nbsp;750&nbsp;6200</div>
     </div>
-</nav>
+</div>
+<div class="head141217">
+    <div class="row">
+        <div class="col-sm-4 hidden-xs">
+            <cms:pageSlot position="HeaderLinks" var="link">
+                <cms:component component="${link}" element="" />
+            </cms:pageSlot>
+        </div>
+        <div class="col-sm-4 text-center hidden-xs">
+            <a href="/" title="${siteName}"><img src="../_ui/desktop/theme-babyartikel/assets/images/logo.svg" alt="Babyartikel Shop" height="70" width="220">${siteName}</a>
+        </div>
+        <div class="col-sm-4 text-right">
+            <div class="headicons150519">
+                <%-- minicartcomponent.jsp --%> 
+                <cms:pageSlot position="MiniCart" var="cart" limit="1">
+                    <cms:component component="${cart}" element="div" />
+                </cms:pageSlot>
+                <a class="active" href="#"><span class="babicon babicon-heart"></span><span class="count150519">12</span></a>
+                <a class="" href="<c:url value="/login"/>"><span class="babicon babicon-user"></span></a>
+            </div>
+            <div class="clearfix"></div>
+            <div class="headtext150519 text-center hidden-xs">
+                <a href="<c:url value="/cart"/>">Warenkorb</a>
+                <a href="#">Wunschliste</a>
+                <a href="<c:url value="/login"/>">Konto</a>
+            </div>
+                <a href="/" class="home150312 visible-xs"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container head141217">
+    <nav role="navigation" class="navbar navbar-default">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <form role="search" class="navbar-xs navbar-form visible-xs">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Suche&hellip;">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <!-- Collection of nav links, forms, and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Unterwegs</a></li>
+                <li><a href="#">F&uuml;ttern &amp; Pflege</a></li>
+                <li><a href="#">Wohnen &amp; Schlafen</a></li>
+                <li><a href="#">Kleidung</a></li>
+                <li><a href="#">Spielen</a></li>
+            </ul>
+            <%-- searchboxcomponent.jsp --%> 
+            <cms:pageSlot position="SearchBox" var="component">
+                <cms:component component="${component}" />
+            </cms:pageSlot>
+        </div>
+    </nav>
+</div>
