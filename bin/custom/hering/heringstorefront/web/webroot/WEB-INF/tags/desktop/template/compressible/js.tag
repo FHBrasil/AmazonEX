@@ -171,17 +171,3 @@
 </noscript>
 <script async defer src="//static.chaordicsystems.com/static/loader.js" data-apikey="hering-v5"
     data-initialize="false"></script>
-<script type="text/javascript">
-    (function() {
-        window.NeoAssistTag = {};
-        NeoAssistTag.querystring = true;
-        NeoAssistTag.pageid = 'hrgnova';
-        NeoAssistTag.clientdomain = 'hering.neoassist.com';
-        var na = document.createElement('script');
-        na.type = 'text/javascript';
-        na.async = true;
-        na.src = '//cdn.atendimen.to/n.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(na, s);
-    })();
-</script>
