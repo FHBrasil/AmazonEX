@@ -193,14 +193,6 @@ public class DefaultExportOrderService extends AbstractHeringOrderService {
    		
    		cliente.setEmail(customer.getUid().replaceAll("[a-z0-9\\-]*\\|", ""));
    
-/*   		try {
-   			NewsletterSubscriberData newsLetter = newsletterSubscriptionFacade
-   					.findByEmail(customer.getUid().replaceAll("[a-z0-9\\-]*\\|", ""));
-   			cliente.setNewsletter(newsLetter != null 
-   					&& Boolean.TRUE.equals(newsLetter.getReceive()) );
-   		} catch (Exception e) {
-   			LOG.error("Not FATAL error", e);
-   		}*/
    
    		dadosPedido.setCliente(cliente);
    
