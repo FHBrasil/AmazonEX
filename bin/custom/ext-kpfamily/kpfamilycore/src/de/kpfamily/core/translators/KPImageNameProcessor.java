@@ -22,10 +22,12 @@ public class KPImageNameProcessor implements ImportProcessor {
     
     private static final Logger LOG = Logger.getLogger(KPImageNameProcessor.class);
     //
-    // www1: /medias/sys_master/media/
-    private static final String FTP_FOLDER = File.pathSeparator + "HYBRIS" + File.pathSeparator
-            + "fliegercommerce" + File.pathSeparator + "medias" + File.pathSeparator + "ftp"
-            + File.pathSeparator + "babyartikel" + File.pathSeparator;
+    // www:
+    // private static final String FTP_FOLDER =
+    // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel";
+    // www1:
+    private static final String FTP_FOLDER = "/HYBRIS/fliegercommerce/medias/ftp/babyartikel";
+    // local:
     // private static final String FTP_FOLDER = "/workspace/medias/";
     private static final String REGEX_IGNORE_PATTERN =
             "\\_d[0-9]+|\\_t[0-9]+|\\_m|\\_n|\\_t|\\_detail";
