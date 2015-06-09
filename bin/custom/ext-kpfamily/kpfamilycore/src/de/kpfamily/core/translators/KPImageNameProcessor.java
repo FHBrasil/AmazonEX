@@ -26,7 +26,7 @@ public class KPImageNameProcessor implements ImportProcessor {
     // private static final String FTP_FOLDER =
     // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel";
     // www1:
-    private static final String FTP_FOLDER = "/HYBRIS/fliegercommerce/medias/ftp/babyartikel";
+    private static final String FTP_FOLDER = "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
     // local:
     // private static final String FTP_FOLDER = "/workspace/medias/";
     private static final String REGEX_IGNORE_PATTERN =
