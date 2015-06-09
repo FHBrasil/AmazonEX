@@ -1,21 +1,19 @@
 package de.kpfamily.core.translators;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
 import de.hybris.platform.impex.jalo.ImpExException;
-import de.hybris.platform.impex.jalo.header.HeaderDescriptor;
-import de.hybris.platform.impex.jalo.imp.DefaultImportProcessor;
-import de.hybris.platform.impex.jalo.imp.ExistingItemResolver;
 import de.hybris.platform.impex.jalo.imp.ImpExImportReader;
 import de.hybris.platform.impex.jalo.imp.ImportProcessor;
 import de.hybris.platform.impex.jalo.imp.ValueLine;
-import de.hybris.platform.impex.jalo.imp.ValueLineTranslator;
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.JaloInvalidParameterException;
-import de.hybris.platform.jalo.JaloSession;
-import de.hybris.platform.jalo.c2l.Language;
 
 /**
  * Renames the given image name.
@@ -27,20 +25,16 @@ public class KPImageNameProcessor implements ImportProcessor {
     
     private static final Logger LOG = Logger.getLogger(KPImageNameProcessor.class);
     //
-    private static final String PREFIX_FILE = File.pathSeparator + "HYBRIS"
-            + File.pathSeparator
-            + "fliegercommerce"
-            + File.pathSeparator
-            + "medias"
-            + File.pathSeparator
-            + "ftp"
-            + File.pathSeparator
-            + "babyartikel";
-    private ImpExImportReader reader = null;
-    private Language defaultLanguage = null;
-    private ValueLineTranslator valueLineTrans;
-    private HeaderDescriptor existingItemResolverHeader;
-    private ExistingItemResolver existingItemResolver;
+    // private static final String PREFIX_FILE = File.pathSeparator +
+    // "HYBRIS" + File.pathSeparator
+    // + "fliegercommerce" + File.pathSeparator + "medias" +
+    // File.pathSeparator + "ftp"
+    // + File.pathSeparator + "babyartikel" + File.pathSeparator;
+    private static final String NEW_PREFIX_FILE = "/workspace/medias/";
+    private static final String COLUMN_PRODUCT_CODE = "code";
+    private static final String COLUMN_IMAGE_URL = "detail";
+    private static final String REGEX_IGNORE_PATTERN =
+            "\\_d[0-9]+|\\_t[0-9]+|\\_m|\\_n|\\_t|\\_detail";
     
     
     /**
@@ -48,8 +42,7 @@ public class KPImageNameProcessor implements ImportProcessor {
      */
     @Override
     public void init(ImpExImportReader reader) {
-        this.reader = reader;
-        this.defaultLanguage = JaloSession.getCurrentSession().getSessionContext().getLanguage();
+        //
     }
     
     
@@ -58,28 +51,42 @@ public class KPImageNameProcessor implements ImportProcessor {
      */
     @Override
     public Item processItemData(ValueLine valueLine) throws ImpExException {
-        LOG.info(valueLine.getValueEntry(0));
+        String productCode = valueLine.getValueEntry(1).getCellValue();
+        String imageFilePath = valueLine.getValueEntry(2).getCellValue();
+        // If the impex file comes with more than one detail image, which
+        // will probaly occur, we need to get the first image name, which is
+        // the base image.
+        imageFilePath = imageFilePath.split(",")[0];
+        Pattern pattern = Pattern.compile(REGEX_IGNORE_PATTERN);
+        // Only move and rename the file if it's a base image.
+        if (!pattern.matcher(imageFilePath).matches()) {
+            renameImageFile(imageFilePath, productCode);
+        }
         return null;
     }
     
     
     /**
-     * Translates a given input parameter to its equivalent on target
-     * system.
+     * Renames the given file name to a new name, according to the new image
+     * file pattern:
+     * productcode_image_name.jpg
      * 
-     * @param input
-     *            - country from source system to be translated
-     * @param item
-     *            - not used
-     * @return country object equivalent to given input parameter
-     * @author jfelipe
+     * @param imageFilePath
+     *            the image name that already exists.
+     * @param productCode
+     *            the product that owns the image (- file name).
+     * @return
+     *         true if succeded changing the image file name. false
+     *         otherwise.
+     * @throws JaloInvalidParameterException
      */
-    public boolean renameImageFile(String imageFileName, String productCode)
+    public boolean renameImageFile(String imageFilePath, String productCode)
             throws JaloInvalidParameterException {
-        File realImageFile = new File(PREFIX_FILE + File.pathSeparator + imageFileName);
-        String newFileName = productCode + "_" + imageFileName;
-        File renamedImageFile = new File(newFileName);
-        boolean foi = realImageFile.renameTo(renamedImageFile);
-        return foi;
+        File realImageFile = new File(imageFilePath);
+        String fileName = imageFilePath.split("/")[imageFilePath.split("/").length - 1];
+        String newFilePath = productCode + "_" + fileName;
+        File renamedImageFile = new File(NEW_PREFIX_FILE + newFilePath);
+        LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
+        return realImageFile.renameTo(renamedImageFile);
     }
 }
