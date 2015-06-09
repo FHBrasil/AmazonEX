@@ -82,7 +82,10 @@ public class KPImageNameProcessor implements ImportProcessor {
         String fileName = imageFilePath.split("/")[imageFilePath.split("/").length - 1];
         String newFilePath = productCode + "_" + fileName;
         File renamedImageFile = new File(FTP_FOLDER + newFilePath);
-        LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
-        return realImageFile.renameTo(renamedImageFile);
+        if (realImageFile.renameTo(renamedImageFile)) {
+            LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
+            return true;
+        }
+        return false;
     }
 }
