@@ -1,9 +1,6 @@
 package de.kpfamily.core.translators;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -25,14 +22,11 @@ public class KPImageNameProcessor implements ImportProcessor {
     
     private static final Logger LOG = Logger.getLogger(KPImageNameProcessor.class);
     //
-    // private static final String PREFIX_FILE = File.pathSeparator +
-    // "HYBRIS" + File.pathSeparator
-    // + "fliegercommerce" + File.pathSeparator + "medias" +
-    // File.pathSeparator + "ftp"
-    // + File.pathSeparator + "babyartikel" + File.pathSeparator;
-    private static final String NEW_PREFIX_FILE = "/workspace/medias/";
-    private static final String COLUMN_PRODUCT_CODE = "code";
-    private static final String COLUMN_IMAGE_URL = "detail";
+    // www1: /medias/sys_master/media/
+    private static final String FTP_FOLDER = File.pathSeparator + "HYBRIS" + File.pathSeparator
+            + "fliegercommerce" + File.pathSeparator + "medias" + File.pathSeparator + "ftp"
+            + File.pathSeparator + "babyartikel" + File.pathSeparator;
+    // private static final String FTP_FOLDER = "/workspace/medias/";
     private static final String REGEX_IGNORE_PATTERN =
             "\\_d[0-9]+|\\_t[0-9]+|\\_m|\\_n|\\_t|\\_detail";
     
@@ -85,7 +79,7 @@ public class KPImageNameProcessor implements ImportProcessor {
         File realImageFile = new File(imageFilePath);
         String fileName = imageFilePath.split("/")[imageFilePath.split("/").length - 1];
         String newFilePath = productCode + "_" + fileName;
-        File renamedImageFile = new File(NEW_PREFIX_FILE + newFilePath);
+        File renamedImageFile = new File(FTP_FOLDER + newFilePath);
         LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
         return realImageFile.renameTo(renamedImageFile);
     }
