@@ -472,7 +472,10 @@ public class HeringSingleStepCheckoutController extends
 			model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
 			model.addAttribute("command", "selectDeliveryMethod");
 			model.addAttribute("success", Boolean.FALSE.toString());
-			model.addAttribute("successMessage", "Erro ao selecionar o Método de Entrega.");
+			
+			final String success = getMessageSource().getMessage("text.fliegercommerce.texto123", null, getI18nService().getCurrentLocale());
+			model.addAttribute("successMessage", success);
+			
 			return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments
 					.CheckoutOrderDetails;
 		}

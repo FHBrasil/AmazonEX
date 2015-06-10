@@ -43,6 +43,11 @@
 <%-- PAGE FILES--%>
 <c:if test="${pageType == 'HOMEPAGE'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/home.js"></script>
+<%--     
+    <script type="text/javascript" src="${commonResourcePath}/js/newslettersubscriptionformparagraphcomponent.js"></script>
+    <script type="text/javascript" src="${commonResourcePath}/js/newslettersubscriptionmanagementparagraphcomponent.js"></script>
+    
+     --%>
 </c:if>
 <c:if test="${pageType == 'PRODUCTSEARCH' || pageType == 'CATEGORY'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.mousewheel.js"></script>
