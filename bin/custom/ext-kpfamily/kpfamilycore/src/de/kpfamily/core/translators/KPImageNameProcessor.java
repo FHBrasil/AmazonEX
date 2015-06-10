@@ -88,7 +88,7 @@ public class KPImageNameProcessor implements ImportProcessor {
                 LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
                 return true;
             } else {
-                LOG.info("Renamed Image File:" + realImageFile.getAbsolutePath());
+                LOG.error("File NOT Renamed:" + realImageFile.getAbsolutePath());
             }
         } catch (AccessControlException ace) {
             LOG.error("File NOT Renamed.", ace);
