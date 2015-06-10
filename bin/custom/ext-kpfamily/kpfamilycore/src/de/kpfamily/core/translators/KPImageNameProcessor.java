@@ -1,6 +1,7 @@
 package de.kpfamily.core.translators;
 
 import java.io.File;
+import java.security.AccessControlException;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -82,7 +83,14 @@ public class KPImageNameProcessor implements ImportProcessor {
         String fileName = imageFilePath.split("/")[imageFilePath.split("/").length - 1];
         String newFilePath = productCode + "_" + fileName;
         File renamedImageFile = new File(FTP_FOLDER + newFilePath);
-        LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
-        return realImageFile.renameTo(renamedImageFile);
+        try {
+            if (realImageFile.renameTo(renamedImageFile)) {
+                LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
+                return true;
+            }
+        } catch (AccessControlException ace) {
+            LOG.error("File NOT Renamed.", ace);
+        }
+        return false;
     }
 }
