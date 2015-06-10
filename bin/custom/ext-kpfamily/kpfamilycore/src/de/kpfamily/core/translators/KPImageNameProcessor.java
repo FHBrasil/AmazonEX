@@ -1,8 +1,12 @@
 package de.kpfamily.core.translators;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileExistsException;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import de.hybris.platform.impex.jalo.ImpExException;
@@ -22,10 +26,12 @@ public class KPImageNameProcessor implements ImportProcessor {
     
     private static final Logger LOG = Logger.getLogger(KPImageNameProcessor.class);
     //
-    // www1: /medias/sys_master/media/
-    private static final String FTP_FOLDER = File.pathSeparator + "HYBRIS" + File.pathSeparator
-            + "fliegercommerce" + File.pathSeparator + "medias" + File.pathSeparator + "ftp"
-            + File.pathSeparator + "babyartikel" + File.pathSeparator;
+    // www:
+    // private static final String FTP_FOLDER =
+    // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel";
+    // www1:
+    private static final String FTP_FOLDER = "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
+    // local:
     // private static final String FTP_FOLDER = "/workspace/medias/";
     private static final String REGEX_IGNORE_PATTERN =
             "\\_d[0-9]+|\\_t[0-9]+|\\_m|\\_n|\\_t|\\_detail";
@@ -76,11 +82,21 @@ public class KPImageNameProcessor implements ImportProcessor {
      */
     public boolean renameImageFile(String imageFilePath, String productCode)
             throws JaloInvalidParameterException {
-        File realImageFile = new File(imageFilePath);
+        File sourceFile = new File(imageFilePath);
         String fileName = imageFilePath.split("/")[imageFilePath.split("/").length - 1];
         String newFilePath = productCode + "_" + fileName;
-        File renamedImageFile = new File(FTP_FOLDER + newFilePath);
-        LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
-        return realImageFile.renameTo(renamedImageFile);
+        File destinationFile = new File(FTP_FOLDER + newFilePath);
+        try {
+            FileUtils.moveFile(sourceFile, destinationFile);
+            LOG.info("Renamed Image File:" + destinationFile.getAbsolutePath());
+            return true;
+        } catch (FileExistsException fee) {
+            LOG.error(fee);
+        } catch (FileNotFoundException fnfe) {
+            LOG.error(fnfe);
+        } catch (IOException ioe) {
+            LOG.error(ioe);
+        }
+        return false;
     }
 }
