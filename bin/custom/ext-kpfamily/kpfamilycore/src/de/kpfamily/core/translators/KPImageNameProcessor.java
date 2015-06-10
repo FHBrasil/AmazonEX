@@ -1,9 +1,12 @@
 package de.kpfamily.core.translators;
 
 import java.io.File;
-import java.security.AccessControlException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileExistsException;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import de.hybris.platform.impex.jalo.ImpExException;
@@ -79,19 +82,20 @@ public class KPImageNameProcessor implements ImportProcessor {
      */
     public boolean renameImageFile(String imageFilePath, String productCode)
             throws JaloInvalidParameterException {
-        File realImageFile = new File(imageFilePath);
+        File sourceFile = new File(imageFilePath);
         String fileName = imageFilePath.split("/")[imageFilePath.split("/").length - 1];
         String newFilePath = productCode + "_" + fileName;
-        File renamedImageFile = new File(FTP_FOLDER + newFilePath);
+        File destinationFile = new File(FTP_FOLDER + newFilePath);
         try {
-            if (realImageFile.renameTo(renamedImageFile)) {
-                LOG.info("Renamed Image File:" + renamedImageFile.getAbsolutePath());
-                return true;
-            } else {
-                LOG.error("File NOT Renamed:" + realImageFile.getAbsolutePath());
-            }
-        } catch (AccessControlException ace) {
-            LOG.error("File NOT Renamed.", ace);
+            FileUtils.moveFile(sourceFile, destinationFile);
+            LOG.info("Renamed Image File:" + destinationFile.getAbsolutePath());
+            return true;
+        } catch (FileExistsException fee) {
+            LOG.error(fee);
+        } catch (FileNotFoundException fnfe) {
+            LOG.error(fnfe);
+        } catch (IOException ioe) {
+            LOG.error(ioe);
         }
         return false;
     }
