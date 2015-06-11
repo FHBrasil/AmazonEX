@@ -51,13 +51,11 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
            {
                final Object value = modelService.getAttributeValue(component, property);
                variables.put(property, value);
-               LOG.info("Entrando no renderer");
 
            }
            catch (final AttributeNotSupportedException ignore)
            {
                // ignore
-               LOG.info("o-oh");
 
            }
        }
