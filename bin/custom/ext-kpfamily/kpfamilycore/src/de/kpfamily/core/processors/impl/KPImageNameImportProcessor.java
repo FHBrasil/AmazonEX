@@ -36,7 +36,7 @@ import de.hybris.platform.jalo.Item;
  * 
  * <pre>
  * #-----------------------------------------------------------
- * INSERT_UPDATE Product[processor=de.kpfamily.core.translators.KPImageNameImportProcessor];code[unique=true];detail(url);
+ * INSERT_UPDATE Product[processor=de.kpfamily.core.processors.impl.KPImageNameImportProcessor];code[unique=true];detail(url);
  * "#% impex.includeExternalDataMedia(""Product.csv"", ""UTF-8"", ';', 1, -1);"
  * #-----------------------------------------------------------
  * </pre>
@@ -51,10 +51,11 @@ public class KPImageNameImportProcessor extends DefaultImportProcessor implement
     // private static final String FTP_FOLDER =
     // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
     // www1:
-    // private static final String DESTINATION_FOLDER =
-    // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
+    private static final String DESTINATION_FOLDER =
+            "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
     // local:
-    private static final String DESTINATION_FOLDER = "/workspace/medias/ftp/babyartikel/";
+    // private static final String DESTINATION_FOLDER =
+    // "/workspace/medias/ftp/babyartikel/";
     private static final String REGEX_IGNORE_PATTERN = "\\_(d[0-9]+|t[0-9]+|m|n|t|detail)\\.jpg";
     private ImpExImportReader reader = null;
     
