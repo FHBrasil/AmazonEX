@@ -10,9 +10,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import de.hybris.platform.impex.jalo.ImpExException;
-import de.hybris.platform.impex.jalo.imp.DefaultImportProcessor;
 import de.hybris.platform.impex.jalo.imp.ImpExImportReader;
-import de.hybris.platform.impex.jalo.imp.ImportProcessor;
+import de.hybris.platform.impex.jalo.imp.MultiThreadedImportProcessor;
 import de.hybris.platform.impex.jalo.imp.ValueLine;
 import de.hybris.platform.jalo.Item;
 
@@ -26,9 +25,11 @@ import de.hybris.platform.jalo.Item;
  * 
  * <pre>
  * #-----------------------------------------------------------
+ * $version=Staged
+ * $catalog=babyartikel
  * "#% impex.setTargetFile(""Product.csv"");"
  * INSERT_UPDATE Product;code[unique=true];detail(url);
- * "#% impex.exportItems(""SELECT {p:pk} FROM {Product AS p} WHERE {p:catalogVersion} = '169173368076033728' AND {p:creationTime} < '2012-08-01'"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
+ * "#% impex.exportItems(""SELECT {p:pk} FROM {Product AS p JOIN CatalogVersion AS cv ON {cv:pk} = {p:catalogVersion} AND {cv:version} = '$version' JOIN Catalog AS c ON {c:pk} = {cv:catalog} AND {c:id} = '$catalog' }"", Collections.EMPTY_MAP, Collections.singletonList(Item.class), true, true, -1, -1);"
  * #-----------------------------------------------------------
  * </pre>
  * 
@@ -43,19 +44,15 @@ import de.hybris.platform.jalo.Item;
  * 
  * @author jfelipe
  */
-public class KPImageNameImportProcessor extends DefaultImportProcessor implements ImportProcessor {
+public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
     
     private static final Logger LOG = Logger.getLogger(KPImageNameImportProcessor.class);
     //
-    // www:
-    // private static final String FTP_FOLDER =
-    // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
-    // www1:
+    // production / acceptance
     private static final String DESTINATION_FOLDER =
             "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
     // local:
-    // private static final String DESTINATION_FOLDER =
-    // "/workspace/medias/ftp/babyartikel/";
+    // private static final String DESTINATION_FOLDER = "/workspace/medias/ftp/babyartikel/";
     private static final String REGEX_IGNORE_PATTERN = "\\_(d[0-9]+|t[0-9]+|m|n|t|detail)\\.jpg";
     private ImpExImportReader reader = null;
     
