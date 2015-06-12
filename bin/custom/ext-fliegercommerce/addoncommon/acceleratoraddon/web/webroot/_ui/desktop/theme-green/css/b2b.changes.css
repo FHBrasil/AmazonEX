@@ -1,0 +1,20 @@
+/*
+Facet Nav Fixes
+************************/
+.nav_column {
+	top: 0;
+	margin-top: 5px;
+}
+
+.simple_disp-img {
+	float: left;
+}
+
+.yCmsContentSlot > .scroller {
+	float: left;
+}
+
+.yCmsContentSlot > .scroller .jcarousel-container {
+	padding: 24px 19.5px;
+}
+

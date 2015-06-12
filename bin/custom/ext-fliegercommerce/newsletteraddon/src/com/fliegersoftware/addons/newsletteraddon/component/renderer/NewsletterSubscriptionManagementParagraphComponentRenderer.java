@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.jsp.PageContext;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.addons.newsletteraddon.model.NewsletterSubscriptionManagementParagraphComponentModel;
@@ -26,6 +27,8 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
 	CMSComponentService cmsComponentService;
 	
    	ModelService modelService;
+   	
+   	private static final Logger LOG = Logger.getLogger(NewsletterSubscriptionManagementParagraphComponentRenderer.class);
 
    @Required
    public void setCmsComponentService(final CMSComponentService cmsComponentService)
@@ -53,6 +56,7 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
            catch (final AttributeNotSupportedException ignore)
            {
                // ignore
+
            }
        }
        return variables;

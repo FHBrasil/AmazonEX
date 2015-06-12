@@ -33,6 +33,7 @@
 <template:javaScriptVariables />
 <%-- VALIDATIONS --%>
 <template:validation />
+
 <%-- COMMON FILES --%>
 <%-- Commented the auto complete > giving conflict --%>
 <%-- <script type="text/javascript" src="${themeResourcePath}/assets/js/hering.autocomplete.js"></script>--%>
@@ -46,6 +47,8 @@
 <%-- PAGE FILES--%>
 <c:if test="${pageType == 'HOMEPAGE'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/home.js"></script>
+
+
 </c:if>
 <c:if test="${pageType == 'PRODUCTSEARCH' || pageType == 'CATEGORY'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.mousewheel.js"></script>
@@ -134,15 +137,19 @@
     <script type="text/javascript" src="${commonResourcePath}/js/acc.track.js"></script>
 </c:if>
 <script type="text/javascript" src="${commonResourcePath}/js/acc.minicart.js"></script>
-<c:if test="${pageType != 'ORDERCONFIRMATION'}">
+<%-- <c:if test="${pageType != 'ORDERCONFIRMATION'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/newsletter.js"></script>
-</c:if>
-<%-- Descomentar para utilizar o facebook. --%>
-<%-- <c:forEach items="${addOnJavaScriptPaths}" var="addOnJavaScript">
-		<c:if test="${not fn:containsIgnoreCase(addOnJavaScript, 'placeorder.js')}">
-   			<script type="text/javascript" src="${addOnJavaScript}"></script>	
-		</c:if>
-	</c:forEach> --%>
+</c:if> --%>
+
+
+<!-- IMPORT DE JS DE ADDONS -->
+<c:forEach items="${addOnJavaScriptPaths}" var="addOnJavaScript">
+	<c:if test="${not fn:containsIgnoreCase(addOnJavaScript, 'placeorder.js')}">
+  			<script type="text/javascript" src="${addOnJavaScript}"></script>	
+	</c:if>
+</c:forEach>
+	
+
 <template:ferramentaRecomendacaoComponent />
 <c:if test="${not localEnvironment}">
     <script type="text/javascript" src="${commonResourcePath}/js/vizuryTagHering.js"
