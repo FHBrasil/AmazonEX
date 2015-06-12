@@ -7,7 +7,6 @@
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-<%@ taglib prefix="newsletter" tagdir="/WEB-INF/tags/desktop/newsletter"%>
 <section class="col-1 column">
     <%-- cabe�alho do formul�rio --%>
     <header>
@@ -72,14 +71,8 @@
                 path="checkPwd" inputCSS="text password" mandatory="true"
                 hideInputErrorOnField="true" />
         </div>
-        <%-- campo confirmar newsletter --%>
-        <!-- 			<div class="f-row"> -->
-        <%-- 				<formElement:formCheckbox idKey="register.subscribeNewsletter" labelKey="profile.subscribeNewsletter.hering" path="subscribeNewsletter" labelCSS="text" mandatory="false"/> --%>
-        <!-- 			</div> -->
-        <%-- campo confirmar newsletter --%>
-        <div class="f-row">
-            <newsletter:newsletters bases="${basesCode}" basesChecked="${basesChecked}" id="pf" />
-        </div>
+
+
         <%-- mensagem de campo obrigat�rio --%>
         <small><spring:theme code="login.required.message" /></small>
         <%-- bot�o de cadastrar --%>
@@ -142,14 +135,8 @@
                 path="checkPwd" inputCSS="text password" mandatory="true"
                 hideInputErrorOnField="true" />
         </div>
-        <%-- campo confirmar newsletter --%>
-        <!-- 			<div class="f-row"> -->
-        <%-- 				<formElement:formCheckbox idKey="register.subscribeNewsletter" labelKey="profile.subscribeNewsletter.hering" path="subscribeNewsletter" labelCSS="text" mandatory="false"/> --%>
-        <!-- 			</div> -->
-        <%-- campo confirmar newsletter --%>
-        <div class="f-row">
-            <newsletter:newsletters bases="${basesCode}" basesChecked="${basesChecked}" id="pj" />
-        </div>
+
+
         <%-- mensagem de campo obrigat�rio --%>
         <small><spring:theme code="login.required.message" /></small>
         <%-- bot�o de cadastrar --%>

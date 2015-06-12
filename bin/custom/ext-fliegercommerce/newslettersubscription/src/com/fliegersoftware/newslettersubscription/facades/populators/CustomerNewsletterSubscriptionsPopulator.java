@@ -3,12 +3,6 @@
  */
 package com.fliegersoftware.newslettersubscription.facades.populators;
 
-import de.hybris.platform.commercefacades.user.data.CustomerData;
-import de.hybris.platform.converters.Populator;
-import de.hybris.platform.core.model.user.CustomerModel;
-import de.hybris.platform.servicelayer.dto.converter.ConversionException;
-import de.hybris.platform.servicelayer.dto.converter.Converter;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +11,12 @@ import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
+
+import de.hybris.platform.commercefacades.user.data.CustomerData;
+import de.hybris.platform.converters.Populator;
+import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.servicelayer.dto.converter.ConversionException;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 
 /**
  * @author luiza
@@ -66,6 +66,4 @@ public class CustomerNewsletterSubscriptionsPopulator implements Populator<Custo
 	{
 		this.newsletterSubscriptionModelToDataConverter = newsletterSubscriptionModelToDataConverter;
 	}
-
-	
 }

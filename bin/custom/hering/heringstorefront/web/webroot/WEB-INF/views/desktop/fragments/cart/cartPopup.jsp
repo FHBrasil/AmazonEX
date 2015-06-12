@@ -35,7 +35,7 @@
                                 <c:forEach items="${option.selected.variantOptionQualifiers}"
                                     var="selectedOption">
                                     <c:if test="${selectedOption.qualifier eq 'size'}">
-                                        <li>${selectedOption.name}: ${selectedOption.value}
+                                        <li>${selectedOption.name}:${selectedOption.value}
                                         <li>
                                     </c:if>
                                     <c:if
@@ -62,7 +62,8 @@
                                 <c:otherwise>
                                 </c:otherwise>
                             </c:choose>
-                            <strong><spring:theme code="text.fliegercommerce.texto107"/>: <format:fromPrice priceData="${entry.basePrice}" /></strong>
+                            <strong><spring:theme code="text.fliegercommerce.texto107" />:
+                                <format:fromPrice priceData="${entry.basePrice}" /></strong>
                         </div>
                     </div> <c:url value="/cart/update" var="cartUpdateFormAction" /> <form:form
                         id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}"
@@ -101,11 +102,13 @@
             </c:if>
             <c:if test="${hasItems}">
                 <c:if test="${numberItemsInCart gt 1}">
-                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto6"/></p>
+                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto6" />
+                    </p>
                     <strong><format:price priceData="${cartData.totalPrice}" /></strong>
                 </c:if>
                 <c:if test="${numberItemsInCart lt 2}">
-                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto7"/></p>
+                    <p>${totalItems}<spring:theme code="text.fliegercommerce.texto7" />
+                    </p>
                     <strong><format:price priceData="${cartData.totalPrice}" /></strong>
                 </c:if>
                 <c:if test="${numberItemsInCart > numberShowing}">
@@ -117,8 +120,9 @@
         </div>
         <c:if test="${hasItems}">
             <div class="btn-group">
-                <a href="${cartUrl}" class="btn btn-full-bag"><spring:theme code="text.fliegercommerce.texto8"/></a> <a
-                    href="${checkoutUrl}" class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto9"/></a>
+                <a href="${cartUrl}" class="btn btn-full-bag"><spring:theme
+                        code="text.fliegercommerce.texto8" /></a> <a href="${checkoutUrl}"
+                    class="btn btn-checkout"><spring:theme code="text.fliegercommerce.texto9" /></a>
             </div>
         </c:if>
     </div>

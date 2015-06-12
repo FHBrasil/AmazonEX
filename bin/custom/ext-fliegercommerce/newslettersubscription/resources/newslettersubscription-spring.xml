@@ -6,12 +6,15 @@
 	into with hybris. -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
            http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
+	<bean id="newsletterSubscriptionData"  class="com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData" scope="prototype" />
+	<bean id="newsletterSubscriptionModel" class="com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel" scope="prototype" />
 
 	<!-- Facade -->
 	<alias name="defaultNewsletterSubscriptionFacade" alias="newsletterSubscriptionFacade" />
@@ -52,7 +55,6 @@
 	
 	<alias name="customerNewsletterSubscriptionsPopulator" alias="customerNewsletterSubscriptionsPopulator" />
 	<bean id="customerNewsletterSubscriptionsPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.CustomerNewsletterSubscriptionsPopulator" >
-		<!-- <property name="targetClass" value="com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData"/>  -->
 		<property name="newsletterSubscriptionModelToDataConverter" ref="newsletterSubscriptionModelToDataConverter" />	
 	</bean>
 	
@@ -60,23 +62,27 @@
 	<!-- Converters -->
 	<alias name="defaultNewsletterSubscriptionDataToModelConverter" alias="newsletterSubscriptionDataToModelConverter" />
 	<bean id="defaultNewsletterSubscriptionDataToModelConverter" parent="abstractPopulatingConverter">
-			<property name="populators">
+		<lookup-method name="createTarget" bean="newsletterSubscriptionModel"/>
+		<property name="populators">
 			<list>
 				<ref bean="newsletterSubscriptionDataToModelPopulator" />
 			</list>
 		</property>
 	</bean>	
+	
 	<alias name="defaultNewsletterSubscriptionModelToDataConverter" alias="newsletterSubscriptionModelToDataConverter" />
 	<bean id="defaultNewsletterSubscriptionModelToDataConverter" parent="abstractPopulatingConverter">
+			<lookup-method name="createTarget" bean="newsletterSubscriptionData"/>
 			<property name="populators">
 			<list>
 				<ref bean="newsletterSubscriptionModelToDataPopulator" />
 			</list>
 		</property>
 	</bean>
+	
 	<alias name="defaultCustomerConverter" alias="customerConverter"/>
 	<bean id="defaultCustomerConverter" parent="abstractPopulatingConverter">
-		<property name="targetClass" value="de.hybris.platform.commercefacades.user.data.CustomerData"/>
+		<lookup-method name="createTarget" bean="customerData"/>
 		<property name="populators">
 			<list>
 				<ref bean="customerNewsletterSubscriptionsPopulator"/> 

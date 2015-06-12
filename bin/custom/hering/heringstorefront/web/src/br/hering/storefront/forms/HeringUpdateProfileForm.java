@@ -22,7 +22,6 @@ import javax.validation.constraints.Size;
 public class HeringUpdateProfileForm extends UpdateProfileForm
 {
 	
-	private Boolean subscribeNewsletter;
 	private String cpfcnpj;
 	private String rgIe;
 	private String ufIe;
@@ -32,22 +31,6 @@ public class HeringUpdateProfileForm extends UpdateProfileForm
 	private String birthday;
 	private String baseStore;
 	
-
-	/**
-	 * @return the subscribeNewsletter
-	 */
-	public Boolean getSubscribeNewsletter()
-	{
-		return subscribeNewsletter;
-	}
-
-	/**
-	 * @param subscribeNewsletter the subscribeNewsletter to set
-	 */
-	public void setSubscribeNewsletter(Boolean subscribeNewsletter)
-	{
-		this.subscribeNewsletter = subscribeNewsletter;
-	}
 
 	/**
 	 * @return the cpfcnpj

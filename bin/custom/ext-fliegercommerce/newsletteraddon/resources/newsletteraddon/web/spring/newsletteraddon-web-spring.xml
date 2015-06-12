@@ -16,37 +16,22 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
            http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd">
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<context:component-scan base-package="com.fliegersoftware.addons.newsletteraddon.controllers" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
 
-	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
-	<bean id="defaultNewsletteraddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
-		<property name="addOnName" value="newsletteraddon"/>
-	</bean>
 
-	<bean id="defaultNewsletteraddonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
-		<property name="messageSource" ref="defaultNewsletteraddonJavaScriptMessageResourceAccessor"/>
-	</bean>
-
-	<bean id="getNewsletteraddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
-		<property name="adaptee">
-			<ref bean="defaultNewsletteraddonBeforeViewJsPropsHandlerAdaptee"/>
-		</property>
-	</bean>
-	<bean id="NewsletteraddonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
-		<property name="add" ref="getNewsletteraddonBeforeViewHandler"/>
-	</bean>
-		
-		
 	<!-- Newsletter Subscription Management -->	
 	<bean id="newsletterSubscriptionManagementParagraphComponentRenderer"   
 	          class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionManagementParagraphComponentRenderer"
-	          parent="addOnJspIncludeCMSComponentRenderer" />
+	          parent="addOnJspIncludeCMSComponentRenderer">
+	        <property name="cmsComponentService" ref="cmsComponentService" />
+	        <property name="modelService" ref="modelService" />
+   </bean>
 	     
 	<bean id="newsletterSubscriptionManagementParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
 	        <property name="typeCode" value="NewsletterSubscriptionManagementParagraphComponent" />
@@ -60,6 +45,8 @@
 	         parent="addOnJspIncludeCMSComponentRenderer" > 
 	         <property name="userFacade" ref="userFacade" />
 	         <property name="typeService" ref="typeService" />
+	         <property name="cmsComponentService" ref="cmsComponentService" />
+	         <property name="modelService" ref="modelService" />
 	</bean>
 	     
 	<bean id="newsletterSubscriptionFormParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">

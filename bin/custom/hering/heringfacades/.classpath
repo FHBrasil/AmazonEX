@@ -10,6 +10,5 @@
 	<classpathentry kind="src" output="eclipsebin/classes" path="gensrc"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/exacttarget"/>
 	<classpathentry kind="src" path="/adyen"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/newsletter"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

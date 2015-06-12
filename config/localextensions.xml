@@ -42,6 +42,7 @@
 
         <!-- ext-addon -->
         <extension name="addonsupport" />
+        <extension name="addoncommon" />
         <extension name="b2ccheckoutaddon" />
 
         <extension name="ycommercewebservices" />
@@ -70,6 +71,10 @@
         <extension name="wishlist" />
         <extension name="adyen" />
         <extension name="clearsaleantifraude" />
+        <extension name="paypal" />
+        
+        <!-- Flieger Commer AddOn -->
+<!--         <extension name="paypaladdon" /> -->
 
         <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />
@@ -79,11 +84,11 @@
         <extension name="kpfamilyfacades" />
         <extension name="kpfamilyservices" />
        <!--  <extension name="kpfamilytest" /> -->
-                
+       
         <extension name="storecatalogfeed" />
         <extension name="pixicore" />
         <extension name="pixiapi" />
-<!--         <extension name="pixiwebservices" /> -->
-        
+        <extension name="newslettersubscription" />   
+        <extension name="newsletteraddon" />
     </extensions>
 </hybrisconfig>
