@@ -17,24 +17,18 @@
 <section id="new-address"
     style="${empty showEditAddress || showEditAddress eq false ? 'display: none' : 'display: block'};">
     <c:url value="/checkout/single/add-address" var="addNewAddressUrl"/>
-    <form:form method="post"
-            action="${addNewAddressUrl}"
-            commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm">
+    <form:form method="post" action="${addNewAddressUrl}" commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm">
         <input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
-        <form:hidden path="addressId" class="add_edit_delivery_address_id"
-                status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
+        <form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
         <form:hidden path="shippingAddress" value="true" />
-        <input type="hidden" name="bill_state" value="bill_state"
-                id="address.billstate" />
+        <input type="hidden" name="bill_state" value="bill_state" id="address.billstate" />
         <div id="i18nAddressForm" class="i18nAddressForm">
-            <single-checkout-hering:addressFormElements regions="${regions}"
-                    country="${country}" page="${page}" />
+            <single-checkout-hering:addressFormElements regions="${regions}" country="${country}" page="${page}" />
         </div>
         <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
             <div class="form-additionals">
                 <div class="required right">
-                    <spring:theme code="form.required"
-                            text="Fields marked * are required" />
+                    <spring:theme code="form.required" text="Fields marked * are required" />
                 </div>
 <%--                 <formElement:formCheckbox idKey="saveAddressInMyAddressBook" --%>
 <%--                         labelKey="checkout.summary.deliveryAddress.saveAddressInMyAddressBook" --%>
@@ -43,9 +37,8 @@
             </div>
         </sec:authorize>
         <div id="addressform_button_panel" class="form-actions">
-            <button class="btn btn-addr-cadastrar" type="submit">
-                <spring:theme code="checkout.multi.saveAddress"
-                        text="Save address" />
+            <button class="btn btn-primary btn-sm btn-addr-cadastrar" type="submit">
+                <spring:theme code="checkout.multi.saveAddress" text="Save address" />
             </button>
         </div>
     </form:form>

@@ -1001,6 +1001,7 @@ public class HeringSingleStepCheckoutController extends
 			addressData.setId(addressForm.getAddressId());
 			addressData.setFirstName(addressForm.getFirstName());
 			addressData.setLastName(addressForm.getLastName());
+			addressData.setReceiver(addressForm.getReceiver());
 			addressData.setLine1(addressForm.getLine1());
 			addressData.setTown(addressForm.getTownCity());
 			addressData.setPostalCode(addressForm.getPostcode());

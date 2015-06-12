@@ -9,6 +9,8 @@
 </script>
 <%-- LIBRARIES FILES --%>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.mobile.custom.min.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.bxslider.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript"
@@ -22,7 +24,7 @@
 </c:if>
 <%-- Criteo loader --%>
 <script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="async"></script>
-<!-- ALTERACOES DO THESKO PARA CORRIGIR O ADD TO CART  -->
+<%-- ALTERACOES DO THESKO PARA CORRIGIR O ADD TO CART  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.form-3.09.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.colorbox.custom-1.3.16.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.jcarousel-0.2.8.min.js"></script>
@@ -32,7 +34,8 @@
 <%-- VALIDATIONS --%>
 <template:validation />
 <%-- COMMON FILES --%>
-<script type="text/javascript" src="${themeResourcePath}/assets/js/hering.autocomplete.js"></script>
+<%-- Commented the auto complete > giving conflict --%>
+<%-- <script type="text/javascript" src="${themeResourcePath}/assets/js/hering.autocomplete.js"></script>--%>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/globalMessages.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/hering.commons.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/hering.form.js"></script>
@@ -134,7 +137,7 @@
 <c:if test="${pageType != 'ORDERCONFIRMATION'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/newsletter.js"></script>
 </c:if>
-<!-- Descomentar para utilizar o facebook. -->
+<%-- Descomentar para utilizar o facebook. --%>
 <%-- <c:forEach items="${addOnJavaScriptPaths}" var="addOnJavaScript">
 		<c:if test="${not fn:containsIgnoreCase(addOnJavaScript, 'placeorder.js')}">
    			<script type="text/javascript" src="${addOnJavaScript}"></script>	
