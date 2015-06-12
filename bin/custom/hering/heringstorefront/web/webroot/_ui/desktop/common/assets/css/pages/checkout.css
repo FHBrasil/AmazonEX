@@ -30,8 +30,8 @@ body { color: #000; }
 #main-wrapper .btn-editar:before { content: ""; background: url(../../images/sprite-checkout.png) -31px 0 no-repeat; width: 27px; height: 25px; display: inline-block; margin-bottom: -7px; margin-right: 5px; }
 #main-wrapper .btn-excluir:before { content: ""; background: url(../../images/sprite-checkout.png) 0 0 no-repeat; width: 27px; height: 25px; display: inline-block; margin-bottom: -7px; margin-right: 5px; }
 
-.btn-outro-endereco { background: #4f4f4f !important; font-size: 14px; margin-right: 0 !important; }
-.btn-outro-endereco:hover { background: #666 !important; }
+/*.btn-outro-endereco { background: #4f4f4f !important; font-size: 14px; margin-right: 0 !important; }
+.btn-outro-endereco:hover { background: #666 !important; }*/
 .btn-addr-cadastrar { background: #FFF; color: #3f3f3f; width: 100%; font-size: 16px; border-radius: 3px; border: 3px solid #3f3f3f; margin: 15px 0; }
 .btn-addr-cadastrar:hover { background: #3f3f3f; }
 #main-wrapper .btn-checkout { margin: 25px auto; display: block; width: 80%; padding: 5px; }
@@ -84,13 +84,13 @@ body { color: #000; }
 #main-wrapper.co input { width: 100%; margin-bottom: 5px; padding: 2px; font-size: 1em; }
 
 /* Col 1 */ 
-#selected-address { background: #e6e6e6; color: #292929; padding: 10px; margin-bottom: 20px; -webkit-transition: all 0.3s;-moz-transition: all 0.3s;-o-transition: all 0.3s;transition: all 0.3s; }
+/*#selected-address { background: #e6e6e6; color: #292929; padding: 10px; margin-bottom: 20px; -webkit-transition: all 0.3s;-moz-transition: all 0.3s;-o-transition: all 0.3s;transition: all 0.3s; }*/
 #selected-address .address-info dl { font-size: 15px; }
 #selected-address .address-info dl dt { width: 90px; font-weight: bold; float: left; }
-#selected-address .address-info dl dd { margin-left: 100px; margin-bottom: 15px; }
+/*#selected-address .address-info dl dd { margin-left: 100px; margin-bottom: 15px; }*/
 #selected-address .address-info label { font-size: 15px; font-weight: bold; }
 #selected-address .address-info input { display: inline-block; width: auto !important; }
-#selected-address .address-info .btn-group { margin-top: 10px; }
+/*#selected-address .address-info .btn-group { margin-top: 10px; }*/
 #selected-address .address-info .btn-group a { margin-right: 0px; }
 #selected-address .address-prompt { display: none; }
 #selected-address .address-prompt p { margin-bottom: 20px; }
@@ -109,6 +109,7 @@ body { color: #000; }
 #shipping-methods h3 { font-size: 14px; }
 #shipping-methods h3 strong { font-weight: bold; }
 #main-wrapper.co #shipping-methods label { margin-bottom: 20px; }
+#newBillingAddressFields { border-top: 1px dotted #969696; padding-top: 20px; }
 
 /* Col 2 */
 #main-wrapper.co .payment-methods section { margin-bottom: 20px; }

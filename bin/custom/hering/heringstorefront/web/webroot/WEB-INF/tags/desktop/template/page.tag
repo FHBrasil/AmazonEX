@@ -26,13 +26,13 @@
 				</div>
 			</c:if>
 		
-			<div class="container" <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">class="co"</c:if>>
+			<div class="container ${pageType == 'SINGLESTEPCHECKOUT' ? 'co' : ''}">
 				<%--<nav:topNavigation />--%>
 				<header:header />
 			</div>
-
-			<div class="container" <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">class="co"</c:if>>
-
+			
+			<div class="container ${pageType == 'SINGLESTEPCHECKOUT' ? 'onestep150526' : ''}">
+				<%-- 
 				<c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
 					
 					<header class="co" id="page-header">
@@ -43,17 +43,8 @@
 					</header>
 					
 				</c:if>
-				
-				<c:choose>
-					<c:when test="${pageType == 'SINGLESTEPCHECKOUT' || pageType == 'CHECKOUT'}">
-						<div class="container">
-							<jsp:doBody />
-						</div>
-					</c:when>
-					<c:otherwise>
-						<jsp:doBody />
-					</c:otherwise>
-				</c:choose>
+				--%>
+				<jsp:doBody />				
 			</div>
 			
 			<footer>

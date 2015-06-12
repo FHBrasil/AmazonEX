@@ -16,11 +16,11 @@
 <%@ taglib prefix="multi-checkout"
     tagdir="/WEB-INF/tags/addons/b2ccheckoutaddon/desktop/checkout/multi"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<header>
+
     <h2>
         <spring:theme code="checkout.single.payment.title" />
     </h2>
-</header>
+
 <c:forEach items="${paymentModes}" var="paymentMode">
     <input type="hidden" name="voucherAmountEqualsOrderAmount"
         value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
