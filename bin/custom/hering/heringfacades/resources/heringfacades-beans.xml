@@ -97,13 +97,11 @@
 	
 	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData" extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
 		<property name="birthday" type="java.util.Date" />
-		<property name="newsletterSubscription" type="com.flieger.data.NewsletterSubscriberData"/>
 		<property name="gender" type="de.hybris.platform.core.enums.Gender"/>
 		<property name="cpfcnpj" type="java.lang.String" />
 		<property name="rgIe" type="java.lang.String" />
 		<property name="ufIe" type="java.lang.String" />
 		<property name="orders" type="java.util.Collection&lt;java.lang.String>" />
-		<property name="newsletters" type="java.util.List&lt;com.flieger.data.NewsletterSubscriberData>" />
 		<property name="primaryKey" type="java.lang.String"/>
 	</bean>
         
@@ -149,6 +147,7 @@
 		<property name="code" type="String" />
 		<property name="name" type="String" />
 		<property name="description" type="String" />
+		<property name="active" type="Boolean"/>
 	</bean>
 	<!-- PaypalSession data -->
 	<bean class="br.hering.facades.checkout.data.PaypalSessionData">

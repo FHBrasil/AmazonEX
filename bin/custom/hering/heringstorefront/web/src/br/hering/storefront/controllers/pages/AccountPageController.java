@@ -132,8 +132,7 @@ import br.hering.facades.wishlist.impl.DefaultHeringWishlistFacade;
 import br.hering.storefront.forms.UpdateWishlistForm;
 import br.hering.storefront.util.HeringPageType;
 
-import com.flieger.data.NewsletterSubscriberData;
-import com.flieger.facades.NewsletterSubscriberFacade;
+
 
 
 /**
@@ -205,8 +204,6 @@ public class AccountPageController extends AbstractSearchPageController
 	private AddressVerificationFacade addressVerificationFacade;
 	@Resource(name = "addressVerificationResultHandler")
 	private AddressVerificationResultHandler addressVerificationResultHandler;
-	@Resource(name = "newsletterSubscriptionFacade")
-	private NewsletterSubscriberFacade newsletterSubscriptionFacade;
 	@Resource
 	private OrderService orderService;
 	@Resource
@@ -268,22 +265,7 @@ public class AccountPageController extends AbstractSearchPageController
 		return addressVerificationResultHandler;
 	}
 
-	/**
-	 * @return the newsletterSubscriptionFacade
-	 */
-	public NewsletterSubscriberFacade getNewsletterSubscriptionFacade()
-	{
-		return newsletterSubscriptionFacade;
-	}
 
-	/**
-	 * @param newsletterSubscriptionFacade
-	 *           the newsletterSubscriptionFacade to set
-	 */
-	public void setNewsletterSubscriptionFacade(NewsletterSubscriberFacade newsletterSubscriptionFacade)
-	{
-		this.newsletterSubscriptionFacade = newsletterSubscriptionFacade;
-	}
 
 	@ModelAttribute("countries")
 	public Collection<CountryData> getCountries()
@@ -528,17 +510,6 @@ public class AccountPageController extends AbstractSearchPageController
 
 		final CustomerData customerData = customerFacade.getCurrentCustomer();
 
-		if (customerData.getNewsletterSubscription() == null)
-		{
-			try
-			{
-				customerData.setNewsletterSubscription(newsletterSubscriptionFacade.findByEmail(customerData.getUid()));
-			}
-			catch (Exception e)
-			{
-				LOG.error("Erro ao executar facade de Newsletter.", e);
-			}
-		}
 
 		if (customerData.getTitleCode() != null)
 		{
@@ -641,24 +612,8 @@ public class AccountPageController extends AbstractSearchPageController
 				newAuthentication.setDetails(oldAuthentication.getDetails());
 				SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
-				//atualiza����o de newsletter
-				newsletterSubscriptionFacade.changeEmail(oldEmail, updateEmailForm.getEmail());
-				
 
-				NewsletterSubscriberData newsData = newsletterSubscriptionFacade.findByEmail(oldEmail);
-				if (newsData != null && newsData.getReceive().equals(Boolean.TRUE))
-				{
-					NewsletterSubscriberData newNewsData = new NewsletterSubscriberData();
-					newNewsData.setReceive(Boolean.TRUE);
-					newNewsData.setEmail(updateEmailForm.getEmail());
-					newNewsData.setGender(newsData.getGender());
-					newNewsData.setName(customerFacade.getCurrentCustomer().getFirstName() + " "
-							+ customerFacade.getCurrentCustomer().getLastName());
-					newNewsData.setBaseStore(baseStoreService.getCurrentBaseStore().getUid());
 
-					newsletterSubscriptionFacade.delete(newsData);
-					newsletterSubscriptionFacade.update(newNewsData);
-				}
 			}
 			catch (final DuplicateUidException e)
 			{
@@ -672,8 +627,7 @@ public class AccountPageController extends AbstractSearchPageController
 			}
 			catch (Exception e)
 			{
-				bindingResult.rejectValue("email", "profile.email.newsletter");
-				returnAction = errorUpdatingEmail(model, "profile.email.newsletter");
+				//
 			}
 		}
 
@@ -703,7 +657,6 @@ public class AccountPageController extends AbstractSearchPageController
 		final CustomerData customerData = customerFacade.getCurrentCustomer();
 		final HeringUpdateProfileForm updateProfileForm = new HeringUpdateProfileForm();
 		
-		model.addAttribute("basesChecked", getBasesChecked(customerData.getNewsletters()));
 		model.addAttribute("checked", Boolean.FALSE);
 		
 
@@ -727,35 +680,7 @@ public class AccountPageController extends AbstractSearchPageController
 			updateProfileForm.setBirthday(customerData.getBirthday());
 		}
 
-		if (customerData.getNewsletterSubscription() != null)
-		{
-			updateProfileForm.setSubscribeNewsletter(customerData.getNewsletterSubscription().getReceive());
-		}
-		else
-		{
-			if (customerData.getUid() != null)
-			{
-				try
-				{
-					NewsletterSubscriberData data = newsletterSubscriptionFacade.findByEmail(customerData.getUid());
-					if (data == null)
-					{
-						data = new NewsletterSubscriberData();
-						data.setName(customerData.getName());
-						data.setEmail(customerData.getUid());
-						data.setGender(customerData.getGender());
-						data.setReceive(updateProfileForm.getSubscribeNewsletter());
-						data.setBaseStore(baseStoreService.getCurrentBaseStore().getUid());
-					}
-					customerData.setNewsletterSubscription(data);
-					updateProfileForm.setSubscribeNewsletter(customerData.getNewsletterSubscription().getReceive());
-				}
-				catch (Exception e)
-				{
-					LOG.error("Erro ao executar servi��o Newsletter", e);
-				}
-			}
-		}
+		
 		updateProfileForm.setCpfcnpj(customerData.getCpfcnpj());
 		updateProfileForm.setGender(customerData.getGender());
 		model.addAttribute("updateProfileForm", updateProfileForm);
@@ -770,30 +695,7 @@ public class AccountPageController extends AbstractSearchPageController
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
 		return ControllerConstants.Views.Pages.Account.AccountProfileEditPage;
 	}
-	
-	/**
-	 * @param newsletters
-	 * @return
-	 */
-	private String getBasesChecked(List<NewsletterSubscriberData> newsletters)
-	{
-		String result = "";
-		
-		List<String> auxBases = new LinkedList<>();
-		
-		if(newsletters != null)
-		{
-			for (NewsletterSubscriberData news : newsletters)
-			{
-				if(news.getReceive() && !auxBases.contains(news.getBaseStore()))
-				{
-					result += ","+news.getBaseStore();
-					auxBases.add(news.getBaseStore());
-				}
-			}
-		}
-		return result;
-	}
+
 
 	/**
 	 * @return Retorna os c��digos dos Base Store registrados, separados por ",".
@@ -856,13 +758,7 @@ public class AccountPageController extends AbstractSearchPageController
 		customerData.setCpfcnpj(updateProfileForm.getCpfcnpj());
 		customerData.setRgIe(updateProfileForm.getRgIe());
 		customerData.setUfIe(updateProfileForm.getUfIe());
-		NewsletterSubscriberData newsletterData = new NewsletterSubscriberData();
-		newsletterData.setName(updateProfileForm.getFirstName() + " " + updateProfileForm.getLastName());
-		newsletterData.setEmail(currentCustomerData.getUid());
-		newsletterData.setReceive(updateProfileForm.getSubscribeNewsletter());
-		newsletterData.setGender(customerData.getGender());
-		newsletterData.setBaseStore(baseStoreService.getCurrentBaseStore().getUid());
-		customerData.setNewsletterSubscription(newsletterData);
+
 		
 		if(customerData.getRgIe() != null && customerData.getUfIe() != null){
 			model.addAttribute("pf", Boolean.FALSE);
@@ -885,14 +781,7 @@ public class AccountPageController extends AbstractSearchPageController
 			try
 			{
 				customerFacade.updateProfile(customerData);
-				try
-				{
-					newsletterSubscriptionFacade.update(customerData.getNewsletterSubscription(), getListBaseStore(updateProfileForm.getBaseStore()));
-				}
-				catch (Exception e)
-				{
-					GlobalMessages.addErrorMessage(model, "form.global.error");
-				}
+
 				GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER,
 						"text.account.profile.confirmationUpdated", null);
 				returnAction = REDIRECT_TO_PROFILE_PAGE;
@@ -911,7 +800,6 @@ public class AccountPageController extends AbstractSearchPageController
 		storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
 		model.addAttribute("basesCode", getBasesCode());
-		model.addAttribute("basesChecked", getBasesChecked(customerData.getNewsletters()));
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.profile"));
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
 		return returnAction;

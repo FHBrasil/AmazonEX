@@ -47,11 +47,6 @@
 		</itemtype>
 -->
 
-		<itemtype generate="true"
-           code="ExportNewsletterSubscriptionsJob"
-           jaloclass="br.flieger.exacttarget.job.ExportNewsletterSubscriptionsJob"
-           extends="CronJob"
-           autocreate="true">     
-        </itemtype>
+
 	</itemtypes>
 </items>

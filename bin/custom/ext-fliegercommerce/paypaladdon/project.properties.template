@@ -1,0 +1,35 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform 
+# 
+# Copyright (c) 2000-2013 hybris AG
+# All rights reserved.
+#  
+# This software is the confidential and proprietary information of hybris 
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with hybris.
+#
+#  
+# -----------------------------------------------------------------------
+
+# you can put key/value pairs here.
+# Use Config.getParameter(..) to retrieve the values during runtime.
+
+paypaladdon.key=value
+
+# Specifies the location of the spring context file added automatically to the global platform application context.
+paypaladdon.application-context=paypaladdon-spring.xml
+
+yacceleratorstorefront.additionalWebSpringConfigs.paypaladdon=classpath:/paypaladdon/web/spring/paypaladdon-web-spring.xml
+yb2bacceleratorstorefront.additionalWebSpringConfigs.paypaladdon=classpath:/paypaladdon/web/spring/paypaladdon-web-spring.xml
+
+storefront.supportedUiExperienceLevels.electronics=DESKTOP,MOBILE
+storefront.supportedUiExperienceLevels.apparel-uk=DESKTOP,MOBILE
+storefront.supportedUiExperienceLevels.apparel-de=DESKTOP,MOBILE
+storefront.supportedUiExperienceLevels.powertools=DESKTOP
+
+
+paypaladdon.javascript.paths.desktop=/desktop/common/js/paypaladdon.js
+paypaladdon.javascript.paths.mobile=/mobile/common/js/paypaladdon.js
+paypaladdon.css.paths.desktop=/desktop/common/css/paypaladdon.css
+paypaladdon.css.paths.mobile=/mobile/common/css/paypaladdon.css

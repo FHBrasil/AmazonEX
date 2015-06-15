@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<!--
+		Example Data POJO
+	
+	<bean class="com.paypal.hybris.data.MyPojo">
+		<property name="id" type="String"/>
+		<property name="flag" type="boolean"/>
+	</bean>
+	-->
+
+	<enum class="com.paypal.hybris.data.SeverityCode">
+		<description>Enumeration with severity codes came with error response</description>
+		<value>warning</value>
+		<value>error</value>
+		<value>partial_success</value>
+		<value>custom_code</value>
+	</enum>
+	<enum class="com.paypal.hybris.data.PaymentStatus">
+		<description>Enumeration with payment status</description>
+		<value>none</value>
+		<value>canceled_reversal</value>
+		<value>completed</value>
+		<value>denied</value>
+		<value>expired</value>
+		<value>failed</value>
+		<value>in_progress</value>
+		<value>partially_refunded</value>
+		<value>pending</value>
+		<value>refunded</value>
+		<value>reversed</value>
+		<value>processed</value>
+		<value>voided</value>
+	</enum>
+	<enum class="com.paypal.hybris.data.PendingReason">
+		<description>Enumeration with possible pending reasons</description>
+		<value>none</value>
+		<value>address</value>
+		<value>authorization</value>
+		<value>echeck</value>
+		<value>intl</value>
+		<value>multi_currency</value>
+		<value>order</value>
+		<value>payment_review</value>
+		<value>regulatory_review</value>
+		<value>unilateral</value>
+		<value>verify</value>
+		<value>other</value>
+	</enum>
+    <enum class="com.paypal.hybris.data.PayerStatus">
+        <value>verified</value>
+        <value>unverified</value>
+    </enum>
+    <enum class="com.paypal.hybris.data.TransactionType">
+        <value>cart</value>
+        <value>express_checkout</value>
+		<value>mercht_pmt</value>
+        <value>none</value>
+    </enum>
+    <enum class="com.paypal.hybris.data.PaymentCode">
+        <value>none</value>
+        <value>echeck</value>
+        <value>instant</value>
+    </enum>
+
+	<bean class="com.paypal.hybris.data.DetailsItemData">
+		<property name="name" type="java.lang.String"/>
+		<property name="description" type="java.lang.String"/>
+		<property name="amount" type="double"/>
+		<property name="number" type="java.lang.String"/>
+		<property name="quantity" type="int"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.ResultErrorData">
+		<property name="shortMessage" type="java.lang.String"/>
+		<property name="longMessage" type="java.lang.String"/>
+		<property name="errorCode" type="java.lang.String"/>
+		<property name="severityCode" type="com.paypal.hybris.data.SeverityCode"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.AbstractRequestData">
+		<property name="version" type="java.lang.String"/>
+        <property name="locale" type="java.util.Locale"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.AbstractResultData">
+		<property name="dateTime" type="java.util.Calendar"/>
+		<property name="correlationId" type="java.lang.String"/>
+		<property name="ack" type="java.lang.String"/>
+		<property name="version" type="java.lang.String"/>
+		<property name="build" type="java.lang.String"/>
+		<property name="errors" type="java.util.List&lt;com.paypal.hybris.data.ResultErrorData&gt;"/>
+        <property name="errorMessagesList" type="java.util.List&lt;java.lang.String&gt;"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.SetExpressCheckoutRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+		<property name="uid" type="java.lang.String"/>
+		<property name="solutionType" type="java.lang.String"/>
+		<property name="paymentAction" type="java.lang.String"/>
+		<property name="returnUrl" type="java.lang.String"/>
+		<property name="cancelUrl" type="java.lang.String"/>
+		<property name="uiExperienceLevel" type="de.hybris.platform.acceleratorservices.enums.UiExperienceLevel"/>
+		<property name="fundingSource" type="java.lang.String"/>
+		<property name="addressOverride" type="boolean"/>
+        <property name="sessionCart" type="de.hybris.platform.commercefacades.order.data.CartData"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.SetExpressCheckoutResultData" extends="com.paypal.hybris.data.AbstractResultData">
+		<property name="token" type="java.lang.String"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.GetExpressCheckoutDetailsRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+		<property name="token" type="java.lang.String"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.GetExpressCheckoutDetailsResultData" extends="com.paypal.hybris.data.AbstractResultData">
+		<property name="payerId" type="java.lang.String"/>
+		<property name="payer" type="java.lang.String"/>
+
+        <!-- remove -->
+		<property name="payerFirstName" type="java.lang.String"/>
+		<property name="payerLastName" type="java.lang.String"/>
+		<property name="addressId" type="java.lang.String"/>
+		<property name="addressName" type="java.lang.String"/>
+		<property name="line1" type="java.lang.String"/>
+		<property name="line2" type="java.lang.String"/>
+		<property name="town" type="java.lang.String"/>
+		<property name="stateOrProvince" type="java.lang.String"/>
+		<property name="postalCode" type="java.lang.String"/>
+		<property name="countryIsoCode" type="java.lang.String"/>
+        <!-- remove end -->
+
+        <property name="deliveryAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+
+		<property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.DoExpressCheckoutPaymentRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+		<property name="token" type="java.lang.String"/>
+		<property name="payerId" type="java.lang.String"/>
+		<property name="paymentAction" type="java.lang.String"/>
+
+        <property name="sessionCart" type="de.hybris.platform.commercefacades.order.data.CartData"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.PaymentInfoData">
+		<property name="transactionId" type="java.lang.String"/>
+		<property name="grossAmount" type="double"/>
+		<property name="currencyIsoCode" type="java.lang.String"/>
+		<property name="paymentRequestId" type="java.lang.String"/>
+		<property name="store" type="boolean"/>
+		<property name="paymentDate" type="java.util.Calendar"/>
+		<property name="paymentStatus" type="com.paypal.hybris.data.PaymentStatus"/>
+		<property name="pendingReason" type="com.paypal.hybris.data.PendingReason"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.DoExpressCheckoutPaymentResultData" extends="com.paypal.hybris.data.AbstractResultData">
+		<property name="paymentInfoList" type="java.util.List&lt;com.paypal.hybris.data.PaymentInfoData&gt;"/>
+		<property name="billingAgreementID" type="java.lang.String"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.DoAuthorizationRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+		<property name="transactionId" type="java.lang.String"/>
+		<property name="amount" type="double"/>
+		<property name="currencyIsoCode" type="java.lang.String"/>
+		<property name="shipToStore" type="boolean"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.DoAuthorizationResultData" extends="com.paypal.hybris.data.AbstractResultData">
+		<property name="transactionId" type="java.lang.String"/>
+		<property name="amount" type="double"/>
+		<property name="currencyIsoCode" type="java.lang.String"/>
+		<property name="paymentStatus" type="com.paypal.hybris.data.PaymentStatus"/>
+		<property name="pendingReason" type="com.paypal.hybris.data.PendingReason"/>
+	</bean>
+
+	<bean class="com.paypal.hybris.data.DoCaptureRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+		<property name="authorizationId" type="java.lang.String"/>
+		<property name="amount" type="double"/>
+		<property name="currencyIsoCode" type="java.lang.String"/>
+		<property name="complete" type="java.lang.Boolean"/>
+	</bean>
+	
+	<bean class="com.paypal.hybris.data.DoCaptureResultData" extends="com.paypal.hybris.data.AbstractResultData">
+		<property name="authorizationId" type="java.lang.String"/>
+		<property name="transactionId" type="java.lang.String"/>
+		<property name="parentTransactionId" type="java.lang.String"/>
+		<property name="amount" type="double"/>
+		<property name="grossAmount" type="double"/>
+		<property name="feeAmount" type="double"/>
+		<property name="settleAmount" type="double"/>
+		<property name="currencyIsoCode" type="java.lang.String"/>
+		<property name="receiptId" type="java.lang.String"/>
+		<property name="paymentDate" type="java.util.Calendar"/>
+		<property name="paymentStatus" type="com.paypal.hybris.data.PaymentStatus"/>
+		<property name="pendingReason" type="com.paypal.hybris.data.PendingReason"/>
+	</bean>
+
+    <bean class="com.paypal.hybris.data.PayerName">
+        <property name="salutation" type="java.lang.String"/>
+        <property name="firstName" type="java.lang.String"/>
+        <property name="middleName" type="java.lang.String"/>
+        <property name="lastName" type="java.lang.String"/>
+        <property name="suffix" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.paypal.hybris.data.TransactionSearchRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+        <property name="startDate" type="java.util.Calendar"/>
+        <property name="endDate" type="java.util.Calendar"/>
+        <property name="payerEmail" type="java.lang.String"/>
+        <property name="receiverEmail" type="java.lang.String"/>
+        <property name="receiptId" type="java.lang.String"/>
+        <property name="transactionId" type="java.lang.String"/>
+        <property name="invoiceId" type="java.lang.String"/>
+        <property name="cartNumber" type="java.lang.String"/>
+        <property name="payerName" type="com.paypal.hybris.data.PayerName"/>
+        <property name="auctionItemNumber" type="java.lang.String"/>
+        <property name="amount" type="double"/>
+        <property name="currencyCode" type="java.lang.String"/>
+        <property name="profileId" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.paypal.hybris.data.PaymentTransaction">
+        <property name="timestamp" type="java.util.Calendar"/>
+        <property name="timezone" type="java.lang.String"/>
+        <property name="type" type="java.lang.String"/>
+        <property name="payerEmail" type="java.lang.String"/>
+        <property name="payerDisplayName" type="java.lang.String"/>
+        <property name="transactionId" type="java.lang.String"/>
+        <property name="status" type="java.lang.String"/>
+        <property name="grossAmount" type="double"/>
+        <property name="feeAmount" type="double"/>
+        <property name="netAmount" type="double"/>
+        <property name="currencyCode" type="java.lang.String"/>
+    </bean>
+    
+    <bean class="com.paypal.hybris.data.TransactionSearchResultData" extends="com.paypal.hybris.data.AbstractResultData">
+        <property name="transactionList" type="java.util.List&lt;PaymentTransaction&gt;"/>
+    </bean>
+
+    <bean class="com.paypal.hybris.data.GetTransactionDetailsRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+        <property name="transactionId" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.paypal.hybris.data.GetTransactionDetailsResultData" extends="com.paypal.hybris.data.AbstractResultData">
+        <property name="transactionId" type="java.lang.String"/>
+        <property name="parentTransactionId" type="java.lang.String"/>
+        <property name="receiptId" type="java.lang.String"/>
+        <property name="transactionType" type="com.paypal.hybris.data.TransactionType"/>
+        <property name="paymentType" type="com.paypal.hybris.data.PaymentCode"/>
+        <property name="paymentData" type="java.util.Calendar"/>
+        <property name="paymentStatus" type="com.paypal.hybris.data.PaymentStatus"/>
+        <property name="pendingReason" type="com.paypal.hybris.data.PendingReason"/>
+
+        <property name="storeId" type="java.lang.String"/>
+        <property name="subject" type="java.lang.String"/>
+
+        <property name="grossAmount" type="double"/>
+        <property name="feeAmount" type="double"/>
+        <property name="taxAmount" type="double"/>
+        <property name="currencyCode" type="java.lang.String"/>
+
+        <property name="TPLReferenceID" type="java.lang.String"/>
+        <property name="receiverEmail" type="java.lang.String"/>
+        <property name="receiverId" type="java.lang.String"/>
+        <property name="payerEmail" type="java.lang.String"/>
+        <property name="payerId" type="java.lang.String"/>
+        <property name="payerName" type="com.paypal.hybris.data.PayerName"/>
+        <property name="payerCountryIso" type="java.lang.String"/>
+        <property name="payerStatus" type="com.paypal.hybris.data.PayerStatus"/>
+        <property name="payerAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+        <!--<property name="secondaryAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>-->
+    </bean>
+
+    <bean class="com.paypal.hybris.data.RefundTransactionRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+        <property name="transactionId" type="java.lang.String"/>
+        <property name="payerId" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.paypal.hybris.data.RefundTransactionResultData" extends="com.paypal.hybris.data.AbstractResultData">
+        <property name="refundTransactionId" type="java.lang.String"/>
+        <property name="feeRefundAmount" type="double"/>
+        <property name="grossRefundAmount" type="double"/>
+        <property name="netRefundAmount" type="double"/>
+        <property name="totalRefundedAmount" type="double"/>
+        <property name="refundStatus" type="com.paypal.hybris.data.PaymentCode"/>
+        <property name="pendingReason" type="com.paypal.hybris.data.PendingReason"/>
+    </bean>
+
+    <bean class="com.paypal.hybris.data.DoReferenceTransactionRequestData" extends="com.paypal.hybris.data.AbstractRequestData">
+        <property name="orderData" type="de.hybris.platform.commercefacades.order.data.OrderData"/>
+        <property name="referenceId" type="java.lang.String"/>
+        <property name="paymentAction" type="java.lang.String"/>
+        <property name="invoiceId" type="java.lang.String"/>
+        <property name="credit" type="boolean"/>
+    </bean>
+
+    <bean class="com.paypal.hybris.data.DoReferenceTransactionResultData" extends="com.paypal.hybris.data.AbstractResultData">
+        <property name="transactionId" type="java.lang.String"/>
+        <property name="billingAgreementId" type="java.lang.String"/>
+        <property name="paymentStatus" type="com.paypal.hybris.data.PaymentStatus"/>
+        <property name="pendingReason" type="com.paypal.hybris.data.PendingReason"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.product.data.PriceData">
+        <property name="formattedPriceWithoutCurrencySymbol" type="java.lang.String"/>
+    </bean>
+    
+    <bean class="de.hybris.platform.acceleratorfacades.order.data.OrderEntryGroupData">
+        <property name="totalTax" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+        <property name="totalPrice" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+    </bean>
+
+</beans>

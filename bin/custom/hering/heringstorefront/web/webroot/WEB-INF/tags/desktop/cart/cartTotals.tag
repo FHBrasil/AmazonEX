@@ -80,4 +80,22 @@
             </div>
         </div>
     </div>
+    <div class="button-paypal-express-checkout">
+        <c:url value="/paypal/checkout/hop/expressCheckoutShortcut" var="paypalExpressCheckoutUrl" />
+        <a class="paypal-express-checkout-link" href="${paypalExpressCheckoutUrl}"
+                data-paypal-button="true" data-paypal-id="${merchantId}">
+        </a>
+    	<script>
+    		(function(d, s, id) {
+    			var js, ref = d.getElementsByTagName(s)[0];
+    			if (!d.getElementById(id)) {
+    				js = d.createElement(s);
+    				js.id = id;
+    				js.async = true;
+    				js.src = "//www.paypalobjects.com/js/external/paypal.v1.js";
+    				ref.parentNode.insertBefore(js, ref);
+    			}
+    		}(document, "script", "paypal-js"));
+    	</script>
+    </div>
 </section>

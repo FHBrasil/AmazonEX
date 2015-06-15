@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<alias alias="csPayPalTransactionSearchService" name="defaultCsPayPalTransactionSearchService"/>
+	<bean id="defaultCsPayPalTransactionSearchService" class="com.paypal.hybris.cscockpit.services.search.impl.PayPalTransactionSearchService" parent="abstractBusinessService">
+		<property name="postSearchMetaProcessors">
+			<list>
+				<bean class="com.paypal.hybris.cockpit.services.search.meta.impl.PayPalTransactionPostProcessor">
+					<property name="flexibleSearchService" ref="flexibleSearchService"/>
+					<property name="flexibleSearchQueryBuilder" ref="csOrderByTransactionSearchQueryBuilder"/>
+				</bean>
+			</list>
+		</property>
+        <property name="paypalPaymentService" ref="paypalPaymentService"/>
+        <property name="transactionSearchConverter" ref="transSearchReqDataConverter"/>
+        <property name="transactionSearchRevertConverter" ref="transSearchResConverter"/>
+		<property name="theSessionService" ref="sessionService"/>
+	</bean>
+
+	<!-- 
+	<alias alias="csOrderByTransactionSearchService" name="defaultOrderByTransactionSearchService"/>
+	<bean id="defaultCsOrderSearchService" parent="baseCsFlexibleSearchService">
+		<property name="flexibleSearchQueryBuilder" ref="csOrderByTransactionSearchQueryBuilder"/>
+	</bean>
+	 -->
+	<alias alias="csOrderByTransactionSearchQueryBuilder" name="defaultCsOrderByTransactionSearchQueryBuilder"/>
+	<bean id="defaultCsOrderByTransactionSearchQueryBuilder" parent="baseCsFlexibleSearchQueryBuilder" class="com.paypal.hybris.cockpit.services.search.query.PayPalTransactionSearchQueryBuilder"/>
+	
+</beans>

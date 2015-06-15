@@ -11,7 +11,7 @@ $(document).ready(function(){
 		})
 		.done(function(data) {
 			
-			var content = '<div class="lightbox_colorbox"><div class="lightbox-overflow"></div><div class="popup-newsletter lightbox-box"><div class="lightbox-wrap"><div class="lightbox-content"><div class="lightbox-image"><img width="478px" height="270px" src="/store/_ui/desktop/common/images/popup-newsletter.jpg"></div></div></div></div></div>';
+//			var content = '<div class="lightbox_colorbox"><div class="lightbox-overflow"></div><div class="popup-newsletter lightbox-box"><div class="lightbox-wrap"><div class="lightbox-content"><div class="lightbox-image"><img width="478px" height="270px" src="/store/_ui/desktop/common/images/popup-newsletter.jpg"></div></div></div></div></div>';
 	            
 	        $("#cboxLoadedContent").html(content);
 			

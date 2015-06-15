@@ -490,6 +490,72 @@ $('#modal-order-resume').css('display','none');
 	    });
     }
     
+    
+    
+    
+    
+    
+    
+/*//    NEWSLETTER
+    
+    $('#newsletterSubscriptionManagementComponent').submit(function(event) {
+        
+        // isso pega o evento de "submit" do form e cancela ele, assim o formulário não é enviado...
+        event.preventDefault();
+  
+        // aqui usamos a função serialize() do jquery que vai pegar todos os dados já inseridos pelo usuário e montar em uma URL
+        var data = $(this).serialize();
+        // isso pega o action do form, no caso a url para onde ele é enviado...
+        var url = $(this).attr('action');
+ 
+        // função para enviar uma requisição ajax
+        $.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: function(data) {
+                	alert(data);
+                    // faz alguma coisa com os dados retornados
+                    //console.info(data);
+                }
+        });
+ 
+        // da um retorno falso para o evento de submit do form
+        return false;
+ 
+    });
+   
+   
+   
+    $('#newsletterSubscriptionFormComponent').submit(function(event) {
+         
+        // isso pega o evento de "submit" do form e cancela ele, assim o formulário não é enviado...
+        event.preventDefault();
+  
+        // aqui usamos a função serialize() do jquery que vai pegar todos os dados já inseridos pelo usuário e montar em uma URL
+        var data = $(this).serialize();       
+        // isso pega o action do form, no caso a url para onde ele é enviado...
+        var url = $(this).attr('action');
+               
+        // função para enviar uma requisição ajax
+        $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: function(data) {
+                	alert(data);
+                    // faz alguma coisa com os dados retornados
+                    //console.info(data);
+                }
+        });
+ 
+        // da um retorno falso para o evento de submit do form
+        return false;
+ 
+    });*/
+    
+    
+    
 //    $('.info .cores ul li:first-child').each(function(){$(this).click()});
 //    $('.info .tamanhos ul li:first-child').each(function(){$(this).click()});
 //	$('.info .addToCartForm #productCodePost').each(function(){

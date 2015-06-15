@@ -164,16 +164,11 @@ table.acc-historical tr:nth-child(2n){background: #eaeaea !important; }
 #acc-address-form #form-endereco-numero { width: 100px; min-width: initial; }
 #acc-address-form form .checkbox-group label { color: #727272; }
 
-#acc-dados-form .newsletters { margin-top: 20px; }
-#acc-dados-form .newsletters .checkbox-group label { color: #727272; font-size: 18px; }
 
 #profile-info > ul {margin-bottom: 10px; }
 #profile-info > ul > li {font-size: 18px; padding: 15px 0; border-bottom: 1px dotted #cacaca; } 
-#profile-info span, #profile-info .newsletters {max-width: 70%; } 
 #profile-info .label {color: #156ca5; min-width: 200px; display: inline-block; } 
-#profile-info .newsletters {display: inline-block; } 
-#profile-info .newsletters li {display: inline-block; position: relative; margin-right: 5px; } 
-#profile-info .newsletters li:before {content: "\f00c"; font-family: "FontAwesome"; font-size: 14px; margin-right: 3px; }
+
 
 #orders-list #search-bar { line-height: 35px; margin-bottom: 20px; }
 #orders-list #search-bar form { display: inline-block; vertical-align: top; }

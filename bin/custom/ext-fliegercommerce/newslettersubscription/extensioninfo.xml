@@ -14,19 +14,12 @@
 --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
 
    <extension abstractclassprefix="Generated" classprefix="Newslettersubscription" managername="NewslettersubscriptionManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="newslettersubscription">
-               
-      <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
-      <!-- <requires-extension name="cms"/> -->         
-      
-
-		<requires-extension name="basecommerce"/>
-		<requires-extension name="commerceservices"/>
-		<requires-extension name="commercefacades"/>
+     	
+<!--      	<requires-extension name="basecommerce"/> -->
+<!-- 		<requires-extension name="commerceservices"/> -->
+<!-- 		<requires-extension name="commercefacades"/> -->
       
       <coremodule generated="true" manager="com.fliegersoftware.newslettersubscription.jalo.NewslettersubscriptionManager" packageroot="com.fliegersoftware.newslettersubscription"/>
-
-      <webmodule jspcompile="false" webroot="/newslettersubscription"/>
-
    </extension>
       
 </extensioninfo>
