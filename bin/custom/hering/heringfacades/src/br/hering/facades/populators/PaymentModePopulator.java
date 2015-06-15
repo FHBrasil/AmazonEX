@@ -27,5 +27,6 @@ public class PaymentModePopulator implements Populator<PaymentModeModel, Payment
 		target.setCode(source.getCode());
 		target.setName(source.getName());
 		target.setDescription(source.getDescription());
+		target.setActive(source.getActive());
 	}
 }
