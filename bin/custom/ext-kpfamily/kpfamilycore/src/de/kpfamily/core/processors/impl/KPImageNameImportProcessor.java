@@ -53,7 +53,8 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
             "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
     // local:
     // private static final String DESTINATION_FOLDER = "/workspace/medias/ftp/babyartikel/";
-    private static final String REGEX_IGNORE_PATTERN = "\\_(d[0-9]+|t[0-9]+|m|n|t|detail)\\.jpg";
+    // private static final String REGEX_IGNORE_PATTERN =
+    // "\\_(d[0-9]+|t[0-9]+|m|n|t|detail)\\.jpg";
     private ImpExImportReader reader = null;
     
     
@@ -79,16 +80,11 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
         String productCode = valueLine.getValueEntry(1).getCellValue();
         String imageFilePath = valueLine.getValueEntry(2).getCellValue();
         String[] sourceFiles = imageFilePath.split(",");
-        Pattern pattern = Pattern.compile(REGEX_IGNORE_PATTERN, Pattern.CASE_INSENSITIVE);
         for (int i = 0; i < sourceFiles.length; i++) {
             String filename = sourceFiles[i];
-            // The impex comes with more than one detail image, we get only
-            // the base image.
-            if (!pattern.matcher(filename).find()) {
-                File sourceFile = new File(filename);
-                File destinationFile = renameImageName(sourceFile, productCode);
-                moveFile(sourceFile, destinationFile);
-            }
+            File sourceFile = new File(filename);
+            File destinationFile = renameImageName(sourceFile, productCode);
+            moveFile(sourceFile, destinationFile);
         }
         return null;
     }
