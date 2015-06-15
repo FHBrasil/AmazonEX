@@ -28,6 +28,10 @@
 
 			<cms:pageSlot position="Section5" var="feature" element="div" class="span-20 section5 cms_disp-img_slot last">
 				<cms:component component="${feature}"/>
+				
+				<!-- 				APAGAR 					-->
+				<img src="${trustedShopImageUrl}" />  
+				
 			</cms:pageSlot>
 		</div>
 	</div>

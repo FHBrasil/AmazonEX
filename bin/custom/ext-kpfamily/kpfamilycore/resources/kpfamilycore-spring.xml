@@ -382,4 +382,11 @@
     <bean id="defaultProductSupplierService"
             class="de.kpfamily.core.service.impl.DefaultProductSupplierService"
             parent="abstractBusinessService"/>
+            
+            
+	<!-- Jobs -->
+    <bean id="updateTrustedShopImageJobPerformable" class="de.kpfamily.core.job.UpdateTrustedShopImageJobPerformable" parent="abstractJobPerformable" />
+
+
+            
 </beans>
