@@ -147,6 +147,7 @@
 		<property name="code" type="String" />
 		<property name="name" type="String" />
 		<property name="description" type="String" />
+		<property name="active" type="Boolean"/>
 	</bean>
 	<!-- PaypalSession data -->
 	<bean class="br.hering.facades.checkout.data.PaypalSessionData">
