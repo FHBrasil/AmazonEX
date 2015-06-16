@@ -23,6 +23,10 @@
         </cms:pageSlot>
     </div>
     <cms:pageSlot position="Section3" var="feature" element="div" class="span-24">
+    	
+		<!--    TrustedShopImage Test    -->	
+		<img src="_ui/desktop/common/images/trustedShop.gif" />
+
         <cms:component component="${feature}" />
     </cms:pageSlot>
     <cms:pageSlot position="Section4" var="feature" element="div" class="span-24 section4">

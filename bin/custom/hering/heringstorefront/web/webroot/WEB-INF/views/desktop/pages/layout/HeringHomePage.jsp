@@ -4,7 +4,7 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common" %>
 
 <template:page pageTitle="${pageTitle}">
-	<div id="globalMessages">
+	<div id="globalMessages">		
 		<common:globalMessages/>
 	</div>
 
@@ -18,7 +18,7 @@
 		</cms:pageSlot>
 
 		<div class="span-20 last">
-			<cms:pageSlot position="Section2" var="feature" element="div" class="span-20 section2 cms_disp-img_slot">
+			<cms:pageSlot position="Section2" var="feature" element="div" class="span-20 section2 cms_disp-img_slot">			
 				<cms:component component="${feature}"/>
 			</cms:pageSlot>
 
@@ -27,11 +27,7 @@
 			</cms:pageSlot>
 
 			<cms:pageSlot position="Section5" var="feature" element="div" class="span-20 section5 cms_disp-img_slot last">
-				<cms:component component="${feature}"/>
-				
-				<!-- 				APAGAR 					-->
-				<img src="${trustedShopImageUrl}" />  
-				
+				<cms:component component="${feature}"/>	
 			</cms:pageSlot>
 		</div>
 	</div>

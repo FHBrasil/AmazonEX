@@ -505,18 +505,18 @@
             
            <attributes>
            		<attribute qualifier="hybrisBinDirManual" type="java.lang.String">
-<!--            			<description>Image URL</description> -->
-           			<modifiers read="true" write="true" search="true" optional="false" />
+           			<description>Hybris directory</description>
+           			<modifiers read="true" write="true" search="true" optional="true" />
 					<persistence type="property" />
 				</attribute> 
 				<attribute qualifier="trustedShopImageUrl" type="java.lang.String">
-<!-- 					<description>Image URL</description> -->
-					<modifiers read="true" write="true" search="true" optional="false" />
+					<description>Image URL</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
 					<persistence type="property" />
 				</attribute> 
 				<attribute qualifier="kpfamilyTrustedShopImageDir" type="java.lang.String">
-<!-- 					<description>Image directory in the kpfamily project</description> -->
-					<modifiers read="true" write="true" search="true" optional="false" />
+					<description>Image directory in the kpfamily project</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
 					<persistence type="property" />
 				</attribute>         
            </attributes> 
