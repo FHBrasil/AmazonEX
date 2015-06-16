@@ -25,9 +25,8 @@
         	selectedDeliveryMethodId="${cartData.deliveryMode.code}" />
     </div>
      <div class="col-sm-4 payments150526">
-   	 	<form:form method="post" commandName="paymentDetailsForm"
-        	class="create_update_payment_form display-inline"
-            action="${request.contextPath}/checkout/single/placeOrder">
+   	 	<form:form method="post" commandName="paymentDetailsForm" class="create_update_payment_form display-inline" 
+   	 		action="${request.contextPath}/checkout/single/placeOrder">
             	<single-checkout-hering:customAddPaymentMethod cartData="${cartData}" />
         </form:form>
      </div>
