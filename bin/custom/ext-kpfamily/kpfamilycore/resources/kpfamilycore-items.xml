@@ -499,7 +499,7 @@
 		
 		
 	<!-- CronJob -->	
-<!-- 	<typegroup name="UpdateTrustedShopImage">
+	<typegroup name="UpdateTrustedShopImage">
 		<itemtype generate="true" code="UpdateTrustedShopImageCronJob" jaloclass="de.kpfamily.core.jalo.UpdateTrustedShopImageCronJob"
            extends="CronJob" autocreate="true">    
             
@@ -522,7 +522,7 @@
            </attributes> 
            
 		</itemtype>
-	</typegroup> -->
+	</typegroup>
 
 		
 	</itemtypes>
