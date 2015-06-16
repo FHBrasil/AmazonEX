@@ -12,56 +12,53 @@
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-<table>
-    <tbody>
-        <c:forEach items="${cartData.entries}" var="entry">
-            <tr>
-                <%-- BRAND IMAGE --%>
-                <td class="brand"><product:productBrand product="${entry.product}" /></td>
-                <td class="product-details talign-left"><product:productPrimaryImage
-                        product="${entry.product}" format="cartIcon" />
-                    <div class="info">
-                        <ul>
-                            <li class="titulo">${entry.product.name}</li>
-                            <c:if test="${not empty entry.product.size}">
-                                <li class="tamanho"><spring:theme code="text.fliegercommerce.texto51"/>: ${entry.product.size}</li>
-                            </c:if>
-                            <c:if test="${not empty entry.product.color}">
-                                <li class="cor"><spring:theme
-                                        code="checkout.single.details.cartItems.color" />:
-                                    <div class="cores">
-                                        <ul>
-                                            <li class="${entry.product.color.RGB}"
-                                                style="background-color:${entry.product.color.RGB};"></li>
-                                        </ul>
-                                    </div></li>
-                            </c:if>
-                            <li class="codigo"><spring:theme
-                                    code="checkout.single.details.cartItems.code" />:
-                                ${entry.product.code}</li>
-                            <li class="precos"><c:choose>
-                                    <c:when test="${entry.product.fromPrice}">
-                                        <s> <spring:theme
-                                                code="checkout.single.details.cartItems.productPrice.from" />:
-                                            <fmt:formatNumber value="${entry.product.oldPrice}"
-                                                type="number" minFractionDigits="2" /></s>
-                                        <strong> <spring:theme
-                                                code="checkout.single.details.cartItems.productPrice.to" />:
-                                            <format:price priceData="${entry.basePrice}"
-                                                displayFreeForZero="true" />
-                                        </strong>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <strong> <spring:theme
-                                                code="checkout.single.details.cartItems.productPrice.from" />:
-                                            <format:price priceData="${entry.basePrice}"
-                                                displayFreeForZero="true" />
-                                        </strong>
-                                    </c:otherwise>
-                                </c:choose></li>
-                        </ul>
-                    </div></td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
+
+<ol class="list150608">
+	<c:forEach items="${cartData.entries}" var="entry">
+    	<li class="item150608">
+			<div class="row">
+				<div class="col-xxs-4 col-xs-12 col-md-4">
+                	<a href="${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
+                </div>
+                <div class="col-xxs-8 col-xs-12 col-md-8">
+                	<a href="${entry.product.url}">${entry.product.name}</a>
+                	<br /><small>${entry.product.code}</small>                	
+	                <c:if test="${not empty entry.product.size}">
+	                    <div class="tamanho"><spring:theme code="text.fliegercommerce.texto51"/>: ${entry.product.size}</div>
+	                </c:if>                   
+	                <c:if test="${not empty entry.product.color}">
+	                    <spring:theme code="checkout.single.details.cartItems.color" />:
+	                    <div class="${entry.product.color.RGB}" style="background-color:${entry.product.color.RGB};"></div>
+	                </c:if>                    
+                	<div class="row">
+                		<div class="col-xs-6">
+                			<small>${entry.quantity}x 
+                				<c:choose>
+		                        	<c:when test="${entry.product.fromPrice}">
+		                            	<s>
+		                            		<spring:theme code="checkout.single.details.cartItems.productPrice.from" />:
+		                                    <fmt:formatNumber value="${entry.product.oldPrice}" type="number" minFractionDigits="2" />
+		                                </s>
+		                                <strong>
+		                                	<spring:theme code="checkout.single.details.cartItems.productPrice.to" />:
+		                                    <format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
+		                                </strong>
+		                             </c:when>
+		                             <c:otherwise>
+		                             	<format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
+		                             </c:otherwise>
+		                    	</c:choose>
+                			</small>
+                		</div>
+                		<div class="col-xs-6 text-right">	                		
+	                    	<strong><format:price priceData="${entry.totalPrice}" displayFreeForZero="true" /></strong>
+                    	</div>
+                	</div>                	
+                </div>
+			</div>
+		</li>
+	</c:forEach>
+	<li class="delivery160608 nostock">
+		
+	</li>
+</ol>
