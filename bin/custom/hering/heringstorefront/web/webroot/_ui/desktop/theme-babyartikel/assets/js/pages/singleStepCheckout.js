@@ -1,5 +1,14 @@
 $(document).ready(function() {
 	
+	//toggle method payment
+	$('.closePayments').click(function(){
+		  $('.paycollapse.collapse.in').collapse('hide');
+	});
+	
+	$('.closeNewAddress').click(function(){
+		$('.addresscollapse.collapse.in').collapse('hide');
+	});
+	
 	$(".btn-checkout").click(function(){
 		blockTwoClickPaymentButton();
 	});
@@ -202,7 +211,7 @@ $(document).ready(function() {
 	
 	
 	/*! Sends payment form */
-	$('section#co-right').find('button[type=button].confirm-purchase').click(function() {
+	$('.cart150529 .text-right').find('button[type=button].confirm-purchase').click(function() {
 		if(!validateCCForm()) {
 			allowClickPaymentButton();
 			return false;
