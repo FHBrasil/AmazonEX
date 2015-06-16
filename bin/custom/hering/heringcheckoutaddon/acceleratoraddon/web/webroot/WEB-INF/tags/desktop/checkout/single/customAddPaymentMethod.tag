@@ -21,30 +21,34 @@
 </h2>
 <c:if test="${not empty paymentModes}">
 	<c:set var="sharp" value='#'/>
-	<c:forEach items="${paymentModes}" var="paymentMode">
-	    <input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
-	    <c:if test="${paymentMode.active}">		    
-		    <div class="radio">
-				<input type="radio" name="paymentMode" value="${paymentMode.code}" ${checked} id="${paymentMode.name}" class="closePayments" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
-				<label class="btn btn-default btn-pay150526 closePayments ${paymentMode.code}" for="${paymentMode.name}" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
-				</label>
-			</div>
-			<div id="${paymentMode.code}" class="paycollapse collapse out">
-				<div class="sliced">
-					<h3>${paymentMode.name}</h3>
-					<p>
-                		${paymentMode.description}
-                	</p>
-                	<c:if test="${paymentMode.code == 'CreditCard'}">
-                		<methodPayment:methodCreditCard />
-                	</c:if>
-                	<c:if test="${paymentMode.code == 'klarna'}">
-                		<methodPayment:methodKlarnaRechnung/>
-                	</c:if>
+	<form:form method="post" commandName="paymentDetailsForm" class="create_update_payment_form"
+            action="${request.contextPath}/checkout/single/custom-add-payment-method">
+	    <c:set var="deliveryAddress" value="${cartData.deliveryAddress}" />
+		<c:forEach items="${paymentModes}" var="paymentMode">
+		    <input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
+		    <c:if test="${paymentMode.active}">		    
+			    <div class="radio">
+					<input type="radio" name="paymentMode" value="${paymentMode.code}" ${checked} id="${paymentMode.name}" class="closePayments" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
+					<label class="btn btn-default btn-pay150526 closePayments ${paymentMode.code}" for="${paymentMode.name}" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
+					</label>
 				</div>
-			</div>
-	    </c:if>
-	</c:forEach>
+				<div id="${paymentMode.code}" class="paycollapse collapse out">
+					<div class="sliced">
+						<h3>${paymentMode.name}</h3>
+						<p>
+	                		${paymentMode.description}
+	                	</p>
+	                	<c:if test="${paymentMode.code == 'CreditCard'}">
+	                		<methodPayment:methodCreditCard />
+	                	</c:if>
+	                	<c:if test="${paymentMode.code == 'klarna'}">
+	                		<methodPayment:methodKlarnaRechnung/>
+	                	</c:if>
+					</div>
+				</div>
+		    </c:if>
+		</c:forEach>
+	</form:form>
 </c:if>
 
 <div class="col-xs-12 charge150127">
