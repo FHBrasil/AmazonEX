@@ -41,9 +41,10 @@ public class DefaultNewsletterSubscriptionService implements NewsletterSubscript
 		
 		if (subscriber != null)
 		{
-			return getNewsletterSubscriptionDao().updateSubscription(subscriber);			
+			NewsletterSubscriptionModel existingSubscription = findExistingSubscription(subscriber);
+			return getNewsletterSubscriptionDao().updateSubscription(existingSubscription);			
 		}
-		return null;
+		return null;		
 		
 	}
 
@@ -54,9 +55,10 @@ public class DefaultNewsletterSubscriptionService implements NewsletterSubscript
 		
 		if (subscriber != null)
 		{
-			getNewsletterSubscriptionDao().removeSubscription(subscriber); 				
+			NewsletterSubscriptionModel existingSubscription = findExistingSubscription(subscriber);
+			getNewsletterSubscriptionDao().removeSubscription(existingSubscription); 				
 		}
-
+		
 	}
 
 

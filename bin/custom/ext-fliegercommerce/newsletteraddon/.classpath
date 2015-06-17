@@ -13,5 +13,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/cms2"/>
 	<classpathentry kind="src" path="/acceleratorstorefrontcommons"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/newslettersubscription"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

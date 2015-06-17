@@ -19,7 +19,7 @@ import javax.servlet.jsp.PageContext;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.addons.newsletteraddon.model.NewsletterSubscriptionFormParagraphComponentModel;
-import com.fliegersoftware.addons.newsletteraddon.selectoption.AbstractSelectOption.SelectOption;
+import com.fliegersoftware.addons.newsletteraddon.selectoption.SelectOption;
 
 /**
  * @author luiza
@@ -39,21 +39,8 @@ public class NewsletterSubscriptionFormParagraphComponentRenderer<C extends News
 	ModelService modelService;
 
 
-   @Required
-   public void setCmsComponentService(final CMSComponentService cmsComponentService)
-   {
-       this.cmsComponentService = cmsComponentService;
-   }
-
    
-   @Required
-   public void setModelService(final ModelService modelService)
-   {
-       this.modelService = modelService;
-   }
-
-   
-   public List<SelectOption> getTitles()
+   private List<SelectOption> getTitles()
    {
    	
    	final List<SelectOption> titles = new ArrayList<SelectOption>();
@@ -73,7 +60,7 @@ public class NewsletterSubscriptionFormParagraphComponentRenderer<C extends News
    }
    
    
-   public List<SelectOption> getGenders()
+   private List<SelectOption> getGenders()
    {
    		 
    	final List<SelectOption> genders = new ArrayList<SelectOption>();
@@ -118,6 +105,20 @@ public class NewsletterSubscriptionFormParagraphComponentRenderer<C extends News
            }
        }
        return variables;
+   }
+   
+   
+   @Required
+   public void setCmsComponentService(final CMSComponentService cmsComponentService)
+   {
+       this.cmsComponentService = cmsComponentService;
+   }
+
+   
+   @Required
+   public void setModelService(final ModelService modelService)
+   {
+       this.modelService = modelService;
    }
    
    

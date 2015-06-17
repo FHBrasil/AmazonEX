@@ -58,6 +58,9 @@
 	<!-- Controller -->
 	<bean id="newsletterSubscriptionAddOnController" class="com.fliegersoftware.addons.newsletteraddon.controllers.cms.NewsletterSubscriptionAddOnController">
 		<property name="newsletterSubscriptionFacade" ref="newsletterSubscriptionFacade" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="userService" ref="userService" />
+		<property name="customerFacade" ref="customerFacade" />
 	</bean>
 
 </beans>

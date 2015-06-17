@@ -78,9 +78,9 @@ public class DefaultNewsletterSubscriptionDao implements NewsletterSubscriptionD
 		                + "WHERE " + "{p:store}=?store ";
 		
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
-      query.addQueryParameter("store", store);
+        query.addQueryParameter("store", store);
 
-      return getFlexibleSearchService().<NewsletterSubscriptionModel> search(query).getResult();
+        return getFlexibleSearchService().<NewsletterSubscriptionModel> search(query).getResult();
 		 	
 	}
 
@@ -92,15 +92,16 @@ public class DefaultNewsletterSubscriptionDao implements NewsletterSubscriptionD
 		final String queryString = //
 		        "SELECT {p:PK}" //
 		                + "FROM {NewsletterSubscription AS p} "//
-		                + "WHERE " + "{p:store}=?store" //
+		                + "WHERE " + "{p:store}=?store " //
 		                + "AND " + "{p:email}=?email";
 		 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
-      query.addQueryParameter("store", store);
-      query.addQueryParameter("email", email);
+        query.addQueryParameter("store", store);
+        query.addQueryParameter("email", email);
 
-      return getFlexibleSearchService().<NewsletterSubscriptionModel> search(query).getResult().get(1);
-			
+      return getFlexibleSearchService().<NewsletterSubscriptionModel> search(query).getResult().get(0);
+    
+      
 	}
 
 	

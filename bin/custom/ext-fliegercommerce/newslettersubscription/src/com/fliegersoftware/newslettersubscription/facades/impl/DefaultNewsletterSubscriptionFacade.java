@@ -17,6 +17,7 @@ import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionMo
 import com.fliegersoftware.newslettersubscription.services.NewsletterSubscriptionService;
 
 
+
 /**
  * @author luiza
  *
@@ -53,6 +54,12 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	@Override
 	public NewsletterSubscriptionData updateSubscription(final NewsletterSubscriptionData subscription) throws NewsletterSubscriptionNotFound
 	{
+		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
+		subscription.setStoreCode(storeCode);
+		
+		final String languageIsoCode = getCommerceCommonI18NService().getCurrentLanguage().getIsocode();
+		subscription.setLanguageIsoCode(languageIsoCode);
+		
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
 		getNewsletterSubscriptionService().updateSubscription(model);
@@ -64,6 +71,11 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	@Override
 	public void unsubscribe(final NewsletterSubscriptionData subscription) throws NewsletterSubscriptionNotFound
 	{
+		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
+		subscription.setStoreCode(storeCode);
+		
+		final String languageIsoCode = getCommerceCommonI18NService().getCurrentLanguage().getIsocode();
+		subscription.setLanguageIsoCode(languageIsoCode);
 		
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
