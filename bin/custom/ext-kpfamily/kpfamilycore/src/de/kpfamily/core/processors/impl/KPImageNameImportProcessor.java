@@ -49,8 +49,9 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
     private static final Logger LOG = Logger.getLogger(KPImageNameImportProcessor.class);
     //
     // production / acceptance
-    private static final String DESTINATION_FOLDER =
-            "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
+    // private static final String DESTINATION_FOLDER =
+    // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
+    private static final String DESTINATION_FOLDER = "/fotos/";
     // local:
     // private static final String DESTINATION_FOLDER = "/workspace/medias/ftp/babyartikel/";
     // private static final String REGEX_IGNORE_PATTERN =
@@ -78,13 +79,16 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
             return null;
         }
         String productCode = valueLine.getValueEntry(1).getCellValue();
-        String imageFilePath = valueLine.getValueEntry(2).getCellValue();
-        String[] sourceFiles = imageFilePath.split(",");
-        for (int i = 0; i < sourceFiles.length; i++) {
-            String filename = sourceFiles[i];
-            File sourceFile = new File(filename);
-            File destinationFile = renameImageName(sourceFile, productCode);
-            moveFile(sourceFile, destinationFile);
+        int columnQuantity = valueLine.getHeader().getAllColumnQualifiers().size();
+        for (int i = 2; i <= columnQuantity; i++) {
+            String imageFilePath = valueLine.getValueEntry(i).getCellValue();
+            String[] sourceFiles = imageFilePath.split(",");
+            for (int j = 0; j < sourceFiles.length; j++) {
+                String filename = sourceFiles[j];
+                File sourceFile = new File(filename);
+                File destinationFile = renameImageName(sourceFile, productCode);
+                copyFile(sourceFile, destinationFile);
+            }
         }
         return null;
     }
@@ -109,8 +113,9 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
         // If the image file name does not have a product code, renames the
         // file to "productcode_name.jpg". Otherwise it just modify the
         // image folder.
-        String destinationFilename = (productCode.equals(productCodeInFileName) ? ""
-                : productCode + "_") + sourceFilename;
+        String destinationFilename =
+                (productCode.equals(productCodeInFileName) ? "" : productCode + "_")
+                        + sourceFilename;
         File destinationFile = new File(DESTINATION_FOLDER + destinationFilename);
         return destinationFile;
     }
@@ -125,21 +130,21 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
      *            the destination file absolute path
      * @return true if succeeded, false otherwise
      */
-    private boolean moveFile(File source, File destination) {
+    private boolean copyFile(File source, File destination) {
         try {
-            FileUtils.moveFile(source, destination);
-            LOG.info("Renamed image file:" + destination.getAbsolutePath());
+            FileUtils.copyFile(source, destination);
+            LOG.info("Renamed and copied image file:" + destination.getAbsolutePath());
             return true;
         } catch (FileExistsException fee) {
             // Nothing to do, just log the file name.
-            LOG.error("Image file NOT renamed:" + source.getAbsolutePath(), fee);
+            LOG.error("Image file NOT renamed and NOT copied:" + source.getAbsolutePath(), fee);
         } catch (FileNotFoundException fnfe) {
             // Nothing to do, just log the file name.
-            LOG.error("Image file NOT renamed:" + source.getAbsolutePath(), fnfe);
+            LOG.error("Image file NOT renamed and NOT copied:" + source.getAbsolutePath(), fnfe);
         } catch (IOException ioe) {
             // Maybe in this case we need to review source and destination
             // folders permissions on server.
-            LOG.error("Image file NOT renamed:" + source.getAbsolutePath(), ioe);
+            LOG.error("Image file NOT renamed and NOT copied:" + source.getAbsolutePath(), ioe);
         }
         return false;
     }

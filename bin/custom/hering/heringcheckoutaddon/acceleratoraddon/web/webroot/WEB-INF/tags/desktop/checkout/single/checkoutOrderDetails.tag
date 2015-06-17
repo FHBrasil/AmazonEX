@@ -56,7 +56,7 @@
 	</div>
 </div>
 <div class="text-right" style="margin-bottom:30px;">
-	<button type="button" class="btn btn-primary btn-lg btn-checkout confirm-purchase">
+	<button type="button" class="btn btn-primary btn-lg btn-checkout confirm-purchase" style="background-color: #09AB33;border-color: #008910;">
 	  	<spring:theme code="checkout.single.button.purchase" />
 	</button>
 	<div class="btn waiting-order-confirm" style="display: none;">
