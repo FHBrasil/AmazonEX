@@ -80,7 +80,7 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
         }
         String productCode = valueLine.getValueEntry(1).getCellValue();
         int columnQuantity = valueLine.getHeader().getAllColumnQualifiers().size();
-        for (int i = 2; i < columnQuantity; i++) {
+        for (int i = 2; i <= columnQuantity; i++) {
             String imageFilePath = valueLine.getValueEntry(i).getCellValue();
             String[] sourceFiles = imageFilePath.split(",");
             for (int j = 0; j < sourceFiles.length; j++) {
