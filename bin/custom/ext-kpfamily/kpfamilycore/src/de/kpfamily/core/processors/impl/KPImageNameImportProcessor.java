@@ -87,7 +87,7 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
                 String filename = sourceFiles[j];
                 File sourceFile = new File(filename);
                 File destinationFile = renameImageName(sourceFile, productCode);
-                moveFile(sourceFile, destinationFile);
+                copyFile(sourceFile, destinationFile);
             }
         }
         return null;
@@ -130,21 +130,21 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
      *            the destination file absolute path
      * @return true if succeeded, false otherwise
      */
-    private boolean moveFile(File source, File destination) {
+    private boolean copyFile(File source, File destination) {
         try {
-            FileUtils.moveFile(source, destination);
-            LOG.info("Renamed image file:" + destination.getAbsolutePath());
+            FileUtils.copyFile(source, destination);
+            LOG.info("Renamed and copied image file:" + destination.getAbsolutePath());
             return true;
         } catch (FileExistsException fee) {
             // Nothing to do, just log the file name.
-            LOG.error("Image file NOT renamed:" + source.getAbsolutePath(), fee);
+            LOG.error("Image file NOT renamed and NOT copied:" + source.getAbsolutePath(), fee);
         } catch (FileNotFoundException fnfe) {
             // Nothing to do, just log the file name.
-            LOG.error("Image file NOT renamed:" + source.getAbsolutePath(), fnfe);
+            LOG.error("Image file NOT renamed and NOT copied:" + source.getAbsolutePath(), fnfe);
         } catch (IOException ioe) {
             // Maybe in this case we need to review source and destination
             // folders permissions on server.
-            LOG.error("Image file NOT renamed:" + source.getAbsolutePath(), ioe);
+            LOG.error("Image file NOT renamed and NOT copied:" + source.getAbsolutePath(), ioe);
         }
         return false;
     }
