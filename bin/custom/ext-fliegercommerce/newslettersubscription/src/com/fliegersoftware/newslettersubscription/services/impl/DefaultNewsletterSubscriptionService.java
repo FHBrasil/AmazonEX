@@ -27,8 +27,11 @@ public class DefaultNewsletterSubscriptionService implements NewsletterSubscript
 	{
 		
 		if (subscriber != null)
-		{			
-			return getNewsletterSubscriptionDao().createSubscription(subscriber);
+		{	
+			if (findExistingSubscription(subscriber)==null)
+			{
+				return getNewsletterSubscriptionDao().createSubscription(subscriber);
+			}
 		}
 		return null;
 				
@@ -56,7 +59,10 @@ public class DefaultNewsletterSubscriptionService implements NewsletterSubscript
 		if (subscriber != null)
 		{
 			NewsletterSubscriptionModel existingSubscription = findExistingSubscription(subscriber);
-			getNewsletterSubscriptionDao().removeSubscription(existingSubscription); 				
+			if (existingSubscription!=null)
+			{				
+				getNewsletterSubscriptionDao().removeSubscription(existingSubscription); 
+			}							
 		}
 		
 	}
@@ -67,10 +73,17 @@ public class DefaultNewsletterSubscriptionService implements NewsletterSubscript
 	{
 		if (subscriber != null) 
 		{
-			final String email = subscriber.getEmail();
-			final BaseStoreModel store = subscriber.getStore();
-			
-			return getNewsletterSubscriptionDao().findSubscriptionByEmailAndStore(email, store);
+			//if subscription not found, return null 
+			try 
+			{
+				final String email = subscriber.getEmail();
+				final BaseStoreModel store = subscriber.getStore();
+				
+				return getNewsletterSubscriptionDao().findSubscriptionByEmailAndStore(email, store);
+			} 
+			catch (Exception e) {
+				//e.printStackTrace();
+			}
 		}
 		return null;
 		

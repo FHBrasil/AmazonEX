@@ -66,6 +66,8 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		data.setTitleCode("Mr");
 		//data.setTitleCode(currentCustomerData.getTitleCode());
 		
+		
+		//arrumar estado do checkbox
 		if (subscription)
 		{	
 			try
@@ -136,7 +138,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 			redirectAttributes.addFlashAttribute("newsletterregistration", Boolean.TRUE);
 			redirectAttributes.addFlashAttribute("newsletterregistrationnegative", Boolean.TRUE);
 			final String message = getMessageSource().getMessage("text.fliegercommerce.texto124", null, getI18nService().getCurrentLocale());
-			//e-mail ja cadastrado
+			//E-mail ja cadastrado
 			return message;
 		}
 		
@@ -145,7 +147,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		////LOG.info("Redirect "+redirect);
 
 		final String message = getMessageSource().getMessage("text.fliegercommerce.texto125", null, getI18nService().getCurrentLocale());
-		//cadastrado com sucesso
+		//Cadastrado com sucesso!
 		return message;
 	}
 
