@@ -27,16 +27,14 @@
                 </c:if>
             </label>
         </c:if>
-        <form:select id="${idKey}" path="${path}"
-            cssClass="${selectCSSClass} ${(mandatory ? 'required':'')}" tabindex="${tabindex}">
+        <form:select id="${idKey}" path="${path}" cssClass="${selectCSSClass}" tabindex="${tabindex}" required="${mandatory ? 'required' : ''}">
             <c:if test="${skipBlank == null || skipBlank == false}">
                 <option value="" ${!allowEmpty ? 'disabled="disabled"' : ''}
                     ${empty selectedValue ? 'selected="selected"' : ''}>
                     <spring:theme code='${skipBlankMessageKey}' />
                 </option>
             </c:if>
-            <form:options items="${items}" itemValue="${not empty itemValue ? itemValue :'code'}"
-                itemLabel="${not empty itemLabel ? itemLabel :'name'}" />
+            <form:options items="${items}" itemValue="${not empty itemValue ? itemValue :'code'}" itemLabel="${not empty itemLabel ? itemLabel :'name'}" />
         </form:select>
         <span class="skip" style="display: none;"> <form:errors path="${path}" />
         </span>

@@ -154,7 +154,7 @@ body { color: #000; }
 #shipping-methods h3 { font-size: 14px; }
 #shipping-methods h3 strong { font-weight: bold; }
 #main-wrapper.co #shipping-methods label { margin-bottom: 20px; }
-#newBillingAddressFields { border-top: 1px dotted #969696; padding-top: 20px; }
+/*#newBillingAddressFields { border-top: 1px dotted #969696; padding-top: 20px; }*/
 
 /* Col 2 */
 #main-wrapper.co .payment-methods section { margin-bottom: 20px; }
