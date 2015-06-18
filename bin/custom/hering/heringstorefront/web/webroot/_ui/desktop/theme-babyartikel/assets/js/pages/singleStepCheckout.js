@@ -138,7 +138,7 @@ $(document).ready(function() {
 	});
 	
 	/* Applies or removes voucher */
-	 $('form#paymentDetailsForm').find('.applyVC').click(function() {
+	 $('div#voucherModal').find('.applyVC').click(function() {
 		 var url = $(this).siblings('input[type=hidden][name=applyVcUrl]').val();
 		 var vrc = $('input[type=text][name=voucher]').val();
 		 vrc = vrc === '' ? $('input[type=hidden][name=vcCode]').val() : vrc;

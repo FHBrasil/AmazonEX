@@ -28,7 +28,7 @@
 		    <input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
 		    <c:if test="${paymentMode.active}">		    
 			    <div class="radio">
-					<input type="radio" name="paymentMode" value="${paymentMode.code}" ${checked} id="${paymentMode.name}" class="closePayments" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
+					<input type="radio" name="paymentMode" value="${paymentMode.code}" id="${paymentMode.name}" class="closePayments" ${paymentMode.code == 'Advance' ? 'checked' : ''} data-toggle="collapse" data-target="${sharp}${paymentMode.code}" required>
 					<label class="btn btn-default btn-pay150526 closePayments ${paymentMode.code}" for="${paymentMode.name}" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
 					</label>
 				</div>
@@ -52,10 +52,10 @@
 </c:if>
 
 <div class="col-xs-12 charge150127">
-	<a class="btn btn-link fox24gif150217" href="#cartModal" data-toggle="modal">Punkte einl&ouml;sen?</a>
+	<a class="btn btn-link fox24gif150217" href="#cartModal" data-toggle="modal"><spring:theme code="checkout.single.redeemPoints" />?</a>
 </div>
 <div class="col-xs-12 charge150127">
-	<a class="btn btn-link" href="#voucherModal" data-toggle="modal">Gutschein einl&ouml;sen?</a>
+	<a class="btn btn-link" href="#voucherModal" data-toggle="modal"><spring:theme code="checkout.single.redeemVoucher" />?</a>
 </div>
 <div class="clearfix"></div>
 
@@ -64,21 +64,23 @@
     	<div class="modal-content">
         	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title fox24150217">Punkte einl&ouml;sen</h4>
+                <h4 class="modal-title fox24150217"><spring:theme code="checkout.single.redeemPoints" /></h4>
             </div>
             <div class="modal-body">
-            	<p>Sie haben aktuell <b>2359 Punkte</b> auf Ihrem Kundenkonto. Wieviele Punkte m&ouml;chten Sie jetzt einl&ouml;sen?</p>
+            	<p><spring:theme code="checkout.single.youCurrentlyHave" />&nbsp;<b><spring:theme code="checkout.single.xPoints" /></b>&nbsp;
+            	<spring:theme code="checkout.single.howManyPointsYouWant" /></p>
 				<form>
 					<div class="form-group">
-						<label for="inputPoints">Einzul&ouml;sende Punkte</label>
-						<input type="number" min="0" max="2359" value="2359" class="form-control" id="inputPoints">
+						<label for="inputPoints"><spring:theme code="checkout.single.redeemablePoints" /></label>
+						<input type="number" min="0" max="2359" class="form-control" id="inputPoints" required="required">
 					</div>
 				</form>
-				<p><small><b>Sind Sie sicher?</b> Ihnen fehlen nur noch 641 Punkte zum goldenen DHL-Fuchs, dann erhalten Sie kostenlosen Versand f&uuml;r alle Bestellungen.</small></p>
+				<p><small><b><spring:theme code="checkout.single.youAreSure" /></b>&nbsp;
+				<spring:theme code="checkout.single.textBonusPoint" /></small></p>
             </div>
             <div class="modal-footer">
-            	<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-                <button type="button" class="btn btn-primary">Punkte einl&ouml;sen</button>
+            	<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
+                <button type="button" class="btn btn-primary"><spring:theme code="checkout.single.redeemPoints" /></button>
             </div>
         </div>
     </div>
@@ -88,18 +90,18 @@
     	<div class="modal-content">
         	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Gutschein einl&ouml;sen</h4>
+                <h4 class="modal-title"><spring:theme code="checkout.single.redeemVoucher" /></h4>
             </div>
-            <div class="modal-body">
-				<form>
-					<div class="form-group">
-						<formElement:formInputBox idKey="voucher" labelKey="Gutscheincode eingeben:" path="voucher"
-                            inputCSS="form-control text required-voucher" mandatory="false" />
-					</div>
-				</form>
+            <div class="modal-body">				
+				<div class="form-group">
+					<formElement:formInputBox idKey="voucher" labelKey="checkout.single.enterCouponCode" path="voucher"
+                    	inputCSS="form-control text required-voucher" mandatory="false" />
+				</div>
          	</div>
             <div class="modal-footer">
-            	<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+            	<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
+            	<input type="hidden" name="applyVcUrl" value="${request.contextPath}/checkout/single/remove-vc/" />
+            	<input type="hidden" name="vcCode" value="${appliedValeCreditoCode}" />
             	<input type="hidden" name="applyVcUrl" value="${request.contextPath}/checkout/single/apply-vc/" /> 
             	<a href="#" class="btn btn-primary applyVC btn-voucher"> 
             		<spring:theme code="checkout.single.payment.redeemValeCredito" />
