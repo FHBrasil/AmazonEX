@@ -56,7 +56,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 	{
 		LOG.info("NewsletterAddon Controller: " +subscription);
 		
-		final CustomerData currentCustomerData = customerFacade.getCurrentCustomer();		
+		final CustomerData currentCustomerData = getCustomerFacade().getCurrentCustomer();		
 		final NewsletterSubscriptionData data = new NewsletterSubscriptionData();
 		
 		data.setFirstName(currentCustomerData.getFirstName());
@@ -66,8 +66,6 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		data.setTitleCode("Mr");
 		//data.setTitleCode(currentCustomerData.getTitleCode());
 		
-		
-		//arrumar estado do checkbox
 		if (subscription)
 		{	
 			try
@@ -126,8 +124,23 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		data.setTitleCode(titleCode);
 		
 		LOG.info(" NewsletterAddon Controller: " +firstName+" - "+lastName+" - "+email+" - "+titleCode+" - "+genderCode);
-		
+
 		try
+		{
+			getNewsletterSubscriptionFacade().subscribe(data);
+			final String message = getMessageSource().getMessage("text.fliegercommerce.texto125", null, getI18nService().getCurrentLocale());
+			//Cadastrado com sucesso!
+			return message;
+		}
+		catch (DuplicatedNewsletterSubscriptionException e)
+		{
+			final String message = getMessageSource().getMessage("text.fliegercommerce.texto124", null, getI18nService().getCurrentLocale());
+			//E-mail ja cadastrado
+			return message;		
+		}
+	
+		
+/*		try
 		{
 			getNewsletterSubscriptionFacade().subscribe(data);
 			redirectAttributes.addFlashAttribute("newsletterregistration", Boolean.TRUE);
@@ -148,7 +161,9 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 
 		final String message = getMessageSource().getMessage("text.fliegercommerce.texto125", null, getI18nService().getCurrentLocale());
 		//Cadastrado com sucesso!
-		return message;
+		return message;*/
+		
+		
 	}
 
 	
