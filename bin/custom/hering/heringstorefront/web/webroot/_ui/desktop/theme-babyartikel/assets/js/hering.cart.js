@@ -4,8 +4,7 @@ hering.cart = {
 
 		var entryAtual = "";
 		
-		 $('#cart table tbody tr').hover(function(a){
-
+		 $('#cart table tbody tr, .list150608 li').hover(function(a){
 			entryAtual = ($(this).attr('id'));
 			
 			$("#updateCartForm" + entryAtual + " .control-down, .control-up").on("click",function(){

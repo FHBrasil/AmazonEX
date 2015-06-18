@@ -6,9 +6,11 @@ package br.hering.checkout.controllers.pages;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateQuantityForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.PlaceOrderForm;
 import de.hybris.platform.catalog.constants.CatalogConstants.Config;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.commercefacades.order.data.OrderEntryData;
 import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
@@ -44,6 +46,7 @@ import de.hybris.platform.util.localization.Localization;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.SerializationUtils;
@@ -74,6 +77,9 @@ import br.hering.facades.order.data.VoucherPaymentInfoData;
 import br.hering.facades.voucher.HeringVoucherFacade;
 import br.hering.heringstorefrontcommons.forms.HeringAddressForm;
 import br.hering.heringstorefrontcommons.forms.HeringPaymentDetailsForm;
+import br.hering.storefront.controllers.ControllerConstants;
+import de.hybris.platform.commercefacades.order.data.CartModificationData;
+import org.springframework.validation.ObjectError;
 
 import com.flieger.payment.data.AdvancePaymentInfoData;
 import com.flieger.payment.data.BoletoPaymentInfoData;
@@ -223,6 +229,7 @@ public class HeringSingleStepCheckoutController extends
 		final HeringAddressForm heringBillingAddressForm = getPreparedAddressForm();
 		heringBillingAddressForm.setBilling(true);
 		model.addAttribute("cartData", cartData);
+		createProductList(model);
 		model.addAttribute("paymentDetailsForm", paymentDetailsForm);
 		if (!model.containsAttribute("heringAddressForm")) {
 			model.addAttribute("heringAddressForm", heringAddressForm);
@@ -231,6 +238,7 @@ public class HeringSingleStepCheckoutController extends
 		model.addAttribute("deliveryAddresses",
 				getDeliveryAddresses(selectedDeliveryAddress));
 		model.addAttribute("selectedDeliveryAddress", selectedDeliveryAddress);
+		model.addAttribute("addressData", getUserFacade().getAddressBook());
 		model.addAttribute("noAddress", Boolean.valueOf(hasNoDeliveryAddress()));
 		model.addAttribute("showSaveToAddressBook", Boolean.TRUE);
 		model.addAttribute("deliveryMethods", getDeliveryModes());
@@ -608,6 +616,104 @@ public class HeringSingleStepCheckoutController extends
 			return Boolean.FALSE.booleanValue();
 	}
 	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String updateCartQuantities(@RequestParam("entryNumber") final long entryNumber, final Model model,
+			@Valid final UpdateQuantityForm form, final BindingResult bindingResult, final HttpServletRequest request,
+			final RedirectAttributes redirectModel) throws CMSItemNotFoundException
+	{
+		if (bindingResult.hasErrors())
+		{
+			for (final ObjectError error : bindingResult.getAllErrors())
+			{
+				if (error.getCode().equals("typeMismatch"))
+				{
+					GlobalMessages.addErrorMessage(model, "basket.error.quantity.invalid");
+				}
+				else
+				{
+					GlobalMessages.addErrorMessage(model, error.getDefaultMessage());
+				}
+			}
+		}
+		else if (cartFacade.getSessionCart().getEntries() != null)
+		{
+			try
+			{
+				final CartModificationData cartModification = cartFacade.updateCartEntry(entryNumber, form.getQuantity().longValue());
+				if (cartModification.getQuantity() == form.getQuantity().longValue())
+				{
+					// Success
+
+					if (cartModification.getQuantity() == 0)
+					{
+						// Success in removing entry
+						GlobalMessages
+								.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.remove");
+					}
+					else
+					{
+						// Success in update quantity
+						GlobalMessages
+								.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.update");
+					}
+				}
+				else if (cartModification.getQuantity() > 0)
+				{
+					// Less than successful
+					GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER,
+							"basket.page.message.update.reducedNumberOfItemsAdded.lowStock", new Object[]
+							{ cartModification.getEntry().getProduct().getName(), cartModification.getQuantity(), form.getQuantity(),
+									request.getRequestURL().append(cartModification.getEntry().getProduct().getUrl()) });
+				}
+				else
+				{
+					// No more stock available
+					GlobalMessages.addFlashMessage(
+							redirectModel,
+							GlobalMessages.ERROR_MESSAGES_HOLDER,
+							"basket.page.message.update.reducedNumberOfItemsAdded.noStock",
+							new Object[]
+							{ cartModification.getEntry().getProduct().getName(),
+									request.getRequestURL().append(cartModification.getEntry().getProduct().getUrl()) });
+				}
+
+				// Redirect to the cart page on update success so that the browser doesn't re-post again
+
+				final String referer = request.getHeader("Referer");
+				  if (StringUtils.isNotBlank(referer))
+				  {
+				   return REDIRECT_PREFIX + referer;
+				  }
+				
+				return REDIRECT_PREFIX + "/cart";
+			}
+			catch (final CommerceCartModificationException ex)
+			{
+				LOG.warn("Couldn't update product with the entry number: " + entryNumber + ".", ex);
+			}
+		}
+
+		prepareDataForPage(model);
+		return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.SingleStepCheckoutPage;
+	}
+	
+	protected void createProductList(final Model model){
+		final CartData cartData = getCheckoutFacade().getCheckoutCart();
+		boolean hasPickUpCartEntries = false;
+		if (cartData.getEntries() != null && !cartData.getEntries().isEmpty())
+		{
+			for (final OrderEntryData entry : cartData.getEntries())
+			{
+				if (!hasPickUpCartEntries && entry.getDeliveryPointOfService() != null)
+				{
+					hasPickUpCartEntries = true;
+				}
+				final UpdateQuantityForm uqf = new UpdateQuantityForm();
+				uqf.setQuantity(entry.getQuantity());
+				model.addAttribute("updateQuantityForm" + entry.getEntryNumber(), uqf);
+			}
+		}
+	}
 	
 	/**
 	 * This is needed to override HeringMultiStepCheckout Mapping

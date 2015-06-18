@@ -21,7 +21,8 @@
     </header>
     <div class="section-container">
     	<section id="selected-address">
-        	<c:if test="${not empty selectedDeliveryAddress.id}">
+    		<c:choose>
+        	<c:when test="${not empty selectedDeliveryAddress.id}">
                 <div class="address-info">
                 	<span id="e-tipo" class="h4"><b>${selectedDeliveryAddress.type.code}</b></span><br /><br />
                     <input type="hidden" class="e-code" value="${selectedDeliveryAddress.id}"/>
@@ -55,12 +56,16 @@
                     --%>
                     <div class="checkbox">
 	                    <label>
-	                        <input type="checkbox" name="billing" id="differentAddress" checked="checked"/>
+	                        <input type="checkbox" name="billing" id="differentAddress"/>
 	                    	<spring:theme code="checkout.single.address.useDeliveryAddressAsBillingAddress"/>
 	                    </label> 
                     </div>                   
                 </div>
-			</c:if>
+			</c:when>
+				<c:otherwise>
+					<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
+				</c:otherwise>
+			</c:choose>
             <div id="deliveryAddressModal" class="modal fade">
             	<div class="modal-dialog">
             		<div class="modal-content">
@@ -73,7 +78,7 @@
 								<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
 							</div>
                 			<form id="selectAddress">
-                				<c:forEach items="${deliveryAddresses}" var="deliveryAddress" varStatus="status">
+                				<c:forEach items="${addressData}" var="deliveryAddress" varStatus="status">
                 					<div class="radio">
 										<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}">
 										<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">

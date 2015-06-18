@@ -21,6 +21,8 @@
 .list150608 {margin:0;padding:0;list-style-type:none;}
 .item150608, .delivery160608 {border:1px solid #f5f5f5;border-left: 5px solid #D6E9C6;padding:5px;border-bottom: none;}
 .item150608.nostock, .delivery160608.nostock {border-left:5px solid #e6e6e6;}
+.itemdata150608 .col-xs-4 {padding: 6px 12px;height: 34px;}
+.itemdata150608 .col-xs-4:first-child {padding: 0 0 0 15px;}
 .delivery160608 {background-color: #DFF0D8;padding:0;padding-left:5px;line-height:30px;}
 .delivery160608.nostock {background-color: #f5f5f5;}
 .list150608 li:first-child {border-radius:5px 5px 0 0}
