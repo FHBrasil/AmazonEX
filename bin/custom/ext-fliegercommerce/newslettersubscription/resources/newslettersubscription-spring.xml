@@ -80,15 +80,10 @@
 		</property>
 	</bean>
 	
-<!--  	<alias name="defaultCustomerConverter" alias="customerConverter"/>
-	<bean id="defaultCustomerConverter" parent="abstractPopulatingConverter">
-		<lookup-method name="createTarget" bean="customerData"/>
-		<property name="populators">
-			<list>
-				<ref bean="customerNewsletterSubscriptionsPopulator"/> 
-			</list>
-		</property>
-	</bean> -->
 	
+	<bean parent="modifyPopulatorList">
+        <property name="list" ref="customerConverter" />
+        <property name="add" ref="customerNewsletterSubscriptionsPopulator" />
+    </bean>
 	
 </beans>
