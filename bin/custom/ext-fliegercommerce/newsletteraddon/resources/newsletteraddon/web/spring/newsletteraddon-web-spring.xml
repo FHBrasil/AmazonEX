@@ -65,17 +65,4 @@
 		<property name="userService" ref="userService" />
 		<property name="customerFacade" ref="customerFacade" />
 	</bean>
-	
-	
-	
-	<alias name="defaultCustomerConverter" alias="customerConverter"/>
-	<bean id="defaultCustomerConverter" parent="abstractPopulatingConverter">
-		<lookup-method name="createTarget" bean="customerData"/>
-		<property name="populators">
-			<list>
-				<ref bean="customerNewsletterSubscriptionsPopulator"/> 
-			</list>
-		</property>
-	</bean>
-
 </beans>

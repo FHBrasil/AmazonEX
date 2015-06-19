@@ -58,7 +58,6 @@
 		<property name="newsletterSubscriptionModelToDataConverter" ref="newsletterSubscriptionModelToDataConverter" />	
 	</bean>
 	
-
 	<!-- Converters -->
 	<alias name="defaultNewsletterSubscriptionDataToModelConverter" alias="newsletterSubscriptionDataToModelConverter" />
 	<bean id="defaultNewsletterSubscriptionDataToModelConverter" parent="abstractPopulatingConverter">
@@ -79,16 +78,9 @@
 			</list>
 		</property>
 	</bean>
-	
-<!--  	<alias name="defaultCustomerConverter" alias="customerConverter"/>
-	<bean id="defaultCustomerConverter" parent="abstractPopulatingConverter">
-		<lookup-method name="createTarget" bean="customerData"/>
-		<property name="populators">
-			<list>
-				<ref bean="customerNewsletterSubscriptionsPopulator"/> 
-			</list>
-		</property>
-	</bean> -->
-	
-	
+
+	<bean parent="modifyPopulatorList">
+        <property name="list" ref="customerConverter" />
+        <property name="add" ref="customerNewsletterSubscriptionsPopulator" />
+    </bean>
 </beans>
