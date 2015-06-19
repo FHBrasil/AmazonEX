@@ -21,8 +21,11 @@
     <div class="col-sm-4">
     	<single-checkout-hering:addressFormSelector regions="${regions}" country="${country}" />
         <single-checkout-hering:addEditBillingAddress regions="${regions}" country="${country}" />
-        <single-checkout-hering:deliveryMethodSelector deliveryMethods="${deliveryMethods}"
-        	selectedDeliveryMethodId="${cartData.deliveryMode.code}" />
+        <%-- TODO parametrizar condicao --%>
+        <c:if test="${false}">
+	        <single-checkout-hering:deliveryMethodSelector deliveryMethods="${deliveryMethods}"
+	        	selectedDeliveryMethodId="${cartData.deliveryMode.code}" />
+        </c:if>
     </div>
      <div class="col-sm-4 payments150526">
    	 	<form:form method="post" commandName="paymentDetailsForm" class="create_update_payment_form display-inline" 

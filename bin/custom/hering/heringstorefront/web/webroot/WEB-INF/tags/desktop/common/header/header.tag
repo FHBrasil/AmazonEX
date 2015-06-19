@@ -25,7 +25,7 @@
                 <cms:component component="${link}" element="" />
             </cms:pageSlot>
         </div>
-        <div class="col-sm-4 text-center hidden-xs">
+        <div class="col-sm-4 text-center hidden-xs" style="margin-top: -20px;">
             <h1>
                 <a href="/" title="${siteName}"><img src="/_ui/desktop/theme-babyartikel/assets/images/logo.svg" alt="${siteName}" height="70" width="220"></a>
             </h1>

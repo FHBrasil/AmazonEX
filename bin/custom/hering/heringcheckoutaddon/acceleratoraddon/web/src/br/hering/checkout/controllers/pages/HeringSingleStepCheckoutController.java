@@ -231,9 +231,9 @@ public class HeringSingleStepCheckoutController extends
 		model.addAttribute("cartData", cartData);
 		createProductList(model);
 		model.addAttribute("paymentDetailsForm", paymentDetailsForm);
-		if (!model.containsAttribute("heringAddressForm")) {
+		//if (!model.containsAttribute("heringAddressForm")) {
 			model.addAttribute("heringAddressForm", heringAddressForm);
-		}
+		//}
 		model.addAttribute("heringBillingAddressForm", heringBillingAddressForm);
 		model.addAttribute("deliveryAddresses",
 				getDeliveryAddresses(selectedDeliveryAddress));
@@ -314,16 +314,16 @@ public class HeringSingleStepCheckoutController extends
 		getAddressValidator().validate(heringAddressForm, bindingResult, model);
 		if (!bindingResult.hasErrors()) {
 			//if we are editing one address, turn it into inactive and create a new one
-			if(StringUtils.isBlank(heringAddressForm.getAddressId())){
+			//if(StringUtils.isBlank(heringAddressForm.getAddressId())){
 				this.saveDeliveryAddress(heringAddressForm);
-			} else {
+			/*} else {
 				AddressData addressData = new AddressData();
 				addressData.setId(heringAddressForm.getAddressId());
 				getHeringUserFacade().removeAddress(addressData);
 
 				heringAddressForm.setAddressId(null);
 				this.saveDeliveryAddress(heringAddressForm);
-			}
+			}*/
 		}		
 		return this.prepareSingleStepCheckout(model);
 	}
