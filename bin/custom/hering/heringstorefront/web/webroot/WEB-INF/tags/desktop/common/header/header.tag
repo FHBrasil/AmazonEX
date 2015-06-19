@@ -72,13 +72,16 @@
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+            <%--<ul class="nav navbar-nav">
                 <li><a href="#">Unterwegs</a></li>
                 <li><a href="#">F&uuml;ttern &amp; Pflege</a></li>
                 <li><a href="#">Wohnen &amp; Schlafen</a></li>
                 <li><a href="#">Kleidung</a></li>
                 <li><a href="#">Spielen</a></li>
-            </ul>
+            </ul>--%>
+            <cms:pageSlot position="MainMenu" var="component">
+                <cms:component component="${component}" />
+            </cms:pageSlot>
             <%-- searchboxcomponent.jsp --%> 
             <cms:pageSlot position="SearchBox" var="component">
                 <cms:component component="${component}" />
