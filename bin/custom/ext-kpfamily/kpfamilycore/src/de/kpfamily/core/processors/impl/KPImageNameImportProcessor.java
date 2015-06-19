@@ -16,12 +16,11 @@ import de.hybris.platform.impex.jalo.imp.ValueLine;
 import de.hybris.platform.jalo.Item;
 
 /**
- * Renames the given image name.
- * !!! Important: IT DOES NOT IMPORT (OR PROCESS) THE GIVEN IMPEX FILE !!!
+ * Renames the given image name, and copy it to the FTP folder.
+ * !!! Important: IT DOES NOT IMPORT (OR PROCESS) THE GIVEN VALUE LINE TO THE SYSTEM !!!
  * The impex file to use with this class:
- * First we need to export, in hybris 4, the Products with the detail
- * picture which is not
- * in the correct naming pattern:
+ * First we need to export, in hybris 4, the Products with the detail picture which is not in the
+ * correct naming pattern:
  * 
  * <pre>
  * #-----------------------------------------------------------
@@ -33,7 +32,7 @@ import de.hybris.platform.jalo.Item;
  * #-----------------------------------------------------------
  * </pre>
  * 
- * And then reimport in hybris 5:
+ * And then reimport it in hybris 5 like this:
  * 
  * <pre>
  * #-----------------------------------------------------------
@@ -49,9 +48,9 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
     private static final Logger LOG = Logger.getLogger(KPImageNameImportProcessor.class);
     //
     // production / acceptance
-    // private static final String DESTINATION_FOLDER =
-    // "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
-    private static final String DESTINATION_FOLDER = "/fotos/";
+    private static final String DESTINATION_FOLDER =
+            "/HYBRIS/fliegercommerce/medias/ftp/babyartikel/";
+    // private static final String DESTINATION_FOLDER = "/fotos/";
     // local:
     // private static final String DESTINATION_FOLDER = "/workspace/medias/ftp/babyartikel/";
     // private static final String REGEX_IGNORE_PATTERN =
@@ -69,13 +68,23 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
     
     
     /**
+     * Process each Item in the impex file.
+     * Renames the image file, if necessary, and copy it to the FTP folder, to be processed by a
+     * Job.
      * 
+     * @param valueLine
+     *            The value line in the impex file.
      */
     @Override
     public Item processItemData(ValueLine valueLine) throws ImpExException {
         if (reader.isSecondPass()) {
             LOG.info("Second pass, ignoring items...");
-            reader.discardNextLine();
+            try {
+                // Closes the reader, because already copied the imge files in first pass.
+                reader.close();
+            } catch (IOException e) {
+                // Nothing to do in this case...
+            }
             return null;
         }
         String productCode = valueLine.getValueEntry(1).getCellValue();
@@ -90,6 +99,7 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
                 copyFile(sourceFile, destinationFile);
             }
         }
+        // Ignores the value line and does not import it to the system.
         return null;
     }
     
@@ -97,6 +107,9 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
     /**
      * Renames the given file name to a new name, if necessary, according to
      * the new image file pattern: productcode_image_name.jpg
+     * Note: Renames the file IF the given product code is different from the product code of the
+     * file (if the file has a product code. If it exists, it should not be different, but, you,
+     * shit happens...)
      * 
      * @param sourceFilePath
      *            the image name that already exists.
@@ -110,9 +123,8 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
         String fileAbsolutePath = sourceFile.getAbsolutePath();
         String sourceFilename = fileAbsolutePath.split("/")[fileAbsolutePath.split("/").length - 1];
         String productCodeInFileName = sourceFilename.split("_")[0];
-        // If the image file name does not have a product code, renames the
-        // file to "productcode_name.jpg". Otherwise it just modify the
-        // image folder.
+        // If the image file name does not have a product code, renames the file to
+        // "productcode_name.jpg". Otherwise it just modify the image folder.
         String destinationFilename =
                 (productCode.equals(productCodeInFileName) ? "" : productCode + "_")
                         + sourceFilename;
@@ -122,7 +134,7 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
     
     
     /**
-     * Move a file from source to destination.
+     * Copy a file from source to destination.
      * 
      * @param source
      *            file to be moved
@@ -150,6 +162,9 @@ public class KPImageNameImportProcessor extends MultiThreadedImportProcessor {
     }
     
     
+    /**
+     * 
+     */
     public ImpExImportReader getReader() {
         return this.reader;
     }
