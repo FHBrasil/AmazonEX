@@ -1,5 +1,7 @@
 package com.fliegersoftware.addons.newsletteraddon.controllers.cms;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +18,7 @@ import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionDat
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
+import com.fliegersoftware.newslettersubscription.jalo.NewsletterSubscription;
 
 import de.hybris.platform.addonsupport.controllers.page.AbstractAddOnPageController;
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
@@ -43,6 +46,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		
 	private CustomerFacade customerFacade;
 	
+	
 	//private UserFacade userFacade;
 
 	
@@ -56,49 +60,77 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 	{
 		LOG.info("NewsletterAddon Controller: " +subscription);
 		
-		final CustomerData currentCustomerData = getCustomerFacade().getCurrentCustomer();		
+		//final CustomerData currentCustomerData = getCustomerFacade().getCurrentCustomer();		
+		
+		final CustomerData customer = getCustomerFacade().getCurrentCustomer();
 		final NewsletterSubscriptionData data = new NewsletterSubscriptionData();
 		
-		data.setFirstName(currentCustomerData.getFirstName());
-		data.setLastName(currentCustomerData.getLastName());
-		data.setEmail(currentCustomerData.getUid());
-		data.setGenderCode(currentCustomerData.getGender().getCode());
-		data.setTitleCode("Mr");
-		//data.setTitleCode(currentCustomerData.getTitleCode());
-		
-		if (subscription)
-		{	
-			try
+		if (customer != null)
+		{
+			
+			data.setFirstName(customer.getFirstName());
+			data.setLastName(customer.getLastName());
+			
+			if (customer.getUid()!=null)
 			{
-				getNewsletterSubscriptionFacade().subscribe(data);
-
-				final String message = getMessageSource().getMessage("text.fliegercommerce.texto127", null, getI18nService().getCurrentLocale());
-				//Você se cadastrou na newsletter
-				return message;
-			}
-			catch (DuplicatedNewsletterSubscriptionException e)
-			{
-				//do nothing
-			}
-								
-		}		
-		
-		else
-		{		
-			try
-			{
-				getNewsletterSubscriptionFacade().unsubscribe(data);	
-				
-				final String message = getMessageSource().getMessage("text.fliegercommerce.texto126", null, getI18nService().getCurrentLocale());
-				//Você não se cadastrou na newsletter
-				return message;
-			}
-			catch (NewsletterSubscriptionNotFound e)
-			{
-				//do nothing
+				data.setEmail(customer.getUid());
 			}
 			
+			
+			if (customer.getGender()!=null)
+			{
+				data.setGenderCode(customer.getGender().getCode());
+			}
+			
+			data.setTitleCode("Mr");
+			//data.setTitleCode(currentCustomerData.getTitleCode());
+			
+			final String storeCode = getNewsletterSubscriptionFacade().getCurrentBaseStoreCode();
+			data.setStoreCode(storeCode);
+			
+			final String languageIsoCode = getCurrentLanguage().getIsocode();
+			data.setLanguageIsoCode(languageIsoCode);
+			
+			//final CustomerData customer = getCustomerFacade().getCurrentCustomer();
+			data.setCustomer(customer);
+						
+			if (subscription)
+			{	
+				try
+				{
+					getNewsletterSubscriptionFacade().subscribe(data);
+
+					final String message = getMessageSource().getMessage("text.fliegercommerce.texto127", null, getI18nService().getCurrentLocale());
+					//Você se cadastrou na newsletter
+					return message;
+				}
+				catch (DuplicatedNewsletterSubscriptionException e)
+				{
+					//do nothing
+				}
+									
+			}		
+			
+			else
+			{		
+				try
+				{
+					getNewsletterSubscriptionFacade().unsubscribe(data);	
+					
+					final String message = getMessageSource().getMessage("text.fliegercommerce.texto126", null, getI18nService().getCurrentLocale());
+					//Você não se cadastrou na newsletter
+					return message;
+				}
+				catch (NewsletterSubscriptionNotFound e)
+				{
+					//do nothing
+				}
+				
+			}
+			
+			
 		}
+		
 			
 		return null;
 	}
@@ -122,6 +154,16 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		data.setEmail(email);
 		data.setGenderCode(genderCode);
 		data.setTitleCode(titleCode);
+				
+		final String storeCode = getNewsletterSubscriptionFacade().getCurrentBaseStoreCode();
+		data.setStoreCode(storeCode);
+		
+		final String languageIsoCode = getCurrentLanguage().getIsocode();
+		data.setLanguageIsoCode(languageIsoCode);
+		
+		//final CustomerData customer = getCustomerFacade().getCurrentCustomer();
+		//data.setCustomer(customer);
+		
 		
 		LOG.info(" NewsletterAddon Controller: " +firstName+" - "+lastName+" - "+email+" - "+titleCode+" - "+genderCode);
 

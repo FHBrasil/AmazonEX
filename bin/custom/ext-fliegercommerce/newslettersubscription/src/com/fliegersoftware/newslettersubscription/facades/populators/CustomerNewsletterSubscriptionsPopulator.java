@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionManagementParagraphComponentRenderer;
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 

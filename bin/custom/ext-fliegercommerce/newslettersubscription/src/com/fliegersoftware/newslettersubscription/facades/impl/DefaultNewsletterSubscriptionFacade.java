@@ -6,6 +6,7 @@ package com.fliegersoftware.newslettersubscription.facades.impl;
 import de.hybris.platform.commerceservices.i18n.CommerceCommonI18NService;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.store.services.BaseStoreService;
+//import net.sf.antcontrib.inifile.IniFileTask.Get;
 
 import org.springframework.beans.factory.annotation.Required;
 
@@ -32,17 +33,13 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	private BaseStoreService baseStoreService;
 	
 	private CommerceCommonI18NService commerceCommonI18NService;
+	
 		
 
 	@Override
 	public NewsletterSubscriptionData subscribe(final NewsletterSubscriptionData subscription) throws DuplicatedNewsletterSubscriptionException
 	{	
-		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
-		subscription.setStoreCode(storeCode);
-		
-		final String languageIsoCode = getCommerceCommonI18NService().getCurrentLanguage().getIsocode();
-		subscription.setLanguageIsoCode(languageIsoCode);
-		
+				
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);
 		getNewsletterSubscriptionService().subscribe(model);
@@ -54,12 +51,7 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	@Override
 	public NewsletterSubscriptionData updateSubscription(final NewsletterSubscriptionData subscription) throws NewsletterSubscriptionNotFound
 	{
-		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
-		subscription.setStoreCode(storeCode);
-		
-		final String languageIsoCode = getCommerceCommonI18NService().getCurrentLanguage().getIsocode();
-		subscription.setLanguageIsoCode(languageIsoCode);
-		
+
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
 		getNewsletterSubscriptionService().updateSubscription(model);
@@ -71,18 +63,25 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	@Override
 	public void unsubscribe(final NewsletterSubscriptionData subscription) throws NewsletterSubscriptionNotFound
 	{
-		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
-		subscription.setStoreCode(storeCode);
-		
-		final String languageIsoCode = getCommerceCommonI18NService().getCurrentLanguage().getIsocode();
-		subscription.setLanguageIsoCode(languageIsoCode);
-		
+
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
 		getNewsletterSubscriptionService().unsubscribe(model);
 		
 	}
 
+	
+	/**
+	 * @return the current storeCode
+	 */
+	public String getCurrentBaseStoreCode()
+	{
+		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
+		
+		return storeCode;			
+	
+	}
+	
 
 	/**
 	 * @return the newsletterSubscriptionService

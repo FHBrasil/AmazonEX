@@ -55,15 +55,9 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
 		
 		String nome = customer.getFirstName();
 		String sobrenome = customer.getLastName();
-		LOG.info("Nome: " + nome + " lastname: " + sobrenome);
+		LOG.info("Name: " + nome + " lastname: " + sobrenome);
 		List<NewsletterSubscriptionData> subscriptions = customer.getNewsletterSubscriptions();
-		
-				
-    	///////////////////List<NewsletterSubscriptionData> subscriptions = getCustomerData().getNewsletterSubscriptions();		
-    	///////////////////String name = getCustomerData().getFirstName();
-    	///////////////////String last = getCustomerData().getLastName();
-    	///////////////////LOG.info("Nome: " + name + " lastname: " + last);
-    	
+
     	if (subscriptions==null){
     		LOG.info("null subscription");
     	}
