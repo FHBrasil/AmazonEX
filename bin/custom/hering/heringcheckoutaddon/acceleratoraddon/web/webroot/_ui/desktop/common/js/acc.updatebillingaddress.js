@@ -10,7 +10,7 @@ ACC.updatebillingaddress = {
 	updateBillingAddressForm: function ()
 	{
 		var newAddress = $('#differentAddress').attr("checked");
-		if (!newAddress)
+		if (newAddress)
 		{
 			$("#newBillingAddressFields").show();
 		}

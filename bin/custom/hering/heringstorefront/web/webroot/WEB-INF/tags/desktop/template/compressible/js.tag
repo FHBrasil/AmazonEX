@@ -92,6 +92,8 @@
     <script src="//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script>
 </c:if>
 <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
+	<script type="text/javascript" src="${commonResourcePath}/js/acc.cart.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/hering.cart.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/singleStepCheckout.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.silentorderpost.js"></script>
     <script type="text/javascript"

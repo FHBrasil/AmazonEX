@@ -68,32 +68,38 @@ $(document).ready(function() {
 	}
 	
 	
-	$('.btn-editar').click(function(e){ return;
-		e.preventDefault();
-		var selectedAddress = $('section#selected-address div.address-info');
-		$('#new-address form')[0].reset();
-		$('#new-address #new-addr-addressId').val($(selectedAddress).find('.e-code').text());
-		$('#new-address #new-addr-cep').val($(selectedAddress).find('.e-cep').text());
-		$('#new-address #new-addr-tipo').val($(selectedAddress).find('.e-tipo').text());
-		$('#new-address #new-addr-addr').val($(selectedAddress).find('.e-addr').text());
-		$('#new-address #new-addr-numero').val($(selectedAddress).find('.e-numero').text());
-		$('#new-address #new-addr-bairro').val($(selectedAddress).find('.e-bairro').text());
-		$('#new-address #new-addr-complemento').val($(selectedAddress).find('.e-complemento').text());
-		$('#new-address #new-addr-estado').val($(selectedAddress).find('.e-estado').text());
-		$('#new-address #new-addr-cidade').val($(selectedAddress).find('.e-cidade').text());
-		$('#new-address').slideDown('slow');
-		// mmuda o nome do botão de editar
-		// $('#new-address .btn-addr-cadastrar').html('Cadastrar e utilizar este endereço');
-	});
-
-	/*! Edits delivery address */
-	$('section#selected-address').find('div.address-info').find('div.btn-group')
-	.find('a.btn-editar').click(function() {
-		var url = contextPath + '/checkout/single/edit-delivery-address?';
-		var addressCodeParam = 'addressCode=' 
-				+ $('section#selected-address').find('div.address-info')
-					.find('input[type=hidden].e-code').val();
-		window.location = url + addressCodeParam;
+//	$('.btn-editar').click(function(e){ return;
+//		e.preventDefault();
+//		var selectedAddress = $('section#selected-address div.address-info');
+//		$('#new-address form')[0].reset();
+//		$('#new-address #new-addr-addressId').val($(selectedAddress).find('.e-code').text());
+//		$('#new-address #new-addr-cep').val($(selectedAddress).find('.e-cep').text());
+//		$('#new-address #new-addr-tipo').val($(selectedAddress).find('.e-tipo').text());
+//		$('#new-address #new-addr-addr').val($(selectedAddress).find('.e-addr').text());
+//		$('#new-address #new-addr-numero').val($(selectedAddress).find('.e-numero').text());
+//		$('#new-address #new-addr-bairro').val($(selectedAddress).find('.e-bairro').text());
+//		$('#new-address #new-addr-complemento').val($(selectedAddress).find('.e-complemento').text());
+//		$('#new-address #new-addr-estado').val($(selectedAddress).find('.e-estado').text());
+//		$('#new-address #new-addr-cidade').val($(selectedAddress).find('.e-cidade').text());
+//		$('#new-address').slideDown('slow');
+//		// mmuda o nome do botão de editar
+//		// $('#new-address .btn-addr-cadastrar').html('Cadastrar e utilizar este endereço');
+//	});
+//
+//	/*! Edits delivery address */
+//	$('section#selected-address').find('div.address-info').find('div.btn-group')
+//	.find('a.btn-editar').click(function() {
+//		var url = contextPath + '/checkout/single/edit-delivery-address?';
+//		var addressCodeParam = 'addressCode=' 
+//				+ $('section#selected-address').find('div.address-info')
+//					.find('input[type=hidden].e-code').val();
+//		window.location = url + addressCodeParam;
+//	});
+	
+	$('form#selectAddress').find('button.btn-primary').click(function(){		
+		var cod = $('input:radio[name=chooseDeliveryAddress]:checked').val();		
+		var url = contextPath + '/checkout/single/select-delivery-address/' + cod;
+		$('form#selectAddress').attr('action', url).submit();
 	});
 	
 	/*! Removes delivery address */
@@ -132,7 +138,7 @@ $(document).ready(function() {
 	});
 	
 	/* Applies or removes voucher */
-	 $('form#paymentDetailsForm').find('.applyVC').click(function() {
+	 $('div#voucherModal').find('.applyVC').click(function() {
 		 var url = $(this).siblings('input[type=hidden][name=applyVcUrl]').val();
 		 var vrc = $('input[type=text][name=voucher]').val();
 		 vrc = vrc === '' ? $('input[type=hidden][name=vcCode]').val() : vrc;
