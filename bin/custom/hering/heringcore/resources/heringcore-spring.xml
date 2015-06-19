@@ -568,18 +568,6 @@
 	<alias alias="productModelUrlResolver" name="heringProductModelUrlResolver"/>
 	<bean id="heringProductModelUrlResolver" class="br.hering.core.url.impl.HeringProductModelUrlResolver" parent="defaultProductModelUrlResolver"/>
 
-	<alias name="defaultNewsletterSubscriberFacade" alias="newsletterSubscriptionFacade"/>
-	<bean id="defaultNewsletterSubscriberFacade" class="com.flieger.facades.impl.DefaultNewsletterSubscriberFacade">
-		<property name="modelService" ref="modelService" />
-		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService" />
-	</bean>
-		
-	<alias name="defaultNewsletterSubscriptionService" alias="newsletterSubscriptionService"/>
-	<bean id="defaultNewsletterSubscriptionService" class="com.flieger.services.impl.DefaultNewsletterSubscriptionService">
-		<property name="modelService" ref="modelService" />
-		<property name="eventService" ref="eventService"/>
-		<property name="userService" ref="userService"/>
-	</bean>
 			
 	<!-- Dynamic Handlers -->
 	<bean id="HeringSizeVariantProduct_colorRGBAttributeHandler" class="br.hering.core.model.ProductColorRGBHandler" />

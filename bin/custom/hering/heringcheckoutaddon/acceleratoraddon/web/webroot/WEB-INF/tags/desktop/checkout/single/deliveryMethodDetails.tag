@@ -5,22 +5,24 @@
 <%@ attribute name="deliveryMethod" required="true"
     type="de.hybris.platform.commercefacades.order.data.DeliveryModeData"%>
 <%@ attribute name="isSelected" required="false" type="java.lang.Boolean"%>
-<label for="${deliveryMethod.code}"> <input type="radio" name="delivery_method"
-    id="${deliveryMethod.code}" value="${deliveryMethod.code}"
-    ${isSelected ? 'checked="checked"' : ''}>
-    <div class="desc">
-        <h3>
-            ${deliveryMethod.name} (${deliveryMethod.description}) <strong> <c:choose>
-                    <c:when
-                        test="${isVoucherFreeShipping && not empty cheaperDeliveryMode && deliveryMethod.code eq cheaperDeliveryMode.code}">
-                        <spring:theme code="order.free" text="FREE" />
-                    </c:when>
-                    <c:otherwise>
-                        <format:price priceData="${deliveryMethod.deliveryCost}"
-                            displayFreeForZero="TRUE" />
-                    </c:otherwise>
-                </c:choose>
-            </strong>
-        </h3>
-    </div>
-</label>
+
+<div class="radio">
+	<label for="${deliveryMethod.code}"> 
+		<input type="radio" name="delivery_method"
+		    id="${deliveryMethod.code}" value="${deliveryMethod.code}"
+		    ${isSelected ? 'checked="checked"' : ''}>
+	    	<p class="text-justify">		       
+		    	${deliveryMethod.name} (${deliveryMethod.description})
+		    	<strong>
+		    		<c:choose>
+		       			<c:when test="${isVoucherFreeShipping && not empty cheaperDeliveryMode && deliveryMethod.code eq cheaperDeliveryMode.code}">
+		                	<spring:theme code="order.free" text="FREE" />
+		                </c:when>
+		                <c:otherwise>
+		                	<format:price priceData="${deliveryMethod.deliveryCost}" displayFreeForZero="TRUE" />
+		                </c:otherwise>
+		            </c:choose>
+		        </strong>
+		    </p>    	
+	</label>
+</div>

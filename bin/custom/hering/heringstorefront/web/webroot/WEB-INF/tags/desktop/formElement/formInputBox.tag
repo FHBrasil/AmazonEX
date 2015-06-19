@@ -28,29 +28,21 @@
             </label>
         </c:if>
         <c:if test="${idKey == 'address.postcode'}">
-            <form:input cssClass="${inputCSS} ${mandatory ? 'required' : ''}" id="${idKey}"
-                path="${path}" maxlength="${size}" tabindex="${tabindex}"
-                autocomplete="${autocomplete}" />
+            <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" maxlength="${size}" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" />
         </c:if>
         <c:if test="${idKey == 'profile.birthday'}">
-            <form:input cssClass="${inputCSS} ${mandatory ? 'required' : ''}" id="${idKey}"
-                path="${path}" maxlength="10" tabindex="${tabindex}" autocomplete="${autocomplete}" />
+            <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" maxlength="10" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" />
         </c:if>
         <c:if test="${idKey == 'address.phone1' || idKey == 'address.phone2'}">
-            <form:input cssClass="${inputCSS} ${mandatory ? 'required' : ''}" id="${idKey}"
-                path="${path}" maxlength="11" tabindex="${tabindex}" autocomplete="${autocomplete}" />
+            <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" maxlength="11" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" />
         </c:if>
         <c:if
             test="${idKey != 'address.postcode' && idKey != 'address.phone1' && idKey != 'address.phone2' && idKey != 'profile.birthday'}">
             <c:if test="${not empty placeholder}">
-                <form:input cssClass="${inputCSS} ${mandatory ? 'required' : ''}" id="${idKey}"
-                    path="${path}" placeholder="${placeholder}" maxlength="${size}"
-                    tabindex="${tabindex}" autocomplete="${autocomplete}" />
+                <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" placeholder="${placeholder}" maxlength="${size}" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" />
             </c:if>
             <c:if test="${empty placeholder}">
-                <form:input cssClass="${inputCSS} ${mandatory ? 'required' : ''}" id="${idKey}"
-                    path="${path}" maxlength="${size}" tabindex="${tabindex}"
-                    autocomplete="${autocomplete}" />
+                <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" maxlength="${size}" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" />
             </c:if>
         </c:if>
         <c:if test="${!hideInputErrorOnField}">

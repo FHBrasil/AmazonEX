@@ -17,7 +17,6 @@ import java.util.Date;
 public class HeringRegisterForm extends RegisterForm
 {
 
-	private boolean subscribeNewsletter;
 	private String gender;
 
 	private String cpfcnpj;
@@ -40,22 +39,7 @@ public class HeringRegisterForm extends RegisterForm
 		this.pessoaFisica = pessoaFisica;
 	}
 
-	/**
-	 * @return the subscribeNewsletter
-	 */
-	public boolean isSubscribeNewsletter()
-	{
-		return subscribeNewsletter;
-	}
 
-	/**
-	 * @param subscribeNewsletter the subscribeNewsletter to set
-	 */
-	public void setSubscribeNewsletter(boolean subscribeNewsletter)
-	{
-		this.subscribeNewsletter = subscribeNewsletter;
-	}
-	
 	/**
 	 * @return the cpfcnpj
 	 */

@@ -54,15 +54,7 @@
                                     </c:if>
                                     <li><span class="label">E-mail:</span><span>${fn:escapeXml(customerData.displayUid)}</span></li>
                                     <li><span class="label"><spring:theme code="text.fliegercommerce.texto38"/></span>
-                                        <ul class="newsletters">
-                                            <c:forEach var="newsletter"
-                                                items="${customerData.newsletters}">
-                                                <c:if test="${fn:escapeXml(newsletter.receive)}">
-                                                    <li><spring:theme
-                                                            code="profile.subscribeNewsletter.${newsletter.baseStore}" /></li>
-                                                </c:if>
-                                            </c:forEach>
-                                        </ul></li>
+                                        
                                 </ul>
                                 <div class="btn-group">
                                     <a href="update-password" class="btn"><spring:theme code="text.fliegercommerce.texto39"/></a> <a

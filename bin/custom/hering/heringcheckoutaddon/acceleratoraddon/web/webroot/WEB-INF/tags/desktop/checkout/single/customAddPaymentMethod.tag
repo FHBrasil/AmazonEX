@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ attribute name="cartData" required="false"
-    type="de.hybris.platform.commercefacades.order.data.CartData"%>
+<%@ attribute name="cartData" required="false" type="de.hybris.platform.commercefacades.order.data.CartData"%>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="nav" tagdir="/WEB-INF/tags/desktop/nav"%>
@@ -13,14 +12,106 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-<%@ taglib prefix="multi-checkout"
-    tagdir="/WEB-INF/tags/addons/b2ccheckoutaddon/desktop/checkout/multi"%>
+<%@ taglib prefix="multi-checkout" tagdir="/WEB-INF/tags/addons/b2ccheckoutaddon/desktop/checkout/multi"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<header>
-    <h2>
-        <spring:theme code="checkout.single.payment.title" />
-    </h2>
-</header>
+<%@ taglib prefix="methodPayment" tagdir="/WEB-INF/tags/addons/heringcheckoutaddon/desktop/checkout/single"%>
+
+<h2>
+	<spring:theme code="checkout.single.payment.title" />
+</h2>
+<c:if test="${not empty paymentModes}">
+	<c:set var="sharp" value='#'/>
+	<form:form method="post" commandName="paymentDetailsForm" class="create_update_payment_form"
+            action="${request.contextPath}/checkout/single/custom-add-payment-method">
+	    <c:set var="deliveryAddress" value="${cartData.deliveryAddress}" />
+		<c:forEach items="${paymentModes}" var="paymentMode">
+		    <input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
+		    <c:if test="${paymentMode.active}">		    
+			    <div class="radio">
+					<input type="radio" name="paymentMode" value="${paymentMode.code}" id="${paymentMode.name}" class="closePayments" ${paymentMode.code == 'Advance' ? 'checked' : ''} data-toggle="collapse" data-target="${sharp}${paymentMode.code}" required>
+					<label class="btn btn-default btn-pay150526 closePayments ${paymentMode.code}" for="${paymentMode.name}" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
+					</label>
+				</div>
+				<div id="${paymentMode.code}" class="paycollapse collapse out">
+					<div class="sliced">
+						<h3>${paymentMode.name}</h3>
+						<p>
+	                		${paymentMode.description}
+	                	</p>
+	                	<c:if test="${paymentMode.code == 'CreditCard'}">
+	                		<methodPayment:methodCreditCard />
+	                	</c:if>
+	                	<c:if test="${paymentMode.code == 'klarna'}">
+	                		<methodPayment:methodKlarnaRechnung/>
+	                	</c:if>
+					</div>
+				</div>
+		    </c:if>
+		</c:forEach>
+	</form:form>
+</c:if>
+
+<div class="col-xs-12 charge150127">
+	<a class="btn btn-link fox24gif150217" href="#cartModal" data-toggle="modal"><spring:theme code="checkout.single.redeemPoints" />?</a>
+</div>
+<div class="col-xs-12 charge150127">
+	<a class="btn btn-link" href="#voucherModal" data-toggle="modal"><spring:theme code="checkout.single.redeemVoucher" />?</a>
+</div>
+<div class="clearfix"></div>
+
+<div id="cartModal" class="modal fade">
+	<div class="modal-dialog">
+    	<div class="modal-content">
+        	<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title fox24150217"><spring:theme code="checkout.single.redeemPoints" /></h4>
+            </div>
+            <div class="modal-body">
+            	<p><spring:theme code="checkout.single.youCurrentlyHave" />&nbsp;<b><spring:theme code="checkout.single.xPoints" /></b>&nbsp;
+            	<spring:theme code="checkout.single.howManyPointsYouWant" /></p>
+				<form>
+					<div class="form-group">
+						<label for="inputPoints"><spring:theme code="checkout.single.redeemablePoints" /></label>
+						<input type="number" min="0" max="2359" class="form-control" id="inputPoints" required="required">
+					</div>
+				</form>
+				<p><small><b><spring:theme code="checkout.single.youAreSure" /></b>&nbsp;
+				<spring:theme code="checkout.single.textBonusPoint" /></small></p>
+            </div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
+                <button type="button" class="btn btn-primary"><spring:theme code="checkout.single.redeemPoints" /></button>
+            </div>
+        </div>
+    </div>
+</div>	
+<div id="voucherModal" class="modal fade">
+	<div class="modal-dialog">
+    	<div class="modal-content">
+        	<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><spring:theme code="checkout.single.redeemVoucher" /></h4>
+            </div>
+            <div class="modal-body">				
+				<div class="form-group">
+					<formElement:formInputBox idKey="voucher" labelKey="checkout.single.enterCouponCode" path="voucher"
+                    	inputCSS="form-control text required-voucher" mandatory="false" />
+				</div>
+         	</div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
+            	<input type="hidden" name="applyVcUrl" value="${request.contextPath}/checkout/single/remove-vc/" />
+            	<input type="hidden" name="vcCode" value="${appliedValeCreditoCode}" />
+            	<input type="hidden" name="applyVcUrl" value="${request.contextPath}/checkout/single/apply-vc/" /> 
+            	<a href="#" class="btn btn-primary applyVC btn-voucher"> 
+            		<spring:theme code="checkout.single.payment.redeemValeCredito" />
+                </a>
+           	</div>
+        </div>
+    </div>
+</div>
+
+<%-- 
 <c:forEach items="${paymentModes}" var="paymentMode">
     <input type="hidden" name="voucherAmountEqualsOrderAmount"
         value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
@@ -194,3 +285,4 @@
         </c:if>
     </div>
 </c:forEach>
+--%>

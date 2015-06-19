@@ -1,3 +1,50 @@
+.btn-pay150526 {text-align:left;width: 100%; height:60px;display:block;padding-left:135px;background-position: 40px center; background-repeat: no-repeat;margin-bottom:15px;border:none !important;}
+.payments150526 h3 {display:none;margin:0;}
+.btn-pay150526 span {font-size:18px;display:block;font-weight:bold;}
+.Advance, .Advance:active {background-image: url("/_ui/desktop/theme-babyartikel/assets/images/paymentsImages/pay2-vorkasse.png")!important;}
+.paypal, .paypal:active {background-image: url("/_ui/desktop/theme-babyartikel/assets/images/paymentsImages/pay2-paypal.png")!important;}
+.klarna, .klarna:active {background-image: url("/_ui/desktop/theme-babyartikel/assets/images/paymentsImages/pay2-klarna-rechnung.png")!important;}
+.CreditCard, .CreditCard:active {background-image: url("/_ui/desktop/theme-babyartikel/assets/images/paymentsImages/pay2-kredit.png")!important;}
+.debitByCall, .debitByCall:active {background-image: url("/_ui/desktop/theme-babyartikel/assets/images/paymentsImages/pay2-sofort.png")!important;}
+.klarnaFinancing, .klarnaFinancing:active {background-image: url("/_ui/desktop/theme-babyartikel/assets/images/paymentsImages/pay2-klarna-raten.png")!important;}
+.payments150526 .radio {margin-bottom:0;}
+.payments150526 .btn-pay150526 {padding-left:30px;filter:grayscale(100%);-webkit-filter: grayscale(100%);}
+.payments150526 input[type="radio"] {top:20px;margin-left:15px !important;z-index:1000;}
+.payments150526 label:hover {border-color:#e6e6e6;filter:grayscale(0%);-webkit-filter: grayscale(0%);background-color:white;}
+.payments150526 input[type="radio"]:checked+label{ background-color: #f0f0f0;filter:grayscale(0%);-webkit-filter: grayscale(0%);} 
+.payments150526 .sliced {background-color: #f5f5f5; border-color: silver;padding: 10px 15px;border-top:1px solid #ddd;border-bottom: 1px solid #DDD;}
+
+.productitem150529 {float:left;margin-bottom:10px;}
+.productimage150529 {padding-right:0;}
+.delete150605 {font-size: 12px;position: absolute;top: 10px;right: 0px;background-color: #FFF;}
+	
+.list150608 {margin:0;padding:0;list-style-type:none;}
+.item150608, .delivery160608 {border:1px solid #f5f5f5;border-left: 5px solid #D6E9C6;padding:5px;border-bottom: none;}
+.item150608.nostock, .delivery160608.nostock {border-left:5px solid #e6e6e6;}
+.itemdata150608 .col-xs-4 {padding: 6px 12px;height: 34px;}
+.itemdata150608 .col-xs-4:first-child {padding: 0 0 0 15px;}
+.delivery160608 {background-color: #DFF0D8;padding:0;padding-left:5px;line-height:30px;}
+.delivery160608.nostock {background-color: #f5f5f5;}
+.list150608 li:first-child {border-radius:5px 5px 0 0}
+.list150608 li:last-child {border-radius:0 0 5px 5px}
+@media (min-width:1200px){.item150608 div.col-md-8 {padding-left:0px;}}
+@media (min-width:345px) {
+	@media (max-width:767px) {
+		.col-xxs-4 {width: 33%} .col-xxs-8 {width:66%} .image150608 {display:block;width:100%;text-align:center}
+	}
+}
+@media (max-width:345px) {
+	.image150608 {display:block;width:100%;text-align:center}
+}
+@media (max-width:991px) {
+	@media (min-width:768px) {
+		.image150608 {display:block;width:100%;text-align:center}
+	}
+}
+		
+.btn-address050609 {display:block;width:100%}
+#deliveryAddressModal input[type="radio"] {margin-left: 15px;z-index: 1000;top: 35%;}
+
 .singleStepCheckout .display-inline {
 	display: inline;
 }
@@ -30,8 +77,8 @@ body { color: #000; }
 #main-wrapper .btn-editar:before { content: ""; background: url(../../images/sprite-checkout.png) -31px 0 no-repeat; width: 27px; height: 25px; display: inline-block; margin-bottom: -7px; margin-right: 5px; }
 #main-wrapper .btn-excluir:before { content: ""; background: url(../../images/sprite-checkout.png) 0 0 no-repeat; width: 27px; height: 25px; display: inline-block; margin-bottom: -7px; margin-right: 5px; }
 
-.btn-outro-endereco { background: #4f4f4f !important; font-size: 14px; margin-right: 0 !important; }
-.btn-outro-endereco:hover { background: #666 !important; }
+/*.btn-outro-endereco { background: #4f4f4f !important; font-size: 14px; margin-right: 0 !important; }
+.btn-outro-endereco:hover { background: #666 !important; }*/
 .btn-addr-cadastrar { background: #FFF; color: #3f3f3f; width: 100%; font-size: 16px; border-radius: 3px; border: 3px solid #3f3f3f; margin: 15px 0; }
 .btn-addr-cadastrar:hover { background: #3f3f3f; }
 #main-wrapper .btn-checkout { margin: 25px auto; display: block; width: 80%; padding: 5px; }
@@ -84,13 +131,13 @@ body { color: #000; }
 #main-wrapper.co input { width: 100%; margin-bottom: 5px; padding: 2px; font-size: 1em; }
 
 /* Col 1 */ 
-#selected-address { background: #e6e6e6; color: #292929; padding: 10px; margin-bottom: 20px; -webkit-transition: all 0.3s;-moz-transition: all 0.3s;-o-transition: all 0.3s;transition: all 0.3s; }
+/*#selected-address { background: #e6e6e6; color: #292929; padding: 10px; margin-bottom: 20px; -webkit-transition: all 0.3s;-moz-transition: all 0.3s;-o-transition: all 0.3s;transition: all 0.3s; }*/
 #selected-address .address-info dl { font-size: 15px; }
 #selected-address .address-info dl dt { width: 90px; font-weight: bold; float: left; }
-#selected-address .address-info dl dd { margin-left: 100px; margin-bottom: 15px; }
+/*#selected-address .address-info dl dd { margin-left: 100px; margin-bottom: 15px; }*/
 #selected-address .address-info label { font-size: 15px; font-weight: bold; }
 #selected-address .address-info input { display: inline-block; width: auto !important; }
-#selected-address .address-info .btn-group { margin-top: 10px; }
+/*#selected-address .address-info .btn-group { margin-top: 10px; }*/
 #selected-address .address-info .btn-group a { margin-right: 0px; }
 #selected-address .address-prompt { display: none; }
 #selected-address .address-prompt p { margin-bottom: 20px; }
@@ -109,6 +156,7 @@ body { color: #000; }
 #shipping-methods h3 { font-size: 14px; }
 #shipping-methods h3 strong { font-weight: bold; }
 #main-wrapper.co #shipping-methods label { margin-bottom: 20px; }
+/*#newBillingAddressFields { border-top: 1px dotted #969696; padding-top: 20px; }*/
 
 /* Col 2 */
 #main-wrapper.co .payment-methods section { margin-bottom: 20px; }
@@ -124,32 +172,6 @@ body { color: #000; }
 #main-wrapper.co #payment-billet p { width: 80%; display: inline-block; font-size: 10px; color: #8f8f8f; }
 #main-wrapper.co #payment-billet i { font-size: 35px; float: left; margin: 0 20px 10px 0; }
 #main-wrapper.co #payment-bank-transfer ul li { display: inline-block; margin-right: 5px; }
-.btn.applyVC {
-background: #FFF;
-color: #3f3f3f;
-font-size: 16px !important;
-border-radius: 3px;
-border: 3px solid #3f3f3f;
-margin: 15px 0;
-padding: 8px 16px;
-display: inline-block;
-cursor: pointer;
-outline: none;
-text-align: center;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
--o-box-sizing: border-box;
-box-sizing: border-box;
--webkit-transition: all 0.3s;
--moz-transition: all 0.3s;
--o-transition: all 0.3s;
-transition: all 0.3s;
-text-decoration: none !important;
-}
-.btn.applyVC:hover {
-background: #3f3f3f;
-color: #fff !important;
-}
 
 .hover-tooltip {position: relative; }
 .hover-tooltip .securityCodeInfo {display: none; }
@@ -159,9 +181,9 @@ color: #fff !important;
 .securityCodeInfo h3 {margin-bottom: 10px; }
 .securityCodeInfo img {margin-bottom: 5px; }
 .securityCodeInfo .amex h3 {margin-top: 14px; }
-.securityCodeInfo.tooltip {background: #000; color: #FFF; min-width: 40px; position: absolute; padding: 5px; bottom: 100%; left: 0; margin-bottom: 3px; font-size: 12px; text-align: center; z-index: 9999; width: 360px; padding: 15px; }
+.securityCodeInfo.tooltip {background: #337ab7; color: #FFF; min-width: 40px; position: absolute; padding: 5px; bottom: 100%; left: 0; margin-bottom: 3px; font-size: 12px; text-align: center; z-index: 9999; width: 360px; padding: 15px;   opacity: 1 !important; }
 .securityCodeInfo.tooltip.right {left: auto; right: 0; }
-.securityCodeInfo.tooltip:after {top: 100%; left: 10px; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; border-color: rgba(51, 51, 51, 0); border-top-color: #000; border-width: 3px; margin-left: -5px; }
+.securityCodeInfo.tooltip:after {top: 100%; left: 10px; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; border-color: rgba(51, 51, 51, 0); border-top-color: #337ab7; border-width: 3px; margin-left: -5px; }
 .securityCodeInfo.tooltip.right:after {left: auto; right: 10px; margin-left: 0; margin-right: -5px; }
 
 /* Col 3 */

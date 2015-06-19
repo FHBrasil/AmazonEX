@@ -65,6 +65,7 @@
 	</relations>
 
 	<itemtypes>
+	
 		<typegroup name="Hybris">
 			 <itemtype code="AbstractOrderEntry" autocreate="false" generate="false">
 				<attributes>
@@ -495,5 +496,34 @@
 					</attributes>
 				</itemtype>
 		</typegroup>
+		
+		
+	<!-- CronJob -->	
+	<typegroup name="UpdateTrustedShopImage">
+		<itemtype generate="true" code="UpdateTrustedShopImageCronJob" jaloclass="de.kpfamily.core.jalo.UpdateTrustedShopImageCronJob"
+           extends="CronJob" autocreate="true">    
+            
+           <attributes>
+           		<attribute qualifier="hybrisBinDirManual" type="java.lang.String">
+           			<description>Hybris directory</description>
+           			<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute> 
+				<attribute qualifier="trustedShopImageUrl" type="java.lang.String">
+					<description>Image URL</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute> 
+				<attribute qualifier="kpfamilyTrustedShopImageDir" type="java.lang.String">
+					<description>Image directory in the kpfamily project</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>         
+           </attributes> 
+           
+		</itemtype>
+	</typegroup>
+
+		
 	</itemtypes>
 </items>

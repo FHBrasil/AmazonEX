@@ -3,11 +3,11 @@
  */
 package com.fliegersoftware.newslettersubscription.facades.populators;
 
-import de.hybris.platform.converters.Populator;
-import de.hybris.platform.servicelayer.dto.converter.ConversionException;
-
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
+
+import de.hybris.platform.converters.Populator;
+import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 
 /**
  * @author luiza
@@ -36,5 +36,4 @@ public class NewsletterSubscriptionModelToDataPopulator implements Populator<New
 		target.setStoreCode(baseStoreId);
 		
 	}
-		
 }

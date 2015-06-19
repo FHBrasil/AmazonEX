@@ -12,7 +12,6 @@
         <requires-extension name="heringcore" />
         <requires-extension name="adyen" />
         <requires-extension name="exacttarget" />
-        <requires-extension name="newsletter" />
         <coremodule generated="true" manager="de.hybris.platform.jalo.extension.GenericManager"
             packageroot="br.hering.facades" />
     </extension>

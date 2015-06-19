@@ -41,7 +41,12 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 	{
 		LOG.info("Controller do addon: " +subscription);
 		
-		return "Cadastrado com sucesso!";
+		if (subscription==false)
+		{
+			return "Não se cadastrou na newsletter.";
+		}
+		
+		return "Cadastrou-se na newsletter.";
 	}
 	
 	

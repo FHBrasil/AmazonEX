@@ -12,56 +12,97 @@
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-<table>
-    <tbody>
-        <c:forEach items="${cartData.entries}" var="entry">
-            <tr>
-                <%-- BRAND IMAGE --%>
-                <td class="brand"><product:productBrand product="${entry.product}" /></td>
-                <td class="product-details talign-left"><product:productPrimaryImage
-                        product="${entry.product}" format="cartIcon" />
-                    <div class="info">
-                        <ul>
-                            <li class="titulo">${entry.product.name}</li>
-                            <c:if test="${not empty entry.product.size}">
-                                <li class="tamanho"><spring:theme code="text.fliegercommerce.texto51"/>: ${entry.product.size}</li>
-                            </c:if>
-                            <c:if test="${not empty entry.product.color}">
-                                <li class="cor"><spring:theme
-                                        code="checkout.single.details.cartItems.color" />:
-                                    <div class="cores">
-                                        <ul>
-                                            <li class="${entry.product.color.RGB}"
-                                                style="background-color:${entry.product.color.RGB};"></li>
-                                        </ul>
-                                    </div></li>
-                            </c:if>
-                            <li class="codigo"><spring:theme
-                                    code="checkout.single.details.cartItems.code" />:
-                                ${entry.product.code}</li>
-                            <li class="precos"><c:choose>
-                                    <c:when test="${entry.product.fromPrice}">
-                                        <s> <spring:theme
-                                                code="checkout.single.details.cartItems.productPrice.from" />:
-                                            <fmt:formatNumber value="${entry.product.oldPrice}"
-                                                type="number" minFractionDigits="2" /></s>
-                                        <strong> <spring:theme
-                                                code="checkout.single.details.cartItems.productPrice.to" />:
-                                            <format:price priceData="${entry.basePrice}"
-                                                displayFreeForZero="true" />
-                                        </strong>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <strong> <spring:theme
-                                                code="checkout.single.details.cartItems.productPrice.from" />:
-                                            <format:price priceData="${entry.basePrice}"
-                                                displayFreeForZero="true" />
-                                        </strong>
-                                    </c:otherwise>
-                                </c:choose></li>
-                        </ul>
-                    </div></td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<ol class="list150608">
+	<c:set var="sharp" value='#'/>
+	<p class="underlinelinks150212">
+		<spring:theme code="checkout.single.pleaseReferOur"/>&nbsp;<a href="#"><spring:theme code="checkout.single.termsAndConditions"/></a>
+		<spring:theme code="checkout.single.youHaveA"/>&nbsp;<a href="#"><spring:theme code="checkout.single.daysReturnPolicy"/></a>
+		<spring:theme code="checkout.single.hereYouWillFind"/>&nbsp;<a href="#"><spring:theme code="checkout.single.privacyPolicy"/></a></p>
+	<c:forEach items="${cartData.entries}" var="entry">
+    	<li id="${entry.entryNumber}" class="item150608">
+    		<div class="row">
+    			<div class="col-xs-12 text-right">
+    				<c:if test="${entry.updateable}">
+                    	<ycommerce:testId code="cart_product_removeProduct">
+                            <a href="#" class="btn-excluir-produto"
+                                id="RemoveProduct_${entry.entryNumber}" class="submitRemoveProduct"
+                                title="Remover"
+                                onClick="hering.cart.removeProduct('${entry.entryNumber}');"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                        </ycommerce:testId>
+                	</c:if>
+    			</div>
+    		</div>
+			<div class="row">
+				<div class="col-xxs-4 col-xs-12 col-md-4">
+                	<a href="${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
+                </div>
+                <div class="col-xxs-8 col-xs-12 col-md-8">
+                	<a href="${entry.product.url}">${entry.product.name}</a>
+                	<br /><small>${sharp}${entry.product.code}</small><br />
+                	<small>
+                		<span class="itemdelivery160608 collapse out"><span class="glyphicon glyphicon-stop text-onstock"></span> sofort lieferbar</span>
+                	</small>                	
+	                <%-- 
+	                <c:if test="${not empty entry.product.size}">
+	                    <div class="tamanho"><spring:theme code="text.fliegercommerce.texto51"/>: ${entry.product.size}</div>
+	                </c:if>                   
+	                <c:if test="${not empty entry.product.color}">
+	                    <spring:theme code="checkout.single.details.cartItems.color" />:
+	                    <div class="${entry.product.color.RGB}" style="background-color:${entry.product.color.RGB};"></div>
+	                </c:if>   
+	                --%>         	               	
+                </div>
+            </div>
+            <div class="row itemdata150608">
+                <div class="col-xs-4">
+                	<c:url value="/checkout/single/update" var="cartUpdateFormAction" />
+		            <form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" method="post" commandName="updateQuantityForm${entry.entryNumber}">
+		            	<input type="hidden" name="entryNumber" value="${entry.entryNumber}" />
+		                <input type="hidden" name="productCode" value="${entry.product.code}" />
+		                <input type="hidden" name="initialQuantity" value="${entry.quantity}" />
+		                <input type="hidden" name="initialQuantity_${entry.entryNumber}" id="initialQuantity_${entry.entryNumber}" value="${entry.quantity}" />
+		               	<ycommerce:testId code="cart_product_quantity">
+		                	<form:input disabled="${not entry.updateable}" type="number" size="1" id="quantity${entry.entryNumber}" class="form-control qty" path="quantity"
+		                    	min="1" maxlength="3" required="required" step="1" />
+		                </ycommerce:testId>
+		           	</form:form>
+		        </div> 
+		        <div class="col-xs-4">
+	             	<small>               			
+	               		<c:choose>
+			               	<c:when test="${entry.product.fromPrice}">
+			                  	<s>
+			                   		<spring:theme code="checkout.single.details.cartItems.productPrice.from" />:
+			                        <fmt:formatNumber value="${entry.product.oldPrice}" type="number" minFractionDigits="2" />
+			                    </s>
+			    	            <strong>
+			                      	<spring:theme code="checkout.single.details.cartItems.productPrice.to" />:
+			                        <format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
+			                    </strong>
+			                </c:when>
+			                <c:otherwise>
+			                      	<format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
+			                </c:otherwise>
+			           	</c:choose>
+	                </small>
+                </div>
+                <div class="col-xs-4 text-right">	                		
+	            	<strong><format:price priceData="${entry.totalPrice}" displayFreeForZero="true" /></strong>
+                </div>                                           	 
+			</div>			
+		</li>
+		<%-- Item Express Shipping? --%>
+		<li id="toggleDelivery" class="delivery160608 collapse out">
+			<small><span class="glyphicon glyphicon-stop text-onstock"></span> <b><spring:theme code="checkout.single.expressShipping"/></b> Lieferung Morgen, 17.08.2015</small>
+		</li>
+	</c:forEach>
+	<li class="delivery160608 onstock">
+		<small><span class="glyphicon glyphicon-stop text-nostock"></span> Lieferung am Freitag, 17.08.2015</small>
+	</li>
+</ol>
+<%-- If has items express shipping --%>
+<div class="checkbox">
+	<label><input type="checkbox" data-toggle="collapse" data-target="#toggleDelivery,.itemdelivery160608"><spring:theme code="checkout.single.sendPositionsImmediately"/>&nbsp;(<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />)</label>
+</div>

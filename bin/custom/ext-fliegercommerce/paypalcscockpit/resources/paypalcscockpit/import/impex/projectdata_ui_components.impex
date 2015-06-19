@@ -1,0 +1,21 @@
+
+###############################################################################
+#
+#	1. Configuration files (media)
+#
+###############################################################################
+
+INSERT_UPDATE CockpitUIConfigurationMedia;code[unique=true];mime;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true]
+;refundentry_paypalrefundentrylist_cockpitgroup_ui_config;text/xml; RefundEntry_PayPalRefundEntryList_CockpitGroup.xml; file:com.paypal.hybris.jalo.PaypalcscockpitManager&/paypalcscockpit/import/config/RefundEntry_PayPalRefundEntryList_CockpitGroup.xml
+;refundentry_paypalrefundentryedit_cockpitgroup_ui_config;text/xml; RefundEntry_PayPalRefundEntryEdit_CockpitGroup.xml; file:com.paypal.hybris.jalo.PaypalcscockpitManager&/paypalcscockpit/import/config/RefundEntry_PayPalRefundEntryEdit_CockpitGroup.xml
+
+###############################################################################
+#
+#	2. Configuration mappings (principal, type, context code)
+#
+###############################################################################
+
+INSERT_UPDATE CockpitUIComponentConfiguration;code[unique=true];factoryBean;objectTemplateCode[unique=true];principal(uid)[unique=true];media(code);
+# Refund popup - RefundEntry list and editor properties (must match up)
+;payPalRefundEntryList;listViewConfigurationFactory;RefundEntry;cockpitgroup;refundentry_paypalrefundentrylist_cockpitgroup_ui_config;
+;payPalRefundEntryEdit;editorConfigurationFactory;RefundEntry;cockpitgroup;refundentry_paypalrefundentryedit_cockpitgroup_ui_config;

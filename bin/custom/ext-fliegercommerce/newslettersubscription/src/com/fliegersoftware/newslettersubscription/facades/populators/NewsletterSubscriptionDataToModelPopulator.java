@@ -3,6 +3,11 @@
  */
 package com.fliegersoftware.newslettersubscription.facades.populators;
 
+import org.springframework.beans.factory.annotation.Required;
+
+import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
+import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
+
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.enums.Gender;
 import de.hybris.platform.core.model.c2l.LanguageModel;
@@ -13,11 +18,6 @@ import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.store.services.BaseStoreService;
-
-import org.springframework.beans.factory.annotation.Required;
-
-import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
-import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 
 
 /**
@@ -136,5 +136,4 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 	{
 		this.enumerationService = enumerationService;
 	}
-
 }

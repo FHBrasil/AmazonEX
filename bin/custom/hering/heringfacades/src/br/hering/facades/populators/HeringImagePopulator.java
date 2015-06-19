@@ -25,7 +25,7 @@ public class HeringImagePopulator extends ImagePopulator
 		//LOG.info("TAG IMAGE: "+urlPrefix);
 		if(isSecureRequest()) 
 		{
-			urlPrefix = "/";
+			//urlPrefix = "/";
 		}
 		
 		String url = source.getURL();

@@ -3,6 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"  
     pageEncoding="ISO-8859-1"%>
     
+<script type="text/javascript" src="${commonResourcePath}/js/newslettersubscriptionformparagraphcomponent.js"></script>
+    
 <form:form id="newsletterSubscriptionFormComponent" method="POST" action="/newsletter/newsletter-register">
 
 	<input type="text" name="firstName" placeholder="Your first name"></input><br/>
