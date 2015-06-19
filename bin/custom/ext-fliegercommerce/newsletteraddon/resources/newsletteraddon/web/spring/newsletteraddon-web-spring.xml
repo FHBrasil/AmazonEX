@@ -65,7 +65,7 @@
 		<property name="userService" ref="userService" />
 		<property name="customerFacade" ref="customerFacade" />
 	</bean>
-	
+
 
 
 </beans>
