@@ -100,7 +100,6 @@
          	</div>
             <div class="modal-footer">
             	<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
-            	<input type="hidden" name="applyVcUrl" value="${request.contextPath}/checkout/single/remove-vc/" />
             	<input type="hidden" name="vcCode" value="${appliedValeCreditoCode}" />
             	<input type="hidden" name="applyVcUrl" value="${request.contextPath}/checkout/single/apply-vc/" /> 
             	<a href="#" class="btn btn-primary applyVC btn-voucher"> 
