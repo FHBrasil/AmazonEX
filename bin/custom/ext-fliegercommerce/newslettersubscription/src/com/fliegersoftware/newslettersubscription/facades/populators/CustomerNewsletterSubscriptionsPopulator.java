@@ -43,9 +43,10 @@ public class CustomerNewsletterSubscriptionsPopulator implements Populator<Custo
 		Collection<NewsletterSubscriptionModel> newsletterSubscriptionModelCollection = source.getNewsletterSubscriptions(); 
 		
 	    for (NewsletterSubscriptionModel newsletterSubscriptionModel : newsletterSubscriptionModelCollection) { 
-	   	
+   	
 	   	final NewsletterSubscriptionData newsletterSubscriptionData = new NewsletterSubscriptionData();
 	   	getNewsletterSubscriptionModelToDataConverter().convert(newsletterSubscriptionModel, newsletterSubscriptionData);   	
+	   	newsletterSubscriptionData.setCustomer(target);
 	   	newsletterSubscriptionDataList.add(newsletterSubscriptionData);
 	   	
 	   }  		

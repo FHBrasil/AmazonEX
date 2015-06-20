@@ -64,7 +64,6 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
 
     	final String currentStore = getBaseStoreService().getCurrentBaseStore().getUid();   	
     	
-    	//if customer has at least one subscription
     	if (subscriptions!=null)
     	{
     		if (!subscriptions.isEmpty())
@@ -83,7 +82,7 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
             	}
     		}
     		
-    		//return newsletterChecked;
+    		return newsletterChecked;
     	}
     	
     	//else
