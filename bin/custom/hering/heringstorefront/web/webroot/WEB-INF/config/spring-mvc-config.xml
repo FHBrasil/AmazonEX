@@ -158,6 +158,9 @@
 			</map>
 		</property>
 		<property name="unknownUiExperiencePrefix" value="desktop/"/>
+	    <property name="exposedContextBeanNames">
+	        <list><value>frontend</value></list>
+	    </property>
 	</bean>
 
 	<!-- Localization -->
@@ -360,4 +363,11 @@
 	
 	<alias name="defaultHeringPasswordValidator" alias="passwordValidator" />
 	<bean id="defaultHeringPasswordValidator" class="br.hering.storefront.forms.validation.HeringPasswordValidator"/>
+	
+	<bean id="frontend" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	    <property name="locations">
+	        <list><value>classpath*:fliegercommercefrontend.properties</value></list>
+	    </property>
+	</bean>
+	
 </beans>
