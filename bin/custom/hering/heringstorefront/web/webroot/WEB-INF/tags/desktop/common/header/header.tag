@@ -12,11 +12,14 @@
 <%@ taglib prefix="user" tagdir="/WEB-INF/tags/desktop/user"%>
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <div class="prehead141211">
-    <div class="row bluerow">
+    <%--<div class="row bluerow">
         <div class="col-sm-4 text-left hidden-xs">Einkaufen ohne Risiko</div>
         <div class="col-sm-4 col-xs-12 text-center">Kostenloser Versand ab 40 &euro; (D)</div>
         <div class="col-sm-4 text-right hidden-xs">Kundenservice: 089/904&nbsp;750&nbsp;6200</div>
-    </div>
+    </div>--%>
+    <cms:pageSlot position="TopHeaderSlot" var="component">
+        <cms:component component="${component}" />
+    </cms:pageSlot>
 </div>
 <div class="head141217">
     <div class="row">
