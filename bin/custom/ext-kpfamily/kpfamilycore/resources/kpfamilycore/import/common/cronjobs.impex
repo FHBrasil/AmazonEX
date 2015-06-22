@@ -1,5 +1,5 @@
 INSERT_UPDATE UpdateTrustedShopImageCronJob; code[unique=true];job(code);hybrisBinDirManual;trustedShopImageUrl;kpfamilyTrustedShopImageDir;singleExecutable;sessionLanguage(isocode)
-;updateTrustedShopImageCronJob;updateTrustedShopImageJobPerformable;/HYBRIS/fliegercommerce/hybris/bin/custom/;https://www.trustedshops.com/bewertung/widget/widgets/XA2EF864014A142CF9EDC2483FE556551.gif;hering/heringstorefront/web/webroot/_ui/desktop/common/images/;false;de
+;updateTrustedShopImageCronJob;updateTrustedShopImageJobPerformable;/HYBRIS/fliegercommerce/hybris/bin/custom/;https://www.trustedshops.com/bewertung/widget/widgets/XA2EF864014A142CF9EDC2483FE556551.gif;hering/heringstorefront/web/webroot/_ui/desktop/common/images/trustedShop.gif;false;de
  
 INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
 #% afterEach: impex.getLastImportedItem().setActivationTime(new Date());

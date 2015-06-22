@@ -17,6 +17,7 @@ import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionMo
 import com.fliegersoftware.newslettersubscription.services.NewsletterSubscriptionService;
 
 
+
 /**
  * @author luiza
  *
@@ -31,17 +32,13 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	private BaseStoreService baseStoreService;
 	
 	private CommerceCommonI18NService commerceCommonI18NService;
+	
 		
 
 	@Override
 	public NewsletterSubscriptionData subscribe(final NewsletterSubscriptionData subscription) throws DuplicatedNewsletterSubscriptionException
 	{	
-		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
-		subscription.setStoreCode(storeCode);
-		
-		final String languageIsoCode = getCommerceCommonI18NService().getCurrentLanguage().getIsocode();
-		subscription.setLanguageIsoCode(languageIsoCode);
-		
+				
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);
 		getNewsletterSubscriptionService().subscribe(model);
@@ -53,6 +50,7 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	@Override
 	public NewsletterSubscriptionData updateSubscription(final NewsletterSubscriptionData subscription) throws NewsletterSubscriptionNotFound
 	{
+
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
 		getNewsletterSubscriptionService().updateSubscription(model);
@@ -64,13 +62,25 @@ public class DefaultNewsletterSubscriptionFacade implements NewsletterSubscripti
 	@Override
 	public void unsubscribe(final NewsletterSubscriptionData subscription) throws NewsletterSubscriptionNotFound
 	{
-		
+
 		final NewsletterSubscriptionModel model = new NewsletterSubscriptionModel();
 		getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
 		getNewsletterSubscriptionService().unsubscribe(model);
 		
 	}
 
+	
+	/**
+	 * @return the current storeCode
+	 */
+	public String getCurrentBaseStoreCode()
+	{
+		final String storeCode = getBaseStoreService().getCurrentBaseStore().getUid();
+		
+		return storeCode;			
+	
+	}
+	
 
 	/**
 	 * @return the newsletterSubscriptionService

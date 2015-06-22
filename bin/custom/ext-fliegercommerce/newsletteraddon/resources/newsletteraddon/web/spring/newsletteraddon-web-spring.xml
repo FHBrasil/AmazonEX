@@ -31,6 +31,8 @@
 	          parent="addOnJspIncludeCMSComponentRenderer">
 	        <property name="cmsComponentService" ref="cmsComponentService" />
 	        <property name="modelService" ref="modelService" />
+	        <property name="baseStoreService" ref="baseStoreService" />
+	        <property name="customerFacade" ref="customerFacade" />
    </bean>
 	     
 	<bean id="newsletterSubscriptionManagementParagraphComponentRendererMapping" parent="addonCmsComponentRendererMapping">
@@ -41,7 +43,8 @@
 	
 	<!-- Newsletter Subscription Form -->
 <!-- 	<alias name="newsletterSubscriptionFormParagraphComponentRenderer" alias="newsletterSubscriptionFormParagraphComponentRenderer" /> -->
-	<bean id="newsletterSubscriptionFormParagraphComponentRenderer" class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionFormParagraphComponentRenderer"
+	<bean id="newsletterSubscriptionFormParagraphComponentRenderer" 
+			class="com.fliegersoftware.addons.newsletteraddon.component.renderer.NewsletterSubscriptionFormParagraphComponentRenderer"
 	         parent="addOnJspIncludeCMSComponentRenderer" > 
 	         <property name="userFacade" ref="userFacade" />
 	         <property name="typeService" ref="typeService" />
@@ -58,6 +61,11 @@
 	<!-- Controller -->
 	<bean id="newsletterSubscriptionAddOnController" class="com.fliegersoftware.addons.newsletteraddon.controllers.cms.NewsletterSubscriptionAddOnController">
 		<property name="newsletterSubscriptionFacade" ref="newsletterSubscriptionFacade" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="userService" ref="userService" />
+		<property name="customerFacade" ref="customerFacade" />
 	</bean>
+
+
 
 </beans>

@@ -42,23 +42,22 @@
 	
 	
 	<!-- Populators -->
-	<alias name="newsletterSubscriptionModelToDataPopulator" alias="newsletterSubscriptionModelToDataPopulator" />
-	<bean id="newsletterSubscriptionModelToDataPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.NewsletterSubscriptionModelToDataPopulator" />	
+	<alias name="defaultNewsletterSubscriptionModelToDataPopulator" alias="newsletterSubscriptionModelToDataPopulator" />
+	<bean id="defaultNewsletterSubscriptionModelToDataPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.NewsletterSubscriptionModelToDataPopulator" />	
 	
-	<alias name="newsletterSubscriptionDataToModelPopulator" alias="newsletterSubscriptionDataToModelPopulator" />
-	<bean id="newsletterSubscriptionDataToModelPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.NewsletterSubscriptionDataToModelPopulator">
+	<alias name="defaultNewsletterSubscriptionDataToModelPopulator" alias="newsletterSubscriptionDataToModelPopulator" />
+	<bean id="defaultNewsletterSubscriptionDataToModelPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.NewsletterSubscriptionDataToModelPopulator">
 		<property name="baseStoreService" ref="baseStoreService" />
 		<property name="commonI18NService" ref="commonI18NService" />
 		<property name="userService" ref="userService" />
 		<property name="enumerationService" ref="enumerationService" />
 	</bean>
 	
-	<alias name="customerNewsletterSubscriptionsPopulator" alias="customerNewsletterSubscriptionsPopulator" />
-	<bean id="customerNewsletterSubscriptionsPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.CustomerNewsletterSubscriptionsPopulator" >
+	<alias name="defaultCustomerNewsletterSubscriptionsPopulator" alias="customerNewsletterSubscriptionsPopulator" />
+	<bean id="defaultCustomerNewsletterSubscriptionsPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.CustomerNewsletterSubscriptionsPopulator" >
 		<property name="newsletterSubscriptionModelToDataConverter" ref="newsletterSubscriptionModelToDataConverter" />	
 	</bean>
 	
-
 	<!-- Converters -->
 	<alias name="defaultNewsletterSubscriptionDataToModelConverter" alias="newsletterSubscriptionDataToModelConverter" />
 	<bean id="defaultNewsletterSubscriptionDataToModelConverter" parent="abstractPopulatingConverter">
@@ -80,14 +79,10 @@
 		</property>
 	</bean>
 	
-	<alias name="defaultCustomerConverter" alias="customerConverter"/>
-	<bean id="defaultCustomerConverter" parent="abstractPopulatingConverter">
-		<lookup-method name="createTarget" bean="customerData"/>
-		<property name="populators">
-			<list>
-				<ref bean="customerNewsletterSubscriptionsPopulator"/> 
-			</list>
-		</property>
-	</bean>
+	<bean parent="modifyPopulatorList">
+        <property name="list" ref="customerConverter" />
+        <property name="add" ref="customerNewsletterSubscriptionsPopulator" />
+    </bean>
+
 
 </beans>

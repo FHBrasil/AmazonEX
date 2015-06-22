@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Required;
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 
+import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.enums.Gender;
 import de.hybris.platform.core.model.c2l.LanguageModel;
+import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.TitleModel;
+import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.enumeration.EnumerationService;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
@@ -34,7 +37,9 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 	private UserService userService;
 	
 	private EnumerationService enumerationService;
+			
 	
+
 	@Override
 	public void populate(NewsletterSubscriptionData source, NewsletterSubscriptionModel target) throws ConversionException
 	{
@@ -58,6 +63,12 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 		final String baseStoreUid = source.getStoreCode();
 		final BaseStoreModel baseStoreModel = getBaseStoreService().getBaseStoreForUid(baseStoreUid);
 		target.setStore(baseStoreModel);
+		
+		final CustomerData customer = source.getCustomer();
+		final String customerUid = customer.getUid();
+		UserModel customerModel = getUserService().getUserForUID(customerUid);
+		target.setCustomer((CustomerModel) customerModel);
+		
 		
 	}
 
@@ -136,4 +147,7 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 	{
 		this.enumerationService = enumerationService;
 	}
+	
+	
+	
 }

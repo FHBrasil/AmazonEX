@@ -1,6 +1,6 @@
 package com.fliegersoftware.addons.newsletteraddon.controllers.cms;
 
-import de.hybris.platform.addonsupport.controllers.page.AbstractAddOnPageController;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +16,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
+import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
+import com.fliegersoftware.newslettersubscription.jalo.NewsletterSubscription;
+
+import de.hybris.platform.addonsupport.controllers.page.AbstractAddOnPageController;
+import de.hybris.platform.commercefacades.customer.CustomerFacade;
+import de.hybris.platform.commercefacades.user.data.CustomerData;
+import de.hybris.platform.servicelayer.i18n.I18NService;
+import de.hybris.platform.servicelayer.user.UserService;
+
 
 /**
  * @author luiza
@@ -31,6 +40,13 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 
 	private NewsletterSubscriptionFacade newsletterSubscriptionFacade;
 
+	private UserService userService;
+	
+	private I18NService i18nService;
+		
+	private CustomerFacade customerFacade;
+
+	
 	private static final Logger LOG = Logger.getLogger(NewsletterSubscriptionAddOnController.class);
 
 	@RequestMapping(value = "/manage-subscription", method = RequestMethod.GET)
@@ -39,14 +55,76 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 			RedirectAttributes redirectAttributes,
 			@RequestParam (defaultValue = "false") final boolean subscription)
 	{
-		LOG.info("Controller do addon: " +subscription);
+		//LOG.info("NewsletterAddon Controller: " +subscription);		
 		
-		if (subscription==false)
+		final CustomerData customer = getCustomerFacade().getCurrentCustomer();
+		final NewsletterSubscriptionData data = new NewsletterSubscriptionData();
+		
+		if (customer != null)
 		{
-			return "Não se cadastrou na newsletter.";
+			
+			data.setFirstName(customer.getFirstName());
+			data.setLastName(customer.getLastName());
+			
+			if (customer.getUid()!=null)
+			{
+				data.setEmail(customer.getUid());
+			}
+			
+			
+			if (customer.getGender()!=null)
+			{
+				data.setGenderCode(customer.getGender().getCode());
+			}
+			
+			data.setTitleCode("Mr");
+			//data.setTitleCode(currentCustomerData.getTitleCode());
+			
+			final String storeCode = getNewsletterSubscriptionFacade().getCurrentBaseStoreCode();
+			data.setStoreCode(storeCode);
+			
+			final String languageIsoCode = getCurrentLanguage().getIsocode();
+			data.setLanguageIsoCode(languageIsoCode);
+			
+			data.setCustomer(customer);
+						
+			if (subscription)
+			{	
+				try
+				{
+					getNewsletterSubscriptionFacade().subscribe(data);
+
+					final String message = getMessageSource().getMessage("text.fliegercommerce.texto127", null, getI18nService().getCurrentLocale());
+					//Você se cadastrou na newsletter
+					return message;
+				}
+				catch (DuplicatedNewsletterSubscriptionException e)
+				{
+					//do nothing
+				}
+									
+			}		
+			
+			else
+			{		
+				try
+				{
+					getNewsletterSubscriptionFacade().unsubscribe(data);	
+					
+					final String message = getMessageSource().getMessage("text.fliegercommerce.texto126", null, getI18nService().getCurrentLocale());
+					//Você não se cadastrou na newsletter
+					return message;
+				}
+				catch (NewsletterSubscriptionNotFound e)
+				{
+					//do nothing
+				}
+				
+			}
+						
 		}
-		
-		return "Cadastrou-se na newsletter.";
+					
+		return null;
 	}
 	
 	
@@ -68,29 +146,36 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		data.setEmail(email);
 		data.setGenderCode(genderCode);
 		data.setTitleCode(titleCode);
+				
+		final String storeCode = getNewsletterSubscriptionFacade().getCurrentBaseStoreCode();
+		data.setStoreCode(storeCode);
 		
-		LOG.info(" Controller do addon: " +firstName+" - "+lastName+" - "+email+" - "+titleCode+" - "+genderCode);
+		final String languageIsoCode = getCurrentLanguage().getIsocode();
+		data.setLanguageIsoCode(languageIsoCode);
 		
+		//final CustomerData customer = getCustomerFacade().getCurrentCustomer();
+		//data.setCustomer(customer);
+		
+		
+		LOG.info(" NewsletterAddon Controller: " +firstName+" - "+lastName+" - "+email+" - "+titleCode+" - "+genderCode);
+
 		try
 		{
 			getNewsletterSubscriptionFacade().subscribe(data);
-			redirectAttributes.addFlashAttribute("newsletterregistration", Boolean.TRUE);
-			redirectAttributes.addFlashAttribute("newsletterregistrationnegative", Boolean.FALSE);
+			final String message = getMessageSource().getMessage("text.fliegercommerce.texto125", null, getI18nService().getCurrentLocale());
+			//Cadastrado com sucesso!
+			return message;
 		}
 		catch (DuplicatedNewsletterSubscriptionException e)
 		{
-			redirectAttributes.addFlashAttribute("newsletterregistration", Boolean.TRUE);
-			redirectAttributes.addFlashAttribute("newsletterregistrationnegative", Boolean.TRUE);
-			return "E-mail já cadastrado";
-		}
+			final String message = getMessageSource().getMessage("text.fliegercommerce.texto124", null, getI18nService().getCurrentLocale());
+			//E-mail ja cadastrado
+			return message;		
+		}	
 		
-		String redirect = getReturnRedirectUrl(request);
-		//LOG.info("Base Store = "+data.getBaseStore());
-		////LOG.info("Redirect "+redirect);
-
-		return "Cadastrado com sucesso!";
 	}
 
+	
 	protected String getReturnRedirectUrl(final HttpServletRequest request)
 	{
 		final String referer = request.getHeader("Referer");
@@ -121,5 +206,31 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		this.newsletterSubscriptionFacade = newsletterSubscriptionFacade;
 	}
 
+	public UserService getUserService() {
+		return userService;
+	}
+	
+	@Required
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public I18NService getI18nService() {
+		return i18nService;
+	}
+
+	@Required
+	public void setI18nService(I18NService i18nService) {
+		this.i18nService = i18nService;
+	}
+
+	public CustomerFacade getCustomerFacade() {
+		return customerFacade;
+	}
+	
+	@Required
+	public void setCustomerFacade(CustomerFacade customerFacade) {
+		this.customerFacade = customerFacade;
+	}
 
 }

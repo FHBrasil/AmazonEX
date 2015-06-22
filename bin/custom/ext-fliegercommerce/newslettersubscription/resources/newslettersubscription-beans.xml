@@ -24,7 +24,8 @@
 		<property name="genderCode" type="java.lang.String"/>
 		<property name="email" type="java.lang.String"/>
 		<property name="storeCode" type="java.lang.String"/>
-		<property name="languageIsoCode" type="java.lang.String"/>		
+		<property name="languageIsoCode" type="java.lang.String"/>
+		<property name="customer" type="de.hybris.platform.commercefacades.user.data.CustomerData"/>	
 	</bean>
 	
 	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData"

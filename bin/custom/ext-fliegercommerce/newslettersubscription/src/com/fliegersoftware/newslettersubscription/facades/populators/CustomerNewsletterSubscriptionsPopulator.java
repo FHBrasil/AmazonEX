@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
@@ -27,18 +28,25 @@ public class CustomerNewsletterSubscriptionsPopulator implements Populator<Custo
 
 	private Converter<NewsletterSubscriptionModel, NewsletterSubscriptionData> newsletterSubscriptionModelToDataConverter;	
 	
+	private static final Logger LOG = Logger.getLogger(CustomerNewsletterSubscriptionsPopulator.class);
+
+	
+	
 	@Override
 	public void populate(CustomerModel source, CustomerData target) throws ConversionException
 	{
+
+		LOG.info("populating customer subscriptions");
 
 		final List <NewsletterSubscriptionData> newsletterSubscriptionDataList = new ArrayList<NewsletterSubscriptionData>();
 			
 		Collection<NewsletterSubscriptionModel> newsletterSubscriptionModelCollection = source.getNewsletterSubscriptions(); 
 		
-	   for (NewsletterSubscriptionModel newsletterSubscriptionModel : newsletterSubscriptionModelCollection) { 
-	   	
-	   	final   NewsletterSubscriptionData newsletterSubscriptionData = new NewsletterSubscriptionData();
+	    for (NewsletterSubscriptionModel newsletterSubscriptionModel : newsletterSubscriptionModelCollection) { 
+   	
+	   	final NewsletterSubscriptionData newsletterSubscriptionData = new NewsletterSubscriptionData();
 	   	getNewsletterSubscriptionModelToDataConverter().convert(newsletterSubscriptionModel, newsletterSubscriptionData);   	
+	   	newsletterSubscriptionData.setCustomer(target);
 	   	newsletterSubscriptionDataList.add(newsletterSubscriptionData);
 	   	
 	   }  		

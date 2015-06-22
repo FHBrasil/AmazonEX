@@ -20,4 +20,6 @@ public interface NewsletterSubscriptionFacade
 	
 	void unsubscribe(final NewsletterSubscriptionData subscription) throws NewsletterSubscriptionNotFound;
 	
+	String getCurrentBaseStoreCode();
+	
 }
