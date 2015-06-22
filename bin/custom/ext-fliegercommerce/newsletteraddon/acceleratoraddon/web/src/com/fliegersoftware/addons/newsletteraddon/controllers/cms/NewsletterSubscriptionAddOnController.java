@@ -45,9 +45,6 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 	private I18NService i18nService;
 		
 	private CustomerFacade customerFacade;
-	
-	
-	//private UserFacade userFacade;
 
 	
 	private static final Logger LOG = Logger.getLogger(NewsletterSubscriptionAddOnController.class);
@@ -58,9 +55,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 			RedirectAttributes redirectAttributes,
 			@RequestParam (defaultValue = "false") final boolean subscription)
 	{
-		LOG.info("NewsletterAddon Controller: " +subscription);
-		
-		//final CustomerData currentCustomerData = getCustomerFacade().getCurrentCustomer();		
+		//LOG.info("NewsletterAddon Controller: " +subscription);		
 		
 		final CustomerData customer = getCustomerFacade().getCurrentCustomer();
 		final NewsletterSubscriptionData data = new NewsletterSubscriptionData();
@@ -91,7 +86,6 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 			final String languageIsoCode = getCurrentLanguage().getIsocode();
 			data.setLanguageIsoCode(languageIsoCode);
 			
-			//final CustomerData customer = getCustomerFacade().getCurrentCustomer();
 			data.setCustomer(customer);
 						
 			if (subscription)
@@ -127,11 +121,9 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 				}
 				
 			}
-			
-			
+						
 		}
-		
-			
+					
 		return null;
 	}
 	
@@ -179,32 +171,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 			final String message = getMessageSource().getMessage("text.fliegercommerce.texto124", null, getI18nService().getCurrentLocale());
 			//E-mail ja cadastrado
 			return message;		
-		}
-	
-		
-/*		try
-		{
-			getNewsletterSubscriptionFacade().subscribe(data);
-			redirectAttributes.addFlashAttribute("newsletterregistration", Boolean.TRUE);
-			redirectAttributes.addFlashAttribute("newsletterregistrationnegative", Boolean.FALSE);
-		}
-		catch (DuplicatedNewsletterSubscriptionException e)
-		{
-			redirectAttributes.addFlashAttribute("newsletterregistration", Boolean.TRUE);
-			redirectAttributes.addFlashAttribute("newsletterregistrationnegative", Boolean.TRUE);
-			final String message = getMessageSource().getMessage("text.fliegercommerce.texto124", null, getI18nService().getCurrentLocale());
-			//E-mail ja cadastrado
-			return message;
-		}
-		
-		String redirect = getReturnRedirectUrl(request);
-		//LOG.info("Base Store = "+data.getBaseStore());
-		////LOG.info("Redirect "+redirect);
-
-		final String message = getMessageSource().getMessage("text.fliegercommerce.texto125", null, getI18nService().getCurrentLocale());
-		//Cadastrado com sucesso!
-		return message;*/
-		
+		}	
 		
 	}
 
