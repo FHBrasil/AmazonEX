@@ -15,35 +15,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <ol class="list150608">
-	<c:set var="sharp" value='#'/>
-	<p class="underlinelinks150212">
-		<spring:theme code="checkout.single.pleaseReferOur"/>&nbsp;<a href="#"><spring:theme code="checkout.single.termsAndConditions"/></a>
-		<spring:theme code="checkout.single.youHaveA"/>&nbsp;<a href="#"><spring:theme code="checkout.single.daysReturnPolicy"/></a>
-		<spring:theme code="checkout.single.hereYouWillFind"/>&nbsp;<a href="#"><spring:theme code="checkout.single.privacyPolicy"/></a></p>
+	<c:set var="sharp" value='#'/>	
 	<c:forEach items="${cartData.entries}" var="entry">
     	<li id="${entry.entryNumber}" class="item150608">
-    		<div class="row">
-    			<div class="col-xs-12 text-right">
-    				<c:if test="${entry.updateable}">
-                    	<ycommerce:testId code="cart_product_removeProduct">
-                            <a href="#" class="btn-excluir-produto"
-                                id="RemoveProduct_${entry.entryNumber}" class="submitRemoveProduct"
-                                title="Remover"
-                                onClick="hering.cart.removeProduct('${entry.entryNumber}');"><span class="glyphicon glyphicon-remove-sign"></span></a>
-                        </ycommerce:testId>
-                	</c:if>
-    			</div>
-    		</div>
 			<div class="row">
-				<div class="col-xxs-4 col-xs-12 col-md-4">
+				<div class="col-xxs-4 col-xs-12 col-md-4 text-right">
                 	<a href="${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
                 </div>
                 <div class="col-xxs-8 col-xs-12 col-md-8">
                 	<a href="${entry.product.url}">${entry.product.name}</a>
                 	<br /><small>${sharp}${entry.product.code}</small><br />
-                	<small>
-                		<span class="itemdelivery160608 collapse out"><span class="glyphicon glyphicon-stop text-onstock"></span> sofort lieferbar</span>
-                	</small>                	
+                	<small><span class="stock150619 onstock">sofort lieferbar</span></small>             	
 	                <%-- 
 	                <c:if test="${not empty entry.product.size}">
 	                    <div class="tamanho"><spring:theme code="text.fliegercommerce.texto51"/>: ${entry.product.size}</div>
@@ -89,20 +71,28 @@
 	                </small>
                 </div>
                 <div class="col-xs-4 text-right">	                		
-	            	<strong><format:price priceData="${entry.totalPrice}" displayFreeForZero="true" /></strong>
+	            	<format:price priceData="${entry.totalPrice}" displayFreeForZero="true" />
                 </div>                                           	 
-			</div>			
+			</div>	
+			<c:if test="${entry.updateable}">
+           		<ycommerce:testId code="cart_product_removeProduct">
+                	<a href="#" class="delete150618 btn-excluir-produto"
+                    	id="RemoveProduct_${entry.entryNumber}" class="submitRemoveProduct"
+                        title="Remover"
+                        onClick="hering.cart.removeProduct('${entry.entryNumber}');"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                </ycommerce:testId>
+            </c:if>		
 		</li>
 		<%-- Item Express Shipping? --%>
-		<li id="toggleDelivery" class="delivery160608 collapse out">
-			<small><span class="glyphicon glyphicon-stop text-onstock"></span> <b><spring:theme code="checkout.single.expressShipping"/></b> Lieferung Morgen, 17.08.2015</small>
+		<li id="toggleDelivery" class="delivery150618 collapse out">
+			<small><span class="stock150619 onstock big"><b><spring:theme code="checkout.single.expressShipping"/></b> Lieferung Morgen, 17.08.2015</span></small>
 		</li>
 	</c:forEach>
-	<li class="delivery160608 onstock">
-		<small><span class="glyphicon glyphicon-stop text-nostock"></span> Lieferung am Freitag, 17.08.2015</small>
+	<li class="delivery150618">
+		<small><span class="stock150619 nostock big">Lieferung am Freitag, 17.08.2015</span></small>
 	</li>
 </ol>
 <%-- If has items express shipping --%>
-<div class="checkbox">
+<div class="checkbox" style="margin-top:-15px;margin-left:-5px;">
 	<label><input type="checkbox" data-toggle="collapse" data-target="#toggleDelivery,.itemdelivery160608"><spring:theme code="checkout.single.sendPositionsImmediately"/>&nbsp;(<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />)</label>
 </div>

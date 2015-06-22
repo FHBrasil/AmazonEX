@@ -15,7 +15,11 @@
 <h2>
 	<spring:theme code="checkout.single.details.title" />
 </h2>
-
+<p class="underlinelinks150212">
+		<spring:theme code="checkout.single.pleaseReferOur"/>&nbsp;<a href="#"><spring:theme code="checkout.single.termsAndConditions"/></a>
+		<spring:theme code="checkout.single.youHaveA"/>&nbsp;<a href="#"><spring:theme code="checkout.single.daysReturnPolicy"/></a>
+		<spring:theme code="checkout.single.hereYouWillFind"/>&nbsp;<a href="#"><spring:theme code="checkout.single.privacyPolicy"/></a>
+</p>
 <single-checkout-hering:deliveryCartItems cartData="${cartData}" />
 
 <div class="row">
@@ -63,28 +67,32 @@
 	  	<spring:theme code="checkout.single.button.purchase.pleaseWait" />
 	</div>
 </div>
-<section id="docs">
-	<h3>
-    	<spring:theme code="checkout.single.summary.message.title" />
-	</h3>
-    <p>
-    	<spring:theme code="checkout.single.summary.message.1" />
-    </p>
-    <ol>
-    	<li><spring:theme code="checkout.single.summary.message.2" /></li>
-        <li><spring:theme code="checkout.single.summary.message.3" /></li>
-        <li><spring:theme code="checkout.single.summary.message.4" /></li>
-        <li><spring:theme code="checkout.single.summary.message.5" /></li>
-        <li><spring:theme code="checkout.single.summary.message.6" /></li>
-    </ol>
-    <h3>
-    	<spring:theme code="checkout.single.summary.company.procedures.title" />
-    </h3>
-    <ol>
-    	<li><spring:theme code="checkout.single.summary.company.procedure.1" /></li>
-        <li><spring:theme code="checkout.single.summary.company.procedure.2" /></li>
-        <li><spring:theme code="checkout.single.summary.company.procedure.3" /></li>
-        <li><spring:theme code="checkout.single.summary.company.procedure.4" /></li>
-        <li><spring:theme code="checkout.single.summary.company.procedure.5" /></li>
-    </ol>
-</section>
+
+<%-- TODO parametrizar condicao --%>
+<c:if test="${false}">
+	<section id="docs">
+		<h3>
+	    	<spring:theme code="checkout.single.summary.message.title" />
+		</h3>
+	    <p>
+	    	<spring:theme code="checkout.single.summary.message.1" />
+	    </p>
+	    <ol>
+	    	<li><spring:theme code="checkout.single.summary.message.2" /></li>
+	        <li><spring:theme code="checkout.single.summary.message.3" /></li>
+	        <li><spring:theme code="checkout.single.summary.message.4" /></li>
+	        <li><spring:theme code="checkout.single.summary.message.5" /></li>
+	        <li><spring:theme code="checkout.single.summary.message.6" /></li>
+	    </ol>
+	    <h3>
+	    	<spring:theme code="checkout.single.summary.company.procedures.title" />
+	    </h3>
+	    <ol>
+	    	<li><spring:theme code="checkout.single.summary.company.procedure.1" /></li>
+	        <li><spring:theme code="checkout.single.summary.company.procedure.2" /></li>
+	        <li><spring:theme code="checkout.single.summary.company.procedure.3" /></li>
+	        <li><spring:theme code="checkout.single.summary.company.procedure.4" /></li>
+	        <li><spring:theme code="checkout.single.summary.company.procedure.5" /></li>
+	    </ol>
+	</section>
+</c:if>

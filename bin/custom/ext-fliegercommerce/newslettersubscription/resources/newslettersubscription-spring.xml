@@ -78,8 +78,7 @@
 			</list>
 		</property>
 	</bean>
-
-
+	
 	<bean parent="modifyPopulatorList">
         <property name="list" ref="customerConverter" />
         <property name="add" ref="customerNewsletterSubscriptionsPopulator" />

@@ -12,11 +12,9 @@
 <%@ taglib prefix="user" tagdir="/WEB-INF/tags/desktop/user"%>
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <div class="prehead141211">
-    <div class="row bluerow">
-        <div class="col-sm-4 text-left hidden-xs">Einkaufen ohne Risiko</div>
-        <div class="col-sm-4 col-xs-12 text-center">Kostenloser Versand ab 40 &euro; (D)</div>
-        <div class="col-sm-4 text-right hidden-xs">Kundenservice: 089/904&nbsp;750&nbsp;6200</div>
-    </div>
+    <cms:pageSlot position="TopHeaderSlot" var="component">
+        <cms:component component="${component}" />
+    </cms:pageSlot>
 </div>
 <div class="head141217">
     <div class="row">
@@ -25,7 +23,7 @@
                 <cms:component component="${link}" element="" />
             </cms:pageSlot>
         </div>
-        <div class="col-sm-4 text-center hidden-xs">
+        <div class="col-sm-4 text-center hidden-xs" style="margin-top: -20px;">
             <h1>
                 <a href="/" title="${siteName}"><img src="/_ui/desktop/theme-babyartikel/assets/images/logo.svg" alt="${siteName}" height="70" width="220"></a>
             </h1>
@@ -72,13 +70,9 @@
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#">Unterwegs</a></li>
-                <li><a href="#">F&uuml;ttern &amp; Pflege</a></li>
-                <li><a href="#">Wohnen &amp; Schlafen</a></li>
-                <li><a href="#">Kleidung</a></li>
-                <li><a href="#">Spielen</a></li>
-            </ul>
+            <cms:pageSlot position="MainMenu" var="component">
+                <cms:component component="${component}" />
+            </cms:pageSlot>
             <%-- searchboxcomponent.jsp --%> 
             <cms:pageSlot position="SearchBox" var="component">
                 <cms:component component="${component}" />
