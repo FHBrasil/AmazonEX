@@ -58,10 +58,6 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
 		LOG.info("Name: " + nome + " lastname: " + sobrenome);
 		List<NewsletterSubscriptionData> subscriptions = customer.getNewsletterSubscriptions();
 
-    	if (subscriptions==null){
-    		LOG.info("null subscription");
-    	}
-
     	final String currentStore = getBaseStoreService().getCurrentBaseStore().getUid();   	
     	
     	if (subscriptions!=null)
@@ -74,21 +70,17 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
             		
             		if (subscriptionStore == currentStore)
             		{
-            			LOG.info("retorna checked");
+            			//LOG.info("retorna checked");
             			newsletterChecked = "checked";
             			return newsletterChecked;
             		}
-            		//return newsletterChecked;
             	}
     		}
     		
     		return newsletterChecked;
     	}
     	
-    	//else
-    	//{
     	return newsletterChecked;
-    	//}
   		
     }  
 
@@ -98,7 +90,6 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
    {
 	   
 	   String newsletterChecked = getNewsletterChecked();
-	   LOG.info("DENTRO DE GETVARIABLES");
 	   
        final Map<String, Object> variables = new HashMap<String, Object>();
 

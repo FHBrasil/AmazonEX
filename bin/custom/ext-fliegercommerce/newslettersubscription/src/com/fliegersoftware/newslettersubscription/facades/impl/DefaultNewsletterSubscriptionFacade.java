@@ -6,7 +6,6 @@ package com.fliegersoftware.newslettersubscription.facades.impl;
 import de.hybris.platform.commerceservices.i18n.CommerceCommonI18NService;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.store.services.BaseStoreService;
-//import net.sf.antcontrib.inifile.IniFileTask.Get;
 
 import org.springframework.beans.factory.annotation.Required;
 
