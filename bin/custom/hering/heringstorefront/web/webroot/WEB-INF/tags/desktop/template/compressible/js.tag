@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.mobile.custom.min.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.bxslider.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/fancybox/jquery.fancybox.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/trustedshops.js"></script>
 <script type="text/javascript"
     src="${themeResourcePath}/assets/js/fancybox/helpers/jquery.fancybox-media.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery-ui-1.9.2.custom.min.js"></script>
