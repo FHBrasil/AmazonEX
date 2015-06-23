@@ -56,7 +56,7 @@
                     --%>
                     <div class="checkbox">
 	                    <label>
-	                        <input type="checkbox" name="billing" id="differentAddress"/>
+	                        <input type="checkbox" name="billing" id="differentAddress" ${checkedDifferingBilling ? 'checked' : ''}/>
 	                    	<spring:theme code="checkout.single.address.useDeliveryAddressAsBillingAddress"/>
 	                    </label> 
                     </div>                   
@@ -78,9 +78,10 @@
 								<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
 							</div>
                 			<form id="selectAddress">
+                				<input type="hidden" name="deliveryOrBilling"/>
                 				<c:forEach items="${addressData}" var="deliveryAddress" varStatus="status">
                 					<div class="radio">
-										<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}">
+										<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}" ${status.index == '0' ? 'checked' : ''}>
 										<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">
 											<small>${deliveryAddress.receiver}<br /></small>
 											<b>${deliveryAddress.line1}, ${deliveryAddress.number}<br /></b>

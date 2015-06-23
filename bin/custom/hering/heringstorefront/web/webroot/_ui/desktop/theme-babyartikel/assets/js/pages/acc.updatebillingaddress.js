@@ -13,10 +13,12 @@ ACC.updatebillingaddress = {
 		if (newAddress)
 		{
 			$("#newBillingAddressFields").show();
+			$('input:hidden[name=differingBillingAddress]').attr('value', 'true');
 		}
 		else
 		{
 			$("#newBillingAddressFields").hide();
+			$('input:hidden[name=differingBillingAddress]').removeAttr('value');
 		}
 	}
 }
