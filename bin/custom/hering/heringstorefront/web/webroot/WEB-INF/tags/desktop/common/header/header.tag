@@ -41,7 +41,7 @@
             <div class="headtext150519 text-center hidden-xs">
                 <a href="<c:url value="/cart"/>">Warenkorb</a>
                 <a href="#">Wunschliste</a>
-                <a href="<c:url value="/login"/>">Konto</a>
+                <a href="<c:url value="/my-account"/>">Konto</a>
             </div>
                 <a href="/" class="home150312 visible-xs"></a>
             </div>
