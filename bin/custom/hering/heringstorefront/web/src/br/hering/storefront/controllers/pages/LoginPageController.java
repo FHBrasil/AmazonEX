@@ -196,7 +196,7 @@ public class LoginPageController extends AbstractHeringLoginController
 
 		if (redirect.matches("redirect:http://([a-zA-Z0-9:/\\.])*store/"))
 		{
-			redirect = redirect + "pt/";
+			redirect = redirect + "de/";
 			LOG.info("matches redirecionando para: " + redirect);
 		}
 		else if (redirect.contains("/login/checkout"))
@@ -205,17 +205,19 @@ public class LoginPageController extends AbstractHeringLoginController
 			redirect = "redirect:/checkout";
 			LOG.info("matches redirecionando para: " + redirect);
 		}
-		else if (redirect.matches("([a-zA-Z0-9:/\\.-])*store/pt/login([?]error=true)*"))
+		else if (redirect.matches("([a-zA-Z0-9:/\\.-])*/login([?]error=true)*"))
 		{
 			// from /login page, goes to /my-account
 			redirect = "redirect:/my-account";
 			LOG.info("matches redirecionando para: " + redirect);
+			LOG.info("3");
 		}
-		else if (redirect.matches("redirect:https://([a-zA-Z0-9:/\\.])*store/pt/login/loginOver"))
+		else if (redirect.matches("redirect:https://([a-zA-Z0-9:/\\.])*/login/loginOver"))
 		{
 			// from /login page, goes to /my-account
 			redirect = "redirect:/my-account";
 			LOG.info("matches redirecionando para: " + redirect);
+			LOG.info("4");
 		}
 		else if (redirect.contains("forgotPassword=true"))
 		{
