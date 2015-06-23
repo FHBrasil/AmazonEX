@@ -10,29 +10,29 @@
 <div id="newBillingAddressFields" class="cardForm" style="display: none;">
 	<div class="section-container">
     	<section id="selected-address">
-        	<c:if test="${not empty selectedDeliveryAddress.id}">
+        	<c:if test="${not empty selectedBillingAddress.id}">
                 <div class="address-info">
-                	<span id="e-tipo" class="h4"><b>${selectedDeliveryAddress.type.code}</b></span><br /><br />
-                    <input type="hidden" class="e-code" value="${selectedDeliveryAddress.id}"/>
-                    <span class="e-receiver">${selectedDeliveryAddress.receiver}</span>
+                	<span id="e-tipo" class="h4"><b>${selectedBillingAddress.type.code}</b></span><br /><br />
+                    <input type="hidden" class="e-code" value="${selectedBillingAddress.id}"/>
+                    <span class="e-receiver">${selectedBillingAddress.receiver}</span>
                     <div class="btn-group">
-                    	<a href="#deliveryAddressModal" class="btn-editar" data-toggle="modal"><small><span class="glyphicon glyphicon-pencil"></span><spring:theme code="checkout.single.address.edit"/></small></a>
+                    	<a href="#deliveryAddressModal" class="billing btn-editar" data-toggle="modal"><small><span class="glyphicon glyphicon-pencil"></span><spring:theme code="checkout.single.address.edit"/></small></a>
                     </div><br />
-                    <span class="e-addr">${selectedDeliveryAddress.line1}</span>,
-                    <span class="e-numero">${selectedDeliveryAddress.number}</span><br />
-                    <c:if test="${not empty selectedDeliveryAddress.complement}">
-                    	<span class="e-complemento">${selectedDeliveryAddress.complement}</span><br />
+                    <span class="e-addr">${selectedBillingAddress.line1}</span>,
+                    <span class="e-numero">${selectedBillingAddress.number}</span><br />
+                    <c:if test="${not empty selectedBillingAddress.complement}">
+                    	<span class="e-complemento">${selectedBillingAddress.complement}</span><br />
                     </c:if>
-                    <c:if test="${not empty selectedDeliveryAddress.reference}">
-                       	<span class="e-ref">${selectedDeliveryAddress.reference}</span><br />
+                    <c:if test="${not empty selectedBillingAddress.reference}">
+                       	<span class="e-ref">${selectedBillingAddress.reference}</span><br />
                     </c:if>
-                    <span class="e-cep">${selectedDeliveryAddress.postalCode}</span>&nbsp;<span class="e-cidade">${selectedDeliveryAddress.town}</span><br />
-                    <c:if test="${not empty selectedDeliveryAddress.region.name}">
-                    	<span class="e-estado">${selectedDeliveryAddress.region.name}</span><br />
+                    <span class="e-cep">${selectedBillingAddress.postalCode}</span>&nbsp;<span class="e-cidade">${selectedBillingAddress.town}</span><br />
+                    <c:if test="${not empty selectedBillingAddress.region.name}">
+                    	<span class="e-estado">${selectedBillingAddress.region.name}</span><br />
                     </c:if>                
-                    <span class="e-pais">${selectedDeliveryAddress.country.name}</span><br /><br />
+                    <span class="e-pais">${selectedBillingAddress.country.name}</span><br /><br />
                     <spring:theme code="checkout.single.address.phone"/>
-                    <span class="e-phone">:&nbsp;${selectedDeliveryAddress.dddPhone}&nbsp;${selectedDeliveryAddress.phone}</span>                    
+                    <span class="e-phone">:&nbsp;${selectedBillingAddress.dddPhone}&nbsp;${selectedBillingAddress.phone}</span>                    
 					<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>					
            		</div>
         	</c:if>

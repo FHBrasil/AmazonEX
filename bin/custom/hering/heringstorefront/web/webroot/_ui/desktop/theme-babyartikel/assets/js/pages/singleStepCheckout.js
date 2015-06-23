@@ -97,9 +97,17 @@ $(document).ready(function() {
 //	});
 	
 	$('form#selectAddress').find('button.btn-primary').click(function(){		
-		var cod = $('input:radio[name=chooseDeliveryAddress]:checked').val();		
-		var url = contextPath + '/checkout/single/select-delivery-address/' + cod;
+		var cod = $('input:radio[name=chooseDeliveryAddress]:checked').val();
+		var typeAddress = $('input:hidden[name=deliveryOrBilling]').val();
+		var url = contextPath + '/checkout/single/select-' + typeAddress + '-address/' + cod;
 		$('form#selectAddress').attr('action', url).submit();
+	});
+	
+	$('.btn-group .btn-editar').click(function(){
+		if($(this).hasClass('billing'))
+			$('input:hidden[name=deliveryOrBilling]').attr("value", 'billing');
+		else
+			$('input:hidden[name=deliveryOrBilling]').attr("value", 'delivery');
 	});
 	
 	/*! Removes delivery address */
