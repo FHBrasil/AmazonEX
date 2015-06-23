@@ -41,51 +41,58 @@
 </div>
 <!--  chaordic - fim -->
 <section id="product-main">
-	<product:productImagePanel product="${product}" galleryImages="${galleryImages}"/> 
-	<div class="right product-main-info">
-		<div class="wrap pro-info">
-			<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
-				<header>
-					<h1 class="estilo-titulo-produto">${product.name}</h1>
-					<span><spring:theme code="product.code"/>&nbsp;${product.code}</span>
-				</header>
-			</ycommerce:testId>
-			
-			<c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">
-			
-			<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
-				<product:productPricePanel product="${product}"/>
-			</ycommerce:testId>
-			
-			<%--<product:productReviewSummary product="${product}"/>--%>
-	
-			<c:if test="${not empty product.summary}">
-				<div class="summary">
-					${product.summary}
-				</div>
-			</c:if>
-	
-			<product:productPromotionSection product="${product}"/>
-	
-			<c:if test="${not empty product.color}">
-				<div class="product-color-RGB">
-			<!--  	Cor RGB: ${product.color.RGB}-->
-				</div>
-			</c:if>
-			</c:if>
-			
-			<cms:pageSlot position="VariantSelector" var="component" element="div">
-				<cms:component component="${component}"/>
-			</cms:pageSlot>
-				
-			<cms:pageSlot position="AddToCart" var="component" element="div" class="span-8">
-				<cms:component component="${component}"/>
-			</cms:pageSlot>
-			
-			<product:productDetailsFooter product="${product}" />
+	<div class="margin-top">
+		<div class="col-xs-12 col-sm-6 v-bottom">
+			<product:productImagePanel product="${product}" galleryImages="${galleryImages}"/> 
 		</div>
+		<div class="rightcol-sm-6 v-bottom margin-top">
+			<div class="col-sm-12 text-right hidden-xs">
+			</div>
+			<div class="wrap pro-info">
+				<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
+					<header>
+						<h1><b>[BRAND]</b>${product.name}</h1>
+						<span><spring:theme code="product.code"/>&nbsp;${product.code}</span>
+					</header>
+				</ycommerce:testId>
+				
+				<c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">
+				
+				<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
+					<product:productPricePanel product="${product}"/>
+				</ycommerce:testId>
+				
+				<%--<product:productReviewSummary product="${product}"/>--%>
+		
+				<c:if test="${not empty product.summary}">
+					<div class="summary">
+						${product.summary}
+					</div>
+				</c:if>
+		
+				<product:productPromotionSection product="${product}"/>
+		
+				<c:if test="${not empty product.color}">
+					<div class="product-color-RGB">
+				<!--  	Cor RGB: ${product.color.RGB}-->
+					</div>
+				</c:if>
+				</c:if>
+				
+				<cms:pageSlot position="VariantSelector" var="component" element="div">
+					<cms:component component="${component}"/>
+				</cms:pageSlot>
+					
+				<cms:pageSlot position="AddToCart" var="component" element="div" class="span-8">
+					<cms:component component="${component}"/>
+				</cms:pageSlot>
+				
+				<product:productDetailsFooter product="${product}" />
+			</div>
+		</div>
+		<cms:pageSlot position="Section2" var="feature" element="div" class="span-8 section2 cms_disp-img_slot last">
+			<cms:component component="${feature}"/>
+		</cms:pageSlot>
 	</div>
-	<cms:pageSlot position="Section2" var="feature" element="div" class="span-8 section2 cms_disp-img_slot last">
-		<cms:component component="${feature}"/>
-	</cms:pageSlot>
+	<div class="clearfix"></div>
 </section>

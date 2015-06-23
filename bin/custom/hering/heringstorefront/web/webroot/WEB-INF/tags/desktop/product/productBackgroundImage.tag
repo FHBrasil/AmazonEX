@@ -6,5 +6,7 @@
 <%@ attribute name="galleryImages" required="true" type="java.util.List"%>
 <c:set var="productMainImagesUrl" value="${galleryImages[0].zoom.url}" />
 <c:set var="productZoomImagesUrl" value="${galleryImages[0].superZoom.url}" />
-<div id="product-main-img" data-image-source="${productMainImagesUrl}"
-    data-zoom-image-source="${productZoomImagesUrl}" style="background-position-y: 25px"></div>
+	<div class="col-xs-12 col-sm-6 v-bottom">
+		<div id="product-main-img" data-image-source="${productMainImagesUrl}" data-zoom-image-source="${productZoomImagesUrl}" style="background-position-y: 25px"></div>
+	</div>
+	
