@@ -1,6 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
+
+<div>
+        <product:productPageTabs />
+    <div class="col-sm-4 col-md-6 col-lg-5 col-lg-offset-1 recs150126 text-center">
+    </div>
+</div>
+
+
+
+
+<%-- code original
 <div class="container half">
     <div class="right">
         <section class="section-mini right-margin">
@@ -22,4 +33,4 @@
 </cms:pageSlot>
 <cms:pageSlot position="UpSelling" var="comp" element="div" class="span-24">
     <cms:component component="${comp}" />
-</cms:pageSlot>
+</cms:pageSlot>--%>

@@ -7,6 +7,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
+
+<div>
+ 	<ul class="nav nav-tabs margin-top" id="tab150219">
+        <li class="active"><a data-toggle="tab" href="#sectionA"><spring:theme code="product.product.details" /></a></li>
+        <li><a data-toggle="tab" href="#sectionB"><spring:theme code="review.reviews" /></a></li>
+    </ul>
+</div>
+    	<product:productBrand />
+	<div class="col-md-6 col-sm-8 tab150119">   
+        <div class="tab-content">
+            <div id="sectionA" class="tab-pane fade in active">
+                <product:productDetailsTab product="${product}" />
+            </div>
+            <div id="sectionB" class="tab-pane fade">
+                <product:productPageReviewsTab product="${product}" />
+            </div>
+        </div>
+    </div>
+
+
+
+<%-- code original
 <div class="tabs">
     <ul class="tabs-header">
         <li class="active"><a href="#"><spring:theme code="product.product.details" /></a></li>
@@ -16,4 +38,4 @@
         <product:productDetailsTab product="${product}" />
         <product:productPageReviewsTab product="${product}" />
     </div>
-</div>
+</div>--%>
