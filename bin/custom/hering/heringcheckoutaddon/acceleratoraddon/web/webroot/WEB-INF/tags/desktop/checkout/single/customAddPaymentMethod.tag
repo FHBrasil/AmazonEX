@@ -23,6 +23,7 @@
 	<c:set var="sharp" value='#'/>
 	<form:form method="post" commandName="paymentDetailsForm" class="create_update_payment_form"
             action="${request.contextPath}/checkout/single/custom-add-payment-method">
+        <input type="hidden" name="differingBillingAddress"/>
 	    <c:set var="deliveryAddress" value="${cartData.deliveryAddress}" />
 		<c:forEach items="${paymentModes}" var="paymentMode">
 		    <input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
