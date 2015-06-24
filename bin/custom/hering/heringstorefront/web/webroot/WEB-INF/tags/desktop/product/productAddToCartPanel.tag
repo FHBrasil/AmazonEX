@@ -16,30 +16,28 @@
     <c:when test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">
         <form:form id="code_${product.code}" method="post" action="${addToCartUrl}" class="addToCartForm">
             <div class="col-xs-4 margin-top qty150126">
-                <form>
-                    <div class="form-group row">
-                        <input class="productStock" type="hidden" value="${product.stock.stockLevel}" />
-                    <c:if test="${product.purchasable}">
-                        <div class="col-md-4 hidden-xs hidden-sm">
-                            <label class="" for="qty"><spring:theme code="basket.page.quantity" /></label>
-                        </div>
-                        <div class="col-xs-12 col-md-8">
-                            <input id="qtyInput_${product.code}" type="number" value="1" min="1" max="10" maxlength="3" name="qty">
-                        </div>
-                    </c:if>
-                    <c:if test="${product.stock.stockLevelStatus.code eq 'lowStock'}">
-                        <c:if test="${product.stock.stockLevel < 4}">
-                            <c:set var="productStockLevel">
-                                <spring:theme code="product.variants.only.left"
-                                    arguments="${product.stock.stockLevel}" />
-                            </c:set>
-                        </c:if>
-                    </c:if>
-                    <ycommerce:testId code="productDetails_productInStock_label">
-                        <span>${productStockLevel}</span>
-                    </ycommerce:testId>
-                    </div>
-                </form>
+                   <div class="form-group row">
+                       <input class="productStock" type="hidden" value="${product.stock.stockLevel}" />
+                   <c:if test="${product.purchasable}">
+                       <div class="col-md-4 hidden-xs hidden-sm">
+                           <label class="" for="qty"><spring:theme code="basket.page.quantity" /></label>
+                       </div>
+                       <div class="col-xs-12 col-md-8">
+                           <input id="qtyInput_${product.code}" type="number" value="1" min="1" max="10" maxlength="3" name="qty">
+                       </div>
+                   </c:if>
+                   <c:if test="${product.stock.stockLevelStatus.code eq 'lowStock'}">
+                       <c:if test="${product.stock.stockLevel < 4}">
+                           <c:set var="productStockLevel">
+                               <spring:theme code="product.variants.only.left"
+                                   arguments="${product.stock.stockLevel}" />
+                           </c:set>
+                       </c:if>
+                   </c:if>
+                   <ycommerce:testId code="productDetails_productInStock_label">
+                       <span>${productStockLevel}</span>
+                   </ycommerce:testId>
+                   </div>
             </div>
             <div class="col-xs-8 margin-top">
                 <input type="hidden" name="productCodePost" value="${product.code}" />
