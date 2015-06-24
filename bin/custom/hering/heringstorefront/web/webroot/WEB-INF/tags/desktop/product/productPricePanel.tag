@@ -9,6 +9,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<p class="price"> <format:fromPrice priceData="${product.price}" /><%--<sup>75&nbsp;&euro;</sup>--%></p>
+<p><small>inkl. MwSt.<br />zzgl. Versand</small></p>
+
+
+
+
+<%-- code original
 <section class="clear">
     <div class="precos">
         <c:choose>
@@ -30,7 +38,7 @@
         <p>
             <c:choose>
                 <c:when test="${product.priceParcels > 1}">
-						${product.priceParcels}<spring:theme code="product.volumePrices.parcel" />
+                        ${product.priceParcels}<spring:theme code="product.volumePrices.parcel" />
                     <b><spring:theme code="product.currencynotation" />
                         <fmt:formatNumber value="${product.parcelUnitPrice}" type="number"
                             minFractionDigits="2" /></b>
@@ -70,3 +78,4 @@
         </ul>
     </div>
 </section>
+--%>
