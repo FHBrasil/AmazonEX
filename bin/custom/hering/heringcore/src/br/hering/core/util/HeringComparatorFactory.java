@@ -6,8 +6,10 @@ package br.hering.core.util;
 import java.util.Comparator;
 import java.util.Map;
 
-import br.hering.core.model.HeringSizeVariantProductModel;
+import org.apache.log4j.Logger;
 
+import br.hering.core.model.HeringSizeVariantProductModel;
+import br.hering.facades.product.impl.HeringProductImagePopulatorHelper;
 import de.hybris.platform.commercefacades.product.data.ImageData;
 
 /**
@@ -20,6 +22,8 @@ import de.hybris.platform.commercefacades.product.data.ImageData;
 public final class HeringComparatorFactory
 {
 	private static final String PRODUCT = "product";
+
+	private static final Logger LOG = Logger.getLogger(HeringComparatorFactory.class);
 
 	private HeringComparatorFactory(){}
 	
@@ -56,19 +60,19 @@ public final class HeringComparatorFactory
 			
 			public int compare(final Map<String, ImageData> imageLeft, final Map<String, ImageData> imageRight)
 			{
+
+				ImageData imageDataLeft = imageLeft.get(PRODUCT);
+				ImageData imageDataRight = imageRight.get(PRODUCT);
+			
+				if(imageDataLeft != null && imageDataRight != null)
+				{
+					String nameLeft = StringUtils.getSubNameImagem(imageDataLeft.getUrl());
+					String nameRight = StringUtils.getSubNameImagem(imageDataRight.getUrl());		
+
+					return nameLeft.compareTo(nameRight);
+				} 
+				
 				return 0;
-				//TODO bug no codigo abaixo.
-//				ImageData imageDataLeft = imageLeft.get(PRODUCT);
-//				ImageData imageDataRight = imageRight.get(PRODUCT);
-//				
-//				if(imageDataLeft != null && imageDataRight != null){
-//   				String nameLeft = StringUtils.getSubNameImagem(imageDataLeft.getUrl());
-//   				String nameRight = StringUtils.getSubNameImagem(imageDataRight.getUrl());
-//   				
-//   				return nameLeft.compareTo(nameRight);
-//				} 
-//				
-//				return 0;
 			}
 		};
 	}
