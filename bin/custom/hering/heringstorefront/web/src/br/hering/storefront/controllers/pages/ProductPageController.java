@@ -554,15 +554,22 @@ public class ProductPageController extends AbstractPageController
 		}
 				
 		Collections.sort(galleryImages, HeringComparatorFactory.getComparatorReverseMapKeyProductImageDataIndex());
-				
-		String lastObjList = galleryImages.get(galleryImages.size() - 1).get(PRODUCT).getUrl();
 		
-	    if (lastObjList.matches("(.*)[a-zA-Z].jpg(.*)"))
-	    {
-	    	Map<String, ImageData> obj = galleryImages.get(galleryImages.size() - 1);
-	    	galleryImages.remove(obj);
-	    	galleryImages.add(0, obj);
-	    }
+		try
+		{
+			String lastObjList = galleryImages.get(galleryImages.size() - 1).get(PRODUCT).getUrl();
+			
+		    if (lastObjList.matches("(.*)[a-zA-Z].jpg(.*)"))
+		    {
+		    	Map<String, ImageData> obj = galleryImages.get(galleryImages.size() - 1);
+		    	galleryImages.remove(obj);
+		    	galleryImages.add(0, obj);
+		    }
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		return galleryImages;
 	}
