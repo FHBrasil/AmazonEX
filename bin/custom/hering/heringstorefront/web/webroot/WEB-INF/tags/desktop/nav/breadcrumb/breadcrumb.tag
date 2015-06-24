@@ -3,11 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:url value="/" var="homeUrl" />
-<header id="page-header">
-    <div>
         <ul class="breadcrumb">
-            <li><a href="${homeUrl}"><spring:theme code="breadcrumb.home" /></a></li>
-            <c:forEach items="${breadcrumbs}" var="breadcrumb" varStatus="status">
+             <li><a href="${homeUrl}">
+             	<%--<spring:theme code="breadcrumb.home" /> --%>
+             	<span class="glyphicon glyphicon-home"></span>
+          	</a></li>
+          	<c:forEach items="${breadcrumbs}" var="breadcrumb" varStatus="status">
                 <li><c:choose>
                         <c:when test="${breadcrumb.url eq '#'}">
                             <a href="#" onclick="return false;"
@@ -25,5 +26,3 @@
                     </c:choose></li>
             </c:forEach>
         </ul>
-    </div>
-</header>
