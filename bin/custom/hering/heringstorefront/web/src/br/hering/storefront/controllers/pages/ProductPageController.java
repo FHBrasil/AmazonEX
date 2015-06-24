@@ -52,6 +52,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -93,6 +94,8 @@ public class ProductPageController extends AbstractPageController
 {
 	@SuppressWarnings("unused")
 	private static final Logger LOG = Logger.getLogger(ProductPageController.class);
+	
+	private static final String PRODUCT = "product";
 
 	/**
 	 * We use this suffix pattern because of an issue with Spring 3.1 where a Uri value is incorrectly extracted if it
@@ -549,10 +552,27 @@ public class ProductPageController extends AbstractPageController
 				}
 			}
 		}
-		
-		
+				
 		Collections.sort(galleryImages, HeringComparatorFactory.getComparatorReverseMapKeyProductImageDataIndex());
-
+		
+		try
+		{
+			String lastObjList = galleryImages.get(galleryImages.size() - 1).get(PRODUCT).getUrl();
+			
+			
+		    if (lastObjList.matches("(.*)[a-zA-Z].jpg(.*)"))
+		    {
+		    	Map<String, ImageData> obj = galleryImages.get(galleryImages.size() - 1);
+		    	galleryImages.remove(obj);
+		    	galleryImages.add(0, obj);
+		    }
+		}
+		catch (Exception e)
+		{
+			//There is no gallery images
+			//e.printStackTrace();
+		}
+		
 		return galleryImages;
 	}
 	
