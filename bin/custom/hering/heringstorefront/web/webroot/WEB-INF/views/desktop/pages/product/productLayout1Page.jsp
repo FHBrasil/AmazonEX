@@ -8,9 +8,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
 <template:page pageTitle="${pageTitle}">
-    <product:productBackgroundImage product="${product}" galleryImages="${galleryImages}" />
-    <div class="container">
+    <div>
         <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
+        <product:productBackgroundImage product="${product}" galleryImages="${galleryImages}" />
         <product:productMainPanel />
         <product:productSecondaryPanel />
     </div>

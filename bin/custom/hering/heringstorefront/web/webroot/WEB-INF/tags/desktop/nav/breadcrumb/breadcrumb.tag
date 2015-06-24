@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:url value="/" var="homeUrl" />
 <header id="page-header">
-    <div class="container">
+    <div>
         <ul class="breadcrumb">
             <li><a href="${homeUrl}"><spring:theme code="breadcrumb.home" /></a></li>
             <c:forEach items="${breadcrumbs}" var="breadcrumb" varStatus="status">
