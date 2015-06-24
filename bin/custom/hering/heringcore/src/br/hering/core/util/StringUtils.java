@@ -19,8 +19,6 @@ import br.hering.facades.product.impl.HeringProductImagePopulatorHelper;
  */
 public class StringUtils
 {
-	//final static Pattern p = Pattern.compile("[a-zA-Z]");
-	
 	private static final Logger LOG = Logger.getLogger(StringUtils.class);
 
 	

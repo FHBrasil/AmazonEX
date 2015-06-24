@@ -569,6 +569,7 @@ public class ProductPageController extends AbstractPageController
 		}
 		catch (Exception e)
 		{
+			//There is no gallery images
 			//e.printStackTrace();
 		}
 		
