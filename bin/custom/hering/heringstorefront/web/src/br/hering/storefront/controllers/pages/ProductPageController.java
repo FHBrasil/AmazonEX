@@ -559,6 +559,7 @@ public class ProductPageController extends AbstractPageController
 		{
 			String lastObjList = galleryImages.get(galleryImages.size() - 1).get(PRODUCT).getUrl();
 			
+			
 		    if (lastObjList.matches("(.*)[a-zA-Z].jpg(.*)"))
 		    {
 		    	Map<String, ImageData> obj = galleryImages.get(galleryImages.size() - 1);
@@ -568,7 +569,7 @@ public class ProductPageController extends AbstractPageController
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return galleryImages;
