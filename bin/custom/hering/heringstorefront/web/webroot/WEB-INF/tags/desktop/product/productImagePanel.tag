@@ -7,10 +7,8 @@
 
 <%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData" %>
 <%@ attribute name="galleryImages" required="true" type="java.util.List" %>
-
-		<div class="margin-top margin-bottom">
-			<div class="col-xs-12 col-sm-6 v-bottom">
-				<ul class="hidden-xs hidden-sm col-sm-6 carouselNav150219">
+	
+				<ol class="hidden-xs hidden-sm col-sm-6 carouselNav150219">
 					<c:forEach items="${galleryImages}" var="container" varStatus="status">
 						<li <c:if test="${status.first}">class="col-xs-2"</c:if>>
 							<a href="#" data-image-source="${container.zoom.url}" data-zoom-image-source="${container.superZoom.url}">
@@ -18,9 +16,8 @@
 							</a>
 						</li>
 					</c:forEach>
-				</ul>  
-			</div>
-		</div>
+				</ol>
+			
 	
 
 <%-- code original
