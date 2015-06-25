@@ -57,8 +57,11 @@
                                         
                                 </ul>
                                 <div class="btn-group">
-                                    <a href="update-password" class="btn"><spring:theme code="text.fliegercommerce.texto39"/></a> <a
-                                        href="update-profile" class="btn"> <spring:theme code="text.fliegercommerce.texto40"/> </a> <a href="update-email" class="btn"><spring:theme code="text.fliegercommerce.texto41"/></a>
+                                    <a href="update-password" class="btn"><spring:theme code="text.fliegercommerce.texto39"/></a> 
+                                    <a href="update-profile" class="btn"> <spring:theme code="text.fliegercommerce.texto40"/> </a> 
+                                    <a href="update-email" class="btn"><spring:theme code="text.fliegercommerce.texto41"/></a>
+									<!-- testing delete account -->
+                                    <a href="delete-account" class="btn"><spring:theme code="text.fliegercommerce.texto128"/></a>
                                 </div>
                             </section>
                         </form:form>

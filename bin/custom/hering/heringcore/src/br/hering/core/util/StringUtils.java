@@ -3,12 +3,6 @@
  */
 package br.hering.core.util;
 
-import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
-
-import br.hering.facades.product.impl.HeringProductImagePopulatorHelper;
-
 /**
  * CLASSE RESPONSAVEL
  * POR
@@ -19,8 +13,6 @@ import br.hering.facades.product.impl.HeringProductImagePopulatorHelper;
  */
 public class StringUtils
 {
-	private static final Logger LOG = Logger.getLogger(StringUtils.class);
-
 	
 	public static String getSubNameImagem(String imageUrl){
 		String subEnd = imageUrl.replace("-", "");

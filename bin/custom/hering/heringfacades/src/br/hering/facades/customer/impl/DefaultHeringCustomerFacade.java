@@ -4,7 +4,6 @@
 package br.hering.facades.customer.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
-
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
@@ -13,6 +12,7 @@ import de.hybris.platform.commerceservices.enums.CustomerType;
 import de.hybris.platform.core.enums.Gender;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.PasswordEncoderService;
@@ -30,10 +30,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
+
 import br.flieger.exacttarget.events.CustomerRegisterEvent;
 import br.hering.core.customer.impl.KPCustomerAccountService;
+import br.hering.core.customer.HeringCustomerAccountService;
 import br.hering.facades.customer.HeringCustomerFacade;
-
 
 
 /**
@@ -57,7 +58,12 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	@Resource
 	private ModelService modelService;
 	
+	@Resource
+	private HeringCustomerAccountService heringCustomerAccountService;
+		
+
 	private static final Logger LOG = Logger.getLogger(DefaultHeringCustomerFacade.class);
+
 	
 	@Override
 	public void updateProfile(final CustomerData customerData) throws DuplicateUidException
@@ -80,6 +86,24 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		getModelService().save(customer);
 	}
 
+	
+	@Override
+	public void deleteAccount()
+	{
+		
+		final CustomerModel customerModel = getCurrentSessionCustomer();
+		try
+		{
+			heringCustomerAccountService.DeleteAccount(customerModel);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}		
+		
+	}
+	
+	
 	
 	@Override
 	protected void validateDataBeforeUpdate(final CustomerData customerData)
@@ -140,6 +164,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		validateParameterNotNullStandardMessage("birthday", birthday);
 		
 		final CustomerModel guestCustomer = getModelService().create(CustomerModel.class);
+		
 		final String guid = generateGUID();
 
 		//takes care of localizing the name based on the site language
@@ -242,4 +267,6 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		}
 		return "";
 	}
+	
+
 }

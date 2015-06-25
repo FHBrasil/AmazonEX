@@ -792,4 +792,6 @@
         class="br.hering.facades.usergroup.impl.DefaultHeringCustomerGroupFacade"
         parent="customerGroupFacade">
     </bean>
+    
+    
 </beans>

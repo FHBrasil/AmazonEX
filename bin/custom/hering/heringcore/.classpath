@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/platform"/>
 	<classpathentry exported="true" kind="src" path="/acceleratorservices"/>
 	<classpathentry exported="true" kind="src" path="/acceleratorcms"/>
 	<classpathentry exported="true" kind="src" path="/heringfulfilmentprocess"/>
@@ -14,5 +13,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/exacttarget"/>
 	<classpathentry kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/notificationservices"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/newslettersubscription"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

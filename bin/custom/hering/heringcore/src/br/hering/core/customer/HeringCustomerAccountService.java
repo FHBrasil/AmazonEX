@@ -24,4 +24,7 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	public List<OrderModel> getOrderList(CustomerModel customerModel, OrderStatus[] status);
 
 	public SearchPageData<OrderModel> getOrderList(CustomerModel customerModel, OrderStatus[] status, PageableData pageableData);
+	
+	public void DeleteAccount(CustomerModel customerModel);
+	
 }

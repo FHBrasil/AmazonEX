@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import br.hering.core.model.HeringSizeVariantProductModel;
-import br.hering.facades.product.impl.HeringProductImagePopulatorHelper;
 import de.hybris.platform.commercefacades.product.data.ImageData;
 
 /**

@@ -99,24 +99,6 @@ public class InterfaceImportacaoClienteEndpoint extends AbstractInterfaceEndpoin
 
 			prepareCurrentSession(customerRequest.getCodigoSite(), false);
 
-			/*if (customerRequest.isNewsletter())
-			{
-				final NewsletterSubscriberData news = new NewsletterSubscriberData();
-				news.setEmail(customerRequest.getEmail());
-				news.setGender(genderMapping.get(customerRequest.getSexo()));
-				news.setReceive(Boolean.TRUE);
-
-				try
-				{
-					newsletterSubscriptionFacade.update(news);
-				}
-				catch (final Exception e)
-				{
-					LOG.error("error", e);
-					createErrorMessageList(CHAVE_CLIENTE + "=" + customerRequest.getCodigoCliente(), MENSAGEM + "=" + e.getMessage());
-				}
-			}*/
-
 			if (userService.isUserExisting(customerRequest.getEmail()))
 			{
 				LOG.info("CLIENTE - ATUALIZAÇÃO: " + customerRequest.getEmail());
@@ -140,6 +122,7 @@ public class InterfaceImportacaoClienteEndpoint extends AbstractInterfaceEndpoin
 				customerModel.setName(customerNameStrategy.getName(customerRequest.getNome(), ""));
 			}
 
+			
 			customerModel.setSessionLanguage(commonI18NService.getCurrentLanguage());
 			customerModel.setSessionCurrency(commonI18NService.getCurrentCurrency());
 			customerModel.setBirthday(parseDate(customerRequest.getAniversario()));
