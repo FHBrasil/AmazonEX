@@ -23,7 +23,7 @@
                            <label class="" for="qty"><spring:theme code="basket.page.quantity" /></label>
                        </div>
                        <div class="col-xs-12 col-md-8">
-                           <input id="qtyInput_${product.code}" type="number" value="1" min="1" max="10" maxlength="3" name="qty">
+                           <input class="form-control input-lg" id="qtyInput_${product.code}" type="number" value="1" min="1" max="10" maxlength="3" name="qty">
                        </div>
                    </c:if>
                    <c:if test="${product.stock.stockLevelStatus.code eq 'lowStock'}">
