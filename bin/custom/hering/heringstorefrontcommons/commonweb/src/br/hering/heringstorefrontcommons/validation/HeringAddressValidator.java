@@ -6,6 +6,8 @@ package br.hering.heringstorefrontcommons.validation;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.AddressForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.AddressValidator;
 
+import javax.annotation.Resource;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,20 +22,28 @@ import br.hering.heringstorefrontcommons.forms.HeringAddressForm;
 
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 
+import de.hybris.platform.store.services.BaseStoreService;
+
 
 /**
  * @author Antony P
  * @author franthescollymaneira
+ * @author Rafael S
  * 
  */
 public class HeringAddressValidator extends AddressValidator
 {
+	@Resource
+	private BaseStoreService baseStoreService;
+	
+	private static final int MAX_CHARS_SMALL_FIELD = 10;
 	private static final int MAX_CHARS_MEDIUM_FIELD = 50;
 	private static final int MAX_CHARS_LARGE_FIELD = 255;
 	private static final int MAX_CHARS_PHONE_FIELD = 11;
-	private static final int MAX_CHARS_STREET_NUMBER_FIELD = 6;
+	private static final int MAX_CHARS_STREET_NUMBER_FIELD = 8;
 	private static final int MAX_POSTCODE_LENGTH = 8;
 	private static final int MIN_POSTCODE_LENGTH = 8;
+	private static final int MAX_POSTCODE_LENGTH_INTER = 11;
 	private static final Logger LOG = Logger.getLogger(HeringAddressValidator.class);
 	private static Model model;
 	
@@ -51,9 +61,43 @@ public class HeringAddressValidator extends AddressValidator
 	{
 		HeringAddressValidator.model = model;
 		final HeringAddressForm addressForm = (HeringAddressForm) object;
-		validateStandardFields(addressForm, errors);
-		validateCountrySpecificFields(addressForm, errors);
-		//super.validate(object, errors);
+
+		if("babyartikel".equals(baseStoreService.getCurrentBaseStore().getUid()))
+		{
+			validateStandardFieldsInter(addressForm, errors);
+		}
+		else
+		{
+			validateStandardFields(addressForm, errors);	
+			validateCountrySpecificFields(addressForm, errors);
+			//super.validate(object, errors);
+		}
+	}
+	
+	//Validate International
+	protected void validateStandardFieldsInter(final HeringAddressForm addressForm, final Errors errors)
+	{
+		validateStringField(addressForm.getTitleCode(), BrazilianAddressField.TITLE, MAX_CHARS_SMALL_FIELD, errors);
+		validateStringField(addressForm.getFirstName(), BrazilianAddressField.FIRSTNAME, MAX_FIELD_LENGTH, errors);
+		validateStringField(addressForm.getLastName(), BrazilianAddressField.LASTNAME, MAX_FIELD_LENGTH, errors);		
+		validateStringField(addressForm.getNumber(), BrazilianAddressField.STREETNUMBER, MAX_CHARS_STREET_NUMBER_FIELD, errors);
+		validateStringField(addressForm.getPostcode(), BrazilianAddressField.POSTCODE, MAX_POSTCODE_LENGTH_INTER, errors);
+		validateStringField(addressForm.getTownCity(), BrazilianAddressField.TOWN, MAX_FIELD_LENGTH, errors);
+		validateStringField(addressForm.getCountryIso(), BrazilianAddressField.COUNTRY, MAX_FIELD_LENGTH, errors);
+		if(addressForm.getAddressType().equalsIgnoreCase("packstation"))
+		{
+			validateStringField(addressForm.getReference(), BrazilianAddressField.REFERENCE, MAX_CHARS_MEDIUM_FIELD, errors);
+		}
+		else
+		{
+			validateStringField(addressForm.getLine1(), BrazilianAddressField.LINE1, MAX_FIELD_LENGTH, errors);
+		}
+		
+		final HeringAddressForm heringForm = (HeringAddressForm) addressForm;
+		if (StringUtils.isBlank(heringForm.getReceiver()))
+		{
+			heringForm.setReceiver(heringForm.getFirstName() + " " + heringForm.getLastName());
+		}
 	}
 	
 	protected void validateStandardFields(final HeringAddressForm addressForm, final Errors errors)
@@ -83,17 +127,16 @@ public class HeringAddressValidator extends AddressValidator
 			validateStringField(heringForm.getNumber(), BrazilianAddressField.STREETNUMBER, MAX_CHARS_STREET_NUMBER_FIELD, errors);
 			validateStringField(heringForm.getNeighborhood(), BrazilianAddressField.NEIGHBORHOOD, MAX_CHARS_MEDIUM_FIELD, errors);
 			validatePhoneNumber(heringForm.getPhone(), BrazilianAddressField.PHONE, MAX_CHARS_PHONE_FIELD, errors);
-			
+				
 			//validateStringField(heringForm.getReceiver(), BrazilianAddressField.RECEIVER, MAX_CHARS_MEDIUM_FIELD, errors);
 			if (StringUtils.isBlank(heringForm.getReceiver()))
 			{
 				heringForm.setReceiver(heringForm.getFirstName() + " " + heringForm.getLastName());
 			}
-			
+				
 			validateFieldNotNull(addressForm.getRegionIso(), BrazilianAddressField.REGION, errors);
-			validatePostalCode(addressForm.getPostcode(), BrazilianAddressField.POSTCODE, MAX_POSTCODE_LENGTH, MIN_POSTCODE_LENGTH,
-					errors);
-
+			validatePostalCode(addressForm.getPostcode(), BrazilianAddressField.POSTCODE, MAX_POSTCODE_LENGTH, MIN_POSTCODE_LENGTH,	errors);
+				
 			if (StringUtils.isNotBlank(heringForm.getReference()))
 			{
 				validateStringField(heringForm.getReference(), BrazilianAddressField.REFERENCE, MAX_CHARS_LARGE_FIELD, errors);
@@ -171,10 +214,11 @@ public class HeringAddressValidator extends AddressValidator
 	{
 		STREETNUMBER("number", "address.number.invalid"), NEIGHBORHOOD("neighborhood", "address.district.invalid"), PHONE("phone",
 				"address.phone1.invalid"), CELLPHONE("celPhone", "address.phone2.invalid"), REFERENCE("reference",
-				"address.remarks.invalid"), RECEIVER("receiver", "address.receiver.invalid"), POSTCODE("postcode",
+				"packstation.postNumber.invalid"), RECEIVER("receiver", "address.receiver.invalid"), POSTCODE("postcode",
 				"address.postcode.invalid.cep"), REGION("regionIso", "address.regionIso.invalid"), COUNTRY("countryIso", "address.country.invalid"),
 				FIRSTNAME("firstName", "address.firstName.invalid"), LINE1("line1", "address.line1.invalid"),
-				LASTNAME("lastName", "address.lastName.invalid"), TOWN("townCity", "address.townCity.invalid") ;
+				LASTNAME("lastName", "address.lastName.invalid"), TOWN("townCity", "address.townCity.invalid"), TITLE("title", "address.title.invalid"),
+				DISTRICT("district", "address.district.invalid");
 
 		private final String fieldKey;
 		private final String errorKey;

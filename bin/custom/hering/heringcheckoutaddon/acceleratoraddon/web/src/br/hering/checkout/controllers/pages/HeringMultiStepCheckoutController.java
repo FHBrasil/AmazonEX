@@ -107,6 +107,7 @@ import br.hering.heringstorefrontcommons.validation.HeringAddressValidator;
 import br.hering.heringstorefrontcommons.validation.HeringPaymentDetailsValidator;
 import br.hering.core.order.impl.HeringCommerceCheckoutService;
 import br.hering.core.util.HeringPageType;
+import br.hering.core.util.SelectOption;
 
 import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
@@ -211,19 +212,33 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 		final List<SelectOption> addressTypes = new ArrayList<SelectOption>();
 		
 		final TipoDeEndereco enderecoResidencial = TipoDeEndereco.RESIDENCIAL;
-		final TipoDeEndereco enderecoComercial = TipoDeEndereco.COMERCIAL;
+		final TipoDeEndereco enderecoComercial = TipoDeEndereco.COMERCIAL;		
 		
 		final String residencialCode = enderecoResidencial.getCode();
 		final String residencialName = getTypeService().getEnumerationValue(enderecoResidencial).getName();
 		
 		final String comercialCode = enderecoComercial.getCode();
-		final String comercialName = getTypeService().getEnumerationValue(enderecoComercial).getName();
+		final String comercialName = getTypeService().getEnumerationValue(enderecoComercial).getName();		
 				
 		addressTypes.add(new SelectOption(residencialCode, residencialName));
-		addressTypes.add(new SelectOption(comercialCode, comercialName));
-	
+		addressTypes.add(new SelectOption(comercialCode, comercialName));			
 		
 		return addressTypes;
+	}
+	
+	@ModelAttribute("packstationType")
+	public List<SelectOption> getPackstationType()
+	{
+		final List<SelectOption> packstationType = new ArrayList<SelectOption>();
+		
+		final TipoDeEndereco enderecoPackStation = TipoDeEndereco.PACKSTATION;
+		
+		final String packStationCode = enderecoPackStation.getCode();
+		final String packStationName = getTypeService().getEnumerationValue(enderecoPackStation).getName();
+		
+		packstationType.add(new SelectOption(packStationCode, packStationName));
+		
+		return packstationType;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
