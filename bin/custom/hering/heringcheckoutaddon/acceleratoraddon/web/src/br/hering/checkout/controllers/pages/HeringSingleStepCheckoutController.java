@@ -1194,10 +1194,8 @@ public class HeringSingleStepCheckoutController extends
 			addressData.setComplement(addressForm.getComplement());
 			addressData.setReference(addressForm.getReference());
 			addressData.setType(TipoDeEndereco.valueOf(addressForm.getAddressType()));
-			addressData.setCountry(getI18NFacade().getCountryForIsocode(
-					addressForm.getCountryIso()));
-			if(!addressForm.getAddressType().equalsIgnoreCase("packstation"))
-				addressData.setRegion(getI18NFacade().getRegion(addressForm.getCountryIso(), addressForm.getRegionIso()));
+			addressData.setCountry(getI18NFacade().getCountryForIsocode(addressForm.getCountryIso()));
+			//addressData.setRegion(getI18NFacade().getRegion(addressForm.getCountryIso(), addressForm.getRegionIso()));
 			addressData.setShippingAddress(Boolean.TRUE.equals(addressForm
 					.getShippingAddress()));
 			addressData.setBillingAddress(Boolean.TRUE.equals(addressForm
