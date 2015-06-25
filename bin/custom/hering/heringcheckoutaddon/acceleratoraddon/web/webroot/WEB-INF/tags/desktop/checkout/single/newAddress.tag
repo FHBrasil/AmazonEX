@@ -46,6 +46,7 @@
 				            <single-checkout-hering:addressFormElements regions="${regions}" country="${country}" page="${page}" />
 				        </div>
 				        <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
+				        	<%-- 
 				            <div class="form-additionals">
 				                <div class="required right">
 				                    <small><spring:theme code="form.required" text="Fields marked * are required" /></small>
@@ -53,8 +54,9 @@
 				<%--                 <formElement:formCheckbox idKey="saveAddressInMyAddressBook" --%>
 				<%--                         labelKey="checkout.summary.deliveryAddress.saveAddressInMyAddressBook" --%>
 				<%--                         path="saveInAddressBook" inputCSS="add-address-left-input" --%>
-				<%--                         labelCSS="add-address-left-label" mandatory="false" /> --%>
+				<%--                         labelCSS="add-address-left-label" mandatory="false" /> 
 				            </div>
+				            --%>
 				        </sec:authorize>
 				        <div class="modal-footer">
 					       	<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -65,21 +67,23 @@
 					        </button>					        
 				        </div>
 				    </form:form>
-				    <c:url value="/checkout/single/add-packStation" var="addNewPackStationUrl"/>
-				    <form method="post" action="${addNewPackStationUrl}" class="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse out">
-				       	<%-- <input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true"> --%>
-				       	<%-- <form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" /> --%>
-				        <%-- <form:hidden path="shippingAddress" value="true" /> --%>
-				        <%-- <input type="hidden" name="bill_state" value="bill_state" id="address.billstate" /> --%>
+				    <c:url value="/checkout/single/add-address" var="addNewAddressUrl"/>
+				    <form:form method="post" action="${addNewAddressUrl}" commandName="packstationAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse out">
+				       	<input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
+				       	<form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
+				        <form:hidden path="shippingAddress" value="true" />
+				        <input type="hidden" name="bill_state" value="bill_state" id="address.billstate" />
 				        <div id="i18nAddressForm" class="i18nAddressForm">
 				            <single-checkout-hering:addressFormElements regions="${regions}" country="${country}" page="${page}" type="packStation" />
 				        </div>
 				        <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
+				        	<%-- 
 				            <div class="form-additionals">
 				                <div class="required right">
 				                    <small><spring:theme code="form.required" text="Fields marked * are required" /></small>
 				                </div>
 				           </div>
+				           --%>
 				        </sec:authorize>
 				        <div class="modal-footer">
 					       	<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -89,7 +93,7 @@
 					        	<spring:theme code="checkout.multi.saveAddress" text="Save address" />
 					        </button>					        
 				        </div>
-				    </form>
+				    </form:form>
 			</div>
 		</div>
 	</div>
