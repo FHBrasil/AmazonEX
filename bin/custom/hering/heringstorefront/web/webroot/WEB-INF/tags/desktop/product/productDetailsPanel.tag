@@ -16,9 +16,11 @@
 <spring:theme code="text.addToCart" var="addToCartText"/>
 <div class="margin-top">
 	<div class="col-xs-12 col-sm-6 v-bottom">
-		<product:productImagePanel product="${product}" galleryImages="${galleryImages}"/> 
+		<div id="mainCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+			<product:productBackgroundImage product="${product}" galleryImages="${galleryImages}"/>  
+		</div> 
 	</div>
-	<div class="rightcol-sm-6 v-bottom margin-top">
+	<div class="col-sm-6 v-bottom margin-top" style="float: right;">
 			<div class="col-sm-12 text-right hidden-xs"><a href="#">[brand img]</a></div>
 			<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
 				<header>
@@ -78,15 +80,14 @@
 			
 			<%--<product:productDetailsFooter product="${product}" />--%>
 	</div>
-	<cms:pageSlot position="Section2" var="feature" element="div" class="span-8 section2 cms_disp-img_slot last">
+	<%--<cms:pageSlot position="Section2" var="feature" element="div" class="span-8 section2 cms_disp-img_slot last">
 		<cms:component component="${feature}"/>
-	</cms:pageSlot>
+	</cms:pageSlot>--%>
 	<div class="clearfix"></div>
 </div>
 <div class="margin-top margin-bottom">
-	<ol class="hidden-xs hidden-sm col-sm-6 carouselNav150219">
 		<%-- [thumbs here] --%>
-	</ol>  	
+		<product:productImagePanel product="${product}" galleryImages="${galleryImages}"/>	
 	<div class="col-sm-6 visible-xs visible-sm"></div>
 	<div class="col-sm-6">
 		<div class="row">
