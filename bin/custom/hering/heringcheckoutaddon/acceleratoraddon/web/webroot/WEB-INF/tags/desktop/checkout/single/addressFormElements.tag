@@ -148,7 +148,7 @@
 		        path="reference" inputCSS="text form-control" mandatory="false" />
 		</div>
 		--%>
-		<div class="form-group">
+		<div class="form-group" style="display: none !important;">
 		    <formElement:formSelectBox idKey="address.addressType" labelKey="address.addressType"
 		        path="addressType" mandatory="true" skipBlank="true" items="${addressTypes}"
 		        selectedValue="${heringAddressForm.addressType}" selectCSSClass="form-control" />

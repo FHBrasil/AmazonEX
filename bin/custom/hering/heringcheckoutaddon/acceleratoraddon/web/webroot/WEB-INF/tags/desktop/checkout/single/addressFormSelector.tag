@@ -24,7 +24,14 @@
     		<c:choose>
         	<c:when test="${not empty selectedDeliveryAddress.id}">
                 <div class="address-info">
-                	<span id="e-tipo" class="h4"><b>${selectedDeliveryAddress.type.code}</b></span><br /><br />
+                	<span id="e-tipo" class="h4"><b>
+                		<c:if test="${selectedDeliveryAddress.type.code == 'PACKSTATION'}">
+                			<spring:theme code="checkout.single.address.packStation"/>
+                		</c:if>
+                		<c:if test="${selectedDeliveryAddress.type.code != 'PACKSTATION'}">
+                			<spring:theme code="checkout.single.address"/>
+                		</c:if>
+                		</b></span><br /><br />
                     <input type="hidden" class="e-code" value="${selectedDeliveryAddress.id}"/>
                     <span class="e-receiver">${selectedDeliveryAddress.receiver}</span>
                     <div class="btn-group">

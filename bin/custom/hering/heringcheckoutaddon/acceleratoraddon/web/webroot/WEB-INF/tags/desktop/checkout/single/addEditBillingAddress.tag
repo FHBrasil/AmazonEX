@@ -12,7 +12,15 @@
     	<section id="selected-address">
         	<c:if test="${not empty selectedBillingAddress.id}">
                 <div class="address-info">
-                	<span id="e-tipo" class="h4"><b>${selectedBillingAddress.type.code}</b></span><br /><br />
+                	<span id="e-tipo" class="h4"><b>
+                		<c:if test="${selectedBillingAddress.type.code == 'PACKSTATION'}">
+                			<spring:theme code="checkout.single.address.packStation"/>
+                		</c:if>
+                		<c:if test="${selectedBillingAddress.type.code != 'PACKSTATION'}">
+                			<spring:theme code="checkout.single.address"/>
+                		</c:if>
+                		</b>
+                	</span><br /><br />
                     <input type="hidden" class="e-code" value="${selectedBillingAddress.id}"/>
                     <span class="e-receiver">${selectedBillingAddress.receiver}</span>
                     <div class="btn-group">
