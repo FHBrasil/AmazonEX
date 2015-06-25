@@ -59,9 +59,14 @@
 						<c:if test="${not empty orderHistoryPreview}">
 							<c:forEach items="${orderHistoryPreview}" var="order" begin="0" end="2">
 								<div class="col-sm-4">
-									<a class="panel panel-default order150311" href="${myAccountOrderDetailsUrl}">
+									<a class="panel panel-default order150311" href="/my-account/order/${order.code}">
 										<span class="title150311">
-											<span class="glyphicon glyphicon-time"></span> 
+											<c:if test="${order.status == 'COMPLETED'}">
+												<span class="glyphicon glyphicon-ok"></span>
+											</c:if>
+											<c:if test="${order.status != 'COMPLETED'}">
+												<span class="glyphicon glyphicon-time"></span>
+											</c:if>
 											${order.code}
 										</span>
 										<div class="squarebox150311"> 
@@ -77,23 +82,34 @@
 										<span class="price150311">${order.total.formattedValue} &euro;</span>
 									</a>
 								</div>
+							</c:forEach>
 							<div id="toggleOrderlist" class="collapse">
-								<c:forEach items="${orderHistoryPreview}" var="order" begin="2" end="${fn:length(orderHistoryPreview)}">
+								<c:set var="endList" value="${fn:length(orderHistoryPreview)}" />
+								<c:forEach items="${orderHistoryPreview}" var="order" begin="3" end="${endList}">
 									<div class="col-sm-4">
-										<a class="panel panel-default order150311" href="${myAccountOrderDetailsUrl}">
-											<span class="title150311"><span class="glyphicon glyphicon-ok"></span> ${order.code}</span>
+										<a class="panel panel-default order150311" href="/my-account/order/${order.code}">
+											<span class="title150311">
+												<c:if test="${order.status == 'COMPLETED'}">
+													<span class="glyphicon glyphicon-ok"></span>
+												</c:if>
+												<c:if test="${order.status != 'COMPLETED'}">
+													<span class="glyphicon glyphicon-time"></span>
+												</c:if> 
+												${order.code}
+											</span>
 											<div class="squarebox150311"> 
 												<div class="squarecontent150311">
-													<div class="orderline150311 first" style="background-image: url('products/051010000451_bugg-gos_navy_hauck_detail.jpg')"></div>
-													<div class="orderline150311" style="background-image: url('products/201200005172_kombikinderwagen-voletto-sport-grau-blau_knorr-baby_detail.jpg')"></div>
-												</div> 
+												<div class="orderline150311 first" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2014-12/201100001311_beissring-kirsche_chicco_t150.jpg')"></div>
+												<div class="orderline150311" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2014-08/201400006614_kuehlbeissring-brezel_fashy_t150.jpg')"></div>
+												<div class="orderline150311" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2013-10/201300006348_schnuller-perfect-night-fuer-maedchen_silikon-gr-2_mam_t150.jpg')"></div>
+												<div class="orderline150311 last"></div>
+											</div>	
 											</div>
 											<span class="price150311">${order.total.formattedValue} &euro;</span>
 										</a>
 									</div>
 								</c:forEach>
 							</div>
-							</c:forEach>
 						</c:if>
 						<c:if test="${empty orderHistoryPreview}">
 							<spring:theme code="text.fliegercommerce.texto17"/>
@@ -158,6 +174,57 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class=" panel panel-default">
+					<div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Konto 00011VOY<div class="pull-right"><small><a href="#accountModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
+					</div>
+					<div class="panel-body">
+						E-Mail: philipp-paul@googlemail.de<br>
+						Telefon: 017680308574<br>
+						Passwort: ********
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div class=" panel panel-default">
+					<div class="panel-heading"><span class="glyphicon glyphicon-file"></span> Rechnungsadresse<div class="pull-right"><small><a href="#invoiceAddressModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
+					</div>
+					<div class="panel-body">
+						Philipp Paul<br>
+						Ismaninger Str. 2<br>
+						98987 Aschheim<br>
+						Deutschland
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div class=" panel panel-default">
+					<div class="panel-heading"><span class="glyphicon glyphicon-map-marker"></span> Lieferadresse<div class="pull-right"><small><a href="#deliveryAddressModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
+					</div>
+					<div class="panel-body">
+						Philipp Paul<br>
+						KP Family International GmbH<br>
+						Sternstr. 20<br>
+						98987 Aschheim<br>
+						Deutschland<br>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div class=" panel panel-default">
+					<div class="panel-heading"><span class="glyphicon glyphicon-link"></span> Verknüpfte Konten<div class="pull-right"><small><a href="#connectionsModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
+					</div>
+					<div class="panel-body">
+						<div style="float:left;height:64px;width:64px;background-image: url('layout/but_amazon64.png');background-repeat:no-repeat;">
+						</div>
+						<div style="float:left;height:64px;width:64px;background-image: url('layout/but_facebook64.png');background-repeat:no-repeat;">
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
