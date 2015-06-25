@@ -6,6 +6,7 @@ import de.hybris.platform.commercefacades.voucher.impl.DefaultVoucherFacade;
 import de.hybris.platform.commerceservices.order.CommerceCartService;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.order.exceptions.CalculationException;
+import de.hybris.platform.voucher.model.VoucherModel;
 
 import java.util.List;
 
@@ -99,6 +100,13 @@ public class DefaultHeringVoucherFacade extends DefaultVoucherFacade implements 
 		}
 		return "";
 	}
-
 	
+	@Override
+	protected boolean checkVoucherCanBeRedeemed(VoucherModel voucher, String voucherCode) 
+	{
+		boolean redeemable = super.checkVoucherCanBeRedeemed(voucher, voucherCode);
+		boolean notReserved = !isVoucherReserved(voucherCode);
+		
+		return redeemable && notReserved;
+	}
 }
