@@ -18,8 +18,8 @@
 				<li data-target="#mainCarousel" data-slide-to="5"></li>
 			</ol>
 			<div class="carousel-inner">
-				<div class="active item">
-					<img src="${productMainImagesUrl}" galleryImages="${galleryImages}" width="500" />
+				<div class="item active">
+					<img src="${productMainImagesUrl}" width="500" />
 				</div>
 			</div>
 			<!-- Carousel nav -->
