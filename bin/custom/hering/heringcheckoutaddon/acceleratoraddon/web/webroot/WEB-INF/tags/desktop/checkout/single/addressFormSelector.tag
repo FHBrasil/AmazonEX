@@ -84,6 +84,12 @@
 										<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}" ${status.index == '0' ? 'checked' : ''}>
 										<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">
 											<small>${deliveryAddress.receiver}<br /></small>
+											<small><c:if test="${not empty deliveryAddress.reference}">
+												<spring:theme code="packstation.postNumber"/> ${deliveryAddress.reference}<br />
+											</c:if></small>
+											<small><c:if test="${not empty deliveryAddress.complement}">
+												${deliveryAddress.complement}<br />
+											</c:if></small>
 											<b>${deliveryAddress.line1}, ${deliveryAddress.number}<br /></b>
 											<small>${deliveryAddress.postalCode} ${deliveryAddress.town}, ${deliveryAddress.country.name}</small>
 										</label>
