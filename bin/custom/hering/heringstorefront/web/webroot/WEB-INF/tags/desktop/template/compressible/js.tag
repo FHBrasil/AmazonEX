@@ -151,7 +151,7 @@
   			<script type="text/javascript" src="${addOnJavaScript}"></script>	
 	</c:if>
 </c:forEach>
-	
+
 
 <template:ferramentaRecomendacaoComponent />
 <c:if test="${not localEnvironment}">

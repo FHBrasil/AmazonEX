@@ -72,6 +72,7 @@
         <extension name="adyen" />
         <extension name="clearsaleantifraude" />
         <extension name="paypal" />
+        <extension name="bazaarvoice" />
         
         <!-- Flieger Commer AddOn -->
 <!--         <extension name="paypaladdon" /> -->

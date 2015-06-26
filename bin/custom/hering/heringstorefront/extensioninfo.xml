@@ -17,6 +17,7 @@
         <!-- <requires-extension name="captchaaddon" /> -->
         <!-- <requires-extension name="paypaladdon"/> -->
         <requires-extension name="newsletteraddon"/>
+        <requires-extension name="bazaarvoice" />
         
         
         <webmodule jspcompile="false" webroot="/heringstorefront"/>

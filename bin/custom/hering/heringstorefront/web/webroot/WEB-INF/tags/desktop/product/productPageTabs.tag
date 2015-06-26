@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-
+<%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 <div>
  	<ul class="nav nav-tabs margin-top" id="tab150219">
         <li class="active"><a data-toggle="tab" href="#sectionA"><spring:theme code="product.product.details" /></a></li>
@@ -21,8 +21,10 @@
                 <product:productDetailsTab product="${product}" />
             </div>
             <div id="sectionB" class="tab-pane fade">
-                <product:productPageReviewsTab product="${product}" />
-            </div>
+				<!--<product:productPageReviewsTab product="${product}" /> -->
+				<bazaarvoice:productPageReviewDetailsTab product="${product}" />
+				<div id="BVRRSummaryContainer"></div>
+			</div>
         </div>
     </div>
 
