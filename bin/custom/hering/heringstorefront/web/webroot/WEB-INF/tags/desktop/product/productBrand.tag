@@ -11,6 +11,5 @@
     type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 	<div class="col-xs-12 tab150119">
          <h2><b>[BRAND]</b>${product.name}</h2>
-         <%-- [reviews] --%>
-         <p><span class="glyphicon stars">&#57350;&#57350;&#57350;&#57350;&#57350;<span style="width:90%">&#57350;&#57350;&#57350;&#57350;&#57350;</span></span><small> 4.8 (17) <a href="#">Bewertung schreiben</a></small></p>
+         <p>[FIXED]<span class="glyphicon stars">&#57350;&#57350;&#57350;&#57350;&#57350;<span style="width:90%">&#57350;&#57350;&#57350;&#57350;&#57350;</span></span><small> 4.8 (17) <a href="#">Bewertung schreiben</a></small></p>
     </div>

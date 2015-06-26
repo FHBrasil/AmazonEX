@@ -16,21 +16,3 @@
 		</c:forEach>
 	</ol>
 </c:if>
-	
-
-<%-- code original
-<div class="left product-thumbnails ">
-	<ul>
-		<c:forEach items="${galleryImages}" var="container" varStatus="status">
-			<li <c:if test="${status.first}">class="active"</c:if>>
-				<a href="#" data-image-source="${container.zoom.url}" data-zoom-image-source="${container.superZoom.url}">
-					<img src="${container.thumbnail.url}" alt="${container.thumbnail.altText}"/>
-				</a>
-			</li>
-		</c:forEach>
-	</ul>
-	<div class="product-main-img-mask">
-		<i class="lupa fa fa-search"></i>
-	</div>
-</div>
---%>
