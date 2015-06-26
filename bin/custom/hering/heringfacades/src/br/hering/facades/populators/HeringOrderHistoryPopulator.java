@@ -7,18 +7,27 @@ import de.hybris.platform.commercefacades.order.converters.populator.OrderHistor
 import de.hybris.platform.commercefacades.order.data.AbstractOrderData;
 import de.hybris.platform.commercefacades.order.data.OrderHistoryData;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
+import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.converters.Converters;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
+import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.ordersplitting.model.ConsignmentModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Required;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import br.hering.fulfilmentprocess.model.OrderInvoiceModel;
 import br.hering.fulfilmentprocess.services.HeringOrderService;
@@ -77,7 +86,11 @@ public class HeringOrderHistoryPopulator extends OrderHistoryPopulator
 
 	protected void addEntries(final AbstractOrderModel source, final OrderHistoryData prototype)
 	{
-		prototype.setPreviewEntries(Converters.convertAll(source.getEntries(), getOrderEntryConverter()));
+		List<OrderEntryData> convertAll = Converters.convertAll(source.getEntries(), getOrderEntryConverter());
+		
+		Collections.sort(convertAll, OrderEntryDataComparator);
+		
+		prototype.setPreviewEntries(convertAll);
 	}
 	
 	protected HeringOrderService getHeringOrderService()
@@ -101,4 +114,14 @@ public class HeringOrderHistoryPopulator extends OrderHistoryPopulator
 	{
 		return this.orderEntryConverter;
 	}
+	
+	Comparator<OrderEntryData> OrderEntryDataComparator 
+    	= new Comparator<OrderEntryData>() {
+
+		public int compare(OrderEntryData price1, OrderEntryData price2) 
+		{
+			return price2.getTotalPrice().getValue().compareTo(price1.getTotalPrice().getValue());
+		}
+
+	};
 }
