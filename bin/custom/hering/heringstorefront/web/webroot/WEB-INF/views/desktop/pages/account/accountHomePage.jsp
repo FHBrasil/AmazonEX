@@ -128,7 +128,6 @@
 													</c:if>
 												</div>
 											</div>	
-											</div>
 											<span class="price150311">${order.total.formattedValue} &euro;</span>
 										</a>
 									</div>
