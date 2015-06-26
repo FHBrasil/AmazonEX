@@ -11,6 +11,7 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
 <%@ taglib prefix="order" tagdir="/WEB-INF/tags/desktop/order"%>
+<%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product" %>
 <template:page pageTitle="${pageTitle}">
 <!--     <div id="main-wrapper"> -->
 <div class="container">
@@ -71,12 +72,23 @@
 										</span>
 										<div class="squarebox150311"> 
 											<div class="squarecontent150311">
-												<div class="orderline150311 first" style="background-image: url('http://www.babyartikel.de/medias/sys_master/media/BA2015/products/051010000451_bugg-gos_navy_hauck_detail.jpg')"></div>
-												<div class="orderline150311 second" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2013-02/011505000082_baby-bottle-270ml-silikon-groesse-2-rosa_mam_t150.jpg')"></div>
-												<div class="orderline150311 third" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2012-12/011005000016_manuelle-milchpumpe-grurn_mam_t150.jpg')"></div>
-												<div class="orderline150311" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2012-12/011010000044_aufbewahrungsbecher-fuer-babynahrung-und-muttermilch_mam_t150.jpg')"></div>
-												<div class="orderline150311" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2012-10/201200005465_mikrowellen-dampfsterilisator-gruen-weiss_mam_t150.jpg')"></div>
-												<div class="orderline150311 last"><span class="glyphicon glyphicon-option-horizontal"></span></div>
+												<c:forEach items="${order.previewEntries}" var="productPhoto" begin="0" end="4" varStatus="count">
+													<c:if test="${count.index == 0}">
+														<div class="orderline150311 first">
+															<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+														</div>
+													</c:if>
+													<c:if test="${count.index > 0 && count.index < 4}">
+														<div class="orderline150311">
+															<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+														</div>
+													</c:if>
+													<c:if test="${count.index == 4}">
+														<div class="orderline150311 first">
+															<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+														</div>
+													</c:if>
+												</c:forEach>
 											</div> 
 										</div>
 										<span class="price150311">${order.total.formattedValue} &euro;</span>

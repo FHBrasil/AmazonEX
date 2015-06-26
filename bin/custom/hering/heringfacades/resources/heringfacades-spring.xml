@@ -710,6 +710,7 @@
     <bean id="defaultHeringOrderHistoryPopulator" class="br.hering.facades.populators.HeringOrderHistoryPopulator"
         parent="defaultOrderHistoryPopulator">
         <property name="heringOrderService" ref="heringOrderService" />
+        <property name="orderEntryConverter" ref="orderEntryConverter"/>
     </bean>
 
     <alias name="defaultHeringProductFeatureListPopulator" alias="productFeatureListPopulator" />

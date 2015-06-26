@@ -172,6 +172,7 @@
 		<property name="deliveryMode" type="String"/>
 		<property name="paymentMode" type="String"/>
 		<property name="boletoExpired" type="Boolean"/>
+		<property name="previewEntries" type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.OrderEntryData>"/>
 	</bean> 
 	
 	<bean class="de.hybris.platform.commercefacades.product.data.FeatureData">
