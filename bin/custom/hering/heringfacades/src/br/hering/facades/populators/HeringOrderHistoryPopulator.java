@@ -4,10 +4,17 @@
 package br.hering.facades.populators;
 
 import de.hybris.platform.commercefacades.order.converters.populator.OrderHistoryPopulator;
+import de.hybris.platform.commercefacades.order.data.AbstractOrderData;
 import de.hybris.platform.commercefacades.order.data.OrderHistoryData;
+import de.hybris.platform.commercefacades.order.data.OrderEntryData;
+import de.hybris.platform.converters.Converters;
+import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
+import de.hybris.platform.core.model.order.AbstractOrderModel;
 import de.hybris.platform.ordersplitting.model.ConsignmentModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 
 import java.util.LinkedList;
 
@@ -24,6 +31,7 @@ import br.hering.fulfilmentprocess.services.impl.InvalidBoletoException;
 public class HeringOrderHistoryPopulator extends OrderHistoryPopulator 
 {
 	private HeringOrderService heringOrderService;
+	private Converter<AbstractOrderEntryModel, OrderEntryData> orderEntryConverter;
 
 	/* (non-Javadoc)
 	 * @see de.hybris.platform.converters.Populator#populate(java.lang.Object, java.lang.Object)
@@ -31,7 +39,6 @@ public class HeringOrderHistoryPopulator extends OrderHistoryPopulator
 	@Override
 	public void populate(OrderModel source, OrderHistoryData target) throws ConversionException
 	{
-		
 		LinkedList<ConsignmentModel> consignments = new LinkedList<>(source.getConsignments());
 		if(!consignments.isEmpty())
 		{
@@ -63,9 +70,16 @@ public class HeringOrderHistoryPopulator extends OrderHistoryPopulator
 			}
 		}
 		
+		addEntries(source, target);
+		
 		super.populate(source, target);
 	}
 
+	protected void addEntries(final AbstractOrderModel source, final OrderHistoryData prototype)
+	{
+		prototype.setPreviewEntries(Converters.convertAll(source.getEntries(), getOrderEntryConverter()));
+	}
+	
 	protected HeringOrderService getHeringOrderService()
 	{
 		return heringOrderService;
@@ -75,5 +89,16 @@ public class HeringOrderHistoryPopulator extends OrderHistoryPopulator
 	public void setHeringOrderService(HeringOrderService heringOrderService)
 	{
 		this.heringOrderService = heringOrderService;
+	}
+	
+	@Required
+	public void setOrderEntryConverter(final Converter<AbstractOrderEntryModel, OrderEntryData> converter)
+	{
+		this.orderEntryConverter = converter;
+	}
+	
+	protected Converter<AbstractOrderEntryModel, OrderEntryData> getOrderEntryConverter()
+	{
+		return this.orderEntryConverter;
 	}
 }
