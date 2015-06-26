@@ -27,5 +27,4 @@
 		<span class="glyphicon glyphicon-chevron-right"></span>
 	</a>
 </c:if>
-<%--<div id="product-main-img" data-image-source="${productMainImagesUrl}" data-zoom-image-source="${productZoomImagesUrl}" style="background-position-y: 25px"></div>--%>
 	
