@@ -119,6 +119,7 @@ public class LoginPageController extends AbstractHeringLoginController
 		this.customerFacade = customerFacade;
 	}
 
+	
 	@Override
 	protected String getView()
 	{
@@ -321,14 +322,18 @@ public class LoginPageController extends AbstractHeringLoginController
 			HttpServletResponse response, final RedirectAttributes redirectModel) throws CMSItemNotFoundException
 	{
 		getRegistrationValidator().validate(form, bindingResult, model);
-		boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
-
-		if (cpfCnpjAlreadyRegistered)
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
 		{
-			GlobalMessages.addErrorMessage(model, "register.cpfexists");
-			bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
-		}
+			boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
 
+			if (cpfCnpjAlreadyRegistered)
+			{
+				GlobalMessages.addErrorMessage(model, "register.cpfexists");
+				bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
+			}
+		}
+		
 		model.addAttribute("pageType", "LOGIN");
 		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.parseBoolean(form.getPessoaFisica()));

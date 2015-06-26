@@ -3,21 +3,6 @@
  */
 package br.hering.core.customer.impl;
 
-import org.springframework.security.web.authentication.logout.LogoutFilter;
-import de.hybris.platform.commerceservices.customer.dao.CustomerAccountDao;
-import de.hybris.platform.commerceservices.customer.impl.DefaultCustomerAccountService;
-import de.hybris.platform.commerceservices.enums.CustomerType;
-import de.hybris.platform.commerceservices.search.pagedata.PageableData;
-import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
-import de.hybris.platform.core.model.user.CustomerModel;
-import de.hybris.platform.core.enums.OrderStatus;
-import de.hybris.platform.core.model.order.OrderModel;
-import de.hybris.platform.core.model.user.CustomerModel;
-import de.hybris.platform.servicelayer.util.ServicesUtil;
-import de.hybris.platform.servicelayer.model.ModelService;
-import de.hybris.platform.servicelayer.security.auth.AuthenticationService;
-import de.hybris.platform.store.BaseStoreModel;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -27,12 +12,23 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
+import br.hering.core.customer.HeringCustomerAccountService;
+import br.hering.core.customer.dao.HeringCustomerAccountDao;
+
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 import com.fliegersoftware.newslettersubscription.services.NewsletterSubscriptionService;
 
-import br.hering.core.customer.HeringCustomerAccountService;
-import br.hering.core.customer.dao.HeringCustomerAccountDao;
+import de.hybris.platform.commerceservices.customer.impl.DefaultCustomerAccountService;
+import de.hybris.platform.commerceservices.enums.CustomerType;
+import de.hybris.platform.commerceservices.search.pagedata.PageableData;
+import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
+import de.hybris.platform.core.enums.OrderStatus;
+import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.servicelayer.model.ModelService;
+import de.hybris.platform.servicelayer.security.auth.AuthenticationService;
+import de.hybris.platform.servicelayer.util.ServicesUtil;
 
 /**
  * @author herbert
@@ -120,20 +116,6 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
-		
-/*		try
-		{
-
-			authenticationService.logout();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}*/
-		
-
-		//redirect to login page
-		//message account deleted
 		
 	}
 	

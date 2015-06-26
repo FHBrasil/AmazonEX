@@ -116,6 +116,8 @@ import com.meterware.httpunit.WebResponse;
 
 import groovy.json.JsonBuilder;
 
+import de.hybris.platform.servicelayer.config.ConfigurationService;
+
 /**
  * @author flieger
  * @author jfelipe
@@ -186,11 +188,15 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 	@Resource
 	private TypeService typeService;
 
+	@Resource
+	private ConfigurationService configurationService;
 	
+
 	public TypeService getTypeService() {
 		return typeService;
 	}
 
+	
 	@ModelAttribute("instalments")
 	public List<SelectOption> getInstalments()
 	{
@@ -696,6 +702,9 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 		return REDIRECT_URL_SUMMARY;
 	}
 
+	
+
+	
 	/**
 	 * @param model
 	 * @param paymentDetailsForm
@@ -726,8 +735,11 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 		paymentInfoData.setDaysToAddInBoletoExpirationDate("3");
 		paymentInfoData.setTransactionReference(cartData.getCode());
 		paymentInfoData.setNossoNumero(cartData.getCode() + cartData.getCode());
-
-		paymentInfoData.setCpf(getUser().getCpfcnpj());
+		
+		////////////////////////////
+			paymentInfoData.setCpf(getUser().getCpfcnpj());
+		///////////////////////////
+		
 		paymentInfoData.setSaved(new Boolean(false));
 
 		model.addAttribute("cartData", cartData);

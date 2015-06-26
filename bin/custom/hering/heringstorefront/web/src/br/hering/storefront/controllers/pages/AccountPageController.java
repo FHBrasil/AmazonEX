@@ -13,6 +13,42 @@
  */
 package br.hering.storefront.controllers.pages;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import de.hybris.platform.acceleratorservices.payment.cybersource.data.PaymentInfoData;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.Breadcrumb;
@@ -66,52 +102,7 @@ import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.store.services.BaseStoreService;
 import de.hybris.platform.util.Config;
 
-import org.apache.commons.lang.StringUtils;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Dictionary;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.annotation.Scope;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
-import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
-
-import br.hering.core.enums.TipoDeEndereco;
-import br.hering.core.util.SelectOption;
+import br.hering.core.enums.TipoDeEndereco;  
 import br.hering.facades.checkout.payment.HeringPaymentModeFacade;
 import br.hering.facades.customer.HeringCustomerFacade;
 import br.hering.facades.customer.impl.DefaultHeringCustomerFacade;
@@ -134,6 +125,7 @@ import br.hering.facades.wishlist.data.HeringWishlistEntryData;
 import br.hering.facades.wishlist.impl.DefaultHeringWishlistFacade;
 import br.hering.storefront.forms.UpdateWishlistForm;
 import br.hering.storefront.util.HeringPageType;
+import br.hering.storefront.util.SelectOption;
 
 /**
  * Controller for home page.
@@ -544,10 +536,12 @@ public class AccountPageController extends AbstractSearchPageController {
 		}
 
 		model.addAttribute("customerData", customerData);
-		model.addAttribute("pf",
-				customerData.getCpfcnpj().length() == 14 ? Boolean.FALSE
-						: Boolean.TRUE);
-
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			model.addAttribute("pf", customerData.getCpfcnpj().length() == 14 ? Boolean.FALSE : Boolean.TRUE);
+		}
+		
 		storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
 		setUpMetaDataForContentPage(model,
 				getContentPageForLabelOrId(PROFILE_CMS_PAGE));
@@ -701,7 +695,11 @@ public class AccountPageController extends AbstractSearchPageController {
 			updateProfileForm.setBirthday(customerData.getBirthday());
 		}
 
-		updateProfileForm.setCpfcnpj(customerData.getCpfcnpj());
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			updateProfileForm.setCpfcnpj(customerData.getCpfcnpj());
+		}
+		
 		updateProfileForm.setGender(customerData.getGender());
 		model.addAttribute("updateProfileForm", updateProfileForm);
 		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
@@ -733,6 +731,8 @@ public class AccountPageController extends AbstractSearchPageController {
 			{
 				heringCustomerFacade.deleteAccount();	
 				GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER, "Você apagou sua conta.");
+				return REDIRECT_TO_LOGIN_PAGE;
+
 			}
 			catch (Exception e)
 			{			
@@ -741,7 +741,7 @@ public class AccountPageController extends AbstractSearchPageController {
 
 		}
 
-		return REDIRECT_TO_LOGIN_PAGE;
+		return null;
 		
 	}
 
@@ -787,25 +787,35 @@ public class AccountPageController extends AbstractSearchPageController {
 		customerData.setUid(currentCustomerData.getUid());
 		customerData.setDisplayUid(currentCustomerData.getDisplayUid());
 
-		if (StringUtils.isNotEmpty(updateProfileForm.getCpfcnpj())
-				&& updateProfileForm.getCpfcnpj().length() == 14) {
-			customerData.setGender(Gender.UNDEFINED);
-		} else {
-			customerData.setGender(updateProfileForm.getGender());
-		}
-
-		if (getDefaultHeringCustomerFacade().cpfCnpjAlreadyExists(
-				updateProfileForm.getCpfcnpj()) != null) {
-			String cpf = getDefaultHeringCustomerFacade().cpfCnpjAlreadyExists(
-					updateProfileForm.getCpfcnpj()).getCpfcnpj();
-			String cpfAtual = checkoutCustomerStrategy
-					.getCurrentUserForCheckout().getCpfcnpj();
-			if (!cpf.equals(cpfAtual)) {
-				bindingResult.rejectValue("cpfcnpj", "");
-				GlobalMessages.addErrorMessage(model, "register.cpfexists");
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+		
+			if (StringUtils.isNotEmpty(updateProfileForm.getCpfcnpj())
+					&& updateProfileForm.getCpfcnpj().length() == 14) 
+			{
+				customerData.setGender(Gender.UNDEFINED);
+			} 
+			else 
+			{
+				customerData.setGender(updateProfileForm.getGender());
 			}
+	
+			if (getDefaultHeringCustomerFacade().cpfCnpjAlreadyExists(
+					updateProfileForm.getCpfcnpj()) != null) 
+			{
+				String cpf = getDefaultHeringCustomerFacade().cpfCnpjAlreadyExists(
+						updateProfileForm.getCpfcnpj()).getCpfcnpj();
+				String cpfAtual = checkoutCustomerStrategy
+						.getCurrentUserForCheckout().getCpfcnpj();
+				if (!cpf.equals(cpfAtual)) {
+					bindingResult.rejectValue("cpfcnpj", "");
+					GlobalMessages.addErrorMessage(model, "register.cpfexists");
+				}
+			}
+			customerData.setCpfcnpj(updateProfileForm.getCpfcnpj());
+
 		}
-		customerData.setCpfcnpj(updateProfileForm.getCpfcnpj());
+		
 		customerData.setRgIe(updateProfileForm.getRgIe());
 		customerData.setUfIe(updateProfileForm.getUfIe());
 
