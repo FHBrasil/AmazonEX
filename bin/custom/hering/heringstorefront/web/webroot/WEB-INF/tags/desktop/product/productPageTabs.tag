@@ -14,7 +14,7 @@
         <li><a data-toggle="tab" href="#sectionB"><spring:theme code="review.reviews" /></a></li>
     </ul>
 </div>
-    	<product:productBrand />
+		<product:productBrand product="${product}" />
 	<div class="col-md-6 col-sm-8 tab150119">   
         <div class="tab-content">
             <div id="sectionA" class="tab-pane fade in active">

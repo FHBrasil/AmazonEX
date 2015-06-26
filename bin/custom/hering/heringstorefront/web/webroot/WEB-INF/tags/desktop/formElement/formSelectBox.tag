@@ -13,6 +13,7 @@
 <%@ attribute name="selectedValue" required="false" type="java.lang.String"%>
 <%@ attribute name="tabindex" required="false" rtexprvalue="true"%>
 <%@ attribute name="allowEmpty" required="false" type="java.lang.Boolean"%>
+<%@ attribute name="readOnly" required="false" type="java.lang.Boolean"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -21,13 +22,15 @@
 <template:errorSpanField path="${path}">
     <ycommerce:testId code="LoginPage_Item_${idKey}">
         <c:if test="${not empty labelKey}">
-            <label for="${idKey}"> <spring:theme code="${labelKey}" /> <c:if
-                    test="${mandatory != null && mandatory == true}">
+            <label for="${idKey}"> <spring:theme code="${labelKey}" />
+            	<%-- 
+            	<c:if test="${mandatory != null && mandatory == true}">
                     <span class="mandatory"> *: </span>
                 </c:if>
+                --%>
             </label>
         </c:if>
-        <form:select id="${idKey}" path="${path}" cssClass="${selectCSSClass}" tabindex="${tabindex}" required="${mandatory ? 'required' : ''}">
+        <form:select id="${idKey}" path="${path}" cssClass="${selectCSSClass}" tabindex="${tabindex}" required="${mandatory ? 'required' : ''}" readonly="${readOnly}">
             <c:if test="${skipBlank == null || skipBlank == false}">
                 <option value="" ${!allowEmpty ? 'disabled="disabled"' : ''}
                     ${empty selectedValue ? 'selected="selected"' : ''}>

@@ -79,7 +79,6 @@
 
         <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />
-        <extension name="babyartikelstore" />
         <extension name="kpfamilyhmc" />
         <extension name="kpfamilycockpits" />
         <extension name="kpfamilyfacades" />

@@ -10,7 +10,7 @@
 <template:page pageTitle="${pageTitle}" showBV="true">
     <div>
         <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
-        <product:productBackgroundImage product="${product}" galleryImages="${galleryImages}" />
+        <%--<product:productBackgroundImage product="${product}" galleryImages="${galleryImages}" />--%>
         <product:productMainPanel />
         <product:productSecondaryPanel />
     </div>

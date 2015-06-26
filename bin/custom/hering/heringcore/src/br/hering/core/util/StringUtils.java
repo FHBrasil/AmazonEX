@@ -3,6 +3,8 @@
  */
 package br.hering.core.util;
 
+import org.apache.log4j.Logger;
+
 /**
  * CLASSE RESPONSAVEL
  * POR
@@ -13,13 +15,13 @@ package br.hering.core.util;
  */
 public class StringUtils
 {
-	private static final String IMAGE_EXTENSAO = ".jpg";
-	private static final String IMAGE_EXTENSAO_B = "B.jpg";
+	private static final Logger LOG = Logger.getLogger(StringUtils.class);
 
+	
 	public static String getSubNameImagem(String imageUrl){
 		String subEnd = imageUrl.replace("-", "");
-		int end = subEnd.indexOf(IMAGE_EXTENSAO);
-		int endComB = subEnd.contains(IMAGE_EXTENSAO_B) ? end - 1 : end;
+		int end = subEnd.indexOf(".jpg");
+		int endComB = subEnd.matches("[a-zA-Z].jpg") ? end - 1 : end;
 		
 		subEnd = subEnd.substring(endComB - 2, end);
 		

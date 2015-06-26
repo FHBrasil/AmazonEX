@@ -187,6 +187,8 @@ $(document).ready(function() {
 						}
 					},
 					complete : function() {
+						//TODO isso é temporario, até termos o ajax funcionando
+						location.reload();
 						bindDeliveryMethod_onChange();
 					}
 			 });

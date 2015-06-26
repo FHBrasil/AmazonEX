@@ -390,7 +390,7 @@ public class AccountPageController extends AbstractSearchPageController
 		storeCmsPageInModel(model, getContentPageForLabelOrId(ACCOUNT_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(ACCOUNT_CMS_PAGE));
 		
-		final PageableData pageableData = createPageableData(0, 3, null, ShowMode.Page);
+		final PageableData pageableData = createPageableData(0, 0, null, ShowMode.All);
 		final SearchPageData<OrderHistoryData> searchPageData = orderFacade.getPagedOrderHistoryForStatuses(pageableData);
 		
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs(null));
