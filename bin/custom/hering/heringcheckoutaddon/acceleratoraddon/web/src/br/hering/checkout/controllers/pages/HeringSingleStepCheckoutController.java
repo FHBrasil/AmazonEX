@@ -227,6 +227,7 @@ public class HeringSingleStepCheckoutController extends
 		final HeringAddressForm heringAddressForm = getPreparedAddressForm();
 		final HeringAddressForm heringBillingAddressForm = getPreparedAddressForm();
 		heringBillingAddressForm.setBilling(true);
+		final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
 		if (paymentDetailsForm.getBillingAddress() == null || Strings.isNullOrEmpty(paymentDetailsForm.getBillingAddress().getPostcode())) {			
 			AddressData billingAddressData = getAddressBilling();
 			if(billingAddressData == null)
@@ -249,13 +250,13 @@ public class HeringSingleStepCheckoutController extends
 		//if (!model.containsAttribute("heringAddressForm")) {
 			model.addAttribute("heringAddressForm", heringAddressForm);
 		//}
-		model.addAttribute("heringBillingAddressForm", heringBillingAddressForm);
+		model.addAttribute("packstationAddressForm", packstationAddressForm);
 		model.addAttribute("deliveryAddresses",	getDeliveryAddresses(selectedDeliveryAddress));
 		model.addAttribute("selectedDeliveryAddress", selectedDeliveryAddress);
 		model.addAttribute("selectedBillingAddress", cartData.getBillingAddress());
-		if(selectedDeliveryAddress != null && cartData.getBillingAddress() != null)
-			model.addAttribute("checkedDifferingBilling", !selectedDeliveryAddress.getId().equals(cartData.getBillingAddress().getId()) ? true : false);
-		else
+//		if(selectedDeliveryAddress != null && cartData.getBillingAddress() != null)
+//			model.addAttribute("checkedDifferingBilling", !selectedDeliveryAddress.getId().equals(cartData.getBillingAddress().getId()) ? true : false);
+//		else
 			model.addAttribute("checkedDifferingBilling", false);
 		model.addAttribute("addressData", getUserFacade().getAddressBook());
 		model.addAttribute("noAddress", Boolean.valueOf(hasNoDeliveryAddress()));
@@ -322,15 +323,14 @@ public class HeringSingleStepCheckoutController extends
 	 * @return
 	 * @throws CMSItemNotFoundException
 	 */
-	@RequestMapping(value = "/add-address",
-			method = RequestMethod.POST)
+	@RequestMapping(value = "/add-address",	method = RequestMethod.POST)
 	@RequireHardLogIn
-	public String addDeliveryAddress(final HeringAddressForm heringAddressForm,
-			final BindingResult bindingResult, final Model model,
-			final RedirectAttributes redirectModel)
-			throws CMSItemNotFoundException {
+	public String addDeliveryAddress(final HeringAddressForm heringAddressForm,	final BindingResult bindingResult, 
+			final Model model, final RedirectAttributes redirectModel) throws CMSItemNotFoundException 
+	{
 		prepareDeliveryAddressForm(heringAddressForm);
 		getAddressValidator().validate(heringAddressForm, bindingResult, model);
+		
 		if (!bindingResult.hasErrors()) {
 			//if we are editing one address, turn it into inactive and create a new one
 			//if(StringUtils.isBlank(heringAddressForm.getAddressId())){
@@ -407,11 +407,15 @@ public class HeringSingleStepCheckoutController extends
 			return;
 		}
 		final CustomerData userData = getUser();
-		addressForm.setTitleCode(userData.getTitleCode());
+		//addressForm.setTitleCode(userData.getTitleCode());
 		addressForm.setFirstName(userData.getFirstName());
 		addressForm.setLastName(userData.getLastName());
 		addressForm.setReceiver(userData.getName());
-		addressForm.setCountryIso("DE");
+		if(addressForm.getAddressType().equalsIgnoreCase("packstation"))
+		{
+			addressForm.setCountryIso("DE");
+			addressForm.setLine1("Packstation");
+		}
 		addressForm.setShippingAddress(Boolean.TRUE);
 	}
 	
@@ -665,19 +669,9 @@ public class HeringSingleStepCheckoutController extends
 	 * @param voucherCode
 	 * @return
 	 */
-	protected boolean isVoucherValid(final String voucherCode) {
-		 if(!Strings.isNullOrEmpty(voucherCode) 
-				 && isVoucherCreditValid(voucherCode) 
-				 && heringVoucherFacade.checkVoucherCode(voucherCode)) {
-			 
-			 if(voucherCode.toLowerCase().startsWith(VALE_CREDITO_RESERV)){
-				 
-				 return heringVoucherFacade.isVoucherReserved(voucherCode);
-			 }			 
-			 	return Boolean.TRUE.booleanValue(); 
-			}
-		 
-			return Boolean.FALSE.booleanValue();
+	protected boolean isVoucherValid(final String voucherCode) 
+	{
+		return heringVoucherFacade.checkVoucherCode(voucherCode);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -961,10 +955,8 @@ public class HeringSingleStepCheckoutController extends
 	 */
 	private VoucherData redeemVoucher(final String voucherCode) {
 		try {
-			if (isVoucherValid(voucherCode)) {				
-				heringVoucherFacade.applyVoucher(voucherCode);
-				return heringVoucherFacade.getVoucher(voucherCode);
-			}
+			heringVoucherFacade.applyVoucher(voucherCode);
+			return heringVoucherFacade.getVoucher(voucherCode);
 		} catch (VoucherOperationException voe) {
 			LOG.error("error: ", voe);
 		}
@@ -1202,11 +1194,8 @@ public class HeringSingleStepCheckoutController extends
 			addressData.setComplement(addressForm.getComplement());
 			addressData.setReference(addressForm.getReference());
 			addressData.setType(TipoDeEndereco.valueOf(addressForm.getAddressType()));
-			addressData.setCountry(getI18NFacade().getCountryForIsocode(
-					addressForm.getCountryIso()));
-			addressData.setRegion(getI18NFacade().getRegion(addressForm
-					.getCountryIso(),
-					addressForm.getRegionIso()));
+			addressData.setCountry(getI18NFacade().getCountryForIsocode(addressForm.getCountryIso()));
+			//addressData.setRegion(getI18NFacade().getRegion(addressForm.getCountryIso(), addressForm.getRegionIso()));
 			addressData.setShippingAddress(Boolean.TRUE.equals(addressForm
 					.getShippingAddress()));
 			addressData.setBillingAddress(Boolean.TRUE.equals(addressForm
@@ -1242,7 +1231,7 @@ public class HeringSingleStepCheckoutController extends
 			addressForm.setComplement(addressData.getComplement());
 			addressForm.setReference(addressData.getReference());
 			addressForm.setCountryIso(addressData.getCountry().getIsocode());
-			addressForm.setRegionIso(addressData.getRegion().getIsocode());
+			//addressForm.setRegionIso(addressData.getRegion().getIsocode());
 			addressForm.setAddressType(addressData.getType().getCode());
 			addressForm.setShippingAddress(Boolean.TRUE.equals(addressData
 					.isShippingAddress()));

@@ -38,13 +38,13 @@ $(document).ready(function() {
 	var zoomLoaded = false;
 
 	// pega a url da imagem principal de produto e a define como background
-	if(productMainImgWrapperSrc[0]) {
-		$('#product-main-img').css({
-			"background-image": 'url('+productMainImgWrapperSrc+')'
-		}).promise().done(function() {
-			$(this).stop(1,1).fadeIn("slow");
-		});
-	}
+//	if(productMainImgWrapperSrc[0]) {
+//		$('#product-main-img').css({
+//			"background-image": 'url('+productMainImgWrapperSrc+')'
+//		}).promise().done(function() {
+//			$(this).stop(1,1).fadeIn("slow");
+//		});
+//	}
 
 	// adiciona botÃ£o de zoom-out na imagem principal do produto
 	if(!productMainImgWrapper.has('.click-to-zoom-out')[0]) {

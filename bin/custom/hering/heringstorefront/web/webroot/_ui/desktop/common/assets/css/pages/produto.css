@@ -16,13 +16,13 @@
 	padding: 10px;
 }
 
-#product-main-img {
+/*#product-main-img {
 	background: #FFF;
 	background-position: top center;
 	background-repeat: no-repeat;
 	display: block;
 	width: 100%;
-	height: 600px;
+	height: 570px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -38,7 +38,7 @@
 	-moz-transition: height 0.3s, top 0.3s, left 0.3s;
 	-o-transition: height 0.3s, top 0.3s, left 0.3s;
 	transition: height 0.3s, top 0.3s, left 0.3s;
-}
+}*/
 
 #product-main-img.zoomed-in {
 	height: 800px;

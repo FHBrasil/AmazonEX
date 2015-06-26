@@ -24,7 +24,14 @@
     		<c:choose>
         	<c:when test="${not empty selectedDeliveryAddress.id}">
                 <div class="address-info">
-                	<span id="e-tipo" class="h4"><b>${selectedDeliveryAddress.type.code}</b></span><br /><br />
+                	<span id="e-tipo" class="h4"><b>
+                		<c:if test="${selectedDeliveryAddress.type.code == 'PACKSTATION'}">
+                			<spring:theme code="checkout.single.address.packStation"/>
+                		</c:if>
+                		<c:if test="${selectedDeliveryAddress.type.code != 'PACKSTATION'}">
+                			<spring:theme code="checkout.single.address"/>
+                		</c:if>
+                		</b></span><br /><br />
                     <input type="hidden" class="e-code" value="${selectedDeliveryAddress.id}"/>
                     <span class="e-receiver">${selectedDeliveryAddress.receiver}</span>
                     <div class="btn-group">
@@ -84,6 +91,12 @@
 										<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}" ${status.index == '0' ? 'checked' : ''}>
 										<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">
 											<small>${deliveryAddress.receiver}<br /></small>
+											<small><c:if test="${not empty deliveryAddress.reference}">
+												<spring:theme code="packstation.postNumber"/> ${deliveryAddress.reference}<br />
+											</c:if></small>
+											<small><c:if test="${not empty deliveryAddress.complement}">
+												${deliveryAddress.complement}<br />
+											</c:if></small>
 											<b>${deliveryAddress.line1}, ${deliveryAddress.number}<br /></b>
 											<small>${deliveryAddress.postalCode} ${deliveryAddress.town}, ${deliveryAddress.country.name}</small>
 										</label>
