@@ -75,7 +75,7 @@
 												<c:forEach items="${order.previewEntries}" var="productPhoto" begin="0" end="4" varStatus="count">
 													<c:if test="${count.index == 0}">
 														<div class="orderline150311 first">
-															<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+															<product:productPrimaryImage product="${productPhoto.product}" format="store"/>
 														</div>
 													</c:if>
 													<c:if test="${count.index > 0 && count.index < 4}">
@@ -110,11 +110,21 @@
 												${order.code}
 											</span>
 											<div class="squarebox150311"> 
-												<div class="squarecontent150311">
-												<div class="orderline150311 first" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2014-12/201100001311_beissring-kirsche_chicco_t150.jpg')"></div>
-												<div class="orderline150311" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2014-08/201400006614_kuehlbeissring-brezel_fashy_t150.jpg')"></div>
-												<div class="orderline150311" style="background-image: url('http://88.198.78.166/medias/sys_master/media/2013-10/201300006348_schnuller-perfect-night-fuer-maedchen_silikon-gr-2_mam_t150.jpg')"></div>
-												<div class="orderline150311 last"></div>
+												<c:if test="${count.index == 0}">
+													<div class="orderline150311 first">
+														<product:productPrimaryImage product="${productPhoto.product}" format="store"/>
+													</div>
+												</c:if>
+												<c:if test="${count.index > 0 && count.index < 4}">
+													<div class="orderline150311">
+														<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+													</div>
+												</c:if>
+												<c:if test="${count.index == 4}">
+													<div class="orderline150311 first">
+														<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+													</div>
+												</c:if>
 											</div>	
 											</div>
 											<span class="price150311">${order.total.formattedValue} &euro;</span>
