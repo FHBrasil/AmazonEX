@@ -26,6 +26,7 @@
                            <input class="form-control input-lg" id="qtyInput_${product.code}" type="number" value="1" min="1" max="10" maxlength="3" name="qty">
                        </div>
                    </c:if>
+                   <%-- 
                    <c:if test="${product.stock.stockLevelStatus.code eq 'lowStock'}">
                        <c:if test="${product.stock.stockLevel < 4}">
                            <c:set var="productStockLevel">
@@ -34,6 +35,7 @@
                            </c:set>
                        </c:if>
                    </c:if>
+                   --%>
                    <ycommerce:testId code="productDetails_productInStock_label">
                        <span>${productStockLevel}</span>
                    </ycommerce:testId>
@@ -46,10 +48,20 @@
                         <spring:theme code="cart.page.add" />
                     </button>
                 </c:if>
-                    <br />
-                    <%-- add wishlist --%>
-                    <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-heart"></span> Auf die Wunschliste</button>
-                    
+                <br />
+                <c:choose>
+			    	<c:when test="${not added}">
+			        	<p class="prod_review-new">
+			            	<c:url value="/w/${product.code}" var="addToWishlistUrl"/>
+			                <a href="${addToWishlistUrl}/addToWishlist" id="add_to_woshlist" class="btn btn-link">
+			                 	<span class="glyphicon glyphicon-heart"></span>&nbsp;<spring:theme code="product.product.details.addToWishlist" />
+			                </a>
+			            </p>
+			        </c:when>			                
+			        <c:otherwise>
+			        	<p class="prod_review-new"><spring:theme code="product.product.details.onWishlist" /></p>
+			        </c:otherwise>
+			   	</c:choose>                    
             </div>
         </form:form>
     </c:when>
