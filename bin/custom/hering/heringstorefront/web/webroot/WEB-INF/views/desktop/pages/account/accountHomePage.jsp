@@ -204,38 +204,17 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Konto 00011VOY<div class="pull-right"><small><a href="#accountModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
-					</div>
-					<div class="panel-body">
-						E-Mail: philipp-paul@googlemail.de<br>
-						Telefon: 017680308574<br>
-						Passwort: ********
-					</div>
+					<order:infoAccountUser customer="${customerData}" />
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<div class="panel-heading"><span class="glyphicon glyphicon-file"></span> Rechnungsadresse<div class="pull-right"><small><a href="#invoiceAddressModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
-					</div>
-					<div class="panel-body">
-						Philipp Paul<br>
-						Ismaninger Str. 2<br>
-						98987 Aschheim<br>
-						Deutschland
-					</div>
+					<order:addressAccountUser type="billing" customer="${customerData}"/>
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<div class="panel-heading"><span class="glyphicon glyphicon-map-marker"></span> Lieferadresse<div class="pull-right"><small><a href="#deliveryAddressModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
-					</div>
-					<div class="panel-body">
-						Philipp Paul<br>
-						KP Family International GmbH<br>
-						Sternstr. 20<br>
-						98987 Aschheim<br>
-						Deutschland<br>
-					</div>
+					<order:addressAccountUser type="delivery" customer="${customerData}"/>
 				</div>
 			</div>
 			<div class="col-xs-12">
@@ -254,12 +233,35 @@
 	</div>
 </div>
 
-        
-        
-        
-        
-        
-        
+<!-- BEGIN Modal HTML (This part should be loaded asynchronous until golive -->
+    
+<!-- connectionsModal HTML -->
+    <div id="connectionsModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-link"></span> Verkn&uuml;pfte Konten &auml;ndern</h4>
+                </div>
+                <div class="modal-body">
+					<p>Wenn Sie sich mit 1 Klick einloggen, wird Ihr Amazon- oder Facebook-Konto mit Ihrem Babyartikel.de-Konto verkn&uuml;pft. Sie m&uuml;ssen sich kein separates Passwort mehr merken. Hier k&ouml;nnen Sie die Verkn&uuml;pfung wieder entfernen:</p>
+					<div class=" margin-bottom" style="background-image: url('layout/but_amazon64.png');padding-left:91px;background-repeat:no-repeat;min-height:91px">
+						Amazon Login and Payments<br />
+						<button type="button" class="btn btn-default">Entfernen</button>
+					</div>
+					<div class=" margin-bottom" style="background-image: url('layout/but_facebook64.png');padding-left:91px;background-repeat:no-repeat;min-height:91px">
+						Facebook Login<br />
+						<button type="button" class="btn btn-default">Entfernen</button>
+					</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	
+<!-- END Modal HTML -->        
         
         
 <!--             <section class="home page with-sidebar"> -->

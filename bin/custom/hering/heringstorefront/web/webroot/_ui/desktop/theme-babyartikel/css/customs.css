@@ -122,6 +122,7 @@
 	.box150102 a {display:block;height:60px;overflow:hidden;}
 	.box150102 b {display:block;}
 	.box150102 del {color: #c7438e;}
+	.box150102 h2 {font-size: 14px; margin: 0;}
 	.teaser150102 {padding:30px;font-weight:bold;color:white;height:100%;border-radius:5px;}
 	.teaser150102 a {height:auto;}
 
