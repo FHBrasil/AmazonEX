@@ -3,7 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData" %>
+		<c:if test="${product.freeShipping}">
+		<div class="flag150219"><spring:theme code="product.attractions.freeshipping"/></div>
+		</c:if>
+		
+		<c:if test="${product.newProduct && !(product.oldPrice > product.price.value)}">
+		<div class="flag150219"><spring:theme code="product.attractions.new"/></div>
+		</c:if>
+		
+		<c:choose>
+			<c:when test="${product.blackfriday}">
+				<div class="flag150219"><spring:theme code="product.attractions.blackfriday"/></div>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${product.oldPrice > product.price.value}">
+				<div class="flag150219"><spring:theme code="product.attractions.sale.${themeName}"/></div>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
 
+
+<%--
 <div class="selos">
 	<ul>
 		<c:if test="${product.freeShipping}">
@@ -25,4 +45,4 @@
 			</c:otherwise>
 		</c:choose>
 	</ul>
-</div>
+</div>--%>

@@ -13,13 +13,17 @@
 				<spring:theme code="product.currencynotation" /> 
 				<fmt:formatNumber value="${product.oldPrice}" type="number" minFractionDigits="2"/>
 			</s>
-			<strong> 
+			<span class="glyphicon glyphicon-stop text-onstock"></span> 
+			<span class="">  
 				<spring:theme code="product.volumePrices.to"/> 
 				<format:fromPrice priceData="${product.price}"/>
-			</strong>
+			</span>
 		</c:when>
 		<c:otherwise>
-			<strong><format:fromPrice priceData="${product.price}"/></strong>
+			<span class="glyphicon glyphicon-stop text-onstock"></span> 
+			<span class="">  
+				<format:fromPrice priceData="${product.price}"/>
+			</span>
 		</c:otherwise>
 	</c:choose>
 	<c:choose>

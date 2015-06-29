@@ -5,5 +5,5 @@
 <a href="${productUrl}" 
 	title="${productName}" 
 	class="productMainLink">
-	<h2>${productName}</h2>
+	<h2><b>[BRAND]</b> ${productName}</h2>
 </a>
