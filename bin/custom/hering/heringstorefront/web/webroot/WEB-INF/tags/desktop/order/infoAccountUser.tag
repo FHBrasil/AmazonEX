@@ -25,3 +25,48 @@
 	Telefon: (${customer.defaultShippingAddress.dddPhone}) ${customer.defaultShippingAddress.phone}<br>
 	Passwort: ********
 </div>
+
+<!-- accountModal HTML -->
+    <div id="accountModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-user"></span> Konto &auml;ndern</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+						<!-- this form is exactly same like at index-register.html ... maybe we should make a component for that? -->
+						<div class="form-group">
+							<label for="inputEmail">E-Mail-Adresse</label>
+							<input type="email" class="form-control" id="inputEmail" value="${customer.uid}" required="true">
+						</div>
+						<div class="form-group">
+							<label for="inputEmail">Telefon (optional)</label>
+							<input type="tel" class="form-control" id="inputPhone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}">
+						</div>
+						<div class="form-group">
+							<button id="changeEmail" class="btn btn-primary">Speichern</button>
+						</div>
+					</form>
+					<form>
+						<div class="form-group">
+							<label >Passwort &auml;ndern</label><br />
+							<p>Bitte klicken Sie den folgenden Button, wenn Sie Ihr Passwort zu &auml;ndern m&ouml;chten.</p>
+							<button id="changePassword" class="btn btn-default" data-target="#passwordModal" data-toggle="modal">Passwort &auml;ndern</button>
+						</div>
+					</form>
+					<form>
+						<div class="form-group">
+							<label >Konto l&ouml;schen</label><br />
+							<p>Das L&ouml;schen Ihres Konto l&auml;sst sich nicht r&uuml;ckg&auml;ngig machen.</p>
+							<button id="deleteAccount" class="btn btn-default">Konto l&ouml;schen</button>
+						</div>
+					</form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    </div>
