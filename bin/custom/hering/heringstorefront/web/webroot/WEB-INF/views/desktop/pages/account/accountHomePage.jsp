@@ -204,38 +204,17 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Konto 00011VOY<div class="pull-right"><small><a href="#accountModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
-					</div>
-					<div class="panel-body">
-						E-Mail: philipp-paul@googlemail.de<br>
-						Telefon: 017680308574<br>
-						Passwort: ********
-					</div>
+					<order:infoAccountUser customer="${customerData}" />
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<div class="panel-heading"><span class="glyphicon glyphicon-file"></span> Rechnungsadresse<div class="pull-right"><small><a href="#invoiceAddressModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
-					</div>
-					<div class="panel-body">
-						Philipp Paul<br>
-						Ismaninger Str. 2<br>
-						98987 Aschheim<br>
-						Deutschland
-					</div>
+					<order:addressAccountUser type="billing" customer="${customerData}"/>
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<div class="panel-heading"><span class="glyphicon glyphicon-map-marker"></span> Lieferadresse<div class="pull-right"><small><a href="#deliveryAddressModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
-					</div>
-					<div class="panel-body">
-						Philipp Paul<br>
-						KP Family International GmbH<br>
-						Sternstr. 20<br>
-						98987 Aschheim<br>
-						Deutschland<br>
-					</div>
+					<order:addressAccountUser type="delivery" customer="${customerData}"/>
 				</div>
 			</div>
 			<div class="col-xs-12">
