@@ -72,18 +72,18 @@
 										</span>
 										<div class="squarebox150311"> 
 											<div class="squarecontent150311">
-												<c:forEach items="${order.previewEntries}" var="productPhoto" begin="0" end="4" varStatus="count">
-													<c:if test="${count.index == 0}">
+												<c:forEach items="${order.previewEntries}" var="productPhoto" begin="0" end="4" varStatus="status">
+													<c:if test="${status.index == 0}">
 														<div class="orderline150311 first">
-															<product:productPrimaryImage product="${productPhoto.product}" format="store"/>
+															<product:productPrimaryImage product="${productPhoto.product}" format="product"/>
 														</div>
 													</c:if>
-													<c:if test="${count.index > 0 && count.index < 4}">
+													<c:if test="${status.index > 0 && status.index < 4}">
 														<div class="orderline150311">
 															<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
 														</div>
 													</c:if>
-													<c:if test="${count.index == 4}">
+													<c:if test="${status.index == 4}">
 														<div class="orderline150311 first">
 															<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
 														</div>
@@ -110,23 +110,26 @@
 												${order.code}
 											</span>
 											<div class="squarebox150311"> 
-												<c:if test="${count.index == 0}">
-													<div class="orderline150311 first">
-														<product:productPrimaryImage product="${productPhoto.product}" format="store"/>
-													</div>
-												</c:if>
-												<c:if test="${count.index > 0 && count.index < 4}">
-													<div class="orderline150311">
-														<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
-													</div>
-												</c:if>
-												<c:if test="${count.index == 4}">
-													<div class="orderline150311 first">
-														<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
-													</div>
-												</c:if>
+												<div class="squarecontent150311">
+													<c:forEach items="${order.previewEntries}" var="productPhoto" begin="0" end="4" varStatus="status">
+														<c:if test="${status.index == 0}">
+															<div class="orderline150311 first">
+																<product:productPrimaryImage product="${productPhoto.product}" format="product"/>
+															</div>
+														</c:if>
+														<c:if test="${status.index > 0 && status.index < 4}">
+															<div class="orderline150311">
+																<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+															</div>
+														</c:if>
+														<c:if test="${status.index == 4}">
+															<div class="orderline150311 first">
+																<product:productPrimaryImage product="${productPhoto.product}" format="thumbnail"/>
+															</div>
+														</c:if>
+													</c:forEach>
+												</div>
 											</div>	
-											</div>
 											<span class="price150311">${order.total.formattedValue} &euro;</span>
 										</a>
 									</div>
