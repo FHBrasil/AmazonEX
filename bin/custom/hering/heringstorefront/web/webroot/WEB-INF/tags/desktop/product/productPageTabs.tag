@@ -11,10 +11,12 @@
 <div>
  	<ul class="nav nav-tabs margin-top" id="tab150219">
         <li class="active"><a data-toggle="tab" href="#sectionA"><spring:theme code="product.product.details" /></a></li>
-        <li><a data-toggle="tab" href="#sectionB"><spring:theme code="review.reviews" /></a></li>
+        <li><a data-toggle="tab" href="#sectionB"><spring:theme code="review.reviews" />&nbsp;<span class="badge">${product.numberOfReviews}</span></a></li>
     </ul>
 </div>
-		<product:productBrand product="${product}" />
+<div class="col-xs-12 tab150119">
+	<product:productBrand product="${product}" upper="false" />
+</div>
 	<div class="col-md-6 col-sm-8 tab150119">   
         <div class="tab-content">
             <div id="sectionA" class="tab-pane fade in active">

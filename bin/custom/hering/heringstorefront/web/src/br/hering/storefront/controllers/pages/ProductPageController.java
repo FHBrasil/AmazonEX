@@ -170,7 +170,7 @@ public class ProductPageController extends AbstractPageController
 		model.addAttribute(new ReviewForm());
 		final List<ProductReferenceData> productReferences = productFacade.getProductReferencesForCode(productCode,
 				Arrays.asList(ProductReferenceTypeEnum.SIMILAR, ProductReferenceTypeEnum.ACCESSORIES),
-				Arrays.asList(ProductOption.BASIC,ProductOption.PRICE), null);
+				Arrays.asList(ProductOption.BASIC,ProductOption.PRICE), null);		
 		model.addAttribute("productReferences", productReferences);
 		model.addAttribute("pageType", HeringPageType.PRODUCT.name());
 		
@@ -489,6 +489,7 @@ public class ProductPageController extends AbstractPageController
 				ProductOption.DELIVERY_MODE_AVAILABILITY));
 
 		sortVariantOptionData(productData);
+		model.addAttribute("percentageRating", percentageRating(productData));
 		storeCmsPageInModel(model, getPageForProduct(productModel));
 		populateProductData(productData, model);
 		model.addAttribute(WebConstants.BREADCRUMBS_KEY, productBreadcrumbBuilder.getBreadcrumbs(productModel));
@@ -576,7 +577,12 @@ public class ProductPageController extends AbstractPageController
 		return galleryImages;
 	}
 	
-	
+	protected double percentageRating(final ProductData productData)
+	{
+		if(productData.getAverageRating() != null && productData.getAverageRating() > 0)
+			return (productData.getAverageRating() * 100) / 5;
+		return 0;
+	}
 
 	/**
 	 * @return the cartFacade
