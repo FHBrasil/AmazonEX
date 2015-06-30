@@ -36,19 +36,35 @@
 <div class="panel-body">
 	${customer.firstName}&nbsp;${customer.lastName}<br>
 	<c:if test="${type == 'billing'}">
-		${customer.defaultBillingAddress.line1}, 
-		&nbsp;${customer.defaultBillingAddress.number} 
-		&nbsp;${customer.defaultBillingAddress.region.name}<br>	
-		${customer.defaultBillingAddress.postalCode},
-		&nbsp;${customer.defaultBillingAddress.district}<br>
+		${fn:escapeXml(customer.defaultBillingAddress.line1)}&nbsp;
+	    ${fn:escapeXml(customer.defaultBillingAddress.number)}<br>
+	    ${fn:escapeXml(customer.defaultBillingAddress.complement)}
+	    <c:if test="${not empty customer.defaultBillingAddress.reference}">
+			${fn:escapeXml(customer.defaultBillingAddress.reference)}
+	    </c:if>
+	    ${fn:escapeXml(customer.defaultBillingAddress.postalCode)}
+	    - ${fn:escapeXml(customer.defaultBillingAddress.town)}
+	    <c:if test="${not empty customer.defaultBillingAddress.region.name}">
+	    	-${fn:escapeXml(customer.defaultBillingAddress.region.isocodeShort)}
+	   	</c:if>
+	   	<br>
+	    ${fn:escapeXml(customer.defaultBillingAddress.district)}<br>
 		${customer.defaultBillingAddress.country.name}
-	</c:if>
+    </c:if>
 	<c:if test="${type == 'delivery'}">
-		${customer.defaultShippingAddress.line1}, 
-		&nbsp;${customer.defaultShippingAddress.number} 
-		&nbsp;${customer.defaultShippingAddress.region.name}<br>	
-		${customer.defaultShippingAddress.postalCode},
-		&nbsp;${customer.defaultShippingAddress.district}<br>
+		${fn:escapeXml(customer.defaultShippingAddress.line1)}&nbsp;
+	    ${fn:escapeXml(customer.defaultShippingAddress.number)}<br>
+	    ${fn:escapeXml(customer.defaultShippingAddress.complement)}
+	    <c:if test="${not empty customer.defaultShippingAddress.reference}">
+			${fn:escapeXml(customer.defaultShippingAddress.reference)}
+	    </c:if>
+	    ${fn:escapeXml(customer.defaultShippingAddress.postalCode)}
+	    - ${fn:escapeXml(customer.defaultShippingAddress.town)}
+	    <c:if test="${not empty customer.defaultShippingAddress.region.name}">
+	    	-${fn:escapeXml(customer.defaultShippingAddress.region.isocodeShort)}
+	   	</c:if>
+	   	<br>
+	    ${fn:escapeXml(customer.defaultShippingAddress.district)}<br>
 		${customer.defaultShippingAddress.country.name}
 	</c:if>
 </div>
