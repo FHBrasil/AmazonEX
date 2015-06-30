@@ -13,7 +13,7 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <template:page pageTitle="${pageTitle}">
     <div id="main-wrapper">
-        <div class="container">
+        <div>
             <header id="page-header">
                 <h1>
                     <spring:theme code="text.account.yourAccount" text="Your Account" />
