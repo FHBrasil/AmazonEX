@@ -133,19 +133,20 @@ public class HeringProductPopulator implements Populator<ProductModel, ProductDa
 		if (baseProduct instanceof HeringProductModel)
 		{
 			final HeringProductModel heringProductModel = (HeringProductModel) baseProduct;
-			if (CollectionUtils.isNotEmpty(heringProductModel.getGenders()))
-			{
+			//if (CollectionUtils.isNotEmpty(heringProductModel.getGenders()))
+			//{
 				populatePriceInfo(source, target);
 				populateGender(target, heringProductModel);
 				populateColorAndSize(heringProductModel, target);
 				populatePreviewImages(heringProductModel,target);
 				populateUrl(heringProductModel,target);
 
+				target.setShortDescription(source.getShortDescription());
 				target.setOnlinedate(source.getOnlineDate());
 				target.setNewProduct(isNewProduct(source.getOnlineDate()).booleanValue());
 				target.setFreeShipping(isFreeShipping(source.getEurope1Prices()).booleanValue());
 				target.setBlackfriday(isBlackfriday(source).booleanValue());
-			}
+			//}
 			
 			if(CollectionUtils.isNotEmpty(heringProductModel.getMeasurementList()))
 			{

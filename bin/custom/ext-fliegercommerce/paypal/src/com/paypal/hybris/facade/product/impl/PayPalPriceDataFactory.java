@@ -83,7 +83,7 @@ public class PayPalPriceDataFactory extends DefaultPriceDataFactory
 
 	protected NumberFormat createNumberFormat(final Locale locale, final CurrencyModel currency, final boolean addCurrencySymbol)
 	{
-		DecimalFormat currencyFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(locale);
+		DecimalFormat currencyFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(locale.GERMANY);
 
 		if (!addCurrencySymbol)
 		{
