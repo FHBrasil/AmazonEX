@@ -29,91 +29,91 @@
 	<h3>Adresse eingeben</h3>
 	<p>Bitte geben Sie Ihre Rechnungsadresse ein. Sie können später eine abweichende Lieferadresse eingeben.</p>
 	<form:form method="post" cssClass="pf" commandName="heringRegisterForm" action="${action}">
-	<form:hidden path="pessoaFisica" value="true" />
-	<div class="form-group">
-		<label for="inputInvoiceSalutation">Anrede</label>
-		<select class="form-control" id="inputInvoiceSalutation">
-			<option>Frau</option>
-			<option>Herr</option>
-			<option>Firma</option>
-		</select>
-	</div>
-	<div class="row">
-		<div class="form-group col-sm-6">
-			<formElement:formInputBox size="30" idKey="register.firstName"
-				labelKey="register.firstName" path="firstName" inputCSS="text required-letters form-control"
-		        mandatory="true" hideInputErrorOnField="true" />
+		<form:hidden path="pessoaFisica" value="true" />
+		<div class="form-group">
+			<label for="inputInvoiceSalutation">Anrede</label>
+			<select class="form-control" id="inputInvoiceSalutation">
+				<option>Frau</option>
+				<option>Herr</option>
+				<option>Firma</option>
+			</select>
 		</div>
-		<div class="form-group col-sm-6">
-			<formElement:formInputBox idKey="register.lastName" labelKey="register.lastName"
-		        path="lastName" inputCSS="text required-letters form-control" mandatory="true"
-		        hideInputErrorOnField="true" />
+		<div class="row">
+			<div class="form-group col-sm-6">
+				<formElement:formInputBox size="30" idKey="register.firstName"
+					labelKey="register.firstName" path="firstName" inputCSS="text required-letters form-control"
+			        mandatory="true" hideInputErrorOnField="true" />
+			</div>
+			<div class="form-group col-sm-6">
+				<formElement:formInputBox idKey="register.lastName" labelKey="register.lastName"
+			        path="lastName" inputCSS="text required-letters form-control" mandatory="true"
+			        hideInputErrorOnField="true" />
+			</div>
 		</div>
-	</div>
-	<p>
-		<a data-toggle="collapse" href="#toggleInvoiceAdditionalAddress" class="collapsed">
-			<span class="glyphicon glyphicon-triangle-right"></span> 
-			Adresszusatz (optional)
-		</a>
-	</p>
-    <div id="toggleInvoiceAdditionalAddress" class="out form-group collapse" style="height: 0px;">
-		<input type="text" class="form-control" id="inputInvoiceAdditionalAddress" placeholder="z.B. Mami &amp; Co. GmbH, 2. Stock">
-	</div>
-	<div class="row">
-		<div class="form-group col-sm-8">
-			<label for="inputInvoiceStreet">Straße</label>
-			<input type="text" class="form-control" id="inputInvoiceStreet" required="true">
-		</div>
-		<div class="form-group col-sm-4">
-			<label for="inputInvoiceStreetNo">Haus-Nr.</label>
-			<input type="text" class="form-control" id="inputInvoiceStreetNo" required="true">
-		</div>
-	</div>
-	<div class="row">
-		<div class="form-group col-sm-4">
-			<label for="inputInvoiceZipcode">PLZ</label>
-			<input type="text" class="form-control" id="inputInvoiceZipcode" required="true">
-		</div>
-		<div class="form-group col-sm-8">
-			<label for="inputInvoiceCity">Ort</label>
-			<input type="text" class="form-control" id="inputInvoiceCity" required="true">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="inputInvoiceCountry">Land</label>
-		<select class="form-control" id="inputInvoiceCountry">
-			<option>Deutschland</option>
-			<option>Brasil</option>
-			<option>more...</option>
-		</select>
-	</div>
-	<p>
-		<a data-toggle="collapse" data-target="#togglePhone">
-			<span class=" glyphicon glyphicon-collapse-down"></span> 
-			Telefonnummer (optional)
-		</a>
-		<small> 
-			<a href="#">
-				<span class="glyphicon glyphicon-info-sign"></span> 
-				Warum?
+		<p>
+			<a data-toggle="collapse" href="#toggleInvoiceAdditionalAddress" class="collapsed">
+				<span class="glyphicon glyphicon-triangle-right"></span> 
+				Adresszusatz (optional)
 			</a>
-		</small>
-	</p>
-	<div id="togglePhone" class="form-group out collapse in">
-		<input type="tel" class="form-control" id="inputPhone" placeholder="Telefonnummer">
+		</p>
+	    <div id="toggleInvoiceAdditionalAddress" class="out form-group collapse" style="height: 0px;">
+			<input type="text" class="form-control" id="inputInvoiceAdditionalAddress" placeholder="z.B. Mami &amp; Co. GmbH, 2. Stock">
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-8">
+				<label for="inputInvoiceStreet">Straße</label>
+				<input type="text" class="form-control" id="inputInvoiceStreet" required="true">
+			</div>
+			<div class="form-group col-sm-4">
+				<label for="inputInvoiceStreetNo">Haus-Nr.</label>
+				<input type="text" class="form-control" id="inputInvoiceStreetNo" required="true">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label for="inputInvoiceZipcode">PLZ</label>
+				<input type="text" class="form-control" id="inputInvoiceZipcode" required="true">
+			</div>
+			<div class="form-group col-sm-8">
+				<label for="inputInvoiceCity">Ort</label>
+				<input type="text" class="form-control" id="inputInvoiceCity" required="true">
+			</div>
+			</div>
+		<div class="form-group">
+			<label for="inputInvoiceCountry">Land</label>
+			<select class="form-control" id="inputInvoiceCountry">
+				<option>Deutschland</option>
+				<option>Brasil</option>
+				<option>more...</option>
+			</select>
+		</div>
+		<p>
+			<a data-toggle="collapse" data-target="#togglePhone">
+				<span class=" glyphicon glyphicon-collapse-down"></span> 
+				Telefonnummer (optional)
+			</a>
+			<small> 
+				<a href="#">
+					<span class="glyphicon glyphicon-info-sign"></span> 
+					Warum?
+				</a>
+			</small>
+		</p>
+		<div id="togglePhone" class="form-group out collapse in">
+			<input type="tel" class="form-control" id="inputPhone" placeholder="Telefonnummer">
+		</div>
+		<div class="form-group">
+	        <div class="f-row">
+	            <formElement:formInputBox idKey="register.email" labelKey="register.email" path="email"
+	                inputCSS="text form-control" mandatory="true" hideInputErrorOnField="true" />
+	        </div>
+		</div>
+	    <ycommerce:testId code="register_Register_button">
+	        <button type="submit" class="btn btn-primary btn-lg">
+	            <spring:theme code="text.fliegercommerce.texto74"/>
+	        </button>
+	    </ycommerce:testId>
 	</div>
-	<div class="form-group">
-        <div class="f-row">
-            <formElement:formInputBox idKey="register.email" labelKey="register.email" path="email"
-                inputCSS="text form-control" mandatory="true" hideInputErrorOnField="true" />
-        </div>
-	</div>
-        <ycommerce:testId code="register_Register_button">
-            <button type="submit" class="btn btn-primary btn-lg">
-                <spring:theme code="text.fliegercommerce.texto74"/>
-            </button>
-        </ycommerce:testId>
-</div>
 <%--         campo CPF --%>
 <!--         <div class="f-row"> -->
 <%--             <formElement:formInputBox idKey="register.cpfcnpj" labelKey="register.cpf" --%>

@@ -42,11 +42,7 @@
             <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" maxlength="11" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" readonly="${readOnly}"/>
         </c:if>
         --%>
-        <c:if test="${idKey == 'j_username'}">
-        	<form:input cssClass="${inputCSS}"  class="form-control" id="${idKey}" path="${path}" placeholder="${placeholder}" maxlength="${size}" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" readonly="${readOnly}" />
-        	<input type="email" cssClass id="inputEmail" placeholder="E-Mail" autocomplete="off" />
-        </c:if>
-        <c:if test="${idKey != 'address.postcode' && idKey != 'profile.birthday' && idKey != 'j_username'}">
+        <c:if test="${idKey != 'address.postcode' && idKey != 'profile.birthday'}">
             <c:if test="${not empty placeholder}">
               <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" placeholder="${placeholder}" maxlength="${size}" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" readonly="${readOnly}" />  
             </c:if>

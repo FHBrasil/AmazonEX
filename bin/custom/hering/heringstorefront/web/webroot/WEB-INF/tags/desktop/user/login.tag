@@ -67,11 +67,9 @@
  		<%-- FORM LOGIN --%> 
 		<form:form action="${action}" method="post" commandName="loginForm">
 			<div class="form-group">
-				<!-- INPUT TYPE TEXT -->
-		        <div class="f-row">
-		            <formElement:formInputBox idKey="j_username" labelKey="login.email" path="j_username"
-		                inputCSS="text required-email form-control" mandatory="true" />
-		        </div>
+			    <formElement:formInputBox idKey="j_username" labelKey="login.email" path="j_username"
+             		inputCSS="text required-email form-control" mandatory="true" /> 
+		        
 			</div>
 			<div class="form-group">
 				<!-- INPUT TYPE PASSWORD -->
