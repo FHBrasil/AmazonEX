@@ -19,6 +19,7 @@ import org.springframework.util.Assert;
 import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.model.BoletoPaymentInfoModel;
 
+import de.hybris.platform.util.Config;
 
 /**
  * 
@@ -47,10 +48,15 @@ public class BoletoPaymentInfoReversePopulator implements Populator<BoletoPaymen
 		{
 			target.setTransactionReference(source.getTransactionReference());
 		}
-		if (StringUtils.isNotBlank(source.getCpf()))
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
 		{
-			target.setTransactionReference(source.getCpf());
+		if (StringUtils.isNotBlank(source.getCpf()))
+			{
+				target.setTransactionReference(source.getCpf());
+			}
 		}
+		
 		target.setCode(target.getUser().getUid() + "_" + UUID.randomUUID());
 		//target.setId(source.getPk().toString());
 

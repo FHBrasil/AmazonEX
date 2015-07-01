@@ -9,6 +9,8 @@ import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 
+import de.hybris.platform.util.Config;
+
 /**
  *
  * @author Vinicius de Souza
@@ -22,7 +24,12 @@ public class HeringCustomerReversePopulator extends CustomerReversePopulator
 		super.populate(source, target);
 		target.setBirthday(source.getBirthday());
 		target.setGender(source.getGender());
-		target.setCpfcnpj(source.getCpfcnpj());
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			target.setCpfcnpj(source.getCpfcnpj());
+		}
+		
 		target.setRgIe(source.getRgIe());
 		target.setUfIe(source.getUfIe());
 

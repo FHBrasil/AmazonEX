@@ -17,6 +17,7 @@ import br.hering.heringstorefrontcommons.forms.HeringGuestForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.GuestValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 
+import de.hybris.platform.util.Config;
 
 /**
  * @author franthescollymaneira
@@ -40,7 +41,9 @@ public class HeringGuestValidator extends GuestValidator
 		final HeringGuestForm guestForm = (HeringGuestForm) object;
 
 		final String email = guestForm.getEmail();
+		
 		final String cpfcnpj = guestForm.getCpfcnpj();
+
 
 		final String birthday = guestForm.getBirthday();
 
@@ -55,23 +58,26 @@ public class HeringGuestValidator extends GuestValidator
 			GlobalMessages.addErrorMessage(model, "profile.email.invalid");
 		}
 
-		if (StringUtils.isBlank(cpfcnpj))
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
 		{
-			errors.rejectValue("cpfcnpj", "register.cpfcnpj.invalid");
-			GlobalMessages.addErrorMessage(model, "register.cpfcnpj.invalid");
-		}
-		else
-		{
-			if (cpfcnpj.equals("00000000000") || cpfcnpj.equals("11111111111") || cpfcnpj.equals("22222222222")
-					|| cpfcnpj.equals("33333333333") || cpfcnpj.equals("44444444444") || cpfcnpj.equals("55555555555")
-					|| cpfcnpj.equals("66666666666") || cpfcnpj.equals("77777777777") || cpfcnpj.equals("88888888888")
-					|| cpfcnpj.equals("99999999999") || (cpfcnpj.length() != 11) || !cpfValid(cpfcnpj))
+			if (StringUtils.isBlank(cpfcnpj))
 			{
 				errors.rejectValue("cpfcnpj", "register.cpfcnpj.invalid");
 				GlobalMessages.addErrorMessage(model, "register.cpfcnpj.invalid");
 			}
+			else
+			{
+				if (cpfcnpj.equals("00000000000") || cpfcnpj.equals("11111111111") || cpfcnpj.equals("22222222222")
+						|| cpfcnpj.equals("33333333333") || cpfcnpj.equals("44444444444") || cpfcnpj.equals("55555555555")
+						|| cpfcnpj.equals("66666666666") || cpfcnpj.equals("77777777777") || cpfcnpj.equals("88888888888")
+						|| cpfcnpj.equals("99999999999") || (cpfcnpj.length() != 11) || !cpfValid(cpfcnpj))
+				{
+					errors.rejectValue("cpfcnpj", "register.cpfcnpj.invalid");
+					GlobalMessages.addErrorMessage(model, "register.cpfcnpj.invalid");
+				}
+			}
 		}
-
+		
 		try
 		{
 			boolean containError = false;

@@ -25,6 +25,8 @@ import br.hering.facades.populators.HeringCreditCardPaymentInfoReversePopulator;
 import br.hering.facades.user.HeringUserFacade;
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
 
+import de.hybris.platform.util.Config;
+
 /**
  * @author Antony P
  *
@@ -43,9 +45,13 @@ implements HeringUserFacade {
 	 */
 	@Override
 	public void setCnpjCpfForCheckout(String cpfCnpj) {
-		CustomerModel customer = (CustomerModel) getUserService().getCurrentUser();
-		customer.setCpfcnpj(cpfCnpj);
-		getModelService().save(customer);
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			CustomerModel customer = (CustomerModel) getUserService().getCurrentUser();
+			customer.setCpfcnpj(cpfCnpj);
+			getModelService().save(customer);
+		}
 	}
 
 	/*
@@ -55,11 +61,16 @@ implements HeringUserFacade {
 	 */
 	@Override
 	public String getCpfCnpjIfExiss() {
-		CustomerModel customer = (CustomerModel) getUserService().getCurrentUser();
-		if (StringUtils.isNotBlank(customer.getCpfcnpj()))
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
 		{
-			return customer.getCpfcnpj();
+			CustomerModel customer = (CustomerModel) getUserService().getCurrentUser();
+			if (StringUtils.isNotBlank(customer.getCpfcnpj()))
+			{
+				return customer.getCpfcnpj();
+			}
 		}
+		
 		return "";
 	}
 

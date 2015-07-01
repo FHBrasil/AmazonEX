@@ -28,6 +28,7 @@ import java.util.Map;
 
 import br.hering.core.customer.dao.HeringCustomerAccountDao;
 
+import de.hybris.platform.util.Config;
 
 /**
  * @author Antony P
@@ -44,13 +45,20 @@ public class DefaultHeringCustomerAccountDao extends DefaultCustomerAccountDao i
 	@Override
 	public CustomerModel getCustomerByCpf(String cpfCnpj)
 	{
-		ServicesUtil.validateParameterNotNull(cpfCnpj, "CPF must not be null");
-		Map queryParams = new HashMap();
-		queryParams.put("cpfcnpj", cpfCnpj);
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			ServicesUtil.validateParameterNotNull(cpfCnpj, "CPF must not be null");
+			Map queryParams = new HashMap();
+			queryParams.put("cpfcnpj", cpfCnpj);
 
-		SearchResult result = getFlexibleSearchService().search("SELECT {pk} FROM {Customer} WHERE {cpfCnpj} = ?cpfCnpj",
+			SearchResult result = getFlexibleSearchService().search("SELECT {pk} FROM {Customer} WHERE {cpfCnpj} = ?cpfCnpj",
 				queryParams);
-		return ((result.getCount() > 0) ? (CustomerModel) result.getResult().get(0) : null);
+			return ((result.getCount() > 0) ? (CustomerModel) result.getResult().get(0) : null);
+		}
+		
+		return null;
+		
 	}
 
 	@Override
