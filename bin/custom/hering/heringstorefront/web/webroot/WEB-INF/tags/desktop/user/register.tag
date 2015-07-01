@@ -7,19 +7,113 @@
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-<section class="col-1 column">
+<!-- <section class="col-1 column"> -->
     <%-- cabeçalho do formulário --%>
-<!--     <header> -->
-<!--         <h2> -->
-<%--             <spring:theme code="register.new.customer" /> --%>
-<!--         </h2> -->
-<!--     </header> -->
-<%--     <form class="f-row pfpj"> --%>
-<%--         <label><input type="radio" id="radiopf" name="tipo" ${pf ? 'checked' : ''}><spring:theme code="text.fliegercommerce.texto31"/> </label> <label><input type="radio" id="radiopj" name="tipo" --%>
-<%--             ${!pf ? 'checked' : ''}><spring:theme code="text.fliegercommerce.texto32"/></label> --%>
-<%--     </form> --%>
-<%--     <form:form method="post" cssClass="pf" commandName="heringRegisterForm" action="${action}"> --%>
-<%--         <form:hidden path="pessoaFisica" value="true" /> --%>
+<h2>Neukunden</h2>
+<p>Bestellen Sie als Gast, wenn Sie zum ersten Mal bei uns einkaufen:</p>
+<form>
+	<a href="#" onclick="$('#registerForm').removeClass('out').addClass('in');" 
+		class="btn btn-primary btn-registerForm">Als Gast bestellen</a>
+</form>
+<form class="f-row pfpj" style="display:none">
+        <label>
+        	<input type="radio" id="radiopf" name="tipo" ${pf ? 'checked' : ''}>
+        	<spring:theme code="text.fliegercommerce.texto31"/> 
+        </label> 
+        <label>
+        	<input type="radio" id="radiopj" name="tipo" ${!pf ? 'checked' : ''}>
+            <spring:theme code="text.fliegercommerce.texto32"/>
+        </label>
+    </form>
+<div class="panel-collapse collapse out" id="registerForm" name="registerForm">
+	<h3>Adresse eingeben</h3>
+	<p>Bitte geben Sie Ihre Rechnungsadresse ein. Sie können später eine abweichende Lieferadresse eingeben.</p>
+	<form:form method="post" cssClass="pf" commandName="heringRegisterForm" action="${action}">
+	<form:hidden path="pessoaFisica" value="true" />
+	<div class="form-group">
+		<label for="inputInvoiceSalutation">Anrede</label>
+		<select class="form-control" id="inputInvoiceSalutation">
+			<option>Frau</option>
+			<option>Herr</option>
+			<option>Firma</option>
+		</select>
+	</div>
+	<div class="row">
+		<div class="form-group col-sm-6">
+			<formElement:formInputBox size="30" idKey="register.firstName"
+				labelKey="register.firstName" path="firstName" inputCSS="text required-letters form-control"
+		        mandatory="true" hideInputErrorOnField="true" />
+		</div>
+		<div class="form-group col-sm-6">
+			<formElement:formInputBox idKey="register.lastName" labelKey="register.lastName"
+		        path="lastName" inputCSS="text required-letters form-control" mandatory="true"
+		        hideInputErrorOnField="true" />
+		</div>
+	</div>
+	<p>
+		<a data-toggle="collapse" href="#toggleInvoiceAdditionalAddress" class="collapsed">
+			<span class="glyphicon glyphicon-triangle-right"></span> 
+			Adresszusatz (optional)
+		</a>
+	</p>
+    <div id="toggleInvoiceAdditionalAddress" class="out form-group collapse" style="height: 0px;">
+		<input type="text" class="form-control" id="inputInvoiceAdditionalAddress" placeholder="z.B. Mami &amp; Co. GmbH, 2. Stock">
+	</div>
+	<div class="row">
+		<div class="form-group col-sm-8">
+			<label for="inputInvoiceStreet">Straße</label>
+			<input type="text" class="form-control" id="inputInvoiceStreet" required="true">
+		</div>
+		<div class="form-group col-sm-4">
+			<label for="inputInvoiceStreetNo">Haus-Nr.</label>
+			<input type="text" class="form-control" id="inputInvoiceStreetNo" required="true">
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<label for="inputInvoiceZipcode">PLZ</label>
+			<input type="text" class="form-control" id="inputInvoiceZipcode" required="true">
+		</div>
+		<div class="form-group col-sm-8">
+			<label for="inputInvoiceCity">Ort</label>
+			<input type="text" class="form-control" id="inputInvoiceCity" required="true">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputInvoiceCountry">Land</label>
+		<select class="form-control" id="inputInvoiceCountry">
+			<option>Deutschland</option>
+			<option>Brasil</option>
+			<option>more...</option>
+		</select>
+	</div>
+	<p>
+		<a data-toggle="collapse" data-target="#togglePhone">
+			<span class=" glyphicon glyphicon-collapse-down"></span> 
+			Telefonnummer (optional)
+		</a>
+		<small> 
+			<a href="#">
+				<span class="glyphicon glyphicon-info-sign"></span> 
+				Warum?
+			</a>
+		</small>
+	</p>
+	<div id="togglePhone" class="form-group out collapse in">
+		<input type="tel" class="form-control" id="inputPhone" placeholder="Telefonnummer">
+	</div>
+	<div class="form-group">
+        <div class="f-row">
+            <formElement:formInputBox idKey="register.email" labelKey="register.email" path="email"
+                inputCSS="text form-control" mandatory="true" hideInputErrorOnField="true" />
+        </div>
+	</div>
+        <ycommerce:testId code="register_Register_button">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <spring:theme code="text.fliegercommerce.texto74"/>
+            </button>
+        </ycommerce:testId>
+</div>
 <%--         campo CPF --%>
 <!--         <div class="f-row"> -->
 <%--             <formElement:formInputBox idKey="register.cpfcnpj" labelKey="register.cpf" --%>
@@ -29,19 +123,7 @@
 <!--         			<div class="f-row"> -->
 <%--         				<formElement:formInputBox idKey="register.rgIe" labelKey="register.rg" path="rgIe" inputCSS="text" mandatory="false" hideInputErrorOnField="true" /> --%>
 <!--         			</div> -->
-<%--         campo nome --%>
-<!--         <div class="f-row"> -->
-<%--             <formElement:formInputBox size="30" idKey="register.firstName" --%>
-<%--                 labelKey="register.firstName" path="firstName" inputCSS="text required-letters" --%>
-<%--                 mandatory="true" hideInputErrorOnField="true" /> --%>
-<!--         </div> -->
-<%--         campo sobrenome --%>
-<!--         <div class="f-row"> -->
-<%--             <formElement:formInputBox idKey="register.lastName" labelKey="register.lastName" --%>
-<%--                 path="lastName" inputCSS="text required-letters" mandatory="true" --%>
-<%--                 hideInputErrorOnField="true" /> --%>
-<!--         </div> -->
-<%--         campo email --%>
+<!-- 			campo email --%>
 <!--         <div class="f-row"> -->
 <%--             <formElement:formInputBox idKey="register.email" labelKey="register.email" path="email" --%>
 <%--                 inputCSS="text" mandatory="true" hideInputErrorOnField="true" /> --%>
@@ -81,7 +163,7 @@
 <%--                 <spring:theme code="text.fliegercommerce.texto74"/> --%>
 <!--             </button> -->
 <%--         </ycommerce:testId> --%>
-<%--     </form:form> --%>
+    </form:form>
 <%--     <form:form method="post" cssClass="pj" commandName="heringRegisterForm" action="${action}"> --%>
 <%--         <form:hidden path="pessoaFisica" value="false" /> --%>
 <!--         <div class="f-row"> -->
@@ -146,4 +228,4 @@
 <!--             </button> -->
 <%--         </ycommerce:testId> --%>
 <%--     </form:form> --%>
-</section>
+<!-- </section> -->
