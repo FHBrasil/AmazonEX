@@ -5,19 +5,18 @@
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
-<%@ attribute name="product" required="true"
-    type="de.hybris.platform.commercefacades.product.data.ProductData"%>
+<%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 <%@ attribute name="simplifiedSelectors" required="false" type="java.lang.Boolean"%>
 <%-- ProductData.getSizes() contains all sizes --%>
 <%@ attribute name="useSizesProperty" required="false" type="java.lang.Boolean"%>
 <%@ attribute name="showVariantSizeGuide" required="false" type="java.lang.Boolean"%>
 <%@ variable name-given="showAddToCart" variable-class="java.lang.Boolean" scope="AT_END"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:set var="simplifiedSelectors"
-    value="${(empty simplifiedSelectors) ? false : simplifiedSelectors}" />
+
+<c:set var="simplifiedSelectors" value="${(empty simplifiedSelectors) ? false : simplifiedSelectors}" />
 <c:set var="useSizesProperty" value="${(empty useSizesProperty) ? false : useSizesProperty}" />
-<c:set var="showVariantSizeGuide"
-    value="${(empty showVariantSizeGuide) ? true : showVariantSizeGuide}" />
+<c:set var="showVariantSizeGuide" value="${(empty showVariantSizeGuide) ? true : showVariantSizeGuide}" />
+<%-- 
 <c:choose>
     <c:when test="${simplifiedSelectors}">
         <div class="cores">
@@ -39,7 +38,7 @@
         </div>
     </c:when>
     <c:otherwise>
-        <%-- Determine if product is one of Hering style or size variant --%>
+        <%-- Determine if product is one of Hering style or size variant 
         <c:if test="${product.variantType eq 'HeringStyleVariantProduct'}">
             <c:set var="variantStyles" value="${product.variantOptions}" />
         </c:if>
@@ -56,7 +55,7 @@
             <c:set var="currentStyleUrl" value="${product.baseOptions[1].selected.url}" />
         </c:if>
         <c:url value="${currentStyleUrl}" var="currentStyledProductUrl" />
-        <%-- Determine if product is other variant --%>
+        <%-- Determine if product is other variant 
         <c:if test="${empty variantStyles}">
             <c:if test="${not empty product.variantOptions}">
                 <c:set var="variantOptions" value="${product.variantOptions}" />
@@ -218,3 +217,4 @@
         </c:if>
     </c:otherwise>
 </c:choose>
+--%>

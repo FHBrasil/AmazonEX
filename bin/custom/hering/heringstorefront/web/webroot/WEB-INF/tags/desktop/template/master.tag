@@ -4,11 +4,13 @@
 <%@ attribute name="metaKeywords" required="false"%>
 <%@ attribute name="pageCss" required="false" fragment="true"%>
 <%@ attribute name="pageScripts" required="false" fragment="true"%>
+<%@ attribute name="showBV" required="true" %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template"%>
 <%@ taglib prefix="analytics" tagdir="/WEB-INF/tags/shared/analytics"%>
 <%@ taglib prefix="debug" tagdir="/WEB-INF/tags/shared/debug"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="bvJavascript" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/template"%>
 <!DOCTYPE html>
 <html lang="${currentLanguage.isocode}">
 <head>
@@ -46,6 +48,23 @@
 <c:if test="${!empty googleApiVersion}">
     <script type="text/javascript"
         src="http://maps.googleapis.com/maps/api/js?v=${googleApiVersion}&amp;key=${googleApiKey}&amp;sensor=false"></script>
+</c:if>
+
+<%-- BazaarVoice JavaScript --%>
+<c:if test="${showBV == 'true'}">
+	<bvJavascript:bazaarvoiceHeaderJavascript />
+	<script type="text/javascript">
+		<c:if test="${not empty searchPageData.results}">
+		$BV.ui('rr', 'inline_ratings', {
+		productIds : [
+			<c:forEach items="${searchPageData.results}" var="product">
+			'${product.code}',
+			</c:forEach>
+		],
+		containerPrefix : 'BVRRInlineRating'
+		});
+		</c:if>
+	</script>
 </c:if>
 </head>
 <body id="${themeName}" class="${pageType}">

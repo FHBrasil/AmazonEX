@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
-<template:page pageTitle="${pageTitle}">
+<template:page pageTitle="${pageTitle}" showBV="true">
     <div>
         <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
         <%--<product:productBackgroundImage product="${product}" galleryImages="${galleryImages}" />--%>

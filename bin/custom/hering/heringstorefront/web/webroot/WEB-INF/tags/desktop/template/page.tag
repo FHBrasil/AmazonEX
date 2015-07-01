@@ -4,13 +4,14 @@
 <%@ attribute name="pageCss" required="false" fragment="true"%>
 <%@ attribute name="pageScripts" required="false" fragment="true"%>
 <%@ attribute name="hideHeaderLinks" required="false"%>
+<%@ attribute name="showBV" required="false" %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="header" tagdir="/WEB-INF/tags/desktop/common/header"%>
 <%@ taglib prefix="footer" tagdir="/WEB-INF/tags/desktop/common/footer"%>
 <%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart"%>
 <%@ taglib prefix="nav" tagdir="/WEB-INF/tags/desktop/nav"%>
-<template:master pageTitle="${pageTitle}">
+<template:master pageTitle="${pageTitle}" showBV="${showBV}">
     <jsp:attribute name="pageCss">
 		<jsp:invoke fragment="pageCss" />
 	</jsp:attribute>
@@ -50,7 +51,5 @@
 			<footer>
 				<footer:footer />
 			</footer>
-		
-	
 	</jsp:body>
 </template:master>

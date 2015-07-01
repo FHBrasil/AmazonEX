@@ -60,12 +60,9 @@
                 <span class="icon-bar"></span>
             </button>
             <form role="search" class="navbar-xs navbar-form visible-xs">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Suche&hellip;">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                </div>
+                <cms:pageSlot position="SearchBox" var="component">
+                    <cms:component component="${component}" />
+                </cms:pageSlot>
             </form>
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->
@@ -73,7 +70,6 @@
             <cms:pageSlot position="MainMenu" var="component">
                 <cms:component component="${component}" />
             </cms:pageSlot>
-            <%-- searchboxcomponent.jsp --%> 
             <cms:pageSlot position="SearchBox" var="component">
                 <cms:component component="${component}" />
             </cms:pageSlot>

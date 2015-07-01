@@ -151,9 +151,9 @@
   			<script type="text/javascript" src="${addOnJavaScript}"></script>	
 	</c:if>
 </c:forEach>
-	
 
-<template:ferramentaRecomendacaoComponent />
+
+<%-- <template:ferramentaRecomendacaoComponent />--%>
 <c:if test="${not localEnvironment}">
     <script type="text/javascript" src="${commonResourcePath}/js/vizuryTagHering.js"
         id="scriptVizury"></script>
