@@ -10,28 +10,31 @@
 <%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart"%>
 <%@ taglib prefix="user" tagdir="/WEB-INF/tags/desktop/user"%>
 <section class="col-2 column">
-    <header>
-        <h2>
-            <spring:theme code="login.header.title" />
-        </h2>
-    </header>
+<!--     <header> -->
+<!--         <h2> -->
+<%--             <spring:theme code="login.header.title" /> --%>
+<!--         </h2> -->
+<!--     </header> -->
     <c:if test="${not empty message}">
         <spring:theme code="${message}" />
     </c:if>
     <%-- FORM LOGIN --%>
     <form:form action="${action}" method="post" commandName="loginForm">
         <%-- INPUT TYPE TEXT --%>
-        <div class="f-row">
-            <formElement:formInputBox idKey="j_username" labelKey="login.email" path="j_username"
-                inputCSS="text required-email" mandatory="true" />
-        </div>
+<!--         <div class="f-row"> -->
+			<div class="form-group">
+				<label for="inputEmail">E-Mail</label>
+				<formElement:formInputBox idKey="j_username" labelKey="login.email" path="j_username"
+                	inputCSS="text required-email" mandatory="true" placeholder="E-mail" />
+			</div>
+<!--         </div> -->
         <%-- RECOVERY EMAIL --%>
-        <div class="f-row">
-            <a href="<c:url value='/login/email/request'/>"
-                data-url="<c:url value='/login/email/request'/>" data-fancybox-type="iframe"
-                class="fancybox"> <spring:theme code="login.link.forgottenEmail" />
-            </a>
-        </div>
+<!--         <div class="f-row"> -->
+<%--             <a href="<c:url value='/login/email/request'/>" --%>
+<%--                 data-url="<c:url value='/login/email/request'/>" data-fancybox-type="iframe" --%>
+<%--                 class="fancybox"> <spring:theme code="login.link.forgottenEmail" /> --%>
+<!--             </a> -->
+<!--         </div> -->
         <%-- INPUT TYPE PASSWORD --%>
         <div class="f-row">
             <formElement:formPasswordBox idKey="j_password" labelKey="login.password"
@@ -39,22 +42,22 @@
         </div>
         <input type="hidden" value="${forgotPassword }" id="forgotPassword" />
         <%-- RECOVERY PASSWORD --%>
-        <div class="f-row">
-            <a href="<c:url value='/login/pw/request'/>"
-                data-url="<c:url value='/login/pw/request'/>" data-fancybox-type="iframe"
-                class="fancybox"> <spring:theme code="login.link.forgottenPwd" />
-            </a>
-        </div>
+<!--         <div class="f-row"> -->
+<%--             <a href="<c:url value='/login/pw/request'/>" --%>
+<%--                 data-url="<c:url value='/login/pw/request'/>" data-fancybox-type="iframe" --%>
+<%--                 class="fancybox"> <spring:theme code="login.link.forgottenPwd" /> --%>
+<!--             </a> -->
+<!--         </div> -->
         <%-- MANDATORY INFORMATION --%>
-        <small><spring:theme code="login.required.message" /></small>
+<%--         <small><spring:theme code="login.required.message" /></small> --%>
         <%-- BUTTON SUBMIT --%>
-        <ycommerce:testId code="login_Login_button">
-            <button type="submit" class="btn btn-registro">
-                <spring:theme code="${actionNameKey}" />
-            </button>
-        </ycommerce:testId>
-        <a href="#" class="btn btn-facebook fb-size-SMALL facebook-connect-btn" data-scope=""
-            style="display: none;"> <span class="fb-text"></span> Login com o Facebook
-        </a>
+<%--         <ycommerce:testId code="login_Login_button"> --%>
+<!--             <button type="submit" class="btn btn-registro"> -->
+<%--                 <spring:theme code="${actionNameKey}" /> --%>
+<!--             </button> -->
+<%--         </ycommerce:testId> --%>
+<!--         <a href="#" class="btn btn-facebook fb-size-SMALL facebook-connect-btn" data-scope="" -->
+<!--             style="display: none;"> <span class="fb-text"></span> Login com o Facebook -->
+<!--         </a> -->
     </form:form>
 </section>
