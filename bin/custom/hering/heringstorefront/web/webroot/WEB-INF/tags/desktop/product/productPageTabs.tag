@@ -40,7 +40,8 @@
 				<product:productTechnicalDetails product="${product}"/>
 			</div>
 			<div id="dropdown1" class="tab-pane fade">
-				<product:productAnswerQuestions product="${product}"/>
+				<!--<product:productAnswerQuestions product="${product}"/>-->
+				<bazaarvoice:productPageQuestionAndAnswerTab product="${product}"/>
 			</div>
 			<div id="dropdown2" class="tab-pane fade">
 				<product:productDownloads product="${product}"/>
