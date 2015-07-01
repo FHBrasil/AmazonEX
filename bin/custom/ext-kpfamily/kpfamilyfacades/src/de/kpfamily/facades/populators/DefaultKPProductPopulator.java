@@ -32,8 +32,7 @@ public class DefaultKPProductPopulator extends
         target.setDescription(source.getDescription());
         target.setManufacturer(source.getManufacturerName());
         target.setName(source.getName());
-        target.setReviewsTotalCount(source.getReviewsTotalCount());
-        target.setShortDescription(source.getShortDescription());
+        target.setReviewsTotalCount(source.getReviewsTotalCount());        
         target.setSummary(source.getSummary());
         if (!source.getEurope1Prices().isEmpty()) {
             PriceRowModel priceRow = source.getEurope1Prices().iterator().next();

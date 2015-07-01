@@ -28,7 +28,7 @@
 					<product:productBrand product="${product}" upper="true"/>
 				</header>
 			</ycommerce:testId>		
-			<p>${product.shortDescription} <a href="#tab150219"><spring:theme code="product.shortDescriptionReadMore"/></a></p>
+			<p>${product.shortDescription}&nbsp;<a href="#tab150219"><spring:theme code="product.shortDescriptionReadMore"/></a></p>
 			<div class="row">
 				<div class="col-xs-4 v-bottom">
 					<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
@@ -37,8 +37,7 @@
 				</div>
 				<div class="col-xs-7 v-bottom">
 					<%-- [shipping information] --%>
-					<p>[FIXED]<b>Am Freitag geliefert!</b><span class="glyphicon glyphicon-stop text-onstock"></span><br />
-					<small>Bestellen Sie innerhalb 5:17 Stunden.<br />Kostenlose Lieferung ab 40 &euro;</small></p>
+					<product:productShippingInformation product="${product}"/>
 				</div>
 			</div>
 			<div class="row shadowbox">
@@ -72,10 +71,10 @@
 		<div class="col-sm-6">
 			<div class="row">
 				<p class="col-xs-4">
-					[FIXED]<a href="#"><b class="fox24gif150217">+1496 Punkte</b><small class="hidden-xs hidden-sm"><br />Sammeln und beim n&auml;chsten Einkauf sparen!</small></a>
+					<product:productBonuspoints product="${product}"/>
 				</p>
 				<p class="col-xs-8">
-					[FIXED]<a href="#"><b>Ratenzahlung ab 12,90 &euro;</b><small class="hidden-xs hidden-sm"><br />mit unserem Partner Klarna<br />Mehr zum Thema Ratenkauf</small></a>
+					<product:productInstallmentWithKlarna product="${product}"/>
 				</p>
 			</div>
 		</div>
