@@ -54,7 +54,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.noggit.JSONUtil;
 import org.springframework.beans.factory.annotation.Required;
-//import org.springframework.integration.core.MessageSource;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

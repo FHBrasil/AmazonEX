@@ -9,8 +9,13 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import br.hering.core.customer.HeringCustomerAccountService;
 import br.hering.core.customer.dao.HeringCustomerAccountDao;
@@ -27,7 +32,6 @@ import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.servicelayer.model.ModelService;
-import de.hybris.platform.servicelayer.security.auth.AuthenticationService;
 import de.hybris.platform.servicelayer.util.ServicesUtil;
 
 /**
@@ -41,12 +45,11 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 
 	@Resource
 	private NewsletterSubscriptionService newsletterSubscriptionService;
-
-	@Resource
-	private AuthenticationService authenticationService;
 	
 	@Resource
 	private ModelService modelService;
+
+	private HttpServletRequest request;
 	
 	
 	@Override
@@ -79,9 +82,9 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	}
 	
 	@Override
-	public void DeleteAccount(CustomerModel customerModel)
+	public void deleteAccount(CustomerModel customerModel)
 	{
-
+			
 		final String customerEmail = customerModel.getUid();
 		final String guid = UUID.randomUUID().toString();
 		
@@ -89,14 +92,12 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		customerModel.setType(CustomerType.valueOf( CustomerType.GUEST.getCode()));
 
 		final String customerUid = customerModel.getUid();
-		LOG.info("Customer uid: " + customerUid);
 		
 		final Date currentDate = customerModel.getCurrentDate();
-		LOG.info("current date: " + currentDate);
 		customerModel.setDeletedAccountDate(currentDate);
 		
 		final Collection<NewsletterSubscriptionModel> customerNewsletterSubscriptions = customerModel.getNewsletterSubscriptions();
-		
+
 		//deleting subscriptions from customer
 		if (! customerNewsletterSubscriptions.isEmpty())
 		{
@@ -113,10 +114,11 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 				
 			}
 		}
-
+			
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
 		
 	}
+
 	
 }

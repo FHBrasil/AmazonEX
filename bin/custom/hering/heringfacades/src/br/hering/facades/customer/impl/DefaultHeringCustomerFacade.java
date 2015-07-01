@@ -31,11 +31,11 @@ import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
 
+
 import br.flieger.exacttarget.events.CustomerRegisterEvent;
 import br.hering.core.customer.impl.KPCustomerAccountService;
 import br.hering.core.customer.HeringCustomerAccountService;
 import br.hering.facades.customer.HeringCustomerFacade;
-
 import de.hybris.platform.util.Config;
 
 /**
@@ -105,7 +105,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		final CustomerModel customerModel = getCurrentSessionCustomer();
 		try
 		{
-			heringCustomerAccountService.DeleteAccount(customerModel);
+			heringCustomerAccountService.deleteAccount(customerModel);
 		}
 		catch (Exception e)
 		{

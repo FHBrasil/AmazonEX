@@ -31,6 +31,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -101,7 +102,6 @@ import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.store.services.BaseStoreService;
 import de.hybris.platform.util.Config;
-
 import br.hering.core.enums.TipoDeEndereco;  
 import br.hering.facades.checkout.payment.HeringPaymentModeFacade;
 import br.hering.facades.customer.HeringCustomerFacade;
@@ -126,6 +126,9 @@ import br.hering.facades.wishlist.impl.DefaultHeringWishlistFacade;
 import br.hering.storefront.forms.UpdateWishlistForm;
 import br.hering.storefront.util.HeringPageType;
 import br.hering.storefront.util.SelectOption;
+
+import org.springframework.context.MessageSource;
+
 
 /**
  * Controller for home page.
@@ -155,8 +158,9 @@ public class AccountPageController extends AbstractSearchPageController {
 			+ "/my-account/profile";
 	private static final String WISHLIST_PUBLIC_URL = REDIRECT_PREFIX + "/w/";
 	
-	private static final String REDIRECT_TO_LOGIN_PAGE = REDIRECT_PREFIX + "/login";
+	private static final String REDIRECT_TO_LOGIN_PAGE = REDIRECT_PREFIX + "/login/";
 	
+	private static final String REDIRECT_LOGOUT = REDIRECT_PREFIX + "/logout";
 	
 	/**
 	 * We use this suffix pattern because of an issue with Spring 3.1 where a
@@ -718,30 +722,22 @@ public class AccountPageController extends AbstractSearchPageController {
 
 	
 	
-	// ADDING METHOD TO DELETE CURRENT ACCOUNT
+	// Adding method to delete current account
 	@RequestMapping(value = "/delete-account", method = RequestMethod.GET)
 	@RequireHardLogIn
-	public String deleteAccount(final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException {
+	public String deleteAccount(final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException 
+	{		
 		
 		final CustomerData customer = customerFacade.getCurrentCustomer();
 		
 		if (customer != null)
 		{
-			try
-			{
-				heringCustomerFacade.deleteAccount();	
-				GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER, "Você apagou sua conta.");
-				return REDIRECT_TO_LOGIN_PAGE;
-
-			}
-			catch (Exception e)
-			{			
-				e.printStackTrace();
-			}
-
+			heringCustomerFacade.deleteAccount();
+			final String accountDeleted = getMessageSource().getMessage("text.fliegercommerce.texto129", null, getI18nService().getCurrentLocale());
+			GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER, accountDeleted);
 		}
 
-		return null;
+		return REDIRECT_PREFIX + "/logout";
 		
 	}
 

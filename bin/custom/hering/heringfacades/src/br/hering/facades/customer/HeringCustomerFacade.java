@@ -12,7 +12,6 @@ import java.util.Date;
 
 import de.hybris.platform.core.enums.Gender;
 
-import java.util.Date;
 
 
 /**
