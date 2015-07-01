@@ -11,6 +11,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="bvJavascript" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/template"%>
+<%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 <!DOCTYPE html>
 <html lang="${currentLanguage.isocode}">
 <head>
@@ -77,6 +78,7 @@
             value="${user.firstName}" /> <input type="hidden" class="userLastName"
             value="${user.lastName}" />
     </div>
+    
 </body>
 <debug:debugFooter />
 </html>

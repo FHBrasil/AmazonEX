@@ -21,7 +21,7 @@
                         <c:forEach items="${order.entries}" var="entry">
                             <c:url value="${entry.product.url}" var="productUrl" />
                             <tr>
-                                <td class="brand"><product:productBrand
+                                <td class="brand"><product:productTitle
                                         product="${entry.product}" /></td>
                                 <td class="thumb"><a href="${productUrl}"><product:productPrimaryImage
                                             product="${entry.product}" format="cartIcon" /></a></td>
@@ -91,7 +91,7 @@
                 <c:url value="${entry.product.url}" var="productUrl" />
                 <tbody>
                     <tr>
-                        <td class="brand"><product:productBrand product="${entry.product}" /></td>
+                        <td class="brand"><product:productTitle product="${entry.product}" /></td>
                         <td class="product-details talign-left"><a href="${productUrl}"><product:productPrimaryImage
                                     product="${entry.product}" format="thumbnail" /></a>
                             <div class="info">

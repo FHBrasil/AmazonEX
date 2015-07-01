@@ -406,3 +406,32 @@
 .squarebox150311{position: relative;width: 100%;}
 .squarebox150311:before{content: "";display: block;padding-top: 100%;}
 .squarecontent150311{position: absolute;top: 0;left: 0;bottom: 0;right: 0;}
+
+.order150312 .panel-body {padding:5px;}
+
+.positions150327 tr:hover {background-color: #F0F0F0;}
+.positions150327 table a {display:inline-block;width:100%;}
+.positions150327 .panel-heading {width:100%;float:left;padding: 0px 15px;}
+	
+.title150312, .value150312 {font-size:12px;}
+.title150312 {text-transform: uppercase;}
+.value150312 {text-align: right;}
+.value2150312 {font-size:30px; font-weight: bold;}
+.value3150312 sup {font-size:12px;}
+
+.pos150327 {border-bottom: 1px solid #f0f0f0}
+.img150327 {height: 150px;background-repeat:no-repeat;background-position: center top;}
+.img150327 a {display:block;height:100%; width:100%}
+.status150327 {font-size:30px;}
+.qty150327 {font-size:24px;font-weight:bold;}
+.item150327 {padding-bottom:15px;padding-top:15px;}
+.statusbar150327 {padding: 0 15px;}
+.ship150327, .shipout150327, .tracking150327, .receive150327 {padding: 7px 5px;}
+.tracking150327 {text-align:center}
+.receive150327, .linestatus150327 {text-align: right}
+	
+@media (max-width:767px){
+	.receive150327, .tracking150327, .linestatus150327 {
+		text-align: left;
+		}
+	}
