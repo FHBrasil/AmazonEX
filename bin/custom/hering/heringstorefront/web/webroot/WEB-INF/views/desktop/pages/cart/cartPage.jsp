@@ -38,6 +38,17 @@
 	    	<cart:cartItems cartData="${cartData}" product="${product}" />
 	        <cart:cartTotals cartData="${cartData}" showTaxEstimate="true" showCalculateDeliveryComponent="true" />	        
 	    </c:if>
+	    <%-- // IF EMPTY CART --%>
+	    <c:if test="${empty cartData.entries}">
+            <header>
+                <h1><spring:theme code="basket.page.empty" /></h1>
+            </header>
+            <p><spring:theme code="basket.page.emptyInfoHering" /></p>
+            <a href="${request.contextPath}" class="btn btn-default">
+				<span class="hidden-xs"><spring:theme code="basket.page.back" />&nbsp;</span>
+				<spring:theme code="basket.page.toTheShop" />
+			</a>
+        </c:if>
     </div>
     <div class="hidden-xs col-sm-4 col-md-3" style="background-color:#f0f0f0;margin-top:50px;">
 		<h1 style="color:#c6c6c6;font-size:40px">
