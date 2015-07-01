@@ -35,7 +35,7 @@
                 </ycommerce:testId>
             </h1>
 
-            <div class="col-xs-12 col-sm-7 text-right pagination150224 container">
+            <div class="col-xs-12 col-sm-7 text-right pagination150224">
                 <ul class="pagination">
                     <li><a data-toggle="collapse" data-parent="#accordionFilter" href="#collapseFilter"><span class="glyphicon glyphicon-filter"></span> Filter</a></li>
                     <div class="input-group-btn">
@@ -68,36 +68,18 @@
                 searchPageData="${searchPageData}" searchUrl="${searchPageData.currentQuery.url}"
                 numberPagesShown="${numberPagesShown}" />
         </div>
-        <section>
-                <nav:facetNavRefinements pageData="${searchPageData}" />
-                
-        
-        <!-- FOLLOWING CONTAINER MUST BE LOADED BY AJAX -->
+
+<section>        
+<!-- FOLLOWING CONTAINER MUST BE LOADED BY AJAX -->
 <div class="filter150219 panel-collapse collapse" id="collapseFilter">
     <div class="text-center margin-top margin-bottom">
         <button type="button" class="btn btn-lg" data-toggle="collapse" href="#collapseFilter"><span class="glyphicon glyphicon-refresh"></span> Aktualisieren</button>
     </div>
     <div class="panel-group" id="accordion">
         <div class="row">
-        <div class="col-sm-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Kategorie</a>
-                </h4>
+            <div class="col-sm-3">
+                <nav:facetNavRefinements pageData="${searchPageData}" />
             </div>
-            <div id="collapse1" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        <li><div class="checkbox"><label><input type="checkbox"> Buggys <span class="badge">25</span></label></div></li>
-                        <li><div class="checkbox"><label><input type="checkbox"> Kombikinderwagen <span class="badge">56</span></label></div></li>
-                        <li><div class="checkbox"><label><input type="checkbox"> Erstlingswagen <span class="badge">9</span></label></div></li>
-                        <li><div class="checkbox"><label><input type="checkbox"> Sportwagen <span class="badge">34</span></label></div></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        </div>
         </div>
     </div>      
 </div>
@@ -118,7 +100,7 @@
                     supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
                     searchUrl="${searchPageData.currentQuery.url}"
                     numberPagesShown="${numberPagesShown}" />
-        <ul class="pagination">
+        <%--<ul class="pagination">
             <li class="disabled"><a href="#">&laquo;</a></li>
             <li class="active"><a href="#">1</a></li>
             <li><a href="#">2</a></li>
@@ -126,7 +108,7 @@
             <li><a href="#">4</a></li>
             <li><a href="#">5</a></li>
             <li><a href="#">&raquo;</a></li>
-        </ul>
+        </ul>--%>
     </div>
 </div>
         
@@ -155,7 +137,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+</section>
     </div>
     <c:url value="${requestScope['javax.servlet.forward.servlet_path']}" var="checkoutUrl" />
     <div id="currentPath" data-current-path="${checkoutUrl }"></div>
