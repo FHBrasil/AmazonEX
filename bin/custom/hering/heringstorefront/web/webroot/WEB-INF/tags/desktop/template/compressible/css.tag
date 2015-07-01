@@ -52,4 +52,5 @@
 <%-- Babyartikel Customs --%>
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/customs.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/bootstrap-slider.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/fonts/babyartikel-fonts.css" />

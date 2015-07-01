@@ -10,12 +10,16 @@
 <c:if test="${not empty facetData.values}">
     <spring:theme code="text.hideFacet" var="hideFacetText" />
     <spring:theme code="text.showFacet" var="showFacetText" />
-    <div
-        class="category ${facetData.name eq 'cor' ? 'cores' : ''} ${fn:containsIgnoreCase(facetData.name, 'Tamanho') ? 'sizes' : ''} ${fn:containsIgnoreCase(facetData.name, 'subcategoria') ? 'with-search-box' : ''}">
-        <dl>
-            <spring:theme code="search.nav.facetTitle" arguments="${facetData.name}" />
-        </dl>
-        <div class="cat-links">
+    <div class="category ${facetData.name eq 'cor' ? 'cores' : ''} ${fn:containsIgnoreCase(facetData.name, 'Tamanho') ? 'sizes' : ''} ${fn:containsIgnoreCase(facetData.name, 'subcategoria') ? 'with-search-box' : ''}">
+    
+    <div class="panel panel-default">    
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><spring:theme code="search.nav.facetTitle" arguments="${facetData.name}" /></a>
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+            <div class="panel-body">
             <ycommerce:testId code="facetNav_facet${facetData.name}_links">
                 <c:if test="${not empty facetData.topValues}">
                     <ul class="topFacetValues">
@@ -161,7 +165,9 @@
                             code="product.variants.size.guide" /></a>
                     <nav:categoryPesosMedidas />
                 </c:if>
+            </ycommerce:testId>
+            </div>
         </div>
-        </ycommerce:testId>
+    </div>
     </div>
 </c:if>

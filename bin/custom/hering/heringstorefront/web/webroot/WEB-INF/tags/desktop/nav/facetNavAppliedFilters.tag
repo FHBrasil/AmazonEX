@@ -6,6 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
+
 <c:if test="${not empty pageData.breadcrumbs}">
     <c:forEach items="${pageData.breadcrumbs}" var="breadcrumb" varStatus="status">
         <c:if test="${status.first}">
@@ -27,30 +28,28 @@
         </c:if>
         <div class="clear"></div>
     </c:forEach>
-    <div id="product-filters" class="category">
-        <div class="cat-links">
-            <ul style="dsisplay: inline">
-                <c:forEach items="${pageData.breadcrumbs}" var="breadcrumb" varStatus="status">
-                    <c:url value="${breadcrumb.removeQuery.url}" var="removeQueryUrl" />
-                    <c:if
-                        test="${breadcrumb.facetValueName != 'Activewear' && breadcrumb.facetValueName != 'Beachwear' && breadcrumb.facetValueName != 'Underwear' && breadcrumb.facetValueName != 'Loungewear' && breadcrumb.facetValueName != 'Sleepwear' && breadcrumb.facetValueName != 'Promo��o' &&
-						breadcrumb.facetValueName != 'Feminino' && breadcrumb.facetValueName != 'Masculino' && breadcrumb.facetValueName != 'Jeans' && breadcrumb.facetValueName != 'Acess�rios' && breadcrumb.facetValueName != 'Sales'}">
-                        <c:choose>
-                            <c:when test="${fn:startsWith(breadcrumb.facetValueName, '#')}">
-                                <li><a href="${removeQueryUrl}"><b class="close">x</b> <span>${breadcrumb.facetName}:
-                                            <div
-                                                class="remove_item_left_name facet_block-label itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}"
-                                                style="background-color:${breadcrumb.facetValueName}; width:15px; height:15px;display:inline!important;position: absolute;top: 9px;left: 35px"></div>
-                                    </span></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="${removeQueryUrl}"><b class="close">x</b> <span>${breadcrumb.facetName}:
-                                            ${breadcrumb.facetValueName}</span></a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:if>
-                </c:forEach>
-            </ul>
-        </div>
-    </div>
+
+        
+    <c:forEach items="${pageData.breadcrumbs}" var="breadcrumb" varStatus="status">
+        <c:url value="${breadcrumb.removeQuery.url}" var="removeQueryUrl" />
+        <c:if
+            test="${breadcrumb.facetValueName != 'Activewear' && breadcrumb.facetValueName != 'Beachwear' && breadcrumb.facetValueName != 'Underwear' && breadcrumb.facetValueName != 'Loungewear' && breadcrumb.facetValueName != 'Sleepwear' && breadcrumb.facetValueName != 'Promo��o' &&
+			breadcrumb.facetValueName != 'Feminino' && breadcrumb.facetValueName != 'Masculino' && breadcrumb.facetValueName != 'Jeans' && breadcrumb.facetValueName != 'Acess�rios' && breadcrumb.facetValueName != 'Sales'}">
+            <c:choose>
+                <c:when test="${fn:startsWith(breadcrumb.facetValueName, '#')}">
+                    <div class="btn btn-d">
+                        <a href="${removeQueryUrl}"><b class="close">x</b> <span>${breadcrumb.facetName}:
+                                <div class="remove_item_left_name facet_block-label itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}" style="background-color:${breadcrumb.facetValueName}; width:15px; height:15px;display:inline!important;position: absolute;top: 9px;left: 35px"></div>
+                        </span></a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="btn btn-d">
+                        <a href="${removeQueryUrl}"><b class="close">x</b> <span>${breadcrumb.facetName}:${breadcrumb.facetValueName}</span></a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
+    </c:forEach>
+       
 </c:if>
