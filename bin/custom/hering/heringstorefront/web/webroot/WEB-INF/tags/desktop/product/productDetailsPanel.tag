@@ -12,8 +12,11 @@
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format" %>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product" %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template" %>
+<%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
 <spring:theme code="text.addToCart" var="addToCartText"/>
+<bazaarvoice:cloudSeoInclude product="${product}"/>
+
 <section id="product-main">
 	<div class="margin-top">
 		<div class="col-xs-12 col-sm-6 v-bottom">
@@ -49,7 +52,7 @@
 				</cms:pageSlot>
 			</div>				
 			<c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">				
-				<%--<product:productReviewSummary product="${product}"/>--%>			
+				 <bazaarvoice:productReviewSummary product="${product}" />		
 				<c:if test="${not empty product.summary}">
 					<div class="summary">
 						${product.summary}

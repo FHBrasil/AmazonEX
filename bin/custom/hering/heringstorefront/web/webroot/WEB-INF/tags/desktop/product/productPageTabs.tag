@@ -34,7 +34,7 @@
             <div id="sectionB" class="tab-pane fade">
 				<%-- <product:productPageReviewsTab product="${product}" /> --%>
 				<bazaarvoice:productPageReviewDetailsTab product="${product}" />
-				<div id="BVRRSummaryContainer"></div>
+				<!-- <div id="BVRRSummaryContainer"></div> -->
 			</div>
 			<div id="sectionC" class="tab-pane fade">
 				<product:productTechnicalDetails product="${product}"/>
@@ -50,8 +50,6 @@
 			</div>
         </div>
     </div>
-
-
 
 <%-- code original
 <div class="tabs">

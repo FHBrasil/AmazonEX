@@ -27,6 +27,7 @@
 <s:eval expression="T(com.bazaarvoice.hybris.utils.BazaarVoiceUtils).ReplaceUnsupportedCharacters(product.code)" var="productCode" />
 <jsp:useBean id="productCode" class="java.lang.String" />
 
+${productcode}
 
 <%
 
@@ -65,7 +66,6 @@
 	//the following 2 lines must be configured for each page.
 	_bvParam.setBaseURI(productUrl); //Insert the URI/URL of the page. This is typically the canonical URL.  The SDK will append pagination parameters to this URI/URL to create search-friendly pagination links.
 	_bvParam.setSubjectId(productCode); //Insert the product ID
-
 	BVUIContent _bvOutput1 = new BVManagedUIContent(_bvConfig);
 	//String sBvOutputReviews = _bvOutput.getContent(_bvParam);  //This method returns both the reviews markup and aggregate rating into a single string.  Use this method if there is no summary div.
 	sBvOutputSummary = _bvOutput1.getAggregateRating(_bvParam); //This method returns only the aggregate rating markup.

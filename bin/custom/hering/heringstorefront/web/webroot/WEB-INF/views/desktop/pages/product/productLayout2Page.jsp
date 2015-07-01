@@ -42,7 +42,7 @@
 		<cms:component component="${comp}"/>
 	</cms:pageSlot>
 	
-	<product:productPageTabs />
+	<product:productPageTabs  />
 
 	<cms:pageSlot position="Section4" var="feature" element="div" class="span-24 section4 cms_disp-img_slot">
 		<cms:component component="${feature}"/>
