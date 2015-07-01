@@ -22,7 +22,7 @@
                 <%-- BRAND IMAGE --%>
                 <li>
                     <div class="brand">
-                        <product:productBrand product="${entry.product}" />
+                        <product:productTitle product="${entry.product}" />
                     </div> <a href="${entryProductUrl}" class="thumbMiniCart"><product:productPrimaryImage
                             product="${entry.product}" format="thumbnail" /></a>
                     <div class="info">
