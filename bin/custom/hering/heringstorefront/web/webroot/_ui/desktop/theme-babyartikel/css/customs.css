@@ -114,6 +114,7 @@
 	.pagination150224 .glyphicon {font-size:15px;}
 	.pagination150224 .input-group-btn {float:left;display:inline;width:auto;}
 	.pagination150224 .input-group-btn button {border-radius: 0;border-left:none;}
+	.pagination150224 .btn-d {background: #f0f0f0; border-radius: 4px;}
 	
 	.box150102 .thumbnail {height: 190px;display:table;width:100%;padding:0;margin:0;border:0;}
 	.box150102 .thumbnail a {display:table-cell;vertical-align:bottom;}
