@@ -16,17 +16,18 @@
         <cms:component component="${feature}" />
     </cms:pageSlot>
     <div class="container">
-        <header id="page-header">
-            <h1><spring:theme code="text.fliegercommerce.texto43"/></h1>
-        </header>
         <section class="identificacao page">
-            <div class="column-wrapper">
+            <div class="col-sm-4">
                 <%-- register.tag --%>
                 <c:url value="/login/register" var="registerActionUrl" />
                 <user:register actionNameKey="register.submit" action="${registerActionUrl}" />
+            </div>
+            <div class="col-sm-4">
                 <%-- login.tag --%>
                 <c:url value="/login/loginOver" var="loginActionUrl" />
                 <user:login actionNameKey="login.login" action="${loginActionUrl}" />
+            </div>
+            <div class="col-sm-4">
                 <%-- loginBanner.tag --%>
                 <user:loginBanner />
             </div>
