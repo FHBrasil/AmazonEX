@@ -24,7 +24,7 @@
     </ul>
 </div>
 <div class="col-xs-12 tab150119">
-	<product:productBrand product="${product}" upper="false" />
+	<product:productTitle product="${product}" upper="false" />
 </div>
 	<div class="col-md-6 col-sm-8 tab150119">   
         <div class="tab-content">
@@ -34,7 +34,7 @@
             <div id="sectionB" class="tab-pane fade">
 				<%-- <product:productPageReviewsTab product="${product}" /> --%>
 				<bazaarvoice:productPageReviewDetailsTab product="${product}" />
-				<div id="BVRRSummaryContainer"></div>
+				<!-- <div id="BVRRSummaryContainer"></div> -->
 			</div>
 			<div id="sectionC" class="tab-pane fade">
 				<product:productTechnicalDetails product="${product}"/>
@@ -50,8 +50,6 @@
 			</div>
         </div>
     </div>
-
-
 
 <%-- code original
 <div class="tabs">
