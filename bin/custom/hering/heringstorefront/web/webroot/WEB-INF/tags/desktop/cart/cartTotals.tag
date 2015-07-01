@@ -1,6 +1,5 @@
 <%@ tag body-content="empty" trimDirectiveWhitespaces="true"%>
-<%@ attribute name="cartData" required="true"
-    type="de.hybris.platform.commercefacades.order.data.CartData"%>
+<%@ attribute name="cartData" required="true" type="de.hybris.platform.commercefacades.order.data.CartData"%>
 <%@ attribute name="showTaxEstimate" required="false" type="java.lang.Boolean"%>
 <%@ attribute name="showTax" required="false" type="java.lang.Boolean"%>
 <%@ attribute name="showCalculateDeliveryComponent" required="false" type="java.lang.Boolean"%>
@@ -16,6 +15,73 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
+<sec:authorize ifNotGranted="ROLE_ANONYMOUS">
+    <c:if test="${showCalculateDeliveryComponent and not empty cartData.deliveryAddress}">
+        <c:set var="showCalculateDeliveryComponent" value="false" />
+    </c:if>
+</sec:authorize>
+
+<div class="">
+	<div class="col-xs-7 text-right charge150127">
+		<spring:theme code="basket.page.totals.sum" />
+	</div>
+	<div class="col-xs-5 text-right charge150127">
+		<format:price priceData="${cartData.subTotal}" />
+	</div>
+	<div class="col-xs-7 text-right charge150127">
+		<spring:theme code="basket.page.totals.savings" />
+	</div>
+	<div class="col-xs-5 text-right charge150127">
+		<format:price priceData="${cartData.totalDiscounts}" />
+	</div>
+	<div class="col-xs-7 text-right charge150127">
+		<spring:theme code="basket.page.totals.delivery" />
+	</div>
+	<div class="col-xs-5 text-right charge150127">
+		<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
+	</div>
+	<div class="col-xs-7 text-right charge150127 h3">		
+		<b><spring:theme code="basket.page.total" /></b>
+	</div>
+	<div class="col-xs-5 text-right charge150127 h3">
+		<b><format:price priceData="${cartData.totalPrice}" /></b>
+	</div>
+	<div class="col-xs-4" style="margin-top:15px;margin-left:-15px;">
+		<a href="${request.contextPath}" class="btn btn-default">
+			<span class="hidden-xs"><spring:theme code="basket.page.back" />&nbsp;</span>
+			<spring:theme code="basket.page.toTheShop" />
+		</a>
+	</div>
+	<div class="col-xs-8 text-right" style="margin-top:15px;margin-left:15px;">
+		<c:url value="/cart/checkout/" var="checkoutUrl" />
+		<a href="${checkoutUrl}" class="btn btn-primary btn-lg" class="margin-bottom"><spring:theme code="checkout.checkout" /></a>
+	</div>
+	<div class="col-xs-12 text-right" style="margin-top:15px;margin-bottom:50px;">
+		<spring:theme code="basket.or" />&nbsp;
+		<a href="#"><img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/de/live/prod/image/lwa/gold/small/PwA.png"></a>
+	</div>
+</div>
+<div class="button-paypal-express-checkout">
+	<c:url value="/paypal/checkout/hop/expressCheckoutShortcut" var="paypalExpressCheckoutUrl" />
+    <a class="paypal-express-checkout-link" href="${paypalExpressCheckoutUrl}"
+    	data-paypal-button="true" data-paypal-id="${merchantId}">
+    </a>
+    <script>
+    	(function(d, s, id) {
+    		var js, ref = d.getElementsByTagName(s)[0];
+    		if (!d.getElementById(id)) {
+    			js = d.createElement(s);
+    			js.id = id;
+    			js.async = true;
+    			js.src = "//www.paypalobjects.com/js/external/paypal.v1.js";
+    			ref.parentNode.insertBefore(js, ref);
+    		}
+    	}(document, "script", "paypal-js"));
+    </script>
+</div>
+
+<%-- OLD CODE
 <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
     <c:if test="${showCalculateDeliveryComponent and not empty cartData.deliveryAddress}">
         <c:set var="showCalculateDeliveryComponent" value="false" />
@@ -40,10 +106,10 @@
                         style="width: 110px" />
                     <button type="submit" onclick="cepFunction()" class="btn-ok btn">ok</button>
                 </div>
-            </form:form> --%>
+            </form:form> 
             <cart:cartVoucher />
         </div>
-        <%-- RESUMO DO PEDIDO // --%>
+        <%-- RESUMO DO PEDIDO // 
         <div class="right">
             <ul>
                 <li><a href="/"><i class="fa fa-angle-left"></i><spring:theme code="text.fliegercommerce.texto57"/></a></li>
@@ -99,3 +165,4 @@
     	</script>
     </div>
 </section>
+--%>

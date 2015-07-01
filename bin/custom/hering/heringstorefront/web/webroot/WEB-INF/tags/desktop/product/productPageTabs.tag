@@ -24,7 +24,7 @@
     </ul>
 </div>
 <div class="col-xs-12 tab150119">
-	<product:productBrand product="${product}" upper="false" />
+	<product:productTitle product="${product}" upper="false" />
 </div>
 	<div class="col-md-6 col-sm-8 tab150119">   
         <div class="tab-content">

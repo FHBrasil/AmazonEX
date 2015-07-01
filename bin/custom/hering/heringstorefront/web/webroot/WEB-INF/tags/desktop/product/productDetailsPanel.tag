@@ -25,7 +25,7 @@
 			<div class="col-sm-12 text-right hidden-xs"><a href="#">[brand img]</a></div>
 			<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
 				<header>
-					<product:productBrand product="${product}" upper="true"/>
+					<product:productTitle product="${product}" upper="true"/>
 				</header>
 			</ycommerce:testId>		
 			<p>${product.shortDescription}&nbsp;<a href="#tab150219"><spring:theme code="product.shortDescriptionReadMore"/></a></p>
