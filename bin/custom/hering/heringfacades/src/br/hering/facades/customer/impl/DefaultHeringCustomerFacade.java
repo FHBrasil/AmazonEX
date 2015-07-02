@@ -5,6 +5,7 @@ package br.hering.facades.customer.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
@@ -31,6 +32,10 @@ import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
 
+
+
+
+import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 
 import br.flieger.exacttarget.events.CustomerRegisterEvent;
 import br.hering.core.customer.impl.KPCustomerAccountService;
@@ -61,6 +66,9 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	
 	@Resource
 	private HeringCustomerAccountService heringCustomerAccountService;
+	
+	@Resource
+	private Converter<CustomerData, CustomerModel> customerReverseConverter;
 		
 
 	private static final Logger LOG = Logger.getLogger(DefaultHeringCustomerFacade.class);
@@ -98,6 +106,9 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	}
 
 	
+	/**
+	 * @author luiza
+	 */
 	@Override
 	public void deleteAccount()
 	{
@@ -114,6 +125,33 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		
 	}
 	
+	
+	/**
+	 * @author luiza
+	 */
+	@Override
+	public void changePhoneNumber(final String phoneNumber)
+	{
+		
+		//final CustomerModel customerModel = getCurrentSessionCustomer();
+		
+		//recebe todo o data, converte pra model e passa tudo pro service salvar
+		
+		
+		//recebi o data
+		//converter em model getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
+		//passar para classe  getNewsletterSubscriptionService().updateSubscription(model);
+		
+		final CustomerModel customerModel = getCurrentSessionCustomer();
+		
+		//popular o address e o customer model
+		//customerReverseConverter.convert(customerData, customerModel);
+	
+		LOG.info("FACADE: " + phoneNumber);
+		heringCustomerAccountService.changePhoneNumber(customerModel, phoneNumber);
+
+		
+	}
 	
 	
 	@Override

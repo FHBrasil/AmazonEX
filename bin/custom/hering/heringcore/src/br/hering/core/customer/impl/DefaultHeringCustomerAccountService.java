@@ -10,8 +10,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -30,6 +28,7 @@ import de.hybris.platform.commerceservices.search.pagedata.PageableData;
 import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
 import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.util.ServicesUtil;
@@ -48,8 +47,6 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	
 	@Resource
 	private ModelService modelService;
-
-	private HttpServletRequest request;
 	
 	
 	@Override
@@ -81,6 +78,10 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		return (HeringCustomerAccountDao) super.getCustomerAccountDao();
 	}
 	
+	
+	/**
+	 * @author luiza
+	 */
 	@Override
 	public void deleteAccount(CustomerModel customerModel)
 	{
@@ -91,8 +92,6 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		customerModel.setUid(guid + "|" + customerEmail);
 		customerModel.setType(CustomerType.valueOf( CustomerType.GUEST.getCode()));
 
-		final String customerUid = customerModel.getUid();
-		
 		final Date currentDate = customerModel.getCurrentDate();
 		customerModel.setDeletedAccountDate(currentDate);
 		
@@ -120,5 +119,31 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		
 	}
 
+	
+	public void changePhoneNumber(CustomerModel customerModel, String phoneNumber)
+	{
+		
+		LOG.info("phone number: " + phoneNumber);
+		
+		String add = customerModel.getDefaultPaymentAddress().getStreetname();
+		LOG.info("street name: " + add);
+		
+		
+		
+		LOG.info("SERVICE");
+		try {
+			customerModel.getDefaultPaymentAddress().setPhone1(phoneNumber);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOG.info("ERROR");
+			e.printStackTrace();
+		}
+		LOG.info("SET PHONE NUMBER: " + customerModel.getDefaultPaymentAddress().getPhone1());
+		modelService.save(customerModel);
+		modelService.refresh(customerModel);
+		LOG.info("ENDING");
+
+	}
+	
 	
 }

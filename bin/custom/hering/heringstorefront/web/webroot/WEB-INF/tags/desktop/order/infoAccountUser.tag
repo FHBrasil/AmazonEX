@@ -35,7 +35,7 @@
                     <h4 class="modal-title"><span class="glyphicon glyphicon-user"></span> Konto &auml;ndern</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/my-account/change-phonenumber">
 						<!-- this form is exactly same like at index-register.html ... maybe we should make a component for that? -->
 						<div class="form-group">
 							<label for="inputEmail">E-Mail-Adresse</label>

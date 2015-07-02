@@ -721,8 +721,10 @@ public class AccountPageController extends AbstractSearchPageController {
 	}
 
 	
-	
-	// Adding method to delete current account
+	/**
+	 * Adding method to delete current account
+	 * @author luiza
+	 */
 	@RequestMapping(value = "/delete-account", method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String deleteAccount(final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException 
@@ -739,6 +741,38 @@ public class AccountPageController extends AbstractSearchPageController {
 		
 	}
 
+	
+	/**
+	 * Adding method to change customer phone number
+	 * @author luiza
+	 */
+	@RequestMapping(value = "/change-phonenumber", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String changePhoneNumber(@ModelAttribute(value = "inputPhone") final String inputPhone,
+			final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException 
+	{		
+		
+		final CustomerData customer = customerFacade.getCurrentCustomer();
+		//final AddressData address = customerFacade.getCurrentCustomer().getDefaultBillingAddress();
+		
+		if (customer != null)
+		{
+			
+			//customer.getDefaultBillingAddress().setPhone(phoneNumber);
+			//address.setPhone(phoneNumber);
+			LOG.info("FIRST LOG: " + inputPhone);
+			heringCustomerFacade.changePhoneNumber(inputPhone);
+		}
+
+		LOG.info("FIM");
+		//GlobalMessages.addInfoMessage(redirectAttributes, "você atualizou seu perfil");
+		return REDIRECT_MY_ACCOUNT;
+		
+	}
+	
+	
+	
+	
 	
 	/**
 	 * @return Retorna os c��digos dos Base Store registrados, separados por
