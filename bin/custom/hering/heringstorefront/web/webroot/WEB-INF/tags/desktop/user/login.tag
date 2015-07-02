@@ -67,9 +67,9 @@
  		<%-- FORM LOGIN --%> 
 		<form:form action="${action}" method="post" commandName="loginForm">
 			<div class="form-group">
+				<label for="j_password"> E-Mail<span class="mandatory"> *: </span></label>
 			    <formElement:formInputBox idKey="j_username" labelKey="login.email" path="j_username"
-             		inputCSS="text required-email form-control" mandatory="true" /> 
-		        
+             		inputCSS="text required-email form-control" mandatory="true" placeholder="E-Mail" /> 
 			</div>
 			<div class="form-group">
 				<!-- INPUT TYPE PASSWORD -->
@@ -88,3 +88,22 @@
 		</form:form>
 	</div>
 </div>
+<small>
+	<a href="<c:url value='/login/pw/request'/>"
+	    data-url="<c:url value='/login/pw/request'/>" data-fancybox-type="iframe"
+        class="fancybox"> <spring:theme code="login.link.forgottenPwd" />
+    </a>
+</small>
+<h2>Mit 1 Klick einloggen</h2>
+<p>Loggen Sie sich bequem mit Amazon oder Facebook ein:</p>
+<p>
+	<a href="#">
+		<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/de/live/prod/image/lwa/gold/small/LwA.png">
+	</a>
+</p>
+<p>
+	<a href="#">
+		<img src="https://www.babyartikel.de/images/fblogin.png">
+	</a>
+</p>
+

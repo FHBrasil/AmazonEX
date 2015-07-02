@@ -22,6 +22,7 @@ import de.hybris.platform.acceleratorstorefrontcommons.security.GUIDCookieStrate
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.store.services.BaseStoreService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,15 +43,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import de.hybris.platform.core.enums.Gender;
 
+import com.google.common.base.Strings;
+
+import de.hybris.platform.core.enums.Gender;
 import br.hering.facades.customer.HeringCustomerFacade;
+import br.hering.heringstorefrontcommons.forms.HeringAddressForm;
 import br.hering.heringstorefrontcommons.forms.HeringGuestForm;
+import br.hering.heringstorefrontcommons.forms.HeringPaymentDetailsForm;
 import br.hering.heringstorefrontcommons.validation.HeringGuestValidator;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.forms.validation.HeringRegistrationValidator;
 import br.hering.storefront.forms.HeringRegisterForm;
-
 import de.hybris.platform.util.Config;
 
 /**
@@ -112,6 +117,9 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 	public String doCheckoutLogin(@RequestParam(value = "error", defaultValue = "false") final boolean loginError,
 			final HttpSession session, final Model model, final HttpServletRequest request) throws CMSItemNotFoundException
 	{
+		final CartData cartData = getCheckoutFlowFacade().getCheckoutCart();
+		
+		model.addAttribute("cartData",cartData);
 		model.addAttribute("pageType", "CHECKOUT");
 		model.addAttribute("expressCheckoutAllowed", Boolean.valueOf(checkoutFlowFacade.isExpressCheckoutEnabledForStore()));
 		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
