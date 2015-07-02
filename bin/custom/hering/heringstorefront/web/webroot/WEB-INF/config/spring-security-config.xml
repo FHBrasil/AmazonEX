@@ -279,6 +279,7 @@
 				<value>/checkout</value>
 			</list>
 		</property>
+		<property name="targetUrlParameter" value="logoutTargetUrlParameter"/>
 	</bean>
 
 	<!-- Remember Me -->

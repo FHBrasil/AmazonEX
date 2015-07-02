@@ -152,11 +152,19 @@ public class LoginPageController extends AbstractHeringLoginController
 	@RequestMapping(method = RequestMethod.GET)
 	public String doLogin(@RequestHeader(value = "referer", required = false) final String referer,
 			@RequestParam(value = "error", defaultValue = "false") final boolean loginError,
+			@RequestParam(value = "deleted", defaultValue = "false") final boolean deleted, 
 			@RequestParam(value = "forgotPassword", defaultValue = "false") final String forgotPassword, final Model model,
 			final HttpServletRequest request, final HttpServletResponse response, final HttpSession session)
 			throws CMSItemNotFoundException
 	{
 		String result = "false";
+		
+		if (deleted)
+		{
+			//GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER, "text.fliegercommerce.texto129", null);
+			GlobalMessages.addInfoMessage(model, "text.fliegercommerce.texto129");
+		}
+		
 		if (!StringUtils.isEmpty(forgotPassword))
 		{
 			if (forgotPassword.compareTo("true") == 0)
@@ -183,6 +191,8 @@ public class LoginPageController extends AbstractHeringLoginController
 		return returnPage;
 	}
 
+	
+	
 	@RequestMapping(value = "/loginOver", method = RequestMethod.POST)
 	public String login(final LoginForm loginForm, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes redirectAttributes, final Model model, final HttpSession session, final BindingResult bindingResult)

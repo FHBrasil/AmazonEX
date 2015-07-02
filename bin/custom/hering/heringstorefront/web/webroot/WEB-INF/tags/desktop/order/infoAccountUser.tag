@@ -56,7 +56,7 @@
 							<button id="changePassword" class="btn btn-default" data-target="#passwordModal" data-toggle="modal">Passwort &auml;ndern</button>
 						</div>
 					</form>
-					<form>
+					<form action="/my-account/delete-account" >
 						<div class="form-group">
 							<label >Konto l&ouml;schen</label><br />
 							<p>Das L&ouml;schen Ihres Konto l&auml;sst sich nicht r&uuml;ckg&auml;ngig machen.</p>
