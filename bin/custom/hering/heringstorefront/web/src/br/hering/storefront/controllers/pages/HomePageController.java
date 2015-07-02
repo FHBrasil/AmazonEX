@@ -38,14 +38,16 @@ public class HomePageController extends AbstractPageController
 {
 	private static final String REDIRECT_MY_WISHLIST = REDIRECT_PREFIX
 			+ "/my-account/my-wishlist";
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public String home(@RequestParam(value = "logout", defaultValue = "false") final boolean logout, final Model model,
+	public String home(@RequestParam(value = "logout", defaultValue = "false") final boolean logout,	
+			final Model model,
 			final RedirectAttributes redirectModel) throws CMSItemNotFoundException
 	{
+		
 		if (logout)
-		{
-			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.INFO_MESSAGES_HOLDER,
-					"account.confirmation.signout.title");
+		{ 
+			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.INFO_MESSAGES_HOLDER, "account.confirmation.signout.title");
 			return REDIRECT_PREFIX + ROOT;
 		}
 
@@ -57,6 +59,7 @@ public class HomePageController extends AbstractPageController
 		return getViewForPage(model);
 	}
 
+	
 	protected void updatePageTitle(final Model model, final AbstractPageModel cmsPage)
 	{
 		storeContentPageTitleInModel(model, getPageTitleResolver().resolveHomePageTitle(cmsPage.getTitle()));

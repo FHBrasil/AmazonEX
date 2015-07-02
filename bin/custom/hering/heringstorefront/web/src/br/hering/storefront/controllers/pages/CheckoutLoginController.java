@@ -50,6 +50,8 @@ import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.forms.validation.HeringRegistrationValidator;
 import br.hering.storefront.forms.HeringRegisterForm;
 
+import de.hybris.platform.util.Config;
+
 /**
  * Checkout Login Controller. Handles login and register for the checkout flow.
  */

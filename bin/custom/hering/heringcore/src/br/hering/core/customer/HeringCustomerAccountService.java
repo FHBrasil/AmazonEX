@@ -12,6 +12,7 @@ import de.hybris.platform.core.model.user.CustomerModel;
 
 import java.util.List;
 
+
 /**
  * @author herbert
  *
@@ -24,4 +25,7 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	public List<OrderModel> getOrderList(CustomerModel customerModel, OrderStatus[] status);
 
 	public SearchPageData<OrderModel> getOrderList(CustomerModel customerModel, OrderStatus[] status, PageableData pageableData);
+	
+	public void deleteAccount(CustomerModel customerModel);
+	
 }

@@ -3,8 +3,6 @@
  */
 package br.hering.core.util;
 
-import org.apache.log4j.Logger;
-
 /**
  * CLASSE RESPONSAVEL
  * POR
@@ -15,8 +13,6 @@ import org.apache.log4j.Logger;
  */
 public class StringUtils
 {
-	private static final Logger LOG = Logger.getLogger(StringUtils.class);
-
 	
 	public static String getSubNameImagem(String imageUrl){
 		String subEnd = imageUrl.replace("-", "");

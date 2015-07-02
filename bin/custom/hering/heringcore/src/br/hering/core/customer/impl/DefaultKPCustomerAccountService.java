@@ -37,6 +37,8 @@ import br.hering.core.payment.dto.KpCardInfo;
 import com.adyen.services.payment.AdyenPaymentService;
 import com.flieger.payment.model.HeringDebitPaymentInfoModel;
 
+import de.hybris.platform.util.Config;
+
 /**
  * @author franthescollymaneira
  * @author Antony P
@@ -58,7 +60,12 @@ public class DefaultKPCustomerAccountService extends DefaultCustomerAccountServi
 			throws DuplicateUidException
 	{
 		super.updateProfile(customerModel, titleCode, name, login);
-		customerModel.setCpfcnpj(cpfcnpj);
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			customerModel.setCpfcnpj(cpfcnpj);
+		}
+				
 		getModelService().save(customerModel);
 	}
 

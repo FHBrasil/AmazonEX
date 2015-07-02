@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import de.hybris.platform.util.Config;
+
 
 /**
  *
@@ -32,7 +34,12 @@ public class HeringCustomerPopulator extends CustomerPopulator
 
 		target.setGender(source.getGender());
 		target.setBirthday(source.getBirthday());
-		target.setCpfcnpj(source.getCpfcnpj());
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{	
+			target.setCpfcnpj(source.getCpfcnpj());
+		}
+		
 		target.setRgIe(source.getRgIe());
 		target.setUfIe(source.getUfIe());
 		target.setPrimaryKey(source.getPk().getLongValueAsString());

@@ -8,7 +8,7 @@ import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateQuantityForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.PlaceOrderForm;
-import de.hybris.platform.catalog.constants.CatalogConstants.Config;
+//import de.hybris.platform.catalog.constants.CatalogConstants.Config;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
 import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
@@ -54,7 +54,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.noggit.JSONUtil;
 import org.springframework.beans.factory.annotation.Required;
-//import org.springframework.integration.core.MessageSource;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -86,6 +85,8 @@ import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
 import com.flieger.payment.model.HeringDebitPaymentInfoModel;
 import com.google.common.base.Strings;
+
+import de.hybris.platform.util.Config;
 
 /**
  * @author jfelipe
@@ -1008,7 +1009,12 @@ public class HeringSingleStepCheckoutController extends
 		paymentInfoData.setDaysToAddInBoletoExpirationDate("3");
 		paymentInfoData.setTransactionReference(cartData.getCode());
 		paymentInfoData.setNossoNumero(cartData.getCode() + cartData.getCode());
-		paymentInfoData.setCpf(getUser().getCpfcnpj());
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			paymentInfoData.setCpf(getUser().getCpfcnpj());
+		}
+		
 		paymentInfoData.setSaved(new Boolean(false));
 		AddressData addressData = this.convertAddressFormIntoAddressData(
 				formBillingAddress);

@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="lib/SintegraIE-0.2.jar"/>
 	<classpathentry kind="src" path="/carrier"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/newsletteraddon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

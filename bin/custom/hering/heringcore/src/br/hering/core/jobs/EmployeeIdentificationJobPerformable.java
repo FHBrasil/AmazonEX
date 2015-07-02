@@ -51,6 +51,8 @@ import org.springframework.util.Assert;
 
 import br.hering.core.model.jobs.EmployeeIdentificationJobModel;
 
+import de.hybris.platform.util.Config;
+
 public class EmployeeIdentificationJobPerformable extends AbstractJobPerformable<EmployeeIdentificationJobModel> 
 {
 	private Logger LOG = Logger.getLogger(EmployeeIdentificationJobPerformable.class);

@@ -9,7 +9,7 @@ import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLo
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.PlaceOrderForm;
-import de.hybris.platform.catalog.constants.CatalogConstants.Config;
+//import de.hybris.platform.catalog.constants.CatalogConstants.Config;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.ContentPageModel;
 import de.hybris.platform.commercefacades.address.data.AddressVerificationResult;
@@ -117,6 +117,8 @@ import com.meterware.httpunit.WebResponse;
 
 import groovy.json.JsonBuilder;
 
+import de.hybris.platform.util.Config;
+
 /**
  * @author flieger
  * @author jfelipe
@@ -187,11 +189,12 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 	@Resource
 	private TypeService typeService;
 
-	
+
 	public TypeService getTypeService() {
 		return typeService;
 	}
 
+	
 	@ModelAttribute("instalments")
 	public List<SelectOption> getInstalments()
 	{
@@ -711,6 +714,9 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 		return REDIRECT_URL_SUMMARY;
 	}
 
+	
+
+	
 	/**
 	 * @param model
 	 * @param paymentDetailsForm
@@ -741,8 +747,12 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 		paymentInfoData.setDaysToAddInBoletoExpirationDate("3");
 		paymentInfoData.setTransactionReference(cartData.getCode());
 		paymentInfoData.setNossoNumero(cartData.getCode() + cartData.getCode());
-
-		paymentInfoData.setCpf(getUser().getCpfcnpj());
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			paymentInfoData.setCpf(getUser().getCpfcnpj());
+		}
+		
 		paymentInfoData.setSaved(new Boolean(false));
 
 		model.addAttribute("cartData", cartData);
@@ -1246,11 +1256,16 @@ public class HeringMultiStepCheckoutController extends MultiStepCheckoutControll
 		}
 
 		final CustomerData customer = getCheckoutFacade().getUserForCheckout();
-		if (StringUtils.isBlank(customer.getCpfcnpj()))
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
 		{
-			GlobalMessages.addFlashMessage(redir, GlobalMessages.ERROR_MESSAGES_HOLDER, "register.cpfcnpj.invalid");
-			invalid = true;
+			if (StringUtils.isBlank(customer.getCpfcnpj()))
+			{
+				GlobalMessages.addFlashMessage(redir, GlobalMessages.ERROR_MESSAGES_HOLDER, "register.cpfcnpj.invalid");
+				invalid = true;
+			}
 		}
+		
 
 		return invalid;
 	}

@@ -51,6 +51,8 @@ import br.hering.facades.customer.impl.DefaultHeringCustomerFacade;
 import br.hering.heringstorefrontcommons.forms.HeringGuestForm;
 import br.hering.storefront.forms.HeringRegisterForm;
 
+import de.hybris.platform.util.Config;
+
 @Controller
 public abstract class AbstractHeringLoginController extends AbstractLoginPageController
 {
@@ -159,7 +161,12 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 		data.setLogin(email);
 		data.setGender(form.getGenderType());
 		data.setPassword(form.getPwd());
-		data.setCpfcnpj(form.getCpfcnpj());
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			data.setCpfcnpj(form.getCpfcnpj());
+		}
+		
 		data.setBirthday(form.getDateBirthday());
 		data.setRgIe(form.getRgIe());
 		data.setUfIe(form.getUfIe());

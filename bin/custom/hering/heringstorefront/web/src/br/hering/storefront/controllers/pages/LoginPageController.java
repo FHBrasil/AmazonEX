@@ -119,6 +119,7 @@ public class LoginPageController extends AbstractHeringLoginController
 		this.customerFacade = customerFacade;
 	}
 
+	
 	@Override
 	protected String getView()
 	{
@@ -151,11 +152,18 @@ public class LoginPageController extends AbstractHeringLoginController
 	@RequestMapping(method = RequestMethod.GET)
 	public String doLogin(@RequestHeader(value = "referer", required = false) final String referer,
 			@RequestParam(value = "error", defaultValue = "false") final boolean loginError,
+			@RequestParam(value = "deleted", defaultValue = "false") final boolean deleted, 
 			@RequestParam(value = "forgotPassword", defaultValue = "false") final String forgotPassword, final Model model,
 			final HttpServletRequest request, final HttpServletResponse response, final HttpSession session)
 			throws CMSItemNotFoundException
 	{
 		String result = "false";
+		
+		if (deleted)
+		{
+			GlobalMessages.addInfoMessage(model, "text.fliegercommerce.texto132");
+		}
+		
 		if (!StringUtils.isEmpty(forgotPassword))
 		{
 			if (forgotPassword.compareTo("true") == 0)
@@ -182,6 +190,8 @@ public class LoginPageController extends AbstractHeringLoginController
 		return returnPage;
 	}
 
+	
+	
 	@RequestMapping(value = "/loginOver", method = RequestMethod.POST)
 	public String login(final LoginForm loginForm, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes redirectAttributes, final Model model, final HttpSession session, final BindingResult bindingResult)
@@ -321,14 +331,18 @@ public class LoginPageController extends AbstractHeringLoginController
 			HttpServletResponse response, final RedirectAttributes redirectModel) throws CMSItemNotFoundException
 	{
 		getRegistrationValidator().validate(form, bindingResult, model);
-		boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
-
-		if (cpfCnpjAlreadyRegistered)
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
 		{
-			GlobalMessages.addErrorMessage(model, "register.cpfexists");
-			bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
-		}
+			boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
 
+			if (cpfCnpjAlreadyRegistered)
+			{
+				GlobalMessages.addErrorMessage(model, "register.cpfexists");
+				bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
+			}
+		}
+		
 		model.addAttribute("pageType", "LOGIN");
 		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.parseBoolean(form.getPessoaFisica()));

@@ -4,7 +4,6 @@
 package br.hering.facades.customer.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
-
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
@@ -13,6 +12,7 @@ import de.hybris.platform.commerceservices.enums.CustomerType;
 import de.hybris.platform.core.enums.Gender;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.PasswordEncoderService;
@@ -30,11 +30,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
+
+
 import br.flieger.exacttarget.events.CustomerRegisterEvent;
 import br.hering.core.customer.impl.KPCustomerAccountService;
+import br.hering.core.customer.HeringCustomerAccountService;
 import br.hering.facades.customer.HeringCustomerFacade;
-
-
+import de.hybris.platform.util.Config;
 
 /**
  * @author sejunior Sergio-Prado-Junior
@@ -57,7 +59,12 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	@Resource
 	private ModelService modelService;
 	
+	@Resource
+	private HeringCustomerAccountService heringCustomerAccountService;
+		
+
 	private static final Logger LOG = Logger.getLogger(DefaultHeringCustomerFacade.class);
+
 	
 	@Override
 	public void updateProfile(final CustomerData customerData) throws DuplicateUidException
@@ -68,12 +75,22 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		final CustomerModel customer = getCurrentSessionCustomer();
 		customer.setOriginalUid(customerData.getDisplayUid());
 		customer.setName(name);
-		customer.setCpfcnpj(customerData.getCpfcnpj());
-		if(customerData.getCpfcnpj() != null 
-				 && customerData.getCpfcnpj().length() == 14) {
-   		customer.setRgIe(customerData.getRgIe());
-   		customer.setUfIe(customerData.getUfIe());
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			customer.setCpfcnpj(customerData.getCpfcnpj());
+			
+			if(customerData.getCpfcnpj() != null && customerData.getCpfcnpj().length() == 14) {
+	   		customer.setRgIe(customerData.getRgIe());
+	   		customer.setUfIe(customerData.getUfIe());
+			}
 		}
+		else
+		{
+			customer.setRgIe(customerData.getRgIe());
+	   		customer.setUfIe(customerData.getUfIe());
+		}
+		
 		customer.setGender(customerData.getGender());
 		customer.setBirthday(customerData.getBirthday());
 		
@@ -82,12 +99,35 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 
 	
 	@Override
+	public void deleteAccount()
+	{
+		
+		final CustomerModel customerModel = getCurrentSessionCustomer();
+		try
+		{
+			heringCustomerAccountService.deleteAccount(customerModel);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}		
+		
+	}
+	
+	
+	
+	@Override
 	protected void validateDataBeforeUpdate(final CustomerData customerData)
 	{
 		validateParameterNotNullStandardMessage("customerData", customerData);
 		Assert.hasText(customerData.getFirstName(), "The field [FirstName] cannot be empty");
 		Assert.hasText(customerData.getLastName(), "The field [LastName] cannot be empty");
-		Assert.hasText(customerData.getCpfcnpj(), "The field [Cpfcnpj] cannot be empty");
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			Assert.hasText(customerData.getCpfcnpj(), "The field [Cpfcnpj] cannot be empty");
+		}
+		
 		Assert.hasText(customerData.getUid(), "The field [Uid] cannot be empty");
 		Assert.notNull(customerData.getBirthday(), "The field [Birthday] cannot be empty");
 	}
@@ -100,7 +140,12 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		Assert.hasText(registerData.getFirstName(), "The field [FirstName] cannot be empty");
 		Assert.hasText(registerData.getLastName(), "The field [LastName] cannot be empty");
 		Assert.hasText(registerData.getLogin(), "The field [Login] cannot be empty");
-		Assert.hasText(registerData.getCpfcnpj(), "The field [CPF] cannot be empty");
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			Assert.hasText(registerData.getCpfcnpj(), "The field [CPF] cannot be empty");
+		}
+		
 		Assert.notNull(registerData.getBirthday(), "The field [Birthday] cannot be empty");
 		
 		final CustomerModel newCustomer = getModelService().create(CustomerModel.class);
@@ -115,7 +160,11 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		newCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
 		newCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
 		
-		newCustomer.setCpfcnpj(registerData.getCpfcnpj());
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			newCustomer.setCpfcnpj(registerData.getCpfcnpj());
+		}
+		
 		newCustomer.setGender(registerData.getGender());
 		newCustomer.setBirthday(registerData.getBirthday());
 		newCustomer.setRgIe(registerData.getRgIe());
@@ -136,16 +185,27 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	public void createGuestUserForAnonymousCheckout(String email, String cpfcnpj, String name, Date birthday, Gender gender) throws DuplicateUidException
 	{
 		validateParameterNotNullStandardMessage("email", email);
-		validateParameterNotNullStandardMessage("cpfcnpj", cpfcnpj);
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			validateParameterNotNullStandardMessage("cpfcnpj", cpfcnpj);
+		}
+		
 		validateParameterNotNullStandardMessage("birthday", birthday);
 		
 		final CustomerModel guestCustomer = getModelService().create(CustomerModel.class);
+		
 		final String guid = generateGUID();
 
 		//takes care of localizing the name based on the site language
 		guestCustomer.setUid(guid + "|" + email);
 		guestCustomer.setName(name);
-		guestCustomer.setCpfcnpj(cpfcnpj);
+		
+		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+		{
+			guestCustomer.setCpfcnpj(cpfcnpj);
+		}
+		
 		guestCustomer.setType(CustomerType.valueOf(CustomerType.GUEST.getCode()));
 		guestCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
 		guestCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
@@ -242,4 +302,6 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		}
 		return "";
 	}
+	
+
 }
