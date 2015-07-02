@@ -733,9 +733,6 @@ public class AccountPageController extends AbstractSearchPageController {
 		if (customer != null)
 		{
 			heringCustomerFacade.deleteAccount();
-			//final String accountDeleted = getMessageSource().getMessage("text.fliegercommerce.texto129", null, getI18nService().getCurrentLocale());
-			//GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER, "text.fliegercommerce.texto129");
-			//return REDIRECT_PREFIX + "/logout?deleted=true";
 		}
 
 		return REDIRECT_PREFIX + "/logout?logoutTargetUrlParameter=/login?deleted=true";

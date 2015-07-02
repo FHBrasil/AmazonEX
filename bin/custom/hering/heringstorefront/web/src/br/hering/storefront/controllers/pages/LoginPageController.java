@@ -161,8 +161,7 @@ public class LoginPageController extends AbstractHeringLoginController
 		
 		if (deleted)
 		{
-			//GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER, "text.fliegercommerce.texto129", null);
-			GlobalMessages.addInfoMessage(model, "text.fliegercommerce.texto129");
+			GlobalMessages.addInfoMessage(model, "text.fliegercommerce.texto132");
 		}
 		
 		if (!StringUtils.isEmpty(forgotPassword))

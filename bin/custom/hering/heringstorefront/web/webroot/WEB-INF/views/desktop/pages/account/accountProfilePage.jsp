@@ -61,7 +61,7 @@
                                     <a href="update-profile" class="btn"> <spring:theme code="text.fliegercommerce.texto40"/> </a> 
                                     <a href="update-email" class="btn"><spring:theme code="text.fliegercommerce.texto41"/></a>
 									<!-- testing delete account -->
-                                    <a href="delete-account" class="btn"><spring:theme code="text.fliegercommerce.texto128"/></a>
+                                    <a href="delete-account" class="btn"><spring:theme code="text.fliegercommerce.texto131"/></a>
                                 </div>
                             </section>
                         </form:form>
