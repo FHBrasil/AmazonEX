@@ -42,8 +42,8 @@
             <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" maxlength="11" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" readonly="${readOnly}"/>
         </c:if>
         --%>
-        <c:if test="${idKey != 'address.postcode' && idKey != 'profile.birthday'}">
             <c:if test="${not empty placeholder}">
+        <c:if test="${idKey != 'address.postcode' && idKey != 'profile.birthday'}">
               <form:input cssClass="${inputCSS}" id="${idKey}" path="${path}" placeholder="${placeholder}" maxlength="${size}" tabindex="${tabindex}" autocomplete="${autocomplete}" required="${mandatory ? 'required' : ''}" readonly="${readOnly}" />  
             </c:if>
             <c:if test="${empty placeholder}">

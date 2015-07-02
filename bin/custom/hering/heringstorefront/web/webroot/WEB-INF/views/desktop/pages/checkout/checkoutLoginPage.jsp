@@ -6,6 +6,7 @@
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <template:page pageTitle="${pageTitle}">
 <section class="identificacao-checkout page">
 	<div class="col-sm-4">
@@ -36,24 +37,24 @@
 						Warenwert
 					</div>
 					<div class="col-xs-6 text-right">
-						26,71 &euro;
+						<format:price priceData="${cartData.subTotal}" />
 					</div>
 					<div class="col-xs-6">
 						Versand
 					</div>
 					<div class="col-xs-6 text-right">
-						3,95 &euro;
+						<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
 					</div>
 					<div class="col-xs-6 sum150203">
 						<h4>Summe</h4>
 					</div>
 					<div class="col-xs-6 sum150203 text-right">
-						<h4>33,66 &euro;</h4>
+						<h4><format:price priceData="${cartData.totalPrice}" /></h4>
 					</div>
 				</div>
 				<div class="col-xs-12 row margin-top">
 					<small class="trusted150203">
-					inkl. <span class="hidden-sm">kostenloser </span> <a href="http://www.trustedshops.de/guetesiegel/kaeuferschutz.html#fifth_aspect" target="_blank">Geld-Zurück-Garantie</a>
+					inkl. <span class="hidden-sm">kostenloser </span> <a href="http://www.trustedshops.de/guetesiegel/kaeuferschutz.html#fifth_aspect" target="_blank">Geld-Zur&uuml;ck-Garantie</a>
 					</small>
 				</div>
 			</div>
