@@ -67,9 +67,9 @@
  		<%-- FORM LOGIN --%> 
 		<form:form action="${action}" method="post" commandName="loginForm">
 			<div class="form-group">
+				<label for="j_password"> E-Mail<span class="mandatory"> *: </span></label>
 			    <formElement:formInputBox idKey="j_username" labelKey="login.email" path="j_username"
-             		inputCSS="text required-email form-control" mandatory="true" /> 
-		        
+             		inputCSS="text required-email form-control" mandatory="true" placeholder="E-Mail" /> 
 			</div>
 			<div class="form-group">
 				<!-- INPUT TYPE PASSWORD -->
