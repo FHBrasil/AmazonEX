@@ -32,7 +32,7 @@
 				<header:header />
 			</div>
 			
-			<div class="container ${pageType == 'SINGLESTEPCHECKOUT' ? 'onestep150526' : ''} ${pageType == 'CART' ? 'cart150127' : ''}">
+			<div class="${pageType == 'PRODUCTSEARCH' || pageType == 'PRODUCT' ? '' : 'container '} ${pageType == 'SINGLESTEPCHECKOUT' ? 'onestep150526' : ''} ${pageType == 'CART' ? 'cart150127' : ''}">
 				<%-- 
 				<c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
 					
