@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${commonResourcePath}/assets/fonts/font-awesome.css">
 <link rel="stylesheet" href="${commonResourcePath}/assets/fonts/museo-sans.css">
 <link rel="stylesheet" href="${commonResourcePath}/assets/fonts/steelfish.css">
-<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/reset.css" />
+<%-- <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/reset.css" />--%>
 <%--<link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/base.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/header.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${commonResourcePath}/assets/css/footer.css" />--%>
@@ -52,4 +52,5 @@
 <%-- Babyartikel Customs --%>
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/customs.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/bootstrap-slider.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/fonts/babyartikel-fonts.css" />

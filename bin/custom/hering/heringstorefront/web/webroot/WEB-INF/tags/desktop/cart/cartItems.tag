@@ -15,8 +15,81 @@
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 <%@ taglib prefix="component" tagdir="/WEB-INF/tags/shared/component"%>
 <%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart"%>
-<%@ attribute name="product" required="true"
-    type="de.hybris.platform.commercefacades.product.data.ProductData"%>
+<%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData"%>
+
+<ol class="list150608">
+	<c:forEach items="${cartData.entries}" var="entry" varStatus="status">
+        <li class="item150608" id="${entry.entryNumber}">
+        	<div class="row">
+        		<div class="col-xxs-4 col-xs-12 col-sm-4 text-right">
+        			<a href="${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
+        		</div>
+        		<div class="col-xxs-8 col-xs-12 col-sm-8">
+        			<product:productTitle product="${entry.product}" cart="true"/>
+        			<%-- [FIXED] for the time being --%>
+        			<c:if test="${status.index == 0}">
+        				<button type="button" class="btn btn-link btn-xs" data-toggle="popover-bulk"><span class="glyphicon glyphicon glyphicon-warning-sign"></span> Sperrgut</button>
+        			</c:if>
+        			<c:if test="${status.index == 1}">
+        				<button type="button" class="btn btn-link btn-xs" data-toggle="popover-forwarding"><span class="glyphicon glyphicon glyphicon-road"></span> Speditionslieferung</button>
+        			</c:if>
+        		</div>
+        	</div>
+        	<div class="row itemdata150608">
+        		<%-- QUANTITY PRODUCT --%>
+        		<div class="col-xs-4 col-sm-3">
+        			<c:url value="/cart/update" var="cartUpdateFormAction" />
+                    <form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" method="post"
+                    	commandName="updateQuantityForm${entry.entryNumber}">
+                    	<input type="hidden" name="entryNumber" value="${entry.entryNumber}" />
+                        <input type="hidden" name="productCode" value="${entry.product.code}" />
+                        <input type="hidden" name="initialQuantity" value="${entry.quantity}" />
+                        <input type="hidden" name="initialQuantity_${entry.entryNumber}" id="initialQuantity_${entry.entryNumber}" value="${entry.quantity}" />
+                        <ycommerce:testId code="cart_product_quantity">
+                            <form:input disabled="${not entry.updateable}" type="number" size="1"
+                                id="quantity${entry.entryNumber}" class="qty" path="quantity"
+                                min="1" maxlength="3" required="required" step="1" cssClass="form-control"/>
+                        </ycommerce:testId>
+                    </form:form>
+        		</div>
+        		<%-- REMOVE PRODUCT --%>
+        		<div class="col-sm-3 hidden-xs">
+        			<c:if test="${entry.updateable}">
+                    	<ycommerce:testId code="cart_product_removeProduct">                    		
+                            <a href="#" class="btn-excluir-produto"
+                                id="RemoveProduct_${entry.entryNumber}" class="submitRemoveProduct"
+                                title="Remover"
+                                onClick="hering.cart.removeProduct('${entry.entryNumber}');">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                                <spring:theme code="basket.removeProduct" />                                
+                            </a>
+                        </ycommerce:testId>
+                	</c:if>
+        		</div>
+        		<%-- PRICE UNIT --%>
+        		<div class="col-xs-4 col-sm-3">
+        			<format:fromPrice priceData="${entry.basePrice}" />
+        		</div>
+        		<%-- TOTAL PRICE --%>
+        		<div class="col-xs-4 col-sm-3 text-right">
+        			<format:price priceData="${entry.totalPrice}" displayFreeForZero="true" />
+        		</div>
+            </div>                           
+    	</li>
+	</c:forEach>
+	<li id="toggleDelivery" class="delivery150618 collapse out">
+		<small><span class="stock150619 onstock big"><b>Expressversand:</b> Lieferung Morgen, 17.08.2015</span></small> 
+	</li>
+	<li class="delivery150618">
+		<small><span class="stock150619 nostock big">Lieferung am Freitag, 17. August 2015</span></small>
+	</li>
+</ol>
+
+<div class="checkbox" style="margin-top:-15px;margin-left:-5px;">
+	<label><input type="checkbox" data-toggle="collapse" data-target="#toggleDelivery"> Sofort lieferbare Positionen sofort versenden? <br />(+3,95 &euro;)</label>
+</div>
+ 
+<%--  OLD CODE
 <table>
     <thead>
         <tr>
@@ -32,16 +105,16 @@
         <c:forEach items="${cartData.entries}" var="entry">
             <c:url value="${entry.product.url}" var="productUrl" />
             <tr id="${entry.entryNumber}">
-                <%-- BRAND IMAGE --%>
-                <td class="brand"><product:productBrand product="${entry.product}" /></td>
+                <%-- BRAND IMAGE 
+                <td class="brand"><product:productTitle product="${entry.product}" /></td>
                 <td class="product-details talign-left">
-                    <%-- PRODUTO // --%> <%-- PRODUCT IMAGE --%> <a href="${productUrl}"><product:productPrimaryImage
+                    <%-- PRODUTO // --%> <%-- PRODUCT IMAGE  <a href="${productUrl}"><product:productPrimaryImage
                             product="${entry.product}" format="cartIcon" /></a>
                     <div class="info">
                         <ul>
-                            <%-- NOME PRODUTO --%>
+                            <%-- NOME PRODUTO 
                             <li class="titulo"><a href="${productUrl}">${entry.product.name}</a></li>
-                            <%-- TAMANHO E COR --%>
+                            <%-- TAMANHO E COR 
                             <c:set value="false" var="colorIsUsed" />
                             <c:forEach items="${entry.product.baseOptions}" var="option">
                                 <c:forEach items="${option.selected.variantOptionQualifiers}"
@@ -66,12 +139,12 @@
                                     </c:if>
                                 </c:forEach>
                             </c:forEach>
-                            <%-- CODIGO DO PRODUTO --%>
+                            <%-- CODIGO DO PRODUTO 
                             <li class="codigo"><br><spring:theme code="text.fliegercommerce.texto103"/>: ${entry.product.code}</li>
                         </ul>
                     </div>
                 </td>
-                <%--  QUANTIDADE // --%>
+                <%--  QUANTIDADE // 
                 <td class="quantity"><c:url value="/cart/update" var="cartUpdateFormAction" />
                     <form:form id="updateCartForm${entry.entryNumber}"
                         action="${cartUpdateFormAction}" method="post"
@@ -100,7 +173,7 @@
                     </c:if></td>
                 <%-- VALOR UNITARIO // --%>
                 <td class="product-price talign-left">
-                    <%-- SE O PRODUTO ESTIVER COM DESCONTO --%> <c:if
+                    <%-- SE O PRODUTO ESTIVER COM DESCONTO  <c:if
                         test="${entry.product.fromPrice}">
                         <div class="precos">
                             <s>de: <fmt:formatNumber value="${entry.product.oldPrice}"
@@ -119,7 +192,7 @@
                         </div>
                     </c:if>
                 </td>
-                <%-- VALOR TOTAL // --%>
+                <%-- VALOR TOTAL // 
                 <td class="product-price total">
                     <div class="precos">
                         <c:if test="${entry.product.fromPrice}">
@@ -132,7 +205,7 @@
                         </c:if>
                     </div>
                 </td>
-                <%-- EXCLUIR // --%>
+                <%-- EXCLUIR // 
                 <c:if test="${entry.updateable}">
                     <td><ycommerce:testId code="cart_product_removeProduct">
                             <a href="#" class="btn-excluir-produto"
@@ -145,3 +218,4 @@
         </c:forEach>
     </tbody>
 </table>
+--%>

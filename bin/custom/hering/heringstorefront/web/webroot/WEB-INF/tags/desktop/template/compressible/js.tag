@@ -10,15 +10,17 @@
 <%-- LIBRARIES FILES --%>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/bootstrap-slider.min.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.mobile.custom.min.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.bxslider.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/trustedshops.js"></script>
-<script type="text/javascript"
-    src="${themeResourcePath}/assets/js/fancybox/helpers/jquery.fancybox-media.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/fancybox/helpers/jquery.fancybox-media.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/waypoints.min.1.1.5.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/ba.product.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/ba.searchpage.js"></script>
 <c:if test="${pageType != 'PRODUCT'}">
     <%-- TODO: this file is not supposed to be used --%>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/script.js"></script>
@@ -185,25 +187,6 @@
 <script async defer src="//static.chaordicsystems.com/static/loader.js" data-apikey="hering-v5"
     data-initialize="false"></script>
 
-<%-- slider product imgs --%>
-<script>
-$(document).ready(function() {
-$("#mainCarousel").swiperight(function() {
-$(this).carousel('prev');
-});
-$("#mainCarousel").swipeleft(function() {
-$(this).carousel('next');
-});
-});
-</script> 
-<script type="text/javascript">
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover({
-        placement : 'bottom',
-        html: 'true'
-    });
-});
-</script>
 <script type="text/javascript">
     (function () { 
     var _tsid = 'XA2EF864014A142CF9EDC2483FE556551'; 
