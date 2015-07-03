@@ -4,6 +4,7 @@
 package br.hering.facades.customer;
 
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.core.model.user.CustomerModel;
@@ -29,6 +30,6 @@ public interface HeringCustomerFacade extends CustomerFacade
 	
 	public void deleteAccount();
 	
-	public void changePhoneNumber(String phoneNumber);
+	public CustomerData changePhoneNumber(AddressData addressData);
 
 }

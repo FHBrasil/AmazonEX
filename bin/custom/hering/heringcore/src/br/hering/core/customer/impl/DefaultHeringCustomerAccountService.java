@@ -30,6 +30,7 @@ import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.servicelayer.exceptions.ModelSavingException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.util.ServicesUtil;
 
@@ -120,29 +121,23 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	}
 
 	
-	public void changePhoneNumber(CustomerModel customerModel, String phoneNumber)
+	public CustomerModel changePhoneNumber(CustomerModel customerModel, AddressModel addressModel)
 	{
+				
+		LOG.info("address PHONE NUMBER 1: " + addressModel.getPhone1());
+		LOG.info("address: " + addressModel.getStreetname());
 		
-		LOG.info("phone number: " + phoneNumber);
+		modelService.save(addressModel);
+		modelService.refresh(addressModel);
 		
-		String add = customerModel.getDefaultPaymentAddress().getStreetname();
-		LOG.info("street name: " + add);
-		
-		
-		
-		LOG.info("SERVICE");
-		try {
-			customerModel.getDefaultPaymentAddress().setPhone1(phoneNumber);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			LOG.info("ERROR");
-			e.printStackTrace();
-		}
-		LOG.info("SET PHONE NUMBER: " + customerModel.getDefaultPaymentAddress().getPhone1());
+		customerModel.setDefaultPaymentAddress(addressModel);
+
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
-		LOG.info("ENDING");
+		
+		LOG.info("SET PHONE NUMBER 2: " + customerModel.getDefaultPaymentAddress().getPhone1());
 
+		return customerModel;
 	}
 	
 	

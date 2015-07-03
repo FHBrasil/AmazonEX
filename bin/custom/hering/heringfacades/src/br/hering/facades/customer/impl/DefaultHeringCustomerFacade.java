@@ -5,12 +5,14 @@ package br.hering.facades.customer.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
+import de.hybris.platform.commercefacades.user.converters.populator.AddressReversePopulator;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.commerceservices.enums.CustomerType;
 import de.hybris.platform.core.enums.Gender;
+import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
@@ -30,10 +32,6 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
-
-
-
-
 
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 
@@ -69,7 +67,12 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	
 	@Resource
 	private Converter<CustomerData, CustomerModel> customerReverseConverter;
+	
+	@Resource
+	private Converter<CustomerModel, CustomerData> customerConverter;
 		
+	@Resource
+	private Converter<AddressData, AddressModel> addressReverseConverter;
 
 	private static final Logger LOG = Logger.getLogger(DefaultHeringCustomerFacade.class);
 
@@ -130,26 +133,20 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	 * @author luiza
 	 */
 	@Override
-	public void changePhoneNumber(final String phoneNumber)
+	public CustomerData changePhoneNumber(final AddressData addressData)
 	{
-		
-		//final CustomerModel customerModel = getCurrentSessionCustomer();
-		
-		//recebe todo o data, converte pra model e passa tudo pro service salvar
-		
-		
-		//recebi o data
-		//converter em model getNewsletterSubscriptionDataToModelConverter().convert(subscription, model);	
-		//passar para classe  getNewsletterSubscriptionService().updateSubscription(model);
-		
-		final CustomerModel customerModel = getCurrentSessionCustomer();
-		
-		//popular o address e o customer model
-		//customerReverseConverter.convert(customerData, customerModel);
-	
-		LOG.info("FACADE: " + phoneNumber);
-		heringCustomerAccountService.changePhoneNumber(customerModel, phoneNumber);
 
+		CustomerModel customerModel = getCurrentSessionCustomer();		
+		final AddressModel addressModel = customerModel.getDefaultPaymentAddress();
+		
+		addressReverseConverter.convert(addressData, addressModel);
+		
+		customerModel = heringCustomerAccountService.changePhoneNumber(customerModel, addressModel);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+
+		return customerData;
 		
 	}
 	

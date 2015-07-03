@@ -95,6 +95,7 @@ import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.jalo.order.payment.PaymentMode;
 import de.hybris.platform.order.OrderService;
+import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.type.TypeService;
@@ -184,7 +185,7 @@ public class AccountPageController extends AbstractSearchPageController {
 
 	private static final Logger LOG = Logger
 			.getLogger(AccountPageController.class);
-
+ 
 	@Resource(name = "heringWishlistFacade")
 	private DefaultHeringWishlistFacade heringWishlistFacade;
 	@Resource(name = "wishlistValidator")
@@ -748,30 +749,26 @@ public class AccountPageController extends AbstractSearchPageController {
 	 */
 	@RequestMapping(value = "/change-phonenumber", method = RequestMethod.GET)
 	@RequireHardLogIn
-	public String changePhoneNumber(@ModelAttribute(value = "inputPhone") final String inputPhone,
-			final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException 
-	{		
+	public String changePhoneNumber(
+			HttpServletRequest request,
+			RedirectAttributes redirectAttributes,
+			@RequestParam(value = "phone") final String phone) throws CMSItemNotFoundException 
+	{	
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		AddressData addressData = customerData.getDefaultBillingAddress();
 		
-		final CustomerData customer = customerFacade.getCurrentCustomer();
-		//final AddressData address = customerFacade.getCurrentCustomer().getDefaultBillingAddress();
-		
-		if (customer != null)
-		{
-			
-			//customer.getDefaultBillingAddress().setPhone(phoneNumber);
-			//address.setPhone(phoneNumber);
-			LOG.info("FIRST LOG: " + inputPhone);
-			heringCustomerFacade.changePhoneNumber(inputPhone);
+		if (customerData != null)
+		{		
+			addressData.setPhone(phone);
+			customerData = heringCustomerFacade.changePhoneNumber(addressData);
 		}
 
-		LOG.info("FIM");
-		//GlobalMessages.addInfoMessage(redirectAttributes, "você atualizou seu perfil");
-		return REDIRECT_MY_ACCOUNT;
-		
+		LOG.info("TELEFONE CADASTRADO = " + customerData.getDefaultBillingAddress().getPhone());
+		GlobalMessages.addInfoMessage(redirectAttributes, "você atualizou seu perfil");
+		LOG.info("fim");
+		return ControllerConstants.Views.Pages.Account.AccountHomePage;
+			
 	}
-	
-	
-	
 	
 	
 	/**

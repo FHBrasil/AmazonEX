@@ -35,20 +35,35 @@
                     <h4 class="modal-title"><span class="glyphicon glyphicon-user"></span> Konto &auml;ndern</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="/my-account/change-phonenumber">
+                    <form>
 						<!-- this form is exactly same like at index-register.html ... maybe we should make a component for that? -->
 						<div class="form-group">
 							<label for="inputEmail">E-Mail-Adresse</label>
 							<input type="email" class="form-control" id="inputEmail" value="${customer.uid}" required="true">
 						</div>
-						<div class="form-group">
+						<%-- <div class="form-group">
 							<label for="inputEmail">Telefon (optional)</label>
-							<input type="tel" class="form-control" id="inputPhone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}">
-						</div>
+							<input type="tel" class="form-control" name="phone" id="phone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}">
+						</div> --%>
 						<div class="form-group">
 							<button id="changeEmail" class="btn btn-primary">Speichern</button>
 						</div>
 					</form>
+					
+					
+					<form id="changePhone" method="GET" action="/my-account/change-phonenumber">						
+						<div class="form-group">
+							<%-- <label for="phone">Telefon (optional)</label>
+							<input type="tel" class="form-control" id="inputPhone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}"> --%>
+						
+						<label>Telefon (optional)</label>
+						<input type="tel" name="phone" class="form-control" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}"></input>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary">Speichern</button>
+						</div>
+					</form>
+					
 					<form>
 						<div class="form-group">
 							<label >Passwort &auml;ndern</label><br />
