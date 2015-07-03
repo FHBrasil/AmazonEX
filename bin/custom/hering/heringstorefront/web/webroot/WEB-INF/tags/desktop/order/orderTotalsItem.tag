@@ -15,10 +15,9 @@
 <section id="values" class="right">
 <c:forEach items="${orderHistory.previewEntries}" var="productOrder" begin="0" end="4" varStatus="status">
 	<div class="panel-body pos150327">
-		<div class="col-sm-3 img150327" 
-			style="background-image: url(http://88.198.78.166/medias/sys_master/media/2013-02/011505000082_baby-bottle-270ml-silikon-groesse-2-rosa_mam_t150.jpg)">
+		<div class="col-sm-3 img150327">
 			<a href="#">
-<%-- 				<product:productPrimaryImage product="${productOrder.product}" format="product"/> --%>
+ 				<product:productPrimaryImage product="${productOrder.product}" format="product"/>
 			</a>
 		</div>
 		<div class="col-sm-9 item150327">
