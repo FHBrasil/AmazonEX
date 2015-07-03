@@ -1,4 +1,21 @@
 $(document).ready(function() {
+	
+	var contextPath = $('input[type=hidden].contextPath').val();
+	
+	$('form#selectAddress').find('button.btn-primary').click(function(){		
+		var cod = $('input:radio[name=chooseDeliveryAddress]:checked').val();
+		var typeAddress = $('input:hidden[name=deliveryOrBilling]').val();
+		var url = contextPath + '/my-account/select-' + typeAddress + '-address/' + cod;
+		$('form#selectAddress').attr('action', url).submit();
+	});
+	
+	$('.pull-right .btn-editar').click(function(){
+		if($(this).hasClass('billing'))
+			$('input:hidden[name=deliveryOrBilling]').attr("value", 'billing');
+		else
+			$('input:hidden[name=deliveryOrBilling]').attr("value", 'delivery');
+	});
+	
 	hering.form.validateAll();
 	
     // fancybox
