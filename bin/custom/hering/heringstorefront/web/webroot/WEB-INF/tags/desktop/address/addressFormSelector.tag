@@ -1,7 +1,5 @@
-<%@ attribute name="supportedCountries" required="true" type="java.util.List"%>
 <%@ attribute name="regions" required="true" type="java.util.List"%>
 <%@ attribute name="country" required="false" type="java.lang.String"%>
-<%@ attribute name="cancelUrl" required="false" type="java.lang.String"%>
 <%@ attribute name="page" required="false" type="java.lang.String"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
@@ -12,6 +10,49 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<input type="hidden" class="contextPath" value="${request.contextPath}" />
+	<div id="deliveryAddressModal" class="modal fade">
+      	<div class="modal-dialog">
+       		<div class="modal-content">
+          		<div class="modal-header">
+           			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title"><spring:theme code="checkout.single.address.chooseAddress"/></h4>
+	            </div>
+	            <div class="modal-body">
+	             	<div class="text-right">
+						<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
+					</div>
+           			<form id="selectAddress">
+          				<input type="hidden" name="deliveryOrBilling"/>
+           				<c:forEach items="${addressData}" var="deliveryAddress" varStatus="status">
+          					<div class="radio">
+								<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}" ${status.index == '0' ? 'checked' : ''}>
+								<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">
+									<small>${deliveryAddress.receiver}<br /></small>
+									<small><c:if test="${not empty deliveryAddress.reference}">
+										<spring:theme code="packstation.postNumber"/> ${deliveryAddress.reference}<br />
+									</c:if></small>
+									<small><c:if test="${not empty deliveryAddress.complement}">
+										${deliveryAddress.complement}<br />
+									</c:if></small>
+									<b>${deliveryAddress.line1}, ${deliveryAddress.number}<br /></b>
+									<small>${deliveryAddress.postalCode} ${deliveryAddress.town}, ${deliveryAddress.country.name}</small>
+								</label>
+							</div>                		
+                    	</c:forEach>
+                    	<div class="modal-footer">
+                    		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
+                    		<button type="button" class="btn btn-primary"><spring:theme code="checkout.single.address.acceptAddress"/></button>
+                		</div>
+                    </form>
+                 </div>
+			</div>                    		
+        </div>
+    </div>
+    <address:newAddress regions="${regions}" country="${country}" />
+
+<%-- OLD CODE
 <c:if test="${not empty deliveryAddresses}">
     <div id="savedAddressListHolder" style="display: block" class="clear">
         <div id="savedAddressList" class="summaryOverlay clearfix">
@@ -98,7 +139,7 @@
                     <%-- 							inputCSS="add-address-left-input"  --%>
                     <%-- 							labelCSS="add-address-left-label"  --%>
                     <%-- 							mandatory="false"/> --%>
-                    <!-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }">  -->
+                    <%-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }">  
                 </c:when>
                 <c:when test="${not addressBookEmpty && not isDefaultAddress}">
                     <c:if test="${false}">
@@ -106,7 +147,7 @@
                             path="defaultAddress" inputCSS="add-address-left-input"
                             labelCSS="add-address-left-label" mandatory="false" />
                     </c:if>
-                    <!-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }"> -->
+                    <!-- <input type="hidden" name="defaultAddress" value="${isDefaultAddress }"> 
                 </c:when>
             </c:choose>
         </div>
@@ -143,3 +184,4 @@
                 text="Cancel" /></a>
     </div>
 </form:form>
+--%>
