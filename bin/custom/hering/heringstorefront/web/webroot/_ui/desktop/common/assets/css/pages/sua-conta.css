@@ -1,3 +1,11 @@
+/* CODE BA */
+
+.btn-address050609 {display:block;width:100%}
+#deliveryAddressModal input[type="radio"] {margin-left: 15px;z-index: 1000;top: 35%;}
+
+/* END */
+
+
 #acc-email-form form label {
 	min-width: 215px;
 }
@@ -10,7 +18,7 @@
 		margin-right: 22%;
 	}
 }
-
+/**
 @media (min-width: 980px) {
 	#acc-address-form input[id="address.line1"] { width: 449px; }
 	#acc-address-form input[id="address.number"] { width: 76px; }
@@ -21,7 +29,7 @@
 	#acc-address-form input[id="address.district"], input[id="address.townCity"] { width: 245px; }
 	#acc-address-form select[id="address.addressType"] { width: 165px; }
 	#acc-address-form select[id="address.state"] { width: 210px; }
-}
+}*/
 
 body {color: #5d5d5d; }
 
