@@ -16,22 +16,27 @@
     <div id="globalMessages">
         <common:globalMessages />
     </div>
-    <div>
+<div>
         <cms:pageSlot position="Section1" var="feature">
             <cms:component component="${feature}" element="div"
                 class="span-24 section1 cms_disp-img_slot" />
         </cms:pageSlot>
-        <header>
-            <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
-        </header>
-        <div class="pagination150224">
+        <div class="container">
+            <header>
+                <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
+            </header>
+        </div>
+        <div class="pagination150224 container">
             <h1 class="col-xs-12 col-sm-5">
                 <c:if test="${!(searchPageData.freeTextSearch == '')}">
                     <spring:theme code="search.page.searchText" arguments="${searchPageData.freeTextSearch}" />
                     <%--<nav:searchSpellingSuggestion spellingSuggestion="${searchPageData.spellingSuggestion}" />--%>
                 </c:if>
+                <c:set var="themeMsgKey" value="${not empty msgKey ? msgKey : 'search.page'}" />
                 <ycommerce:testId code="searchResults_productsFound_label">
-                    <small><spring:theme code="${themeMsgKey}.totalResults" arguments="${searchPageData.pagination.totalNumberOfResults}" /></small>
+                    <small>
+                        <spring:theme code="${themeMsgKey}.totalResults" arguments="${searchPageData.pagination.totalNumberOfResults}" />
+                    </small>
                 </ycommerce:testId>
             </h1>
 
@@ -51,8 +56,8 @@
                             </ul>
                         </li>
                     </div>
-                    <li class="active"><a href="#"><span class="glyphicon glyphicon-th"></span> <span class="hidden-xs">Raster</span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> <span class="hidden-xs">Liste</span></a></li>
+                    <%--<li class="active"><a href="#"><span class="glyphicon glyphicon-th"></span> <span class="hidden-xs">Raster</span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> <span class="hidden-xs">Liste</span></a></li>--%>
                 </ul>
             </div>
         </div>
@@ -61,84 +66,79 @@
             <input type="hidden" class="userCode" value="${searchPageData.freeTextSearch}" /> 
             <input type="hidden" class="textSearch" value="${searchPageData.freeTextSearch}" />
         </div>
-        <div class="filters">
+        <div class="container filters">
             <nav:paginationTop top="true" isShowInfo="${isShowInfo}"
                 isShowListHeringEnabled="${isShowListHeringEnabled}"
                 supportShowPaged="${isShowPageAllowed}" supportShowAll="${isShowAllAllowed}"
                 searchPageData="${searchPageData}" searchUrl="${searchPageData.currentQuery.url}"
                 numberPagesShown="${numberPagesShown}" />
         </div>
-
-<section>        
-<!-- FOLLOWING CONTAINER MUST BE LOADED BY AJAX -->
-<div class="filter150219 panel-collapse collapse" id="collapseFilter">
-    <div class="text-center margin-top margin-bottom">
-        <button type="button" class="btn btn-lg" data-toggle="collapse" href="#collapseFilter"><span class="glyphicon glyphicon-refresh"></span> Aktualisieren</button>
-    </div>
-    <div class="panel-group" id="accordion">
-        <div class="row">
-            <div class="col-sm-3">
-                <nav:facetNavRefinements pageData="${searchPageData}" />
-            </div>
-        </div>
-    </div>      
-</div>
-
-<div>
-    <div class="col-xs-12 col-sm-7 margin-top pagination150224">
-        <form>
-            <div class="btn-group">
-                <nav:facetNavAppliedFilters pageData="${searchPageData}" />
-                <button type="button" data-toggle="collapse" data-parent="#accordionFilter" href="#collapseFilter" class="btn btn-link">Filter &auml;ndern</button>
-            </div>
-        </form>
-    </div>
-    
-    
-    <div class="col-xs-12 col-sm-5 text-right pagination150224 margin-top">
-        <nav:pagination top="true" supportShowPaged="${isShowPageAllowed}"
-                    supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
-                    searchUrl="${searchPageData.currentQuery.url}"
-                    numberPagesShown="${numberPagesShown}" />
-        <%--<ul class="pagination">
-            <li class="disabled"><a href="#">&laquo;</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
-        </ul>--%>
-    </div>
-</div>
-        
-
-
-
-            <div>
-                <c:if test="${(searchPageData.freeTextSearch == '' )}">
-                    <div chaordic="top"></div>
-                </c:if>
-                <c:if
-                    test="${(searchPageData.freeTextSearch == '' && searchPageData.pagination.currentPage == 0)}">
-                    <div class="disp-banner">
-                        <cms:pageSlot position="Section2" var="feature">
-                            <cms:component component="${feature}" />
-                        </cms:pageSlot>
-                    </div>
-                </c:if>
-                <div chaordic="middle"></div>
-                <div id="productGrid" class="text-center panel150102">
-                    <div id="resultsList">
-                        <c:set var="classNameDisplay"
-                            value="${isShowInfo ? 'product-info' : 'resumed-info'}" />
-                        <showcase:productsToShow className="${classNameDisplay}"
-                            products="${searchPageData.results}" />
-                    </div>
+      
+    <!-- FOLLOWING CONTAINER MUST BE LOADED BY AJAX -->
+    <div class="container filter150219 panel-collapse collapse" id="collapseFilter">
+        <%--<div class="text-center margin-top margin-bottom">
+            <button type="button" class="btn btn-lg" data-toggle="collapse" href="#collapseFilter"><span class="glyphicon glyphicon-refresh"></span> Aktualisieren</button>
+        </div>--%>
+        <div class="panel-group" id="accordion">
+            <div class="row">
+                <div class="col-sm-3">
+                    <nav:facetNavRefinements pageData="${searchPageData}" />
                 </div>
             </div>
-</section>
+        </div>      
     </div>
+
+    <div class="container">
+        <div class="col-xs-12 col-sm-7 margin-top pagination150224">
+            <form>
+                <div class="btn-group">
+                    <nav:facetNavAppliedFilters pageData="${searchPageData}" />
+                    <button type="button" data-toggle="collapse" data-parent="#accordionFilter" href="#collapseFilter" class="btn btn-link">Filter &auml;ndern</button>
+                </div>
+            </form>
+        </div>
+        
+        
+        <div class="col-xs-12 col-sm-5 text-right pagination150224 margin-top">
+            <nav:pagination top="true" supportShowPaged="${isShowPageAllowed}"
+                        supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
+                        searchUrl="${searchPageData.currentQuery.url}"
+                        numberPagesShown="${numberPagesShown}" />
+        </div>
+    </div>
+            
+
+    <div class="container">
+        <c:if test="${(searchPageData.freeTextSearch == '' )}">
+            <div chaordic="top"></div>
+        </c:if>
+        <c:if test="${(searchPageData.freeTextSearch == '' && searchPageData.pagination.currentPage == 0)}">
+            <div class="disp-banner">
+                <cms:pageSlot position="Section2" var="feature">
+                    <cms:component component="${feature}" />
+                </cms:pageSlot>
+            </div>
+        </c:if>
+        <div id="productGrid" class="text-center panel150102">
+            <div id="resultsList">
+                <c:set var="classNameDisplay"
+                    value="${isShowInfo ? 'product-info' : 'resumed-info'}" />
+                <showcase:productsToShow className="${classNameDisplay}"
+                    products="${searchPageData.results}" />
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-xs-12 text-right">
+            <nav:pagination top="false" supportShowPaged="${isShowPageAllowed}"
+                        supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
+                        searchUrl="${searchPageData.currentQuery.url}"
+                        numberPagesShown="${numberPagesShown}" />
+        </div>
+    </div>
+</div>
+
+</div>
     <c:url value="${requestScope['javax.servlet.forward.servlet_path']}" var="checkoutUrl" />
     <div id="currentPath" data-current-path="${checkoutUrl }"></div>
 </template:page>

@@ -99,24 +99,38 @@
 }
 
 .categories .category dl, .categories .category h3 {
-  font-size: 15px;
-  border-bottom: 1px dotted #156ca5;
-  color: #156ca5;
-  padding: 10px 0;
-  margin: 18px 0 10px;
   cursor: pointer;
   position: relative;
-  text-transform: capitalize;
+  background: #f0f0f0;
+  border-color: #f0f0f0;
+  margin: 0;
+  padding: 10px 15px;
+  border-top-left-radius:3px;
+  border-top-right-radius:3px;
+  font-size: 16px;
+  color: #333;
 }
 
-.categories .category dl:after, .categories .category h3:after {
+.category h3 a {
+  color: #333;
+}
+
+
+.categories .category dl, .categories .category h3:hover {
+  text-decoration: underline;
+  color: #000;
+}
+
+/*.categories .category dl:after, .categories .category h3:after {
 	content: '-';
 	position: absolute;
 	right: 0;
-}
+}*/
+
+.category .cat-links {border-top:1px solid #ddd;}
 
 .category .cat-links, .category .cat-links ul {
-	display: inline-block;
+	display: none;
 	width: 100%;
 }
 
@@ -131,11 +145,10 @@
 }
 
 .categories .category ul li a {
-  color: #727272;
-  font-size: 12px;
+  color: #333;
+  font-size: 14px;
   display: inline-block;
-  width: 100%;
-  margin: 5px 0;
+  line-height: 1.9;
 }
 
 .categories .category ul li a .close {
@@ -182,12 +195,16 @@
 	font-family: "FontAwesome";
 }
 
-.categories .category.closed dl:after, .categories .category.closed h3:after {
+/*.categories .category.closed dl:after, .categories .category.closed h3:after {
 	content: '+' !important;
-}
+}*/
 
 .categories .category.closed .cat-links, .categories .category.closed .search-box {
   display: none;
+}
+
+.categories .category.opened .cat-links, .categories .category.opened.search-box {
+  display: inline-block;
 }
 
 .categories .sizes ul li,

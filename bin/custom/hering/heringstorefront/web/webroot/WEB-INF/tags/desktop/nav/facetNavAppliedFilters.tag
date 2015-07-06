@@ -20,8 +20,7 @@
                 test="${breadcrumb.facetValueName eq 'Feminino' or breadcrumb.facetValueName eq 'Masculino' or breadcrumb.facetValueName eq 'Jeans' or breadcrumb.facetValueName eq 'Acess�rios' or breadcrumb.facetValueName eq 'Sales'}">
                 <header>
                     <h1>
-                        <span
-                            class="remove_item_left_name itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}">${breadcrumb.facetValueName}</span>
+                        <span class="remove_item_left_name itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}">${breadcrumb.facetValueName}</span>
                     </h1>
                 </header>
             </c:if>
