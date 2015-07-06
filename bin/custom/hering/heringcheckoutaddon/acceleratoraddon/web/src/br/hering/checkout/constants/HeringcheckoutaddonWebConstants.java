@@ -25,4 +25,5 @@ public final class HeringcheckoutaddonWebConstants
 	public static final String REMOVE_VOUCHER = "RemoveVoucher"; 	
 	public static final String DEBIT = "Debit";
 	public static final String ADVANCE = "Advance";
+	public static final String PAYPAL = "paypal";
 }

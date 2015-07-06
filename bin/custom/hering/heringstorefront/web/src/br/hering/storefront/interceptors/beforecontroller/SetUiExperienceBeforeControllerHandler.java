@@ -28,11 +28,13 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 
+import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
+
 /**
  * Allows to overwrite the UiExperience level in the session via
  * de.hybris.platform.acceleratorservices.uiexperience.UiExperienceService#setOverrideUiExperienceLevel
  */
-public class SetUiExperienceBeforeControllerHandler implements BeforeControllerHandler
+public class SetUiExperienceBeforeControllerHandler implements BeforeControllerHandlerAdaptee
 {
 	private static final Logger LOG = Logger.getLogger(SetLanguageBeforeControllerHandler.class);
 

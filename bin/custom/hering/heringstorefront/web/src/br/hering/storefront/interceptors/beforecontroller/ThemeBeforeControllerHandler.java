@@ -23,8 +23,10 @@ import org.springframework.ui.context.ThemeSource;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ThemeResolver;
 
+import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
 
-public class ThemeBeforeControllerHandler implements BeforeControllerHandler
+
+public class ThemeBeforeControllerHandler implements BeforeControllerHandlerAdaptee
 {
 	@Resource(name = "themeResolver")
 	private ThemeResolver themeResolver;

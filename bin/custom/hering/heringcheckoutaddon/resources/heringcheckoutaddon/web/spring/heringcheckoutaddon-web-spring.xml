@@ -21,6 +21,7 @@
 		class="br.hering.checkout.controllers.pages.HeringSingleStepCheckoutController">
 		<property name="sessionService" ref="sessionService" />
 		<property name="heringPaymentDetailsValidator" ref="heringPaymentDetailsValidator"/>
+        <property name="paypalPaymentRequestController" ref="paypalPaymentRequestController" />
 	</bean>
 		
 	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">

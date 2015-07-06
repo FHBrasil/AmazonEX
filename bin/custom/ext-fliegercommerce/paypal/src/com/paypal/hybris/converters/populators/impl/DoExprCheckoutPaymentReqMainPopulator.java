@@ -33,7 +33,7 @@ public class DoExprCheckoutPaymentReqMainPopulator implements Populator<DoExpres
 			request.setDoExpressCheckoutPaymentRequestDetails(details);
 		}
 
-		details.setPayerID(requestData.getPayerId());
+		details.setPayerID(requestData.getPayerid());
 		details.setToken(requestData.getToken());
 		Boolean isCredit = sessionService.getAttribute(PaypalConstants.IS_PAYPAL_CREDIT);
 		if(isCredit != null && isCredit){

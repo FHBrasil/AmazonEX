@@ -33,7 +33,7 @@
     </bean>
     
     <bean id="beforeControllerHandlerAdapter" abstract="true" class="com.hybris.addon.common.interceptors.BeforeControllerHandlerAdapter" >
-   		<property name="proxyInterfaceName" value="com.hybris.yb2bportalstorefront.interceptors.BeforeControllerHandler" />
+   		<property name="proxyInterfaceName" value="com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee" />
     </bean>
 
     <bean id="genericB2BAddOnCMSComponentRenderer"  parent="genericAddOnCMSComponentRenderer" >

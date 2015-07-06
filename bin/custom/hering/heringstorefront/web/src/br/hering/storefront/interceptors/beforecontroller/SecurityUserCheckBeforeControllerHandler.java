@@ -28,13 +28,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.method.HandlerMethod;
 
+import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
+
 
 /**
  * Spring MVC interceptor that validates that the spring security user and the hybris session user are in sync. If the
  * spring security user and the hybris session user are not in sync then the session is invalidated and the visitor is
  * redirect to the homepage.
  */
-public class SecurityUserCheckBeforeControllerHandler implements BeforeControllerHandler
+public class SecurityUserCheckBeforeControllerHandler implements BeforeControllerHandlerAdaptee
 {
 	private static final Logger LOG = Logger.getLogger(SecurityUserCheckBeforeControllerHandler.class);
 

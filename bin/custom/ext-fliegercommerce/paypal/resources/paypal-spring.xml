@@ -52,6 +52,29 @@
         !execution(* getPK(..))" /> <aop:pointcut id="profiledMethods" expression="execution(* 
         *(..))" /> -->
 
+    <!-- Beans for lookup-method injection -->
+    <bean id="captureResult" class="de.hybris.platform.payment.commands.result.CaptureResult" />
+    <bean id="voidRequestType" class="com.ebay.api.DoVoidRequestType" />
+    <bean id="voidResult" class="de.hybris.platform.payment.commands.result.VoidResult" />
+    <bean id="setExpressCheckoutRequestType" class="com.ebay.api.SetExpressCheckoutRequestType" />
+    <bean id="setExpressCeckoutResultData" class="com.paypal.hybris.data.SetExpressCheckoutResultData" />
+    <bean id="getExpressCheckoutDetailsRequestType" class="com.ebay.api.GetExpressCheckoutDetailsRequestType" />
+    <bean id="getExpressCheckoutDetailsResultData" class="com.paypal.hybris.data.GetExpressCheckoutDetailsResultData" />
+    <bean id="doExpressCheckoutPaymentRequestType" class="com.ebay.api.DoExpressCheckoutPaymentRequestType" />
+    <bean id="doExpressCheckoutPaymentResultData" class="com.paypal.hybris.data.DoExpressCheckoutPaymentResultData" />
+    <bean id="doAuthorizationRequestType" class="com.ebay.api.DoAuthorizationRequestType" />
+    <bean id="doAuthorizationResultData" class="com.paypal.hybris.data.DoAuthorizationResultData" />
+    <bean id="doCaptureRequestType" class="com.ebay.api.DoCaptureRequestType" />
+    <bean id="doCaptureResultData" class="com.paypal.hybris.data.DoCaptureResultData" />
+    <bean id="transactionSearchRequestType" class="com.ebay.api.TransactionSearchRequestType" />
+    <bean id="transactionSearchResultData" class="com.paypal.hybris.data.TransactionSearchResultData" />
+    <bean id="getTransactionDetailsRequestType" class="com.ebay.api.GetTransactionDetailsRequestType" />
+    <bean id="getTransactionDetailsResultData" class="com.paypal.hybris.data.GetTransactionDetailsResultData" />
+    <bean id="refundTransactionRequestType" class="com.ebay.api.RefundTransactionRequestType" />
+    <bean id="refundTransactionResultData" class="com.paypal.hybris.data.RefundTransactionResultData" />
+    <bean id="doReferenceTransactionRequestType" class="com.ebay.api.DoReferenceTransactionRequestType" />
+    <bean id="doReferenceTransactionResultData" class="com.paypal.hybris.data.DoReferenceTransactionResultData" />
+
     <!-- Commands converters -->
     <alias name="defaultCaptureRequestConverter" alias="captureRequestToDoCaptureReqConverter" />
     <bean id="defaultCaptureRequestConverter"
@@ -61,8 +84,7 @@
     <alias name="defaultDoCaptureResponseConverter" alias="doCaptureResponseConverter" />
     <bean id="defaultDoCaptureResponseConverter"
         class="com.paypal.hybris.commands.converters.impl.DoCaptureResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="de.hybris.platform.payment.commands.result.CaptureResult" /> -->
+        <lookup-method name="createTarget" bean="captureResult" />
     </bean>
 
     <alias name="defaultVoidRequestConverter" alias="voidRequestConverter" />
@@ -73,8 +95,7 @@
     <alias name="defaultDoVoidResponseConverter" alias="doVoidResponseConverter" />
     <bean id="defaultDoVoidResponseConverter"
         class="com.paypal.hybris.commands.converters.impl.DoVoidResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="de.hybris.platform.payment.commands.result.VoidResult" /> -->
+        <lookup-method name="createTarget" bean="voidResult" />
     </bean>
 
     <!-- PayPal payment commands -->
@@ -85,21 +106,24 @@
             <map>
                 <entry>
                     <key>
-                        <value type="java.lang.Class">de.hybris.platform.payment.commands.IsApplicableCommand</value>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.IsApplicableCommand
+                        </value>
                     </key>
                     <bean
                         class="com.paypal.hybris.commands.impl.IsApplicableCommandImpl" />
                 </entry>
                 <entry>
                     <key>
-                        <value type="java.lang.Class">de.hybris.platform.payment.commands.AuthorizationCommand</value>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.AuthorizationCommand
+                        </value>
                     </key>
                     <bean
                         class="com.paypal.hybris.commands.impl.AuthorizationCommandImpl" />
                 </entry>
                 <entry>
                     <key>
-                        <value type="java.lang.Class">de.hybris.platform.payment.commands.CaptureCommand</value>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.CaptureCommand
+                        </value>
                     </key>
                     <bean class="com.paypal.hybris.commands.impl.CaptureCommandImpl">
                         <property name="paypalPaymentService" ref="paypalPaymentService" />
@@ -113,14 +137,16 @@
                 </entry>
                 <entry>
                     <key>
-                        <value type="java.lang.Class">de.hybris.platform.payment.commands.PartialCaptureCommand</value>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.PartialCaptureCommand
+                        </value>
                     </key>
                     <bean
                         class="com.paypal.hybris.commands.impl.PartialCaptureCommandImpl" />
                 </entry>
                 <entry>
                     <key>
-                        <value type="java.lang.Class">de.hybris.platform.payment.commands.VoidCommand</value>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.VoidCommand
+                        </value>
                     </key>
                     <bean class="com.paypal.hybris.commands.impl.VoidCommandImpl">
                         <property name="paypalPaymentService" ref="paypalPaymentService" />
@@ -130,14 +156,16 @@
                 </entry>
                 <entry>
                     <key>
-                        <value type="java.lang.Class">de.hybris.platform.payment.commands.FollowOnRefundCommand</value>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.FollowOnRefundCommand
+                        </value>
                     </key>
                     <bean
                         class="com.paypal.hybris.commands.impl.FollowOnRefundCommandImpl" />
                 </entry>
                 <entry>
                     <key>
-                        <value type="java.lang.Class">de.hybris.platform.payment.commands.StandaloneRefundCommand</value>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.StandaloneRefundCommand
+                        </value>
                     </key>
                     <bean
                         class="com.paypal.hybris.commands.impl.StandaloneRefundCommandImpl" />
@@ -189,7 +217,7 @@
 
     <!-- Convectors and populators -->
     <bean id="setExprCheckReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" value="com.ebay.api.SetExpressCheckoutRequestType" /> -->
+        <lookup-method name="createTarget" bean="setExpressCheckoutRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -204,8 +232,7 @@
     </bean>
 
     <bean id="setExprCheckResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.SetExpressCheckoutResultData" /> -->
+        <lookup-method name="createTarget" bean="setExpressCeckoutResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -216,8 +243,7 @@
     </bean>
 
     <bean id="getExprCheckDetReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.ebay.api.GetExpressCheckoutDetailsRequestType" /> -->
+        <lookup-method name="createTarget" bean="getExpressCheckoutDetailsRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -227,8 +253,7 @@
     </bean>
 
     <bean id="getExprCheckDetResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.GetExpressCheckoutDetailsResultData" /> -->
+        <lookup-method name="createTarget" bean="getExpressCheckoutDetailsResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -238,8 +263,7 @@
     </bean>
 
     <bean id="doExprCheckPaymentReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.ebay.api.DoExpressCheckoutPaymentRequestType" /> -->
+        <lookup-method name="createTarget" bean="doExpressCheckoutPaymentRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -254,8 +278,7 @@
     </bean>
 
     <bean id="doExprCheckPaymentResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.DoExpressCheckoutPaymentResultData" /> -->
+        <lookup-method name="createTarget" bean="doExpressCheckoutPaymentResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -265,7 +288,7 @@
     </bean>
 
     <bean id="doAuthReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" value="com.ebay.api.DoAuthorizationRequestType" /> -->
+        <lookup-method name="createTarget" bean="doAuthorizationRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -275,8 +298,7 @@
     </bean>
 
     <bean id="doAuthResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.DoAuthorizationResultData" /> -->
+        <lookup-method name="createTarget" bean="doAuthorizationResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -286,7 +308,7 @@
     </bean>
 
     <bean id="doCaptReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" value="com.ebay.api.DoCaptureRequestType" /> -->
+        <lookup-method name="createTarget" bean="doCaptureRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -296,7 +318,7 @@
     </bean>
 
     <bean id="doCaptResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" value="com.paypal.hybris.data.DoCaptureResultData" /> -->
+        <lookup-method name="createTarget" bean="doCaptureResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -306,7 +328,7 @@
     </bean>
 
     <bean id="transSearchReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" value="com.ebay.api.TransactionSearchRequestType" /> -->
+        <lookup-method name="createTarget" bean="transactionSearchRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -316,8 +338,7 @@
     </bean>
 
     <bean id="transSearchResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.TransactionSearchResultData" /> -->
+        <lookup-method name="createTarget" bean="transactionSearchResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -327,7 +348,7 @@
     </bean>
 
     <bean id="getTransDetailsReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" value="com.ebay.api.GetTransactionDetailsRequestType" /> -->
+        <lookup-method name="createTarget" bean="getTransactionDetailsRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -337,8 +358,7 @@
     </bean>
 
     <bean id="getTransDetailsResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.GetTransactionDetailsResultData" /> -->
+        <lookup-method name="createTarget" bean="getTransactionDetailsResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -348,7 +368,7 @@
     </bean>
 
     <bean id="refundTransReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" value="com.ebay.api.RefundTransactionRequestType" /> -->
+        <lookup-method name="createTarget" bean="refundTransactionRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -358,8 +378,7 @@
     </bean>
 
     <bean id="refundTransResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.RefundTransactionResultData" /> -->
+        <lookup-method name="createTarget" bean="refundTransactionResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -369,7 +388,7 @@
     </bean>
 
     <bean id="doRefTransactionReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-<!--         <property name="targetClass" value="com.ebay.api.DoReferenceTransactionRequestType" /> -->
+        <lookup-method name="createTarget" bean="doReferenceTransactionRequestType" />
         <property name="populators">
             <list>
                 <bean
@@ -380,8 +399,7 @@
     </bean>
 
     <bean id="doRefTransactionResConverter" class="com.paypal.hybris.converters.impl.PayPalResponseConverter">
-<!--         <property name="targetClass" -->
-<!--             value="com.paypal.hybris.data.DoReferenceTransactionResultData" /> -->
+        <lookup-method name="createTarget" bean="doReferenceTransactionResultData" />
         <property name="populators">
             <list>
                 <bean
@@ -506,5 +524,7 @@
         <property name="businessProcessService" ref="businessProcessService" />
         <property name="modelService" ref="modelService" />
     </bean>
+
+
 
 </beans>

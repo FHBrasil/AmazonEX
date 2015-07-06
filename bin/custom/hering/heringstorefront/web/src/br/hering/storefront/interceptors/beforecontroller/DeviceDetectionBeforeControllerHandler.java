@@ -22,11 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.method.HandlerMethod;
 
+import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
+
 
 /**
  * An interceptor to set up the request the detected device information.
  */
-public class DeviceDetectionBeforeControllerHandler implements BeforeControllerHandler
+public class DeviceDetectionBeforeControllerHandler implements BeforeControllerHandlerAdaptee
 {
 	@Resource(name = "deviceDetectionFacade")
 	private DeviceDetectionFacade deviceDetectionFacade;

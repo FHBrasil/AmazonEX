@@ -3,23 +3,25 @@
     software is the confidential and proprietary information of hybris ("Confidential 
     Information"). You shall not disclose such Confidential Information and shall use 
     it only in accordance with the terms of the license agreement you entered into with 
-    hybris. --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
-    <extension abstractclassprefix="Generated" classprefix="HeringStorefront" name="heringstorefront">
-		<requires-extension name="heringstorefrontcommons"/>
-        <requires-extension name="heringcheckoutaddon"/>
-        <requires-extension name="b2ccheckoutaddon"/>
-        <requires-extension name="exacttarget"/>
-        <requires-extension name="notificationservices"/>
-        <requires-extension name="btg"/>
-        <requires-extension name="acceleratorstorefrontcommons"/>
-        <requires-extension name="heringfacades"/>
-        <requires-extension name="textboxinfoaddon"/>
+    hybris. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+    <extension abstractclassprefix="Generated" classprefix="HeringStorefront"
+        name="heringstorefront">
+        <requires-extension name="heringstorefrontcommons" />
+        <requires-extension name="heringcheckoutaddon" />
+        <requires-extension name="b2ccheckoutaddon" />
+        <requires-extension name="exacttarget" />
+        <requires-extension name="notificationservices" />
+        <requires-extension name="btg" />
+        <requires-extension name="acceleratorstorefrontcommons" />
+        <requires-extension name="heringfacades" />
+        <requires-extension name="textboxinfoaddon" />
         <!-- <requires-extension name="captchaaddon" /> -->
-        <!-- <requires-extension name="paypaladdon"/> -->
-        <requires-extension name="newsletteraddon"/>
+        <requires-extension name="paypaladdon" />
+        <requires-extension name="newsletteraddon" />
         <requires-extension name="bazaarvoice" />
-        
-        
-        <webmodule jspcompile="false" webroot="/heringstorefront"/>
+
+        <webmodule jspcompile="false" webroot="/heringstorefront" />
     </extension>
 </extensioninfo>

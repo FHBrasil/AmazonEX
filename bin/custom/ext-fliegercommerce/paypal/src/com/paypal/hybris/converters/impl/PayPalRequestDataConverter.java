@@ -12,36 +12,34 @@ import java.util.Locale;
  * @author Andrei_Krauchanka (EPAM Systems)
  */
 public class PayPalRequestDataConverter extends
-		AbstractPopulatingConverter<AbstractRequestData, AbstractRequestType> {
-	
-	/**
-	 * Populate the target instance from the source instance. Calls a list
-	 * of injected populators to populate the
-	 * instance.
-	 *
-	 * @param requestData
-	 *            the source item
-	 * @param request
-	 */
-	@Override
-	public void populate(AbstractRequestData requestData,
-			AbstractRequestType request) {
-		String apiVersion = requestData.getVersion();
-		if (StringUtils.isBlank(apiVersion)) {
-			request.setVersion(PaypalConstants.SOAP_API_VERSION);
-		} else {
-			request.setVersion(apiVersion);
-		}
-		Locale userLocale = requestData.getLocale();
-		if (userLocale != null) {
-			request.setErrorLanguage(userLocale.getLanguage());
-		}
-		super.populate(requestData, request);
-	}
-	
-	
-	@Override
-	protected AbstractRequestType createTarget() {
-		return null;
-	}
+        AbstractPopulatingConverter<AbstractRequestData, AbstractRequestType> {
+    
+    /**
+     * Populate the target instance from the source instance. Calls a list of injected populators
+     * to populate the
+     * instance.
+     *
+     * @param requestData
+     *            the source item
+     * @param request
+     */
+    @Override
+    public void populate(AbstractRequestData requestData, AbstractRequestType request) {
+        String apiVersion = requestData.getVersion();
+        if (StringUtils.isBlank(apiVersion)) {
+            request.setVersion(PaypalConstants.SOAP_API_VERSION);
+        } else {
+            request.setVersion(apiVersion);
+        }
+        Locale userLocale = requestData.getLocale();
+        if (userLocale != null) {
+            request.setErrorLanguage(userLocale.getLanguage());
+        }
+        super.populate(requestData, request);
+    }
+    
+    
+    protected AbstractRequestType createTarget() {
+        return null;
+    }
 }
