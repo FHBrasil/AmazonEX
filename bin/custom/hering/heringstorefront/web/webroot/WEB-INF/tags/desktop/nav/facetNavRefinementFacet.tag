@@ -12,13 +12,12 @@
     <spring:theme code="text.showFacet" var="showFacetText" />
     <div class="category ${facetData.name eq 'cor' ? 'cores' : ''} ${fn:containsIgnoreCase(facetData.name, 'Tamanho') ? 'sizes' : ''} ${fn:containsIgnoreCase(facetData.name, 'subcategoria') ? 'with-search-box' : ''}">
     
-    <div class="panel panel-default">    
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><spring:theme code="search.nav.facetTitle" arguments="${facetData.name}" /></a>
-            </h4>
-        </div>
-        <div id="collapse1" class="panel-collapse collapse">
+    <div class="panel panel-default categories">   
+    <div class="category"> 
+            <h3 class="panel-title panel-body">
+                <spring:theme code="search.nav.facetTitle" arguments="${facetData.name}" />
+            </h3>
+        <div id="collapse1" class="cat-links">
             <div class="panel-body">
             <ycommerce:testId code="facetNav_facet${facetData.name}_links">
                 <c:if test="${not empty facetData.topValues}">
@@ -170,4 +169,5 @@
         </div>
     </div>
     </div>
+</div>
 </c:if>
