@@ -4,10 +4,12 @@ import com.ebay.api.*;
 import com.paypal.hybris.constants.PaypalConstants;
 import com.paypal.hybris.data.AbstractRequestData;
 
-import de.hybris.platform.acceleratorfacades.order.data.OrderEntryGroupData;
 import de.hybris.platform.acceleratorfacades.order.data.DeliveryOrderEntryGroupData;
+import de.hybris.platform.acceleratorfacades.order.data.OrderEntryGroupData;
 import de.hybris.platform.acceleratorfacades.order.data.PickupOrderEntryGroupData;
-import de.hybris.platform.commercefacades.order.data.*;
+import de.hybris.platform.commercefacades.order.data.AbstractOrderData;
+import de.hybris.platform.commercefacades.order.data.OrderEntryData;
+import de.hybris.platform.commercefacades.order.data.PromotionOrderEntryConsumedData;
 import de.hybris.platform.commercefacades.product.PriceDataFactory;
 import de.hybris.platform.commercefacades.product.data.PriceData;
 import de.hybris.platform.commercefacades.product.data.PriceDataType;
@@ -151,7 +153,7 @@ public abstract class AbstractRequestPaymentDetailsPopulator<SOURCE, TARGET> imp
 
 		// in case of gross amount items total price already includes taxes
 		PriceData detailsItemsTotalPriceData = getPriceDataFactory().create(PriceDataType.BUY,
-				    	entryGroup.getTotalPriceWithTax().getValue() , currencyIsoCode);
+				    	entryGroup.getTotalPrice().getValue() , currencyIsoCode);
 
 		PriceData detailsDeliveryTotalData;
 		if (entryGroup instanceof DeliveryOrderEntryGroupData && cart.getDeliveryCost() != null)
@@ -174,7 +176,7 @@ public abstract class AbstractRequestPaymentDetailsPopulator<SOURCE, TARGET> imp
 		// in case of net pricing separately calculate taxes otherwise taxes were already included in items total
 		if (cart.isNet())
 		{
-			detailsTaxTotalData = entryGroup.getTotalPriceWithTax();
+			detailsTaxTotalData = entryGroup.getTotalTax();
 		}
 
 

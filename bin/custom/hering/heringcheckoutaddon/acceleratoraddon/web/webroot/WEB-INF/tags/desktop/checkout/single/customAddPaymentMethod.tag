@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ attribute name="cartData" required="false" type="de.hybris.platform.commercefacades.order.data.CartData"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="nav" tagdir="/WEB-INF/tags/desktop/nav"%>
@@ -16,6 +16,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="methodPayment" tagdir="/WEB-INF/tags/addons/heringcheckoutaddon/desktop/checkout/single"%>
 
+<c:url value="/paypal/request/payment-method/expressCheckoutMark" var="expressCheckoutMarkUrl" />
+<div style="display: none;" id="expressCheckoutUrl">${expressCheckoutMarkUrl}</div>
+
 <h2>
 	<spring:theme code="checkout.single.payment.title" />
 </h2>
@@ -26,11 +29,18 @@
         <input type="hidden" name="differingBillingAddress"/>
 	    <c:set var="deliveryAddress" value="${cartData.deliveryAddress}" />
 		<c:forEach items="${paymentModes}" var="paymentMode">
-		    <input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
+		    <input type="hidden" name="voucherAmountEqualsOrderAmount"
+                    value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
 		    <c:if test="${paymentMode.active}">		    
 			    <div class="radio">
-					<input type="radio" name="paymentMode" value="${paymentMode.code}" id="${paymentMode.name}" class="closePayments" ${paymentMode.code == 'Advance' ? 'checked' : ''} data-toggle="collapse" data-target="${sharp}${paymentMode.code}" required>
-					<label class="btn btn-default btn-pay150526 closePayments ${paymentMode.code}" for="${paymentMode.name}" data-toggle="collapse" data-target="${sharp}${paymentMode.code}">
+					<input type="radio" name="paymentMode" value="${paymentMode.code}" 
+                            id="${paymentMode.name}" 
+                            class="closePayments" ${paymentMode.code == 'Advance' ? 'checked' : ''} 
+                            data-toggle="collapse" data-target="${sharp}${paymentMode.code}" 
+                            required />
+					<label class="btn btn-default btn-pay150526 closePayments ${paymentMode.code}" 
+                            for="${paymentMode.name}" data-toggle="collapse"
+                            data-target="${sharp}${paymentMode.code}">
 					</label>
 				</div>
 				<div id="${paymentMode.code}" class="paycollapse collapse out">
@@ -53,10 +63,14 @@
 </c:if>
 
 <div class="col-xs-12 charge150127">
-	<a class="btn btn-link fox24gif150217" href="#cartModal" data-toggle="modal"><spring:theme code="checkout.single.redeemPoints" />?</a>
+	<a class="btn btn-link fox24gif150217" href="#cartModal" data-toggle="modal">
+        <spring:theme code="checkout.single.redeemPoints" />?
+    </a>
 </div>
 <div class="col-xs-12 charge150127">
-	<a class="btn btn-link" href="#voucherModal" data-toggle="modal"><spring:theme code="checkout.single.redeemVoucher" />?</a>
+	<a class="btn btn-link" href="#voucherModal" data-toggle="modal">
+        <spring:theme code="checkout.single.redeemVoucher" />?
+    </a>
 </div>
 <div class="clearfix"></div>
 
@@ -64,24 +78,40 @@
 	<div class="modal-dialog">
     	<div class="modal-content">
         	<div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title fox24150217"><spring:theme code="checkout.single.redeemPoints" /></h4>
+            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title fox24150217">
+                    <spring:theme code="checkout.single.redeemPoints" />
+                </h4>
             </div>
             <div class="modal-body">
-            	<p><spring:theme code="checkout.single.youCurrentlyHave" />&nbsp;<b><spring:theme code="checkout.single.xPoints" /></b>&nbsp;
-            	<spring:theme code="checkout.single.howManyPointsYouWant" /></p>
+            	<p>
+                    <spring:theme code="checkout.single.youCurrentlyHave" />
+                    &nbsp;<b><spring:theme code="checkout.single.xPoints" /></b>&nbsp;
+            	    <spring:theme code="checkout.single.howManyPointsYouWant" />
+                </p>
 				<form>
 					<div class="form-group">
-						<label for="inputPoints"><spring:theme code="checkout.single.redeemablePoints" /></label>
-						<input type="number" min="0" max="2359" class="form-control" id="inputPoints" required="required">
+						<label for="inputPoints">
+                            <spring:theme code="checkout.single.redeemablePoints" />
+                        </label>
+						<input type="number" min="0" max="2359" class="form-control"
+                                id="inputPoints" required="required"/>
 					</div>
 				</form>
-				<p><small><b><spring:theme code="checkout.single.youAreSure" /></b>&nbsp;
-				<spring:theme code="checkout.single.textBonusPoint" /></small></p>
+				<p><small>
+                    <b><spring:theme code="checkout.single.youAreSure" /></b>&nbsp;
+				    <spring:theme code="checkout.single.textBonusPoint" /></small>
+                </p>
             </div>
             <div class="modal-footer">
-            	<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
-                <button type="button" class="btn btn-primary"><spring:theme code="checkout.single.redeemPoints" /></button>
+            	<button type="button" class="btn btn-default" data-dismiss="modal">
+                    <spring:theme code="checkout.single.address.abort"/>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <spring:theme code="checkout.single.redeemPoints" />
+                </button>
             </div>
         </div>
     </div>

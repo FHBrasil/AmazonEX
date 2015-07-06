@@ -54,3 +54,10 @@
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/customs.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/css/bootstrap-slider.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${themeResourcePath}/fonts/babyartikel-fonts.css" />
+
+<c:forEach items="${addOnCommonCssPaths}" var="addOnCommonCSS">
+    <link rel="stylesheet" type="text/css" media="all" href="${addOnCommonCSS}"/>
+</c:forEach>
+<c:forEach items="${addOnThemeCssPaths}" var="addOnThemeCSS">
+    <link rel="stylesheet" type="text/css" media="all" href="${addOnThemeCSS}"/>
+</c:forEach>

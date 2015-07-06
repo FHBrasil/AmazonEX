@@ -43,7 +43,7 @@ public class GetExprCheckoutDetailsResultDataPopulator implements
 			final PayerInfoType payerInfo = details.getPayerInfo();
 			if (payerInfo != null)
 			{
-				resultData.setPayerId(payerInfo.getPayerID());
+				resultData.setPayerid(payerInfo.getPayerID());
 				resultData.setPayer(payerInfo.getPayer());
 				resultData.setPayerFirstName(payerInfo.getPayerName().getFirstName());
 				resultData.setPayerLastName(payerInfo.getPayerName().getLastName());

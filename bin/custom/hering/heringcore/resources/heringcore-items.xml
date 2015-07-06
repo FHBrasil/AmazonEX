@@ -322,66 +322,6 @@
 
 
         <typegroup name="CustomPaymentModes">
-            <itemtype code="PayPalPaymentInfo" extends="PaymentInfo"
-                jaloclass="br.hering.core.jalo.order.payment.PayPalPaymentInfo">
-                <attributes>
-                    <attribute type="java.lang.String" qualifier="token">
-                        <description>Token ID of the PayPal session</description>
-                        <modifiers optional="false" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="payerid">
-                        <description>PayPal ID of user involved in transaction</description>
-                        <modifiers optional="false" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="payeremail">
-                        <description>Email of user involved in transaction</description>
-                        <modifiers optional="false" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="transactionID">
-                        <description>Returned transactionID from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="orderTime">
-                        <description>Returned Order Time from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="paymentStatus">
-                        <description>Returned payment status from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="pendingReason">
-                        <description>Returned pending reason from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="reasonCode">
-                        <description>Returned reason code from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="approvalResult">
-                        <description>Returned approval result from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="error">
-                        <description>Returned error from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="java.lang.String" qualifier="errorDetails">
-                        <description>Returned error details from PayPal</description>
-                        <modifiers optional="true" />
-                        <persistence type="property" />
-                    </attribute>
-                </attributes>
-            </itemtype>
             
             <itemtype code="VoucherPaymentInfo" extends="PaymentInfo"
                 jaloclass="br.hering.core.jalo.order.payment.VoucherPaymentInfo">
