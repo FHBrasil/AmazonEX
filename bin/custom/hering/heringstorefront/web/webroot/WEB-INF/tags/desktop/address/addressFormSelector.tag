@@ -24,10 +24,10 @@
 						<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
 					</div>
            			<form id="selectAddress">
-          				<input type="hidden" name="deliveryOrBilling"/>
+          				<input type="hidden" name="deliveryOrBilling"/>          				
            				<c:forEach items="${addressData}" var="deliveryAddress" varStatus="status">
            					<c:url var="urlDeleteAddress" value="/my-account/remove-address/${deliveryAddress.id}"/>
-           					<c:url var="urlEditAddress" value="/my-account/edit-address/${deliveryAddress.id}"/>
+           					<c:url var="urlEditAddress" value="/my-account/edit-address/${deliveryAddress.id}"/>           					
           					<div class="radio">
 								<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}" ${status.index == '0' ? 'checked' : ''}>
 								<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">
@@ -45,13 +45,13 @@
 							<div class="text-right">
 								<input type="hidden" name="addressId" value="${deliveryAddress.id}"/>						
 								<a href="${urlEditAddress}" class="btn btn-default btn-sm editAddress">
-									<span class="glyphicon glyphicon-pencil"></span>
-									<span class="hidden-xs">bearbeiten</span>
+									<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+									<span class="hidden-xs"><spring:theme code="text.account.addressEdit"/></span>
 								</a>
 								<c:if test="${quantityAddress > 1}">						
 									<a href="${urlDeleteAddress}" class="btn btn-default btn-sm deleteAddress">
-										<span class="glyphicon glyphicon-trash"></span>
-										<span class="hidden-xs">l&ouml;schen</span>
+										<span class="glyphicon glyphicon-trash"></span>&nbsp;
+										<span class="hidden-xs"><spring:theme code="text.account.addressDelete"/></span>
 									</a>
 								</c:if>                    	
 	                        </div>							                		

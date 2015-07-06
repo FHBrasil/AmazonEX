@@ -199,6 +199,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         getCheckoutFacade().setDeliveryAddressIfAvailable();
         getCheckoutFacade().setDeliveryModeIfAvailable();
         final CartData cartData = getCheckoutFacade().getCheckoutCart();
+        final CustomerData customerData = getUser();
         final AddressData selectedDeliveryAddress = cartData.getDeliveryAddress();
         final HeringPaymentDetailsForm paymentDetailsForm = getPreparedHeringPaymentDetailsForm();
         final HeringAddressForm heringAddressForm = getPreparedAddressForm();
@@ -232,12 +233,11 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         model.addAttribute("deliveryAddresses", getDeliveryAddresses(selectedDeliveryAddress));
         model.addAttribute("selectedDeliveryAddress", selectedDeliveryAddress);
         model.addAttribute("selectedBillingAddress", cartData.getBillingAddress());
-        // if(selectedDeliveryAddress != null && cartData.getBillingAddress() != null)
-        // model.addAttribute("checkedDifferingBilling",
-        // !selectedDeliveryAddress.getId().equals(cartData.getBillingAddress().getId()) ? true :
-        // false);
-        // else
-        model.addAttribute("checkedDifferingBilling", false);
+        model.addAttribute("customer", customerData);
+        if(selectedDeliveryAddress != null && cartData.getBillingAddress() != null)
+        	model.addAttribute("checkedDifferingBilling", !selectedDeliveryAddress.getId().equals(cartData.getBillingAddress().getId()) ? true : false);
+        else
+        	model.addAttribute("checkedDifferingBilling", false);
         model.addAttribute("addressData", getUserFacade().getAddressBook());
         model.addAttribute("noAddress", Boolean.valueOf(hasNoDeliveryAddress()));
         model.addAttribute("showSaveToAddressBook", Boolean.TRUE);

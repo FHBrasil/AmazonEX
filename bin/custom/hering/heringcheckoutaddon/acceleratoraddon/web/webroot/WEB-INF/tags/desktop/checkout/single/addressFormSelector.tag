@@ -24,18 +24,13 @@
     		<c:choose>
         	<c:when test="${not empty selectedDeliveryAddress.id}">
                 <div class="address-info">
-                	<span id="e-tipo" class="h4"><b>
-                		<c:if test="${selectedDeliveryAddress.type.code == 'PACKSTATION'}">
-                			<spring:theme code="checkout.single.address.packStation"/>
-                		</c:if>
-                		<c:if test="${selectedDeliveryAddress.type.code != 'PACKSTATION'}">
-                			<spring:theme code="checkout.single.address"/>
-                		</c:if>
-                		</b></span><br /><br />
+                	<span id="e-tipo" class="h4"><b>                		
+                		<spring:theme code="checkout.single.address"/>
+                	</b></span><br /><br />
                     <input type="hidden" class="e-code" value="${selectedDeliveryAddress.id}"/>
                     <span class="e-receiver">${selectedDeliveryAddress.receiver}</span>
                     <div class="btn-group">
-                    	<a href="#deliveryAddressModal" class="btn-editar" data-toggle="modal"><small><span class="glyphicon glyphicon-pencil"></span><spring:theme code="checkout.single.address.edit"/></small></a>
+                    	<a href="#deliveryAddressModal" class="btn-editar" data-toggle="modal"><small><span class="glyphicon glyphicon-pencil"></span>&nbsp;<spring:theme code="checkout.single.address.edit"/></small></a>
                     </div><br />
                     <span class="e-addr">${selectedDeliveryAddress.line1}</span>,
                     <span class="e-numero">${selectedDeliveryAddress.number}</span><br />
@@ -52,7 +47,7 @@
                     <span class="e-pais">${selectedDeliveryAddress.country.name}</span><br /><br />
                     <spring:theme code="checkout.single.address.phone"/>
                     <span class="e-phone">:&nbsp;${selectedDeliveryAddress.dddPhone}&nbsp;${selectedDeliveryAddress.phone}</span><br />
-                    <spring:theme code="checkout.single.address.email"/><span class="e-email">:&nbsp;${selectedDeliveryAddress.email}</span><br />                  	
+                    <spring:theme code="checkout.single.address.email"/><span class="e-email">:&nbsp;${customer.uid}</span><br />                  	
                         
                     <%-- 
                     <div class="btn-group">
