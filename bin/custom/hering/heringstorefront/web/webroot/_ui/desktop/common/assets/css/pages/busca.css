@@ -2,7 +2,7 @@
 	display: none;
 }
 
-.categories .category ul li a .close {
+.categories .category ul li a .closef {
 	float: none;
 	vertical-align: bottom;
 	text-decoration: none !important;
@@ -151,7 +151,7 @@
   line-height: 1.9;
 }
 
-.categories .category ul li a .close {
+.categories .category ul li a .closef {
   float: none;
   vertical-align: bottom;
   text-decoration: none !important;
@@ -303,11 +303,11 @@
 	position: relative;
 }
 
-#product-filters ul li a .close {
+#product-filters ul li a .closef {
 	position: absolute;
-	top: 3px;
-	right: 11px;
-	font-size: 20px;
+	top: 0;
+	right: 5px;
+	font-size: 14px;
 	line-height: 23px;
 }
 

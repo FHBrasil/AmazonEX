@@ -43,7 +43,7 @@
             <div class="col-xs-12 col-sm-7 text-right pagination150224">
                 <ul class="pagination">
                     <li><a data-toggle="collapse" data-parent="#accordionFilter" href="#collapseFilter"><span class="glyphicon glyphicon-filter"></span> Filter</a></li>
-                    <div class="input-group-btn">
+                    <%--<div class="input-group-btn">
                         <li>
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort"></span> <span class="hidden-xs">Topseller</span> <span class="caret"></span></button>
                             <ul class="dropdown-menu">
@@ -55,7 +55,7 @@
                                 <li><a href="#">Name, A-Z</a></li>
                             </ul>
                         </li>
-                    </div>
+                    </div>--%>
                     <%--<li class="active"><a href="#"><span class="glyphicon glyphicon-th"></span> <span class="hidden-xs">Raster</span></a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> <span class="hidden-xs">Liste</span></a></li>--%>
                 </ul>
@@ -65,13 +65,6 @@
         <div class="searchData">
             <input type="hidden" class="userCode" value="${searchPageData.freeTextSearch}" /> 
             <input type="hidden" class="textSearch" value="${searchPageData.freeTextSearch}" />
-        </div>
-        <div class="container filters">
-            <nav:paginationTop top="true" isShowInfo="${isShowInfo}"
-                isShowListHeringEnabled="${isShowListHeringEnabled}"
-                supportShowPaged="${isShowPageAllowed}" supportShowAll="${isShowAllAllowed}"
-                searchPageData="${searchPageData}" searchUrl="${searchPageData.currentQuery.url}"
-                numberPagesShown="${numberPagesShown}" />
         </div>
       
     <!-- FOLLOWING CONTAINER MUST BE LOADED BY AJAX -->
