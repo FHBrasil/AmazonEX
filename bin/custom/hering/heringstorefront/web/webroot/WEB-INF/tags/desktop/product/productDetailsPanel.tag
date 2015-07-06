@@ -30,7 +30,16 @@
 				<header>
 					<product:productTitle product="${product}" upper="true"/>
 				</header>
-			</ycommerce:testId>		
+			</ycommerce:testId>
+			<c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">				
+				<bazaarvoice:productReviewSummary product="${product}" />		
+				<c:if test="${not empty product.summary}">
+					<div class="summary">
+						${product.summary}
+					</div>
+				</c:if>			
+				<product:productPromotionSection product="${product}"/>					
+			</c:if>					
 			<p>${product.shortDescription}&nbsp;<a href="#tab150219"><spring:theme code="product.shortDescriptionReadMore"/></a></p>
 			<div class="row">
 				<div class="col-xs-4 v-bottom">
@@ -50,16 +59,7 @@
 				<cms:pageSlot position="AddToCart" var="component" element="div" class="span-8">
 					<cms:component component="${component}"/>
 				</cms:pageSlot>
-			</div>				
-			<c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">				
-				 <bazaarvoice:productReviewSummary product="${product}" />		
-				<c:if test="${not empty product.summary}">
-					<div class="summary">
-						${product.summary}
-					</div>
-				</c:if>			
-				<product:productPromotionSection product="${product}"/>					
-			</c:if>				
+			</div>					
 			<%--<product:productDetailsFooter product="${product}" />--%>
 		</div>
 		<%--<cms:pageSlot position="Section2" var="feature" element="div" class="span-8 section2 cms_disp-img_slot last">
