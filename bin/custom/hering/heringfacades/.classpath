@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/platform"/>
 	<classpathentry exported="true" kind="src" path="/acceleratorfacades"/>
 	<classpathentry exported="true" kind="src" path="/heringcore"/>
 	<classpathentry exported="true" kind="lib" path="resources"/>
@@ -11,5 +10,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/exacttarget"/>
 	<classpathentry kind="src" path="/adyen"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

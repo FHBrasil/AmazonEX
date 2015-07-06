@@ -8,7 +8,6 @@ import de.hybris.platform.commerceservices.search.pagedata.PageableData;
 import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
 import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
-import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 
 import java.util.List;
@@ -29,6 +28,6 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	
 	public void deleteAccount(CustomerModel customerModel);
 	
-	public CustomerModel changePhoneNumber(CustomerModel customerModel, AddressModel addressModel);
+	public CustomerModel changePhoneNumber(CustomerModel customerModel, String phone);
 	
 }

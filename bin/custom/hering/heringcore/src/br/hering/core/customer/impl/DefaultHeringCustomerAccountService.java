@@ -48,8 +48,7 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	
 	@Resource
 	private ModelService modelService;
-	
-	
+		
 	@Override
 	public OrderModel getOrderForCode(CustomerModel customerModel, String code)
 	{
@@ -121,21 +120,26 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	}
 
 	
-	public CustomerModel changePhoneNumber(CustomerModel customerModel, AddressModel addressModel)
+	public CustomerModel changePhoneNumber(CustomerModel customerModel, String phone)
 	{
 				
-		LOG.info("address PHONE NUMBER 1: " + addressModel.getPhone1());
-		LOG.info("address: " + addressModel.getStreetname());
+		//LOG.info("address PHONE NUMBER 1: " + addressModel.getPhone1());
+		//LOG.info("address: " + addressModel.getStreetname());
 		
-		modelService.save(addressModel);
-		modelService.refresh(addressModel);
+		////modelService.save(addressModel);
+		////modelService.refresh(addressModel);
 		
-		customerModel.setDefaultPaymentAddress(addressModel);
+		////customerModel.setDefaultPaymentAddress(addressModel);
+		//////CHAMAR O HANDLER
+		
+		LOG.info("chamando o set");
+		customerModel.setDefaultPhoneNumber(phone);
+		
 
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
 		
-		LOG.info("SET PHONE NUMBER 2: " + customerModel.getDefaultPaymentAddress().getPhone1());
+		//LOG.info("SET PHONE NUMBER 2: " + customerModel.getDefaultPaymentAddress().getPhone1());
 
 		return customerModel;
 	}

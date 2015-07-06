@@ -796,26 +796,28 @@ public class AccountPageController extends AbstractSearchPageController {
 	 * Adding method to change customer phone number
 	 * @author luiza
 	 */
-	@RequestMapping(value = "/change-phonenumber", method = RequestMethod.GET)
+	@RequestMapping(value = "/change-phonenumber", method = RequestMethod.POST)
 	@RequireHardLogIn
-	public String changePhoneNumber(
-			HttpServletRequest request,
+	public @ResponseBody String changePhoneNumber(
 			RedirectAttributes redirectAttributes,
 			@RequestParam(value = "phone") final String phone) throws CMSItemNotFoundException 
 	{	
 		CustomerData customerData = customerFacade.getCurrentCustomer();
-		AddressData addressData = customerData.getDefaultBillingAddress();
+		////AddressData addressData = customerData.getDefaultBillingAddress();
 		
 		if (customerData != null)
 		{		
-			addressData.setPhone(phone);
-			customerData = heringCustomerFacade.changePhoneNumber(addressData);
+			////addressData.setPhone(phone);
+			//////CHAMAR O HANDLER SET(CUSTOMER MODEL, STRING)
+			////customerData = heringCustomerFacade.changePhoneNumber(addressData);
+			customerData = heringCustomerFacade.changePhoneNumber(phone);
 		}
 
-		LOG.info("TELEFONE CADASTRADO = " + customerData.getDefaultBillingAddress().getPhone());
-		GlobalMessages.addInfoMessage(redirectAttributes, "você atualizou seu perfil");
+		////LOG.info("TELEFONE CADASTRADO = " + customerData.getDefaultBillingAddress().getPhone());
+		////GlobalMessages.addInfoMessage(redirectAttributes, "você atualizou seu perfil");
 		LOG.info("fim");
-		return ControllerConstants.Views.Pages.Account.AccountHomePage;
+		////return ControllerConstants.Views.Pages.Account.AccountHomePage;
+		return "Sucesso!";
 			
 	}
 	

@@ -133,15 +133,15 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	 * @author luiza
 	 */
 	@Override
-	public CustomerData changePhoneNumber(final AddressData addressData)
+	public CustomerData changePhoneNumber(final String phone)
 	{
 
 		CustomerModel customerModel = getCurrentSessionCustomer();		
-		final AddressModel addressModel = customerModel.getDefaultPaymentAddress();
+		////final AddressModel addressModel = customerModel.getDefaultPaymentAddress();
 		
-		addressReverseConverter.convert(addressData, addressModel);
+		////addressReverseConverter.convert(addressData, addressModel);
 		
-		customerModel = heringCustomerAccountService.changePhoneNumber(customerModel, addressModel);
+		customerModel = heringCustomerAccountService.changePhoneNumber(customerModel, phone);
 
 		CustomerData customerData = new CustomerData();
 		customerConverter.convert(customerModel, customerData);

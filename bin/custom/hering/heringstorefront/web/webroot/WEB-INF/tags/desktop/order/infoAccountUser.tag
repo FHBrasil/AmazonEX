@@ -50,8 +50,8 @@
 						</div>
 					</form>
 					
-					
-					<form id="changePhone" method="GET" action="/my-account/change-phonenumber">						
+
+					<form id="changePhone" action="<c:url value="/my-account/change-phonenumber"/>" method="POST">						
 						<div class="form-group">
 							<%-- <label for="phone">Telefon (optional)</label>
 							<input type="tel" class="form-control" id="inputPhone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}"> --%>
