@@ -22,14 +22,14 @@
                 <div class="modal-body">
 					<div class="form-inline" style="margin-bottom:15px;">
 						<div class="radio">
-							<input type="radio" name="addresstype" id="addresstype-address" class="closeNewAddress" checked="true">
+							<input type="radio" name="addresstype" id="addresstype-address" class="closeNewAddress">
 							<label for="addresstype-address" class="closeNewAddress" data-toggle="collapse" data-target=".toggleNewAddress">
 								<spring:theme code="checkout.single.address"/>
 							</label>
 						</div>
 						<div class="radio"style="margin-left:15px;">
 							<input type="radio" name="addresstype" id="addresstype-packstation" class="closeNewAddress" >
-							<label for="addresstype-packstation" class="closeNewAddress" data-toggle="collapse" data-target=".toggleNewAddress">
+							<label for="addresstype-packstation" class="closeNewAddress addresstype-packstation" data-toggle="collapse" data-target=".toggleNewAddress">
 								<spring:theme code="checkout.single.address.packStation"/>
 							</label>
 						</div>
