@@ -12,6 +12,7 @@
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
 <%@ taglib prefix="order" tagdir="/WEB-INF/tags/desktop/order"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product" %>
+<%@ taglib prefix="address" tagdir="/WEB-INF/tags/desktop/address"%>
 <template:page pageTitle="${pageTitle}">
 <!--     <div id="main-wrapper"> -->
 <div class="container">
@@ -209,12 +210,12 @@
 			</div>
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<order:addressAccountUser type="billing" customer="${customerData}"/>
+					<address:addressAccountUser type="billing" address="${addressBilling}" regions="${regions}" country="${country}" />
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class=" panel panel-default">
-					<order:addressAccountUser type="delivery" customer="${customerData}"/>
+					<address:addressAccountUser type="delivery" address="${addressDelivery}" regions="${regions}" country="${country}" />
 				</div>
 			</div>
 			<div class="col-xs-12">

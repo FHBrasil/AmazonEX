@@ -91,7 +91,7 @@
 <section id="cart-bottom">
     <div class="container">
         <div class="left">
-<%--        
+            <%--        
 		XXX removendo carrier, isso precisa virar addon     
 		<form:form action="${request.contextPath}/cart/calculateDelivery" method="POST"
                 class="calculate-freight" id="calculateFrete">
@@ -112,8 +112,9 @@
         <%-- RESUMO DO PEDIDO // 
         <div class="right">
             <ul>
-                <li><a href="/"><i class="fa fa-angle-left"></i><spring:theme code="text.fliegercommerce.texto57"/></a></li>
-                <li class="right"><spring:theme code="text.fliegercommerce.texto58"/></li>
+                <li><a href="/"><i class="fa fa-angle-left"></i> <spring:theme
+                            code="text.fliegercommerce.texto57" /></a></li>
+                <li class="right"><spring:theme code="text.fliegercommerce.texto58" /></li>
             </ul>
             <div>
                 <ul class="total-info">
@@ -130,8 +131,9 @@
                     <li class="total"><strong><format:price
                                 priceData="${cartData.totalPrice}" /></strong> <c:if
                             test="${not empty cartData.deliveryCost}">
-								(<spring:theme code="text.fliegercommerce.texto59"/> 
-								<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
+								(<spring:theme code="text.fliegercommerce.texto59" />
+                            <format:price priceData="${cartData.deliveryCost}"
+                                displayFreeForZero="TRUE" />
                             <c:if test="${not empty cartData.deliveryMode}">
                                 <br> ${cartData.deliveryMode.description}
 								</c:if>)
@@ -145,24 +147,6 @@
                         code="checkout.checkout" /></a>
             </div>
         </div>
-    </div>
-    <div class="button-paypal-express-checkout">
-        <c:url value="/paypal/checkout/hop/expressCheckoutShortcut" var="paypalExpressCheckoutUrl" />
-        <a class="paypal-express-checkout-link" href="${paypalExpressCheckoutUrl}"
-                data-paypal-button="true" data-paypal-id="${merchantId}">
-        </a>
-    	<script>
-    		(function(d, s, id) {
-    			var js, ref = d.getElementsByTagName(s)[0];
-    			if (!d.getElementById(id)) {
-    				js = d.createElement(s);
-    				js.id = id;
-    				js.async = true;
-    				js.src = "//www.paypalobjects.com/js/external/paypal.v1.js";
-    				ref.parentNode.insertBefore(js, ref);
-    			}
-    		}(document, "script", "paypal-js"));
-    	</script>
     </div>
 </section>
 --%>

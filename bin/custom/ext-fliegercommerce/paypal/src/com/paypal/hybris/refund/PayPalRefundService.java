@@ -3,7 +3,7 @@
  */
 package com.paypal.hybris.refund;
 
-import br.hering.core.model.order.payment.PayPalPaymentInfoModel;
+import br.hering.core.model.order.payment.PaypalPaymentInfoModel;
 
 import com.ebay.api.RefundTransactionRequestType;
 import com.ebay.api.RefundTransactionResponseType;
@@ -60,7 +60,7 @@ public class PayPalRefundService extends DefaultRefundService
 
 	private void refundAllPayPalPayments(List<RefundEntryModel> refunds, OrderModel order)
 	{
-		if (order.getPaymentInfo() instanceof PayPalPaymentInfoModel)
+		if (order.getPaymentInfo() instanceof PaypalPaymentInfoModel)
 		{
 			List<PaymentTransactionModel> paymentTransactionList = order.getPaymentTransactions();
 
@@ -94,7 +94,7 @@ public class PayPalRefundService extends DefaultRefundService
 	private boolean makeRefundServiceCall(OrderModel orderModel, PaymentTransactionEntryModel paymentTransactionEntry)
 	{
 		boolean isRefundSuccess = false;
-		PayPalPaymentInfoModel paymentInfo = (PayPalPaymentInfoModel) orderModel.getPaymentInfo();
+		PaypalPaymentInfoModel paymentInfo = (PaypalPaymentInfoModel) orderModel.getPaymentInfo();
 
 		final RefundTransactionRequestData requestData = new RefundTransactionRequestData();
 		requestData.setTransactionId(paymentTransactionEntry.getRequestId());

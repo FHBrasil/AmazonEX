@@ -4,7 +4,6 @@ import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.JaloBusinessException;
 import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.type.ComposedType;
-
 import org.apache.log4j.Logger;
 
 public class PayPalPaymentInfo extends GeneratedPayPalPaymentInfo

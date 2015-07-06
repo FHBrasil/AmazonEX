@@ -1,5 +1,3 @@
-<%-- searchpage --%>
-
 $("#slider-alter").slider({tooltip: 'always'});
 $("#sliderPrice").slider({tooltip: 'always'});
 $("#slider-alter-top").slider({tooltip: 'always'});

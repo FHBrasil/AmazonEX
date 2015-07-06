@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import br.hering.core.model.order.payment.PaypalPaymentInfoModel;
+
 import com.ebay.api.AckCodeType;
 import com.ebay.api.BasicAmountType;
 import com.ebay.api.CurrencyCodeType;
@@ -27,7 +29,6 @@ import com.ebay.api.PendingStatusCodeType;
 import com.paypal.hybris.constants.PaypalConstants;
 import com.paypal.hybris.data.PaymentStatus;
 import com.paypal.hybris.enums.PaymentActionType;
-import br.hering.core.model.order.payment.PayPalPaymentInfoModel;
 import com.paypal.hybris.reauthorization.PayPalOrderReauthorizationService;
 import com.paypal.hybris.service.PaypalPaymentService;
 
@@ -56,11 +57,11 @@ public class PayPalOrderReauthorizationServiceImpl implements PayPalOrderReautho
 	@Override
 	public boolean isReauthorizationPossible(final OrderModel orderModel)
 	{
-		if (!(orderModel.getPaymentInfo() instanceof PayPalPaymentInfoModel))
+		if (!(orderModel.getPaymentInfo() instanceof PaypalPaymentInfoModel))
 		{
 			return false;
 		}
-		if (!PaymentActionType.AUTHORIZATION.equals(((PayPalPaymentInfoModel) orderModel.getPaymentInfo()).getPaymentAction()))
+		if (!PaymentActionType.AUTHORIZATION.equals(((PaypalPaymentInfoModel) orderModel.getPaymentInfo()).getPaymentAction()))
 		{
 			return false;
 		}

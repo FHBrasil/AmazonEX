@@ -27,11 +27,13 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 
+import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
+
 
 /**
  * Allow the language to be changed per request.
  */
-public class SetLanguageBeforeControllerHandler implements BeforeControllerHandler
+public class SetLanguageBeforeControllerHandler implements BeforeControllerHandlerAdaptee
 {
 	private static final Logger LOG = Logger.getLogger(SetLanguageBeforeControllerHandler.class);
 

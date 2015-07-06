@@ -16,7 +16,6 @@
 	<classpathentry exported="true" kind="lib" path="resources"/>
 	<classpathentry kind="src" output="eclipsebin/web/classes" path="web/src"/>
 	<classpathentry kind="src" output="eclipsebin/web/classes" path="web/testsrc"/>
-	<classpathentry kind="src" path="web/addonsrc"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/heringcheckoutaddon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/btg"/>
@@ -26,6 +25,8 @@
 	<classpathentry kind="lib" path="lib/SintegraIE-0.2.jar"/>
 	<classpathentry kind="src" path="/carrier"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/newsletteraddon"/>
+	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-integration-core-2.1.0.RELEASE.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/addoncommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
