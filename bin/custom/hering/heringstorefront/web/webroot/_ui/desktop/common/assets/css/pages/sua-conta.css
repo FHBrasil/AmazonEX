@@ -1,7 +1,31 @@
 /* CODE BA */
 
-.btn-address050609 {display:block;width:100%}
-#deliveryAddressModal input[type="radio"] {margin-left: 15px;z-index: 1000;top: 35%;}
+.orders150309 tr:hover {background-color: #F0F0F0;}
+.orders150309 table a {display:inline-block;width:100%;}
+.orders150309 .panel-footer a {width:100%;}
+.orders150309 .panel-footer:hover {background-color: #e0e0e0;}
+.abos150309 .panel-footer a {width:100%;}
+.abos150309 .panel-footer:hover {background-color: #e0e0e0;}
+
+.orders150309 .panel-body {background-color:#f0f0f0;padding-top:0;padding-bottom:0;}
+.order150311 {position:relative;display:block;border: none;text-align:right;outline:none;}
+.order150311:focus {outline:none;box-shadow: 3px 3px 3px silver;text-decoration: none;}
+.order150311:hover {box-shadow: 3px 3px 3px silver;text-decoration: none;}
+.order150311 img {margin: 0 5px 5px 0}
+.price150311 {font-weight:bold;border-top:2px solid #3e3e3e; display: inline-block;padding:5px;border-radius: 0 0 4px 4px;text-align:right;}
+.title150311 {font-weight:bold;display: inline-block;width:100%;padding:5px; border-radius: 4px 4px 0 0;text-align:left;}
+.orderline150311 {float:left;width:33%;height:34%;background-position:center center;background-repeat:no-repeat;background-size:100%;}
+.orderline150311.first {width:66%;height:66%;}
+.orderline150311.last {font-size:24px;text-align:center;position: relative;}
+.orderline150311.last span {position:absolute; top:45%;}
+
+.squarebox150311{position: relative;width: 100%;}
+.squarebox150311:before{content: "";display: block;padding-top: 100%;}
+.squarecontent150311{position: absolute;top: 0;left: 0;bottom: 0;right: 0;}
+
+.addressbook150706 input[type="radio"] {margin-left: 15px !important;z-index: 1000 !important;top: 35% !important;}
+.addressbook150706 .btn-address050609 {display:block;width:100%}
+.addressbook150706 .editAddress, .addressbook150706 .deleteAddress {border-radius:0 0 4px 4px;margin-top:-15px;background-color:#E6E6E6}
 
 /* END */
 

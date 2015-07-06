@@ -420,9 +420,14 @@ public class AccountPageController extends AbstractSearchPageController {
 		model.addAttribute("addressData", userFacade.getAddressBook());
 		model.addAttribute("addressDelivery", getAddressDelivery());
 		model.addAttribute("addressBilling", getAddressBilling());
-		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("DE"));		
-		model.addAttribute("heringAddressForm", addressForm);
-		model.addAttribute("packstationAddressForm", packstationAddressForm);
+		model.addAttribute("quantityAddress", userFacade.getAddressBook().size());
+		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("DE"));
+		if (!model.containsAttribute("heringAddressForm")) {
+			model.addAttribute("heringAddressForm", addressForm);
+		}
+		if (!model.containsAttribute("packstationAddressForm")){
+			model.addAttribute("packstationAddressForm", packstationAddressForm);
+		}
 		// model.addAttribute("orderData", getOrderData());
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
 		model.addAttribute("orderHistoryPreview", searchPageData.getResults());
@@ -1235,8 +1240,10 @@ public class AccountPageController extends AbstractSearchPageController {
 //			setUpMetaDataForContentPage(model, getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
 //			return ControllerConstants.Views.Pages.Account.AccountEditAddressPage;
 //		}		
-
-		userFacade.addAddress(newAddress);
+		if(StringUtils.isBlank(newAddress.getId()))
+			userFacade.addAddress(newAddress);
+		else
+			userFacade.editAddress(newAddress);
 
 		if (newAddress.isBillingAddress())
 		{
@@ -1262,30 +1269,16 @@ public class AccountPageController extends AbstractSearchPageController {
 		}
 	}
 
-	@RequestMapping(value = "/edit-address/"
-			+ ADDRESS_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
+	@RequestMapping(value = "/edit-address/" + ADDRESS_CODE_PATH_VARIABLE_PATTERN, method = { RequestMethod.GET, RequestMethod.POST })
 	@RequireHardLogIn
-	public String editAddress(
-			@PathVariable("addressCode") final String addressCode,
-			final Model model) throws CMSItemNotFoundException {
+	public String editAddress(@PathVariable("addressCode") final String addressCode, final Model model) throws CMSItemNotFoundException 
+	{
 		final HeringAddressForm addressForm = new HeringAddressForm();
-		model.addAttribute("countryData", checkoutFacade.getDeliveryCountries());
-		model.addAttribute("titleData", userFacade.getTitles());
-		model.addAttribute("addressTypes", getAddressTypes());
-		model.addAttribute("heringAddressForm", addressForm);
-		model.addAttribute("addressBookEmpty",
-				Boolean.valueOf(userFacade.isAddressBookEmpty()));
-
 		for (final AddressData addressData : userFacade.getAddressBook()) {
-			if (addressData.getId() != null
-					&& addressData.getId().equals(addressCode)) {
-				model.addAttribute(
-						"regions",
-						getI18NFacade().getRegionsForCountryIso(
-								addressData.getCountry().getIsocode()));
+			if (addressData.getId() != null	&& addressData.getId().equals(addressCode)) {
+				model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso(addressData.getCountry().getIsocode()));
 				model.addAttribute("selectedRegion", addressData.getRegion());
-				model.addAttribute("country", addressData.getCountry()
-						.getIsocode());
+				model.addAttribute("country", addressData.getCountry().getIsocode());
 				model.addAttribute("addressData", addressData);
 
 				addressForm.setAddressId(addressData.getId());
@@ -1319,8 +1312,8 @@ public class AccountPageController extends AbstractSearchPageController {
 				addressForm.setComplement(addressData.getComplement());
 				addressForm.setNeighborhood(addressData.getDistrict());
 				addressForm.setTownCity(addressData.getTown());
-				addressForm.setRegionIso(addressData.getRegion().getIsocode());
-				addressForm.setBilling(addressData.isBillingAddress());
+				//addressForm.setRegionIso(addressData.getRegion().getIsocode());
+				//addressForm.setBilling(addressData.isBillingAddress());
 
 				if (StringUtils.isNotBlank(addressData.getReference())) {
 					addressForm.setReference(addressData.getReference());
@@ -1330,8 +1323,7 @@ public class AccountPageController extends AbstractSearchPageController {
 					addressForm.setAddressType(addressData.getType().getCode());
 				}
 
-				addressForm
-						.setCountryIso(addressData.getCountry().getIsocode());
+				addressForm.setCountryIso(addressData.getCountry().getIsocode());
 
 				if (isDefaultAddress(addressData.getId())) {
 					addressForm.setDefaultAddress(Boolean.TRUE);
@@ -1344,24 +1336,19 @@ public class AccountPageController extends AbstractSearchPageController {
 			}
 		}
 
-		storeCmsPageInModel(model,
-				getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
-		setUpMetaDataForContentPage(model,
-				getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
-
-		final List<Breadcrumb> breadcrumbs = accountBreadcrumbBuilder
-				.getBreadcrumbs(null);
-		breadcrumbs.add(new Breadcrumb("/my-account/address-book",
-				getMessageSource().getMessage("text.account.addressBook", null,
-						getI18nService().getCurrentLocale()), null));
-		breadcrumbs.add(new Breadcrumb("#", getMessageSource().getMessage(
-				"text.account.addressBook.addEditAddress", null,
-				getI18nService().getCurrentLocale()), null));
-		model.addAttribute("breadcrumbs", breadcrumbs);
-		model.addAttribute("metaRobots", "no-index,no-follow");
+		if(addressForm.getAddressType().equalsIgnoreCase("packstation"))
+		{
+			model.addAttribute("packstationAddressForm", addressForm);
+			model.addAttribute("editPackstation", Boolean.TRUE);
+		}
+		else
+		{
+			model.addAttribute("heringAddressForm", addressForm);
+			model.addAttribute("editPackstation", Boolean.FALSE);
+		}
 		model.addAttribute("edit", Boolean.TRUE);
-		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
-		return ControllerConstants.Views.Pages.Account.AccountEditAddressPage;
+
+		return this.account(model);
 	}
 
 	/**
@@ -1377,115 +1364,113 @@ public class AccountPageController extends AbstractSearchPageController {
 				.getId().equals(addressId));
 	}
 
-	@RequestMapping(value = "/edit-address/"
-			+ ADDRESS_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.POST)
-	@RequireHardLogIn
-	public String editAddress(final HeringAddressForm addressForm,
-			final BindingResult bindingResult, final Model model,
-			final RedirectAttributes redirectModel)
-			throws CMSItemNotFoundException {
-		getAddressValidator().validate(addressForm, bindingResult, model);
-		if (bindingResult.hasErrors()) {
-			// GlobalMessages.addErrorMessage(model, "form.global.error");
-			storeCmsPageInModel(model,
-					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
-			setUpMetaDataForContentPage(model,
-					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
-			setUpAddressFormAfterError(addressForm, model);
-			return ControllerConstants.Views.Pages.Account.AccountEditAddressPage;
-		}
-
-		model.addAttribute("metaRobots", "no-index,no-follow");
-
-		final AddressData newAddress = new AddressData();
-		newAddress.setTitleCode(addressForm.getTitleCode());
-		newAddress.setId(addressForm.getAddressId());
-		newAddress.setFirstName(addressForm.getFirstName());
-		newAddress.setLastName(addressForm.getLastName());
-		newAddress.setLine1(addressForm.getLine1());
-		newAddress.setTown(addressForm.getTownCity());
-		newAddress.setPostalCode(addressForm.getPostcode());
-		newAddress.setBillingAddress(addressForm.isBilling());
-		newAddress.setShippingAddress(true);
-		newAddress.setComplement(addressForm.getComplement());
-		newAddress.setReference(addressForm.getReference());
-		newAddress.setReceiver(addressForm.getReceiver());
-		newAddress.setNumber(addressForm.getNumber());
-		newAddress
-				.setType(TipoDeEndereco.valueOf(addressForm.getAddressType()));
-		newAddress.setDistrict(addressForm.getNeighborhood());
-		newAddress.setCountry(getI18NFacade().getCountryForIsocode(
-				addressForm.getCountryIso()));
-		newAddress.setRegion(getI18NFacade().getRegion(
-				addressForm.getCountryIso(), addressForm.getRegionIso()));
-
-		if (StringUtils.isNotBlank(addressForm.getPhone())) {
-			newAddress.setPhone(addressForm.getPhone().substring(2));
-			if (addressForm.getPhone().length() > 3) {
-				newAddress.setDddPhone(addressForm.getPhone().substring(0, 2));
-			}
-		}
-
-		if (StringUtils.isNotBlank(addressForm.getCelPhone())) {
-			newAddress.setCelPhone(addressForm.getCelPhone().substring(2));
-
-			if (addressForm.getCelPhone().length() > 3) {
-				newAddress.setDddCelPhone(addressForm.getCelPhone().substring(
-						0, 2));
-			}
-		}
-
-		// newAddress.setBillingAddress(false);
-
-		newAddress.setShippingAddress(true);
-		newAddress.setVisibleInAddressBook(true);
-
-		if (Boolean.TRUE.equals(addressForm.getDefaultAddress())
-				|| userFacade.getAddressBook().size() <= 1) {
-			newAddress.setDefaultAddress(true);
-			newAddress.setVisibleInAddressBook(true);
-		}
-
-		final AddressVerificationResult<AddressVerificationDecision> verificationResult = getAddressVerificationFacade()
-				.verifyAddressData(newAddress);
-		final boolean addressRequiresReview = getAddressVerificationResultHandler()
-				.handleResult(
-						verificationResult,
-						newAddress,
-						model,
-						redirectModel,
-						bindingResult,
-						getAddressVerificationFacade()
-								.isCustomerAllowedToIgnoreAddressSuggestions(),
-						"checkout.multi.address.updated");
-
-		if (addressRequiresReview) {
-			model.addAttribute("regions", getI18NFacade()
-					.getRegionsForCountryIso(addressForm.getCountryIso()));
-			model.addAttribute("country", addressForm.getCountryIso());
-			model.addAttribute("edit", Boolean.TRUE);
-			model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
-			storeCmsPageInModel(model,
-					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
-			setUpMetaDataForContentPage(model,
-					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
-			return ControllerConstants.Views.Pages.Account.AccountEditAddressPage;
-		}
-
-		AddressData toRemove = new AddressData();
-		toRemove.setId(newAddress.getId());
-		userFacade.removeAddress(toRemove);
-
-		userFacade.addAddress(newAddress);
-
-		// userFacade.editAddress(newAddress);
-
-		if (newAddress.isBillingAddress()) {
-			changeBillingAddress(newAddress.getId());
-		}
-
-		return REDIRECT_TO_ADDRESS_BOOK_PAGE;
-	}
+//	@RequestMapping(value = "/edit-address/" + ADDRESS_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.POST)
+//	@RequireHardLogIn
+//	public String editAddress(final HeringAddressForm addressForm, final BindingResult bindingResult, final Model model,
+//			final RedirectAttributes redirectModel)	throws CMSItemNotFoundException 
+//	{
+//		getAddressValidator().validate(addressForm, bindingResult, model);
+//		if (bindingResult.hasErrors()) {
+//			// GlobalMessages.addErrorMessage(model, "form.global.error");
+//			storeCmsPageInModel(model,
+//					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
+//			setUpMetaDataForContentPage(model,
+//					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
+//			setUpAddressFormAfterError(addressForm, model);
+//			return ControllerConstants.Views.Pages.Account.AccountEditAddressPage;
+//		}
+//
+//		model.addAttribute("metaRobots", "no-index,no-follow");
+//
+//		final AddressData newAddress = new AddressData();
+//		newAddress.setTitleCode(addressForm.getTitleCode());
+//		newAddress.setId(addressForm.getAddressId());
+//		newAddress.setFirstName(addressForm.getFirstName());
+//		newAddress.setLastName(addressForm.getLastName());
+//		newAddress.setLine1(addressForm.getLine1());
+//		newAddress.setTown(addressForm.getTownCity());
+//		newAddress.setPostalCode(addressForm.getPostcode());
+//		newAddress.setBillingAddress(addressForm.isBilling());
+//		newAddress.setShippingAddress(true);
+//		newAddress.setComplement(addressForm.getComplement());
+//		newAddress.setReference(addressForm.getReference());
+//		newAddress.setReceiver(addressForm.getReceiver());
+//		newAddress.setNumber(addressForm.getNumber());
+//		newAddress
+//				.setType(TipoDeEndereco.valueOf(addressForm.getAddressType()));
+//		newAddress.setDistrict(addressForm.getNeighborhood());
+//		newAddress.setCountry(getI18NFacade().getCountryForIsocode(
+//				addressForm.getCountryIso()));
+//		newAddress.setRegion(getI18NFacade().getRegion(
+//				addressForm.getCountryIso(), addressForm.getRegionIso()));
+//
+//		if (StringUtils.isNotBlank(addressForm.getPhone())) {
+//			newAddress.setPhone(addressForm.getPhone().substring(2));
+//			if (addressForm.getPhone().length() > 3) {
+//				newAddress.setDddPhone(addressForm.getPhone().substring(0, 2));
+//			}
+//		}
+//
+//		if (StringUtils.isNotBlank(addressForm.getCelPhone())) {
+//			newAddress.setCelPhone(addressForm.getCelPhone().substring(2));
+//
+//			if (addressForm.getCelPhone().length() > 3) {
+//				newAddress.setDddCelPhone(addressForm.getCelPhone().substring(
+//						0, 2));
+//			}
+//		}
+//
+//		// newAddress.setBillingAddress(false);
+//
+//		newAddress.setShippingAddress(true);
+//		newAddress.setVisibleInAddressBook(true);
+//
+//		if (Boolean.TRUE.equals(addressForm.getDefaultAddress())
+//				|| userFacade.getAddressBook().size() <= 1) {
+//			newAddress.setDefaultAddress(true);
+//			newAddress.setVisibleInAddressBook(true);
+//		}
+//
+//		final AddressVerificationResult<AddressVerificationDecision> verificationResult = getAddressVerificationFacade()
+//				.verifyAddressData(newAddress);
+//		final boolean addressRequiresReview = getAddressVerificationResultHandler()
+//				.handleResult(
+//						verificationResult,
+//						newAddress,
+//						model,
+//						redirectModel,
+//						bindingResult,
+//						getAddressVerificationFacade()
+//								.isCustomerAllowedToIgnoreAddressSuggestions(),
+//						"checkout.multi.address.updated");
+//
+//		if (addressRequiresReview) {
+//			model.addAttribute("regions", getI18NFacade()
+//					.getRegionsForCountryIso(addressForm.getCountryIso()));
+//			model.addAttribute("country", addressForm.getCountryIso());
+//			model.addAttribute("edit", Boolean.TRUE);
+//			model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
+//			storeCmsPageInModel(model,
+//					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
+//			setUpMetaDataForContentPage(model,
+//					getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
+//			return ControllerConstants.Views.Pages.Account.AccountEditAddressPage;
+//		}
+//
+//		AddressData toRemove = new AddressData();
+//		toRemove.setId(newAddress.getId());
+//		userFacade.removeAddress(toRemove);
+//
+//		userFacade.addAddress(newAddress);
+//
+//		// userFacade.editAddress(newAddress);
+//
+//		if (newAddress.isBillingAddress()) {
+//			changeBillingAddress(newAddress.getId());
+//		}
+//
+//		return REDIRECT_TO_ADDRESS_BOOK_PAGE;
+//	}
 
 	@RequestMapping(value = "/select-suggested-address", method = RequestMethod.POST)
 	public String doSelectSuggestedAddress(final HeringAddressForm addressForm,
@@ -1549,21 +1534,14 @@ public class AccountPageController extends AbstractSearchPageController {
 		return REDIRECT_TO_ADDRESS_BOOK_PAGE;
 	}
 
-	@RequestMapping(value = "/remove-address/"
-			+ ADDRESS_CODE_PATH_VARIABLE_PATTERN, method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/remove-address/" + ADDRESS_CODE_PATH_VARIABLE_PATTERN, method = { RequestMethod.GET, RequestMethod.POST })
 	@RequireHardLogIn
-	public String removeAddress(
-			@PathVariable("addressCode") final String addressCode,
-			final RedirectAttributes redirectModel) {
+	public String removeAddress(@PathVariable("addressCode") final String addressCode, final RedirectAttributes redirectModel) {
 		final AddressData addressData = new AddressData();
 		addressData.setId(addressCode);
 		userFacade.removeAddress(addressData);
-
-		GlobalMessages.addFlashMessage(redirectModel,
-				GlobalMessages.CONF_MESSAGES_HOLDER,
-				"account.confirmation.address.removed");
-		return REDIRECT_TO_ADDRESS_BOOK_PAGE;
+		GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER, "account.confirmation.address.removed");
+		return REDIRECT_MY_ACCOUNT;
 	}
 
 	@RequestMapping(value = "/set-default-address/"

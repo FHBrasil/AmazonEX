@@ -15,7 +15,8 @@
    	 <div id="editAnchor"></div>
 </c:if>
 --%>
-
+<input type="hidden" name="isEditAddress" value="${edit}"/>
+<input type="hidden" name="editPackstation" value="${editPackstation}"/>
 <c:choose>
 	<c:when test="${type == 'packStation'}">
 		<form:hidden path="countryIso" />
