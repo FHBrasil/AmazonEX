@@ -2,7 +2,7 @@ $(document).ready(function() {
 	
 	var contextPath = $('input[type=hidden].contextPath').val();
 	
-	$('form#selectAddress').find('button.btn-primary').click(function(){		
+	$('#deliveryAddressModal .modal-footer').find('button.btn-primary').click(function(){		
 		var cod = $('input:radio[name=chooseDeliveryAddress]:checked').val();
 		var typeAddress = $('input:hidden[name=deliveryOrBilling]').val();
 		var url = contextPath + '/my-account/select-' + typeAddress + '-address/' + cod;
@@ -15,6 +15,14 @@ $(document).ready(function() {
 		else
 			$('input:hidden[name=deliveryOrBilling]').attr("value", 'delivery');
 	});
+	
+	var editAddress = $('input:hidden[name=isEditAddress]').val();
+	if(editAddress === "true"){
+		$('#editAddressModal').modal('show');
+		$('form.addEditDeliveryAddressForm .modal-footer .btn-default').click(function(){
+			window.location = contextPath + "/my-account";
+		});
+	}
 	
 	hering.form.validateAll();
 	
@@ -52,6 +60,22 @@ $(document).ready(function() {
 
     	trackingClick = false;
     });
+});
+
+$(window).load(function() {
+	var editPackstation = $('input:hidden[name=editPackstation]').val();
+	if(editPackstation === "false"){
+		$('#addresstype-address').click();
+		$('#addresstype-packstation').attr('disabled', true);
+		$('.closeNewAddress').removeAttr('data-target');
+	}
+	else if(editPackstation === "true"){		
+			$('.addresstype-packstation').click();		
+			$('#addresstype-address').attr('disabled', true);
+			$('.closeNewAddress').removeAttr('data-target');
+	}
+	else
+		$('#addresstype-address').click();
 });
 
 trackingClick = false;    
