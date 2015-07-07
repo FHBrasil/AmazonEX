@@ -152,6 +152,7 @@ public class LoginPageController extends AbstractHeringLoginController
 		{
 			return httpSessionRequestCache.getRequest(request, response).getRedirectUrl();
 		}
+		
 		return "/my-account";
 	}
 

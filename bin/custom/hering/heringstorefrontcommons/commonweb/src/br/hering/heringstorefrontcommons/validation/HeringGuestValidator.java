@@ -89,12 +89,7 @@ public class HeringGuestValidator extends GuestValidator
 			GlobalMessages.addErrorMessage(model, "register.name.invalid");
 		}
 		
-		if (StringUtils.isEmpty(complement))
-		{
-			errors.rejectValue("complement", "register.complement.invalid");
-			GlobalMessages.addErrorMessage(model, "register.complement.invalid");
-		}
-		else if (StringUtils.length(complement) > 255)
+		if (StringUtils.length(complement) > 255)
 		{
 			errors.rejectValue("complement", "register.complement.invalid");
 			GlobalMessages.addErrorMessage(model, "register.complement.invalid");
@@ -153,17 +148,6 @@ public class HeringGuestValidator extends GuestValidator
 		{
 			errors.rejectValue("country", "register.country.invalid");
 			GlobalMessages.addErrorMessage(model, "register.country.invalid");
-		}
-		
-		if (StringUtils.isEmpty(telephone))
-		{
-			errors.rejectValue("telephone", "register.telephone.invalid");
-			GlobalMessages.addErrorMessage(model, "register.telephone.invalid");
-		}
-		else if (StringUtils.length(telephone) > 255)
-		{
-			errors.rejectValue("telephone", "register.telephone.invalid");
-			GlobalMessages.addErrorMessage(model, "register.telephone.invalid");
 		}
 		
 		if (StringUtils.isEmpty(email))

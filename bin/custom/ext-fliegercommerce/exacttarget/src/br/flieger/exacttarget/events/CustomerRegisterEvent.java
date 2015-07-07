@@ -34,11 +34,11 @@ public class CustomerRegisterEvent extends AbstractExacttargetEvent
 		final Attribute att1 = createAttribute("Nome", registerData.getFirstName()+" "+registerData.getLastName());
 		final Attribute att2 = createAttribute("DataNasc", registerData.getBirthday());
 		final Attribute att3 = createAttribute("Cpf", registerData.getCpfcnpj());
-		final Attribute att4 = createAttribute("Sexo", registerData.getGender().compareTo(Gender.MALE)==0?"Masculino":"Feminino");
-		final Attribute att5 = createAttribute("Data de Nascimento", registerData.getBirthday());		
-		final Attribute att6 = createAttribute("Genero", registerData.getGender().name());
+//		final Attribute att4 = createAttribute("Sexo", registerData.getGender().compareTo(Gender.MALE)==0?"Masculino":"Feminino");
+//		final Attribute att5 = createAttribute("Data de Nascimento", registerData.getBirthday());		
+//		final Attribute att6 = createAttribute("Genero", registerData.getGender().name());
 		
-		return new Attribute[]{att1, att3, att2, att4, att5, att6};
+		return new Attribute[]{att1, att3, att2/*, att4, att5, att6*/};
 	}
 
 	@Override
