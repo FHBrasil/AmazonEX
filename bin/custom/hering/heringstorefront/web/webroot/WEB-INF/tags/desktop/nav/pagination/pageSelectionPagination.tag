@@ -18,7 +18,9 @@
             </spring:url> <c:if test="${isShowListHeringEnabled}">
                 <c:set var="previousPageUrl" value="${previousPageUrl}&isShowListHeringEnabled=true"></c:set>
             </c:if> <ycommerce:testId code="searchResults_previousPage_link">
-                <a href="${previousPageUrl}" rel="prev" class="prev"><spring:theme code="search.page.linkPreviousPage"/></a>
+                <a href="${previousPageUrl}" rel="prev" class="prev"> 
+                    <spring:theme code="search.page.linkPreviousPage" />
+                </a>
             </ycommerce:testId></li>
     </c:if>
     <c:set var="limit" value="${numberPagesShown}" />
@@ -79,7 +81,7 @@
             </spring:url> <c:if test="${isShowListHeringEnabled}">
                 <c:set var="nextPageUrl" value="${nextPageUrl}&isShowListHeringEnabled=true"></c:set>
             </c:if> <ycommerce:testId code="searchResults_nextPage_link">
-                <a href="${nextPageUrl}" rel="next" class="next"><spring:theme code="search.page.linkNextPage" /> </a>
+                <a href="${nextPageUrl}" rel="next" class="next"><spring:theme code="search.page.linkNextPage" /></a>
             </ycommerce:testId></li>
     </c:if>
 </ul>
