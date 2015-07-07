@@ -129,7 +129,7 @@ public class HeringRegistrationValidator extends RegistrationValidator
 		 if(isJuridica)
 		{
 			 //Verifica se o campo de i.e. ou uf estÃ¡ preechido e se estiver faz 
-			 //a validação
+			 //a validaï¿½ï¿½o
 			if(!StringUtils.isEmpty(rgIe) && !StringUtils.isEmpty(ufIe))
 			{
 				InscricaoEstadual ie = InscricaoEstadualFactory.getInstance(ufIe.substring(3));
