@@ -141,7 +141,7 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 	protected String processRegisterUserRequest(final String referer, final HeringRegisterForm form, final BindingResult bindingResult,
 			final Model model, final HttpServletRequest request, final HttpServletResponse response,
 			final RedirectAttributes redirectModel) throws CMSItemNotFoundException
-	{
+	{	
 		if (bindingResult.hasErrors())
 		{
 			model.addAttribute(form);
@@ -159,19 +159,19 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 		data.setLastName(form.getLastName());
 		String email = form.getEmail();
 		data.setLogin(email);
-		data.setGender(form.getGenderType());
+//		data.setGender(form.getGenderType());
 		data.setPassword(form.getPwd());
 		
-		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
-		{
-			data.setCpfcnpj(form.getCpfcnpj());
-		}
+//		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+//		{
+//			data.setCpfcnpj(form.getCpfcnpj());
+//		}
 		
-		data.setBirthday(form.getDateBirthday());
-		data.setRgIe(form.getRgIe());
-		data.setUfIe(form.getUfIe());
-		data.setBaseStore(form.getBaseStore());
-		
+//		data.setBirthday(form.getDateBirthday());
+//		data.setRgIe(form.getRgIe());
+//		data.setUfIe(form.getUfIe());
+//		data.setBaseStore(form.getBaseStore());
+//		
 		try
 		{			
 			getCustomerFacade().register(data);
@@ -202,6 +202,7 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 		}
 		
 		return REDIRECT_PREFIX + getSuccessRedirect(request, response);
+		
 	}
 	
 	/**

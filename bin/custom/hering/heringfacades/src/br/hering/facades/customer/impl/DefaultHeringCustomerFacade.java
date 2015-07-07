@@ -146,7 +146,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 			Assert.hasText(registerData.getCpfcnpj(), "The field [CPF] cannot be empty");
 		}
 		
-		Assert.notNull(registerData.getBirthday(), "The field [Birthday] cannot be empty");
+//		Assert.notNull(registerData.getBirthday(), "The field [Birthday] cannot be empty");
 		
 		final CustomerModel newCustomer = getModelService().create(CustomerModel.class);
 		newCustomer.setName(getCustomerNameStrategy().getName(registerData.getFirstName(), registerData.getLastName()));
@@ -166,7 +166,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		}
 		
 		newCustomer.setGender(registerData.getGender());
-		newCustomer.setBirthday(registerData.getBirthday());
+//		newCustomer.setBirthday(registerData.getBirthday());
 		newCustomer.setRgIe(registerData.getRgIe());
 		newCustomer.setUfIe(registerData.getUfIe());
 		
