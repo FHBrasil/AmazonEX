@@ -100,7 +100,9 @@ public class DefaultHeringCheckoutFacade extends DefaultAcceleratorCheckoutFacad
     private SessionService sessionService;
     @Resource
     protected BaseStoreService baseStoreService;
+    @Resource
     private PaymentModeService paymentModeService;
+    @Resource
     private HeringCustomerPopulator customerPopulator;
     @Resource
     private CommerceCartCalculationStrategy commerceCartCalculationStrategy;
@@ -868,10 +870,11 @@ public class DefaultHeringCheckoutFacade extends DefaultAcceleratorCheckoutFacad
     /**
      * @param cartData
      */
-    public void setBillingAddressIntoCart(AddressData addressData) {
+    public void saveBillingAddressIntoCart(AddressData addressData) {
         CartModel cartModel = getCart();
         AddressModel addressModel = getModelService().create(AddressModel.class);
         getAddressReversePopulator().populate(addressData, addressModel);
+        addressModel.setOwner(cartModel);
         getHeringCheckoutService().setBillingAddress(cartModel, addressModel);
     }
     
