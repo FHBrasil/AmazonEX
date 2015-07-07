@@ -9,7 +9,6 @@
     <p class="h4 text-left">
         <spring:theme code="product.share" />:
     </p>
-
 <div class="social150126 text-left">
     <%--<div class="fb-like pin-div" data-href="${productUrl}" data-layout="button" data-action="like" data-show-faces="false" data-share="true" data-width="100">
         <a class="" href="#"><span class="babicon babicon-facebook"> </span></a>
