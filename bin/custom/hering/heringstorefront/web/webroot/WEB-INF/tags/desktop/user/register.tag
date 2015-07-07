@@ -7,7 +7,7 @@
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-<section class="col-1 column">
+<!-- <section class="col-1 column"> -->
     <%-- cabe�alho do formul�rio --%>
     <header>
         <h2>
@@ -146,4 +146,4 @@
             </button>
         </ycommerce:testId>
     </form:form>
-</section>
+<!-- </section> -->
