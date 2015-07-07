@@ -27,9 +27,9 @@
     <span class="babicon babicon-google"> </span>
     <span class="babicon babicon-twitter"> </span> --%>
 
-    <div class="fb-like pin-div" data-href="${productUrl}" data-layout="button" data-action="like" data-show-faces="false" data-share="true" data-width="100"></div>--%>
+    <div class="fb-like pin-div" data-href="${productUrl}" data-layout="button" data-action="like" data-show-faces="false" data-share="true" data-width="100"></div>
     <a href="//www.pinterest.com/pin/create/button/?url=${productUrl}&media=${productZoomImagesUrl}&description=Pinterest"
-        data-pin-do="buttonPin" data-pin-config="none">
+        data-pin-do="" data-pin-config="none">
         <span class="babicon babicon-pinterest"> </span>
     </a>
     <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
