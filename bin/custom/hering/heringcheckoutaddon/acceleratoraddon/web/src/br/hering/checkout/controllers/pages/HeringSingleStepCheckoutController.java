@@ -775,6 +775,23 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             final BindingResult bindingResult, final Model model, final HttpServletRequest request,
             final RedirectAttributes redirectModel) throws CMSItemNotFoundException,
             InvalidCartException, CommerceCartModificationException {
+        CartData cartData = getCheckoutFacade().getCheckoutCart();
+        getHeringPaymentDetailsValidator().validate(paymentDetailsForm, bindingResult, model);
+        if (bindingResult.hasErrors()) {
+            GlobalMessages.addErrorMessage(model, "checkout.error.verifyFields");
+            return this.prepareSingleStepCheckout(model);
+        }
+        if (cartData.getDeliveryAddress() == null) {
+            GlobalMessages.addErrorMessage(model, "checkout.error.deliveryAddress.blank");
+            return this.prepareSingleStepCheckout(model);
+        }
+        if (cartData.getDeliveryMode() == null) {
+            GlobalMessages.addErrorMessage(model, "checkout.error.deliveryMode.blank");
+            return this.prepareSingleStepCheckout(model);
+        }
+        if (validateCart(redirectModel)) {
+            return REDIRECT_PREFIX + "/cart";
+        }
         final PaymentModeData paymentMode =
                 paymentModeFacade.getPaymentModeForCode(paymentDetailsForm.getPaymentMode());
         if (HeringcheckoutaddonWebConstants.PAYPAL.equalsIgnoreCase(paymentMode.getCode())) {
@@ -797,8 +814,6 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             final BindingResult bindingResult, final Model model, final HttpServletRequest request,
             final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
         CartData cartData = getCheckoutFacade().getCheckoutCart();
-        // Before doing any validation, we need to ensure that we have a billing address
-        storeBillingAddressIntoCart(paymentDetailsForm);
         getHeringPaymentDetailsValidator().validate(paymentDetailsForm, bindingResult, model);
         if (bindingResult.hasErrors()) {
             GlobalMessages.addErrorMessage(model, "checkout.error.verifyFields");
@@ -815,6 +830,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         if (validateCart(redirectModel)) {
             return REDIRECT_PREFIX + "/cart";
         }
+        storeBillingAddressIntoCart(paymentDetailsForm);
         savePaypalPaymentMethod(paymentDetailsForm);
         return paypalPaymentRequestController.expressCheckoutMark(model);
     }
