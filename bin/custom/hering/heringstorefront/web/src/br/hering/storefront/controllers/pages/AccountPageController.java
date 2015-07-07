@@ -792,7 +792,7 @@ public class AccountPageController extends AbstractSearchPageController {
 			heringCustomerFacade.deleteAccount();
 		}
 
-		GlobalMessages.addInfoMessage(model, "text.fliegercommerce.texto132");
+		GlobalMessages.addInfoMessage(redirectAttributes, "text.fliegercommerce.texto132");
 		return REDIRECT_PREFIX + "/logout?logoutTargetUrlParameter=/login?deleted=true";
 		
 	}
@@ -805,7 +805,6 @@ public class AccountPageController extends AbstractSearchPageController {
 	@RequestMapping(value = "/change-phonenumber", method = RequestMethod.POST)
 	@RequireHardLogIn
 	public String changePhoneNumber(
-			RedirectAttributes redirectAttributes,
 			@RequestParam(value = "phone") final String phone) throws CMSItemNotFoundException 
 	{	
 		CustomerData customerData = customerFacade.getCurrentCustomer();
@@ -815,7 +814,6 @@ public class AccountPageController extends AbstractSearchPageController {
 			customerData = heringCustomerFacade.changePhoneNumber(phone);
 		}
 
-		//GlobalMessages.addInfoMessage(redirectAttributes, "phone number updated");
 		return REDIRECT_MY_ACCOUNT;
 			
 	}
