@@ -67,7 +67,7 @@
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse">
-            <cms:pageSlot position="MainMenu" var="component">
+            <cms:pageSlot position="NavigationBar" var="component">
                 <cms:component component="${component}" />
             </cms:pageSlot>
             <cms:pageSlot position="SearchBox" var="component">

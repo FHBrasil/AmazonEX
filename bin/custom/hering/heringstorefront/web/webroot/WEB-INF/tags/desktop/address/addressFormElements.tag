@@ -20,6 +20,7 @@
 <c:choose>
 	<c:when test="${type == 'packStation'}">
 		<form:hidden path="countryIso" />
+		<input type="hidden" name="codeAddressEdit" value="${packstationAddressForm.addressId}"/>
 		<p>
 			<spring:theme code="checkout.single.packstation.registeredPackstation"/>&nbsp;
 			<a target="_blank" href="https://partner.dhl.de/klick.php?bannerid=48&pid=1419&prid=1">
@@ -71,7 +72,8 @@
 		        path="countryIso" inputCSS="text form-control" mandatory="false" readOnly="true"/>
 		</div>
 	</c:when>
-	<c:otherwise>		
+	<c:otherwise>
+		<input type="hidden" name="codeAddressEdit" value="${heringAddressForm.addressId}"/>		
 		<div class="form-group">
 			<formElement:formSelectBox idKey="address.title" labelKey="address.title"
 		        	path="titleCode" mandatory="true" skipBlank="true" items="${titles}"

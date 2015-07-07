@@ -23,7 +23,7 @@
 	</c:if>
 	<div class="pull-right">
 		<small>
-			<a href="#deliveryAddressModal" data-toggle="modal" class="btn-editar ${type == 'billing' ? type : ''}">
+			<a href="#deliveryAddressModal${not empty address.id ? address.id : ''}" data-toggle="modal" class="btn-editar ${type == 'billing' ? type : ''}">
 				<span class="glyphicon glyphicon-cog"></span>
 			</a>			
 		</small>
@@ -46,4 +46,4 @@
 	    ${address.country.name}<br />
     </c:if>
 </div>
-<address:addressFormSelector regions="${regions}" country="${country}"/>
+<address:addressFormSelector regions="${regions}" country="${country}" addressId="${not empty address.id ? address.id : ''}" type="${type}"/>
