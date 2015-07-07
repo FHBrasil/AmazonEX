@@ -24,6 +24,7 @@ import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
+import de.hybris.platform.commerceservices.i18n.CommerceCommonI18NService;
 import de.hybris.platform.store.services.BaseStoreService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 
@@ -91,6 +92,9 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 	@Resource
 	private I18NFacade i18NFacade;
 	
+	@Resource
+	private CommerceCommonI18NService commerceCommonI18NService;
+	
 	/**
 	 * @return the customerFacade
 	 */
@@ -124,6 +128,7 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 		model.addAttribute("expressCheckoutAllowed", Boolean.valueOf(checkoutFlowFacade.isExpressCheckoutEnabledForStore()));
 		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.TRUE);
+		model.addAttribute("countries", getCommerceCommonI18NService().getAllCountries());
 		
 		return getDefaultLoginPage(loginError, session, model);
 	}
@@ -291,6 +296,11 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 	public HeringRegistrationValidator getRegistrationValidator()
 	{
 		return registrationValidator;
+	}
+	
+	protected CommerceCommonI18NService getCommerceCommonI18NService()
+	{
+		return commerceCommonI18NService;
 	}
 	
 }

@@ -22,9 +22,7 @@
                 class="span-24 section1 cms_disp-img_slot" />
         </cms:pageSlot>
         <div class="container">
-            <header>
-                <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
-            </header>
+            <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
         </div>
         <div class="pagination150224 container">
             <h1 class="col-xs-12 col-sm-5">
