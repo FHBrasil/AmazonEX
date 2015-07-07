@@ -21,8 +21,11 @@
     </small>
 </div>
 	<div class="container">
-   		<div class="col-xs-12">
+   		<div class="col-sm-8 hidden-xs">
    			<h1><spring:theme code="text.fliegercommerce.texto15"/>, ${customerData.firstName}! </h1>
+		</div>
+		<div class="col-sm-4 text-right margin-bottom">
+			<a class="btn btn-default" href="<c:url value="/logout"/>"> <span class="glyphicon glyphicon-log-out"></span>Ausloggen</a>
 		</div>
 		<div class="col-sm-12 col-md-8">
 			<div class="row">
