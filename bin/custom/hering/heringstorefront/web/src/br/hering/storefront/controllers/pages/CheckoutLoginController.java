@@ -163,19 +163,19 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 		model.addAttribute("user", null);
 		
 		getGuestValidator().validate(form, bindingResult, model);
-		
-		boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
+//		
+//		boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
 
 		model.addAttribute("pageType", "CHECKOUT");
 
-		
-		
-		if(cpfCnpjAlreadyRegistered)
-		{
-			//SPJ 23-06-2014 disable cpf cnpj validation on guest checkout 
-		//	bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
-		}
-		
+//		
+//		
+//		if(cpfCnpjAlreadyRegistered)
+//		{
+//			//SPJ 23-06-2014 disable cpf cnpj validation on guest checkout 
+//		//	bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
+//		}
+//		
 		return processAnonymousCheckoutUserRequest(form, bindingResult, model, request, response);
 	}
 	
@@ -192,7 +192,8 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 //				GlobalMessages.addErrorMessage(model, "form.global.error");
 				return handleRegistrationError(model);
 			}
-
+			
+			
 			((HeringCustomerFacade) getCustomerFacade()).createGuestUserForAnonymousCheckout(form.getEmail(), form.getCpfcnpj(), 
 						getMessageSource().getMessage("text.guest.customer",null,getI18nService().getCurrentLocale()), form.getDateBirthday(), form.getGender());
 			getGuidCookieStrategy().setCookie(request, response);
@@ -206,6 +207,7 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 		}
 
 		return REDIRECT_PREFIX + getSuccessRedirect(request, response);
+
 	}
 
 

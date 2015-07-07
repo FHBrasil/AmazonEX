@@ -10,9 +10,16 @@
 <template:page pageTitle="${pageTitle}">
 <section class="identificacao-checkout page">
 	<div class="col-sm-4">
-		<c:url value="/login/checkout/register" var="registerAndCheckoutActionUrl" />
-		    <user:register actionNameKey="checkout.login.registerAndCheckout"
-		          action="${registerAndCheckoutActionUrl}" />
+<%-- 		<c:url value="/login/checkout/register" var="registerAndCheckoutActionUrl" /> --%>
+<%-- 		    <user:register actionNameKey="checkout.login.registerAndCheckout" --%>
+<%-- 		          action="${registerAndCheckoutActionUrl}" /> --%>
+                <sec:authorize ifAnyGranted="ROLE_ANONYMOUS">
+		            <div class="right">
+		                <c:url value="/login/checkout/guest" var="guestCheckoutUrl" />
+		                <user:guestCheckout actionNameKey="checkout.login.guestCheckout"
+		                      action="${guestCheckoutUrl}" /> 
+		            </div>
+        		</sec:authorize>
 	</div>
 	<div class="col-sm-4">
 	       <c:url value="/checkout/j_spring_security_check" var="loginAndCheckoutActionUrl" />

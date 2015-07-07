@@ -3,8 +3,11 @@
  */
 package com.paypal.hybris.ordercancel;
 
+import br.hering.core.model.order.payment.PaypalPaymentInfoModel;
+
 import com.ebay.api.*;
 import com.ebay.utils.PaypalStringUtils;
+
 import de.hybris.platform.ordercancel.OrderCancelException;
 import de.hybris.platform.ordercancel.OrderCancelRequest;
 import de.hybris.platform.ordercancel.impl.executors.ImmediateCancelRequestExecutor;
@@ -17,12 +20,12 @@ import de.hybris.platform.payment.jalo.PaymentTransaction;
 import de.hybris.platform.payment.jalo.PaymentTransactionEntry;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.paypal.hybris.constants.PaypalConstants;
-import br.hering.core.model.order.payment.PayPalPaymentInfoModel;
 import com.paypal.hybris.service.PaypalPaymentService;
 
 import java.util.List;
@@ -52,7 +55,7 @@ public class PayPalCancelRequestExecutor extends ImmediateCancelRequestExecutor
 	{
 		LOG.debug("Process cancel request through PayPal");
 
-		if (orderCancelRequest.getOrder().getPaymentInfo() instanceof PayPalPaymentInfoModel)
+		if (orderCancelRequest.getOrder().getPaymentInfo() instanceof PaypalPaymentInfoModel)
 		{
 			List<PaymentTransactionModel> paymentTransactionList = orderCancelRequest.getOrder().getPaymentTransactions();
 
@@ -66,7 +69,7 @@ public class PayPalCancelRequestExecutor extends ImmediateCancelRequestExecutor
 					{
 						if (PaymentTransactionType.AUTHORIZATION.equals(paymentTransactionEntry.getType()))
 						{
-							//final PayPalPaymentInfoModel paymentInfo = (PayPalPaymentInfoModel) orderCancelRequest.getOrder().getPaymentInfo();
+							//final PaypalPaymentInfoModel paymentInfo = (PaypalPaymentInfoModel) orderCancelRequest.getOrder().getPaymentInfo();
 							final DoVoidRequestType request = new DoVoidRequestType();
 
 							request.setAuthorizationID(paymentTransactionEntry.getRequestId());

@@ -12,14 +12,15 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
 
 import org.springframework.beans.factory.annotation.Required;
 
-import br.hering.core.model.order.payment.PayPalPaymentInfoModel;
+import br.hering.core.model.order.payment.PaypalPaymentInfoModel;
+
 
 
 /**
  * @author Aliaksei_Sery (EPAM Systems)
  *
  */
-public class PaypalPaymentInfoPopulator implements Populator<PayPalPaymentInfoModel, CCPaymentInfoData>
+public class PaypalPaymentInfoPopulator implements Populator<PaypalPaymentInfoModel, CCPaymentInfoData>
 {
 	private Converter<AddressModel, AddressData> addressConverter;
 
@@ -40,7 +41,7 @@ public class PaypalPaymentInfoPopulator implements Populator<PayPalPaymentInfoMo
 	 * @see de.hybris.platform.converters.Populator#populate(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public void populate(final PayPalPaymentInfoModel source, final CCPaymentInfoData target) throws ConversionException
+	public void populate(final PaypalPaymentInfoModel source, final CCPaymentInfoData target) throws ConversionException
 	{
 		target.setId(source.getPk().toString());
 		target.setCardType("PAYPAL");

@@ -19,6 +19,13 @@
         <section class="identificacao page">
             <div class="col-sm-4">
                 <%-- register.tag --%>
+<!--                 <sec:authorize ifAnyGranted="ROLE_ANONYMOUS"> -->
+<!-- 		            <div class="right"> -->
+<%-- 		                <c:url value="/login/checkout/guest" var="guestCheckoutUrl" /> --%>
+<%-- 		                <user:guestCheckout actionNameKey="checkout.login.guestCheckout" --%>
+<%-- 		                      action="${guestCheckoutUrl}" />  --%>
+<!-- 		            </div> -->
+<!--         		</sec:authorize> -->
                 <c:url value="/login/register" var="registerActionUrl" />
                 <user:register actionNameKey="register.submit" action="${registerActionUrl}" />
             </div>

@@ -30,18 +30,20 @@
 	</div>
 </div>
 <div class="panel-body">
-	${address.receiver}<br />
-    ${address.line1},&nbsp;${address.number}<br />
-    <c:if test="${not empty address.complement}">
-    	${address.complement}<br />
+	<c:if test="${not empty address}">
+		${address.receiver}<br />
+	    ${address.line1},&nbsp;${address.number}<br />
+	    <c:if test="${not empty address.complement}">
+	    	${address.complement}<br />
+	    </c:if>
+	    <c:if test="${not empty address.reference}">
+	    	${address.reference}<br />
+	    </c:if>
+	    ${address.postalCode}&nbsp;${address.town}<br />
+	   	<c:if test="${not empty address.region.name}">
+	    	${address.region.name}<br />
+	    </c:if>                
+	    ${address.country.name}<br />
     </c:if>
-    <c:if test="${not empty address.reference}">
-    	${address.reference}<br />
-    </c:if>
-    ${address.postalCode}&nbsp;${address.town}<br />
-   	<c:if test="${not empty address.region.name}">
-    	${address.region.name}<br />
-    </c:if>                
-    ${address.country.name}<br />
 </div>
 <address:addressFormSelector regions="${regions}" country="${country}"/>

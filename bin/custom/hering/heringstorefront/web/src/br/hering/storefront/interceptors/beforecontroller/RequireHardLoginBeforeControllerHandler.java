@@ -34,10 +34,12 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.util.CookieGenerator;
 
+import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
+
 
 /**
  */
-public class RequireHardLoginBeforeControllerHandler implements BeforeControllerHandler
+public class RequireHardLoginBeforeControllerHandler implements BeforeControllerHandlerAdaptee
 {
 	private static final Logger LOG = Logger.getLogger(RequireHardLoginBeforeControllerHandler.class);
 

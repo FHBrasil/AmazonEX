@@ -42,4 +42,11 @@
 		<nature>net.sourceforge.pmd.eclipse.plugin.pmdNature</nature>
 		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>acceleratorstorefrontcommons</name>
+			<type>2</type>
+			<location>/workspace/kpfamily_5/bin/ext-accelerator/acceleratorstorefrontcommons/commonweb/src/de/hybris/platform/acceleratorstorefrontcommons</location>
+		</link>
+	</linkedResources>
 </projectDescription>

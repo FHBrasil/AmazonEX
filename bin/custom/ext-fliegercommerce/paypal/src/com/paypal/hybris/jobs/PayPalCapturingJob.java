@@ -3,9 +3,10 @@
  */
 package com.paypal.hybris.jobs;
 
-import br.hering.core.jalo.order.payment.PayPalPaymentInfo;
-import br.hering.core.model.order.payment.PayPalPaymentInfoModel;
+import br.hering.core.model.order.payment.PaypalPaymentInfoModel;
+
 import com.paypal.hybris.service.OrderCompleteProcessService;
+
 import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.c2l.CurrencyModel;
 import de.hybris.platform.core.model.order.OrderModel;
@@ -154,8 +155,8 @@ public class PayPalCapturingJob extends AbstractJobPerformable<CronJobModel>
 
 			final OrderModel order = (OrderModel) it.next();
 			PaymentInfoModel paymentInfoModel = order.getPaymentInfo();
-			if (paymentInfoModel != null && paymentInfoModel instanceof PayPalPaymentInfoModel &&
-					!Boolean.TRUE.equals(((PayPalPaymentInfoModel) paymentInfoModel).getUseReferenceTransaction())) {
+			if (paymentInfoModel != null && paymentInfoModel instanceof PaypalPaymentInfoModel &&
+					!Boolean.TRUE.equals(((PaypalPaymentInfoModel) paymentInfoModel).getUseReferenceTransaction())) {
 				final DoCaptureRequestType request = prepareCaptureRequest(order);
 
 				final DoCaptureResponseType response = getPaypalPaymentService().doCapture(request);

@@ -25,17 +25,17 @@
         </div>
     </c:if>
     <c:if test="${searchPageData.pagination.totalNumberOfResults > 0}">
-        <div class="filters center">
-            <ycommerce:testId code="searchResults_productsFound_label">
+        <div>
+            <%--<ycommerce:testId code="searchResults_productsFound_label">
                 <div class="left">
                     <spring:theme code="${themeMsgKey}.totalResults"
                         arguments="${searchPageData.pagination.totalNumberOfResults}" />
                 </div>
-            </ycommerce:testId>
+            </ycommerce:testId>--%>
             <c:if test="${not empty searchPageData.sorts}">
                 <form id="sort_form${top ? '1' : '2'}" name="sort_form${top ? '1' : '2'}"
                     method="get" action="#" class="sortForm">
-                    <div class="right">
+                    <div>
                         <select id="sortOptions${top ? '1' : '2'}" name="sort">
                             <c:forEach items="${searchPageData.sorts}" var="sort">
                                 <option value="${sort.code}"

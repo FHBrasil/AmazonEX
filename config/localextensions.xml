@@ -55,7 +55,6 @@
         <extension name="acceleratorstorefrontcommons" />
         <extension name="mediaconversion" />
         <extension name="mediaimportation" />
-        
 
         <!-- Flieger Commerce extensions -->
         <extension name="heringfulfilmentprocess" />
@@ -72,10 +71,11 @@
         <extension name="adyen" />
         <extension name="clearsaleantifraude" />
         <extension name="paypal" />
+        <extension name="fliegercommercecms" />
         <extension name="bazaarvoice" />
-        
+
         <!-- Flieger Commer AddOn -->
-<!--         <extension name="paypaladdon" /> -->
+        <extension name="paypaladdon" />
 
         <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />
@@ -83,12 +83,13 @@
         <extension name="kpfamilycockpits" />
         <extension name="kpfamilyfacades" />
         <extension name="kpfamilyservices" />
-       <!--  <extension name="kpfamilytest" /> -->
-       
+        <!-- <extension name="kpfamilytest" /> -->
+
         <extension name="storecatalogfeed" />
         <extension name="pixicore" />
         <extension name="pixiapi" />
-        <extension name="newslettersubscription" />   
+        <extension name="newslettersubscription" />
         <extension name="newsletteraddon" />
+
     </extensions>
 </hybrisconfig>

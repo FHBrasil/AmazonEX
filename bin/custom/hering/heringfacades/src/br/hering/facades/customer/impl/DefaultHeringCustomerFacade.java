@@ -221,12 +221,12 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	{
 		validateParameterNotNullStandardMessage("email", email);
 		
-		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
-		{
-			validateParameterNotNullStandardMessage("cpfcnpj", cpfcnpj);
-		}
+//		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+//		{
+//			validateParameterNotNullStandardMessage("cpfcnpj", cpfcnpj);
+//		}
 		
-		validateParameterNotNullStandardMessage("birthday", birthday);
+//		validateParameterNotNullStandardMessage("birthday", birthday);
 		
 		final CustomerModel guestCustomer = getModelService().create(CustomerModel.class);
 		
@@ -236,17 +236,17 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		guestCustomer.setUid(guid + "|" + email);
 		guestCustomer.setName(name);
 		
-		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
-		{
-			guestCustomer.setCpfcnpj(cpfcnpj);
-		}
+//		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+//		{
+//			guestCustomer.setCpfcnpj(cpfcnpj);
+//		}
 		
 		guestCustomer.setType(CustomerType.valueOf(CustomerType.GUEST.getCode()));
 		guestCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
 		guestCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
 		guestCustomer.setBirthday(birthday);
 		guestCustomer.setGender(gender);
-
+		
 		getCustomerAccountService().registerGuestForAnonymousCheckout(guestCustomer, guid);
 		updateCartWithGuestForAnonymousCheckout(getCustomerConverter().convert(guestCustomer));
 	}

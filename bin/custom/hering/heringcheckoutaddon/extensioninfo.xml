@@ -17,6 +17,8 @@
         <requires-extension name="addonsupport" />
         <requires-extension name="b2ccheckoutaddon" />
         <requires-extension name="heringcore" />
+        <requires-extension name="paypal" />
+        <requires-extension name="paypaladdon" />
         <coremodule generated="true" manager="br.hering.checkout.jalo.HeringcheckoutaddonManager"
             packageroot="br.hering.checkout" />
     </extension>

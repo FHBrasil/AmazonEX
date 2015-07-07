@@ -1,143 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- [y] hybris Platform
+<!-- [y] hybris Platform Copyright (c) 2000-2014 hybris AG All rights reserved. This 
+    software is the confidential and proprietary information of hybris ("Confidential 
+    Information"). You shall not disclose such Confidential Information and shall use 
+    it only in accordance with the terms of the license agreement you entered into with 
+    hybris. -->
 
- Copyright (c) 2000-2014 hybris AG
- All rights reserved.
-
- This software is the confidential and proprietary information of hybris
- ("Confidential Information"). You shall not disclose such Confidential
- Information and shall use it only in accordance with the terms of the
- license agreement you entered into with hybris.
--->
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:security="http://www.springframework.org/schema/security"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context.xsd
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/paypal/request">paypalPaymentRequestController</prop>
+                <prop key="/paypal/response">paypalPaymentResponseController</prop>
+            </props>
+        </property>
+    </bean>
 
-	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
-<!-- 	<bean id="defaultPaypaladdonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor"> -->
-<!-- 		<property name="addOnName" value="paypaladdon"/> -->
-<!-- 	</bean> -->
+    <!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties 
+        resource bundle as javascript variables -->
+    <bean id="defaultPaypaladdonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+        <property name="addOnName" value="paypaladdon" />
+    </bean>
 
-<!-- 	<bean id="defaultPaypaladdonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler"> -->
-<!-- 		<property name="messageSource" ref="defaultPaypaladdonJavaScriptMessageResourceAccessor"/> -->
-<!-- 	</bean> -->
+    <bean id="defaultPaypaladdonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee"
+        class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+        <property name="messageSource"
+            ref="defaultPaypaladdonJavaScriptMessageResourceAccessor" />
+    </bean>
 
-<!-- 	<bean id="getPaypaladdonBeforeViewHandler" parent="beforeViewHandlerAdapter"> -->
-<!-- 		<property name="adaptee"> -->
-<!-- 			<ref bean="defaultPaypaladdonBeforeViewJsPropsHandlerAdaptee"/> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="PaypaladdonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective"> -->
-<!-- 		<property name="add" ref="getPaypaladdonBeforeViewHandler"/> -->
-<!-- 	</bean> -->
-	
-<!-- 	<bean id="paypalBeforeViewHandler" class="com.paypal.hybris.addon.controllers.pages.PayPalBeforeViewHandler"> -->
-<!-- 		<property name="sessionService" ref="sessionService"/> -->
-<!-- 		<property name="cmsComponentService" ref="cmsComponentService"/> -->
-<!--         <property name="payPalUserHelper" ref="payPalUserHelper"/> -->
-<!-- 	</bean> -->
+    <bean id="getPaypaladdonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+        <property name="adaptee">
+            <ref bean="defaultPaypaladdonBeforeViewJsPropsHandlerAdaptee" />
+        </property>
+    </bean>
 
-	<!-- Add our new before view adaptee to the existing list using a merge -->
-<!-- 	<bean depends-on="beforeViewHandlersList" parent="listMergeDirective"> -->
-<!-- 		<property name="add"> -->
-<!-- 			<bean parent="beforeViewHandlerAdapter"> -->
-<!-- 				<property name="adaptee" ref="paypalBeforeViewHandler" /> -->
-<!-- 			</bean> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
+    <bean id="PaypaladdonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList"
+        parent="listMergeDirective">
+        <property name="add" ref="getPaypaladdonBeforeViewHandler" />
+    </bean>
+
+    <bean id="paypalBeforeViewHandler"
+        class="com.fliegersoftware.addon.paypal.controllers.pages.PayPalBeforeViewHandler">
+        <property name="sessionService" ref="sessionService" />
+        <property name="cmsComponentService" ref="cmsComponentService" />
+        <property name="payPalUserHelper" ref="payPalUserHelper" />
+    </bean>
+
+    <!-- Add our new before view adaptee to the existing list using a merge -->
+    <bean depends-on="beforeViewHandlersList" parent="listMergeDirective">
+        <property name="add">
+            <bean parent="beforeViewHandlerAdapter">
+                <property name="adaptee" ref="paypalBeforeViewHandler" />
+            </bean>
+        </property>
+    </bean>
 
     <!-- Before Controller Handler -->
-<!--     <bean id="payPalBeforeControllerHandler" class="com.paypal.hybris.addon.controllers.pages.PayPalBeforeControllerHandler"> -->
-<!--    		<property name="sessionService" ref="sessionService"/> -->
-<!--    	</bean> -->
+    <bean id="payPalBeforeControllerHandler"
+        class="com.fliegersoftware.addon.paypal.controllers.pages.PayPalBeforeControllerHandler">
+        <property name="sessionService" ref="sessionService" />
+    </bean>
 
-<!--     <bean depends-on="beforeControllerHandlersList" parent="listMergeDirective"> -->
-<!--    		<property name="add"> -->
-<!--    			<bean parent="beforeControllerHandlerAdapter"> -->
-<!--    				<property name="adaptee" ref="payPalBeforeControllerHandler" /> -->
-<!--    			</bean> -->
-<!--    		</property> -->
-<!--    	</bean> -->
+    <bean depends-on="beforeControllerHandlersList" parent="listMergeDirective">
+        <property name="add">
+            <bean parent="beforeControllerHandlerAdapter">
+                <property name="adaptee" ref="payPalBeforeControllerHandler" />
+            </bean>
+        </property>
+    </bean>
 
-	
-	
-	<!-- PayPal Credit Button -->
-<!-- 	<bean id="paypalCreditShortcutRendererMapping" parent="addonCmsComponentRendererMapping"> -->
-<!--         <property name="typeCode" value="PayPalCreditShortcut" /> -->
-<!--         <property name="renderer" ref="genericAddOnCMSComponentRenderer" /> -->
-<!-- 	</bean> -->
-	
-	<!--  PayPal Express Checkout Mark -->
-<!-- 	<bean id="paypalExpressCheckoutMarkRendererMapping" parent="addonCmsComponentRendererMapping"> -->
-<!--         <property name="typeCode" value="PayPalExpressCheckoutMark" /> -->
-<!--         <property name="renderer" ref="genericAddOnCMSComponentRenderer" /> -->
-<!-- 	</bean> -->
-	
-	<!--  PayPal Credit Financing Banner -->
-<!-- 	<bean id="paypalCreditFinancingBannerRendererMapping" parent="addonCmsComponentRendererMapping"> -->
-<!--         <property name="typeCode" value="PayPalCreditFinancingBanner" /> -->
-<!--         <property name="renderer" ref="genericAddOnCMSComponentRenderer" /> -->
-<!-- 	</bean> -->
-	
-	<!--  PayPal Jsp Include Component -->     
-<!-- 	<bean id="payPalJspIncludeComponentRendererMapping" parent="addonCmsComponentRendererMapping"> -->
-<!--         <property name="typeCode" value="PayPalJspIncludeComponent" /> -->
-<!--         <property name="renderer" ref="genericAddOnCMSComponentRenderer" /> -->
-<!-- 	</bean> -->
-	
-	<!-- This alias does not exist in hybris 5.2 and 5.3 -->
-<!-- 	<alias name="addOnJspIncludeCMSComponentRenderer" alias="genericAddOnCMSComponentRenderer" /> -->
-	
-	<!-- To handle PayPal AddOn controllers -->
-	<contexCt:component-scan base-package="com.paypal.hybris.addon.controllers" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver"/>
+    <bean id="paypalUserHelper"
+        class="com.fliegersoftware.addon.paypal.controllers.utils.PayPalUserHelper" />
+
+    <bean id="paypalPaymentRequestController"
+        class="com.fliegersoftware.addon.paypal.controllers.pages.PaypalPaymentRequestController">
+        <property name="payPalUserHelper" ref="paypalUserHelper" />
+    </bean>
+
+    <bean id="paypalPaymentResponseController"
+        class="com.fliegersoftware.addon.paypal.controllers.pages.PaypalPaymentResponseController">
+    </bean>
+
+    <!-- PayPal Credit Button -->
+    <bean id="paypalCreditShortcutRendererMapping" parent="addonCmsComponentRendererMapping">
+        <property name="typeCode" value="PayPalCreditShortcut" />
+        <property name="renderer" ref="genericAddOnCMSComponentRenderer" />
+    </bean>
+
+    <!-- PayPal Express Checkout Mark -->
+    <bean id="paypalExpressCheckoutMarkRendererMapping" parent="addonCmsComponentRendererMapping">
+        <property name="typeCode" value="PayPalExpressCheckoutMark" />
+        <property name="renderer" ref="genericAddOnCMSComponentRenderer" />
+    </bean>
+
+    <!-- PayPal Credit Financing Banner -->
+    <bean id="paypalCreditFinancingBannerRendererMapping" parent="addonCmsComponentRendererMapping">
+        <property name="typeCode" value="PayPalCreditFinancingBanner" />
+        <property name="renderer" ref="genericAddOnCMSComponentRenderer" />
+    </bean>
+
+    <!-- PayPal Jsp Include Component -->
+    <bean id="payPalJspIncludeComponentRendererMapping" parent="addonCmsComponentRendererMapping">
+        <property name="typeCode" value="PayPalJspIncludeComponent" />
+        <property name="renderer" ref="genericAddOnCMSComponentRenderer" />
+    </bean>
+
+    <!-- This alias does not exist in hybris 5.2 and 5.3 -->
+    <alias name="addOnJspIncludeCMSComponentRenderer" alias="genericAddOnCMSComponentRenderer" />
+
+    <!-- To handle PayPal AddOn controllers -->
+    <context:component-scan base-package="com.fliegersoftware.addon.paypal.controllers"
+        scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
 
     <!-- Security rules configuration -->
-<!--     <bean id="payPalExcludeUrlPostProcessor" class="com.paypal.hybris.addon.postprocessors.ExcludeUrlSetPostProcessor"> -->
-<!--         <property name="beanName" value="excludeUrlSet"/> -->
-<!--         <property name="excludeUrlSet"> -->
-<!--             <set> -->
-<!--                 <value>/paypal/checkout/**</value> -->
-<!--             </set> -->
-<!--         </property> -->
-<!--     </bean> -->
+    <bean id="payPalExcludeUrlPostProcessor"
+        class="com.fliegersoftware.addon.paypal.postprocessors.ExcludeUrlSetPostProcessor">
+        <property name="beanName" value="excludeUrlSet" />
+        <property name="excludeUrlSet">
+            <set>
+                <value>/paypal/**</value>
+            </set>
+        </property>
+    </bean>
 
-<!--     <security:http disable-url-rewriting="true" pattern="/paypal/**" use-expressions="true"> -->
-<!--         <security:anonymous username="anonymous" granted-authority="ROLE_ANONYMOUS" /> -->
-<!--         <security:access-denied-handler error-page="/login"/> -->
+    <security:http disable-url-rewriting="true" pattern="/paypal/**"
+        use-expressions="true">
+        <security:anonymous username="anonymous"
+            granted-authority="ROLE_ANONYMOUS" />
+        <security:access-denied-handler
+            error-page="/login" />
 
-<!--         <security:session-management session-authentication-strategy-ref="fixation" /> -->
+        <security:session-management
+            session-authentication-strategy-ref="fixation" />
 
         <!-- SSL / AUTHENTICATED pages -->
 
-<!--         <security:intercept-url pattern="/paypal/checkout/hop/*" requires-channel="https" /> -->
+        <security:intercept-url pattern="/paypal/*"
+            requires-channel="https" />
 
-<!--         <security:form-login -->
-<!--                 login-processing-url="/checkout/j_spring_security_check" -->
-<!--                 login-page="/login/checkout" -->
-<!--                 authentication-failure-handler-ref="loginCheckoutAuthenticationFailureHandler" -->
-<!--                 authentication-success-handler-ref="loginCheckoutGuidAuthenticationSuccessHandler" /> -->
+        <security:form-login login-processing-url="/checkout/j_spring_security_check"
+            login-page="/login/checkout" authentication-failure-handler-ref="loginCheckoutAuthenticationFailureHandler"
+            authentication-success-handler-ref="loginCheckoutGuidAuthenticationSuccessHandler" />
 
-<!--         <security:logout logout-url="/logout" success-handler-ref="logoutSuccessHandler" /> -->
+        <security:logout logout-url="/logout"
+            success-handler-ref="logoutSuccessHandler" />
 
-<!--         <security:port-mappings> -->
-<!--             <security:port-mapping http="#{configurationService.configuration.getProperty('tomcat.http.port')}" -->
-<!--                                    https="#{configurationService.configuration.getProperty('tomcat.ssl.port')}" /> -->
-<!--             <security:port-mapping http="80" https="443" /> -->
-            <!--security:port-mapping http="#{configurationService.configuration.getProperty('proxy.http.port')}"
-                https="#{configurationService.configuration.getProperty('proxy.ssl.port')}" /-->
-<!--         </security:port-mappings> -->
+        <security:port-mappings>
+            <security:port-mapping
+                http="#{configurationService.configuration.getProperty('tomcat.http.port')}"
+                https="#{configurationService.configuration.getProperty('tomcat.ssl.port')}" />
+            <security:port-mapping http="80" https="443" />
+            <!-- <security:port-mapping http="#{configurationService.configuration.getProperty('proxy.http.port')}" 
+                https="#{configurationService.configuration.getProperty('proxy.ssl.port')}" /> -->
+        </security:port-mappings>
 
-<!--         <security:request-cache ref="httpSessionRequestCache" /> -->
-<!--     </security:http> -->
-
+        <security:request-cache ref="httpSessionRequestCache" />
+    </security:http>
 </beans>

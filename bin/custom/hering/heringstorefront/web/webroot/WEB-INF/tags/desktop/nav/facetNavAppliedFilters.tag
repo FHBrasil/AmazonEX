@@ -20,8 +20,7 @@
                 test="${breadcrumb.facetValueName eq 'Feminino' or breadcrumb.facetValueName eq 'Masculino' or breadcrumb.facetValueName eq 'Jeans' or breadcrumb.facetValueName eq 'Acess�rios' or breadcrumb.facetValueName eq 'Sales'}">
                 <header>
                     <h1>
-                        <span
-                            class="remove_item_left_name itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}">${breadcrumb.facetValueName}</span>
+                        <span class="remove_item_left_name itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}">${breadcrumb.facetValueName}</span>
                     </h1>
                 </header>
             </c:if>
@@ -38,14 +37,16 @@
             <c:choose>
                 <c:when test="${fn:startsWith(breadcrumb.facetValueName, '#')}">
                     <div class="btn btn-d">
-                        <a href="${removeQueryUrl}"><b class="close">x</b> <span>${breadcrumb.facetName}:
-                                <div class="remove_item_left_name facet_block-label itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}" style="background-color:${breadcrumb.facetValueName}; width:15px; height:15px;display:inline!important;position: absolute;top: 9px;left: 35px"></div>
+                        <a href="${removeQueryUrl}"><span>${breadcrumb.facetName}:
+                                <div class="remove_item_left_name facet_block-label itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}" style="background-color:${breadcrumb.facetValueName}; width:15px; height:15px;display:inline!important;position: absolute;top: 9px;left: 35px">
+                                <b class="closef">x</b></div>
                         </span></a>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="btn btn-d">
-                        <a href="${removeQueryUrl}"><b class="close">x</b> <span>${breadcrumb.facetName}:${breadcrumb.facetValueName}</span></a>
+                        <a href="${removeQueryUrl}"><span>${breadcrumb.facetName}:${breadcrumb.facetValueName}</span> 
+                        <b class="closef">x</b></a>
                     </div>
                 </c:otherwise>
             </c:choose>
