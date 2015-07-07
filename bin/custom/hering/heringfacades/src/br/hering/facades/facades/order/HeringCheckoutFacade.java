@@ -74,5 +74,5 @@ public interface HeringCheckoutFacade extends AcceleratorCheckoutFacade {
      * 
      * @param cartData
      */
-    void setBillingAddressIntoCart(AddressData addressData);
+    void saveBillingAddressIntoCart(AddressData addressData);
 }

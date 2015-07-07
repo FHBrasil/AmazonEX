@@ -223,9 +223,6 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
                 paymentDetailsForm.setBillingAddress(this.convertAddressDataIntoAddressForm(cartData
                         .getBillingAddress()));
             }
-            // In order to retrieve the billing address when paypal payment returns, we need to
-            // store it in the CartModel.
-            // getCheckoutFacade().setBillingAddressIntoCart(billingAddressData);
         }
         model.addAttribute("cartData", cartData);
         createProductList(model);
@@ -264,6 +261,38 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     }
     
     
+    /***
+     * @param paymentDetailsForm
+     */
+    private void storeBillingAddressIntoCart(final HeringPaymentDetailsForm paymentDetailsForm) {
+        CartData cartData = getCheckoutFacade().getCheckoutCart();
+        if (cartData.getBillingAddress() == null) {
+            // in case the checkout cart does not already have a billing address, we (try to) get
+            // the user default billing address
+            AddressData billingAddressData = getAddressBilling();
+            if (billingAddressData == null) {
+                // in case user does not have a default billing address, we must clone the
+                // delivery
+                // address
+                billingAddressData = (AddressData) SerializationUtils.clone(cartData
+                        .getDeliveryAddress());
+                if (billingAddressData != null) {
+                    billingAddressData.setShippingAddress(false);
+                    billingAddressData.setBillingAddress(true);
+                }
+            }
+            // At this point, billingAddressData should not be null, because it is either a
+            // already registered billing address, a user default billing address or a cloned
+            // delivery address
+            cartData.setBillingAddress(billingAddressData);
+        }
+        getCheckoutFacade().saveBillingAddressIntoCart(cartData.getBillingAddress());
+    }
+    
+    
+    /**
+     * 
+     */
     @Override
     @RequestMapping(value = "/select-delivery-address/{selectedAddressCode:.*}",
             method = RequestMethod.GET)
@@ -768,6 +797,8 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             final BindingResult bindingResult, final Model model, final HttpServletRequest request,
             final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
         CartData cartData = getCheckoutFacade().getCheckoutCart();
+        // Before doing any validation, we need to ensure that we have a billing address
+        storeBillingAddressIntoCart(paymentDetailsForm);
         getHeringPaymentDetailsValidator().validate(paymentDetailsForm, bindingResult, model);
         if (bindingResult.hasErrors()) {
             GlobalMessages.addErrorMessage(model, "checkout.error.verifyFields");
@@ -784,8 +815,6 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         if (validateCart(redirectModel)) {
             return REDIRECT_PREFIX + "/cart";
         }
-        // Saving the payment information in order to retrieve it when PayPal billing process
-        // returns
         savePaypalPaymentMethod(paymentDetailsForm);
         return paypalPaymentRequestController.expressCheckoutMark(model);
     }
@@ -1134,16 +1163,13 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
      */
     private boolean savePaypalPaymentMethod(final HeringPaymentDetailsForm paymentDetailsForm) {
         final CartData cartData = getCheckoutFacade().getCheckoutCart();
-        final HeringAddressForm formBillingAddress = paymentDetailsForm.getBillingAddress();
         final CCPaymentInfoData paymentInfoData = new CCPaymentInfoData();
         paymentInfoData.setCardType(paymentDetailsForm.getCardTypeCode());
-        AddressData addressData = this.convertAddressFormIntoAddressData(formBillingAddress);
-        getAddressVerificationFacade().verifyAddressData(addressData);
-        cartData.setBillingAddress(addressData);
-        paymentInfoData.setBillingAddress(addressData);
+        getAddressVerificationFacade().verifyAddressData(cartData.getBillingAddress());
+        paymentInfoData.setBillingAddress(cartData.getBillingAddress());
         cartData.setPaymentInfo(paymentInfoData);
-        getCheckoutFacade().setPaymentMode(
-                paymentModeFacade.getPaymentModeForCode(HeringcheckoutaddonWebConstants.PAYPAL));
+        getCheckoutFacade().setPaymentMode(paymentModeFacade.getPaymentModeForCode(
+                HeringcheckoutaddonWebConstants.PAYPAL));
         return Boolean.TRUE.booleanValue();
     }
     
