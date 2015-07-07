@@ -9,6 +9,17 @@
     <p class="h4 text-left">
         <spring:theme code="product.share" />:
     </p>
+
+<div class="social150126 text-left">
+    
+    <a data-toggle="popover" title="Social Plugins" tabindex="0" data-trigger="focus">
+        <span class="babicon babicon-facebook"> </span>
+    </a>
+    <span class="babicon babicon-google"> </span>
+    <span class="babicon babicon-twitter"> </span>
+    <span class="babicon babicon-pinterest"> </span>
+            </a>
+</div>
 <div class="social150126 text-left">
     <div class="fb-like pin-div" data-href="${productUrl}" data-layout="button" data-action="like" data-show-faces="false" data-share="true" data-width="100"></div>
     <!-- Pinterest -->
