@@ -16,7 +16,7 @@
                 <sec:authorize ifAnyGranted="ROLE_ANONYMOUS">
 		            <div class="right">
 		                <c:url value="/login/checkout/guest" var="guestCheckoutUrl" />
-		                <user:guestCheckout actionNameKey="checkout.login.guestCheckout"
+		                <user:guestCheckout actionNameKey= "checkout.login.guestCheckout"
 		                      action="${guestCheckoutUrl}" /> 
 		            </div>
         		</sec:authorize>
@@ -113,5 +113,5 @@
 <!--             </div> -->
 <%--         </section> --%>
 <%--     </section> --%>
->>>>>>> develop
+
 </template:page>
