@@ -1,6 +1,7 @@
 <%@ attribute name="regions" required="true" type="java.util.List"%>
 <%@ attribute name="country" required="false" type="java.lang.String"%>
-<%@ attribute name="page" required="false" type="java.lang.String"%>
+<%@ attribute name="type" required="false" type="java.lang.String"%>
+<%@ attribute name="addressId" required="false" type="java.lang.String"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -12,7 +13,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <input type="hidden" class="contextPath" value="${request.contextPath}" />
-	<div id="deliveryAddressModal" class="addressbook150706 modal fade">
+	<div id="deliveryAddressModal${addressId}" class="addressbook150706 modal fade">
       	<div class="modal-dialog">
        		<div class="modal-content">
           		<div class="modal-header">
@@ -27,10 +28,10 @@
           				<input type="hidden" name="deliveryOrBilling"/>          				
            				<c:forEach items="${addressData}" var="deliveryAddress" varStatus="status">
            					<c:url var="urlDeleteAddress" value="/my-account/remove-address/${deliveryAddress.id}"/>
-           					<c:url var="urlEditAddress" value="/my-account/edit-address/${deliveryAddress.id}"/>           					
+           					<c:url var="urlEditAddress" value="/my-account/edit-address/${type}/${deliveryAddress.id}"/>           					
           					<div class="radio">
-								<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}" ${status.index == '0' ? 'checked' : ''}>
-								<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">
+								<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${type}${deliveryAddress.id}" ${deliveryAddress.id == addressId ? 'checked' : ''}>
+								<label class="btn btn-default btn-address050609" for="${type}${deliveryAddress.id}">
 									<small>${deliveryAddress.receiver}<br /></small>
 									<small><c:if test="${not empty deliveryAddress.reference}">
 										<spring:theme code="packstation.postNumber"/> ${deliveryAddress.reference}<br />
