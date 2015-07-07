@@ -14,6 +14,7 @@ import de.hybris.platform.acceleratorservices.uiexperience.UiExperienceService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
+import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.acceleratorservices.enums.UiExperienceLevel;
 import de.hybris.platform.core.model.c2l.CurrencyModel;
 import de.hybris.platform.core.model.order.CartModel;
@@ -79,6 +80,7 @@ public class PayPalCheckoutFacade extends DefaultHeringCheckoutFacade {
     @Resource
     private UiExperienceService uiExperienceService;
     private Converter<PaypalPaymentInfoModel, CCPaymentInfoData> paypalPaymentInfoConverter;
+    private Converter<CartData, CartModel> cartModelConverter;
     
     
     /*
@@ -279,9 +281,7 @@ public class PayPalCheckoutFacade extends DefaultHeringCheckoutFacade {
                         final String billingAgreementID =
                                 doExprCheckPaymentResData.getBillingAgreementID();
                         paymentInfo.setBillingAgreementID(billingAgreementID);
-                        //
                         paymentInfo.setBillingAddress(cartModel.getPaymentAddress());
-                        //
                         getModelService().saveAll(cartModel);
                         try {
                             calculationService.calculate(cartModel);
@@ -419,9 +419,16 @@ public class PayPalCheckoutFacade extends DefaultHeringCheckoutFacade {
     
     
     /**
-     * 
+     * @param cartData
+     * @return
      */
-    private void savePaypalPaymentMethod() {
+    public CartData saveCartData(CartData cartData) {
+        CartModel cartModel = getCart();
+        cartModel = cartModelConverter.convert(cartData, cartModel);
+        getModelService().save(cartModel);
+        getModelService().refresh(cartModel);
+        getCartService().setSessionCart(cartModel);
+        return getCartFacade().getSessionCart();
     }
     
     
