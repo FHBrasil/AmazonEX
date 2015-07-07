@@ -137,15 +137,12 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	{
 
 		CustomerModel customerModel = getCurrentSessionCustomer();		
-		////final AddressModel addressModel = customerModel.getDefaultPaymentAddress();
-		
-		////addressReverseConverter.convert(addressData, addressModel);
-		
+
 		customerModel = heringCustomerAccountService.changePhoneNumber(customerModel, phone);
 
 		CustomerData customerData = new CustomerData();
 		customerConverter.convert(customerModel, customerData);
-
+			
 		return customerData;
 		
 	}

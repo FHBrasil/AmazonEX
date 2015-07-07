@@ -103,6 +103,7 @@
 		<property name="ufIe" type="java.lang.String" />
 		<property name="orders" type="java.util.Collection&lt;java.lang.String>" />
 		<property name="primaryKey" type="java.lang.String"/>
+		<property name="defaultPhoneNumber" type="java.lang.String" />
 	</bean>
         
     <bean class="de.hybris.platform.commercefacades.user.data.RegisterData">

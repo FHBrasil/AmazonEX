@@ -792,6 +792,7 @@ public class AccountPageController extends AbstractSearchPageController {
 			heringCustomerFacade.deleteAccount();
 		}
 
+		GlobalMessages.addInfoMessage(model, "text.fliegercommerce.texto132");
 		return REDIRECT_PREFIX + "/logout?logoutTargetUrlParameter=/login?deleted=true";
 		
 	}
@@ -803,26 +804,19 @@ public class AccountPageController extends AbstractSearchPageController {
 	 */
 	@RequestMapping(value = "/change-phonenumber", method = RequestMethod.POST)
 	@RequireHardLogIn
-	public @ResponseBody String changePhoneNumber(
+	public String changePhoneNumber(
 			RedirectAttributes redirectAttributes,
 			@RequestParam(value = "phone") final String phone) throws CMSItemNotFoundException 
 	{	
 		CustomerData customerData = customerFacade.getCurrentCustomer();
-		////AddressData addressData = customerData.getDefaultBillingAddress();
 		
 		if (customerData != null)
 		{		
-			////addressData.setPhone(phone);
-			//////CHAMAR O HANDLER SET(CUSTOMER MODEL, STRING)
-			////customerData = heringCustomerFacade.changePhoneNumber(addressData);
 			customerData = heringCustomerFacade.changePhoneNumber(phone);
 		}
 
-		////LOG.info("TELEFONE CADASTRADO = " + customerData.getDefaultBillingAddress().getPhone());
-		////GlobalMessages.addInfoMessage(redirectAttributes, "você atualizou seu perfil");
-		LOG.info("fim");
-		////return ControllerConstants.Views.Pages.Account.AccountHomePage;
-		return "Sucesso!";
+		//GlobalMessages.addInfoMessage(redirectAttributes, "phone number updated");
+		return REDIRECT_MY_ACCOUNT;
 			
 	}
 	

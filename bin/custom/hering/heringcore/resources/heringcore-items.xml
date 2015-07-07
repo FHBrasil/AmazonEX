@@ -309,7 +309,7 @@
                         <persistence type="property" />                        
                     </attribute> 
                     
-                    <attribute type="java.lang.String" qualifier="defaultPhoneNumber">
+                    <attribute qualifier="defaultPhoneNumber" type="java.lang.String" >
       					<persistence type="dynamic" attributeHandler="customerDefaultPhoneNumberAttributeHandler" />
       					<modifiers read="true" write="true" />
 					</attribute>

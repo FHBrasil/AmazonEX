@@ -44,6 +44,9 @@ public class HeringCustomerPopulator extends CustomerPopulator
 		target.setUfIe(source.getUfIe());
 		target.setPrimaryKey(source.getPk().getLongValueAsString());
 		
+		target.setDefaultPhoneNumber(source.getDefaultPhoneNumber());
+
+		
 		List<String> orders = new LinkedList<String>();
 		
 		for (OrderModel model : source.getOrders())

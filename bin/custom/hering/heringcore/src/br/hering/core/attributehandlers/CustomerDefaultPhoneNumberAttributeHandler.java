@@ -3,7 +3,6 @@ package br.hering.core.attributehandlers;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-import br.hering.core.customer.impl.DefaultHeringCustomerAccountService;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.servicelayer.model.ModelService;
@@ -32,14 +31,11 @@ public class CustomerDefaultPhoneNumberAttributeHandler implements DynamicAttrib
 
 		final AddressModel addressModel = customerModel.getDefaultPaymentAddress();
 		
-		try 
+		if (addressModel != null)
 		{
 			return addressModel.getPhone1();
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
 		}
+		
 		return null;
 	}
 
@@ -52,13 +48,11 @@ public class CustomerDefaultPhoneNumberAttributeHandler implements DynamicAttrib
 		if (customerModel != null && phone != null)
 		{
 			addressModel.setPhone1(phone);
-			LOG.info("setando phone");
 		}
 		
 		modelService.save(addressModel);
 		modelService.refresh(addressModel);
 		
 	}
-
 
 }

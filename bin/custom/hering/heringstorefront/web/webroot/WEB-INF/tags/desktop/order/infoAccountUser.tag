@@ -9,6 +9,7 @@
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <div class="panel-heading">
 	<span class="glyphicon glyphicon-user"></span> 
 	Konto ${customer.titleCode}
@@ -51,18 +52,18 @@
 					</form>
 					
 
-					<form id="changePhone" action="<c:url value="/my-account/change-phonenumber"/>" method="POST">						
+					<form:form id="changePhone" method="POST" action="/my-account/change-phonenumber" >						
 						<div class="form-group">
 							<%-- <label for="phone">Telefon (optional)</label>
 							<input type="tel" class="form-control" id="inputPhone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}"> --%>
 						
 						<label>Telefon (optional)</label>
-						<input type="tel" name="phone" class="form-control" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}"></input>
+						<input type="tel" name="phone" class="form-control" value="${customer.defaultPhoneNumber}"></input>
 						</div>
 						<div class="form-group">
 							<button class="btn btn-primary">Speichern</button>
 						</div>
-					</form>
+					</form:form>
 					
 					<form>
 						<div class="form-group">
