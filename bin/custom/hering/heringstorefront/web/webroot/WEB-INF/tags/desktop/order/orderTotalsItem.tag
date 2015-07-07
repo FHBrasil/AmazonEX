@@ -16,7 +16,7 @@
 <c:forEach items="${orderHistory.previewEntries}" var="productOrder" begin="0" end="4" varStatus="status">
 	<div class="panel-body pos150327">
 		<div class="col-sm-3 img150327">
-			<a href="#">
+			<a href="${productOrder.product.url}">
  				<product:productPrimaryImage product="${productOrder.product}" format="product"/>
 			</a>
 		</div>
