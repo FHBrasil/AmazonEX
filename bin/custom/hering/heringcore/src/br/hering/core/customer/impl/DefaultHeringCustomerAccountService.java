@@ -10,8 +10,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -30,7 +28,9 @@ import de.hybris.platform.commerceservices.search.pagedata.PageableData;
 import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
 import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.servicelayer.exceptions.ModelSavingException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.util.ServicesUtil;
 
@@ -48,10 +48,7 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	
 	@Resource
 	private ModelService modelService;
-
-	private HttpServletRequest request;
-	
-	
+		
 	@Override
 	public OrderModel getOrderForCode(CustomerModel customerModel, String code)
 	{
@@ -81,6 +78,10 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		return (HeringCustomerAccountDao) super.getCustomerAccountDao();
 	}
 	
+	
+	/**
+	 * @author luiza
+	 */
 	@Override
 	public void deleteAccount(CustomerModel customerModel)
 	{
@@ -91,8 +92,6 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		customerModel.setUid(guid + "|" + customerEmail);
 		customerModel.setType(CustomerType.valueOf( CustomerType.GUEST.getCode()));
 
-		final String customerUid = customerModel.getUid();
-		
 		final Date currentDate = customerModel.getCurrentDate();
 		customerModel.setDeletedAccountDate(currentDate);
 		
@@ -120,5 +119,17 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		
 	}
 
+	@Override
+	public CustomerModel changePhoneNumber(CustomerModel customerModel, String phone)
+	{
+				
+		customerModel.setDefaultPhoneNumber(phone);
+		
+		modelService.save(customerModel);
+		modelService.refresh(customerModel);
+
+		return customerModel;
+	}
+	
 	
 }

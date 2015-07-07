@@ -28,4 +28,6 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	
 	public void deleteAccount(CustomerModel customerModel);
 	
+	public CustomerModel changePhoneNumber(CustomerModel customerModel, String phone);
+	
 }

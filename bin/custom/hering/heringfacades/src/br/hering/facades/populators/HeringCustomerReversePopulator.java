@@ -33,6 +33,7 @@ public class HeringCustomerReversePopulator extends CustomerReversePopulator
 		target.setRgIe(source.getRgIe());
 		target.setUfIe(source.getUfIe());
 
+		target.setDefaultPhoneNumber(source.getDefaultPhoneNumber());
 
 	}
 }

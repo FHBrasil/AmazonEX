@@ -28,5 +28,7 @@ public interface HeringCustomerFacade extends CustomerFacade
 	public void updatePasswordWithSalt(String email, String password);
 	
 	public void deleteAccount();
+	
+	public CustomerData changePhoneNumber(String phone);
 
 }

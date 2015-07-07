@@ -5,11 +5,14 @@ package br.hering.facades.customer.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
+import de.hybris.platform.commercefacades.user.converters.populator.AddressReversePopulator;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.commerceservices.enums.CustomerType;
 import de.hybris.platform.core.enums.Gender;
+import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
@@ -30,7 +33,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
-
+import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 
 import br.flieger.exacttarget.events.CustomerRegisterEvent;
 import br.hering.core.customer.impl.KPCustomerAccountService;
@@ -61,7 +64,15 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	
 	@Resource
 	private HeringCustomerAccountService heringCustomerAccountService;
+	
+	@Resource
+	private Converter<CustomerData, CustomerModel> customerReverseConverter;
+	
+	@Resource
+	private Converter<CustomerModel, CustomerData> customerConverter;
 		
+	@Resource
+	private Converter<AddressData, AddressModel> addressReverseConverter;
 
 	private static final Logger LOG = Logger.getLogger(DefaultHeringCustomerFacade.class);
 
@@ -98,6 +109,9 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	}
 
 	
+	/**
+	 * @author luiza
+	 */
 	@Override
 	public void deleteAccount()
 	{
@@ -114,6 +128,24 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		
 	}
 	
+	
+	/**
+	 * @author luiza
+	 */
+	@Override
+	public CustomerData changePhoneNumber(final String phone)
+	{
+
+		CustomerModel customerModel = getCurrentSessionCustomer();		
+
+		customerModel = heringCustomerAccountService.changePhoneNumber(customerModel, phone);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
 	
 	
 	@Override

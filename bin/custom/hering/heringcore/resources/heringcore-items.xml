@@ -306,8 +306,14 @@
                      <attribute qualifier="deletedAccountDate" type="java.util.Date">
                         <description>Timestamp that indicates when the user deleted his account</description>
                         <modifiers />
-                        <persistence type="property" />
-                    </attribute>                    
+                        <persistence type="property" />                        
+                    </attribute> 
+                    
+                    <attribute qualifier="defaultPhoneNumber" type="java.lang.String" >
+      					<persistence type="dynamic" attributeHandler="customerDefaultPhoneNumberAttributeHandler" />
+      					<modifiers read="true" write="true" />
+					</attribute>
+                                       
                 </attributes>
             </itemtype>
             

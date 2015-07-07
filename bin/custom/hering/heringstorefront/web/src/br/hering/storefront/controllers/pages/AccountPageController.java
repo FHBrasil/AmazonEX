@@ -95,6 +95,7 @@ import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.jalo.order.payment.PaymentMode;
 import de.hybris.platform.order.OrderService;
+import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.type.TypeService;
@@ -184,7 +185,7 @@ public class AccountPageController extends AbstractSearchPageController {
 
 	private static final Logger LOG = Logger
 			.getLogger(AccountPageController.class);
-
+ 
 	@Resource(name = "heringWishlistFacade")
 	private DefaultHeringWishlistFacade heringWishlistFacade;
 	@Resource(name = "wishlistValidator")
@@ -775,8 +776,10 @@ public class AccountPageController extends AbstractSearchPageController {
 	}
 
 	
-	
-	// Adding method to delete current account
+	/**
+	 * Adding method to delete current account
+	 * @author luiza
+	 */
 	@RequestMapping(value = "/delete-account", method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String deleteAccount(final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException 
@@ -789,10 +792,34 @@ public class AccountPageController extends AbstractSearchPageController {
 			heringCustomerFacade.deleteAccount();
 		}
 
+		GlobalMessages.addInfoMessage(model, "text.fliegercommerce.texto132");
 		return REDIRECT_PREFIX + "/logout?logoutTargetUrlParameter=/login?deleted=true";
 		
 	}
 
+	
+	/**
+	 * Adding method to change customer phone number
+	 * @author luiza
+	 */
+	@RequestMapping(value = "/change-phonenumber", method = RequestMethod.POST)
+	@RequireHardLogIn
+	public String changePhoneNumber(
+			RedirectAttributes redirectAttributes,
+			@RequestParam(value = "phone") final String phone) throws CMSItemNotFoundException 
+	{	
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{		
+			customerData = heringCustomerFacade.changePhoneNumber(phone);
+		}
+
+		//GlobalMessages.addInfoMessage(redirectAttributes, "phone number updated");
+		return REDIRECT_MY_ACCOUNT;
+			
+	}
+	
 	
 	/**
 	 * @return Retorna os c��digos dos Base Store registrados, separados por
