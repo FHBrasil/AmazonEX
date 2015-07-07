@@ -13,11 +13,18 @@
  */
 package br.hering.storefront.controllers.pages;
 
+import java.util.Collection;
+import java.util.List;
+
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.order.CartFacade;
+import de.hybris.platform.commercefacades.order.CheckoutFacade;
+import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
+import de.hybris.platform.commercefacades.user.data.TitleData;
+import de.hybris.platform.commerceservices.i18n.CommerceCommonI18NService;
 import de.hybris.platform.commerceservices.order.CommerceCartRestorationException;
 import de.hybris.platform.core.enums.Gender;
 import de.hybris.platform.jalo.JaloSession;
@@ -42,6 +49,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,10 +58,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.hering.core.customer.exceptions.CustomerAuthenticationException;
 import br.hering.facades.customer.HeringCustomerFacade;
+import br.hering.facades.facades.order.HeringCheckoutFacade;
+import br.hering.facades.facades.order.impl.DefaultHeringCheckoutFacade;
+import br.hering.facades.user.HeringUserFacade;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.forms.HeringRegisterForm;
 import br.hering.storefront.forms.validation.HeringRegistrationValidator;
-
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.LoginForm;
@@ -75,6 +85,12 @@ public class LoginPageController extends AbstractHeringLoginController
 	public static final String REDIRECT_LOGIN = REDIRECT_PREFIX + "/login";
 	private HttpSessionRequestCache httpSessionRequestCache;
 
+	@Resource(name = "userFacade")
+	protected HeringUserFacade userFacade;
+	
+	@Resource(name = "acceleratorCheckoutFacade")
+	private CheckoutFacade checkoutFacade;
+	
 	@Resource(name = "heringRegistrationValidator")
 	private HeringRegistrationValidator registrationValidator;
 
@@ -102,6 +118,9 @@ public class LoginPageController extends AbstractHeringLoginController
 	@Resource
 	private BaseStoreService baseStoreService;
 
+	@Resource
+	private CommerceCommonI18NService commerceCommonI18NService;
+	
 	/**
 	 * @return the customerFacade
 	 */
@@ -175,10 +194,12 @@ public class LoginPageController extends AbstractHeringLoginController
 				result = "false";
 			}
 		}
+		
 		model.addAttribute("forgotPassword", result);
 		model.addAttribute("pageType", "LOGIN");
 		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.TRUE);
+		model.addAttribute("countries", getCommerceCommonI18NService().getAllCountries());
 
 		if (!loginError)
 		{
@@ -332,26 +353,27 @@ public class LoginPageController extends AbstractHeringLoginController
 	{
 		getRegistrationValidator().validate(form, bindingResult, model);
 		
-		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
-		{
-			boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
-
-			if (cpfCnpjAlreadyRegistered)
-			{
-				GlobalMessages.addErrorMessage(model, "register.cpfexists");
-				bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
-			}
-		}
-		
+//		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false))
+//		{
+//			boolean cpfCnpjAlreadyRegistered = customerFacade.cpfCnpjAlreadyExists(form.getCpfcnpj()) != null;
+//
+//			if (cpfCnpjAlreadyRegistered)
+//			{
+//				GlobalMessages.addErrorMessage(model, "register.cpfexists");
+//				bindingResult.rejectValue("cpfcnpj", "register.cpfexists");
+//			}
+//		}
+//		
 		model.addAttribute("pageType", "LOGIN");
 		model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 		model.addAttribute("pf", Boolean.parseBoolean(form.getPessoaFisica()));
-		
-		if(!Boolean.parseBoolean(form.getPessoaFisica()))
-		{
-			form.setGender(Gender.UNDEFINED.name());
-		}
-
+//		
+//		
+//		if(!Boolean.parseBoolean(form.getPessoaFisica()))
+//		{
+//			form.setGender(Gender.UNDEFINED.name());
+//		}
+//
 		return processRegisterUserRequest(referer, form, bindingResult, model, request, response, redirectModel);
 	}
 
@@ -362,4 +384,30 @@ public class LoginPageController extends AbstractHeringLoginController
 	{
 		return registrationValidator;
 	}
+	
+	/**
+	 * @return the userFacade
+	 */
+	public HeringUserFacade getUserFacade() {
+		return userFacade;
+	}
+
+	@ModelAttribute("titles")
+	public Collection<TitleData> getTitles() {
+		return userFacade.getTitles();
+	}
+	
+	public CheckoutFacade getCheckoutFacade() {
+		return checkoutFacade;
+	}
+
+	public void setCheckoutFacade(CheckoutFacade checkoutFacade) {
+		this.checkoutFacade = checkoutFacade;
+	}
+	
+	protected CommerceCommonI18NService getCommerceCommonI18NService()
+	{
+		return commerceCommonI18NService;
+	}
+
 }
