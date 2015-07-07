@@ -136,7 +136,7 @@
 				</a>
 			</small>
 		</p>
-		<div id="togglePhone" class="form-group out collapse in">
+		<div id="togglePhone" class="form-group out collapse out">
 				<formElement:formInputBox idKey="register.telephone" labelKey="register.telephone"
 			        path="telephone" inputCSS="text required-numbers form-control" mandatory="true"
 			        hideInputErrorOnField="true" />
