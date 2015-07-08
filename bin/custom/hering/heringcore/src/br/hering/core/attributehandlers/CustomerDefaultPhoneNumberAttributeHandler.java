@@ -1,10 +1,15 @@
 package br.hering.core.attributehandlers;
 
-import org.apache.log4j.Logger;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Required;
 
-import de.hybris.platform.core.model.user.AddressModel;
+import com.google.common.collect.Iterables;
+
+import de.hybris.platform.core.enums.PhoneContactInfoType;
+import de.hybris.platform.core.model.user.AbstractContactInfoModel;
 import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.core.model.user.PhoneContactInfoModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
 
@@ -22,36 +27,43 @@ public class CustomerDefaultPhoneNumberAttributeHandler implements DynamicAttrib
 		this.modelService = modelService;
 	}
 
-	private static final Logger LOG = Logger.getLogger(CustomerDefaultPhoneNumberAttributeHandler.class);
-
 	
 	@Override
 	public String get(final CustomerModel customerModel) 
 	{
 
-		final AddressModel addressModel = customerModel.getDefaultPaymentAddress();
+		Collection<AbstractContactInfoModel> contactInfosModel = customerModel.getContactInfos();
 		
-		if (addressModel != null)
+		if (contactInfosModel != null)
 		{
-			return addressModel.getPhone1();
+			if (!contactInfosModel.isEmpty())
+			{
+				final PhoneContactInfoModel phoneModel = (PhoneContactInfoModel) Iterables.get(contactInfosModel, contactInfosModel.size()-1);
+				final String phone = phoneModel.getPhoneNumber();
+				
+				return phone;
+			}
 		}
-		
+			
 		return null;
+		
 	}
 
 	@Override
 	public void set(final CustomerModel customerModel, final String phone) 
 	{
 		
-		AddressModel addressModel = customerModel.getDefaultPaymentAddress();
+		final PhoneContactInfoModel phoneModel = getModelService().create(PhoneContactInfoModel.class);		
 		
 		if (customerModel != null && phone != null)
 		{
-			addressModel.setPhone1(phone);
+			phoneModel.setPhoneNumber(phone);
+			phoneModel.setType(PhoneContactInfoType.HOME);
+			phoneModel.setUser(customerModel);
 		}
-		
-		modelService.save(addressModel);
-		modelService.refresh(addressModel);
+			
+		modelService.save(phoneModel);
+		modelService.refresh(phoneModel);
 		
 	}
 
