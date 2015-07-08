@@ -1242,13 +1242,24 @@ public class AccountPageController extends AbstractSearchPageController {
 		
 		if (!userFacade.isAddressBookEmpty())
 		{
+			final List<AddressData> addresses = userFacade.getAddressBook();
 			if(isDeliveryOrBilling.equalsIgnoreCase("delivery"))
 			{			
+				if(!StringUtil.isBlank(codeAddressEdit))
+				{
+					if(addresses != null)
+					{
+						for(AddressData address : addresses)
+						{
+							if(address.getId().equals(codeAddressEdit) && address.isBillingAddress())
+								newAddress.setBillingAddress(true);
+						}
+					}
+				}				
 				newAddress.setDefaultAddress(true);
 			}
 			else
-			{
-				final List<AddressData> addresses = userFacade.getAddressBook();
+			{				
 				if(addresses != null)
 				{
 					for(AddressData address : addresses)
