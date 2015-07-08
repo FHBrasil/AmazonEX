@@ -12,8 +12,8 @@ import java.util.List;
 import org.springframework.util.Assert;
 
 import com.flieger.bonussystem.data.BonusSystemData;
-import com.flieger.bonussystem.data.BonusSystemLogData;
-import com.flieger.model.user.BonusSystemLogModel;
+import com.flieger.bonussystem.data.BonusSystemEntryData;
+import com.flieger.model.user.BonusSystemEntryModel;
 import com.flieger.model.user.BonusSystemModel;
 
 
@@ -23,7 +23,7 @@ import com.flieger.model.user.BonusSystemModel;
  */
 public class BonusSystemConverter extends AbstractPopulatingConverter<BonusSystemModel, BonusSystemData>
 {
-	private Converter<BonusSystemLogModel, BonusSystemLogData> bonusSystemLogConverter;
+	private Converter<BonusSystemEntryModel, BonusSystemEntryData> bonusSystemEntryConverter;
 
 	/*
 	 * (non-Javadoc)
@@ -47,7 +47,7 @@ public class BonusSystemConverter extends AbstractPopulatingConverter<BonusSyste
 		Assert.notNull(source, "Parameter source cannot be null.");
 		Assert.notNull(target, "Parameter target cannot be null.");
 
-		final Double points = source.getPoints();
+		final Double points = source.getAvailablePoints();
 		target.setPoints(points == null ? 0 : points.intValue());
 
 		addLogEntries(source, target);
@@ -61,35 +61,35 @@ public class BonusSystemConverter extends AbstractPopulatingConverter<BonusSyste
 	 */
 	private void addLogEntries(final BonusSystemModel source, final BonusSystemData target)
 	{
-		if (source.getLog() == null)
+		if (source.getLogEntries() == null)
 		{
 			return;
 		}
 
-		final List<BonusSystemLogData> log = new ArrayList<BonusSystemLogData>();
+		final List<BonusSystemEntryData> entries = new ArrayList<BonusSystemEntryData>();
 
-		for (final BonusSystemLogModel logModel : source.getLog())
+		for (final BonusSystemEntryModel logModel : source.getLogEntries())
 		{
-			log.add(bonusSystemLogConverter.convert(logModel));
+			entries.add(bonusSystemEntryConverter.convert(logModel));
 		}
 
-		target.setLog(log);
+		target.setEntries(entries);
 	}
 
 	/**
 	 * @return the bonusSystemLogConverter
 	 */
-	public Converter<BonusSystemLogModel, BonusSystemLogData> getBonusSystemLogConverter()
+	public Converter<BonusSystemEntryModel, BonusSystemEntryData> getBonusSystemEntryConverter()
 	{
-		return bonusSystemLogConverter;
+		return bonusSystemEntryConverter;
 	}
 
 	/**
-	 * @param bonusSystemLogConverter
+	 * @param bonusSystemEntryConverter
 	 *           the bonusSystemLogConverter to set
 	 */
-	public void setBonusSystemLogConverter(final Converter<BonusSystemLogModel, BonusSystemLogData> bonusSystemLogConverter)
+	public void setBonusSystemEntryConverter(final Converter<BonusSystemEntryModel, BonusSystemEntryData> bonusSystemEntryConverter)
 	{
-		this.bonusSystemLogConverter = bonusSystemLogConverter;
+		this.bonusSystemEntryConverter = bonusSystemEntryConverter;
 	}
 }

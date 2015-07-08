@@ -4,14 +4,14 @@
 package com.flieger.services;
 
 import de.hybris.platform.core.model.order.AbstractOrderModel;
-import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.core.model.order.price.DiscountModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.exceptions.CalculationException;
 
 import java.util.List;
 
-import com.flieger.model.user.BonusSystemLogModel;
+import com.flieger.model.user.BonusSystemConfigModel;
+import com.flieger.model.user.BonusSystemDiscountModel;
+import com.flieger.model.user.BonusSystemEntryModel;
 import com.flieger.model.user.BonusSystemModel;
 
 
@@ -22,17 +22,19 @@ import com.flieger.model.user.BonusSystemModel;
  */
 public interface BonusSystemService
 {
-	BonusSystemModel createBonusSystem(CustomerModel customer);
+	BonusSystemModel createBonusSystem(CustomerModel customer, BonusSystemConfigModel configuration);
 
-	void removeBonusSystem(CustomerModel customer);
+	boolean removeBonusSystem(BonusSystemModel system);
 
-	void addBonusSystemLog(BonusSystemModel bonusSystem, BonusSystemLogModel log);
+	boolean addBonusSystemEntry(BonusSystemModel system, BonusSystemEntryModel entry);
 
-	void removeBonusSystemLog(BonusSystemModel bonusSystem, BonusSystemLogModel log);
+	boolean addBonusSystemEntry(BonusSystemModel system, BonusSystemEntryModel entry, BonusSystemDiscountModel discount);
 
-	void recalculateBonusSystemPoints(BonusSystemModel bonusSystem);
+	void removeBonusSystemEntry(BonusSystemModel system, BonusSystemEntryModel entry);
+	
+	BonusSystemDiscountModel applyDiscount(AbstractOrderModel abstractOrder, BonusSystemModel system) throws CalculationException;
 
-	void applyDiscount(CartModel cart, BonusSystemModel bonusSystemModel) throws CalculationException;
+	BonusSystemDiscountModel applyDiscount(AbstractOrderModel abstractOrder, BonusSystemModel system, double points) throws CalculationException;
 
-	List<DiscountModel> getAppliedBSDiscounts(AbstractOrderModel cart);
+	List<BonusSystemDiscountModel> getAppliedBonusSystemDiscounts(AbstractOrderModel abstractOrder);
 }

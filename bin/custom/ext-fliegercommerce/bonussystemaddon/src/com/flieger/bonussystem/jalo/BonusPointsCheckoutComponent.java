@@ -1,4 +1,4 @@
-package com.flieger.jalo.user;
+package com.flieger.bonussystem.jalo;
 
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.JaloBusinessException;
@@ -6,10 +6,10 @@ import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.type.ComposedType;
 import org.apache.log4j.Logger;
 
-public class BonusSystemLog extends GeneratedBonusSystemLog
+public class BonusPointsCheckoutComponent extends GeneratedBonusPointsCheckoutComponent
 {
 	@SuppressWarnings("unused")
-	private final static Logger LOG = Logger.getLogger( BonusSystemLog.class.getName() );
+	private final static Logger LOG = Logger.getLogger( BonusPointsCheckoutComponent.class.getName() );
 	
 	@Override
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException
