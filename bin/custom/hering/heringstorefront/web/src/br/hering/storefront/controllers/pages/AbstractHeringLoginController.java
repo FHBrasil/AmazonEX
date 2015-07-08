@@ -146,6 +146,7 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 		{
 			model.addAttribute(form);
 			model.addAttribute(new LoginForm());
+			model.addAttribute("pageError", true);
 			model.addAttribute(new HeringGuestForm());
 			model.addAttribute("regions", i18NFacade.getRegionsForCountryIso("DE"));
 			model.addAttribute("pf", Boolean.valueOf(form.getPessoaFisica()));
@@ -196,6 +197,7 @@ public abstract class AbstractHeringLoginController extends AbstractLoginPageCon
 			model.addAttribute(new HeringGuestForm());
 			model.addAttribute("basesCode", getBasesCode());
 			model.addAttribute("basesChecked", form.getBaseStore());
+			model.addAttribute("pageError", true);
 			bindingResult.rejectValue("email", "registration.error.account.exists.title");
 			GlobalMessages.addErrorMessage(model, "registration.error.account.exists.title");
 			return handleRegistrationError(model);

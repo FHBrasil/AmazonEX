@@ -23,7 +23,7 @@
 	</c:if>
 	<div class="pull-right">
 		<small>
-			<a href="#deliveryAddressModal${not empty address.id ? address.id : ''}" data-toggle="modal" class="btn-editar ${type == 'billing' ? type : ''}">
+			<a href="#deliveryAddressModal${type}" data-toggle="modal" class="btn-editar ${type == 'billing' ? type : ''}">
 				<span class="glyphicon glyphicon-cog"></span>
 			</a>			
 		</small>
