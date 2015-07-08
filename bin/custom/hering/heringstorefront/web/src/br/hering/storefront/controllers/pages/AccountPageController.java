@@ -408,7 +408,7 @@ public class AccountPageController extends AbstractSearchPageController {
 				getContentPageForLabelOrId(ACCOUNT_CMS_PAGE));
 
 		final PageableData pageableData = createPageableData(0, 3, null,
-				ShowMode.Page);
+				ShowMode.All);
 		final SearchPageData<OrderHistoryData> searchPageData = orderFacade
 				.getPagedOrderHistoryForStatuses(pageableData);
 		final CustomerData customerData = customerFacade.getCurrentCustomer();
