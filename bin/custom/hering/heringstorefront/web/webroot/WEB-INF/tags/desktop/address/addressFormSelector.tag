@@ -13,7 +13,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <input type="hidden" class="contextPath" value="${request.contextPath}" />
-	<div id="deliveryAddressModal${addressId}" class="addressbook150706 modal fade">
+	<div id="deliveryAddressModal${type}" class="addressbook150706 modal fade">
       	<div class="modal-dialog">
        		<div class="modal-content">
           		<div class="modal-header">
@@ -30,7 +30,7 @@
            					<c:url var="urlDeleteAddress" value="/my-account/remove-address/${deliveryAddress.id}"/>
            					<c:url var="urlEditAddress" value="/my-account/edit-address/${type}/${deliveryAddress.id}"/>           					
           					<div class="radio">
-								<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${type}${deliveryAddress.id}" ${deliveryAddress.id == addressId ? 'checked' : ''}>
+								<input type="radio" name="chooseDeliveryAddress${type}" value="${deliveryAddress.id}" id="${type}${deliveryAddress.id}" ${deliveryAddress.id == addressId ? 'checked' : ''}>
 								<label class="btn btn-default btn-address050609" for="${type}${deliveryAddress.id}">
 									<small>${deliveryAddress.receiver}<br /></small>
 									<small><c:if test="${not empty deliveryAddress.reference}">
