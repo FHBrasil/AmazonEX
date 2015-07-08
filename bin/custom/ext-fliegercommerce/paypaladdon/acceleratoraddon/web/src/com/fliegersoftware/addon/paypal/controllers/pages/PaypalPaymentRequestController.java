@@ -34,7 +34,6 @@ import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.Abstrac
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.user.UserFacade;
-import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.jalo.JaloSession;
 import de.hybris.platform.servicelayer.config.ConfigurationService;
@@ -49,10 +48,10 @@ public class PaypalPaymentRequestController extends AbstractCheckoutController {
     
     private static final Logger LOG = Logger.getLogger(PaypalPaymentRequestController.class);
     private static final String REDIRECT_URL_CART = REDIRECT_PREFIX + "/cart";
-    private static final String REDIRECT_CANCEL_URL = "http://babyartikel.local:9001/de"
-            + "/checkout/single/single-step-checkout";
-    private static final String REDIRECT_RETURN_URL = "http://babyartikel.local:9001/de"
-            + "/paypal/response/";
+    private static final String REDIRECT_CANCEL_URL = Config.getParameter(
+            "website.babyartikel.https") + "/de/checkout/single/single-step-checkout";
+    private static final String REDIRECT_RETURN_URL = Config.getParameter(
+            "website.babyartikel.https") + "/de/paypal/response/";
     @Resource
     private PayPalPaymentFacade paypalPaymentFacade;
     @Resource
