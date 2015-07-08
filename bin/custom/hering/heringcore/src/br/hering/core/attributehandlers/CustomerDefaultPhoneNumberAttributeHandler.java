@@ -2,6 +2,7 @@ package br.hering.core.attributehandlers;
 
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.google.common.collect.Iterables;
@@ -17,6 +18,9 @@ public class CustomerDefaultPhoneNumberAttributeHandler implements DynamicAttrib
 
 	private ModelService modelService;
 	
+	private PhoneContactInfoModel phoneModel;
+	
+	private static final Logger LOG = Logger.getLogger(CustomerDefaultPhoneNumberAttributeHandler.class);
 	
 	public ModelService getModelService() {
 		return modelService;
@@ -53,18 +57,28 @@ public class CustomerDefaultPhoneNumberAttributeHandler implements DynamicAttrib
 	public void set(final CustomerModel customerModel, final String phone) 
 	{
 		
-		final PhoneContactInfoModel phoneModel = getModelService().create(PhoneContactInfoModel.class);		
-		
 		if (customerModel != null && phone != null)
-		{
-			phoneModel.setPhoneNumber(phone);
-			phoneModel.setType(PhoneContactInfoType.HOME);
-			phoneModel.setUser(customerModel);
-		}
-			
+		{			
+
+			if (get(customerModel) == null)
+			{
+				phoneModel = getModelService().create(PhoneContactInfoModel.class);	
+			}
+			else
+			{
+				Collection<AbstractContactInfoModel> contactInfosModel = customerModel.getContactInfos();
+				phoneModel = (PhoneContactInfoModel) Iterables.get(contactInfosModel, contactInfosModel.size()-1);
+			}
+
+		}	
+		
+		phoneModel.setPhoneNumber(phone);
+		phoneModel.setType(PhoneContactInfoType.HOME);
+		phoneModel.setUser(customerModel);	
 		modelService.save(phoneModel);
 		modelService.refresh(phoneModel);
 		
 	}
 
+	
 }
