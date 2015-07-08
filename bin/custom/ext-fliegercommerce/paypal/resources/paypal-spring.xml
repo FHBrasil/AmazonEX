@@ -56,24 +56,24 @@
     <bean id="captureResult" class="de.hybris.platform.payment.commands.result.CaptureResult" />
     <bean id="voidRequestType" class="com.ebay.api.DoVoidRequestType" />
     <bean id="voidResult" class="de.hybris.platform.payment.commands.result.VoidResult" />
-    <bean id="setExpressCheckoutRequestType" class="com.ebay.api.SetExpressCheckoutRequestType" />
-    <bean id="setExpressCeckoutResultData" class="com.paypal.hybris.data.SetExpressCheckoutResultData" />
-    <bean id="getExpressCheckoutDetailsRequestType" class="com.ebay.api.GetExpressCheckoutDetailsRequestType" />
-    <bean id="getExpressCheckoutDetailsResultData" class="com.paypal.hybris.data.GetExpressCheckoutDetailsResultData" />
-    <bean id="doExpressCheckoutPaymentRequestType" class="com.ebay.api.DoExpressCheckoutPaymentRequestType" />
-    <bean id="doExpressCheckoutPaymentResultData" class="com.paypal.hybris.data.DoExpressCheckoutPaymentResultData" />
-    <bean id="doAuthorizationRequestType" class="com.ebay.api.DoAuthorizationRequestType" />
-    <bean id="doAuthorizationResultData" class="com.paypal.hybris.data.DoAuthorizationResultData" />
-    <bean id="doCaptureRequestType" class="com.ebay.api.DoCaptureRequestType" />
-    <bean id="doCaptureResultData" class="com.paypal.hybris.data.DoCaptureResultData" />
-    <bean id="transactionSearchRequestType" class="com.ebay.api.TransactionSearchRequestType" />
-    <bean id="transactionSearchResultData" class="com.paypal.hybris.data.TransactionSearchResultData" />
-    <bean id="getTransactionDetailsRequestType" class="com.ebay.api.GetTransactionDetailsRequestType" />
-    <bean id="getTransactionDetailsResultData" class="com.paypal.hybris.data.GetTransactionDetailsResultData" />
-    <bean id="refundTransactionRequestType" class="com.ebay.api.RefundTransactionRequestType" />
-    <bean id="refundTransactionResultData" class="com.paypal.hybris.data.RefundTransactionResultData" />
-    <bean id="doReferenceTransactionRequestType" class="com.ebay.api.DoReferenceTransactionRequestType" />
-    <bean id="doReferenceTransactionResultData" class="com.paypal.hybris.data.DoReferenceTransactionResultData" />
+    <bean id="setExpressCheckoutRequestType" class="com.ebay.api.SetExpressCheckoutRequestType" scope="prototype" />
+    <bean id="setExpressCeckoutResultData" class="com.paypal.hybris.data.SetExpressCheckoutResultData" scope="prototype" />
+    <bean id="getExpressCheckoutDetailsRequestType" class="com.ebay.api.GetExpressCheckoutDetailsRequestType" scope="prototype" />
+    <bean id="getExpressCheckoutDetailsResultData" class="com.paypal.hybris.data.GetExpressCheckoutDetailsResultData" scope="prototype" />
+    <bean id="doExpressCheckoutPaymentRequestType" class="com.ebay.api.DoExpressCheckoutPaymentRequestType" scope="prototype" />
+    <bean id="doExpressCheckoutPaymentResultData" class="com.paypal.hybris.data.DoExpressCheckoutPaymentResultData" scope="prototype" />
+    <bean id="doAuthorizationRequestType" class="com.ebay.api.DoAuthorizationRequestType" scope="prototype" />
+    <bean id="doAuthorizationResultData" class="com.paypal.hybris.data.DoAuthorizationResultData" scope="prototype" />
+    <bean id="doCaptureRequestType" class="com.ebay.api.DoCaptureRequestType" scope="prototype" />
+    <bean id="doCaptureResultData" class="com.paypal.hybris.data.DoCaptureResultData" scope="prototype" />
+    <bean id="transactionSearchRequestType" class="com.ebay.api.TransactionSearchRequestType" scope="prototype" />
+    <bean id="transactionSearchResultData" class="com.paypal.hybris.data.TransactionSearchResultData" scope="prototype" />
+    <bean id="getTransactionDetailsRequestType" class="com.ebay.api.GetTransactionDetailsRequestType" scope="prototype" />
+    <bean id="getTransactionDetailsResultData" class="com.paypal.hybris.data.GetTransactionDetailsResultData" scope="prototype" />
+    <bean id="refundTransactionRequestType" class="com.ebay.api.RefundTransactionRequestType" scope="prototype" />
+    <bean id="refundTransactionResultData" class="com.paypal.hybris.data.RefundTransactionResultData" scope="prototype" />
+    <bean id="doReferenceTransactionRequestType" class="com.ebay.api.DoReferenceTransactionRequestType" scope="prototype" />
+    <bean id="doReferenceTransactionResultData" class="com.paypal.hybris.data.DoReferenceTransactionResultData" scope="prototype" />
 
     <!-- Commands converters -->
     <alias name="defaultCaptureRequestConverter" alias="captureRequestToDoCaptureReqConverter" />
@@ -217,7 +217,7 @@
 
     <!-- Convectors and populators -->
     <bean id="setExprCheckReqDataConverter" class="com.paypal.hybris.converters.impl.PayPalRequestDataConverter">
-        <lookup-method name="createTarget" bean="setExpressCheckoutRequestType" />
+        <lookup-method name="createTarget"  bean="setExpressCheckoutRequestType" />
         <property name="populators">
             <list>
                 <bean
