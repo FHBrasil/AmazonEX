@@ -52,7 +52,7 @@
 </c:if>
 
 <%-- Error messages (includes spring validation messages)--%>
-<c:if test="${not empty accErrorMsgs}">]
+<c:if test="${not empty accErrorMsgs}">
 	<div class="container prehead141211">
 		<div class="row">
 			<div class="alert alert-danger">

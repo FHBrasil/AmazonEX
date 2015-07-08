@@ -8,26 +8,26 @@
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <h2>Neu registrieren</h2>
-<div id="registerButton" class="collapse in" style="height: 0px;">
-<p>Klicken Sie hier, wenn Sie nich kein Konto besitzen:</p>
-<form>
-	<a href="#" class="btn btn-primary btn-registerForm"
-		onclick="$('#registerButton').removeClass('in').addClass('out');$('#registerForm').removeClass('out').addClass('in');">Neues Konto erstellen</a>
-</form>
+<div id="registerButton" class="collapse ${pageError == true ? 'out' : 'in' }" style="hei-1ght: 0px;">
+	<p>Klicken Sie hier, wenn Sie nich kein Konto besitzen:</p>
+	<form>
+		<a href="#" class="btn btn-primary btn-registerForm"
+			onclick="$('#registerButton').removeClass('in').addClass('out');$('#registerForm').removeClass('out').addClass('in');">Neues Konto erstellen</a>
+	</form>
 </div>
-<form class="f-row pfpj" style="display:none;">
-    <label>
-    	<input type="radio" id="radiopf" name="tipo" ${pf ? 'checked' : ''}>
-   		<spring:theme code="text.fliegercommerce.texto31"/> 
-	</label> 
-	<label>
-		<input type="radio" id="radiopj" name="tipo" ${!pf ? 'checked' : ''}>
-		<spring:theme code="text.fliegercommerce.texto32"/>
-	</label>
-</form>
-<div class="panel-collapse out margin-top collapse out" id="registerForm" name="registerForm">
+<div class="panel-collapse out margin-top collapse ${pageError == true ? 'in' : 'out' }" id="registerForm" name="registerForm">
 	<p>Bitte füllen Sie folgende Felder aus:</p>
     <form:form method="post" cssClass="pf" commandName="heringRegisterForm" action="${action}">
+<%--     	<form class="f-row pfpj"> --%>
+		    <label style="display:none;">
+		    	<input type="radio" id="radiopf" name="tipo" checked>
+		   		<spring:theme code="text.fliegercommerce.texto31"/> 
+			</label> 
+<!-- 			<label style="display:none;"> -->
+<%-- 				<input type="radio" id="radiopj" name="tipo" ${!pf ? 'checked' : ''}> --%>
+<%-- 				<spring:theme code="text.fliegercommerce.texto32"/> --%>
+<!-- 			</label> -->
+<%-- 		</form> --%>
 		<div class="row">
 			<div class="form-group col-sm-6">
             <formElement:formInputBox size="30" idKey="register.firstName"
@@ -61,9 +61,6 @@
         </ycommerce:testId>
 	</form:form>
 </div>
-
-
-
 
 <!-- <section class="col-1 column"> -->
     <%-- cabeï¿½alho do formulï¿½rio --%>

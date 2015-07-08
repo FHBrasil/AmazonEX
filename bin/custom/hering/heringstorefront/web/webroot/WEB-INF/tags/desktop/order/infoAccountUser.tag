@@ -23,7 +23,7 @@
 </div>
 <div class="panel-body">
 	E-Mail: ${customer.uid} <br>
-	Telefon: (${customer.defaultShippingAddress.dddPhone}) ${customer.defaultShippingAddress.phone}<br>
+	Telefon: ${customer.defaultPhoneNumber}<br>
 	Passwort: ********
 </div>
 
@@ -54,9 +54,6 @@
 
 					<form:form id="changePhone" method="POST" action="/my-account/change-phonenumber" >						
 						<div class="form-group">
-							<%-- <label for="phone">Telefon (optional)</label>
-							<input type="tel" class="form-control" id="inputPhone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}"> --%>
-						
 						<label>Telefon (optional)</label>
 						<input type="tel" name="phone" class="form-control" value="${customer.defaultPhoneNumber}"></input>
 						</div>
@@ -65,20 +62,22 @@
 						</div>
 					</form:form>
 					
-					<form>
+					<form:form id="updatePassword" method="GET" action="/my-account/update-password">
 						<div class="form-group">
 							<label >Passwort &auml;ndern</label><br />
 							<p>Bitte klicken Sie den folgenden Button, wenn Sie Ihr Passwort zu &auml;ndern m&ouml;chten.</p>
 							<button id="changePassword" class="btn btn-default" data-target="#passwordModal" data-toggle="modal">Passwort &auml;ndern</button>
 						</div>
-					</form>
+					</form:form>
+					
 					<form action="/my-account/delete-account" >
 						<div class="form-group">
 							<label >Konto l&ouml;schen</label><br />
 							<p>Das L&ouml;schen Ihres Konto l&auml;sst sich nicht r&uuml;ckg&auml;ngig machen.</p>
 							<button id="deleteAccount" class="btn btn-default">Konto l&ouml;schen</button>
 						</div>
-					</form>
+					</form>	
+					
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
