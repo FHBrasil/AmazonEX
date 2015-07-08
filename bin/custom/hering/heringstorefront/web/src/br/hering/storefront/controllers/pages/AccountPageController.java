@@ -813,11 +813,7 @@ public class AccountPageController extends AbstractSearchPageController {
 		
 		if (customerData != null)
 		{	
-			if (!phone.isEmpty())
-			{
-				customerData = heringCustomerFacade.changePhoneNumber(phone);
-			}
-			
+			customerData = heringCustomerFacade.changePhoneNumber(phone);
 		}
 
 		return REDIRECT_MY_ACCOUNT;
