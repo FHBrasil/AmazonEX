@@ -244,4 +244,18 @@
 		<property name="code"				type="java.lang.String" />
 		<property name="customerData"		type="de.hybris.platform.commercefacades.user.data.CustomerData" />
     </bean>
+    
+     <bean class="com.flieger.facades.checkout.data.GuestRegisterData">
+    	<property name="titleCode"  type="java.lang.String" />
+    	<property name="firstName"  type="java.lang.String" />
+    	<property name="lastName"   type="java.lang.String" />
+    	<property name="complement" type="java.lang.String" />
+    	<property name="address" 	type="java.lang.String" />
+    	<property name="number" 	type="java.lang.String" />
+    	<property name="zipCode" 	type="java.lang.String" />
+    	<property name="city" 		type="java.lang.String" />
+    	<property name="country" 	type="java.lang.String" />
+    	<property name="phone" 		type="java.lang.String" />
+    	<property name="email" 		type="java.lang.String" />
+    </bean>
 </beans> 

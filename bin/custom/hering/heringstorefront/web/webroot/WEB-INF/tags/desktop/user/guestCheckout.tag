@@ -91,7 +91,7 @@
 		</p>
 	    <div id="toggleInvoiceAdditionalAddress" class="out form-group collapse" style="height: 0px;">
 			<formElement:formInputBox idKey="register.complement" labelKey="register.complement"
-			        path="complement" inputCSS="text required-letters form-control" mandatory="true"
+			        path="complement" inputCSS="text form-control"
 			        hideInputErrorOnField="true" />
 		</div>
 		<div class="row">
@@ -138,13 +138,13 @@
 		</p>
 		<div id="togglePhone" class="form-group out collapse out">
 				<formElement:formInputBox idKey="register.telephone" labelKey="register.telephone"
-			        path="telephone" inputCSS="text required-numbers form-control" mandatory="true"
+			        path="telephone" inputCSS="text numbers form-control"
 			        hideInputErrorOnField="true" />
 		</div>
 		<div class="form-group">
 	        <div class="f-row">
 	            <formElement:formInputBox idKey="register.email" labelKey="register.email" path="email"
-	                inputCSS="text form-control" mandatory="true" hideInputErrorOnField="true" />
+	                inputCSS="text form-control required" mandatory="true" hideInputErrorOnField="true" />
 	        </div>
 		</div>
 	    <ycommerce:testId code="register_Register_button">
