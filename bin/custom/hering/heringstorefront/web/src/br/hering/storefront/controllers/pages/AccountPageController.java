@@ -793,7 +793,8 @@ public class AccountPageController extends AbstractSearchPageController {
 			heringCustomerFacade.deleteAccount();
 		}
 
-		GlobalMessages.addInfoMessage(redirectAttributes, "text.fliegercommerce.texto132");
+		//remover
+		//GlobalMessages.addInfoMessage(redirectAttributes, "text.fliegercommerce.texto132");
 		return REDIRECT_PREFIX + "/logout?logoutTargetUrlParameter=/login?deleted=true";
 		
 	}
@@ -811,8 +812,12 @@ public class AccountPageController extends AbstractSearchPageController {
 		CustomerData customerData = customerFacade.getCurrentCustomer();
 		
 		if (customerData != null)
-		{		
-			customerData = heringCustomerFacade.changePhoneNumber(phone);
+		{	
+			if (!phone.isEmpty())
+			{
+				customerData = heringCustomerFacade.changePhoneNumber(phone);
+			}
+			
 		}
 
 		return REDIRECT_MY_ACCOUNT;
@@ -1013,7 +1018,8 @@ public class AccountPageController extends AbstractSearchPageController {
 		} else {
 			GlobalMessages.addFlashMessage(redirectAttributes,
 					GlobalMessages.CONF_MESSAGES_HOLDER, "text.account.confirmation.password.updated", null);
-			return REDIRECT_TO_PROFILE_PAGE;
+			
+			return REDIRECT_MY_ACCOUNT;
 		}
 	}
 
