@@ -212,6 +212,9 @@ public class PaypalPaymentRequestController extends AbstractCheckoutController {
      * @param resultData
      */
     private void handleErrors(final AbstractResultData resultData) {
+        // First of all, we need to clear the request information, because when paypal refuses
+        // the payment and the customer tries again, it sends a parallel payment, which is not the
+        // case.
         final Map<String, String> errorCodeToMsgMap =
                 ControllerUtils.getErrorsCodeToMessageMap(resultData);
         getSessionService().setAttribute(PaypaladdonControllerConstants.PAY_PAL_ERRORS_DETAILS,
