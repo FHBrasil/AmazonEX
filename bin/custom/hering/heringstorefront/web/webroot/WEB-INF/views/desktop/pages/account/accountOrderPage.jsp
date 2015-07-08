@@ -145,7 +145,7 @@
 					<div class="panel-body">
 						<div class="title150312">Zahlart</div>
 						<span class="value3150312"><b>
-							${orderHistory.paymentMode}
+							${orderData.paymentMode.name}
 						</b></span>
 					</div>
 				</div>

@@ -36,10 +36,7 @@
 					</div>
 					<c:url value="/my-account/add-address" var="addNewAddressUrl"/>
     				<form:form method="post" action="${addNewAddressUrl}" commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse in">
-				        <input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
-				        <form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
-				        <form:hidden path="shippingAddress" value="true" />
-				        <input type="hidden" name="bill_state" value="bill_state" id="address.billstate" />
+				        <input type="hidden" name="doDeliveryDoBilling" value="${edit ? typeAddress : ''}"/>
 				        <div id="i18nAddressForm" class="i18nAddressForm">
 				            <address:addressFormElements regions="${regions}" country="${country}" page="${page}" />
 				        </div>
@@ -66,10 +63,7 @@
 				        </div>
 				    </form:form>
 				    <form:form method="post" action="${addNewAddressUrl}" commandName="packstationAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse out">
-				       	<input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
-				       	<form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
-				        <form:hidden path="shippingAddress" value="true" />
-				        <input type="hidden" name="bill_state" value="bill_state" id="address.billstate" />
+				       	<input type="hidden" name="doDeliveryDoBilling" value="${edit ? typeAddress : ''}"/>
 				        <div id="i18nAddressForm" class="i18nAddressForm">
 				            <address:addressFormElements regions="${regions}" country="${country}" page="${page}" type="packStation" />
 				        </div>
