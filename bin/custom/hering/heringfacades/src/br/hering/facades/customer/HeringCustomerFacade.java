@@ -10,6 +10,8 @@ import de.hybris.platform.core.model.user.CustomerModel;
 
 import java.util.Date;
 
+import com.flieger.facades.checkout.data.GuestRegisterData;
+
 import de.hybris.platform.core.enums.Gender;
 
 
@@ -30,5 +32,7 @@ public interface HeringCustomerFacade extends CustomerFacade
 	public void deleteAccount();
 	
 	public CustomerData changePhoneNumber(String phone);
+	
+	public void registerGuest(GuestRegisterData guestData) throws DuplicateUidException;
 
 }

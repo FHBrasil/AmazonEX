@@ -4,13 +4,34 @@
 package br.hering.facades.customer.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+import java.util.Date;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.util.Assert;
+
+import br.flieger.exacttarget.events.CustomerRegisterEvent;
+import br.hering.core.customer.HeringCustomerAccountService;
+import br.hering.core.customer.impl.KPCustomerAccountService;
+import br.hering.facades.customer.HeringCustomerFacade;
+
+import com.flieger.facades.checkout.data.GuestRegisterData;
+import com.google.common.collect.Lists;
+
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
-import de.hybris.platform.commercefacades.user.converters.populator.AddressReversePopulator;
+import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.commerceservices.enums.CustomerType;
+import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.enums.Gender;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
@@ -22,23 +43,6 @@ import de.hybris.platform.servicelayer.user.PasswordEncoderService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.store.services.BaseStoreService;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.util.Assert;
-
-import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
-
-import br.flieger.exacttarget.events.CustomerRegisterEvent;
-import br.hering.core.customer.impl.KPCustomerAccountService;
-import br.hering.core.customer.HeringCustomerAccountService;
-import br.hering.facades.customer.HeringCustomerFacade;
 import de.hybris.platform.util.Config;
 
 /**
@@ -73,8 +77,18 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		
 	@Resource
 	private Converter<AddressData, AddressModel> addressReverseConverter;
+	
+	@Resource
+	private Populator<AddressData, AddressModel> addressReversePopulator;
 
 	private static final Logger LOG = Logger.getLogger(DefaultHeringCustomerFacade.class);
+	
+	@Resource(name = "i18NFacade")
+	private I18NFacade i18NFacade;
+	
+	protected I18NFacade getI18NFacade() {
+		return i18NFacade;
+	}
 
 	
 	@Override
@@ -335,5 +349,58 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		return "";
 	}
 	
+	public void registerGuest(GuestRegisterData guestData) throws DuplicateUidException
+	{
+		String email = guestData.getEmail();
+		String name = guestData.getFirstName()+" "+guestData.getLastName();
+		
+		validateParameterNotNullStandardMessage("email", email);
+		
+		final AddressData newAddress = new AddressData();
+		newAddress.setTitleCode(guestData.getTitleCode());
+		newAddress.setFirstName(guestData.getFirstName());
+		newAddress.setLastName(guestData.getLastName());
+		newAddress.setComplement(guestData.getComplement());
+		newAddress.setLine1(guestData.getAddress());
+		newAddress.setNumber(guestData.getNumber());
+		newAddress.setPostalCode(guestData.getZipCode());
+		newAddress.setDistrict(guestData.getCity());
+		newAddress.setCountry(i18NFacade.getCountryForIsocode(guestData.getCountry()));
+		newAddress.setPhone(guestData.getPhone());
+		
+		final CustomerModel guestCustomer = getModelService().create(CustomerModel.class);
+		
+		final String guid = generateGUID();
+
+		
+		final AddressModel addressModel = getModelService().create(AddressModel.class);
+		getAddressReversePopulator().populate(newAddress, addressModel);
+		
+		addressModel.setOwner(guestCustomer);
+		
+		//takes care of localizing the name based on the site language
+		guestCustomer.setUid(guid + "|" + email);
+		guestCustomer.setName(name);
+		guestCustomer.setAddresses(Collections.singletonList(addressModel));
+		
+		guestCustomer.setType(CustomerType.valueOf(CustomerType.GUEST.getCode()));
+		guestCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
+		guestCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
+
+		getCustomerAccountService().registerGuestForAnonymousCheckout(guestCustomer, guid);
+		updateCartWithGuestForAnonymousCheckout(getCustomerConverter().convert(guestCustomer));
+		
+	}
+
+
+	public Populator<AddressData, AddressModel> getAddressReversePopulator() {
+		return addressReversePopulator;
+	}
+
+
+	public void setAddressReversePopulator(
+			Populator<AddressData, AddressModel> addressReversePopulator) {
+		this.addressReversePopulator = addressReversePopulator;
+	}
 
 }
