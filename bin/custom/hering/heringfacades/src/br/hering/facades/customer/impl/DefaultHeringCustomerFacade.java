@@ -364,9 +364,13 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		newAddress.setLine1(guestData.getAddress());
 		newAddress.setNumber(guestData.getNumber());
 		newAddress.setPostalCode(guestData.getZipCode());
-		newAddress.setDistrict(guestData.getCity());
+		newAddress.setTown(guestData.getCity());
 		newAddress.setCountry(i18NFacade.getCountryForIsocode(guestData.getCountry()));
 		newAddress.setPhone(guestData.getPhone());
+		newAddress.setDefaultAddress(true);
+		newAddress.setBillingAddress(true);
+		newAddress.setShippingAddress(true);
+		
 		
 		final CustomerModel guestCustomer = getModelService().create(CustomerModel.class);
 		
