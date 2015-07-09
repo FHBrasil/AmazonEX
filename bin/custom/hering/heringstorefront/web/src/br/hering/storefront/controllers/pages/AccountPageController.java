@@ -611,7 +611,7 @@ public class AccountPageController extends AbstractSearchPageController {
 
 		getEmailValidator().validate(updateEmailForm, bindingResult, model);
 
-		String returnAction = ControllerConstants.Views.Pages.Account.AccountHomePage;
+		String returnAction = REDIRECT_MY_ACCOUNT;
 
 		if (!bindingResult.hasErrors() && !updateEmailForm.getEmail().equals(updateEmailForm.getChkEmail())) {
 			bindingResult.rejectValue("chkEmail", "validation.checkEmail.equals", new Object[] {},
