@@ -9,6 +9,7 @@
     <spring:theme code="product.share" />:
 </p>
 
+
 <div class="social150126 text-left">
     <a href="http://www.facebook.com/sharer/sharer.php?u=${productUrl}&title=${pageTitle}" target="popup" onclick="fbashare()">
         <span class="babicon babicon-facebook"> </span>
