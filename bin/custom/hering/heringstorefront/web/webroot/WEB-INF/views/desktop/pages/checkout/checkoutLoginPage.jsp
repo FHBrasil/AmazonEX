@@ -36,7 +36,7 @@
 	<div class="col-sm-4">
 		<div class="panel panel-default panel-minicart150203">
 				<div class="panel-body">
-					<h3>Ihr Warenkorb <b>[FIXED]</b></h3>
+					<h3>Ihr Warenkorb</h3>
 					<div class="row">
 					<div class="col-xs-6">
 						Warenwert
