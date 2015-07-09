@@ -11,8 +11,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="single-checkout-hering"
-    tagdir="/WEB-INF/tags/addons/heringcheckoutaddon/desktop/checkout/single"%>
+<%@ taglib prefix="single-checkout-hering" tagdir="/WEB-INF/tags/addons/heringcheckoutaddon/desktop/checkout/single"%>
      
 <div id="editAddressModal" class="modal fade">
         <div class="modal-dialog">
@@ -35,9 +34,8 @@
 								<spring:theme code="checkout.single.address.packStation"/>
 							</label>
 						</div>
-					</div>
-					<c:url value="/checkout/single/add-address" var="addNewAddressUrl"/>
-    				<form:form method="post" action="${addNewAddressUrl}" commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse in">
+					</div>					
+    				<form:form method="post" commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse in">
 				        <input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
 				        <form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
 				        <form:hidden path="shippingAddress" value="true" />
@@ -66,9 +64,8 @@
 					        	<spring:theme code="checkout.multi.saveAddress" text="Save address" />
 					        </button>					        
 				        </div>
-				    </form:form>
-				    <c:url value="/checkout/single/add-address" var="addNewAddressUrl"/>
-				    <form:form method="post" action="${addNewAddressUrl}" commandName="packstationAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse out">
+				    </form:form>				    
+				    <form:form method="post" commandName="packstationAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse out">
 				       	<input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
 				       	<form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
 				        <form:hidden path="shippingAddress" value="true" />
