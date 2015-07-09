@@ -6,12 +6,19 @@
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart"%>
-<section class="col-3 column">
-    <div class="banner">
-        <img src="/store/_ui/desktop/theme-${themeName}/images/identificacao-banner.jpg">
-        <p><spring:theme code="text.fliegercommerce.texto44"/></p>
-        <p>
-            <strong><spring:theme code="text.fliegercommerce.texto45"/></strong>
-        </p>
-    </div>
-</section>
+<!-- <section class="col-3 column"> -->
+<!--     <div class="banner"> -->
+<%--         <img src="/store/_ui/desktop/theme-${themeName}/images/identificacao-banner.jpg"> --%>
+<%--         <p><spring:theme code="text.fliegercommerce.texto44"/></p> --%>
+<!--         <p> -->
+<%--             <strong><spring:theme code="text.fliegercommerce.texto45"/></strong> --%>
+<!--         </p> -->
+<!--     </div> -->
+<!-- </section> -->
+<h2>Vorteile Kundenkonto</h2>
+<ul>
+	<li>Rabatte auf jede Bestellung</li>
+	<li>Wunschliste nutzen</li>
+	<li>Bestellstatus einsehen</li>
+	<li>uvm.</li>
+</ul>
