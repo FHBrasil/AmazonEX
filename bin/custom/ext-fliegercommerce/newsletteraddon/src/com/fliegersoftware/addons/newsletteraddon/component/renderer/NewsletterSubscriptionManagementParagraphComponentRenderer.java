@@ -55,7 +55,6 @@ public class NewsletterSubscriptionManagementParagraphComponentRenderer<C extend
 		
 		String nome = customer.getFirstName();
 		String sobrenome = customer.getLastName();
-		LOG.info("Name: " + nome + " lastname: " + sobrenome);
 		List<NewsletterSubscriptionData> subscriptions = customer.getNewsletterSubscriptions();
 
     	final String currentStore = getBaseStoreService().getCurrentBaseStore().getUid();   	

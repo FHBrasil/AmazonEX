@@ -22,7 +22,7 @@ public class HeringEmailValidator extends EmailValidator
 	{
 		final UpdateEmailForm updateEmailForm = (UpdateEmailForm) object;
 		final String email = updateEmailForm.getEmail();
-		//final String chkEmail = updateEmailForm.getChkEmail();
+		final String chkEmail = updateEmailForm.getChkEmail();
 		final String password = updateEmailForm.getPassword();
 
 		if (StringUtils.isEmpty(email))
@@ -36,11 +36,11 @@ public class HeringEmailValidator extends EmailValidator
 			GlobalMessages.addErrorMessage(model, "profile.email.invalid");
 		}
 
-		/*if (StringUtils.isEmpty(chkEmail))
+		if (StringUtils.isEmpty(chkEmail))
 		{
 			errors.rejectValue("chkEmail", "profile.checkEmail.invalid");
 			GlobalMessages.addErrorMessage(model, "profile.checkEmail.invalid");
-		}*/
+		}
 
 		if (StringUtils.isEmpty(password))
 		{
