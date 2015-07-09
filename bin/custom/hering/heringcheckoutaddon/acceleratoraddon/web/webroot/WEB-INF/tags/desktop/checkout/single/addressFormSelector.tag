@@ -43,9 +43,11 @@
                     <c:if test="${not empty selectedBillingAddress.region.name}">
                     	<span class="e-estado">${selectedBillingAddress.region.name}</span><br />
                     </c:if>                
-                    <span class="e-pais">${selectedBillingAddress.country.name}</span><br /><br />
-                    <spring:theme code="checkout.single.address.phone"/>
-                    <span class="e-phone">:&nbsp;${selectedBillingAddress.dddPhone}&nbsp;${selectedBillingAddress.phone}</span><br />
+                    <span class="e-pais">${selectedBillingAddress.country.name}</span><br /><br />                    
+                    <c:if test="${not empty customer.defaultPhoneNumber}">
+                    	<spring:theme code="checkout.single.address.phone"/>
+                    	<span class="e-phone">:&nbsp;${customer.defaultPhoneNumber}</span><br />
+                    </c:if>
                     <spring:theme code="checkout.single.address.email"/><span class="e-email">:&nbsp;${customer.uid}</span><br />                  	
                         
                     <%-- 
