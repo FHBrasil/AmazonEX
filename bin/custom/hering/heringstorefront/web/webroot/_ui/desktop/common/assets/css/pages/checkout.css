@@ -49,7 +49,7 @@
 }
 		
 .btn-address050609 {display:block;width:100%}
-#deliveryAddressModal input[type="radio"] {margin-left: 15px;z-index: 1000;top: 35%;}
+#selectAddress input[type="radio"] {margin-left: 15px;z-index: 1000;top: 35%;}
 
 .singleStepCheckout .display-inline {
 	display: inline;

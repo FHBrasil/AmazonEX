@@ -96,18 +96,27 @@ $(document).ready(function() {
 //		window.location = url + addressCodeParam;
 //	});
 	
-	$('form#selectAddress').find('button.btn-primary').click(function(){		
-		var cod = $('input:radio[name=chooseDeliveryAddress]:checked').val();
-		var typeAddress = $('input:hidden[name=deliveryOrBilling]').val();
-		var url = contextPath + '/checkout/single/select-' + typeAddress + '-address/' + cod;
-		$('form#selectAddress').attr('action', url).submit();
+	$('#Advance').collapse(true);
+	
+	$('form.billing').find('button.btn-primary').click(function(){		
+		var cod = $('input:radio[name=chooseDeliveryAddressbilling]:checked').val();
+		var url = contextPath + '/checkout/single/select-billing-address/' + cod;
+		$('form.billing').attr('action', url).submit();
+	});
+	
+	$('form.delivery').find('button.btn-primary').click(function(){		
+		var cod = $('input:radio[name=chooseDeliveryAddressdelivery]:checked').val();
+		var url = contextPath + '/checkout/single/select-delivery-address/' + cod;
+		$('form.delivery').attr('action', url).submit();
 	});
 	
 	$('.btn-group .btn-editar').click(function(){
+		var url = "";
 		if($(this).hasClass('billing'))
-			$('input:hidden[name=deliveryOrBilling]').attr("value", 'billing');
+			url = "/checkout/single/add-address/billing";						
 		else
-			$('input:hidden[name=deliveryOrBilling]').attr("value", 'delivery');
+			url = "/checkout/single/add-address/delivery";
+		$('form.addEditDeliveryAddressForm').attr("action", url);
 	});
 	
 	/*! Removes delivery address */

@@ -13,9 +13,12 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<input type="radio" name="credittype" id="pay-visa">
+<input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
+<form:hidden path="paymentId" class="create_update_payment_id" />
+<form:hidden path="instalment" />
+<input type="radio" name="cardTypeCode" id="pay-visa" value="visa">
 <label class="btn btn-default " for="pay-visa">VISA</label>
-<input type="radio" name="credittype" id="pay-mastercard">
+<input type="radio" name="cardTypeCode" id="pay-mastercard" value="master">
 <label class="btn btn-default " for="pay-mastercard">MasterCard</label>
 <form:hidden path="paymentId" class="create_update_payment_id" />
 <div class="form-group">
