@@ -24,6 +24,7 @@
 <c:if test="${pageType != 'PRODUCT'}">
     <%-- TODO: this file is not supposed to be used --%>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/script.js"></script>
+    <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
 </c:if>
 <%-- Criteo loader --%>
 <script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="async"></script>

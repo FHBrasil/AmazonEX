@@ -208,7 +208,7 @@
 
 	
 	/* CSS for Login */
-	.panel-secure150203 {margin-bottom:0;background-image:url('/_ui/desktop/theme-babyartikel/assets/images/ssl.png');background-repeat:no-repeat;background-position: bottom 15px right 15px;background-color:#f8f8f8;}
+	.panel-secure150203 {margin-bottom:0;background-image:url('/_ui/desktop/theme-babyartikel/assets/images/ssl.png');background-repeat:no-repeat;background-position: bottom 15px right 15px;background-color:#eee;}
 	.trusted150203 {background-image: url("/_ui/desktop/theme-babyartikel/assets/images/sprite-foot.png");background-position: -115px -40px;background-repeat: no-repeat;background-size: 400px 200px;display:inline-block;height:25px;padding-left:30px;line-height:25px;}
 	.panel-minicart150203 {margin-top:20px;}
 	.panel-minicart150203 h3 {margin-top:0px;}

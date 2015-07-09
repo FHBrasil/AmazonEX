@@ -18,7 +18,7 @@
 			<details:sizes sizes="${product.sizes}"/>--%>	
 			<details:prices product="${product}"/>
 			<!-- <span class="glyphicon stars">&#57350;&#57350;&#57350;&#57350;&#57350;<span style="width:90%">&#57350;&#57350;&#57350;&#57350;&#57350;</span></span> -->
-			<bazaarvoice:inlineRatings product="${product}"/>
+			 <bazaarvoice:inlineRatings product="${product}"/>
 			<details:stamps product="${product}"/>
 			<%--<details:addtocart/>
 			<details:viewmore productUrl="${productUrl}"/>--%>	
