@@ -3,17 +3,11 @@
 
     <c:set var="productUrl" value="${pageContext.request.serverName}${product.url}" />
     <c:set var="productZoomImagesUrl" value="${galleryImages[0].zoom.url}" />
-<style type="text/css">
-.fb_iframe_widget {overflow: hidden !important;}
-</style>
     <p class="h4 text-left">
         <spring:theme code="product.share" />:
     </p>
    
 <div class="social150126 text-left">
-    <c:set var="productUrl" value="${pageContext.request.serverName}${product.url}" />
-    <c:set var="productZoomImagesUrl" value="${galleryImages[0].zoom.url}" />
-
     <a href="http://www.facebook.com/sharer/sharer.php?u=${productUrl}&title=${pageTitle}" target="popup" onclick="fbashare()">
         <span class="babicon babicon-facebook"> </span>
     </a>
