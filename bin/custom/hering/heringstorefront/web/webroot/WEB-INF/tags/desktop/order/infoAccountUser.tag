@@ -62,14 +62,6 @@
 						</div>
 					</form:form> --%>
 					
-					<%-- <form:form id="updatePassword" method="GET" action="/my-account/update-password">
-						<div class="form-group">
-							<label>Passwort</label><br>
-							<p>Bitte klicken Sie den folgenden Button, wenn Sie Ihr Passwort zu ändern möchten.</p>
-							<button id="changePassword" class="btn btn-default" data-target="#passwordModal" data-toggle="modal">Passwort &auml;ndern</button>
-						</div>
-					</form:form> --%>
-					
 					<form:form id="updatePassword" method="post">
 						<div class="form-group">
 							<form:form>

@@ -11,7 +11,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div id="deleteAccountModal" class="modal fade">
+<div id="deleteAccountModal" class="modal fade in">
         <div class="modal-dialog">
             <div class="modal-content text-danger">
                 <div class="modal-header">
