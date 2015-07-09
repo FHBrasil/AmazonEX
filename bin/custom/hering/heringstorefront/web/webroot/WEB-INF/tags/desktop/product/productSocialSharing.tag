@@ -4,6 +4,7 @@
 <c:set var="productUrl" value="${pageContext.request.serverName}${product.url}" />
 <c:set var="productZoomImagesUrl" value="${galleryImages[0].zoom.url}" />
 
+
 <p class="h4 text-left">
     <spring:theme code="product.share" />:
 </p>
