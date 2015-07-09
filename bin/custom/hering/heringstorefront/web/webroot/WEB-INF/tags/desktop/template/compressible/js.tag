@@ -24,10 +24,11 @@
 <c:if test="${pageType != 'PRODUCT'}">
     <%-- TODO: this file is not supposed to be used --%>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/script.js"></script>
+    <%-- pinterest --%>
     <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
 </c:if>
-<%-- Criteo loader --%>
-<script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="async"></script>
+<%-- Criteo loader 
+<script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="async"></script>--%>
 <%-- ALTERACOES DO THESKO PARA CORRIGIR O ADD TO CART  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.form-3.09.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.colorbox.custom-1.3.16.js"></script>
@@ -156,7 +157,7 @@
 </c:forEach>
 
 
-<%-- <template:ferramentaRecomendacaoComponent />--%>
+<%-- <template:ferramentaRecomendacaoComponent />
 <c:if test="${not localEnvironment}">
     <script type="text/javascript" src="${commonResourcePath}/js/vizuryTagHering.js"
         id="scriptVizury"></script>
@@ -186,7 +187,7 @@
         style="display: none; visibility: hidden"></iframe>
 </noscript>
 <script async defer src="//static.chaordicsystems.com/static/loader.js" data-apikey="hering-v5"
-    data-initialize="false"></script>
+    data-initialize="false"></script>--%>
 
 <script type="text/javascript">
     (function () { 

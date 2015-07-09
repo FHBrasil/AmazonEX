@@ -34,15 +34,13 @@
 			
 			<div class="${pageType == 'PRODUCTSEARCH' || pageType == 'ACCOUNTPAGE' ? '' : 'container '} ${pageType == 'SINGLESTEPCHECKOUT' ? 'onestep150526' : ''} ${pageType == 'CART' ? 'cart150127' : ''}">
 				<%-- 
-				<c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
-					
+				<c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">	
 					<header class="co" id="page-header">
 						<div class="container">
 							<h2><spring:theme code="text.fliegercommerce.texto63"/></h2>
 							<h1><spring:theme code="text.fliegercommerce.texto9"/></h1>
 						</div>
 					</header>
-					
 				</c:if>
 				--%>
 				<jsp:doBody />				
