@@ -63,8 +63,8 @@
 						<description> A type, which specifies the type of bonus. For example register, order, evaluation. </description>
 						<persistence type="property"/>
 					</attribute>
-					<attribute qualifier="reference" type="java.lang.String">
-						<description>A reference to a item.</description>
+					<attribute qualifier="reference" type="AbstractOrder">
+						<description>Order or Cart reference</description>
 						<persistence type="property"/>
 					</attribute>
 					<attribute qualifier="appliedDiscount" type="BonusSystemDiscount">

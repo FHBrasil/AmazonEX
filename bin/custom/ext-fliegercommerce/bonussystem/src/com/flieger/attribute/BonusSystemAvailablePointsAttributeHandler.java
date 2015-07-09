@@ -1,6 +1,10 @@
 package com.flieger.attribute;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -16,22 +20,37 @@ public class BonusSystemAvailablePointsAttributeHandler implements DynamicAttrib
 	@Override
 	public Double get(BonusSystemModel system) {
 		double value = 0;
+		Map<String, BonusSystemEntryModel> placeholders = new HashMap<String, BonusSystemEntryModel>();
 		for(BonusSystemEntryModel entry : system.getLogEntries()) {
 			if(isCartEntry(entry))
 				continue;
-			value += entry.getPoints();
+			if(isPlaceHolder(entry))
+				placeholders.put(getCode(entry), entry);
+			else {
+				placeholders.remove(getCode(entry));
+				value += getPoints(entry);
+			}
 		}
 		return value;
 	}
 
 	private boolean isCartEntry(BonusSystemEntryModel entry) {
-		if(entry.getAppliedDiscount() != null //
-				&& entry.getAppliedDiscount().getOrders() != null) {
-			Iterator<AbstractOrderModel> iterator = entry.getAppliedDiscount().getOrders().iterator();
-			if(iterator.hasNext())
-				return iterator.next() instanceof CartModel;
+		if(entry.getReference() instanceof CartModel) {
+			return true;
 		}
 		return false;
+	}
+
+	private boolean isPlaceHolder(BonusSystemEntryModel entry) {
+		return "placeholder".equals(entry.getType());
+	}
+
+	private String getCode(BonusSystemEntryModel entry) {
+		return entry.getReference() != null ? entry.getReference().getCode() : null;
+	}
+
+	private double getPoints(BonusSystemEntryModel entry) {
+		return entry.getPoints() != null ? entry.getPoints().doubleValue() : 0;
 	}
 
 	@Override

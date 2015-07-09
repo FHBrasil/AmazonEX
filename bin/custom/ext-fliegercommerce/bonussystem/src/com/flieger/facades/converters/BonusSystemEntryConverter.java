@@ -52,7 +52,7 @@ public class BonusSystemEntryConverter extends AbstractPopulatingConverter<Bonus
 //		if(days != null)
 //		target.setExpirationDate(DateUtils.addDays(source.getDate(), days.intValue()));
 		target.setDescription(source.getDescription());
-		target.setReference(source.getReference());
+		target.setReference(source.getReference() != null ? source.getReference().getCode() : null);
 		target.setReferenceType(getReferenceType(source));
 		target.setType(source.getType());
 
@@ -60,11 +60,8 @@ public class BonusSystemEntryConverter extends AbstractPopulatingConverter<Bonus
 	}
 
 	private String getReferenceType(BonusSystemEntryModel entry) {
-		if(entry.getAppliedDiscount() != null //
-				&& entry.getAppliedDiscount().getOrders() != null) {
-			Iterator<AbstractOrderModel> iterator = entry.getAppliedDiscount().getOrders().iterator();
-			if(iterator.hasNext() && iterator.next() instanceof CartModel)
-				return "Cart";
+		if(entry.getReference() instanceof CartModel) {
+			return "Cart";
 		}
 
 		return "Order";

@@ -153,7 +153,6 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 		bsEntry.setDate(new Date());
 		bsEntry.setDescription("description test");
 		bsEntry.setPoints(points);
-		bsEntry.setReference("reference bla bla bla");
 		bsEntry.setType("registration");
 
 		bonusSystemService.addBonusSystemEntry(bonusSystem, bsEntry);
@@ -209,7 +208,7 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 		bsLog.setDate(new Date());
 		bsLog.setDescription("invalidation");
 		bsLog.setPoints(100 * (appliedBSDiscounts.iterator().next().getValue() * -1));
-		bsLog.setReference("cart: " + cart.getCode());
+		bsLog.setReference(cart);
 		bsLog.setType("order");
 
 		bonusSystemService.addBonusSystemEntry(bonusSystem, bsLog);

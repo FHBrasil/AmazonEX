@@ -5,6 +5,7 @@ package com.flieger.bonussystem.facade;
 
 import de.hybris.platform.commercefacades.order.price.data.DiscountData;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
+import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.order.exceptions.CalculationException;
@@ -52,7 +53,7 @@ public interface BonusSystemFacade
 	DiscountData getCartDiscount();
 
 	/**
-	 * @param order
+	 * @param orderCode
 	 */
 	void rewardPoints(String orderCode);
 
@@ -85,8 +86,14 @@ public interface BonusSystemFacade
 	Double getCartUsedPoints();
 
 	/**
-	 * @param cartData
+	 * @param order
 	 * @return
 	 */
 	Double getUsedPoints(AbstractOrderModel order);
+
+	/**
+	 * @param cart
+	 * @param order
+	 */
+	void changeFromCartToOrder(CartModel cart, OrderModel order);
 }

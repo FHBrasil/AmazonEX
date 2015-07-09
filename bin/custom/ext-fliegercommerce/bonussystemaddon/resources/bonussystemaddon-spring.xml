@@ -97,4 +97,9 @@
 	<!--<bean id="bonusSystemOrderEventListener" class="com.flieger.bonussystem.event.BonusSystemOrderEventListener">
 		<property name="bonusSystemFacade" ref="defaultBonusSystemFacade"/>
 	</bean>-->
+
+	<bean id="bonusSystemSubmitOrderEventListener" class="com.flieger.bonussystem.event.BonusSystemSubmitOrderEventListener">
+		<property name="cartService" ref="cartService"/>
+		<property name="bonusSystemFacade" ref="bonusSystemFacade"/>
+	</bean>
 </beans>

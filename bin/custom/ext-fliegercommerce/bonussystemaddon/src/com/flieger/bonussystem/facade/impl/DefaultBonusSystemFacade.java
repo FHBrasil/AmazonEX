@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
@@ -48,9 +47,10 @@ import com.flieger.services.BonusSystemService;
  */
 public class DefaultBonusSystemFacade implements BonusSystemFacade
 {
+	private static final String DESCRIPTION_ORDER_REWARD = "Order Payment Points Reward";
 	private static final String DESCRIPTION_ORDER_CANCELLED = "Order Cancellation Points Revoked";
 	private static final String DESCRIPTION_ORDER_DISCOUNT = "Order Discount";
-	private static final String DESCRIPTION_ORDER_REWARD = "Order Payment Points Reward";
+	private static final String DESCRIPTION_ORDER_PLACEHOLDER = "Order Temporary Points Reward";
 
 	private static final String TYPE_REWARD = "reward";
 	private static final String TYPE_CANCEL = "cancel";
@@ -160,7 +160,7 @@ public class DefaultBonusSystemFacade implements BonusSystemFacade
 		{
 			for (final BonusSystemEntryModel entry : bonusSystem.getLogEntries())
 			{
-				if (StringUtils.equals(entry.getReference(), order.getCode()))
+				if (order.equals(entry.getReference()))
 				{
 					return Double.valueOf(Math.abs(entry.getPoints().doubleValue()));
 				}
@@ -226,6 +226,23 @@ public class DefaultBonusSystemFacade implements BonusSystemFacade
 			final double points = -getOrderPoints(bonusSystem.getConfiguration(), order);
 			final BonusSystemEntryModel entry = createNewEntry(order, TYPE_CANCEL, points, null);
 			getBonusSystemService().addBonusSystemEntry(bonusSystem, entry);
+		}
+	}
+
+	@Override
+	public void changeFromCartToOrder(final CartModel cart, final OrderModel order)
+	{
+		final BonusSystemModel bonusSystem = getUserBonusSystem(order.getUser());
+		if (bonusSystem != null)
+		{
+			for (final BonusSystemEntryModel entry : bonusSystem.getLogEntries())
+			{
+				if (entry.getReference() == cart)
+				{
+					entry.setReference(order);
+					getModelService().save(entry);
+				}
+			}
 		}
 	}
 
@@ -314,7 +331,7 @@ public class DefaultBonusSystemFacade implements BonusSystemFacade
 	{
 		final BonusSystemEntryModel entry = getModelService().create(BonusSystemEntryModel.class);
 		entry.setDate(new Date());
-		entry.setReference(order.getCode());
+		entry.setReference(order);
 		entry.setType(type);
 		entry.setPoints(Double.valueOf(points));
 		entry.setAppliedDiscount(discount);
@@ -329,6 +346,8 @@ public class DefaultBonusSystemFacade implements BonusSystemFacade
 			case TYPE_CANCEL:
 				entry.setDescription(DESCRIPTION_ORDER_CANCELLED);
 				break;
+			case TYPE_PLACEHOLDER:
+				entry.setDescription(DESCRIPTION_ORDER_PLACEHOLDER);
 			default:
 				entry.setDescription("Custom entry type");
 				break;
