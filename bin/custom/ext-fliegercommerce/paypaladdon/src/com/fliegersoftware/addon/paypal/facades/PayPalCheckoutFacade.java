@@ -276,6 +276,8 @@ public class PayPalCheckoutFacade extends DefaultHeringCheckoutFacade {
                         paymentMode.setCode("paypal");
                         paymentMode = flexibleSearchService.getModelByExample(paymentMode);
                         cartModel.setPaymentMode(paymentMode);
+                        // At this point, the payment must be completed
+                        cartModel.setPaymentStatus(de.hybris.platform.core.enums.PaymentStatus.PAID);
                         final PaypalPaymentInfoModel paymentInfo =
                                 (PaypalPaymentInfoModel) cartModel.getPaymentInfo();
                         final String billingAgreementID =
