@@ -2,6 +2,7 @@
 <%@ taglib prefix="details" tagdir="/WEB-INF/tags/desktop/showcaseproductdetail" %>
 <%@ attribute name="className" required="true" type="java.lang.String" %>
 <%@ attribute name="products" required="true" type="java.util.ArrayList" %>
+<%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
 <c:forEach items="${products}" var="product" varStatus="status">
 	<c:url var="productUrl" value="${product.url}"></c:url>
@@ -16,7 +17,8 @@
 			<%--<details:colors colors="${product.colors}"/>	
 			<details:sizes sizes="${product.sizes}"/>--%>	
 			<details:prices product="${product}"/>
-			<span class="glyphicon stars">&#57350;&#57350;&#57350;&#57350;&#57350;<span style="width:90%">&#57350;&#57350;&#57350;&#57350;&#57350;</span></span> 
+			<!-- <span class="glyphicon stars">&#57350;&#57350;&#57350;&#57350;&#57350;<span style="width:90%">&#57350;&#57350;&#57350;&#57350;&#57350;</span></span> -->
+			<bazaarvoice:inlineRatings product="${product}"/>
 			<details:stamps product="${product}"/>
 			<%--<details:addtocart/>
 			<details:viewmore productUrl="${productUrl}"/>--%>	

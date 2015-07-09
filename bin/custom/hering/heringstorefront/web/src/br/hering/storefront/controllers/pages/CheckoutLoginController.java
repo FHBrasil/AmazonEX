@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flieger.facades.checkout.data.GuestRegisterData;
 import com.google.common.base.Strings;
 
 import de.hybris.platform.core.enums.Gender;
@@ -198,11 +199,25 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 				return handleRegistrationError(model);
 			}
 			
+			final GuestRegisterData guestData = new GuestRegisterData();
+			guestData.setTitleCode(form.getTitleCode());
+			guestData.setFirstName(form.getFirstName());
+			guestData.setLastName(form.getLastName());
+			guestData.setComplement(form.getComplement());
+			guestData.setAddress(form.getStreet());
+			guestData.setNumber(form.getNumber());
+			guestData.setZipCode(form.getZipCode());
+			guestData.setCity(form.getPlace());
+			guestData.setCountry(form.getCountry());
+			guestData.setPhone(form.getTelephone());
+			guestData.setEmail(form.getEmail());
 			
-			((HeringCustomerFacade) getCustomerFacade()).createGuestUserForAnonymousCheckout(form.getEmail(), form.getCpfcnpj(), 
-						getMessageSource().getMessage("text.guest.customer",null,getI18nService().getCurrentLocale()), form.getDateBirthday(), form.getGender());
-			getGuidCookieStrategy().setCookie(request, response);
-			getSessionService().setAttribute(WebConstants.ANONYMOUS_CHECKOUT, Boolean.TRUE);
+			((HeringCustomerFacade) getCustomerFacade()).registerGuest(guestData);
+			
+//			((HeringCustomerFacade) getCustomerFacade()).createGuestUserForAnonymousCheckout(form.getEmail(), form.getCpfcnpj(), 
+//						getMessageSource().getMessage("text.guest.customer",null,getI18nService().getCurrentLocale()), form.getDateBirthday(), form.getGender());
+//			getGuidCookieStrategy().setCookie(request, response);
+//			getSessionService().setAttribute(WebConstants.ANONYMOUS_CHECKOUT, Boolean.TRUE);
 		}
 		catch (final DuplicateUidException e)
 		{

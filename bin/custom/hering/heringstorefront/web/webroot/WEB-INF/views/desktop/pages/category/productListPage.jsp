@@ -9,7 +9,7 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
-<template:page pageTitle="${pageTitle}">
+<template:page pageTitle="${pageTitle}" showBV="true">
     <div id="globalMessages">
         <common:globalMessages />
     </div>
