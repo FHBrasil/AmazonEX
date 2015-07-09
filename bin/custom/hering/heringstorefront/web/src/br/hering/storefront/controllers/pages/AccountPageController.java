@@ -793,8 +793,6 @@ public class AccountPageController extends AbstractSearchPageController {
 			heringCustomerFacade.deleteAccount();
 		}
 
-		//remover
-		//GlobalMessages.addInfoMessage(redirectAttributes, "text.fliegercommerce.texto132");
 		return REDIRECT_PREFIX + "/logout?logoutTargetUrlParameter=/login?deleted=true";
 		
 	}
