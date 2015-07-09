@@ -83,7 +83,6 @@
         <extension name="kpfamilycockpits" />
         <extension name="kpfamilyfacades" />
         <extension name="kpfamilyservices" />
-        <!-- <extension name="kpfamilytest" /> -->
 
         <extension name="storecatalogfeed" />
         <extension name="pixicore" />

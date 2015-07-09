@@ -6,6 +6,7 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
+<%@ taglib prefix="order" tagdir="/WEB-INF/tags/desktop/order"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -70,11 +71,11 @@
 						</div>
 					</form:form>
 					
-					<form action="/my-account/delete-account" >
+					<form>
 						<div class="form-group">
 							<label >Konto l&ouml;schen</label><br />
 							<p>Das L&ouml;schen Ihres Konto l&auml;sst sich nicht r&uuml;ckg&auml;ngig machen.</p>
-							<button id="deleteAccount" class="btn btn-default">Konto l&ouml;schen</button>
+							<button id="deleteAccount" class="btn btn-default" data-dismiss="modal" data-target="#deleteAccountModal" data-toggle="modal">Konto l&ouml;schen</button>
 						</div>
 					</form>	
 					
@@ -85,3 +86,5 @@
             </div>
         </div>
     </div>
+    
+<order:deleteAccountConfirmation customer="${customerData}"/>    

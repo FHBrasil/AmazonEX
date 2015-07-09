@@ -793,7 +793,6 @@ public class AccountPageController extends AbstractSearchPageController {
 			heringCustomerFacade.deleteAccount();
 		}
 
-		GlobalMessages.addInfoMessage(redirectAttributes, "text.fliegercommerce.texto132");
 		return REDIRECT_PREFIX + "/logout?logoutTargetUrlParameter=/login?deleted=true";
 		
 	}
@@ -811,7 +810,7 @@ public class AccountPageController extends AbstractSearchPageController {
 		CustomerData customerData = customerFacade.getCurrentCustomer();
 		
 		if (customerData != null)
-		{		
+		{	
 			customerData = heringCustomerFacade.changePhoneNumber(phone);
 		}
 
@@ -1013,7 +1012,8 @@ public class AccountPageController extends AbstractSearchPageController {
 		} else {
 			GlobalMessages.addFlashMessage(redirectAttributes,
 					GlobalMessages.CONF_MESSAGES_HOLDER, "text.account.confirmation.password.updated", null);
-			return REDIRECT_TO_PROFILE_PAGE;
+			
+			return REDIRECT_MY_ACCOUNT;
 		}
 	}
 
@@ -1242,13 +1242,24 @@ public class AccountPageController extends AbstractSearchPageController {
 		
 		if (!userFacade.isAddressBookEmpty())
 		{
+			final List<AddressData> addresses = userFacade.getAddressBook();
 			if(isDeliveryOrBilling.equalsIgnoreCase("delivery"))
 			{			
+				if(!StringUtil.isBlank(codeAddressEdit))
+				{
+					if(addresses != null)
+					{
+						for(AddressData address : addresses)
+						{
+							if(address.getId().equals(codeAddressEdit) && address.isBillingAddress())
+								newAddress.setBillingAddress(true);
+						}
+					}
+				}				
 				newAddress.setDefaultAddress(true);
 			}
 			else
-			{
-				final List<AddressData> addresses = userFacade.getAddressBook();
+			{				
 				if(addresses != null)
 				{
 					for(AddressData address : addresses)

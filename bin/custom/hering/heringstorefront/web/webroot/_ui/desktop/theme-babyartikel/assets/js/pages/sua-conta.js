@@ -2,9 +2,9 @@ $(document).ready(function() {
 	
 	var contextPath = $('input[type=hidden].contextPath').val();
 	
-	$('.addressbook150706 .modal-footer').find('button.btn-primary').click(function(){		
-		var cod = $('input:radio[name=chooseDeliveryAddress]:checked').val();
+	$('.addressbook150706 .modal-footer').find('button.btn-primary').click(function(){			
 		var typeAddress = $('input:hidden[name=deliveryOrBilling]').val();
+		var cod = $('input:radio[name=chooseDeliveryAddress' + typeAddress + ']:checked').val();
 		var url = contextPath + '/my-account/select-' + typeAddress + '-address/' + cod;
 		$('form#selectAddress').attr('action', url).submit();
 	});
@@ -25,10 +25,14 @@ $(document).ready(function() {
 	var editAddress = $('input:hidden[name=isEditAddress]').val();
 	if(editAddress === "true"){
 		$('#editAddressModal').modal('show');
-		$('form.addEditDeliveryAddressForm .modal-footer .btn-default').click(function(){
+		$('form.addEditDeliveryAddressForm .modal-footer .btn-default, .addressbook150706 .modal-footer .btn-default').click(function(){
 			window.location = contextPath + "/my-account";
 		});
 	}
+	
+	$('.addressbook150706 .modal-footer .btn-default').click(function(){
+		window.location = contextPath + "/my-account";
+	});
 	
 	hering.form.validateAll();
 	

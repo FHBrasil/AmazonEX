@@ -3,25 +3,23 @@
 
     <c:set var="productUrl" value="${pageContext.request.serverName}${product.url}" />
     <c:set var="productZoomImagesUrl" value="${galleryImages[0].zoom.url}" />
-<style type="text/css">
-.fb_iframe_widget {overflow: hidden !important;}
-</style>
     <p class="h4 text-left">
         <spring:theme code="product.share" />:
     </p>
+   
 <div class="social150126 text-left">
-    <%--<div class="fb-like pin-div" data-href="${productUrl}" data-layout="button" data-action="like" data-show-faces="false" data-share="true" data-width="100">
-        <a class="" href="#"><span class="babicon babicon-facebook"> </span></a>
-    </div>
-    <span class="babicon babicon-google"> </span>
-    <span class="babicon babicon-twitter"> </span> --%>
-
-    <div class="fb-like pin-div" data-href="${productUrl}" data-layout="button" data-action="like" data-show-faces="false" data-share="true" data-width="100"></div>
-    <a href="//www.pinterest.com/pin/create/button/?url=${productUrl}&media=${productZoomImagesUrl}&description=Pinterest"
-        data-pin-do="" data-pin-config="none">
+    <a href="http://www.facebook.com/sharer/sharer.php?u=${productUrl}&title=${pageTitle}" target="popup" onclick="fbashare()">
+        <span class="babicon babicon-facebook"> </span>
+    </a>
+    <a href="http://plus.google.com/share?url=${productUrl}" target="popup" onclick="gbashare()">
+        <span class="babicon babicon-google"> </span>
+    </a>
+    <a href="http://twitter.com/intent/tweet?status=${productUrl}" target="popup" onclick="tbashare()">
+        <span class="babicon babicon-twitter"> </span>
+    </a>
+    <a href="http://www.pinterest.com/pin/create/link/?url=${productUrl}&media=${productZoomImagesUrl}&description=Pinterest" target="popup" onclick="pbashare()">
         <span class="babicon babicon-pinterest"> </span>
     </a>
-    <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
 </div>
 
 <%-- code original 
