@@ -22,10 +22,6 @@ public class CustomerDefaultPhoneNumberAttributeHandler implements DynamicAttrib
 	
 	private PhoneContactInfoModel phoneModel;
 	
-	private Collection<AbstractContactInfoModel> contactInfosModel;
-	
-	private static final Logger LOG = Logger.getLogger(CustomerDefaultPhoneNumberAttributeHandler.class);
-	
 	public ModelService getModelService() {
 		return modelService;
 	}
