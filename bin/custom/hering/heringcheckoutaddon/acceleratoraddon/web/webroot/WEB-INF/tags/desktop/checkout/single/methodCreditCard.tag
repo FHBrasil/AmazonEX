@@ -13,6 +13,7 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
+<section id="payment-credit-card">
 <input type="hidden" name="voucherAmountEqualsOrderAmount" value="${cartData.totalPrice.value eq 0.0 ? true : false}" />
 <form:hidden path="paymentId" class="create_update_payment_id" />
 <form:hidden path="instalment" />
@@ -43,9 +44,7 @@
 <div class="form-group row">
 	<div class="col-xs-6">
 		<label for="cv2Number">
-			<spring:theme code="payment.cv2Number" /> 
-			<span class="mandatory">*</span> 
-			<span class="skip"></span>
+			<spring:theme code="payment.cv2Number" />			
         </label>								
 		<input id="cv2Number" name="cv2Number" class="form-control text required-payment required-numbers" type="text" maxlength="5" autocomplete="off" />
 	</div>
@@ -53,7 +52,7 @@
 		<a href="#" class="hover-tooltip"> 
 			<span class="glyphicon glyphicon-question-sign"></span>
 			<spring:theme code="checkout.oQueIsso" text="O que e isso" />
-            <div class="tooltip information-content securityCodeInfo">
+            <div class="tooltip information-content securityCodeInfo" style="display: none !important;">
 		      	<h3> <spring:theme code="checkout.toolTip.CodSeguranca" /> </h3>
 			    <ul class="code-information">
 			      	<li>
@@ -71,4 +70,4 @@
 		</a>
 	</div>
 </div>
-<small><spring:theme code="checkout.camposObrigatorios" /></small>
+</section>
