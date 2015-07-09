@@ -1396,22 +1396,16 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     @ModelAttribute("months")
     public List<SelectOption> getMonths() {
         final List<SelectOption> months = new ArrayList<SelectOption>();
-        final String mes =
-                getMessageSource().getMessage("text.fliegercommerce.texto118", null,
-                        getI18nService().getCurrentLocale());
-        months.add(new SelectOption("0", mes));
-        months.add(new SelectOption("1", "01"));
-        months.add(new SelectOption("2", "02"));
-        months.add(new SelectOption("3", "03"));
-        months.add(new SelectOption("4", "04"));
-        months.add(new SelectOption("5", "05"));
-        months.add(new SelectOption("6", "06"));
-        months.add(new SelectOption("7", "07"));
-        months.add(new SelectOption("8", "08"));
-        months.add(new SelectOption("9", "09"));
-        months.add(new SelectOption("10", "10"));
-        months.add(new SelectOption("11", "11"));
-        months.add(new SelectOption("12", "12"));
+//        final String mes =
+//                getMessageSource().getMessage("text.fliegercommerce.texto118", null,
+//                        getI18nService().getCurrentLocale());
+//        months.add(new SelectOption("0", mes));
+        for(int count = 1; count < 13; count++){
+        	String message = "text.fliegercommerce.texto" + String.valueOf(132+count);
+        	months.add(new SelectOption(String.valueOf(count), 
+        			getMessageSource().getMessage(message, null,
+        					getI18nService().getCurrentLocale())));
+        }
         return months;
     }
     
@@ -1424,10 +1418,10 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     public List<SelectOption> getExpiryYears() {
         final List<SelectOption> expiryYears = new ArrayList<SelectOption>();
         final Calendar calender = new GregorianCalendar();
-        final String ano =
-                getMessageSource().getMessage("text.fliegercommerce.texto119", null,
-                        getI18nService().getCurrentLocale());
-        expiryYears.add(new SelectOption("0", ano));
+//        final String ano =
+//                getMessageSource().getMessage("text.fliegercommerce.texto119", null,
+//                        getI18nService().getCurrentLocale());
+//        expiryYears.add(new SelectOption("0", ano));
         for (int i = calender.get(Calendar.YEAR); i < (calender.get(Calendar.YEAR) + 11); i++) {
             expiryYears.add(new SelectOption(String.valueOf(i), String.valueOf(i)));
         }
