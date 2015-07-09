@@ -651,20 +651,24 @@ public class AccountPageController extends AbstractSearchPageController {
 	protected String errorUpdatingEmail(final Model model, final String msg) throws CMSItemNotFoundException {
 
 		final String returnAction;
-		
+
 		GlobalMessages.addErrorMessage(model, msg);
 
-		//storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
-		//setUpMetaDataForContentPage(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
-		//model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
-		//model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.profile"));
-		//returnAction = ControllerConstants.Views.Pages.Account.AccountHomePage;
-		
+		// storeCmsPageInModel(model,
+		// getContentPageForLabelOrId(PROFILE_CMS_PAGE));
+		// setUpMetaDataForContentPage(model,
+		// getContentPageForLabelOrId(PROFILE_CMS_PAGE));
+		// model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
+		// model.addAttribute("breadcrumbs",
+		// accountBreadcrumbBuilder.getBreadcrumbs("text.account.profile"));
+		// returnAction =
+		// ControllerConstants.Views.Pages.Account.AccountHomePage;
+
 		storeCmsPageInModel(model, getContentPageForLabelOrId(ACCOUNT_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(ACCOUNT_CMS_PAGE));
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.account"));
-		
+
 		returnAction = REDIRECT_MY_ACCOUNT;
 		return returnAction;
 
@@ -866,39 +870,49 @@ public class AccountPageController extends AbstractSearchPageController {
 		return bases;
 	}
 
-	@RequestMapping(value = "/update-password", method = RequestMethod.GET)
-	@RequireHardLogIn
-	public String updatePassword(final Model model) throws CMSItemNotFoundException {
-		final UpdatePasswordForm updatePasswordForm = new UpdatePasswordForm();
-
-		model.addAttribute("updatePasswordForm", updatePasswordForm);
-
-		storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
-		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
-
-		model.addAttribute("breadcrumbs",
-				accountBreadcrumbBuilder.getBreadcrumbs("text.account.profile.updatePasswordForm"));
-		model.addAttribute("metaRobots", "no-index,no-follow");
-		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
-		return ControllerConstants.Views.Pages.Account.AccountChangePasswordPage;
-	}
+	/*
+	 * @RequestMapping(value = "/update-password", method = RequestMethod.GET)
+	 * 
+	 * @RequireHardLogIn public String updatePassword(final Model model) throws
+	 * CMSItemNotFoundException { final UpdatePasswordForm updatePasswordForm =
+	 * new UpdatePasswordForm();
+	 * 
+	 * model.addAttribute("updatePasswordForm", updatePasswordForm);
+	 * 
+	 * storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
+	 * setUpMetaDataForContentPage(model,
+	 * getContentPageForLabelOrId(PROFILE_CMS_PAGE));
+	 * 
+	 * model.addAttribute("breadcrumbs",
+	 * accountBreadcrumbBuilder.getBreadcrumbs(
+	 * "text.account.profile.updatePasswordForm"));
+	 * model.addAttribute("metaRobots", "no-index,no-follow");
+	 * model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name()); return
+	 * ControllerConstants.Views.Pages.Account.AccountChangePasswordPage; }
+	 */
 
 	@RequestMapping(value = "/update-password", method = RequestMethod.POST)
 	@RequireHardLogIn
 	public String updatePassword(final UpdatePasswordForm updatePasswordForm, final BindingResult bindingResult,
 			final Model model, final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException {
+		
 		getPasswordValidator().validate(updatePasswordForm, bindingResult, model);
+		
 		if (!bindingResult.hasErrors()) {
+			
 			if (updatePasswordForm.getNewPassword().equals(updatePasswordForm.getCheckNewPassword())) {
+				
 				try {
 					customerFacade.changePassword(updatePasswordForm.getCurrentPassword(),
 							updatePasswordForm.getNewPassword());
-				} catch (final PasswordMismatchException localException) {
+				} 
+				catch (final PasswordMismatchException localException) {
 					GlobalMessages.addErrorMessage(model, "profile.currentPassword.invalid");
 					bindingResult.rejectValue("currentPassword", "profile.currentPassword.invalid", new Object[] {},
 							"profile.currentPassword.invalid");
 				}
-			} else {
+			} 
+			else {
 				bindingResult.rejectValue("checkNewPassword", "validation.checkPwd.equals", new Object[] {},
 						"validation.checkPwd.equals");
 			}
@@ -906,19 +920,18 @@ public class AccountPageController extends AbstractSearchPageController {
 
 		if (bindingResult.hasErrors()) {
 			// GlobalMessages.addErrorMessage(model, "form.global.error");
-			storeCmsPageInModel(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
-			setUpMetaDataForContentPage(model, getContentPageForLabelOrId(PROFILE_CMS_PAGE));
+			storeCmsPageInModel(model, getContentPageForLabelOrId(ACCOUNT_CMS_PAGE));
+			setUpMetaDataForContentPage(model, getContentPageForLabelOrId(ACCOUNT_CMS_PAGE));
 
 			model.addAttribute("breadcrumbs",
 					accountBreadcrumbBuilder.getBreadcrumbs("text.account.profile.updatePasswordForm"));
 			model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
-			return ControllerConstants.Views.Pages.Account.AccountChangePasswordPage;
-		} else {
-			GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER,
-					"text.account.confirmation.password.updated", null);
-
-			return REDIRECT_MY_ACCOUNT;
+		} 
+		else {
+			GlobalMessages.addInfoMessage(model, "text.account.confirmation.password.updated");		
 		}
+		
+		return REDIRECT_MY_ACCOUNT;
 	}
 
 	@RequestMapping(value = "/address-book", method = RequestMethod.GET)
