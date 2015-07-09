@@ -653,36 +653,44 @@ public class AccountPageController extends AbstractSearchPageController {
 				accountBreadcrumbBuilder.getBreadcrumbs("text.account.profile"));
 		model.addAttribute("metaRobots", "no-index,no-follow");
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
+		
+		LOG.info("calling first controller");
 		return ControllerConstants.Views.Pages.Account.AccountProfileEmailEditPage;
 	}
 
 	@RequestMapping(value = "/update-email", method = RequestMethod.POST)
 	@RequireHardLogIn
-	public String updateEmail(final UpdateEmailForm updateEmailForm,
-			final BindingResult bindingResult, final Model model,
+	public String updateEmail(UpdateEmailForm updateEmailForm,
+			final Model model, final BindingResult bindingResult, 
 			final RedirectAttributes redirectAttributes)
 			throws CMSItemNotFoundException {
+		
+		updateEmailForm = new UpdateEmailForm();
+		model.addAttribute("updateEmailForm", updateEmailForm);
+		
+		LOG.info("calling second controller");
+
 		getEmailValidator().validate(updateEmailForm, bindingResult, model);
 
-		String returnAction = REDIRECT_TO_PROFILE_PAGE;
+		String returnAction = REDIRECT_MY_ACCOUNT;
 
-		if (!bindingResult.hasErrors()
+/*		if (!bindingResult.hasErrors()
 				&& !updateEmailForm.getEmail().equals(
 						updateEmailForm.getChkEmail())) {
+			LOG.info("first if");
 			bindingResult.rejectValue("chkEmail",
 					"validation.checkEmail.equals", new Object[] {},
 					"validation.checkEmail.equals");
-		}
+		}*/
 
 		if (bindingResult.hasErrors()) {
+			LOG.info("999999");
 			returnAction = errorUpdatingEmail(model, "form.global.error");
 		} else {
 			try {
 				String oldEmail = customerFacade.getCurrentCustomer().getUid();
-				customerFacade.changeUid(updateEmailForm.getEmail(),
-						updateEmailForm.getPassword());
-				GlobalMessages.addFlashMessage(redirectAttributes,
-						GlobalMessages.CONF_MESSAGES_HOLDER,
+				customerFacade.changeUid(updateEmailForm.getEmail(), updateEmailForm.getPassword());
+				GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER,
 						"text.account.profile.confirmationUpdated", null);
 
 				// Replace the spring security authentication with the new UID
@@ -695,15 +703,16 @@ public class AccountPageController extends AbstractSearchPageController {
 				newAuthentication.setDetails(oldAuthentication.getDetails());
 				SecurityContextHolder.getContext().setAuthentication(
 						newAuthentication);
+				LOG.info("yay!!!");
 
 			} catch (final DuplicateUidException e) {
 				bindingResult.rejectValue("email", "profile.email.unique");
 				returnAction = errorUpdatingEmail(model, "profile.email.unique");
+				LOG.info("aaaaaaaaaaa");
 			} catch (final PasswordMismatchException passwordMismatchException) {
-				bindingResult.rejectValue("password",
-						"profile.currentPassword.invalid");
-				returnAction = errorUpdatingEmail(model,
-						"profile.currentPassword.invalid");
+				bindingResult.rejectValue("password", "profile.currentPassword.invalid");
+				returnAction = errorUpdatingEmail(model, "profile.currentPassword.invalid");
+				LOG.info("bbbbbbbbbb");
 			} catch (Exception e) {
 				//
 			}

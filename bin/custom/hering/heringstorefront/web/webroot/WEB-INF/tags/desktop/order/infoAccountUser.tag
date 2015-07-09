@@ -37,20 +37,20 @@
                     <h4 class="modal-title"><span class="glyphicon glyphicon-user"></span> Konto &auml;ndern</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form:form method="post">
 						<!-- this form is exactly same like at index-register.html ... maybe we should make a component for that? -->
 						<div class="form-group">
 							<label for="inputEmail">E-Mail-Adresse</label>
 							<input type="email" class="form-control" id="inputEmail" value="${customer.uid}" required="true">
 						</div>
-						<%-- <div class="form-group">
-							<label for="inputEmail">Telefon (optional)</label>
-							<input type="tel" class="form-control" name="phone" id="phone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}">
-						</div> --%>
+						 <div class="form-group">
+							<label for="inputPassword">Passwort</label>
+							<input type="password" class="form-control" id="password">
+						</div> 
 						<div class="form-group">
-							<button id="changeEmail" class="btn btn-primary">Speichern</button>
+							<button type="submit" id="changeEmail" class="btn btn-primary" formaction="/my-account/update-email" formmethod="post">Speichern</button>
 						</div>
-					</form>
+					</form:form>
 					
 
 					<form:form id="changePhone" method="POST" action="/my-account/change-phonenumber" >						
@@ -71,7 +71,7 @@
 						</div>
 					</form:form>
 					
-					<form>
+					<form id="deleteAccount">
 						<div class="form-group">
 							<label >Konto l&ouml;schen</label><br />
 							<p>Das L&ouml;schen Ihres Konto l&auml;sst sich nicht r&uuml;ckg&auml;ngig machen.</p>
