@@ -110,12 +110,12 @@ $(document).ready(function() {
 		$('form.delivery').attr('action', url).submit();
 	});
 	
-	$('.btn-group .btn-editar').click(function(){
-		var url = "";
+	$('.btn-group .btn-editar, #selected-address > .zeroAddress').click(function(){
+		var url = contextPath;
 		if($(this).hasClass('billing'))
-			url = "/checkout/single/add-address/billing";						
+			url += "/checkout/single/add-address/billing";						
 		else
-			url = "/checkout/single/add-address/delivery";
+			url += "/checkout/single/add-address/delivery";
 		$('form.addEditDeliveryAddressForm').attr("action", url);
 	});
 	
