@@ -81,6 +81,7 @@ public interface ControllerConstants
 				String AccountOrderHistoryPage = "pages/account/accountOrderHistoryPage";
 				String AccountOrderPage = "pages/account/accountOrderPage";
 				String AccountWishlistEntriesPage = "pages/account/accountWishlistEntriesPage";
+				String AccountBonusSystemPage = "pages/account/accountBonusSystemPage";
 				String AccountProfilePage = "pages/account/accountProfilePage";
 				String AccountProfileEditPage = "pages/account/accountProfileEditPage";
 				String AccountProfileEmailEditPage = "pages/account/accountProfileEmailEditPage";

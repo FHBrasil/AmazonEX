@@ -163,7 +163,7 @@ public class AccountPageController extends AbstractSearchPageController {
 	private static final String REDIRECT_TO_LOGIN_PAGE = REDIRECT_PREFIX + "/login/";
 	
 	private static final String REDIRECT_LOGOUT = REDIRECT_PREFIX + "/logout";
-	
+
 	/**
 	 * We use this suffix pattern because of an issue with Spring 3.1 where a
 	 * Uri value is incorrectly extracted if it contains on or more '.'
@@ -183,6 +183,7 @@ public class AccountPageController extends AbstractSearchPageController {
 	private static final String ORDER_HISTORY_CMS_PAGE = "orders";
 	private static final String ORDER_DETAIL_CMS_PAGE = "order";
 	private static final String WISHLIST_ENTRIES_CMS_PAGE = "my-wishlist";
+	private static final String BONUSSYSTEM_VIEW_CMS_PAGE = "bonus-system";
 
 	private static final Logger LOG = Logger
 			.getLogger(AccountPageController.class);
@@ -1958,6 +1959,17 @@ public class AccountPageController extends AbstractSearchPageController {
 		customerFacade.updateProfile(customer);
 
 		return REDIRECT_MY_ACCOUNT + "/my-wishlist";
+	}
+
+	@RequestMapping(value = "/bonus-system", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String bonusSystemPage(final Model model, final HttpServletRequest request) throws CMSItemNotFoundException
+	{
+		storeCmsPageInModel(model, getContentPageForLabelOrId(BONUSSYSTEM_VIEW_CMS_PAGE));
+		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(BONUSSYSTEM_VIEW_CMS_PAGE));
+		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
+
+		return ControllerConstants.Views.Pages.Account.AccountBonusSystemPage;
 	}
 
 	private HeringPaymentDetailsForm getPreparedHeringPaymentDetailsForm() {
