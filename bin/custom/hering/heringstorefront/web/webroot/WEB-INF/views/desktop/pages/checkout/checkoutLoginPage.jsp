@@ -45,6 +45,12 @@
 						<format:price priceData="${cartData.subTotal}" />
 					</div>
 					<div class="col-xs-6">
+						Rabatt
+					</div>
+					<div class="col-xs-6 text-right">
+						<format:price priceData="${cartData.totalDiscounts}" />
+					</div>
+					<div class="col-xs-6">
 						Versand
 					</div>
 					<div class="col-xs-6 text-right">
