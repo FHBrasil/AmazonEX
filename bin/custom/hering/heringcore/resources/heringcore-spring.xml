@@ -842,5 +842,14 @@
 	class="br.hering.core.attributehandlers.CustomerDefaultPhoneNumberAttributeHandler">
 		<property name="modelService" ref="modelService"/>
 	</bean>
+	
+	<alias name="defaultFliegercommerceOrderSplittingService" alias="orderSplittingService"/>
+	<bean id="defaultFliegercommerceOrderSplittingService" parent="defaultOrderSplittingService">
+		<property name="strategiesList">
+			<list merge="false">
+				<ref bean="splitByNamedDeliveryDate" />
+			</list>
+		</property>
+	</bean>
 
 </beans>
