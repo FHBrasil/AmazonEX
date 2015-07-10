@@ -119,7 +119,7 @@ public class DefaultKPCustomerAccountService extends DefaultCustomerAccountServi
 		billingAddress.setCountry(getCommonI18NService().getCountry(billingInfo.getCountry()));
 		billingAddress.setPhone1(billingInfo.getPhoneNumber());
 		billingAddress.setDddPhone(billingInfo.getDddPhone());
-		billingAddress.setRegion(getCommonI18NService().getRegion(billingAddress.getCountry(), billingInfo.getRegionIso()));
+		//billingAddress.setRegion(getCommonI18NService().getRegion(billingAddress.getCountry(), billingInfo.getRegionIso()));
 		billingAddress.setDistrict(billingInfo.getDistrict());
 		billingAddress.setStreetnumber(billingInfo.getNumber());
 		billingAddress.setPontoDeReferencia(billingInfo.getReference());
@@ -149,7 +149,8 @@ public class DefaultKPCustomerAccountService extends DefaultCustomerAccountServi
 				{ cardInfo.getExpirationMonth() }));
 
 				final KpCardInfo card = (KpCardInfo) cardInfo;
-				cardPaymentInfoModel.setInstallment(new Integer(card.getInstallments()));
+				//cardPaymentInfoModel.setInstallment(new Integer(card.getInstallments()));
+				cardPaymentInfoModel.setInstallment(1);
 				cardPaymentInfoModel.setValidToYear(String.valueOf(cardInfo.getExpirationYear()));
 				if (cardInfo.getIssueMonth() != null)
 				{

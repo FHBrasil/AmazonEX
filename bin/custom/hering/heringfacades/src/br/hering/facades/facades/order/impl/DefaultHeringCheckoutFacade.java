@@ -365,7 +365,7 @@ public class DefaultHeringCheckoutFacade extends DefaultAcceleratorCheckoutFacad
         billingInfo.setPostalCode(billingAddressData.getPostalCode());
         billingInfo.setStreet1(billingAddressData.getLine1());
         billingInfo.setStreet2(billingAddressData.getLine2());
-        billingInfo.setRegionIso(billingAddressData.getRegion().getIsocode());
+        //billingInfo.setRegionIso(billingAddressData.getRegion().getIsocode());
         billingInfo.setDddPhone(billingAddressData.getDddPhone());
         billingInfo.setDistrict(billingAddressData.getDistrict());
         billingInfo.setNumber(billingAddressData.getNumber());

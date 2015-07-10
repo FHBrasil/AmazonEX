@@ -334,14 +334,32 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
      * @return
      * @throws CMSItemNotFoundException
      */
-    @RequestMapping(value = "/add-address", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-address/{typeAddress}", method = RequestMethod.POST)
     @RequireHardLogIn
-    public String addDeliveryAddress(final HeringAddressForm heringAddressForm,
+    public String addDeliveryAddress(@PathVariable("typeAddress") final String typeAddress,
+    		final HeringAddressForm heringAddressForm,
             final BindingResult bindingResult, final Model model,
             final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
         prepareDeliveryAddressForm(heringAddressForm);
         getAddressValidator().validate(heringAddressForm, bindingResult, model);
         if (!bindingResult.hasErrors()) {
+        	final List<AddressData> addresses = getUserFacade().getAddressBook();
+			if(typeAddress.equalsIgnoreCase("delivery"))
+			{					
+				heringAddressForm.setDefaultAddress(true);
+			}
+			else if(typeAddress.equalsIgnoreCase("billing"))
+			{				
+				if(addresses != null)
+				{
+					for(AddressData address : addresses)
+					{
+						address.setBillingAddress(false);
+						getUserFacade().editAddress(address);
+					}
+				}
+				heringAddressForm.setBillingAddress(true);
+			}
             // if we are editing one address, turn it into inactive and create a new one
             // if(StringUtils.isBlank(heringAddressForm.getAddressId())){
             this.saveDeliveryAddress(heringAddressForm);
@@ -355,7 +373,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
              * }
              */
         }
-        return this.prepareSingleStepCheckout(model);
+        return REDIRECT_URL_SINGLE_STEP_CHECKOUT;
     }
     
     
@@ -772,7 +790,9 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             final BindingResult bindingResult, final Model model, final HttpServletRequest request,
             final RedirectAttributes redirectModel) throws CMSItemNotFoundException,
             InvalidCartException, CommerceCartModificationException {
+    	boolean isDifferingBillingAddress = "true".equals(request.getParameter("differingBillingAddress"));    	
         CartData cartData = getCheckoutFacade().getCheckoutCart();
+        getBillingPaymentDetailsForm(paymentDetailsForm, isDifferingBillingAddress, cartData);
         getHeringPaymentDetailsValidator().validate(paymentDetailsForm, bindingResult, model);
         if (bindingResult.hasErrors()) {
             GlobalMessages.addErrorMessage(model, "checkout.error.verifyFields");
@@ -809,7 +829,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
      */
     private String placeOrderWithPayPal(final HeringPaymentDetailsForm paymentDetailsForm,
             final BindingResult bindingResult, final Model model, final HttpServletRequest request,
-            final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
+            final RedirectAttributes redirectModel) throws CMSItemNotFoundException { 	
         CartData cartData = getCheckoutFacade().getCheckoutCart();
         getHeringPaymentDetailsValidator().validate(paymentDetailsForm, bindingResult, model);
         if (bindingResult.hasErrors()) {
@@ -849,7 +869,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     public String placeOrder(final HeringPaymentDetailsForm paymentDetailsForm,
             final BindingResult bindingResult, final Model model, final HttpServletRequest request,
             final RedirectAttributes redirectModel) throws CMSItemNotFoundException,
-            InvalidCartException, CommerceCartModificationException {
+            InvalidCartException, CommerceCartModificationException {   	
         CartData cartData = getCheckoutFacade().getCheckoutCart();
         getHeringPaymentDetailsValidator().validate(paymentDetailsForm, bindingResult, model);
         if (bindingResult.hasErrors()) {
@@ -869,25 +889,8 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         }
         model.addAttribute("cartData", cartData);
         model.addAttribute("paymentId", "" + System.currentTimeMillis());
-        boolean isDifferingBillingAddress =
-                "true".equals(request.getParameter("differingBillingAddress"));
-        if (paymentDetailsForm.getBillingAddress() == null
-                || Strings.isNullOrEmpty(paymentDetailsForm.getBillingAddress().getPostcode())) {
-            AddressData billingAddressData = isDifferingBillingAddress ? getAddressBilling() : null;
-            if (billingAddressData == null) {
-                billingAddressData =
-                        (AddressData) SerializationUtils.clone(cartData.getDeliveryAddress());
-                if (billingAddressData != null) {
-                    billingAddressData.setShippingAddress(false);
-                    billingAddressData.setBillingAddress(true);
-                }
-            }
-            if (billingAddressData != null) {
-                cartData.setBillingAddress(billingAddressData);
-                paymentDetailsForm.setBillingAddress(this.convertAddressDataIntoAddressForm(cartData
-                        .getBillingAddress()));
-            }
-        }
+        
+        
         this.savePaymentMethod(paymentDetailsForm, request);
         // authorize, if failure occurs don't allow to place the order
         boolean isPaymentAuthorized = false;
@@ -946,6 +949,24 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         return redirectToOrderConfirmationPage(orderData);
     }
     
+    private void getBillingPaymentDetailsForm(final HeringPaymentDetailsForm paymentDetailsForm,
+    		final boolean isDifferingBillingAddress, final CartData cartData)
+    {  	
+    	if (paymentDetailsForm.getBillingAddress() == null || Strings.isNullOrEmpty(paymentDetailsForm.getBillingAddress().getPostcode())) {
+            AddressData billingAddressData = isDifferingBillingAddress ? getAddressBilling() : null;
+            if (billingAddressData == null) {
+                billingAddressData = (AddressData) SerializationUtils.clone(cartData.getDeliveryAddress());
+                if (billingAddressData != null) {
+                    billingAddressData.setShippingAddress(false);
+                    billingAddressData.setBillingAddress(true);
+                }
+            }
+            if (billingAddressData != null) {
+                cartData.setBillingAddress(billingAddressData);
+                paymentDetailsForm.setBillingAddress(this.convertAddressDataIntoAddressForm(cartData.getBillingAddress()));
+            }
+        }
+    }
     
     /**
      * @param paymentDetailsForm
@@ -1375,22 +1396,16 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     @ModelAttribute("months")
     public List<SelectOption> getMonths() {
         final List<SelectOption> months = new ArrayList<SelectOption>();
-        final String mes =
-                getMessageSource().getMessage("text.fliegercommerce.texto118", null,
-                        getI18nService().getCurrentLocale());
-        months.add(new SelectOption("0", mes));
-        months.add(new SelectOption("1", "01"));
-        months.add(new SelectOption("2", "02"));
-        months.add(new SelectOption("3", "03"));
-        months.add(new SelectOption("4", "04"));
-        months.add(new SelectOption("5", "05"));
-        months.add(new SelectOption("6", "06"));
-        months.add(new SelectOption("7", "07"));
-        months.add(new SelectOption("8", "08"));
-        months.add(new SelectOption("9", "09"));
-        months.add(new SelectOption("10", "10"));
-        months.add(new SelectOption("11", "11"));
-        months.add(new SelectOption("12", "12"));
+//        final String mes =
+//                getMessageSource().getMessage("text.fliegercommerce.texto118", null,
+//                        getI18nService().getCurrentLocale());
+//        months.add(new SelectOption("0", mes));
+        for(int count = 1; count < 13; count++){
+        	String message = "text.fliegercommerce.texto" + String.valueOf(132+count);
+        	months.add(new SelectOption(String.valueOf(count), 
+        			getMessageSource().getMessage(message, null,
+        					getI18nService().getCurrentLocale())));
+        }
         return months;
     }
     
@@ -1403,10 +1418,10 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     public List<SelectOption> getExpiryYears() {
         final List<SelectOption> expiryYears = new ArrayList<SelectOption>();
         final Calendar calender = new GregorianCalendar();
-        final String ano =
-                getMessageSource().getMessage("text.fliegercommerce.texto119", null,
-                        getI18nService().getCurrentLocale());
-        expiryYears.add(new SelectOption("0", ano));
+//        final String ano =
+//                getMessageSource().getMessage("text.fliegercommerce.texto119", null,
+//                        getI18nService().getCurrentLocale());
+//        expiryYears.add(new SelectOption("0", ano));
         for (int i = calender.get(Calendar.YEAR); i < (calender.get(Calendar.YEAR) + 11); i++) {
             expiryYears.add(new SelectOption(String.valueOf(i), String.valueOf(i)));
         }

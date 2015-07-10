@@ -47,6 +47,7 @@
                     <button type="${buttonType}" class="btn btn-primary btn-lg" href="#cartModal" data-toggle="modal">
                         <spring:theme code="cart.page.add" />
                     </button>
+                    <product:modalAddToCartComplete />
                 </c:if>
                 <br />
                 <c:choose>

@@ -17,8 +17,9 @@
 			<%--<details:colors colors="${product.colors}"/>	
 			<details:sizes sizes="${product.sizes}"/>--%>	
 			<details:prices product="${product}"/>
-			<!-- <span class="glyphicon stars">&#57350;&#57350;&#57350;&#57350;&#57350;<span style="width:90%">&#57350;&#57350;&#57350;&#57350;&#57350;</span></span> -->
-			<bazaarvoice:inlineRatings product="${product}"/>
+			<span class="glyphicon stars">
+				<bazaarvoice:inlineRatings product="${product}"/>
+			</span>
 			<details:stamps product="${product}"/>
 			<%--<details:addtocart/>
 			<details:viewmore productUrl="${productUrl}"/>--%>	

@@ -7,6 +7,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 <%@ taglib prefix="order" tagdir="/WEB-INF/tags/desktop/order"%>
+<%@ taglib prefix="email" tagdir="/WEB-INF/tags/desktop/email"%>
+<%@ taglib prefix="password" tagdir="/WEB-INF/tags/desktop/password"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -37,23 +39,20 @@
                     <h4 class="modal-title"><span class="glyphicon glyphicon-user"></span> Konto &auml;ndern</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form:form id="changeEmail" method="post">
 						<!-- this form is exactly same like at index-register.html ... maybe we should make a component for that? -->
 						<div class="form-group">
-							<label for="inputEmail">E-Mail-Adresse</label>
-							<input type="email" class="form-control" id="inputEmail" value="${customer.uid}" required="true">
-						</div>
-						<%-- <div class="form-group">
-							<label for="inputEmail">Telefon (optional)</label>
-							<input type="tel" class="form-control" name="phone" id="phone" value="${customer.defaultShippingAddress.dddPhone} ${customer.defaultShippingAddress.phone}">
-						</div> --%>
-						<div class="form-group">
-							<button id="changeEmail" class="btn btn-primary">Speichern</button>
-						</div>
-					</form>
+							<form:form>
+								<label for="inputEmail">E-Mail-Adresse</label>
+								<input type="email" class="form-control" id="inputEmail" value="${customer.uid}" required="true" readonly="true">
+								<button id="changeEmail" class="btn btn-default" data-dismiss="modal" data-target="#emailModal" data-toggle="modal">E-Mail-Adresse ändern</button>
+							</form:form>
+						</div>						
+					</form:form>
 					
 
-					<form:form id="changePhone" method="POST" action="/my-account/change-phonenumber" >						
+					<!-- CHANGE PHONE NUMBER - READY TO BE USED -->
+					<%-- <form:form id="changePhone" method="POST" action="/my-account/change-phonenumber" >						
 						<div class="form-group">
 						<label>Telefon (optional)</label>
 						<input type="tel" name="phone" class="form-control" value="${customer.defaultPhoneNumber}"></input>
@@ -61,17 +60,20 @@
 						<div class="form-group">
 							<button class="btn btn-primary">Speichern</button>
 						</div>
-					</form:form>
+					</form:form> --%>
 					
-					<form:form id="updatePassword" method="GET" action="/my-account/update-password">
+					<form:form id="updatePassword" method="post">
 						<div class="form-group">
-							<label >Passwort &auml;ndern</label><br />
-							<p>Bitte klicken Sie den folgenden Button, wenn Sie Ihr Passwort zu &auml;ndern m&ouml;chten.</p>
-							<button id="changePassword" class="btn btn-default" data-target="#passwordModal" data-toggle="modal">Passwort &auml;ndern</button>
+							<form:form>
+								<label for="changePassword">Passwort</label><br>
+								<p>Bitte klicken Sie den folgenden Button, wenn Sie Ihr Passwort zu ändern möchten.</p>
+								<button id="changePassword" class="btn btn-default" data-target="#passwordModal" data-toggle="modal" data-dismiss="modal">Passwort ändern</button>
+							</form:form>
 						</div>
 					</form:form>
 					
-					<form>
+					
+					<form id="deleteAccount">
 						<div class="form-group">
 							<label >Konto l&ouml;schen</label><br />
 							<p>Das L&ouml;schen Ihres Konto l&auml;sst sich nicht r&uuml;ckg&auml;ngig machen.</p>
@@ -87,4 +89,6 @@
         </div>
     </div>
     
-<order:deleteAccountConfirmation customer="${customerData}"/>    
+<order:deleteAccountConfirmation customer="${customerData}"/>  
+<email:emailConfirmation />  
+<password:updatePassword/>

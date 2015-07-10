@@ -60,11 +60,12 @@ public class PayPalBeforeViewHandler implements BeforeViewHandlerAdaptee {
         } else if (B2C_CHECKOUT_CONFIRMATION_PAGE.equals(viewName)) {
             return PaypaladdonControllerConstants.Views.Pages.Checkout.CheckoutConfirmationPage;
         } else if (B2C_ADD_TO_CART_POPUP_PAGE.equals(viewName)) {
+            // We do not use these paypal cms buttons
             // model.addAttribute("payPalExpressCheckoutShortcut", getCmsComponentService()
             // .getSimpleCMSComponent("PayPalExpressCheckoutShortcutSmall"));
             // model.addAttribute("payPalCreditShortcut", getCmsComponentService()
             // .getSimpleCMSComponent("PayPalCreditShortcutSmall"));
-            return PaypaladdonControllerConstants.Views.Fragments.Cart.AddToCartPopup;
+//            return PaypaladdonControllerConstants.Views.Fragments.Cart.AddToCartPopup;
         } else if (isCheckoutPage(viewName) || isPayPalCheckoutRedirect(viewName, request)) {
             final String payPalHopUrl =
                     getSessionService().getAttribute(
