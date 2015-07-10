@@ -9,7 +9,7 @@
 				<h2>${headline}</h2>
 			</div>
 			<div class="thumb">
-				<img title="${headline}" alt="${media.altText}" src="${media.url}">
+				<img title="${headline}" alt="${media.altText}" src="${media.url}" class="img-responsive">
 			</div>
 			<div class="details">
 				<p>${content}</p>
@@ -24,7 +24,7 @@
 					<strong>${headline}</strong>
 				</span>
 				<span class="thumb">
-					<img title="${headline}" alt="${media.altText}" src="${media.url}">
+					<img title="${headline}" alt="${media.altText}" src="${media.url}" class="img-responsive">
 				</span>
 				<span class="details">
 					${content}
