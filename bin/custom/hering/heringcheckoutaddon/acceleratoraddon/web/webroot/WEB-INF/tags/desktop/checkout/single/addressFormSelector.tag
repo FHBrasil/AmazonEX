@@ -66,7 +66,7 @@
                 </div>
 			</c:when>
 				<c:otherwise>
-					<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
+					<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default zeroAddress"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
 				</c:otherwise>
 			</c:choose>
             <single-checkout-hering:chooseAddress type="billing" address="${selectedBillingAddress}"/>
