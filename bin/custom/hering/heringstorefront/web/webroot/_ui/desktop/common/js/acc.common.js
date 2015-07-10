@@ -19,17 +19,17 @@ ACC.common = {
     },
     
     bindToUiCarouselLink : function() {
-        $("ul.carousel > li a.popup").colorbox({
-            onComplete : function() {
+//        $("ul.carousel > li a.popup").colorbox({
+//            onComplete : function() {
                 ACC.common.refreshScreenReaderBuffer();
-                $.colorbox.resize()
+//                $.colorbox.resize()
                 ACC.product.initQuickviewLightbox();
-            },
-            
-            onClosed : function() {
-                ACC.common.refreshScreenReaderBuffer();
-            }
-        });
+//            },
+//            
+//            onClosed : function() {
+//                ACC.common.refreshScreenReaderBuffer();
+//            }
+//        });
     },
     
     processingMessage : $("<img src='" + ACC.config.commonResourcePath

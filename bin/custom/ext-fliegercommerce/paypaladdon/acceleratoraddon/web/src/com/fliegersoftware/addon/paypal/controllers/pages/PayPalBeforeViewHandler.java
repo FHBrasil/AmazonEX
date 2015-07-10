@@ -64,7 +64,7 @@ public class PayPalBeforeViewHandler implements BeforeViewHandlerAdaptee {
             // .getSimpleCMSComponent("PayPalExpressCheckoutShortcutSmall"));
             // model.addAttribute("payPalCreditShortcut", getCmsComponentService()
             // .getSimpleCMSComponent("PayPalCreditShortcutSmall"));
-            return PaypaladdonControllerConstants.Views.Fragments.Cart.AddToCartPopup;
+//            return PaypaladdonControllerConstants.Views.Fragments.Cart.AddToCartPopup;
         } else if (isCheckoutPage(viewName) || isPayPalCheckoutRedirect(viewName, request)) {
             final String payPalHopUrl =
                     getSessionService().getAttribute(
