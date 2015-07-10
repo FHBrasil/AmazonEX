@@ -37,8 +37,6 @@
 		<c:url value="/cart" var="cartUrl"/>
 		<c:url value="/cart/checkout" var="checkoutUrl"/>
 		<div id="addToCartLayer">
-		<div class="cart_popup_error_msg"><spring:theme code="${errorMsg}" /></div>
-		<div class="legend"><spring:theme code="basket.added.to.basket" /></div>
 		<div class="popupCartItem">
 			<div class="itemThumb"><product:productPrimaryImage product="${entry.product}" format="cartIcon"/></div>
 			<div class="itemDesc">
