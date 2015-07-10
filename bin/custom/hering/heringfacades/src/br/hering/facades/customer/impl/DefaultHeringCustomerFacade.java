@@ -16,10 +16,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
+
 import br.flieger.exacttarget.events.CustomerRegisterEvent;
+//import br.hering.core.constants.GeneratedHeringCoreConstants.Enumerations.TipoDeEndereco;
 import br.hering.core.customer.HeringCustomerAccountService;
 import br.hering.core.customer.impl.KPCustomerAccountService;
 import br.hering.facades.customer.HeringCustomerFacade;
+import br.hering.core.enums.TipoDeEndereco;
 
 import com.flieger.facades.checkout.data.GuestRegisterData;
 import com.google.common.collect.Lists;
@@ -351,6 +354,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	
 	public void registerGuest(GuestRegisterData guestData) throws DuplicateUidException
 	{
+		
 		String email = guestData.getEmail();
 		String name = guestData.getFirstName()+" "+guestData.getLastName();
 		
@@ -370,6 +374,8 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		newAddress.setDefaultAddress(true);
 		newAddress.setBillingAddress(true);
 		newAddress.setShippingAddress(true);
+		newAddress.setVisibleInAddressBook(true);
+		newAddress.setType(TipoDeEndereco.valueOf("RESIDENCIAL"));
 		
 		
 		final CustomerModel guestCustomer = getModelService().create(CustomerModel.class);
