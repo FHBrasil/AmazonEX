@@ -10,8 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="single-checkout-hering"
-    tagdir="/WEB-INF/tags/addons/heringcheckoutaddon/desktop/checkout/single"%>    
+<%@ taglib prefix="single-checkout-hering" tagdir="/WEB-INF/tags/addons/heringcheckoutaddon/desktop/checkout/single"%> 
 
 <div id="savedAddressListHolder" style="display: block;" class="clear">
 	<input type="hidden" class="contextPath" value="${request.contextPath}" />
@@ -22,31 +21,33 @@
     <div class="section-container">
     	<section id="selected-address">
     		<c:choose>
-        	<c:when test="${not empty selectedDeliveryAddress.id}">
+        	<c:when test="${not empty selectedBillingAddress.id}">
                 <div class="address-info">
                 	<span id="e-tipo" class="h4"><b>                		
                 		<spring:theme code="checkout.single.address"/>
                 	</b></span><br /><br />
-                    <input type="hidden" class="e-code" value="${selectedDeliveryAddress.id}"/>
-                    <span class="e-receiver">${selectedDeliveryAddress.receiver}</span>
+                    <input type="hidden" class="e-code" value="${selectedBillingAddress.id}"/>
+                    <span class="e-receiver">${selectedBillingAddress.receiver}</span>
                     <div class="btn-group">
-                    	<a href="#deliveryAddressModal" class="btn-editar" data-toggle="modal"><small><span class="glyphicon glyphicon-pencil"></span>&nbsp;<spring:theme code="checkout.single.address.edit"/></small></a>
+                    	<a href="#deliveryAddressModalbilling" class="billing btn-editar" data-toggle="modal"><small><span class="glyphicon glyphicon-pencil"></span>&nbsp;<spring:theme code="checkout.single.address.edit"/></small></a>
                     </div><br />
-                    <span class="e-addr">${selectedDeliveryAddress.line1}</span>,
-                    <span class="e-numero">${selectedDeliveryAddress.number}</span><br />
-                    <c:if test="${not empty selectedDeliveryAddress.complement}">
-                    	<span class="e-complemento">${selectedDeliveryAddress.complement}</span><br />
+                    <span class="e-addr">${selectedBillingAddress.line1}</span>,
+                    <span class="e-numero">${selectedBillingAddress.number}</span><br />
+                    <c:if test="${not empty selectedBillingAddress.complement}">
+                    	<span class="e-complemento">${selectedBillingAddress.complement}</span><br />
                     </c:if>
-                    <c:if test="${not empty selectedDeliveryAddress.reference}">
-                       	<span class="e-ref">${selectedDeliveryAddress.reference}</span><br />
+                    <c:if test="${not empty selectedBillingAddress.reference}">
+                       	<span class="e-ref">${selectedBillingAddress.reference}</span><br />
                     </c:if>
-                    <span class="e-cep">${selectedDeliveryAddress.postalCode}</span>&nbsp;<span class="e-cidade">${selectedDeliveryAddress.town}</span><br />
-                    <c:if test="${not empty selectedDeliveryAddress.region.name}">
-                    	<span class="e-estado">${selectedDeliveryAddress.region.name}</span><br />
+                    <span class="e-cep">${selectedBillingAddress.postalCode}</span>&nbsp;<span class="e-cidade">${selectedBillingAddress.town}</span><br />
+                    <c:if test="${not empty selectedBillingAddress.region.name}">
+                    	<span class="e-estado">${selectedBillingAddress.region.name}</span><br />
                     </c:if>                
-                    <span class="e-pais">${selectedDeliveryAddress.country.name}</span><br /><br />
-                    <spring:theme code="checkout.single.address.phone"/>
-                    <span class="e-phone">:&nbsp;${selectedDeliveryAddress.dddPhone}&nbsp;${selectedDeliveryAddress.phone}</span><br />
+                    <span class="e-pais">${selectedBillingAddress.country.name}</span><br /><br />                    
+                    <c:if test="${not empty customer.defaultPhoneNumber}">
+                    	<spring:theme code="checkout.single.address.phone"/>
+                    	<span class="e-phone">:&nbsp;${customer.defaultPhoneNumber}</span><br />
+                    </c:if>
                     <spring:theme code="checkout.single.address.email"/><span class="e-email">:&nbsp;${customer.uid}</span><br />                  	
                         
                     <%-- 
@@ -68,44 +69,7 @@
 					<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
 				</c:otherwise>
 			</c:choose>
-            <div id="deliveryAddressModal" class="modal fade">
-            	<div class="modal-dialog">
-            		<div class="modal-content">
-                		<div class="modal-header">
-                			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                    <h4 class="modal-title"><spring:theme code="checkout.single.address.chooseAddress"/></h4>
-		                </div>
-		                <div class="modal-body">
-		                	<div class="text-right">
-								<a href="#editAddressModal" data-toggle="modal"  data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <spring:theme code="checkout.single.address.addNewAddress"/></a>
-							</div>
-                			<form id="selectAddress">
-                				<input type="hidden" name="deliveryOrBilling"/>
-                				<c:forEach items="${addressData}" var="deliveryAddress" varStatus="status">
-                					<div class="radio">
-										<input type="radio" name="chooseDeliveryAddress" value="${deliveryAddress.id}" id="${deliveryAddress.id}" ${status.index == '0' ? 'checked' : ''}>
-										<label class="btn btn-default btn-address050609" for="${deliveryAddress.id}">
-											<small>${deliveryAddress.receiver}<br /></small>
-											<small><c:if test="${not empty deliveryAddress.reference}">
-												<spring:theme code="packstation.postNumber"/> ${deliveryAddress.reference}<br />
-											</c:if></small>
-											<small><c:if test="${not empty deliveryAddress.complement}">
-												${deliveryAddress.complement}<br />
-											</c:if></small>
-											<b>${deliveryAddress.line1}, ${deliveryAddress.number}<br /></b>
-											<small>${deliveryAddress.postalCode} ${deliveryAddress.town}, ${deliveryAddress.country.name}</small>
-										</label>
-									</div>                		
-                    			</c:forEach>
-                    			<div class="modal-footer">
-                    				<button type="button" class="btn btn-default" data-dismiss="modal"><spring:theme code="checkout.single.address.abort"/></button>
-                    				<button type="button" class="btn btn-primary"><spring:theme code="checkout.single.address.acceptAddress"/></button>
-                				</div>
-                    		</form>
-                    	</div>
-                    </div>                    		
-                 </div>
-            </div>
+            <single-checkout-hering:chooseAddress type="billing" address="${selectedBillingAddress}"/>
         </section>
         <single-checkout-hering:newAddress regions="${regions}" country="${country}" page="${page}" suggestedAddresses="${suggestedAddresses}" />
 	</div>

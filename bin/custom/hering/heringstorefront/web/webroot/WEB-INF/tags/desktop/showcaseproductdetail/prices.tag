@@ -34,8 +34,8 @@
 				<b>${product.parcelUnitPrice}</b>
 			</p>
 		</c:when>
-		<c:otherwise>
+		<%--<c:otherwise>
 			<spring:theme code="product.payment.methods.not.parceled"/>
-		</c:otherwise>
+		</c:otherwise>--%>
 	</c:choose>
 </div>
