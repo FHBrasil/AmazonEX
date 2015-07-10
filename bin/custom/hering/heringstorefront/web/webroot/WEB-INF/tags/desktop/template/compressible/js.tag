@@ -31,7 +31,7 @@
 <script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="async"></script>--%>
 <%-- ALTERACOES DO THESKO PARA CORRIGIR O ADD TO CART  --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.form-3.09.js"></script>
-<script type="text/javascript" src="${commonResourcePath}/js/jquery.colorbox.custom-1.3.16.js"></script>
+<%-- <script type="text/javascript" src="${commonResourcePath}/js/jquery.colorbox.custom-1.3.16.js"></script> --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.jcarousel-0.2.8.min.js"></script>
 <%-- SYSTEM VARIABLES --%>
 <%-- javaScriptVariables.tag --%>

@@ -20,7 +20,7 @@
 	</jsp:attribute>
     <jsp:body>
 	
-<!-- 			<input type="hidden" name="baseStore" id="baseStore" value="hering"/>			 -->
+			<!--<input type="hidden" name="baseStore" id="baseStore" value="hering"/>-->
 			<c:if test="${pageType != 'SINGLESTEPCHECKOUT'}">
 				<div id="header" class="clearfix">
 					<header:miniHeader />
