@@ -3,11 +3,16 @@
  */
 package com.fliegersoftware.newslettersubscription.facades.populators;
 
+import org.springframework.beans.factory.annotation.Required;
+
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
+import com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData;
+import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 
 /**
  * @author luiza
@@ -15,6 +20,9 @@ import de.hybris.platform.servicelayer.dto.converter.ConversionException;
  */
 public class NewsletterSubscriptionModelToDataPopulator implements Populator<NewsletterSubscriptionModel, NewsletterSubscriptionData>
 {
+
+	private Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter;
+	
 
 	@Override
 	public void populate(NewsletterSubscriptionModel source, NewsletterSubscriptionData target) throws ConversionException
@@ -24,16 +32,49 @@ public class NewsletterSubscriptionModelToDataPopulator implements Populator<New
 		target.setEmail(source.getEmail());
 		
 		final String genderCode = source.getGender().getCode();
-		target.setGenderCode(genderCode);
+		if (genderCode != null)
+		{
+			target.setGenderCode(genderCode);
+		}		
 		
 		final String titleCode = source.getTitle().getCode();
-		target.setTitleCode(titleCode);
-		
+		if (titleCode != null)
+		{
+			target.setTitleCode(titleCode);
+		}
+			
 		final String languageIsoCode = source.getLanguage().getIsocode();
-		target.setLanguageIsoCode(languageIsoCode);
+		if (languageIsoCode != null)
+		{
+			target.setLanguageIsoCode(languageIsoCode);
+		}
 				
 		final String baseStoreId = source.getStore().getUid();
-		target.setStoreCode(baseStoreId);
+		if (baseStoreId != null)
+		{
+			target.setStoreCode(baseStoreId);
+		}
+				
+		SubscriptionType subscriptionType = source.getSubscriptionType();					
+		if (subscriptionType != null)
+		{
+			SubscriptionTypeData subscriptionTypeData = new SubscriptionTypeData();
+			getSubscriptionTypeModelToDataConverter().convert(subscriptionType, subscriptionTypeData);
+			target.setSubscriptionType(subscriptionTypeData);
+		}
 		
 	}
+	
+	
+	public Converter<SubscriptionType, SubscriptionTypeData> getSubscriptionTypeModelToDataConverter() {
+		return subscriptionTypeModelToDataConverter;
+	}
+
+	@Required
+	public void setSubscriptionTypeModelToDataConverter(
+			Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter) {
+		this.subscriptionTypeModelToDataConverter = subscriptionTypeModelToDataConverter;
+	}
+	
+	
 }

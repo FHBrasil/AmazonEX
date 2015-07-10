@@ -43,7 +43,9 @@
 	
 	<!-- Populators -->
 	<alias name="defaultNewsletterSubscriptionModelToDataPopulator" alias="newsletterSubscriptionModelToDataPopulator" />
-	<bean id="defaultNewsletterSubscriptionModelToDataPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.NewsletterSubscriptionModelToDataPopulator" />	
+	<bean id="defaultNewsletterSubscriptionModelToDataPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.NewsletterSubscriptionModelToDataPopulator">	
+		<property name="subscriptionTypeModelToDataConverter" ref="subscriptionTypeModelToDataConverter" />	
+	</bean>
 	
 	<alias name="defaultNewsletterSubscriptionDataToModelPopulator" alias="newsletterSubscriptionDataToModelPopulator" />
 	<bean id="defaultNewsletterSubscriptionDataToModelPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.NewsletterSubscriptionDataToModelPopulator">
@@ -56,6 +58,11 @@
 	<alias name="defaultCustomerNewsletterSubscriptionsPopulator" alias="customerNewsletterSubscriptionsPopulator" />
 	<bean id="defaultCustomerNewsletterSubscriptionsPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.CustomerNewsletterSubscriptionsPopulator" >
 		<property name="newsletterSubscriptionModelToDataConverter" ref="newsletterSubscriptionModelToDataConverter" />	
+	</bean>
+	
+	<alias name="defaultSubscriptionTypeModelToDataPopulator" alias="subscriptionTypeModelToDataPopulator" />
+	<bean id="defaultSubscriptionTypeModelToDataPopulator" class="com.fliegersoftware.newslettersubscription.facades.populators.SubscriptionTypeModelToDataPopulator" >
+		<property name="typeService" ref="typeService" />
 	</bean>
 	
 	<!-- Converters -->
@@ -84,5 +91,14 @@
         <property name="add" ref="customerNewsletterSubscriptionsPopulator" />
     </bean>
 
+	<alias name="defaultSubscriptionTypeModelToDataConverter" alias="subscriptionTypeModelToDataConverter" />
+	<bean id="defaultSubscriptionTypeModelToDataConverter" parent="abstractPopulatingConverter">
+			<lookup-method name="createTarget" bean="subscriptionTypeData"/>
+			<property name="populators">
+			<list>
+				<ref bean="subscriptionTypeModelToDataPopulator" />
+			</list>
+		</property>
+	</bean>
 
 </beans>

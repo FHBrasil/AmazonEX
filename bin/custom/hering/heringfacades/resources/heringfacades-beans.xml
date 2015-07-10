@@ -44,8 +44,7 @@
 	<bean class="br.hering.facades.product.data.GenderData">
 		<property name="code" type="String"/>
 		<property name="name" type="String"/>
-	</bean>
-	
+	</bean>	
 	
 	<bean class="br.hering.facades.product.data.AddressTypeData">
 		<property name="code" type="String"/>

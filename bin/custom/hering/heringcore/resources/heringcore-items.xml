@@ -75,6 +75,15 @@
         <enumtype code="FraudStatus" autocreate="false" generate="false" dynamic="true">
             <value code="NOTSENT" />
         </enumtype>
+        
+        <enumtype code="SubscriptionType" autocreate="false" generate="false">
+	            <value code="SCHEDULED_NEWSLETTER"/>
+	            <value code="TIPS_NEWSLETTER"/>
+	            <value code="REVIEW_SHOPPING_EXPERIENCE"/>
+	            <value code="REVIEW_ORDERED_PRODUCT"/>
+		</enumtype>
+        
+        
     </enumtypes>
 
     <itemtypes>

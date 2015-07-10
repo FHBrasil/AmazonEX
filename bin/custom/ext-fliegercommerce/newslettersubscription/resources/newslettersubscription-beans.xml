@@ -26,11 +26,18 @@
 		<property name="storeCode" type="java.lang.String"/>
 		<property name="languageIsoCode" type="java.lang.String"/>
 		<property name="customer" type="de.hybris.platform.commercefacades.user.data.CustomerData"/>	
+		<property name="subscriptionType" type="com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData"/>
 	</bean>
-	
+
 	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData"
 	      extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
 		<property name="newsletterSubscriptions" type="java.util.List&lt;com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData>"/>	
 	</bean>
+	
+	<bean class="com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	
 
 </beans>
