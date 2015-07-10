@@ -6,7 +6,7 @@
 <div class="dynamic_disp-img">
 	<div class="title">${title}	</div>
    	<div class="thumb">
-   		<img title="${media.altText}" alt="${media.altText}" src="${media.url}">
+   		<img title="${media.altText}" alt="${media.altText}" src="${media.url}" class="img-responsive">
    	</div>
    	<div class="details">
    		<p>${content}</p>
