@@ -25,7 +25,7 @@
             <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
         </div>
         <div class="pagination150224 container">
-            <h1 class="col-xs-12 col-sm-5">
+            <h1 class="col-xs-12">
                 <c:if test="${!(searchPageData.freeTextSearch == '')}">
                     <spring:theme code="search.page.searchText" arguments="${searchPageData.freeTextSearch}" />
                     <%--<nav:searchSpellingSuggestion spellingSuggestion="${searchPageData.spellingSuggestion}" />--%>
@@ -37,34 +37,30 @@
                     </small>
                 </ycommerce:testId>
             </h1>
-
-            <div class="col-xs-12 col-sm-7 text-right pagination150224">
-                <ul class="pagination">
-                    <li><a data-toggle="collapse" data-parent="#accordionFilter" href="#collapseFilter"><span class="glyphicon glyphicon-filter"></span> Filter</a></li>
-                    <%--<div class="input-group-btn">
-                        <li>
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort"></span> <span class="hidden-xs">Topseller</span> <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Topseller</a></li>
-                                <li><a href="#">Kundenbewertung</a></li>
-                                <li><a href="#">Preis, aufsteigend</a></li>
-                                <li><a href="#">Preis, absteigend</a></li>
-                                <li><a href="#">Angebote zuerst</a></li>
-                                <li><a href="#">Name, A-Z</a></li>
-                            </ul>
-                        </li>
-                    </div>--%>
-                    <%--<li class="active"><a href="#"><span class="glyphicon glyphicon-th"></span> <span class="hidden-xs">Raster</span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> <span class="hidden-xs">Liste</span></a></li>--%>
-                </ul>
-            </div>
         </div>
 
         <div class="searchData">
             <input type="hidden" class="userCode" value="${searchPageData.freeTextSearch}" /> 
             <input type="hidden" class="textSearch" value="${searchPageData.freeTextSearch}" />
         </div>
-      
+
+    <div class="container">
+        <div class="col-xs-12 col-sm-7 margin-top filters150630">
+            <form>
+                <div class="btn-group">
+                    <nav:facetNavAppliedFilters pageData="${searchPageData}" />
+                    <button type="button" data-toggle="collapse" data-parent="#accordionFilter" href="#collapseFilter" class="btn btn-link"><span class="glyphicon glyphicon-filter"></span> Filter &auml;ndern</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-5 text-right pagination150224 margin-top">
+            <nav:pagination top="false" supportShowPaged="${isShowPageAllowed}"
+                        supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
+                        searchUrl="${searchPageData.currentQuery.url}"
+                        numberPagesShown="${numberPagesShown}" />
+        </div>
+    </div>
+
     <!-- FOLLOWING CONTAINER MUST BE LOADED BY AJAX -->
     <div class="container filter150219 panel-collapse collapse" id="collapseFilter">
         <%--<div class="text-center margin-top margin-bottom">
@@ -77,25 +73,6 @@
                 </div>
             </div>
         </div>      
-    </div>
-
-    <div class="container">
-        <div class="col-xs-12 col-sm-7 margin-top pagination150224">
-            <form>
-                <div class="btn-group">
-                    <nav:facetNavAppliedFilters pageData="${searchPageData}" />
-                    <button type="button" data-toggle="collapse" data-parent="#accordionFilter" href="#collapseFilter" class="btn btn-link">Filter &auml;ndern</button>
-                </div>
-            </form>
-        </div>
-        
-        
-        <div class="col-xs-12 col-sm-5 text-right pagination150224 margin-top">
-            <nav:pagination top="false" supportShowPaged="${isShowPageAllowed}"
-                        supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
-                        searchUrl="${searchPageData.currentQuery.url}"
-                        numberPagesShown="${numberPagesShown}" />
-        </div>
     </div>
             
 
