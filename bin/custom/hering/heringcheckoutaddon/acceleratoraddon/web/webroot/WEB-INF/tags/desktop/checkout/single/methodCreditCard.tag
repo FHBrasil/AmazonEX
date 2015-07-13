@@ -27,10 +27,10 @@
 		path="cardNumber" inputCSS="form-control text required-payment required-numbers" mandatory="true" autocomplete="off" />
 </div>								
 <div class="form-group">
-	<formElement:formInputBox idKey="nameOnCard" labelKey="payment.nameOnCard"
+	<formElement:formInputBox idKey="nameOnCard" labelKey="paymant.nameOnCreditCard"
     	path="nameOnCard" inputCSS="form-control text required-payment required-letters" mandatory="true" />
 </div>
-<label for="cardmonth"><spring:theme code="payment.expiryDate" /></label>			
+<label for="cardmonth"><spring:theme code="payment.expiryDateCard" /></label>			
 <div class="form-group row">
 	<div class="col-xs-6">									
 		<formElement:formSelectBox idKey="cardmonth" path="expiryMonth" 

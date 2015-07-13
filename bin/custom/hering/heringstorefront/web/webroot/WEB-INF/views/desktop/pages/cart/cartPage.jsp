@@ -50,7 +50,7 @@
 			</a>
         </c:if>
     </div>
-    <div class="hidden-xs col-sm-4 col-md-3">
+    <div class="hidden-xs col-sm-4 col-md-3 cart-banner">
 		<cms:pageSlot position="SideContent" var="component">
             <cms:component component="${component}" />
         </cms:pageSlot>

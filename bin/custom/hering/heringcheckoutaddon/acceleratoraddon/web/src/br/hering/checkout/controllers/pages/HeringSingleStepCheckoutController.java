@@ -207,28 +207,14 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         final CartData cartData = getCheckoutFacade().getCheckoutCart();
         final CustomerData customerData = getUser();
         final AddressData selectedDeliveryAddress = cartData.getDeliveryAddress();
+        final AddressData selectedBillingAddress = getAddressBilling();
         final HeringPaymentDetailsForm paymentDetailsForm = getPreparedHeringPaymentDetailsForm();
         final HeringAddressForm heringAddressForm = getPreparedAddressForm();
-        final HeringAddressForm heringBillingAddressForm = getPreparedAddressForm();
-        heringBillingAddressForm.setBilling(true);
         final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
-        if (paymentDetailsForm.getBillingAddress() == null
-                || Strings.isNullOrEmpty(paymentDetailsForm.getBillingAddress().getPostcode())) {
-            AddressData billingAddressData = getAddressBilling();
-            if (billingAddressData == null) {
-                billingAddressData =
-                        (AddressData) SerializationUtils.clone(cartData.getDeliveryAddress());
-                if (billingAddressData != null) {
-                    billingAddressData.setShippingAddress(false);
-                    billingAddressData.setBillingAddress(true);
-                }
-            }
-            if (billingAddressData != null) {
-                cartData.setBillingAddress(billingAddressData);
-                paymentDetailsForm.setBillingAddress(this.convertAddressDataIntoAddressForm(cartData
-                        .getBillingAddress()));
-            }
-        }
+        if(cartData.getBillingAddress() == null)
+        {
+        	storeBillingAddressIntoCart(cartData);
+        }        
         model.addAttribute("cartData", cartData);
         createProductList(model);
         model.addAttribute("paymentDetailsForm", paymentDetailsForm);
@@ -236,13 +222,12 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         model.addAttribute("heringAddressForm", heringAddressForm);
         // }
         model.addAttribute("packstationAddressForm", packstationAddressForm);
-        model.addAttribute("deliveryAddresses", getDeliveryAddresses(selectedDeliveryAddress));
         model.addAttribute("selectedDeliveryAddress", selectedDeliveryAddress);
-        model.addAttribute("selectedBillingAddress", cartData.getBillingAddress());
+        model.addAttribute("selectedBillingAddress", selectedBillingAddress);
         model.addAttribute("customer", customerData);
-        if (selectedDeliveryAddress != null && cartData.getBillingAddress() != null) {
+        if (selectedDeliveryAddress != null && selectedBillingAddress != null) {
             model.addAttribute("checkedDifferingBilling",
-                    !selectedDeliveryAddress.getId().equals(cartData.getBillingAddress().getId())
+                    !selectedDeliveryAddress.getId().equals(selectedBillingAddress.getId())
                             ? true : false);
         } else {
             model.addAttribute("checkedDifferingBilling", false);
@@ -271,29 +256,27 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     /***
      * @param paymentDetailsForm
      */
-    private void storeBillingAddressIntoCart(final HeringPaymentDetailsForm paymentDetailsForm) {
-        CartData cartData = getCheckoutFacade().getCheckoutCart();
-        if (cartData.getBillingAddress() == null) {
-            // in case the checkout cart does not already have a billing address, we (try to) get
-            // the user default billing address
-            AddressData billingAddressData = getAddressBilling();
-            if (billingAddressData == null) {
-                // in case user does not have a default billing address, we must clone the
-                // delivery
-                // address
-                billingAddressData = (AddressData) SerializationUtils.clone(cartData
-                        .getDeliveryAddress());
-                if (billingAddressData != null) {
-                    billingAddressData.setShippingAddress(false);
-                    billingAddressData.setBillingAddress(true);
-                }
-            }
-            // At this point, billingAddressData should not be null, because it is either a
-            // already registered billing address, a user default billing address or a cloned
-            // delivery address
-            cartData.setBillingAddress(billingAddressData);
+    private void storeBillingAddressIntoCart(final CartData cartData) {
+    	// in case the checkout cart does not already have a billing address, we (try to) get
+        // the user default billing address
+        AddressData billingAddressData = getAddressBilling();
+        if (billingAddressData == null) {
+        	// in case user does not have a default billing address, we must clone the
+            // delivery
+            // address
+        	if(cartData.getDeliveryAddress() != null)
+        	{
+        		billingAddressData = (AddressData) SerializationUtils.clone(cartData.getDeliveryAddress());
+        		billingAddressData.setBillingAddress(true);
+        	}
         }
-        getCheckoutFacade().saveBillingAddressIntoCart(cartData.getBillingAddress());
+        // At this point, billingAddressData should not be null, because it is either a
+        // already registered billing address, a user default billing address or a cloned
+        // delivery address
+        if (billingAddressData != null) {
+	        cartData.setBillingAddress(billingAddressData);        
+	        getCheckoutFacade().saveBillingAddressIntoCart(cartData.getBillingAddress());
+        }
     }
     
     
@@ -313,16 +296,15 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             return REDIRECT_URL_CART;
         }
         if (StringUtils.isNotBlank(selectedAddressCode)) {
-            final AddressData selectedAddressData =
-                    getCheckoutFacade().getDeliveryAddressForCode(selectedAddressCode);
+            final AddressData selectedAddressData = getCheckoutFacade().getDeliveryAddressForCode(selectedAddressCode);
             final boolean hasSelectedAddressData = selectedAddressData != null;
             if (hasSelectedAddressData) {
-                final AddressData cartCheckoutDeliveryAddress =
-                        getCheckoutFacade().getCheckoutCart().getDeliveryAddress();
+                final AddressData cartCheckoutDeliveryAddress = getCheckoutFacade().getCheckoutCart().getDeliveryAddress();
                 if (isAddressIdChanged(cartCheckoutDeliveryAddress, selectedAddressData)) {
+                	selectedAddressData.setDefaultAddress(true);
+                	getUserFacade().editAddress(selectedAddressData);
                     getCheckoutFacade().setDeliveryAddress(selectedAddressData);
-                    if (cartCheckoutDeliveryAddress != null
-                            && !cartCheckoutDeliveryAddress.isVisibleInAddressBook()) { // temporary
+                    if (cartCheckoutDeliveryAddress != null && !cartCheckoutDeliveryAddress.isVisibleInAddressBook()) { // temporary
                                                                                         // address
                                                                                         // should
                                                                                         // be
@@ -350,7 +332,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     		final HeringAddressForm heringAddressForm,
             final BindingResult bindingResult, final Model model,
             final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
-        prepareDeliveryAddressForm(heringAddressForm);
+    	prepareAddressForm(heringAddressForm);
         getAddressValidator().validate(heringAddressForm, bindingResult, model);
         if (!bindingResult.hasErrors()) {
         	final List<AddressData> addresses = getUserFacade().getAddressBook();
@@ -440,10 +422,26 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             return;
         }
         final CustomerData userData = getUser();
-        // addressForm.setTitleCode(userData.getTitleCode());
+        addressForm.setTitleCode(userData.getTitleCode());
         addressForm.setFirstName(userData.getFirstName());
         addressForm.setLastName(userData.getLastName());
         addressForm.setReceiver(userData.getName());
+        if (addressForm.getAddressType().equalsIgnoreCase("packstation")) {
+            addressForm.setCountryIso("DE");
+            addressForm.setLine1("Packstation");
+        }
+        addressForm.setShippingAddress(Boolean.TRUE);
+    }
+    
+    protected void prepareAddressForm(final HeringAddressForm addressForm) {
+        if (getCheckoutCustomerStrategy().isAnonymousCheckout()) {
+            return;
+        }
+        final CustomerData userData = getUser();
+        // addressForm.setTitleCode(userData.getTitleCode());
+//        addressForm.setFirstName(userData.getFirstName());
+//        addressForm.setLastName(userData.getLastName());
+//        addressForm.setReceiver(userData.getName());
         if (addressForm.getAddressType().equalsIgnoreCase("packstation")) {
             addressForm.setCountryIso("DE");
             addressForm.setLine1("Packstation");
@@ -461,14 +459,27 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         deliveryAddressData = convertAddressFormIntoAddressData(deliveryAddressForm);
         deliveryAddressData.setVisibleInAddressBook(true);
         if (getUserFacade().isAddressBookEmpty()) {
+        	deliveryAddressData.setShippingAddress(true);
+        	deliveryAddressData.setBillingAddress(true);
             deliveryAddressData.setDefaultAddress(true);
         }
         if (getCheckoutCustomerStrategy().isAnonymousCheckout()) {
             deliveryAddressData.setDefaultAddress(true);
             deliveryAddressData.setVisibleInAddressBook(true);
         }
+        if((deliveryAddressForm.getDefaultAddress() != null) && deliveryAddressForm.getDefaultAddress()){
+        	deliveryAddressData.setDefaultAddress(true);
+        }
         getHeringUserFacade().addAddress(deliveryAddressData);
-        getCheckoutFacade().setDeliveryAddress(deliveryAddressData);
+        if (!getUserFacade().isAddressBookEmpty() && !deliveryAddressData.isBillingAddress())
+        {
+        	getCheckoutFacade().setDeliveryAddress(deliveryAddressData);        	
+        }
+        else if (!getUserFacade().isAddressBookEmpty() && deliveryAddressData.isBillingAddress())
+        {
+        	getCheckoutFacade().getCheckoutCart().setBillingAddress(deliveryAddressData);
+        	getCheckoutFacade().saveBillingAddressIntoCart(deliveryAddressData);
+        }
         return deliveryAddressData;
     }
     
@@ -507,8 +518,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     @RequestMapping(value = "/select-billing-address/{selectedAddressCode:.*}",
             method = RequestMethod.GET)
     @RequireHardLogIn
-    public String doSelectBillingAddress(
-            @PathVariable("selectedAddressCode") final String selectedAddressCode) {
+    public String doSelectBillingAddress(@PathVariable("selectedAddressCode") final String selectedAddressCode) {
         if (!hasValidCart()) {
             return REDIRECT_URL_CART;
         }
@@ -521,6 +531,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
                     addressData.setBillingAddress(true);
                     getUserFacade().editAddress(addressData);
                     getCheckoutFacade().getCheckoutCart().setBillingAddress(addressData);
+                    getCheckoutFacade().saveBillingAddressIntoCart(addressData);
                 } else {
                     addressData.setBillingAddress(false);
                     getUserFacade().editAddress(addressData);
@@ -838,7 +849,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             InvalidCartException, CommerceCartModificationException {
     	boolean isDifferingBillingAddress = "true".equals(request.getParameter("differingBillingAddress"));    	
         CartData cartData = getCheckoutFacade().getCheckoutCart();
-        getBillingPaymentDetailsForm(paymentDetailsForm, isDifferingBillingAddress, cartData);
+        getBillingPaymentDetailsForm(paymentDetailsForm, isDifferingBillingAddress);
         getHeringPaymentDetailsValidator().validate(paymentDetailsForm, bindingResult, model);
         if (bindingResult.hasErrors()) {
             GlobalMessages.addErrorMessage(model, "checkout.error.verifyFields");
@@ -893,7 +904,6 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         if (validateCart(redirectModel)) {
             return REDIRECT_PREFIX + "/cart";
         }
-        storeBillingAddressIntoCart(paymentDetailsForm);
         savePaypalPaymentMethod(paymentDetailsForm);
         return paypalPaymentRequestController.expressCheckoutMark(model);
     }
@@ -996,22 +1006,31 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     }
     
     private void getBillingPaymentDetailsForm(final HeringPaymentDetailsForm paymentDetailsForm,
-    		final boolean isDifferingBillingAddress, final CartData cartData)
+    		final boolean isDifferingDeliveryAddress)
     {  	
-    	if (paymentDetailsForm.getBillingAddress() == null || Strings.isNullOrEmpty(paymentDetailsForm.getBillingAddress().getPostcode())) {
-            AddressData billingAddressData = isDifferingBillingAddress ? getAddressBilling() : null;
-            if (billingAddressData == null) {
-                billingAddressData = (AddressData) SerializationUtils.clone(cartData.getDeliveryAddress());
-                if (billingAddressData != null) {
-                    billingAddressData.setShippingAddress(false);
-                    billingAddressData.setBillingAddress(true);
+        AddressData billingAddressData = getAddressBilling();
+        AddressData deliveryAddressData = getCheckoutFacade().getCheckoutCart().getDeliveryAddress();
+        
+        if (billingAddressData != null)
+        {
+        	if(!isDifferingDeliveryAddress)
+        	{
+                if (isAddressIdChanged(deliveryAddressData, billingAddressData)) 
+                {
+                	deliveryAddressData = (AddressData) SerializationUtils.clone(billingAddressData);
+                    getCheckoutFacade().setDeliveryAddress(deliveryAddressData);    
+                    getCheckoutFacade().setDeliveryAddressIfAvailable();
+                    getCheckoutFacade().setDeliveryModeIfAvailable();
                 }
-            }
-            if (billingAddressData != null) {
-                cartData.setBillingAddress(billingAddressData);
-                paymentDetailsForm.setBillingAddress(this.convertAddressDataIntoAddressForm(cartData.getBillingAddress()));
-            }
+        	}        		
+        	getCheckoutFacade().getCheckoutCart().setBillingAddress(billingAddressData);             
         }
+        else if(billingAddressData == null)
+        {
+        	getCheckoutFacade().getCheckoutCart().setBillingAddress(getCheckoutFacade().getCheckoutCart().getDeliveryAddress());
+        }
+        getCheckoutFacade().saveBillingAddressIntoCart(getCheckoutFacade().getCheckoutCart().getBillingAddress());
+        paymentDetailsForm.setBillingAddress(this.convertAddressDataIntoAddressForm(getCheckoutFacade().getCheckoutCart().getBillingAddress()));
     }
     
     /**
