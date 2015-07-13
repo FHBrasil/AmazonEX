@@ -41,7 +41,6 @@
         </div>
         <div id="sectionB" class="tab-pane fade">
             <%-- <product:productPageReviewsTab product="${product}" /> --%>
-            mimimi
             <bazaarvoice:productPageReviewDetailsTab product="${product}" />
         </div>
         <div id="sectionC" class="tab-pane fade">
