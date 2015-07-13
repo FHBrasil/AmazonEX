@@ -50,14 +50,10 @@
 			</a>
         </c:if>
     </div>
-    <div class="hidden-xs col-sm-4 col-md-3" style="background-color:#f0f0f0;margin-top:50px;">
-		<h1 style="color:#c6c6c6;font-size:40px">
-		<i><center>Shopping at Babyartikel: <br />
-			<br /> super save, <br />
-			<br />super easy<br />
-			<br /> lot of different payment methods<br />
-			<br />...and a twinkling fox!</center></i>
-		</h1>
+    <div class="hidden-xs col-sm-4 col-md-3 cart-banner">
+		<cms:pageSlot position="SideContent" var="component">
+            <cms:component component="${component}" />
+        </cms:pageSlot>
 	</div>
 </template:page>
 

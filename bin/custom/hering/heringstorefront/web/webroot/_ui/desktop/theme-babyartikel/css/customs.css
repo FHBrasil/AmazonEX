@@ -27,6 +27,7 @@
 	.navbar {margin-bottom: 0;}
 	.navbar-default .navbar-nav > li > a {color: #3e3e3e}
 	.navbar-default .navbar-nav > li > a:hover {text-decoration: underline;}
+	.float-left {float:left;}
 	@media (max-width:991px){
 		.navbar-right {width:158px;}
 	}
@@ -389,6 +390,8 @@
 	padding-left:100px;
 	background-position: left top;
 }
+
+.cart-banner {margin: 50px 0 20px 0;}
 
 .orders150309 tr:hover {background-color: #F0F0F0;}
 .orders150309 table a {display:inline-block;width:100%;}
