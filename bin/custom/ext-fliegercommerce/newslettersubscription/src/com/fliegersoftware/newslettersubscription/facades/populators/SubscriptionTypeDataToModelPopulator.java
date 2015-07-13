@@ -17,17 +17,14 @@ public class SubscriptionTypeDataToModelPopulator implements Populator<Subscript
 	@Override
 	public void populate(SubscriptionTypeData source, SubscriptionType target) throws ConversionException {
 		
+		//como o subscriptiontype é um atributo de newsletter, a unica forma de dar set nele é usando o model do newsletter
 		
-		//String a = source.getCode();
-		//SubscriptionType b = getEnumerationService().getEnumerationValue(SubscriptionType.class, a);
-		//target.
-		
-		//target.
-		//source.getCode();
-		//target.
-		
-		
-		//addressModel.setTipoDeEndereco(addressData.getType());
+		final String subscriptionTypeCode = source.getCode();	
+		SubscriptionType subscriptionType = getEnumerationService().getEnumerationValue(SubscriptionType.class, subscriptionTypeCode);
+		if (subscriptionType != null)
+		{
+			//target.setSubscriptionType(subscriptionType);
+		}
 		
 		
 	}

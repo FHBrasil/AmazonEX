@@ -8,6 +8,7 @@ import de.hybris.platform.store.BaseStoreModel;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.newslettersubscription.dao.NewsletterSubscriptionDao;
+import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
@@ -78,8 +79,9 @@ public class DefaultNewsletterSubscriptionService implements NewsletterSubscript
 			{
 				final String email = subscriber.getEmail();
 				final BaseStoreModel store = subscriber.getStore();
+				final SubscriptionType subscriptionType = subscriber.getSubscriptionType();
 				
-				return getNewsletterSubscriptionDao().findSubscriptionByEmailAndStore(email, store);
+				return getNewsletterSubscriptionDao().findSubscriptionByEmailAndStoreAndType(email, store, subscriptionType);
 			} 
 			catch (Exception e) {
 				//e.printStackTrace();
