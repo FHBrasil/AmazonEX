@@ -199,14 +199,18 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         final CartData cartData = getCheckoutFacade().getCheckoutCart();
         final CustomerData customerData = getUser();
         final AddressData selectedDeliveryAddress = cartData.getDeliveryAddress();
-        final AddressData selectedBillingAddress = getAddressBilling();
+        AddressData selectedBillingAddress = getAddressBilling();
         final HeringPaymentDetailsForm paymentDetailsForm = getPreparedHeringPaymentDetailsForm();
         final HeringAddressForm heringAddressForm = getPreparedAddressForm();
         final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
         if(cartData.getBillingAddress() == null)
         {
         	storeBillingAddressIntoCart(cartData);
-        }        
+        }
+        if(selectedBillingAddress == null && cartData.getBillingAddress() != null)
+        {
+        	selectedBillingAddress = cartData.getBillingAddress();
+        }
         model.addAttribute("cartData", cartData);
         createProductList(model);
         model.addAttribute("paymentDetailsForm", paymentDetailsForm);
