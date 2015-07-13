@@ -27,7 +27,6 @@ public class SubscriptionTypeModelToDataPopulator implements Populator<Subscript
 	@Override
 	public void populate(SubscriptionType source, SubscriptionTypeData target) throws ConversionException {
 		
-		//final String subscriptionTypeCode = getTypeService().getEnumerationValue(source).getCode();
 		target.setCode(source.getCode());
 		
 		final String subscriptionTypeName =  getTypeService().getEnumerationValue(source).getName();

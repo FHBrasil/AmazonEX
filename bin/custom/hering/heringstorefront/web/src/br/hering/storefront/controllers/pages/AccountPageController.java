@@ -756,6 +756,29 @@ public class AccountPageController extends AbstractSearchPageController {
 		return REDIRECT_MY_ACCOUNT;
 
 	}
+	
+	/**
+	 * Adding method to catch subscriptions
+	 * 
+	 * @author luiza
+	 */
+	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter)
+			throws CMSItemNotFoundException {
+		
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{
+			heringCustomerFacade.updateCustomerSubscriptions(tipsNewsletter); //enviar os quatro booleans
+		}
+
+		return REDIRECT_MY_ACCOUNT;
+
+	}
+	
+	
 
 	/**
 	 * @return Retorna os c��digos dos Base Store registrados, separados por

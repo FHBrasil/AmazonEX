@@ -55,7 +55,7 @@ public class NewsletterSubscriptionModelToDataPopulator implements Populator<New
 			target.setStoreCode(baseStoreId);
 		}
 				
-		SubscriptionType subscriptionType = source.getSubscriptionType();					
+		SubscriptionType subscriptionType = source.getSubscriptionType();
 		if (subscriptionType != null)
 		{
 			SubscriptionTypeData subscriptionTypeData = new SubscriptionTypeData();

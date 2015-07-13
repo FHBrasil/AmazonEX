@@ -151,11 +151,15 @@
 					</div>
 				</div>
 			</div>
+			
+			
+			
 			<div class=" panel panel-default abos150309">
 			<div class="panel-heading"><span class="glyphicon glyphicon-envelope"></span> Abonnements
 			</div>
+			
 			<div class="panel-body">
-			    <form class="form-horizontal">
+			    <form id="subscriptions" class="form-horizontal" action="my-account/subscriptions" method="GET">
 					<div class="form-group">
 						<div class="col-xs-12">
 							<div class="checkbox">
@@ -167,7 +171,7 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox"> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
+									<label><input type="checkbox"  name="tipsNewsletter" value="true"> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
 									<div class="form-group col-sm-6">
 										<label for="birthday" class="control-label"><small>Entbindungstermin / Geburtstag</small></label>
 										<div class="input-group input-append date" id="birthday" data-date="01.01.2015" data-date-format="dd.mm.yyyy" style="padding-left:20px;">
@@ -194,15 +198,20 @@
 								</div>
 							</div>
 						</div>
-					</div>
+						<button>Submit</button>
+					</div>					
 				</form>
 			</div>
+			
 			<div class="panel-footer clearfix">
 				<div class="text-center">
 					<a class="btn btn-link" style="padding:0;" data-toggle="collapse" data-target="#toggleMails"><span class="glyphicon glyphicon-option-horizontal" style="font-size:24px;"></span></a>
 				</div>
 			</div>
 		</div>
+		
+		
+		
 	</div>
 	<div class="col-sm-12 col-md-4">
 		<div class="row">

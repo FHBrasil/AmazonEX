@@ -132,4 +132,17 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	}
 	
 	
+	public CustomerModel updateCustomerSubscriptions(CustomerModel customerModel, Boolean tipsNewsletter)
+	{
+		
+		customerModel.setTipsNewsletterEnabled(tipsNewsletter);
+		
+		modelService.save(customerModel);
+		modelService.refresh(customerModel);
+
+		return customerModel;
+		
+	}
+	
+	
 }

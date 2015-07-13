@@ -95,10 +95,10 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 		
 	
 		final SubscriptionTypeData subscriptionTypeData = source.getSubscriptionType();
-		final String subscriptionTypeCode = subscriptionTypeData.getCode();	
-		SubscriptionType subscriptionType = getEnumerationService().getEnumerationValue(SubscriptionType.class, subscriptionTypeCode);
-		if (subscriptionType != null)
+		if (subscriptionTypeData != null)
 		{
+			final String subscriptionTypeCode = subscriptionTypeData.getCode();	
+			SubscriptionType subscriptionType = getEnumerationService().getEnumerationValue(SubscriptionType.class, subscriptionTypeCode);
 			target.setSubscriptionType(subscriptionType);
 		}
 		
