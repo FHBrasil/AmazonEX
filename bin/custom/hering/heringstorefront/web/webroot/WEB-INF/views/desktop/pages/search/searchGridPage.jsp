@@ -54,17 +54,6 @@
             </form>
         </div>
         <div class="col-xs-12 col-sm-5 text-right pagination150224 margin-top">
-            <%--<div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort"></span> Topseller <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Topseller</a></li>
-                    <li><a href="#">Kundenbewertung</a></li>
-                    <li><a href="#">Preis, aufsteigend</a></li>
-                    <li><a href="#">Preis, absteigend</a></li>
-                    <li><a href="#">Angebote zuerst</a></li>
-                    <li><a href="#">Name, A-Z</a></li>
-                </ul>
-            </div>--%>
             <nav:pagination top="false" supportShowPaged="${isShowPageAllowed}"
                         supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
                         searchUrl="${searchPageData.currentQuery.url}"
@@ -108,7 +97,9 @@
         </div>
     </div>
     <div class="container">
-        <div class="col-xs-12 text-right">
+        <div class="col-xs-12 col-sm-7 margin-top filters150630"> 
+        </div>
+        <div class="col-xs-12 col-sm-5 text-right pagination150224 margin-top">
             <nav:pagination top="false" supportShowPaged="${isShowPageAllowed}"
                         supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
                         searchUrl="${searchPageData.currentQuery.url}"
