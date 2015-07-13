@@ -211,13 +211,14 @@ public class CheckoutLoginController extends AbstractHeringLoginController
 			guestData.setCountry(form.getCountry());
 			guestData.setPhone(form.getTelephone());
 			guestData.setEmail(form.getEmail());
+			guestData.setReceiver(form.getFirstName()+" "+form.getLastName());
 			
 			((HeringCustomerFacade) getCustomerFacade()).registerGuest(guestData);
 			
 //			((HeringCustomerFacade) getCustomerFacade()).createGuestUserForAnonymousCheckout(form.getEmail(), form.getCpfcnpj(), 
 //						getMessageSource().getMessage("text.guest.customer",null,getI18nService().getCurrentLocale()), form.getDateBirthday(), form.getGender());
-//			getGuidCookieStrategy().setCookie(request, response);
-//			getSessionService().setAttribute(WebConstants.ANONYMOUS_CHECKOUT, Boolean.TRUE);
+			getGuidCookieStrategy().setCookie(request, response);
+			getSessionService().setAttribute(WebConstants.ANONYMOUS_CHECKOUT, Boolean.TRUE);
 		}
 		catch (final DuplicateUidException e)
 		{
