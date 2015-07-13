@@ -118,7 +118,8 @@
 	.filters150630 .btn-d a {text-decoration:none;}
 	.filters150630 .btn-d a:hover {color:#333;}
 
-	 .sort-f {float:right;width:30%;margin-left:15px;}
+	 .sort-f {float:right;width:35%;margin-left:15px;}
+	 .sort-f select {border:0;width:85%;}
 	
 	.box150102 .thumbnail {height: 190px;display:table;width:100%;padding:0;margin:0;border:0;}
 	.box150102 .thumbnail a {display:table-cell;vertical-align:bottom;}
