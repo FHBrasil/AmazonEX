@@ -36,7 +36,7 @@
                 <form id="sort_form${top ? '1' : '2'}" name="sort_form${top ? '1' : '2'}"
                     method="get" action="#" class="sortForm">
                     <div>
-                        <select id="sortOptions${top ? '1' : '2'}" name="sort">
+                        <select id="sortOptions${top ? '1' : '2'}" name="sort" class="form-control sort-f">
                             <c:forEach items="${searchPageData.sorts}" var="sort">
                                 <option value="${sort.code}"
                                     ${sort.selected ? 'selected="selected"' : ''}>
