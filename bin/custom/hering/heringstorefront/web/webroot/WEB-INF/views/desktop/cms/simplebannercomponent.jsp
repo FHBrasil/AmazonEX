@@ -6,7 +6,7 @@
 <div class="simple_disp-img">
 	<c:choose>
 		<c:when test="${empty encodedUrl || encodedUrl eq '#'}">
-			<img title="${media.altText}" alt="${media.altText}" src="${media.url}">
+			<img title="${media.altText}" alt="${media.altText}" src="${media.url}" class="img-responsive">
 		</c:when>
 		<c:otherwise>
 			<a href="${encodedUrl}"><img title="${media.altText}" alt="${media.altText}" src="${media.url}"></a>

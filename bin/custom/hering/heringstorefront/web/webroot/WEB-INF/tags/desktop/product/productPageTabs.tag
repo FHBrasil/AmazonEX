@@ -25,6 +25,7 @@
 </div>
 <div class="col-xs-12 tab150119">
 	<product:productTitle product="${product}" upper="false" />
+	<p><small><bazaarvoice:productReviewSummary product="${product}" /></small></p>
 </div>
 	<div class="col-md-6 col-sm-8 tab150119">   
         <div class="tab-content">

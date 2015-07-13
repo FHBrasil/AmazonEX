@@ -390,6 +390,8 @@
 	background-position: left top;
 }
 
+.cart-banner {margin: 50px 0 20px 0;}
+
 .orders150309 tr:hover {background-color: #F0F0F0;}
 .orders150309 table a {display:inline-block;width:100%;}
 .orders150309 .panel-footer a {width:100%;}
