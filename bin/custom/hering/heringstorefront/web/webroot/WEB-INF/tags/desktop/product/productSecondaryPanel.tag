@@ -8,10 +8,6 @@
         <product:productSocialSharing />
     </div>
 </div>
-
-
-
-
 <%-- code original
 <div class="container half">
     <div class="right">

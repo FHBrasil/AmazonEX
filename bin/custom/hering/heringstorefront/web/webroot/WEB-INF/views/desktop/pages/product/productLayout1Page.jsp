@@ -9,6 +9,10 @@
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
 <template:page pageTitle="${pageTitle}" showBV="true">
     <div>
+    
+    
+    
+    
         <breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}" />
         <%--<product:productBackgroundImage product="${product}" galleryImages="${galleryImages}" />--%>
         <product:productMainPanel />

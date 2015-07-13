@@ -3,7 +3,7 @@
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<template:page pageTitle="${pageTitle}">
+<template:page pageTitle="${pageTitle}" showBV="true">
     <div id="globalMessages">
         <common:globalMessages />
     </div>
