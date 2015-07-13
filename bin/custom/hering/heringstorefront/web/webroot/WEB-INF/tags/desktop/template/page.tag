@@ -4,7 +4,7 @@
 <%@ attribute name="pageCss" required="false" fragment="true"%>
 <%@ attribute name="pageScripts" required="false" fragment="true"%>
 <%@ attribute name="hideHeaderLinks" required="false"%>
-<%@ attribute name="showBV" required="false" %>
+<%@ attribute name="showBV" required="true" %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/desktop/template"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="header" tagdir="/WEB-INF/tags/desktop/common/header"%>
