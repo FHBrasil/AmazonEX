@@ -2,7 +2,7 @@
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 
-<div>
+<div class="float-left">
         <product:productPageTabs />
     <div class="col-sm-4 col-md-6 col-lg-5 col-lg-offset-1 recs150126 text-center">
         <product:productSocialSharing />
