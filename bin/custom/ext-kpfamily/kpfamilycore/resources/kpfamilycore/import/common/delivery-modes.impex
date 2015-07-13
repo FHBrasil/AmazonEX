@@ -15,10 +15,10 @@ INSERT_UPDATE Zone;code[unique=true];countries(isocode)
 ;zone6;HR
 
 #ZoneDeliveryModes
-INSERT_UPDATE ZoneDeliveryMode;code[unique=true];net[default=false];active[default=true]
-;dhl;;
-;dhl_nachname;;
-;ups;;
+INSERT_UPDATE ZoneDeliveryMode;code[unique=true];net[default=false];active
+;dhl;;true
+;dhl_nachname;;false
+;ups;;false
 
 INSERT_UPDATE ZoneDeliveryModeValue;deliveryMode(code)[unique=true];zone(code)[default='de'][unique=true];currency(isocode)[unique=true,default=$europeCurrency];value;minimum[unique=true]
 ;dhl;de;;3,95;0,00;

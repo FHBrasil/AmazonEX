@@ -843,13 +843,25 @@
 		<property name="modelService" ref="modelService"/>
 	</bean>
 	
-	<alias name="defaultFliegercommerceOrderSplittingService" alias="orderSplittingService"/>
-	<bean id="defaultFliegercommerceOrderSplittingService" parent="defaultOrderSplittingService">
+	<alias name="defaultCheckSplitOrderEntriesEnabledStrategy" alias="checkSplitOrderEntriesEnabledStrategy"/>
+	<bean id="defaultCheckSplitOrderEntriesEnabledStrategy" class="br.hering.core.strategies.impl.DefaultCheckSplitOrderEntriesEnabledStrategy">
+		<property name="baseStoreService" ref="baseStoreService" />
+	</bean>
+	
+	<alias name="defaultShippingEstimatesStrategy" alias="shippingEstimatesStrategy"/>
+	<bean id="defaultShippingEstimatesStrategy" class="br.hering.core.strategies.impl.DefaultShippingEstimatesStrategy"/>
+	
+	<alias name="fliegerCommerceOrderSplittingService" alias="orderSplittingService"/>
+	<bean id="fliegerCommerceOrderSplittingService" parent="defaultOrderSplittingService">
 		<property name="strategiesList">
 			<list merge="false">
 				<ref bean="splitByNamedDeliveryDate" />
 			</list>
 		</property>
 	</bean>
-
+	
+    <alias name="fliegerCommerceFindDeliveryCostStrategy" alias="core.deliverycostsstrategy.default"/>
+	<alias name="fliegerCommerceFindDeliveryCostStrategy" alias="findDeliveryCostStrategy" />
+    <bean id="fliegerCommerceFindDeliveryCostStrategy" parent="defaultFindDeliveryCostStrategy"
+    	class="br.hering.core.order.impl.FliegerCommerceFindDeliveryCostStrategy"/>
 </beans>
