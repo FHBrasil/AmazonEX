@@ -667,6 +667,8 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
 				model.addAttribute("successMessage", "Erro ao aplicar desconto de pontos.");
 			}
 		}
+		commerceCartService.recalculateCart(cartService.getSessionCart());
+
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
 		model.addAttribute("cartData", cartData);
 		model.addAttribute("deliveryMethods", getDeliveryModes());

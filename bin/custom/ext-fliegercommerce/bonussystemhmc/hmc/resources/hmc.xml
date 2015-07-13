@@ -39,8 +39,8 @@
             <tab name="changebonussystem" id="tab_changebonussystem" position="1">
                <section name="edit">
                   <listlayout>                     
-                     <attribute name="log">
-						<referencecollectioneditor presetattribute="PK" autoperform="true" externalcreate="false" editable="true" resortable="true" add="true" remove="true" create="true">
+                     <attribute name="logEntries">
+						<referencecollectioneditor presetattribute="bonusSystem" autoperform="true" externalcreate="false" editable="true" resortable="true" add="true" remove="true" create="true">
                            <itemlayout>
                               <attribute name="date" width="140"/>
                               <attribute name="type" width="140"/>
@@ -50,7 +50,7 @@
                            </itemlayout>
                         </referencecollectioneditor>
                      </attribute>                     
-                     <attribute name="points" editable="false"/>
+                     <attribute name="availablePoints" editable="false"/>
                   </listlayout>
                </section>
             </tab>
