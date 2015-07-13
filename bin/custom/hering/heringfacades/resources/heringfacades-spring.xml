@@ -794,5 +794,9 @@
         parent="customerGroupFacade">
     </bean>
     
-    
+	<bean id="bonusSystemCreationStrategy" class="br.hering.facades.bonussystem.strategies.DefaultHeringBonusSystemCreationStrategy">
+		<property name="bonusSystemDao" ref="bonusSystemDao"/>
+		<property name="bonusSystemService" ref="bonusSystemService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
 </beans>
