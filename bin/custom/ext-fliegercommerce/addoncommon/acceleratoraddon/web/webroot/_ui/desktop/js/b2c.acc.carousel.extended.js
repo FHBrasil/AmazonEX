@@ -29,16 +29,16 @@ if (typeof(ACC.carousel) != "undefined")
             itemFallbackDimension: FALLBACK_DIMENSION
         });
 
-        $(".modal").colorbox({
-            onComplete: function ()
-            {
+//        $(".modal").colorbox({
+//            onComplete: function ()
+//            {
                 ACC.common.refreshScreenReaderBuffer();
-            },
-            onClosed: function ()
-            {
-                ACC.common.refreshScreenReaderBuffer();
-            }
-        });
+//            },
+//            onClosed: function ()
+//            {
+//                ACC.common.refreshScreenReaderBuffer();
+//            }
+//        });
 
         /*
         $('#homepage_slider').waitForImages(function ()
