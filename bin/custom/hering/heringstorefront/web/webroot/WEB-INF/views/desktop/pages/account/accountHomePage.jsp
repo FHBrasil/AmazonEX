@@ -175,7 +175,7 @@
 									<div class="form-group col-sm-6">
 										<label for="birthday" class="control-label"><small>Entbindungstermin / Geburtstag</small></label>
 										<div class="input-group input-append date" id="birthday" data-date="01.01.2015" data-date-format="dd.mm.yyyy" style="padding-left:20px;">
-											<input type="text" size="16" class="form-control span2" value="01.01.2015">
+											<input type="text" name="youngestChildDateOfBirth" size="16" class="form-control span2" value="01.01.2015">
 											<span class="input-group-btn add-on">
 												<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span></button>
 											</span>

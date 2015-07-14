@@ -18,9 +18,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -764,15 +768,29 @@ public class AccountPageController extends AbstractSearchPageController {
 	 */
 	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
 	@RequireHardLogIn
-	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter)
+	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter, 
+			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth) 
 			throws CMSItemNotFoundException {
 		
 		CustomerData customerData = customerFacade.getCurrentCustomer();
 		
-		if (customerData != null)
+		//verificar formato Date MM/dd/yyyy
+		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
+		try 
 		{
-			heringCustomerFacade.updateCustomerSubscriptions(tipsNewsletter); //enviar os quatro booleans
+			Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
+			
+			if (customerData != null)
+			{
+				heringCustomerFacade.updateCustomerSubscriptions(tipsNewsletter, dateOfBirth); //enviar os quatro booleans
+			}
+		} 
+		catch (ParseException e) 
+		{
+			//e.printStackTrace();
 		}
+		
+		
 
 		return REDIRECT_MY_ACCOUNT;
 

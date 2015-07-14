@@ -3,8 +3,6 @@ package br.hering.core.attributehandlers;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-import br.hering.core.customer.impl.DefaultHeringCustomerAccountService;
-
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData;
 import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
@@ -100,6 +98,7 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		subscription.setLanguageIsoCode(customerData.getLanguage().getIsocode());
 		subscription.setStoreCode(getNewsletterSubscriptionFacade().getCurrentBaseStoreCode());
 		subscription.setSubscriptionType(subscriptionTypeData);
+		
 						
 		//create subscription of type TIPS_NEWSLETTER
 		if (tipsNewsletterEnabled)

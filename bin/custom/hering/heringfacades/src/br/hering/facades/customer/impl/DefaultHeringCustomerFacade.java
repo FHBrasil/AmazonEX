@@ -168,12 +168,12 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	/**
 	 * @author Luiza
 	 */
-	public CustomerData updateCustomerSubscriptions(final Boolean tipsNewsletter)
+	public CustomerData updateCustomerSubscriptions(final Boolean tipsNewsletter, final Date dateOfBirth)
 	{
 		
-		CustomerModel customerModel = getCurrentSessionCustomer();		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
 
-		customerModel = heringCustomerAccountService.updateCustomerSubscriptions(customerModel, tipsNewsletter);
+		customerModel = heringCustomerAccountService.updateCustomerSubscriptions(customerModel, tipsNewsletter, dateOfBirth);
 
 		CustomerData customerData = new CustomerData();
 		customerConverter.convert(customerModel, customerData);

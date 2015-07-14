@@ -103,7 +103,7 @@
 		<property name="orders" type="java.util.Collection&lt;java.lang.String>" />
 		<property name="primaryKey" type="java.lang.String"/>
 		<property name="defaultPhoneNumber" type="java.lang.String" />
-		<property name="youngestChildDateOfBirth" type="java.lang.Date" />
+		<property name="youngestChildDateOfBirth" type="java.lang.String" />
 		<property name="tipsNewsletterEnabled" type="boolean" />
 	</bean>
         
