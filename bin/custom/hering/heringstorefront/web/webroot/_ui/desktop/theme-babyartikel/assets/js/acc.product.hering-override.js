@@ -27,6 +27,18 @@ ACC.product.displayAddToCartPopup = function(cartResult, statusText, xhr, formEl
 	if((legend.length && legend.text() != '') && !(error.length && error.text() != ''))
 		showToaster(legend.text());
 	
+	var confirmation = $(cartResult.addToCartLayer).find('.confirmation');
+	if((confirmation.length && confirmation.text() != '') && !(error.length && error.text() != ''))
+	{
+		if(confirmation.text() == "ok")
+		{
+			$('#cartModal').modal('show');
+		}
+	}
+	
+	
+		
+	
 	if (typeof ACC.minicart.refreshMiniCartCount == 'function') {
 		ACC.minicart.refreshMiniCartCount();
 	}
@@ -43,5 +55,7 @@ ACC.product.displayAddToCartPopup = function(cartResult, statusText, xhr, formEl
 		$(".miniCartPopup div").show();
 	}, 1000);
 
+	
+	
 	setTimeout(function(){ $(".miniCartPopup div").hide();	}, 7000);
 };

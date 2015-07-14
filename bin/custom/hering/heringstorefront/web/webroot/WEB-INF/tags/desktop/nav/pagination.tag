@@ -8,10 +8,12 @@
 <%@ attribute name="orderHistory" required="false" type="java.lang.Boolean"%>
 <%@ attribute name="msgKey" required="false"%>
 <%@ attribute name="numberPagesShown" required="false" type="java.lang.Integer"%>
+<%@ attribute name="hideSort" required="false" type="java.lang.Boolean"%>
 <%@ taglib prefix="pagination" tagdir="/WEB-INF/tags/desktop/nav/pagination"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
+
 <c:if test="${!orderHistory}">
     <c:set var="themeMsgKey" value="${not empty msgKey ? msgKey : 'search.page'}" />
     <c:if test="${searchPageData.pagination.totalNumberOfResults == 0 && top }">
@@ -32,7 +34,7 @@
                         arguments="${searchPageData.pagination.totalNumberOfResults}" />
                 </div>
             </ycommerce:testId>--%>
-            <c:if test="${not empty searchPageData.sorts}">
+            <c:if test="${not empty searchPageData.sorts && !hideSort}">
                 <form id="sort_form${top ? '1' : '2'}" name="sort_form${top ? '1' : '2'}"
                     method="get" action="#" class="sortForm">
                     <div class="form-control sort-f">
@@ -79,7 +81,7 @@
                             code="${themeMsgKey}.showPageResults" /></a>
                 </ycommerce:testId>
             </c:if>
-            <c:if test="${(searchPageData.pagination.numberOfPages > 1 && !top)}">
+            <c:if test="${searchPageData.pagination.numberOfPages > 1}">
                 <pagination:pageSelectionPagination searchUrl="${searchUrl}"
                     searchPageData="${searchPageData}" numberPagesShown="${numberPagesShown}"
                     themeMsgKey="${themeMsgKey}" />
