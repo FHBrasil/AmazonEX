@@ -74,6 +74,7 @@ import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderHistoryData;
+import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
@@ -1683,31 +1684,27 @@ public class AccountPageController extends AbstractSearchPageController {
 		// Handle paged search results
 		final PaginationData pageableData = createEmptyPagination();
 		final SearchPageData<HeringWishlistEntryData> searchPageData = heringWishlistFacade.getPagedWishlistEntries();
-		final HeringWishlistData wishlist = heringWishlistFacade.getDefaultWishlist();
 
 		pageableData.setTotalNumberOfResults(searchPageData.getResults().size());
 		searchPageData.setPagination(pageableData);
 
-		final UpdateWishlistForm updateWishlistForm = new UpdateWishlistForm();
-		updateWishlistForm.setDescription(wishlist.getDescription());
-		updateWishlistForm.setName(wishlist.getName());
-		updateWishlistForm.setPublicName(wishlist.getPublicName());
-		updateWishlistForm.setEntriesList(searchPageData.getResults());
-		updateWishlistForm.entryToDesireds(searchPageData.getResults());
-		updateWishlistForm.setBirthday(customerFacade.getCurrentCustomer().getBirthday());
-		final String urlPublicWishlistShare = request.getScheme() + ":" + request.getLocalName() + ":"
-				+ request.getLocalPort() + request.getContextPath() + "/w/" + heringWishlistFacade.getWishlistPK();
+		final String urlPublicWishlistShare = getUrlPublicWishlistShare();
 		populateModel(model, searchPageData, showMode);
 		final String urlPublicWishlist = heringWishlistFacade.getWishlistPK();
 
+		List<ProductData> productList = new ArrayList<ProductData>();
+		for(HeringWishlistEntryData entry : searchPageData.getResults()) {
+			productList.add(entry.getProduct());
+		}
+
 		storeCmsPageInModel(model, getContentPageForLabelOrId(WISHLIST_ENTRIES_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(WISHLIST_ENTRIES_CMS_PAGE));
-		model.addAttribute("updateWishlistForm", updateWishlistForm);
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.wishlist"));
 		model.addAttribute("metaRobots", "no-index,no-follow");
 		model.addAttribute("urlPublicWishlist", urlPublicWishlist);
 		model.addAttribute("urlPublicWishlistShare", urlPublicWishlistShare);
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
+		model.addAttribute("productList", productList);
 		return ControllerConstants.Views.Pages.Account.AccountWishlistEntriesPage;
 	}
 
@@ -1835,6 +1832,15 @@ public class AccountPageController extends AbstractSearchPageController {
 			LOG.info("Erro ao buscar endere��o por cep.", e);
 		}
 		return result;
+	}
+
+	private String getUrlPublicWishlistShare() {
+		StringBuilder urlBuilder = new StringBuilder();
+		BaseStoreModel currentBaseStore = baseStoreService.getCurrentBaseStore();
+		if(currentBaseStore != null) {
+			urlBuilder.append(Config.getString("website." + currentBaseStore.getUid() + ".http", ""));
+		}
+		return urlBuilder.append("/w/").append(heringWishlistFacade.getWishlistPK()).toString();
 	}
 
 	/**

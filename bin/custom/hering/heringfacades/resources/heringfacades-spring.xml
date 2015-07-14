@@ -359,6 +359,7 @@
         <property name="heringWishlistService" ref="heringWishlistService" />
         <property name="productService" ref="productService" />
         <property name="productFacade" ref="productFacade" />
+		<property name="cartService" ref="cartService"/>
         <property name="heringWishlistConverter" ref="heringWishlistConverter" />
         <property name="heringWishlistEntryConverter" ref="heringWishlistEntryConverter" />
         <!-- <property name="productPrimaryImagePopulator" ref="productPrimaryImagePopulator"/> 
@@ -424,11 +425,16 @@
         <property name="typeService" ref="typeService" />
     </bean>
 
-    <alias name="defaultHeringWishlistService" alias="heringWishlistService" />
-    <bean id="defaultHeringWishlistService" class="br.hering.core.wishlist.impl.DefaultHeringWishlistService"
-        parent="defaultWishlistService" scope="tenant">
-    </bean>
-
+	<alias alias="wishlistDao" name="defaultHeringWishlistDao" />
+	<bean id="defaultHeringWishlistDao" class="br.hering.core.wishlist.impl.daos.impl.DefaultHeringWishlist2Dao" parent="defaultWishlistDao">
+		<property name="sessionService" ref="sessionService"/>
+	</bean>
+	
+	<alias name="defaultHeringWishlistService" alias="heringWishlistService"/>
+	<bean id="defaultHeringWishlistService" 
+			class="br.hering.core.wishlist.impl.DefaultHeringWishlistService" parent="defaultWishlistService" scope="tenant">
+	</bean>
+	
     <!-- End Wishlist reverse populators definitions -->
     <bean id="customerEmailContext" class="br.hering.facades.process.email.context.CustomerEmailContext"
         parent="abstractEmailContext" scope="prototype">

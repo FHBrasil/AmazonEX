@@ -6,13 +6,19 @@ package br.hering.core.wishlist.impl;
 
 import br.hering.core.model.HeringWishlistModel;
 import br.hering.core.wishlist.HeringWishlistService;
+import br.hering.core.wishlist.impl.daos.HeringWishlist2Dao;
+
 import de.hybris.platform.core.PK;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.core.model.user.UserModel;
+import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.exceptions.SystemException;
+import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.util.ServicesUtil;
 import de.hybris.platform.wishlist2.impl.DefaultWishlist2Service;
+import de.hybris.platform.wishlist2.model.Wishlist2EntryModel;
 import de.hybris.platform.wishlist2.model.Wishlist2Model;
+
 import java.util.List;
 
 /**
@@ -59,7 +65,8 @@ public class DefaultHeringWishlistService extends DefaultWishlist2Service implem
 
     }
 
-    public void updateHeringWishlist(HeringWishlistModel wishlistModel, UserModel user) {
+    @Override
+	public void updateHeringWishlist(HeringWishlistModel wishlistModel, UserModel user) {
 
 
 
@@ -71,17 +78,47 @@ public class DefaultHeringWishlistService extends DefaultWishlist2Service implem
 
     }
 
-    @Override
-    public boolean hasWishlisEntryForProduct(ProductModel product, Wishlist2Model wishlist) {
+	@Override
+	public Wishlist2EntryModel getWishlistEntryForProduct(String productCode, Wishlist2Model wishlist)
+	{
+		ServicesUtil.validateParameterNotNull(productCode, "Parameter 'product' was null.");
+		ServicesUtil.validateParameterNotNull(wishlist, "Parameter 'wishlist' was null.");
+		List entries = getWishlistDao().findWishlistEntryByProduct(productCode, wishlist);
+		if (entries.isEmpty())
+		{
+			throw new UnknownIdentifierException("Wishlist entry with product [" + productCode + "] in wishlist [" + 
+					wishlist.getName() + " ] not found.");
+		}
+		if (entries.size() > 1)
+		{
+			throw new AmbiguousIdentifierException("Wishlist entry with product [" + productCode + "] in wishlist [" + 
+					wishlist.getName() + "] is not unique, " + entries.size() + " entries found.");
+		}
+		return (Wishlist2EntryModel)entries.iterator().next();
+	}
 
-        ServicesUtil.validateParameterNotNull(product, "Parameter 'product' was null.");
-        ServicesUtil.validateParameterNotNull(wishlist, "Parameter 'wishlist' was null.");
-        List entries = this.wishlistDao.findWishlistEntryByProduct(product, wishlist);
-        if (entries.isEmpty()) {
-            return false;
-        }
+	@Override
+	public boolean hasWishlisEntryForProduct(String productCode, Wishlist2Model wishlist)
+	{
+		ServicesUtil.validateParameterNotNull(productCode, "Parameter 'product' was null.");
+		ServicesUtil.validateParameterNotNull(wishlist, "Parameter 'wishlist' was null.");
+		List entries = getWishlistDao().findWishlistEntryByProduct(productCode, wishlist);
+		if (entries.isEmpty())
+		{
+			return false;
+		}
+		return true;
+	}
 
-        return true;
+	@Override
+	public void removeWishlistEntryForProduct(String productCode, Wishlist2Model wishlist)
+	{
+		Wishlist2EntryModel entry = getWishlistEntryForProduct(productCode, wishlist); /* 123 */
+		removeWishlistEntry(wishlist, entry);
+	}
 
-    }
+	protected HeringWishlist2Dao getWishlistDao()
+	{
+		return (HeringWishlist2Dao) wishlistDao;
+	}
 }
