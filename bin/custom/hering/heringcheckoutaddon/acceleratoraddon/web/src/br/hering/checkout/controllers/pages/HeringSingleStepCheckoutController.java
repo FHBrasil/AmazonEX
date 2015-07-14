@@ -41,6 +41,8 @@ import br.hering.facades.voucher.HeringVoucherFacade;
 import br.hering.heringstorefrontcommons.forms.HeringAddressForm;
 import br.hering.heringstorefrontcommons.forms.HeringPaymentDetailsForm;
 
+import com.flieger.bonussystem.data.BonusSystemData;
+import com.flieger.bonussystem.facade.BonusSystemFacade;
 import com.flieger.payment.data.AdvancePaymentInfoData;
 import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
@@ -66,9 +68,11 @@ import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.voucher.data.VoucherData;
 import de.hybris.platform.commercefacades.voucher.exceptions.VoucherOperationException;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
+import de.hybris.platform.commerceservices.order.CommerceCartService;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.InvalidCartException;
+import de.hybris.platform.order.exceptions.CalculationException;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.servicelayer.i18n.I18NService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
@@ -105,6 +109,10 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     private PaypalPaymentRequestController paypalPaymentRequestController;
     @Resource
     private PayPalCheckoutFacade paypalCheckoutFacade;
+    @Resource
+    private BonusSystemFacade bonusSystemFacade;
+    @Resource
+    private CommerceCartService commerceCartService;
     
     
     /**
@@ -199,14 +207,21 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         final CartData cartData = getCheckoutFacade().getCheckoutCart();
         final CustomerData customerData = getUser();
         final AddressData selectedDeliveryAddress = cartData.getDeliveryAddress();
-        final AddressData selectedBillingAddress = getAddressBilling();
+        AddressData selectedBillingAddress = getAddressBilling();
         final HeringPaymentDetailsForm paymentDetailsForm = getPreparedHeringPaymentDetailsForm();
         final HeringAddressForm heringAddressForm = getPreparedAddressForm();
         final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
+        final CustomerModel customerModel = getCheckoutFacade().getCurrentUserForCheckout();
+        
         if(cartData.getBillingAddress() == null)
         {
         	storeBillingAddressIntoCart(cartData);
-        }        
+        }
+        if(selectedBillingAddress == null && cartData.getBillingAddress() != null)
+        {
+        	selectedBillingAddress = cartData.getBillingAddress();
+        }
+        model.addAttribute("guestEmail", customerModel.getContactEmail());
         model.addAttribute("cartData", cartData);
         createProductList(model);
         model.addAttribute("paymentDetailsForm", paymentDetailsForm);
@@ -224,7 +239,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         } else {
             model.addAttribute("checkedDifferingBilling", false);
         }
-        model.addAttribute("addressData", getUserFacade().getAddressBook());
+        model.addAttribute("addressData", userFacade.getAddressBookUser());
         model.addAttribute("noAddress", Boolean.valueOf(hasNoDeliveryAddress()));
         model.addAttribute("showSaveToAddressBook", Boolean.TRUE);
         model.addAttribute("deliveryMethods", getDeliveryModes());
@@ -232,6 +247,8 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         model.addAttribute("placeOrderForm", new PlaceOrderForm());
         model.addAttribute("metaRobots", "no-index,no-follow");
         model.addAttribute("pageType", HeringPageType.SINGLESTEPCHECKOUT.name());
+		model.addAttribute("availableBonusPoints", getAvailableBonusPoints());
+		model.addAttribute("usedBonusPoints", getUsedBonusPoints());
         this.prepareDataForPage(model);
         storeCmsPageInModel(model, getContentPageForLabelOrId(MULTI_CHECKOUT_SUMMARY_CMS_PAGE_LABEL));
         setUpMetaDataForContentPage(model,
@@ -292,14 +309,14 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
                 final AddressData cartCheckoutDeliveryAddress = getCheckoutFacade().getCheckoutCart().getDeliveryAddress();
                 if (isAddressIdChanged(cartCheckoutDeliveryAddress, selectedAddressData)) {
                 	selectedAddressData.setDefaultAddress(true);
-                	getUserFacade().editAddress(selectedAddressData);
+                	userFacade.editAddress(selectedAddressData);
                     getCheckoutFacade().setDeliveryAddress(selectedAddressData);
                     if (cartCheckoutDeliveryAddress != null && !cartCheckoutDeliveryAddress.isVisibleInAddressBook()) { // temporary
                                                                                         // address
                                                                                         // should
                                                                                         // be
                                                                                         // removed
-                        getUserFacade().removeAddress(cartCheckoutDeliveryAddress);
+                    	userFacade.removeAddress(cartCheckoutDeliveryAddress);
                     }
                 }
             }
@@ -325,7 +342,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     	prepareAddressForm(heringAddressForm);
         getAddressValidator().validate(heringAddressForm, bindingResult, model);
         if (!bindingResult.hasErrors()) {
-        	final List<AddressData> addresses = getUserFacade().getAddressBook();
+        	final List<AddressData> addresses = userFacade.getAddressBookUser();
 			if(typeAddress.equalsIgnoreCase("delivery"))
 			{					
 				heringAddressForm.setDefaultAddress(true);
@@ -337,7 +354,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
 					for(AddressData address : addresses)
 					{
 						address.setBillingAddress(false);
-						getUserFacade().editAddress(address);
+						userFacade.editAddress(address);
 					}
 				}
 				heringAddressForm.setBillingAddress(true);
@@ -445,27 +462,27 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
      * @return
      */
     private AddressData saveDeliveryAddress(final HeringAddressForm deliveryAddressForm) {
-        AddressData deliveryAddressData = new AddressData();
-        deliveryAddressData = convertAddressFormIntoAddressData(deliveryAddressForm);
+        AddressData deliveryAddressData = convertAddressFormIntoAddressData(deliveryAddressForm);
         deliveryAddressData.setVisibleInAddressBook(true);
-        if (getUserFacade().isAddressBookEmpty()) {
+        if (userFacade.getAddressBookUser().size() <= 0 || userFacade.getAddressBookUser() == null) {
         	deliveryAddressData.setShippingAddress(true);
         	deliveryAddressData.setBillingAddress(true);
             deliveryAddressData.setDefaultAddress(true);
         }
-        if (getCheckoutCustomerStrategy().isAnonymousCheckout()) {
-            deliveryAddressData.setDefaultAddress(true);
-            deliveryAddressData.setVisibleInAddressBook(true);
-        }
+//        if (getCheckoutCustomerStrategy().isAnonymousCheckout()) {
+//            deliveryAddressData.setDefaultAddress(true);
+//            deliveryAddressData.setVisibleInAddressBook(true);
+//        }
         if((deliveryAddressForm.getDefaultAddress() != null) && deliveryAddressForm.getDefaultAddress()){
         	deliveryAddressData.setDefaultAddress(true);
         }
-        getHeringUserFacade().addAddress(deliveryAddressData);
-        if (!getUserFacade().isAddressBookEmpty() && !deliveryAddressData.isBillingAddress())
+        userFacade.addAddress(deliveryAddressData);
+        if (userFacade.getAddressBookUser().size() > 0 && !deliveryAddressData.isBillingAddress())
         {
+        	getCheckoutFacade().getCheckoutCart().setDeliveryAddress(deliveryAddressData);
         	getCheckoutFacade().setDeliveryAddress(deliveryAddressData);        	
         }
-        else if (!getUserFacade().isAddressBookEmpty() && deliveryAddressData.isBillingAddress())
+        else if (userFacade.getAddressBookUser().size() > 0 && deliveryAddressData.isBillingAddress())
         {
         	getCheckoutFacade().getCheckoutCart().setBillingAddress(deliveryAddressData);
         	getCheckoutFacade().saveBillingAddressIntoCart(deliveryAddressData);
@@ -516,15 +533,15 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             return REDIRECT_URL_CART;
         }
         if (StringUtils.isNotBlank(selectedAddressCode)) {
-            for (final AddressData addressData : getUserFacade().getAddressBook()) {
+            for (final AddressData addressData : userFacade.getAddressBookUser()) {
                 if (addressData.getId() != null && addressData.getId().equals(selectedAddressCode)) {
                     addressData.setBillingAddress(true);
-                    getUserFacade().editAddress(addressData);
+                    userFacade.editAddress(addressData);
                     getCheckoutFacade().getCheckoutCart().setBillingAddress(addressData);
                     getCheckoutFacade().saveBillingAddressIntoCart(addressData);
                 } else {
                     addressData.setBillingAddress(false);
-                    getUserFacade().editAddress(addressData);
+                    userFacade.editAddress(addressData);
                 }
             }
         }
@@ -533,7 +550,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     
     
     private AddressData getAddressBilling() {
-        final List<AddressData> addresses = getUserFacade().getAddressBook();
+        final List<AddressData> addresses = userFacade.getAddressBookUser();
         if (addresses != null) {
             for (AddressData address : addresses) {
                 if (address.isBillingAddress())
@@ -630,9 +647,47 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         // getPreparedHeringPaymentDetailsForm();
         // model.addAttribute("paymentDetailsForm", paymentDetailsForm);
         model.addAttribute("instalments", getOrderInstalments());
+		model.addAttribute("usedBonusPoints", getUsedBonusPoints());
         return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments.CheckoutOrderDetails;
     }
     
+	@RequestMapping(value = "/apply-bp/{points:.*}", method = RequestMethod.POST,
+			produces = "application/json")
+	public String applyBonusPointsDiscount(Model model, 
+			@PathVariable("points") final Double points)
+					throws Exception 
+	{
+		bonusSystemFacade.clearCartDiscount();
+		if (points == null || points.doubleValue() <= 0) {
+			model.addAttribute("success", Boolean.TRUE.toString());
+			model.addAttribute("successMessage", "Removido desconto de pontos com sucesso.");
+		} else {
+			try
+			{
+				bonusSystemFacade.generateCartDiscount(points.doubleValue());
+				model.addAttribute("success", Boolean.TRUE.toString());
+				model.addAttribute("successMessage", "Desconto de pontos aplicado com sucesso.");
+			}
+			catch (CalculationException e)
+			{
+				model.addAttribute("success", Boolean.FALSE.toString());
+				model.addAttribute("successMessage", "Erro ao aplicar desconto de pontos.");
+			}
+		}
+		commerceCartService.recalculateCart(cartService.getSessionCart());
+
+		CartData cartData = getCheckoutFacade().getCheckoutCart();
+		model.addAttribute("cartData", cartData);
+		model.addAttribute("deliveryMethods", getDeliveryModes());
+		model.addAttribute("selectedDeliveryAddress", cartData.getDeliveryAddress());
+		model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
+		model.addAttribute("isVoucherAmountEqualsOrderAmount", cartData.getTotalPrice().getValue().compareTo(new BigDecimal(0.0)) == 0);
+		model.addAttribute("command", "applyBonusPoints");
+		model.addAttribute("instalments", getOrderInstalments());
+		model.addAttribute("usedBonusPoints", getUsedBonusPoints());
+
+		return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments.CheckoutOrderDetails;
+	}
     
     /**
      * @param model
@@ -1148,8 +1203,8 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         if (newPaymentSubscription != null
                 && StringUtils.isNotBlank(newPaymentSubscription.getSubscriptionId())) {
             if (Boolean.TRUE.equals(paymentDetailsForm.getSaveInAccount())
-                    && getUserFacade().getCCPaymentInfos(true).size() <= 1) {
-                getUserFacade().setDefaultPaymentInfo(newPaymentSubscription);
+                    && userFacade.getCCPaymentInfos(true).size() <= 1) {
+            	userFacade.setDefaultPaymentInfo(newPaymentSubscription);
             }
             getCheckoutFacade().setPaymentDetails(newPaymentSubscription.getId());
             cartData.setPaymentInfo(paymentInfoData);
@@ -1237,8 +1292,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             addressData.setId(addressForm.getAddressId());
             addressData.setFirstName(addressForm.getFirstName());
             addressData.setLastName(addressForm.getLastName());
-            addressData.setReceiver(addressForm.getReceiver());
-            addressData.setLine1(addressForm.getLine1());
+            addressData.setReceiver(addressForm.getReceiver());            
             addressData.setTown(addressForm.getTownCity());
             addressData.setPostalCode(addressForm.getPostcode());
             addressData.setDistrict(addressForm.getNeighborhood());
@@ -1258,8 +1312,16 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             addressData.setComplement(addressForm.getComplement());
             addressData.setReference(addressForm.getReference());
             addressData.setType(TipoDeEndereco.valueOf(addressForm.getAddressType()));
-            addressData
-                    .setCountry(getI18NFacade().getCountryForIsocode(addressForm.getCountryIso()));
+            if(!addressForm.getAddressType().equalsIgnoreCase("packstation"))
+            {
+            	addressData.setLine1(addressForm.getLine1());
+            	addressData.setCountry(getI18NFacade().getCountryForIsocode(addressForm.getCountryIso()));
+        	}
+            else
+            {
+            	addressData.setLine1("Packstation");
+            	addressData.setCountry(getI18NFacade().getCountryForIsocode("DE"));
+            }
             // addressData.setRegion(getI18NFacade().getRegion(addressForm.getCountryIso(),
             // addressForm.getRegionIso()));
             addressData.setShippingAddress(Boolean.TRUE.equals(addressForm.getShippingAddress()));
@@ -1516,6 +1578,14 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         return deliveryModes;
     }
     
+	private Double getAvailableBonusPoints() {
+		BonusSystemData bonusSystem = bonusSystemFacade.getCurrentUserBonusSystem();
+		return Double.valueOf(bonusSystem != null ? bonusSystem.getPoints() : 0);
+	}
+
+	private Double getUsedBonusPoints() {
+		return bonusSystemFacade.getCartUsedPoints();
+	}
     
     public PaypalPaymentRequestController getPaypalPaymentRequestController() {
         return paypalPaymentRequestController;

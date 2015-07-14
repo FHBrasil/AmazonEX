@@ -3,9 +3,13 @@
  */
 package br.hering.facades.wishlist.impl;
 
+import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.core.model.product.UnitModel;
+import de.hybris.platform.order.CartService;
 import de.hybris.platform.product.ProductService;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
+import de.hybris.platform.servicelayer.exceptions.ModelNotFoundException;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.wishlist2.enums.Wishlist2EntryPriority;
 import de.hybris.platform.wishlist2.model.Wishlist2EntryModel;
@@ -19,11 +23,18 @@ import br.hering.core.wishlist.HeringWishlistService;
 import br.hering.facades.wishlist.WishlistFacade;
 import br.hering.facades.wishlist.data.HeringWishlistData;
 import br.hering.facades.wishlist.data.HeringWishlistEntryData;
+
 import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.ProductOption;
+import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
 import de.hybris.platform.core.PK;
+
 import java.util.Arrays;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Required;
 
 /**
  * @author flieger
@@ -36,9 +47,17 @@ public class DefaultHeringWishlistFacade implements WishlistFacade {
     private ProductService productService;
     private ProductFacade productFacade;
     private UserService userService;
+    private CartService cartService;
     private Converter<Wishlist2Model, HeringWishlistData> heringWishlistConverter;
     private Converter<Wishlist2EntryModel, HeringWishlistEntryData> heringWishlistEntryConverter;
 
+//    @Resource
+//    private HeringEventListImagePopulator heringEventListImagePopulator;
+//    
+// 	 protected HeringEventListImagePopulator getHeringEventListImagePopulator()
+// 	 {
+// 		 return this.heringEventListImagePopulator;
+// 	 }
     /*
      * (non-Javadoc)
      * 
@@ -48,14 +67,35 @@ public class DefaultHeringWishlistFacade implements WishlistFacade {
     public void removeWishlistEntryForProduct(final String productCode) {
 
         if (hasDefaultWishlist() && getDefaultWishlist().getEntries().size() > 0) {
-
-            final ProductModel product = getProductService().getProductForCode(productCode);
-            getHeringWishlistService().removeWishlistEntryForProduct(product,
+            getHeringWishlistService().removeWishlistEntryForProduct(productCode,
                     getHeringWishlistService().getDefaultWishlist(getUserService().getCurrentUser()));
 
         }
 
     }
+
+	@Override
+	public void addToCart(String productCode)
+	{
+		HeringWishlistModel wishlist = getDefaultWishlistModel();
+		ProductModel product = getHeringWishlistService().getWishlistEntryForProduct(productCode, wishlist).getProduct();
+		UnitModel orderableUnit = product.getUnit();
+		if (orderableUnit == null)
+		{
+			try
+			{
+				orderableUnit = getProductService().getOrderableUnit(product);
+			}
+			catch (ModelNotFoundException e)
+			{
+				// do nothing
+			}
+		}
+		CartModel cart = getCartService().getSessionCart();
+		getCartService().addNewEntry(cart, product, 1, orderableUnit);
+		getCartService().saveOrder(cart);
+		getHeringWishlistService().getWishlistEntryForProduct(productCode, wishlist);
+	}
 
     /*
      * (non-Javadoc)
@@ -184,8 +224,7 @@ public class DefaultHeringWishlistFacade implements WishlistFacade {
     public boolean hasWishlisEntryForProduct(String productCode) {
         
         if(hasDefaultWishlist()){
-        ProductModel product = getProductService().getProductForCode(productCode);
-        return getHeringWishlistService().hasWishlisEntryForProduct(product, getDefaultWishlistModel());
+      	  return getHeringWishlistService().hasWishlisEntryForProduct(productCode, getDefaultWishlistModel());
         } else{
             return false;
         }
@@ -234,6 +273,8 @@ public class DefaultHeringWishlistFacade implements WishlistFacade {
 
                 HeringWishlistEntryData entryData = getHeringWishlistEntryConverter().convert(wishlist2EntryModel);
                 entryData.setProduct(productFacade.getProductForOptions(wishlist2EntryModel.getProduct(), Arrays.asList(ProductOption.PRICE)));
+//                ProductModel productModelFromWishlist = wishlist2EntryModel.getProduct();
+//                getHeringEventListImagePopulator().populate(productModelFromWishlist, entryData.getProduct());
                 entriesData.add(entryData);
             }
             /*end*/
@@ -367,7 +408,12 @@ public class DefaultHeringWishlistFacade implements WishlistFacade {
         this.productFacade = productFacade;
     }
 
-    
+	protected CartService getCartService() {
+		return cartService;
+	}
 
-    
+	@Required
+	public void setCartService(CartService cartService) {
+		this.cartService = cartService;
+	}
 }

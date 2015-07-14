@@ -88,7 +88,7 @@
             <div class="modal-body">
             	<p>
                     <spring:theme code="checkout.single.youCurrentlyHave" />
-                    &nbsp;<b><spring:theme code="checkout.single.xPoints" /></b>&nbsp;
+                    &nbsp;<b><spring:theme code="checkout.single.xPoints" arguments="${availableBonusPoints}"/></b>&nbsp;
             	    <spring:theme code="checkout.single.howManyPointsYouWant" />
                 </p>
 				<form>
@@ -106,10 +106,12 @@
                 </p>
             </div>
             <div class="modal-footer">
+				<input type="hidden" name="applyBPUrl"
+						value="${request.contextPath}/checkout/single/apply-bp/" />
             	<button type="button" class="btn btn-default" data-dismiss="modal">
                     <spring:theme code="checkout.single.address.abort"/>
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button id="applyBP" type="button" class="btn btn-primary">
                     <spring:theme code="checkout.single.redeemPoints" />
                 </button>
             </div>

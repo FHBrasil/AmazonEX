@@ -64,6 +64,7 @@
         <extension name="heringcockpits" />
         <extension name="heringstorefrontcommons" />
         <extension name="heringcheckoutaddon" />
+        <extension name="heringtest" />
         <extension name="textboxinfoaddon" />
         <extension name="exacttarget" />
         <extension name="notificationservices" />
@@ -89,6 +90,9 @@
         <extension name="pixiapi" />
         <extension name="newslettersubscription" />
         <extension name="newsletteraddon" />
+        <extension name="bonussystem"/>
+        <extension name="bonussystemaddon"/>
+        <extension name="bonussystemhmc"/>
 
     </extensions>
 </hybrisconfig>

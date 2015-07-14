@@ -3,8 +3,8 @@
  */
 package com.flieger.services.impl;
 
+import static de.hybris.platform.servicelayer.util.ServicesUtil.validateIfSingleResult;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
-import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.price.DiscountModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.CalculationService;
@@ -17,11 +17,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
 import com.flieger.constants.BonussystemConstants;
 import com.flieger.dao.BonusSystemDao;
-import com.flieger.model.user.BonusSystemLogModel;
+import com.flieger.model.user.BonusSystemConfigModel;
+import com.flieger.model.user.BonusSystemDiscountModel;
+import com.flieger.model.user.BonusSystemEntryModel;
 import com.flieger.model.user.BonusSystemModel;
 import com.flieger.services.BonusSystemService;
 
@@ -44,9 +47,10 @@ public class DefaultBonusSystemService implements BonusSystemService
 	 * @see com.flieger.services.BonusSystemService#createBonusSystem(de.hybris.platform.core.model.user.CustomerModel)
 	 */
 	@Override
-	public BonusSystemModel createBonusSystem(final CustomerModel customer)
+	public BonusSystemModel createBonusSystem(final CustomerModel customer, BonusSystemConfigModel configuration)
 	{
 		Assert.notNull(customer, "Parameter customer cannot be null.");
+		Assert.notNull(configuration, "Parameter configuration cannot be null.");
 
 		if (!isValidUser(customer))
 		{
@@ -59,13 +63,13 @@ public class DefaultBonusSystemService implements BonusSystemService
 					.append("> already exists").toString());
 		}
 
-		final BonusSystemModel bonusSystemModel = modelService.create(BonusSystemModel.class);
-		bonusSystemModel.setPoints(0D);
-
-		modelService.save(bonusSystemModel);
+		final BonusSystemModel bonusSystemModel = getModelService().create(BonusSystemModel.class);
+		bonusSystemModel.setConfiguration(configuration);
+		bonusSystemModel.setReservedPoints(0D);
+		getModelService().save(bonusSystemModel);
 
 		customer.setBonusSystem(bonusSystemModel);
-		modelService.save(customer);
+		getModelService().save(customer);
 
 		return bonusSystemModel;
 	}
@@ -76,20 +80,18 @@ public class DefaultBonusSystemService implements BonusSystemService
 	 * @see com.flieger.services.BonusSystemService#removeBonusSystem(de.hybris.platform.core.model.user.CustomerModel)
 	 */
 	@Override
-	public void removeBonusSystem(final CustomerModel customer)
+	public boolean removeBonusSystem(final BonusSystemModel system)
 	{
-		Assert.notNull(customer, "Parameter customer cannot be null.");
+		Assert.notNull(system , "Parameter system cannot be null.");
+		CustomerModel customer = getBonusSystemDao().getCustomerForBonusSystem(system);
 
-		if (!hasBonusSystem(customer))
+		getModelService().remove(system);
+		if (customer != null)
 		{
-			throw new SystemException((new StringBuilder("There's no bonusSystem for the customer <")).append(customer.getName())
-					.append(">").toString());
+			customer.setBonusSystem(null);
+			getModelService().save(customer);
 		}
-
-		final BonusSystemModel bonusSystem = customer.getBonusSystem();
-		customer.setBonusSystem(null);
-		modelService.remove(bonusSystem);
-		modelService.save(customer);
+		return true;
 	}
 
 	/*
@@ -99,20 +101,48 @@ public class DefaultBonusSystemService implements BonusSystemService
 	 * com.flieger.model.user.BonusSystemLogModel)
 	 */
 	@Override
-	public void addBonusSystemLog(final BonusSystemModel bonusSystem, final BonusSystemLogModel log)
+	public boolean addBonusSystemEntry(final BonusSystemModel system, final BonusSystemEntryModel entry)
 	{
-		Assert.notNull(bonusSystem, "Parameter bonusSystem cannot be null.");
-		Assert.notNull(log, "Parameter log cannot be null.");
+		Assert.notNull(system, "Parameter system cannot be null.");
+		Assert.notNull(entry, "Parameter log cannot be null.");
 
-		modelService.save(log);
+		entry.setBonusSystem(system);
+		getModelService().save(entry);
 
-		final List<BonusSystemLogModel> logList = new ArrayList<>(bonusSystem.getLog());
-		logList.add(log);
-		bonusSystem.setLog(logList);
+		final List<BonusSystemEntryModel> entryList = new ArrayList<>(system.getLogEntries());
+		entryList.add(entry);
+		system.setLogEntries(entryList);
 
-		modelService.save(bonusSystem);
+		getModelService().save(system);
 
-		recalculateBonusSystemPoints(bonusSystem);
+//		recalculateBonusSystemPoints(bonusSystem);
+		return true;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.flieger.services.BonusSystemService#addBonusSystemLog(com.flieger.model.user.BonusSystemModel,
+	 * com.flieger.model.user.BonusSystemLogModel)
+	 */
+	@Override
+	public boolean addBonusSystemEntry(final BonusSystemModel system, final BonusSystemEntryModel entry, BonusSystemDiscountModel discount)
+	{
+		Assert.notNull(system, "Parameter bonusSystem cannot be null.");
+		Assert.notNull(entry, "Parameter log cannot be null.");
+
+		entry.setBonusSystem(system);
+		getModelService().save(entry);
+
+		final List<BonusSystemEntryModel> entryList = new ArrayList<>(system.getLogEntries());
+		entryList.add(entry);
+		entry.setAppliedDiscount(discount);
+		system.setLogEntries(entryList);
+
+		getModelService().save(system);
+
+//		recalculateBonusSystemPoints(bonusSystem);
+		return true;
 	}
 
 	/*
@@ -122,70 +152,84 @@ public class DefaultBonusSystemService implements BonusSystemService
 	 * com.flieger.model.user.BonusSystemLogModel)
 	 */
 	@Override
-	public void removeBonusSystemLog(final BonusSystemModel bonusSystem, final BonusSystemLogModel log)
+	public void removeBonusSystemEntry(final BonusSystemModel bonusSystem, final BonusSystemEntryModel entry)
 	{
 		Assert.notNull(bonusSystem, "Parameter bonusSystem cannot be null.");
-		Assert.notNull(log, "Parameter log cannot be null.");
+		Assert.notNull(entry, "Parameter log cannot be null.");
 
-		final List<BonusSystemLogModel> logList = new ArrayList<BonusSystemLogModel>(bonusSystem.getLog());
-		logList.remove(log);
+		final List<BonusSystemEntryModel> entryList = new ArrayList<BonusSystemEntryModel>(bonusSystem.getLogEntries());
+		entryList.remove(entry);
 
-		bonusSystem.setLog(logList);
+		bonusSystem.setLogEntries(entryList);
 
-		modelService.remove(log);
-		modelService.save(bonusSystem);
+		getModelService().remove(entry);
+		getModelService().save(bonusSystem);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.flieger.services.BonusSystemService#recalculateBonusSystemPoints(com.flieger.model.user.BonusSystemModel)
-	 */
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see com.flieger.services.BonusSystemService#recalculateBonusSystemPoints(com.flieger.model.user.BonusSystemModel)
+//	 */
+//	@Override
+//	public void recalculateBonusSystemPoints(final BonusSystemModel bonusSystem)
+//	{
+//		Assert.notNull(bonusSystem, "Parameter bonusSystem cannot be null.");
+//
+//		double totalPoints = 0;
+//
+//		if (CollectionUtils.isNotEmpty(bonusSystem.getLogEntries()))
+//		{
+//			for (final BonusSystemEntryModel entry : bonusSystem.getLogEntries())
+//			{
+//				totalPoints += entry.getPoints();
+//			}
+//		}
+//
+//		bonusSystem.setPoints(totalPoints);
+//
+//		modelService.save(bonusSystem);
+//	}
+
 	@Override
-	public void recalculateBonusSystemPoints(final BonusSystemModel bonusSystem)
+	public BonusSystemDiscountModel applyDiscount(final AbstractOrderModel abstractOrder, final BonusSystemModel system) throws CalculationException
 	{
-		Assert.notNull(bonusSystem, "Parameter bonusSystem cannot be null.");
-
-		double totalPoints = 0;
-
-		if (CollectionUtils.isNotEmpty(bonusSystem.getLog()))
-		{
-			for (final BonusSystemLogModel log : bonusSystem.getLog())
-			{
-				totalPoints += log.getPoints();
-			}
-		}
-
-		bonusSystem.setPoints(totalPoints);
-
-		modelService.save(bonusSystem);
+		return applyDiscount(abstractOrder, system, system.getAvailablePoints());
 	}
 
 	@Override
-	public void applyDiscount(final CartModel cart, final BonusSystemModel bonusSystemModel) throws CalculationException
+	public BonusSystemDiscountModel applyDiscount(final AbstractOrderModel abstractOrder, final BonusSystemModel system, double points) throws CalculationException
 	{
-		final DiscountModel bsDiscount = modelService.create(DiscountModel.class);
-		bsDiscount.setCode(BonussystemConstants.BS_DISCOUNT_PREFIX + cart.getCode() + "_" + System.currentTimeMillis());
-		bsDiscount.setCurrency(cart.getCurrency());
+		Assert.notNull(abstractOrder, "Parameter abstractOrder cannot be null.");
+		Assert.notNull(system, "Parameter system cannot be null.");
+		Assert.isTrue(points > 0, "Points cannot be 0 or negative.");
+		double availablePoints = system.getAvailablePoints() != null ? system.getAvailablePoints().doubleValue() : 0;
+		Assert.isTrue(availablePoints > 0, "Available points in system cannot be 0 or negative.");
+		
+		final BonusSystemDiscountModel bsDiscount = getModelService().create(BonusSystemDiscountModel.class);
+		bsDiscount.setCode(BonussystemConstants.BS_DISCOUNT_PREFIX + abstractOrder.getCode() + "_" + System.currentTimeMillis());
+		bsDiscount.setCurrency(abstractOrder.getCurrency());
 		bsDiscount.setPriority(1);
 		bsDiscount.setGlobal(true);
 
-		final double total = cart.getSubtotal();
-		final double value = bonusSystemModel.getPoints() / 100.0;
+		final double total = abstractOrder.getSubtotal();
+		final double value = Math.min(availablePoints, points) / 100.0;
 
 		bsDiscount.setValue(value > total ? total : value);
 
-		modelService.save(bsDiscount);
+		getModelService().save(bsDiscount);
 
-		final List<DiscountModel> discounts = new ArrayList<DiscountModel>(cart.getDiscounts());
+		final List<DiscountModel> discounts = new ArrayList<DiscountModel>(abstractOrder.getDiscounts());
 
 		discounts.add(bsDiscount);
 
-		cart.setDiscounts(discounts);
+		abstractOrder.setDiscounts(discounts);
 
-		calculationService.recalculate(cart);
+		getCalculationService().recalculate(abstractOrder);
 
-		modelService.save(cart);
+		getModelService().save(abstractOrder);
+		
+		return bsDiscount;
 	}
 
 	/*
@@ -196,7 +240,7 @@ public class DefaultBonusSystemService implements BonusSystemService
 	 * )
 	 */
 	@Override
-	public List<DiscountModel> getAppliedBSDiscounts(final AbstractOrderModel model)
+	public List<BonusSystemDiscountModel> getAppliedBonusSystemDiscounts(final AbstractOrderModel model)
 	{
 		Assert.notNull(model, "Parameter model cannot be null.");
 
@@ -205,13 +249,13 @@ public class DefaultBonusSystemService implements BonusSystemService
 			return Collections.emptyList();
 		}
 
-		final List<DiscountModel> bsDiscounts = new ArrayList<DiscountModel>();
+		final List<BonusSystemDiscountModel> bsDiscounts = new ArrayList<BonusSystemDiscountModel>();
 
 		for (final DiscountModel discount : model.getDiscounts())
 		{
-			if (discount.getCode().startsWith(BonussystemConstants.BS_DISCOUNT_PREFIX))
+			if (discount instanceof BonusSystemDiscountModel && discount.getCode().startsWith(BonussystemConstants.BS_DISCOUNT_PREFIX))
 			{
-				bsDiscounts.add(discount);
+				bsDiscounts.add((BonusSystemDiscountModel)discount);
 			}
 		}
 
@@ -237,31 +281,34 @@ public class DefaultBonusSystemService implements BonusSystemService
 		return !isAnonymous;
 	}
 
-	public ModelService getModelService()
+	protected ModelService getModelService()
 	{
 		return modelService;
 	}
 
+	@Required
 	public void setModelService(final ModelService modelService)
 	{
 		this.modelService = modelService;
 	}
 
-	public BonusSystemDao getBonusSystemDao()
+	protected BonusSystemDao getBonusSystemDao()
 	{
 		return bonusSystemDao;
 	}
 
+	@Required
 	public void setBonusSystemDao(final BonusSystemDao bonusSystemDao)
 	{
 		this.bonusSystemDao = bonusSystemDao;
 	}
 
-	public CalculationService getCalculationService()
+	protected CalculationService getCalculationService()
 	{
 		return calculationService;
 	}
 
+	@Required
 	public void setCalculationService(final CalculationService calculationService)
 	{
 		this.calculationService = calculationService;

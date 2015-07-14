@@ -95,7 +95,7 @@
 												</c:forEach>
 											</div> 
 										</div>
-										<span class="price150311">${order.total.formattedValue} &euro;</span>
+										<span class="price150311">${order.total.formattedValue}</span>
 									</a>
 								</div>
 							</c:forEach>
@@ -134,7 +134,7 @@
 													</c:forEach>
 												</div>
 											</div>	
-											<span class="price150311">${order.total.formattedValue} &euro;</span>
+											<span class="price150311">${order.total.formattedValue}</span>
 										</a>
 									</div>
 								</c:forEach>

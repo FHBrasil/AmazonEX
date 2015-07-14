@@ -12,15 +12,17 @@
 -->
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
 	<bean class="com.flieger.bonussystem.data.BonusSystemData">
-		<property name="log" type="java.util.List&lt;com.flieger.bonussystem.data.BonusSystemLogData>"/>
+		<property name="entries" type="java.util.List&lt;com.flieger.bonussystem.data.BonusSystemEntryData>"/>
 		<property name="points" type="double"/>
 	</bean>
-	<bean class="com.flieger.bonussystem.data.BonusSystemLogData">
+	<bean class="com.flieger.bonussystem.data.BonusSystemEntryData">
 		<property name="date" type="java.util.Date"/>
+		<!--<property name="expirationDate" type="java.util.Date"/>-->
 		<property name="description" type="java.lang.String"/>
 		<property name="points" type="double"/>
 		<property name="type" type="java.lang.String"/>
 		<property name="reference" type="java.lang.String"/>
+		<property name="referenceType" type="java.lang.String"/>
 	</bean>
 	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData" extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
 		<property name="bonusSystem" type="com.flieger.bonussystem.data.BonusSystemData" />

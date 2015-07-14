@@ -103,6 +103,7 @@
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.silentorderpost.js"></script>
     <script type="text/javascript"
         src="${themeResourcePath}/assets/js/pages/acc.updatebillingaddress.js"></script>
+	<script type="text/javascript" src="${commonResourcePath}/js/checkoutbonussystem.js"></script>
 </c:if>
 <c:if test="${fn:contains(pageType,'CMS')}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/institucional.js"></script>

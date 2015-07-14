@@ -19,6 +19,7 @@
         <requires-extension name="heringcore" />
         <requires-extension name="paypal" />
         <requires-extension name="paypaladdon" />
+        <requires-extension name="bonussystemfacades" />
         <coremodule generated="true" manager="br.hering.checkout.jalo.HeringcheckoutaddonManager"
             packageroot="br.hering.checkout" />
     </extension>

@@ -547,11 +547,10 @@
 		<property name="flexibleSearchService" ref="flexibleSearchService"/>
 	</bean>
 
-	<alias name="heringCartValidationStrategy" alias="cartValidationStrategy"/>
-	<bean id="heringCartValidationStrategy"
-			class="br.hering.core.strategies.impl.HeringCartValidationStrategy"
-			parent="defaultCartValidationStrategy"
-			/>
+	<alias name="fliegerCommerceCartValidationStrategy" alias="cartValidationStrategy"/>
+	<bean id="fliegerCommerceCartValidationStrategy" parent="defaultCartValidationStrategy" class="br.hering.core.strategies.impl.FliegerCommerceCartValidationStrategy">
+		<property name="featureSplitShippingAllowedStrategy" ref="featureSplitShippingAllowedStrategy" />
+	</bean>		
 
 	<bean id="heringCustomerAccountService" class="br.hering.core.customer.impl.DefaultHeringCustomerAccountService"
 		parent="defaultCustomerAccountService"/>
@@ -850,5 +849,28 @@
 		<property name="customerConverter" ref="customerConverter"/>
 		<property name="subscriptionTypeModelToDataConverter" ref="subscriptionTypeModelToDataConverter"/>
 	</bean>
+
+	<alias name="defaultFeatureSplitShippingAllowedStrategy" alias="featureSplitShippingAllowedStrategy"/>
+	<bean id="defaultFeatureSplitShippingAllowedStrategy" class="br.hering.core.strategies.impl.DefaultFeatureSplitShippingAllowedStrategy">
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="shippingEstimatesStrategy" ref="shippingEstimatesStrategy"/>
+	</bean>
+	
+	<alias name="defaultShippingEstimatesStrategy" alias="shippingEstimatesStrategy"/>
+	<bean id="defaultShippingEstimatesStrategy" class="br.hering.core.strategies.impl.DefaultShippingEstimatesStrategy"/>
+	
+	<alias name="fliegerCommerceOrderSplittingService" alias="orderSplittingService"/>
+	<bean id="fliegerCommerceOrderSplittingService" parent="defaultOrderSplittingService">
+		<property name="strategiesList">
+			<list merge="false">
+				<ref bean="splitByNamedDeliveryDate" />
+			</list>
+		</property>
+	</bean>
+	
+    <alias name="fliegerCommerceFindDeliveryCostStrategy" alias="core.deliverycostsstrategy.default"/>
+	<alias name="fliegerCommerceFindDeliveryCostStrategy" alias="findDeliveryCostStrategy" />
+    <bean id="fliegerCommerceFindDeliveryCostStrategy" parent="defaultFindDeliveryCostStrategy"
+    	class="br.hering.core.order.impl.FliegerCommerceFindDeliveryCostStrategy"/>
 
 </beans>

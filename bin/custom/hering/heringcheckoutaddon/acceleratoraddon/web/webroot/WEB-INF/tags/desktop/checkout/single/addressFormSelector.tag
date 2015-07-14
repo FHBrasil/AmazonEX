@@ -48,7 +48,11 @@
                     	<spring:theme code="checkout.single.address.phone"/>
                     	<span class="e-phone">:&nbsp;${customer.defaultPhoneNumber}</span><br />
                     </c:if>
-                    <spring:theme code="checkout.single.address.email"/><span class="e-email">:&nbsp;${customer.uid}</span><br />                  	
+                    <spring:theme code="checkout.single.address.email"/>
+                    <span class="e-email">:&nbsp;
+                    	${guestEmail == null ? customer.uid : guestEmail}
+                   	</span>
+                   	<br />                  	
                         
                     <%-- 
                     <div class="btn-group">

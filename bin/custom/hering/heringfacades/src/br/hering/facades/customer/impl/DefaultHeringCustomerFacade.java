@@ -389,6 +389,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		newAddress.setTown(guestData.getCity());
 		newAddress.setCountry(i18NFacade.getCountryForIsocode(guestData.getCountry()));
 		newAddress.setPhone(guestData.getPhone());
+		newAddress.setReceiver(guestData.getReceiver());
 		newAddress.setDefaultAddress(true);
 		newAddress.setBillingAddress(true);
 		newAddress.setShippingAddress(true);
@@ -417,6 +418,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 
 		getCustomerAccountService().registerGuestForAnonymousCheckout(guestCustomer, guid);
 		updateCartWithGuestForAnonymousCheckout(getCustomerConverter().convert(guestCustomer));
+		
 		
 	}
 

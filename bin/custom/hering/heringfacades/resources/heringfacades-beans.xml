@@ -92,6 +92,7 @@
 		<property name="paymentMode" type="br.hering.facades.order.data.PaymentModeData" />
 		<property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData" />
 		<property name="estimatedDeliveryDays" type="java.lang.Integer" />
+		<property name="splitDeliveryEnabled" type="boolean" />
 	</bean>
 	
 	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData" extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
@@ -258,5 +259,21 @@
     	<property name="country" 	type="java.lang.String" />
     	<property name="phone" 		type="java.lang.String" />
     	<property name="email" 		type="java.lang.String" />
+    	<property name="receiver"  	type="java.lang.String" />
     </bean>
+    
+    <bean class="de.hybris.platform.commercefacades.order.data.OrderEntryData">
+    	<property name="namedDeliveryDate" type="java.util.Date" />
+    </bean>
+    
+    <bean class="com.flieger.facades.order.data.SplitDeliveryOrderEntryGroupData" 
+			extends="de.hybris.platform.acceleratorfacades.order.data.DeliveryOrderEntryGroupData">
+		<property name="namedDeliveryDate" type="java.util.Date" />
+	</bean>
+	
+	<bean class="com.flieger.facades.order.data.ImmediateDeliveryOrderEntryGroupData"
+		extends="com.flieger.facades.order.data.SplitDeliveryOrderEntryGroupData"/>
+	
+	<bean class="com.flieger.facades.order.data.LateDeliveryOrderEntryGroupData"
+		extends="com.flieger.facades.order.data.SplitDeliveryOrderEntryGroupData"/>
 </beans> 
