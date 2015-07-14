@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Weiter shoppen</button>
-                <a href="/cart" class="btn btn-primary">Zum Warenkorb</a>
+                <a href="/de/cart" class="btn btn-primary">Zum Warenkorb</a>
             </div>
         </div>
     </div>
