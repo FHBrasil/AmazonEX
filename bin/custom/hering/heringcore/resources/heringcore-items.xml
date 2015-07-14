@@ -88,6 +88,9 @@
                     <attribute type="java.lang.String" qualifier="linxSiteCode">
                         <persistence type="property" />
                     </attribute>
+                    <attribute type="boolean" qualifier="splitOrderEntriesByDeliveryEnabled">
+                        <persistence type="property" />
+                    </attribute>
                 </attributes>
             </itemtype>
 
@@ -321,6 +324,9 @@
                 <attributes>
                     <attribute qualifier="estimatedDeliveryDays" type="int">
                         <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="splitDeliveryEnabled" type="boolean">
+                    	 <persistence type="property" />
                     </attribute>
                 </attributes>
             </itemtype>

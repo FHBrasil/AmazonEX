@@ -36,7 +36,11 @@ INSERT_UPDATE BaseStore2WarehouseRel;source(uid)[unique=true];target(code)[uniqu
 
 INSERT_UPDATE StandardPaymentMode;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];active;paymentinfotype(code)
 ;CreditCard;"Kreditkarte";"creditcard";"Nach dem Absenden Ihrer Bestellung werden Ihre Kartendaten abgefragt. Nach erfolgreicher Prüfung erhalten Sie eine E-Mail mit Ihrer Bestellbestätigung.";"payment with creditcard";true;CreditCardPaymentInfo
-;Advance;"Vorauskasse";"Prepaid / Debit";"Mit Ihrer Bestellbestätigung senden wir Ihnen per Mail unsere Bankverbindung sowie den Verwendungszweck für Ihre Überweisung. Nach Eingang Ihrer Zahlung wird Ihre Bestellung verschickt.";"payment in advance";true;AdvancePaymentInfo
+;Advance;"Vorauskasse";"Prepaid / Debit";"Mit Ihrer Bestellbestätigung senden wir Ihnen per Mail unsere Bankverbindung sowie den Verwendungszweck für Ihre überweisung. Nach Eingang Ihrer Zahlung wird Ihre Bestellung verschickt.";"payment in advance";true;AdvancePaymentInfo
+
+INSERT_UPDATE StandardPaymentModeValue;paymentmode(code)[unique=true];currency(isoCode)[unique=true];value;;;;
+;CreditCard;EUR;0;;;;
+;Advance;EUR;0;;;;
 
 UPDATE DeliveryMode;code[unique=true];supportedpaymentmodes(code);
 ;dhl;CreditCard,Advance;
