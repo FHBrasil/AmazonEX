@@ -163,7 +163,7 @@
 					<div class="form-group">
 						<div class="col-xs-12">
 							<div class="checkbox">
-								<label><input type="checkbox"> Angebotsnewsletter (wöchentlich)<br><small>Kein Angebot mehr verpassen. Wir senden dir einmal wöchentlich die besten Schnäppchen.</small></label>
+								<label><input type="checkbox" name="scheduledNewsletterEnabled"> Angebotsnewsletter (wöchentlich)<br><small>Kein Angebot mehr verpassen. Wir senden dir einmal wöchentlich die besten Schnäppchen.</small></label>
 							</div>
 						</div>
 					</div>
@@ -171,7 +171,7 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox"  name="tipsNewsletter"> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
+									<label><input type="checkbox"  name="tipsNewsletterEnabled"> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
 									<div class="form-group col-sm-6">
 										<label for="birthday" class="control-label"><small>Entbindungstermin / Geburtstag</small></label>
 										<div class="input-group input-append date" id="birthday" data-date="01.01.2015" data-date-format="dd.mm.yyyy" style="padding-left:20px;">

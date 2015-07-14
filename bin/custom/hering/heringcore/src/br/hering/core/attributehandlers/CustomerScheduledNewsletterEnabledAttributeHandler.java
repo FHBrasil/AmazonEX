@@ -3,32 +3,24 @@ package br.hering.core.attributehandlers;
 import java.util.Collection;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-
-//import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
-//import com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData;
 import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
-//import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 import com.fliegersoftware.newslettersubscription.services.NewsletterSubscriptionService;
 
-import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.TitleModel;
-import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.services.BaseStoreService;
 
-public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel>{
 
-	
-	//private NewsletterSubscriptionFacade newsletterSubscriptionFacade;
+public class CustomerScheduledNewsletterEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel> {
+
 	
 	private NewsletterSubscriptionService newsletterSubscriptionService;
 	
@@ -38,16 +30,10 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 
 	private CustomerNameStrategy customerNameStrategy;
 
-	//private Converter<CustomerModel, CustomerData> customerConverter;
-	
-	//private Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter;
-	
-	private static final Logger LOG = Logger.getLogger(CustomerTipsNewsletterEnabledAttributeHandler.class);
-
 	
 	@Override
 	public Boolean get(CustomerModel customerModel) {
-
+		
 		Collection<NewsletterSubscriptionModel> customerSubscriptions = customerModel.getNewsletterSubscriptions();
 		
 		if (CollectionUtils.isNotEmpty(customerSubscriptions))				
@@ -55,7 +41,7 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 			for (NewsletterSubscriptionModel subscription : customerSubscriptions)
 			{
 				SubscriptionType type = subscription.getSubscriptionType();
-				if (type == SubscriptionType.TIPS_NEWSLETTER)
+				if (type == SubscriptionType.SCHEDULED_NEWSLETTER)
 				{
 					return true;
 				}
@@ -63,30 +49,13 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		}
 
 		return false;
-
+		
 	}
 
 	@Override
-	public void set(CustomerModel customerModel, Boolean tipsNewsletterEnabled) {
-				
-		
-		final SubscriptionType subscriptionType = SubscriptionType.TIPS_NEWSLETTER;			
-		//SubscriptionTypeData subscriptionTypeData = new SubscriptionTypeData();
-		//getSubscriptionTypeModelToDataConverter().convert(subscriptionType, subscriptionTypeData);
-		
-		//CustomerData customerData = new CustomerData();
-		//getCustomerConverter().convert(customerModel, customerData);
-		
-		//NewsletterSubscriptionData subscription = new NewsletterSubscriptionData();
-		//subscription.setFirstName(customerData.getFirstName());
-		//subscription.setLastName(customerData.getLastName());
-		//subscription.setEmail(customerData.getUid());
-		//subscription.setGenderCode(customerData.getGender().getCode());
-		//subscription.setTitleCode("Mr");
-		//subscription.setCustomer(customerData);
-		//subscription.setLanguageIsoCode(customerData.getLanguage().getIsocode());
-		//subscription.setStoreCode(getNewsletterSubscriptionFacade().getCurrentBaseStoreCode());
-		//subscription.setSubscriptionType(subscriptionTypeData);
+	public void set(CustomerModel customerModel, Boolean scheduledNewsletterEnabled) {
+
+		final SubscriptionType subscriptionType = SubscriptionType.SCHEDULED_NEWSLETTER;
 		
 		NewsletterSubscriptionModel subscription = new NewsletterSubscriptionModel();
 		
@@ -98,13 +67,13 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		subscription.setGender(customerModel.getGender());
 		//TitleModel title = getUserService().getTitleForCode("mr");
 		//subscription.setTitle(title);
-		subscription.setLanguage(customerModel.getSessionLanguage());		
+		subscription.setLanguage(customerModel.getSessionLanguage());
 		subscription.setStore(getBaseStoreService().getCurrentBaseStore());		
 		subscription.setSubscriptionType(subscriptionType);
 		subscription.setCustomer(customerModel);
 		
 								
-		if (tipsNewsletterEnabled)
+		if (scheduledNewsletterEnabled)
 		{	
 			try 
 			{
@@ -127,8 +96,8 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 			}
 		}
 		
-		
 	}
+	
 	
 	public BaseStoreService getBaseStoreService() {
 		return baseStoreService;
@@ -147,7 +116,7 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 	public void setCustomerNameStrategy(CustomerNameStrategy customerNameStrategy) {
 		this.customerNameStrategy = customerNameStrategy;
 	}
-
+	
 	public UserService getUserService() {
 		return userService;
 	}
@@ -156,34 +125,6 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
-/*	public Converter<SubscriptionType, SubscriptionTypeData> getSubscriptionTypeModelToDataConverter() {
-		return subscriptionTypeModelToDataConverter;
-	}
-
-	@Required
-	public void setSubscriptionTypeModelToDataConverter(
-			Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter) {
-		this.subscriptionTypeModelToDataConverter = subscriptionTypeModelToDataConverter;
-	}
-
-	public Converter<CustomerModel, CustomerData> getCustomerConverter() {
-		return customerConverter;
-	}
-
-	@Required
-	public void setCustomerConverter(Converter<CustomerModel, CustomerData> customerConverter) {
-		this.customerConverter = customerConverter;
-	}
-
-	public NewsletterSubscriptionFacade getNewsletterSubscriptionFacade() {
-		return newsletterSubscriptionFacade;
-	}
-
-	@Required
-	public void setNewsletterSubscriptionFacade(NewsletterSubscriptionFacade newsletterSubscriptionFacade) {
-		this.newsletterSubscriptionFacade = newsletterSubscriptionFacade;
-	}*/
 	
 	public NewsletterSubscriptionService getNewsletterSubscriptionService() {
 		return newsletterSubscriptionService;
@@ -194,5 +135,5 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		this.newsletterSubscriptionService = newsletterSubscriptionService;
 	}
 
-
+	
 }

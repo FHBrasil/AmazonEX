@@ -331,7 +331,11 @@
 					<attribute qualifier="tipsNewsletterEnabled" type="boolean" >
       					<persistence type="dynamic" attributeHandler="customerTipsNewsletterEnabledAttributeHandler" />
       					<modifiers read="true" write="true" />
-					</attribute>                                    
+					</attribute>        
+					<attribute qualifier="scheduledNewsletterEnabled" type="boolean" >
+      					<persistence type="dynamic" attributeHandler="customerScheduledNewsletterEnabledAttributeHandler" />
+      					<modifiers read="true" write="true" />
+					</attribute>                      
                 </attributes>
             </itemtype>
             

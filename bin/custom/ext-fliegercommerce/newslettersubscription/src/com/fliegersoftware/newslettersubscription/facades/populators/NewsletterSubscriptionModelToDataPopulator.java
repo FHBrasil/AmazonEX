@@ -3,12 +3,14 @@
  */
 package com.fliegersoftware.newslettersubscription.facades.populators;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData;
 import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
+import com.fliegersoftware.newslettersubscription.services.impl.DefaultNewsletterSubscriptionService;
 
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
@@ -20,6 +22,8 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
  */
 public class NewsletterSubscriptionModelToDataPopulator implements Populator<NewsletterSubscriptionModel, NewsletterSubscriptionData>
 {
+
+	private static final Logger LOG = Logger.getLogger(NewsletterSubscriptionModelToDataPopulator.class);
 
 	private Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter;
 	
@@ -37,8 +41,11 @@ public class NewsletterSubscriptionModelToDataPopulator implements Populator<New
 			target.setGenderCode(genderCode);
 		}		
 		
-		final String titleCode = source.getTitle().getCode();
-		if (titleCode != null)
+		final String titleCode = source.getTitle().getCode(); 
+		LOG.info("TITLE = " + source.getTitle());
+		LOG.info("TITLECODE = " + source.getTitle().getCode());
+		
+		if (titleCode != null && !titleCode.isEmpty())
 		{
 			target.setTitleCode(titleCode);
 		}

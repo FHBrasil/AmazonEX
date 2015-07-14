@@ -770,7 +770,7 @@ public class AccountPageController extends AbstractSearchPageController {
 	 */
 	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
 	@RequireHardLogIn
-	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter, 
+	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletterEnabled, 
 			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth) 
 			throws CMSItemNotFoundException {
 		
@@ -778,20 +778,27 @@ public class AccountPageController extends AbstractSearchPageController {
 		
 		if (customerData != null)
 		{
+			
+			//heringCustomerFacade.subscribeScheduledNewsletter(scheduledNewsletter);
+					
 			//tips newsletter
 			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
 			try 
 			{
 				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
-				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletter, dateOfBirth);
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);
 
 			} 
 			catch (ParseException e) 
 			{
 				//e.printStackTrace();
 			}
+			
+			
+			
 		}
 
+		
 
 		return REDIRECT_MY_ACCOUNT;
 

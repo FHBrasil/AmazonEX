@@ -13,7 +13,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/exacttarget"/>
 	<classpathentry kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/notificationservices"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/newslettersubscription"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

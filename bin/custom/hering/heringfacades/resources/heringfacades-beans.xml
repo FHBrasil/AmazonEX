@@ -106,6 +106,7 @@
 		<property name="defaultPhoneNumber" type="java.lang.String" />
 		<property name="youngestChildDateOfBirth" type="java.lang.String" />
 		<property name="tipsNewsletterEnabled" type="boolean" />
+		<property name="scheduledNewsletterEnabled" type="boolean" />
 	</bean>
         
     <bean class="de.hybris.platform.commercefacades.user.data.RegisterData">
