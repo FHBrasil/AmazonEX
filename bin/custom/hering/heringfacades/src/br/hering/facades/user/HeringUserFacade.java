@@ -4,6 +4,8 @@
 package br.hering.facades.user;
 
 
+import java.util.List;
+
 import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
 import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
@@ -18,6 +20,7 @@ public interface HeringUserFacade extends UserFacade {
 	String getCpfCnpjIfExiss();
 	void registerCustomerPaymentInfo(CCPaymentInfoData paymentInfoData);
 	void setDefaultPaymentInfo(final PaymentInfoData paymentInfoData);
+	List<AddressData> getAddressBookUser();
 	
 	@Override
 	void removeAddress(final AddressData addressData);

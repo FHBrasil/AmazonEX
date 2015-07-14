@@ -258,6 +258,7 @@
     	<property name="country" 	type="java.lang.String" />
     	<property name="phone" 		type="java.lang.String" />
     	<property name="email" 		type="java.lang.String" />
+    	<property name="receiver"  	type="java.lang.String" />
     </bean>
     
     <bean class="de.hybris.platform.commercefacades.order.data.OrderEntryData">
