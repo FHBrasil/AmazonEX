@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.hering.core.customer.exceptions.CustomerAuthenticationException;
@@ -180,6 +181,7 @@ public class CheckoutController extends AbstractCheckoutController
 				LOG.error("Login Error", e);
 			}
 			getSessionService().removeAttribute(WebConstants.ANONYMOUS_CHECKOUT);
+			model.addAttribute("accountCreatedSucess", Boolean.TRUE);
 		}
 		catch (final DuplicateUidException e)
 		{
@@ -229,7 +231,7 @@ public class CheckoutController extends AbstractCheckoutController
 			final GuestRegisterForm guestRegisterForm = new GuestRegisterForm();
 			guestRegisterForm.setOrderCode(orderDetails.getGuid());
 			guestRegisterForm.setUid(uid);
-			model.addAttribute(guestRegisterForm);
+			model.addAttribute("guestRegisterForm", guestRegisterForm);
 		}
 
 		final AbstractPageModel cmsPage = getContentPageForLabelOrId(CHECKOUT_ORDER_CONFIRMATION_CMS_PAGE_LABEL);
