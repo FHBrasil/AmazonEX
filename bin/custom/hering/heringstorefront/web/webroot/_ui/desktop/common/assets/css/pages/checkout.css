@@ -66,6 +66,12 @@ form.addEditDeliveryAddressForm .btn-voucher {
 	margin-top: 10px;
 }
 
+.panel-secure150203 {margin-bottom:0;background-image:url('/_ui/desktop/theme-babyartikel/assets/images/ssl.png');background-repeat:no-repeat;background-position: bottom 15px right 15px;background-color:#EEE;}
+.fox150706 {background-image:url('/_ui/desktop/theme-babyartikel/assets/images/sparfuchs24.gif');background-repeat:no-repeat;padding-left:25px;background-position:left center;}
+.trust150706 {display:block;background-image: url("https://www.trustedshops.com/certificate/images/logo/trustedshops_de-DE.jpg");padding-top:70px;background-repeat:no-repeat;background-position:left top;background-size:auto 50%}
+	
+.social150121.becomesocial a {color:white;background-color:#3e3e3e;}
+
 body { color: #000; }
 
 #main-wrapper .btn-editar,

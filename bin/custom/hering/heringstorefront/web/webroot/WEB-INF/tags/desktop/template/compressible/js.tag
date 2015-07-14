@@ -10,6 +10,7 @@
 <%-- LIBRARIES FILES --%>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${themeResourcePath}/assets/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/bootstrap-slider.min.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.mobile.custom.min.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/jquery.bxslider.js"></script>
@@ -17,6 +18,7 @@
 <script type="text/javascript" src="${themeResourcePath}/assets/js/trustedshops.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/fancybox/helpers/jquery.fancybox-media.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery-ui-1.9.2.custom.min.js"></script>
+<%-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/waypoints.min.1.1.5.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/ba.product.js"></script>
@@ -92,8 +94,7 @@
 <c:if test="${pageType == 'ORDERCONFIRMATION'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/singleStepCheckout.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.silentorderpost.js"></script>
-    <script type="text/javascript"
-        src="${themeResourcePath}/assets/js/pages/acc.updatebillingaddress.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.updatebillingaddress.js"></script>
     <script src="//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script>
 </c:if>
 <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">

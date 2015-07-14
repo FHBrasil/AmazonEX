@@ -16,19 +16,20 @@
 <template:errorSpanField path="${path}" errorPath="${errorPath}">
     <ycommerce:testId code="LoginPage_Item_${idKey}">
         <%-- placeholder nao e obrigatorio. caso seja passado esta label nao ira aparecer--%>
-        <c:if test="${empty placeholder}">
-            <label for="${idKey}"> <spring:theme code="${labelKey}" /> <c:if
-                    test="${mandatory != null && mandatory == true}">
+        <c:if test="${empty placeholder || not empty labelKey}">
+            <label for="${idKey}"> <spring:theme code="${labelKey}" />
+            	<%-- 
+            	<c:if test="${mandatory != null && mandatory == true}">
                     <span class="mandatory"> *: </span>
-                </c:if>
+                </c:if> --%>
             </label>
         </c:if>
         <c:if test="${empty placeholder}">
-            <form:password cssClass="${inputCSS} ${mandatory ? 'required' : ''}" id="${idKey}"
+            <form:password cssClass="${inputCSS}" required="${mandatory ? 'required' : ''}" id="${idKey}"
                 path="${path}" />
         </c:if>
         <c:if test="${not empty placeholder}">
-            <form:password cssClass="${inputCSS} ${mandatory ? 'required' : ''}" id="${idKey}"
+            <form:password cssClass="${inputCSS}" required="${mandatory ? 'required' : ''}" id="${idKey}"
                 placeholder="${placeholder}" path="${path}" />
         </c:if>
         <!-- <c:if test="${!hideInputErrorOnField}">
