@@ -203,6 +203,8 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         final HeringPaymentDetailsForm paymentDetailsForm = getPreparedHeringPaymentDetailsForm();
         final HeringAddressForm heringAddressForm = getPreparedAddressForm();
         final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
+        final CustomerModel customerModel = getCheckoutFacade().getCurrentUserForCheckout();
+        
         if(cartData.getBillingAddress() == null)
         {
         	storeBillingAddressIntoCart(cartData);
@@ -211,6 +213,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         {
         	selectedBillingAddress = cartData.getBillingAddress();
         }
+        model.addAttribute("guestEmail", customerModel.getContactEmail());
         model.addAttribute("cartData", cartData);
         createProductList(model);
         model.addAttribute("paymentDetailsForm", paymentDetailsForm);
