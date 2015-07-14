@@ -155,4 +155,21 @@ implements HeringUserFacade {
 			getCustomerAccountService().clearDefaultAddressEntry(currentCustomer);
 		}
 	}
+	
+	@Override
+	public List<AddressData> getAddressBookUser()
+	{
+		final List<AddressModel> addresses = getCustomerAccountService().getAddressBookEntries(getCurrentUserForCheckout());
+		if (addresses != null && !addresses.isEmpty())
+		{
+			final List<AddressData> result = new ArrayList<AddressData>();
+			for (final AddressModel address : addresses)
+			{
+				final AddressData addressData = getAddressConverter().convert(address);
+				result.add(addressData);
+			}
+			return result;
+		}
+		return new ArrayList<AddressData>();
+	}
 }
