@@ -90,6 +90,9 @@
         <extension name="pixiapi" />
         <extension name="newslettersubscription" />
         <extension name="newsletteraddon" />
+        <extension name="bonussystem"/>
+        <extension name="bonussystemaddon"/>
+        <extension name="bonussystemhmc"/>
 
     </extensions>
 </hybrisconfig>

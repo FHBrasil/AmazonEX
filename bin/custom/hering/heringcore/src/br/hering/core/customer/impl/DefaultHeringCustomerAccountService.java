@@ -132,4 +132,21 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	}
 	
 	
+	public CustomerModel subscribeTipsNewsletter(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth)
+	{
+		
+		customerModel.setYoungestChildDateOfBirth(dateOfBirth);
+		
+		customerModel.setTipsNewsletterEnabled(tipsNewsletter);
+		
+		LOG.info("TIPS: " + customerModel.isTipsNewsletterEnabled());
+		
+		modelService.save(customerModel);
+		modelService.refresh(customerModel);
+
+		return customerModel;
+		
+	}
+	
+	
 }

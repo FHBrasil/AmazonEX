@@ -41,6 +41,8 @@ import br.hering.facades.voucher.HeringVoucherFacade;
 import br.hering.heringstorefrontcommons.forms.HeringAddressForm;
 import br.hering.heringstorefrontcommons.forms.HeringPaymentDetailsForm;
 
+import com.flieger.bonussystem.data.BonusSystemData;
+import com.flieger.bonussystem.facade.BonusSystemFacade;
 import com.flieger.payment.data.AdvancePaymentInfoData;
 import com.flieger.payment.data.BoletoPaymentInfoData;
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
@@ -66,9 +68,11 @@ import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.voucher.data.VoucherData;
 import de.hybris.platform.commercefacades.voucher.exceptions.VoucherOperationException;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
+import de.hybris.platform.commerceservices.order.CommerceCartService;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.InvalidCartException;
+import de.hybris.platform.order.exceptions.CalculationException;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.servicelayer.i18n.I18NService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
@@ -105,6 +109,10 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
     private PaypalPaymentRequestController paypalPaymentRequestController;
     @Resource
     private PayPalCheckoutFacade paypalCheckoutFacade;
+    @Resource
+    private BonusSystemFacade bonusSystemFacade;
+    @Resource
+    private CommerceCartService commerceCartService;
     
     
     /**
@@ -239,6 +247,8 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         model.addAttribute("placeOrderForm", new PlaceOrderForm());
         model.addAttribute("metaRobots", "no-index,no-follow");
         model.addAttribute("pageType", HeringPageType.SINGLESTEPCHECKOUT.name());
+		model.addAttribute("availableBonusPoints", getAvailableBonusPoints());
+		model.addAttribute("usedBonusPoints", getUsedBonusPoints());
         this.prepareDataForPage(model);
         storeCmsPageInModel(model, getContentPageForLabelOrId(MULTI_CHECKOUT_SUMMARY_CMS_PAGE_LABEL));
         setUpMetaDataForContentPage(model,
@@ -637,9 +647,47 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         // getPreparedHeringPaymentDetailsForm();
         // model.addAttribute("paymentDetailsForm", paymentDetailsForm);
         model.addAttribute("instalments", getOrderInstalments());
+		model.addAttribute("usedBonusPoints", getUsedBonusPoints());
         return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments.CheckoutOrderDetails;
     }
     
+	@RequestMapping(value = "/apply-bp/{points:.*}", method = RequestMethod.POST,
+			produces = "application/json")
+	public String applyBonusPointsDiscount(Model model, 
+			@PathVariable("points") final Double points)
+					throws Exception 
+	{
+		bonusSystemFacade.clearCartDiscount();
+		if (points == null || points.doubleValue() <= 0) {
+			model.addAttribute("success", Boolean.TRUE.toString());
+			model.addAttribute("successMessage", "Removido desconto de pontos com sucesso.");
+		} else {
+			try
+			{
+				bonusSystemFacade.generateCartDiscount(points.doubleValue());
+				model.addAttribute("success", Boolean.TRUE.toString());
+				model.addAttribute("successMessage", "Desconto de pontos aplicado com sucesso.");
+			}
+			catch (CalculationException e)
+			{
+				model.addAttribute("success", Boolean.FALSE.toString());
+				model.addAttribute("successMessage", "Erro ao aplicar desconto de pontos.");
+			}
+		}
+		commerceCartService.recalculateCart(cartService.getSessionCart());
+
+		CartData cartData = getCheckoutFacade().getCheckoutCart();
+		model.addAttribute("cartData", cartData);
+		model.addAttribute("deliveryMethods", getDeliveryModes());
+		model.addAttribute("selectedDeliveryAddress", cartData.getDeliveryAddress());
+		model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
+		model.addAttribute("isVoucherAmountEqualsOrderAmount", cartData.getTotalPrice().getValue().compareTo(new BigDecimal(0.0)) == 0);
+		model.addAttribute("command", "applyBonusPoints");
+		model.addAttribute("instalments", getOrderInstalments());
+		model.addAttribute("usedBonusPoints", getUsedBonusPoints());
+
+		return HeringcheckoutaddonControllerConstants.Views.Pages.SingleStepCheckout.Fragments.CheckoutOrderDetails;
+	}
     
     /**
      * @param model
@@ -1530,6 +1578,14 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         return deliveryModes;
     }
     
+	private Double getAvailableBonusPoints() {
+		BonusSystemData bonusSystem = bonusSystemFacade.getCurrentUserBonusSystem();
+		return Double.valueOf(bonusSystem != null ? bonusSystem.getPoints() : 0);
+	}
+
+	private Double getUsedBonusPoints() {
+		return bonusSystemFacade.getCartUsedPoints();
+	}
     
     public PaypalPaymentRequestController getPaypalPaymentRequestController() {
         return paypalPaymentRequestController;

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import br.hering.facades.wishlist.impl.DefaultHeringWishlistFacade;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.ResourceBreadcrumbBuilder;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.controllers.pages.AbstractSearchPageController;
 import de.hybris.platform.acceleratorservices.customer.CustomerLocationService;
@@ -38,6 +39,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 /**
@@ -81,7 +83,7 @@ public class WishListController extends AbstractSearchPageController
 	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/addToWishlist", method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String addToWishlist(@PathVariable("productCode") final String code, final HttpServletRequest request,
-			final HttpServletResponse response) throws UnsupportedEncodingException
+			final HttpServletResponse response, final RedirectAttributes redirectModel) throws UnsupportedEncodingException
 	{
 
 
@@ -99,26 +101,60 @@ public class WishListController extends AbstractSearchPageController
 		final ProductModel productModel = productService.getProductForCode(code);
 		final String redirection = checkRequestUrl(request, response, productModelUrlResolver.resolve(productModel));
 
+		GlobalMessages.addFlashMessage(redirectModel
+				, GlobalMessages.INFO_MESSAGES_HOLDER, "wishlist.message.added");
+
 		return redirection;
 
 	}
 
+	// remove a partir da página de produto
+	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/removeProduct", method = RequestMethod.GET)
+	public String removeWishlistEntry(@PathVariable("productCode") final String code, final HttpServletRequest request,
+			final HttpServletResponse response, final RedirectAttributes redirectModel) throws UnsupportedEncodingException
+	{
+		doRemove(code, redirectModel);
+		
+		final ProductModel productModel = productService.getProductForCode(code);
+		final String redirection = checkRequestUrl(request, response, productModelUrlResolver.resolve(productModel));
+		
+		return redirection;
+	}
+
+	@RequestMapping(value= PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/addToCart", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String addToCart(@PathVariable("productCode") final String code) throws UnsupportedEncodingException
+	{
+		if(heringWishlistFacade.hasWishlisEntryForProduct(code)) {
+			heringWishlistFacade.addToCart(code);
+		}
+
+		return REDIRECT_MY_ACCOUNT + "/my-wishlist";
+	}
+
+	// remove a partir da my-wishlist
 	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/remove", method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String removeToWishlist(@PathVariable("productCode") final String code,
 			@RequestParam(value = "page", defaultValue = "0") final int page,
 			@RequestParam(value = "show", defaultValue = "Page") final AbstractSearchPageController.ShowMode showMode,
-			@RequestParam(value = "sort", required = false) final String sortCode, final Model model)
+			@RequestParam(value = "sort", required = false) final String sortCode
+			, final RedirectAttributes redirectModel)
 			throws UnsupportedEncodingException, CMSItemNotFoundException
 	{
+		doRemove(code, redirectModel);
 
+		return REDIRECT_MY_ACCOUNT + "/my-wishlist";
+	}
+
+	private void doRemove(String code, RedirectAttributes redirectModel) {
 		if (heringWishlistFacade.hasWishlisEntryForProduct(code))
 		{
 			heringWishlistFacade.removeWishlistEntryForProduct(code);
 		}
 
-		return REDIRECT_MY_ACCOUNT + "/my-wishlist";
-
+		GlobalMessages.addFlashMessage(redirectModel
+				, GlobalMessages.INFO_MESSAGES_HOLDER, "wishlist.message.removed");
 	}
 
 	@RequestMapping(value = WISHLISTPK_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)

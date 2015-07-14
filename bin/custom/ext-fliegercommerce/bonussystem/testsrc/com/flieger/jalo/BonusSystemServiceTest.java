@@ -5,12 +5,11 @@ package com.flieger.jalo;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
 import de.hybris.platform.catalog.CatalogVersionService;
+import de.hybris.platform.catalog.model.CatalogVersionModel;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.commerceservices.order.CommerceCartService;
 import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.core.model.order.price.DiscountModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.jalo.CoreBasicDataCreator;
@@ -35,7 +34,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.flieger.model.user.BonusSystemLogModel;
+import com.flieger.model.user.BonusSystemConfigModel;
+import com.flieger.model.user.BonusSystemDiscountModel;
+import com.flieger.model.user.BonusSystemEntryModel;
 import com.flieger.model.user.BonusSystemModel;
 import com.flieger.services.BonusSystemService;
 
@@ -64,6 +65,8 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 	private CustomerModel registeredCustomer;
 
 	private CustomerModel anonymousCustomer;
+	
+	private BonusSystemConfigModel bsConfiguration;
 
 	@Resource
 	private ProductService productService;
@@ -83,7 +86,6 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 	public void setUp() throws Exception
 	{
 		createCoreData();
-		//		createHardwareCatalog();
 		createDefaultUsers();
 
 		userService.setCurrentUser(userService.getAdminUser());
@@ -95,6 +97,9 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 		registeredCustomer = (CustomerModel) userService.getUserForUID("demo");
 
 		anonymousCustomer = userService.getAnonymousUser();
+		
+		bsConfiguration = modelService.create(BonusSystemConfigModel.class);
+		modelService.save(bsConfiguration);
 	}
 
 	@Test
@@ -102,7 +107,7 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 	{
 		assertTrue("BS should be null", registeredCustomer.getBonusSystem() == null);
 
-		bonusSystemService.createBonusSystem(registeredCustomer);
+		bonusSystemService.createBonusSystem(registeredCustomer, bsConfiguration);
 
 		assertTrue("BS should exist", registeredCustomer.getBonusSystem() != null);
 	}
@@ -112,7 +117,7 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 	{
 		assertTrue("BS should be null", anonymousCustomer.getBonusSystem() == null);
 
-		bonusSystemService.createBonusSystem(anonymousCustomer);
+		bonusSystemService.createBonusSystem(anonymousCustomer, bsConfiguration);
 	}
 
 	@Test
@@ -120,69 +125,69 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 	{
 		testCreateBonusSystem();
 
-		bonusSystemService.removeBonusSystem(registeredCustomer);
+		bonusSystemService.removeBonusSystem(registeredCustomer.getBonusSystem());
 
 		assertTrue("BS should be null", registeredCustomer.getBonusSystem() == null);
 	}
 
-	@Test(expected = SystemException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testDeleteInexistentBonusSystem()
 	{
 		assertTrue("BS should be null", registeredCustomer.getBonusSystem() == null);
 
-		bonusSystemService.removeBonusSystem(registeredCustomer);
+		bonusSystemService.removeBonusSystem(registeredCustomer.getBonusSystem());
 	}
 
 	@Test
-	public void testCreateBonusSystemLog()
+	public void testCreateBonusSystemEntry()
 	{
 		testCreateBonusSystem();
 
 		final BonusSystemModel bonusSystem = registeredCustomer.getBonusSystem();
 
-		assertTrue("BS should be empty", CollectionUtils.isEmpty(bonusSystem.getLog()));
+		assertTrue("BS should be empty", CollectionUtils.isEmpty(bonusSystem.getLogEntries()));
 
 		final double points = 500;
 
-		final BonusSystemLogModel bsLog = modelService.create(BonusSystemLogModel.class);
-		bsLog.setDate(new Date());
-		bsLog.setDescription("description test");
-		bsLog.setPoints(points);
-		bsLog.setReference("reference bla bla bla");
-		bsLog.setType("registration");
+		final BonusSystemEntryModel bsEntry = modelService.create(BonusSystemEntryModel.class);
+		bsEntry.setDate(new Date());
+		bsEntry.setDescription("description test");
+		bsEntry.setPoints(points);
+		bsEntry.setType("registration");
 
-		bonusSystemService.addBonusSystemLog(bonusSystem, bsLog);
+		bonusSystemService.addBonusSystemEntry(bonusSystem, bsEntry);
 
-		assertTrue("BS should not be empty", CollectionUtils.isNotEmpty(bonusSystem.getLog()));
-		assertEquals("BS Points Should be " + points, bonusSystem.getPoints(), points);
+		assertTrue("BS should not be empty", CollectionUtils.isNotEmpty(bonusSystem.getLogEntries()));
+		assertEquals("BS Points Should be " + points, bonusSystem.getAvailablePoints(), points);
 	}
 
 	@Test
-	public void testDeleteBonusSystemLog()
+	public void testDeleteBonusSystemEntry()
 	{
-		testCreateBonusSystemLog();
+		testCreateBonusSystemEntry();
 
 		final BonusSystemModel bonusSystem = registeredCustomer.getBonusSystem();
 
-		assertTrue("BS should not be empty", CollectionUtils.isNotEmpty(bonusSystem.getLog()));
+		assertTrue("BS should not be empty", CollectionUtils.isNotEmpty(bonusSystem.getLogEntries()));
 
-		final BonusSystemLogModel bsLog = bonusSystem.getLog().get(0);
+		final BonusSystemEntryModel bsLog = bonusSystem.getLogEntries().get(0);
 
-		bonusSystemService.removeBonusSystemLog(bonusSystem, bsLog);
+		bonusSystemService.removeBonusSystemEntry(bonusSystem, bsLog);
 
-		assertTrue("BS should be empty", CollectionUtils.isEmpty(bonusSystem.getLog()));
+		assertTrue("BS should be empty", CollectionUtils.isEmpty(bonusSystem.getLogEntries()));
 	}
 
 	@Test
 	public void applyDiscout() throws CommerceCartModificationException, CalculationException
 	{
-		testCreateBonusSystemLog();
+		testCreateBonusSystemEntry();
 
 		userService.setCurrentUser(registeredCustomer);
 
 		final BonusSystemModel bonusSystem = registeredCustomer.getBonusSystem();
 
-		final ProductModel productModel = productService.getProductForCode("HW1210-3423");
+		final CatalogVersionModel catalogVersionModel = catalogVersionService.getCatalogVersion("testCatalog", "Online");
+		final ProductModel productModel = productService.getProductForCode(catalogVersionModel, "HW1210-3423");
 
 		final CartModel cart = cartService.getSessionCart();
 
@@ -190,27 +195,27 @@ public class BonusSystemServiceTest extends ServicelayerTransactionalTest
 
 		Assert.assertEquals(1, cart.getEntries().size());
 
-		bonusSystemService.applyDiscount(cart, bonusSystem);
+		bonusSystemService.applyDiscount(cart, bonusSystem, 10);
 
-		System.out.println(bonusSystem.getPoints());
+		System.out.println(bonusSystem.getAvailablePoints());
 
 
-		final List<DiscountModel> appliedBSDiscounts = bonusSystemService.getAppliedBSDiscounts(cart);
+		final List<BonusSystemDiscountModel> appliedBSDiscounts = bonusSystemService.getAppliedBonusSystemDiscounts(cart);
 
 		Assert.assertEquals(1, appliedBSDiscounts.size());
 
-		final BonusSystemLogModel bsLog = modelService.create(BonusSystemLogModel.class);
+		final BonusSystemEntryModel bsLog = modelService.create(BonusSystemEntryModel.class);
 		bsLog.setDate(new Date());
 		bsLog.setDescription("invalidation");
 		bsLog.setPoints(100 * (appliedBSDiscounts.iterator().next().getValue() * -1));
-		bsLog.setReference("cart: " + cart.getCode());
+		bsLog.setReference(cart);
 		bsLog.setType("order");
 
-		bonusSystemService.addBonusSystemLog(bonusSystem, bsLog);
+		bonusSystemService.addBonusSystemEntry(bonusSystem, bsLog);
 
-		System.out.println(bonusSystem.getPoints());
+		System.out.println(bonusSystem.getAvailablePoints());
 
-		for (final BonusSystemLogModel log : bonusSystem.getLog())
+		for (final BonusSystemEntryModel log : bonusSystem.getLogEntries())
 		{
 			System.out.println(log.getDescription() + " - " + log.getPoints());
 		}

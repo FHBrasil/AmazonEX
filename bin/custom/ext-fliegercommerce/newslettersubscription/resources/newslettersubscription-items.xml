@@ -20,6 +20,11 @@
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
 
+	<enumtypes>
+	 	<enumtype code="SubscriptionType" autocreate="true" generate="true" dynamic="true"/>
+	</enumtypes>
+	
+
 	<relations>
 		<relation code="Customer2NewsletterSubscriptionRelation" generate="true" localized="false" autocreate="true">		
 			<sourceElement type="Customer" qualifier="customer" cardinality="one">
@@ -57,6 +62,9 @@
 						<persistence type="property" />
 					</attribute>					
 					<attribute qualifier="language" type="Language">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="subscriptionType" type="SubscriptionType">
 						<persistence type="property" />
 					</attribute>
 				</attributes>

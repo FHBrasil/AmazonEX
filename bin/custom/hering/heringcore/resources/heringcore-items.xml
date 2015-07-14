@@ -75,6 +75,15 @@
         <enumtype code="FraudStatus" autocreate="false" generate="false" dynamic="true">
             <value code="NOTSENT" />
         </enumtype>
+        
+        <enumtype code="SubscriptionType" autocreate="false" generate="false">
+	            <value code="SCHEDULED_NEWSLETTER"/>
+	            <value code="TIPS_NEWSLETTER"/>
+	            <value code="REVIEW_SHOPPING_EXPERIENCE"/>
+	            <value code="REVIEW_ORDERED_PRODUCT"/>
+		</enumtype>
+        
+        
     </enumtypes>
 
     <itemtypes>
@@ -305,18 +314,24 @@
                         <description>Facebook ID. </description>
                         <modifiers />
                         <persistence type="property" />
-                    </attribute>                   
+                    </attribute>                                       
                      <attribute qualifier="deletedAccountDate" type="java.util.Date">
                         <description>Timestamp that indicates when the user deleted his account</description>
                         <modifiers />
                         <persistence type="property" />                        
-                    </attribute> 
-                    
+                    </attribute>                 
                     <attribute qualifier="defaultPhoneNumber" type="java.lang.String" >
       					<persistence type="dynamic" attributeHandler="customerDefaultPhoneNumberAttributeHandler" />
       					<modifiers read="true" write="true" />
 					</attribute>
-                                       
+					<attribute qualifier="youngestChildDateOfBirth" type="java.util.Date">
+                        <modifiers />
+                        <persistence type="property" />                        
+                    </attribute>
+					<attribute qualifier="tipsNewsletterEnabled" type="boolean" >
+      					<persistence type="dynamic" attributeHandler="customerTipsNewsletterEnabledAttributeHandler" />
+      					<modifiers read="true" write="true" />
+					</attribute>                                    
                 </attributes>
             </itemtype>
             

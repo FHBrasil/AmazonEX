@@ -17,6 +17,7 @@ import java.util.List;
 
 import br.hering.facades.wishlist.data.HeringWishlistData;
 import br.hering.facades.wishlist.data.HeringWishlistEntryData;
+
 import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
 
 /**
@@ -46,4 +47,6 @@ public interface WishlistFacade {
 	HeringWishlistData getWishlistByPK(String pk);
 
 	String getWishlistPK();
+
+	void addToCart(String productCode);
 }

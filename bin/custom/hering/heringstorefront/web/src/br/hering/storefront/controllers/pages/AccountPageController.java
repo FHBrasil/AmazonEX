@@ -18,9 +18,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -74,6 +78,7 @@ import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderHistoryData;
+import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
@@ -177,6 +182,7 @@ public class AccountPageController extends AbstractSearchPageController {
 	private static final String ORDER_HISTORY_CMS_PAGE = "orders";
 	private static final String ORDER_DETAIL_CMS_PAGE = "order";
 	private static final String WISHLIST_ENTRIES_CMS_PAGE = "my-wishlist";
+	private static final String BONUSSYSTEM_VIEW_CMS_PAGE = "bonus-system";
 
 	private static final Logger LOG = Logger.getLogger(AccountPageController.class);
 
@@ -756,6 +762,42 @@ public class AccountPageController extends AbstractSearchPageController {
 		return REDIRECT_MY_ACCOUNT;
 
 	}
+	
+	/**
+	 * Adding method to catch subscriptions
+	 * 
+	 * @author luiza
+	 */
+	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter, 
+			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth) 
+			throws CMSItemNotFoundException {
+		
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{
+			//tips newsletter
+			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
+			try 
+			{
+				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletter, dateOfBirth);
+
+			} 
+			catch (ParseException e) 
+			{
+				//e.printStackTrace();
+			}
+		}
+
+
+		return REDIRECT_MY_ACCOUNT;
+
+	}
+	
+	
 
 	/**
 	 * @return Retorna os c��digos dos Base Store registrados, separados por
@@ -1682,31 +1724,27 @@ public class AccountPageController extends AbstractSearchPageController {
 		// Handle paged search results
 		final PaginationData pageableData = createEmptyPagination();
 		final SearchPageData<HeringWishlistEntryData> searchPageData = heringWishlistFacade.getPagedWishlistEntries();
-		final HeringWishlistData wishlist = heringWishlistFacade.getDefaultWishlist();
 
 		pageableData.setTotalNumberOfResults(searchPageData.getResults().size());
 		searchPageData.setPagination(pageableData);
 
-		final UpdateWishlistForm updateWishlistForm = new UpdateWishlistForm();
-		updateWishlistForm.setDescription(wishlist.getDescription());
-		updateWishlistForm.setName(wishlist.getName());
-		updateWishlistForm.setPublicName(wishlist.getPublicName());
-		updateWishlistForm.setEntriesList(searchPageData.getResults());
-		updateWishlistForm.entryToDesireds(searchPageData.getResults());
-		updateWishlistForm.setBirthday(customerFacade.getCurrentCustomer().getBirthday());
-		final String urlPublicWishlistShare = request.getScheme() + ":" + request.getLocalName() + ":"
-				+ request.getLocalPort() + request.getContextPath() + "/w/" + heringWishlistFacade.getWishlistPK();
+		final String urlPublicWishlistShare = getUrlPublicWishlistShare();
 		populateModel(model, searchPageData, showMode);
 		final String urlPublicWishlist = heringWishlistFacade.getWishlistPK();
 
+		List<ProductData> productList = new ArrayList<ProductData>();
+		for(HeringWishlistEntryData entry : searchPageData.getResults()) {
+			productList.add(entry.getProduct());
+		}
+
 		storeCmsPageInModel(model, getContentPageForLabelOrId(WISHLIST_ENTRIES_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(WISHLIST_ENTRIES_CMS_PAGE));
-		model.addAttribute("updateWishlistForm", updateWishlistForm);
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.wishlist"));
 		model.addAttribute("metaRobots", "no-index,no-follow");
 		model.addAttribute("urlPublicWishlist", urlPublicWishlist);
 		model.addAttribute("urlPublicWishlistShare", urlPublicWishlistShare);
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
+		model.addAttribute("productList", productList);
 		return ControllerConstants.Views.Pages.Account.AccountWishlistEntriesPage;
 	}
 
@@ -1758,6 +1796,17 @@ public class AccountPageController extends AbstractSearchPageController {
 		customerFacade.updateProfile(customer);
 
 		return REDIRECT_MY_ACCOUNT + "/my-wishlist";
+	}
+
+	@RequestMapping(value = "/bonus-system", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String bonusSystemPage(final Model model, final HttpServletRequest request) throws CMSItemNotFoundException
+	{
+		storeCmsPageInModel(model, getContentPageForLabelOrId(BONUSSYSTEM_VIEW_CMS_PAGE));
+		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(BONUSSYSTEM_VIEW_CMS_PAGE));
+		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
+
+		return ControllerConstants.Views.Pages.Account.AccountBonusSystemPage;
 	}
 
 	private HeringPaymentDetailsForm getPreparedHeringPaymentDetailsForm() {
@@ -1823,6 +1872,15 @@ public class AccountPageController extends AbstractSearchPageController {
 			LOG.info("Erro ao buscar endere��o por cep.", e);
 		}
 		return result;
+	}
+
+	private String getUrlPublicWishlistShare() {
+		StringBuilder urlBuilder = new StringBuilder();
+		BaseStoreModel currentBaseStore = baseStoreService.getCurrentBaseStore();
+		if(currentBaseStore != null) {
+			urlBuilder.append(Config.getString("website." + currentBaseStore.getUid() + ".http", ""));
+		}
+		return urlBuilder.append("/w/").append(heringWishlistFacade.getWishlistPK()).toString();
 	}
 
 	/**

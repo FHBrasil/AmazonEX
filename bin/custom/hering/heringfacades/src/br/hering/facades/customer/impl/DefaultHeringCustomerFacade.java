@@ -127,7 +127,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 
 	
 	/**
-	 * @author luiza
+	 * @author Luiza
 	 */
 	@Override
 	public void deleteAccount()
@@ -147,7 +147,7 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	
 	
 	/**
-	 * @author luiza
+	 * @author 	Luiza
 	 */
 	@Override
 	public CustomerData changePhoneNumber(final String phone)
@@ -156,6 +156,24 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		CustomerModel customerModel = getCurrentSessionCustomer();		
 
 		customerModel = heringCustomerAccountService.changePhoneNumber(customerModel, phone);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
+	
+	
+	/**
+	 * @author Luiza
+	 */
+	public CustomerData subscribeTipsNewsletter(final Boolean tipsNewsletter, final Date dateOfBirth)
+	{
+		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
+
+		customerModel = heringCustomerAccountService.subscribeTipsNewsletter(customerModel, tipsNewsletter, dateOfBirth);
 
 		CustomerData customerData = new CustomerData();
 		customerConverter.convert(customerModel, customerData);
