@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-import br.hering.core.strategies.CheckSplitOrderEntriesEnabledStrategy;
+import br.hering.core.strategies.FeatureSplitShippingAllowedStrategy;
 import br.hering.core.strategies.ShippingEstimatesStrategy;
 import br.hering.facades.populators.order.SplitDeliveryOrderEntryGroupPopulator;
 
@@ -58,7 +58,7 @@ public class SplitDeliveryOrderEntryGroupTest
 	BaseStoreService baseStoreService;
 	
 	@Mock
-	CheckSplitOrderEntriesEnabledStrategy checkStrategy;
+	FeatureSplitShippingAllowedStrategy checkStrategy;
 	
 	@Mock
 	ShippingEstimatesStrategy shippingEstimatesStrategy;
@@ -73,7 +73,7 @@ public class SplitDeliveryOrderEntryGroupTest
 	@Test
 	public void testPopulate()
 	{
-		given(populator.getCheckSplitOrderEntriesEnabledStrategy()).willReturn(checkStrategy);
+		given(populator.getFeatureSplitShippingAllowedStrategy()).willReturn(checkStrategy);
 		given(populator.getShippingEstimatesStrategy()).willReturn(shippingEstimatesStrategy);
 		
 		final AbstractOrderEntryModel entryModel1 = mock(AbstractOrderEntryModel.class);
@@ -96,7 +96,7 @@ public class SplitDeliveryOrderEntryGroupTest
 		given(entryModel3.getEntryNumber()).willReturn(2);
 		given(entryModel4.getEntryNumber()).willReturn(3);
 		
-		given(checkStrategy.isEnabled()).willReturn(true);
+		given(checkStrategy.isCartAllowedToUseSplitShipping(abstractOrderModel)).willReturn(true);
 		
 		given(shippingEstimatesStrategy.isImmediateShipping(entryModel1)).willReturn(true);
 		given(shippingEstimatesStrategy.isImmediateShipping(entryModel2)).willReturn(true);

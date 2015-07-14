@@ -547,11 +547,10 @@
 		<property name="flexibleSearchService" ref="flexibleSearchService"/>
 	</bean>
 
-	<alias name="heringCartValidationStrategy" alias="cartValidationStrategy"/>
-	<bean id="heringCartValidationStrategy"
-			class="br.hering.core.strategies.impl.HeringCartValidationStrategy"
-			parent="defaultCartValidationStrategy"
-			/>
+	<alias name="fliegerCommerceCartValidationStrategy" alias="cartValidationStrategy"/>
+	<bean id="fliegerCommerceCartValidationStrategy" parent="defaultCartValidationStrategy" class="br.hering.core.strategies.impl.FliegerCommerceCartValidationStrategy">
+		<property name="featureSplitShippingAllowedStrategy" ref="featureSplitShippingAllowedStrategy" />
+	</bean>		
 
 	<bean id="heringCustomerAccountService" class="br.hering.core.customer.impl.DefaultHeringCustomerAccountService"
 		parent="defaultCustomerAccountService"/>
@@ -843,9 +842,10 @@
 		<property name="modelService" ref="modelService"/>
 	</bean>
 	
-	<alias name="defaultCheckSplitOrderEntriesEnabledStrategy" alias="checkSplitOrderEntriesEnabledStrategy"/>
-	<bean id="defaultCheckSplitOrderEntriesEnabledStrategy" class="br.hering.core.strategies.impl.DefaultCheckSplitOrderEntriesEnabledStrategy">
+	<alias name="defaultFeatureSplitShippingAllowedStrategy" alias="featureSplitShippingAllowedStrategy"/>
+	<bean id="defaultFeatureSplitShippingAllowedStrategy" class="br.hering.core.strategies.impl.DefaultFeatureSplitShippingAllowedStrategy">
 		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="shippingEstimatesStrategy" ref="shippingEstimatesStrategy"/>
 	</bean>
 	
 	<alias name="defaultShippingEstimatesStrategy" alias="shippingEstimatesStrategy"/>

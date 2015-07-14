@@ -12,7 +12,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-import br.hering.core.strategies.CheckSplitOrderEntriesEnabledStrategy;
+import br.hering.core.strategies.FeatureSplitShippingAllowedStrategy;
 import br.hering.core.strategies.ShippingEstimatesStrategy;
 
 import com.flieger.facades.order.data.ImmediateDeliveryOrderEntryGroupData;
@@ -31,7 +31,7 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 {
 	private static final Logger LOG = Logger.getLogger(SplitDeliveryOrderEntryGroupPopulator.class);
 	
-	private CheckSplitOrderEntriesEnabledStrategy checkSplitOrderEntriesEnabledStrategy;
+	private FeatureSplitShippingAllowedStrategy featureSplitShippingAllowedStrategy;
 	
 	private ShippingEstimatesStrategy shippingEstimatesStrategy;
 	
@@ -39,7 +39,7 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 		public int compare(final OrderEntryData e1, final OrderEntryData e2) {
 			return ObjectUtils.compare(e1.getNamedDeliveryDate(), e2.getNamedDeliveryDate());
 		}
-	};
+	}; 
 	
 	private static final Comparator<DeliveryOrderEntryGroupData> COMPARATOR_DELIVERY_GROUPS = new Comparator<DeliveryOrderEntryGroupData>() {
 		public int compare(final DeliveryOrderEntryGroupData g1, final DeliveryOrderEntryGroupData g2) {
@@ -56,7 +56,7 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 	{
 		super.populate(source, target);
 		
-		if(getCheckSplitOrderEntriesEnabledStrategy().isEnabled())
+		if(getFeatureSplitShippingAllowedStrategy().isCartAllowedToUseSplitShipping(source))
 		{
 			sortDeliveryGroups(target);
 			updateGroupNamedDeliveryDate(target);
@@ -66,7 +66,7 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 	@Override
 	protected void createUpdateShipGroupData(AbstractOrderEntryModel entryModel, AbstractOrderData target) 
 	{
-		if(!getCheckSplitOrderEntriesEnabledStrategy().isEnabled())
+		if(!getFeatureSplitShippingAllowedStrategy().isCartAllowedToUseSplitShipping(entryModel.getOrder()))
 		{
 			super.createUpdateShipGroupData(entryModel, target);
 			return;
@@ -170,16 +170,6 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 		}
 	}
 
-	public CheckSplitOrderEntriesEnabledStrategy getCheckSplitOrderEntriesEnabledStrategy() 
-	{
-		return checkSplitOrderEntriesEnabledStrategy;
-	}
-
-	@Required
-	public void setCheckSplitOrderEntriesEnabledStrategy(CheckSplitOrderEntriesEnabledStrategy strategy) 
-	{
-		this.checkSplitOrderEntriesEnabledStrategy = strategy;
-	}
 
 	public ShippingEstimatesStrategy getShippingEstimatesStrategy() 
 	{
@@ -190,5 +180,15 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 	public void setShippingEstimatesStrategy(ShippingEstimatesStrategy strategy) 
 	{
 		this.shippingEstimatesStrategy = strategy;
+	}
+
+	public FeatureSplitShippingAllowedStrategy getFeatureSplitShippingAllowedStrategy() {
+		return featureSplitShippingAllowedStrategy;
+	}
+
+	@Required
+	public void setFeatureSplitShippingAllowedStrategy(
+			FeatureSplitShippingAllowedStrategy featureSplitShippingAllowedStrategy) {
+		this.featureSplitShippingAllowedStrategy = featureSplitShippingAllowedStrategy;
 	}
 }
