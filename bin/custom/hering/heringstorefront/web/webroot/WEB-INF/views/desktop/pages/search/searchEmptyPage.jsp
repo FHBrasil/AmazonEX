@@ -10,7 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
-<template:page pageTitle="${pageTitle}">
+<template:page pageTitle="${pageTitle}" showBV="true" >
     <div id="main-wrapper">
         <div class="container">
             <c:if test="${not empty message}">
