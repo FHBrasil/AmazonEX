@@ -805,4 +805,11 @@
 		<property name="bonusSystemService" ref="bonusSystemService"/>
 		<property name="userService" ref="userService"/>
 	</bean>
+
+    <alias name="splitDeliveryOrderEntryGroupPopulator" alias="deliveryOrderEntryGroupPopulator" />
+    <bean id="splitDeliveryOrderEntryGroupPopulator" parent="defaultOrderEntryGroupPopulator"
+        class="br.hering.facades.populators.order.SplitDeliveryOrderEntryGroupPopulator">
+        <property name="featureSplitShippingAllowedStrategy" ref="featureSplitShippingAllowedStrategy"/>
+        <property name="shippingEstimatesStrategy" ref="shippingEstimatesStrategy"/>
+    </bean>
 </beans>

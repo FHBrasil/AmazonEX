@@ -35,7 +35,8 @@
             <c:if test="${not empty searchPageData.sorts}">
                 <form id="sort_form${top ? '1' : '2'}" name="sort_form${top ? '1' : '2'}"
                     method="get" action="#" class="sortForm">
-                    <div>
+                    <div class="form-control sort-f">
+                        <span class="glyphicon glyphicon-sort float-left"></span>
                         <select id="sortOptions${top ? '1' : '2'}" name="sort">
                             <c:forEach items="${searchPageData.sorts}" var="sort">
                                 <option value="${sort.code}"

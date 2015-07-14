@@ -64,6 +64,7 @@
         <extension name="heringcockpits" />
         <extension name="heringstorefrontcommons" />
         <extension name="heringcheckoutaddon" />
+        <extension name="heringtest" />
         <extension name="textboxinfoaddon" />
         <extension name="exacttarget" />
         <extension name="notificationservices" />

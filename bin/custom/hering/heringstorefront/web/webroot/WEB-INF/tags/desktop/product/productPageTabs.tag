@@ -9,50 +9,63 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 <div>
- 	<ul class="nav nav-tabs margin-top" id="tab150219">
-        <li class="active"><a data-toggle="tab" href="#sectionA"><spring:theme code="product.product.details" /></a></li>
-        <li><a data-toggle="tab" href="#sectionB"><spring:theme code="review.reviews" />&nbsp;<span class="badge">${product.numberOfReviews}</span></a></li>
-        <li><a data-toggle="tab" href="#sectionC"><spring:theme code="product.product.technicalDetails" /></a></li>
-        <li class="dropdown">
-			<a data-toggle="dropdown" class="dropdown-toggle" href="#"><spring:theme code="product.more" /><b class="caret"></b></a>
-			<ul class="dropdown-menu">
-				<li><a data-toggle="tab" href="#dropdown1"><spring:theme code="product.answerQuestions" /></a></li>
-				<li><a data-toggle="tab" href="#dropdown2"><spring:theme code="product.downloads" />&nbsp;<span class="badge">0</span></a></li>
-				<li><a data-toggle="tab" href="#dropdown3"><spring:theme code="product.accessoriesTab" />&nbsp;<span class="badge">0</span></a></li>
-			</ul>
-		</li>
+    <ul class="nav nav-tabs margin-top" id="tab150219">
+        <li class="active"><a data-toggle="tab" href="#sectionA"><spring:theme
+                    code="product.product.details" /></a></li>
+        <li><a data-toggle="tab" href="#sectionB"><spring:theme code="review.reviews" />&nbsp;<span
+                class="badge">${product.numberOfReviews}</span></a></li>
+        <li><a data-toggle="tab" href="#sectionC"><spring:theme
+                    code="product.product.technicalDetails" /></a></li>
+        <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><spring:theme
+                    code="product.more" /><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a data-toggle="tab" href="#dropdown1"><spring:theme
+                            code="product.answerQuestions" /></a></li>
+                <li><a data-toggle="tab" href="#dropdown2"><spring:theme
+                            code="product.downloads" />&nbsp;<span class="badge">0</span></a></li>
+                <li><a data-toggle="tab" href="#dropdown3"><spring:theme
+                            code="product.accessoriesTab" />&nbsp;<span class="badge">0</span></a></li>
+            </ul></li>
     </ul>
 </div>
 <div class="col-xs-12 tab150119">
-	<product:productTitle product="${product}" upper="false" />
-	<p><small><bazaarvoice:productReviewSummary product="${product}" /></small></p>
+    <product:productTitle product="${product}" upper="false" />
+    <p>
+        <small>
+            <c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">              
+            <bazaarvoice:productReviewSummary product="${product}" />
+            <c:if test="${not empty product.summary}">
+                <div class="summary">${product.summary}</div>
+            </c:if>         
+            <product:productPromotionSection product="${product}"/>                 
+            </c:if>
+        </small>
+    </p>
 </div>
-	<div class="col-md-6 col-sm-8 tab150119">   
-        <div class="tab-content">
-            <div id="sectionA" class="tab-pane fade in active">
-                <product:productDetailsTab product="${product}" />
-            </div>
-            <div id="sectionB" class="tab-pane fade">
-				<%-- <product:productPageReviewsTab product="${product}" /> --%>
-				<bazaarvoice:productPageReviewDetailsTab product="${product}" />
-				<!-- <div id="BVRRSummaryContainer"></div> -->
-			</div>
-			<div id="sectionC" class="tab-pane fade">
-				<product:productTechnicalDetails product="${product}"/>
-			</div>
-			<div id="dropdown1" class="tab-pane fade">
-				<!--<product:productAnswerQuestions product="${product}"/>-->
-				<bazaarvoice:productPageQuestionAndAnswerTab product="${product}"/>
-			</div>
-			<div id="dropdown2" class="tab-pane fade">
-				<product:productDownloads product="${product}"/>
-			</div>
-			<div id="dropdown3" class="tab-pane fade">
-				<product:productAccessories product="${product}"/>
-			</div>
+<div class="col-md-6 col-sm-8 tab150119">
+    <div class="tab-content">
+        <div id="sectionA" class="tab-pane fade in active">
+            <product:productDetailsTab product="${product}" />
+        </div>
+        <div id="sectionB" class="tab-pane fade">
+            <%-- <product:productPageReviewsTab product="${product}" /> --%>
+            <bazaarvoice:productPageReviewDetailsTab product="${product}" />
+        </div>
+        <div id="sectionC" class="tab-pane fade">
+            <product:productTechnicalDetails product="${product}" />
+        </div>
+        <div id="dropdown1" class="tab-pane fade">
+            <!--<product:productAnswerQuestions product="${product}"/>-->
+            <bazaarvoice:productPageQuestionAndAnswerTab product="${product}" />
+        </div>
+        <div id="dropdown2" class="tab-pane fade">
+            <product:productDownloads product="${product}" />
+        </div>
+        <div id="dropdown3" class="tab-pane fade">
+            <product:productAccessories product="${product}" />
         </div>
     </div>
-
+</div>
 <%-- code original
 <div class="tabs">
     <ul class="tabs-header">

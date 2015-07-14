@@ -29,7 +29,7 @@
 			<product:productTitle product="${product}" upper="true"/>
 		</ycommerce:testId>
 		<c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">				
-			<bazaarvoice:productReviewSummary product="${product}" />		
+			<bazaarvoice:productReviewSummary product="${product}" />
 			<c:if test="${not empty product.summary}">
 				<div class="summary">${product.summary}</div>
 			</c:if>			
