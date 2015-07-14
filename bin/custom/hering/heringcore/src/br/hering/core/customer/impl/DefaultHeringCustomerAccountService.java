@@ -138,9 +138,7 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		customerModel.setYoungestChildDateOfBirth(dateOfBirth);
 		
 		customerModel.setTipsNewsletterEnabled(tipsNewsletter);
-		
-		LOG.info("TIPS: " + customerModel.isTipsNewsletterEnabled());
-		
+				
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
 
