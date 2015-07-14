@@ -18,9 +18,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -758,6 +762,42 @@ public class AccountPageController extends AbstractSearchPageController {
 		return REDIRECT_MY_ACCOUNT;
 
 	}
+	
+	/**
+	 * Adding method to catch subscriptions
+	 * 
+	 * @author luiza
+	 */
+	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter, 
+			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth) 
+			throws CMSItemNotFoundException {
+		
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{
+			//tips newsletter
+			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
+			try 
+			{
+				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletter, dateOfBirth);
+
+			} 
+			catch (ParseException e) 
+			{
+				//e.printStackTrace();
+			}
+		}
+
+
+		return REDIRECT_MY_ACCOUNT;
+
+	}
+	
+	
 
 	/**
 	 * @return Retorna os c��digos dos Base Store registrados, separados por

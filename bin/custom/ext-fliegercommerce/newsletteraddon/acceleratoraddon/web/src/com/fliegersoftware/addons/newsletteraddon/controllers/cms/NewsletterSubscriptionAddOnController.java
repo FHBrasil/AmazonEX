@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
+import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
@@ -85,7 +86,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 			
 			final String languageIsoCode = getCurrentLanguage().getIsocode();
 			data.setLanguageIsoCode(languageIsoCode);
-			
+
 			data.setCustomer(customer);
 						
 			if (subscription)

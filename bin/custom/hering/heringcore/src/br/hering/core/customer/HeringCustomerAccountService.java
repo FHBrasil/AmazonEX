@@ -10,6 +10,7 @@ import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,5 +30,7 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	public void deleteAccount(CustomerModel customerModel);
 	
 	public CustomerModel changePhoneNumber(CustomerModel customerModel, String phone);
+	
+	public CustomerModel subscribeTipsNewsletter(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth);
 	
 }

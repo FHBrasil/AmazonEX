@@ -44,8 +44,7 @@
 	<bean class="br.hering.facades.product.data.GenderData">
 		<property name="code" type="String"/>
 		<property name="name" type="String"/>
-	</bean>
-	
+	</bean>	
 	
 	<bean class="br.hering.facades.product.data.AddressTypeData">
 		<property name="code" type="String"/>
@@ -105,6 +104,8 @@
 		<property name="orders" type="java.util.Collection&lt;java.lang.String>" />
 		<property name="primaryKey" type="java.lang.String"/>
 		<property name="defaultPhoneNumber" type="java.lang.String" />
+		<property name="youngestChildDateOfBirth" type="java.lang.String" />
+		<property name="tipsNewsletterEnabled" type="boolean" />
 	</bean>
         
     <bean class="de.hybris.platform.commercefacades.user.data.RegisterData">

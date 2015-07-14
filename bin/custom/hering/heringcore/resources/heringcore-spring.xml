@@ -842,6 +842,14 @@
 		<property name="modelService" ref="modelService"/>
 	</bean>
 	
+	<bean id="customerTipsNewsletterEnabledAttributeHandler" 
+	class="br.hering.core.attributehandlers.CustomerTipsNewsletterEnabledAttributeHandler">
+		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
+		<property name="newsletterSubscriptionFacade" ref="newsletterSubscriptionFacade"/>
+		<property name="customerConverter" ref="customerConverter"/>
+		<property name="subscriptionTypeModelToDataConverter" ref="subscriptionTypeModelToDataConverter"/>
+	</bean>
+
 	<alias name="defaultFeatureSplitShippingAllowedStrategy" alias="featureSplitShippingAllowedStrategy"/>
 	<bean id="defaultFeatureSplitShippingAllowedStrategy" class="br.hering.core.strategies.impl.DefaultFeatureSplitShippingAllowedStrategy">
 		<property name="baseStoreService" ref="baseStoreService" />
@@ -864,4 +872,5 @@
 	<alias name="fliegerCommerceFindDeliveryCostStrategy" alias="findDeliveryCostStrategy" />
     <bean id="fliegerCommerceFindDeliveryCostStrategy" parent="defaultFindDeliveryCostStrategy"
     	class="br.hering.core.order.impl.FliegerCommerceFindDeliveryCostStrategy"/>
+
 </beans>
