@@ -79,7 +79,7 @@
                             code="${themeMsgKey}.showPageResults" /></a>
                 </ycommerce:testId>
             </c:if>
-            <c:if test="${(searchPageData.pagination.numberOfPages > 1 && !top)}">
+            <c:if test="${searchPageData.pagination.numberOfPages > 1}">
                 <pagination:pageSelectionPagination searchUrl="${searchUrl}"
                     searchPageData="${searchPageData}" numberPagesShown="${numberPagesShown}"
                     themeMsgKey="${themeMsgKey}" />
