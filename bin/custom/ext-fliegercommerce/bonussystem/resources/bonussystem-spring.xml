@@ -21,22 +21,23 @@
 	
 	<!-- Data / POJO -->
 	<bean id="bonusSystemData" class="com.flieger.bonussystem.data.BonusSystemData" scope="prototype"/>
-	<bean id="bonusSystemLogData" class="com.flieger.bonussystem.data.BonusSystemLogData" scope="prototype"/>
+	<bean id="bonusSystemEntryData" class="com.flieger.bonussystem.data.BonusSystemEntryData" scope="prototype"/>
 	
 	<!-- Populators & Converters -->
+	<bean id="bonusSystemAvailablePointsAttributeHandler" class="com.flieger.attribute.BonusSystemAvailablePointsAttributeHandler"/>
 	<alias name="defaultCustomerBonusSystemPopulator" alias="customerBonusSystemPopulator"/>
 	<bean id="defaultCustomerBonusSystemPopulator" class="com.flieger.facades.populators.CustomerBonusSystemPopulator">
 		<property name="bonusSystemConverter" ref="bonusSystemConverter"/>
 		<property name="bonusSystemService" ref="bonusSystemService"/>
 	</bean>
 	
-	<alias name="bonusSystemDefaultConverter" alias="bonusSystemConverter" />
-	<bean id="bonusSystemDefaultConverter" class="com.flieger.facades.converters.BonusSystemConverter" scope="tenant">
-		<property name="bonusSystemLogConverter" ref="bonusSystemLogConverter"/>
+	<alias name="defaultBonusSystemConverter" alias="bonusSystemConverter" />
+	<bean id="defaultBonusSystemConverter" class="com.flieger.facades.converters.BonusSystemConverter" scope="tenant">
+		<property name="bonusSystemEntryConverter" ref="bonusSystemEntryConverter"/>
 	</bean>
 	
-	<alias name="bonusSystemLogDefaultConverter" alias="bonusSystemLogConverter" />
-	<bean id="bonusSystemLogDefaultConverter" class="com.flieger.facades.converters.BonusSystemLogConverter" scope="tenant" />
+	<alias name="defaultBonusSystemEntryConverter" alias="bonusSystemEntryConverter" />
+	<bean id="defaultBonusSystemEntryConverter" class="com.flieger.facades.converters.BonusSystemEntryConverter" scope="tenant" />
 	
 	<!-- Services -->
 	<alias alias="bonusSystemService" name="defaultBonusSystemService"/>

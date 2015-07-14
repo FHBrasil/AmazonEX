@@ -206,7 +206,7 @@ implements HeringCommerceCheckoutService
 		for (final AbstractOrderEntryModel orderEntryModel : cartEntries)
 		{
 
-			if (getHeringWishlistService().hasWishlisEntryForProduct(orderEntryModel.getProduct(), wishlist))
+			if (getHeringWishlistService().hasWishlisEntryForProduct(orderEntryModel.getProduct().getCode(), wishlist))
 			{
 
 				for (final Wishlist2EntryModel wishlistEntry : wishlist.getEntries())

@@ -22,6 +22,8 @@ public class HeringOrderPopulator extends OrderPopulator
 	{
 		super.populate(source, target);
 		
+		target.setSplitDeliveryEnabled(source.isSplitDeliveryEnabled());
+		
 		LinkedList<ConsignmentModel> consignments = new LinkedList<>(source.getConsignments());
 		if(!consignments.isEmpty())
 		{

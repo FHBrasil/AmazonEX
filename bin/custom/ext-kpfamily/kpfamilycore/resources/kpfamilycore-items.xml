@@ -260,37 +260,37 @@
 					<attribute type="double" qualifier="enhanceNewProductsBy">
 						<description>Score used to enhance the visibility of new products</description>
 						<modifiers/>
-						<defaultvalue>0</defaultvalue>
+						<defaultvalue>0.0</defaultvalue>
 						<persistence type="property"/>
 					</attribute>
 					<attribute type="double" qualifier="decreaseOutOfStockProductsBy">
 						<description>Score used to decrease the visibility of products without stock</description>
 						<modifiers/>
-						<defaultvalue>0</defaultvalue>
+						<defaultvalue>0.0</defaultvalue>
 						<persistence type="property"/>
 					</attribute>
 					<attribute type="double" qualifier="decreaseLowProfitProductsBy">
 						<description>Score used to decrease the visibility of products with a poor profit percentage</description>
 						<modifiers/>
-						<defaultvalue>0</defaultvalue>
+						<defaultvalue>0.0</defaultvalue>
 						<persistence type="property"/>
 					</attribute>
 					<attribute type="double" qualifier="multiplyProfitBy">
 						<description>Value used to fine-tune the profit score</description>
 						<modifiers/>
-						<defaultvalue>1</defaultvalue>
+						<defaultvalue>1.0</defaultvalue>
 						<persistence type="property"/>
 					</attribute>
 					<attribute type="double" qualifier="multiplyTotalSalesBy">
 						<description>Value used to fine-tune the sales score</description>
 						<modifiers/>
-						<defaultvalue>1</defaultvalue>
+						<defaultvalue>1.0</defaultvalue>
 						<persistence type="property"/>
 					</attribute>
 					<attribute type="double" qualifier="multiplyPageViewsBy">
 						<description>Value used to fine-tune the page views score</description>
 						<modifiers/>
-						<defaultvalue>1</defaultvalue>
+						<defaultvalue>1.0</defaultvalue>
 						<persistence type="property"/>
 					</attribute>
 				</attributes>

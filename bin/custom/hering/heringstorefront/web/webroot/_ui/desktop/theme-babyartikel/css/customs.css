@@ -111,14 +111,15 @@
 	.underlinelinks150212 a {text-decoration: underline;}
 	
 	/* CSS for general product panels */
-	.pagination150224 h1,.pagination150224 .pagination {margin:0;}
-	.pagination150224 .glyphicon {font-size:15px;}
-	.pagination150224 .input-group-btn {float:left;display:inline;width:auto;}
-	.pagination150224 .input-group-btn button {border-radius: 0;border-left:none;}
+	.pagination150224 .pagination {margin:0;}
+	.pagination150224 .input-group-btn {float:right;display:inline;width:auto;margin-left:15px;margin-bottom:15px;}
 
-	.filters150630 .btn-d {background: #f0f0f0; border-radius: 4px !important; margin-right: 4px; text-decoration: none;}
-	.filters150630 .btn-d a {text-decoration: none;}
-	.filters150630 .btn-d a:hover {color: #333;}
+	.filters150630 .btn-d {background:#f0f0f0;border-radius:4px!important;margin-right:4px;margin-bottom:4px;text-decoration:none;}
+	.filters150630 .btn-d a {text-decoration:none;}
+	.filters150630 .btn-d a:hover {color:#333;}
+
+	 .sort-f {float:right;width:35%;margin-left:15px;}
+	 .sort-f select {border:0;width:85%;}
 	
 	.box150102 .thumbnail {height: 190px;display:table;width:100%;padding:0;margin:0;border:0;}
 	.box150102 .thumbnail a {display:table-cell;vertical-align:bottom;}

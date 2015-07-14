@@ -30,7 +30,6 @@ public class CustomerBonusSystemPopulator implements Populator<CustomerModel, Cu
 
 		if (bonusSystem != null)
 		{
-			bonusSystemService.recalculateBonusSystemPoints(bonusSystem);
 			target.setBonusSystem(bonusSystemConverter.convert(bonusSystem));
 		}
 	}

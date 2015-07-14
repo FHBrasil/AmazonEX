@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.newslettersubscription.dao.NewsletterSubscriptionDao;
+import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
@@ -86,18 +87,20 @@ public class DefaultNewsletterSubscriptionDao implements NewsletterSubscriptionD
 
 
 	@Override
-	public NewsletterSubscriptionModel findSubscriptionByEmailAndStore(final String email, final BaseStoreModel store)
+	public NewsletterSubscriptionModel findSubscriptionByEmailAndStoreAndType(final String email, final BaseStoreModel store, final SubscriptionType subscriptionType)
 	{
 		
 		final String queryString = //
 		        "SELECT {p:PK}" //
 		                + "FROM {NewsletterSubscription AS p} "//
 		                + "WHERE " + "{p:store}=?store " //
-		                + "AND " + "{p:email}=?email";
+		                + "AND " + "{p:email}=?email " //
+		                + "AND " + "{p:subscriptionType}=?subscriptionType";
 		 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
         query.addQueryParameter("store", store);
         query.addQueryParameter("email", email);
+        query.addQueryParameter("subscriptionType", subscriptionType);
 
       return getFlexibleSearchService().<NewsletterSubscriptionModel> search(query).getResult().get(0);
     

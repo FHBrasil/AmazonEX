@@ -8,6 +8,7 @@ import de.hybris.platform.store.BaseStoreModel;
 
 import java.util.List;
 
+import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
@@ -28,7 +29,7 @@ public interface NewsletterSubscriptionDao extends Dao
 	
 	List<NewsletterSubscriptionModel> findSubscriptionsByStore(final BaseStoreModel store);
 
-	NewsletterSubscriptionModel findSubscriptionByEmailAndStore(final String email, final BaseStoreModel store);
+	NewsletterSubscriptionModel findSubscriptionByEmailAndStoreAndType(final String email, final BaseStoreModel store, final SubscriptionType subscriptionType);
 	
 
 }

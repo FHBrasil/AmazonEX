@@ -97,7 +97,9 @@
         </div>
     </div>
     <div class="container">
-        <div class="col-xs-12 text-right">
+        <div class="col-xs-12 col-sm-7 margin-top filters150630"> 
+        </div>
+        <div class="col-xs-12 col-sm-5 text-right pagination150224 margin-top">
             <nav:pagination top="false" supportShowPaged="${isShowPageAllowed}"
                         supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}"
                         searchUrl="${searchPageData.currentQuery.url}"

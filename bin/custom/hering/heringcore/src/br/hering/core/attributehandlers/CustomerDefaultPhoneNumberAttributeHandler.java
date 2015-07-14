@@ -45,17 +45,6 @@ public class CustomerDefaultPhoneNumberAttributeHandler implements DynamicAttrib
 			
 			return phone;
 		}
-		
-		if (contactInfosModel != null)
-		{
-			if (!contactInfosModel.isEmpty())
-			{
-				final PhoneContactInfoModel phoneModel = (PhoneContactInfoModel) Iterables.get(contactInfosModel, contactInfosModel.size()-1);
-				final String phone = phoneModel.getPhoneNumber();
-				
-				return phone;
-			}
-		}
 			
 		return null;
 		
