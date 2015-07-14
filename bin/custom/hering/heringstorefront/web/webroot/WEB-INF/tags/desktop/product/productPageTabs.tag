@@ -31,7 +31,15 @@
 <div class="col-xs-12 tab150119">
     <product:productTitle product="${product}" upper="false" />
     <p>
-        <small><bazaarvoice:productReviewSummary product="${product}" /></small>
+        <small>
+            <c:if test="${product.purchasable && product.stock.stockLevelStatus.code != 'outOfStock'}">              
+            <bazaarvoice:productReviewSummary product="${product}" />
+            <c:if test="${not empty product.summary}">
+                <div class="summary">${product.summary}</div>
+            </c:if>         
+            <product:productPromotionSection product="${product}"/>                 
+            </c:if>
+        </small>
     </p>
 </div>
 <div class="col-md-6 col-sm-8 tab150119">
