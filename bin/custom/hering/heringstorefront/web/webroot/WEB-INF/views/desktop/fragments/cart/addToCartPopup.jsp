@@ -19,7 +19,7 @@
 		[
 			<c:forEach items="${cartData.entries}" var="cartEntry" varStatus="status">
 				{
-					<%--"sku":		"${cartEntry.product.code}",
+					"sku":		"${cartEntry.product.code}",
 					"name": 	"<c:out value='${cartEntry.product.name}' />",
 					"qty": 		"${cartEntry.quantity}",
 					"price": 	"${cartEntry.basePrice.value}",
@@ -27,7 +27,7 @@
 					<c:forEach items="${cartEntry.product.categories}" var="category" varStatus="categoryStatus">
 						"<c:out value='${category.name}' />"<c:if test="${not categoryStatus.last}">,</c:if>
 					</c:forEach>
-					]--%>
+					]
 				}<c:if test="${not status.last}">,</c:if>
 			</c:forEach>
 		]
@@ -37,8 +37,9 @@
 		<c:url value="/cart" var="cartUrl"/>
 		<c:url value="/cart/checkout" var="checkoutUrl"/>
 		<div id="addToCartLayer">
+		<div class="confirmation">ok</div>
 		<div class="popupCartItem">
-			<div class="itemThumb"><product:productPrimaryImage product="${entry.product}" format="cartIcon"/></div>
+			<div class="itemThumb"><product:productPrimaryImage product="${product}" format="cartIcon"/></div>
 			<div class="itemDesc">
 				<div class="itemName"><c:out value="${product.name}" /></div>
 				<div class="itemQuantity"><span class="label"><spring:theme code="popup.cart.quantity.added"/></span>${quantity}</div>
@@ -67,8 +68,6 @@
 		<div class="links"><a href="${cartUrl}" class="button positive"><spring:theme code="checkout.checkout" /></a></div>
 		
 		</div>
-		
-		
 		</spring:escapeBody>"
 }
 
