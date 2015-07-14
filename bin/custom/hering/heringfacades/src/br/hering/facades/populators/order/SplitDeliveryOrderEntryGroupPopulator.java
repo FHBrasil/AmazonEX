@@ -35,6 +35,8 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 	
 	private ShippingEstimatesStrategy shippingEstimatesStrategy;
 	
+	private boolean splitShippingAllowed;
+	
 	private static final Comparator<OrderEntryData> COMPARATOR_ORDER_ENTRIES = new Comparator<OrderEntryData>() {
 		public int compare(final OrderEntryData e1, final OrderEntryData e2) {
 			return ObjectUtils.compare(e1.getNamedDeliveryDate(), e2.getNamedDeliveryDate());
@@ -54,9 +56,11 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 	@Override
 	public void populate(AbstractOrderModel source, AbstractOrderData target) throws ConversionException 
 	{
+		setSplitShippingAllowed(getFeatureSplitShippingAllowedStrategy().isCartAllowedToUseSplitShipping(source));
+		
 		super.populate(source, target);
 		
-		if(getFeatureSplitShippingAllowedStrategy().isCartAllowedToUseSplitShipping(source))
+		if(isSplitShippingAllowed())
 		{
 			sortDeliveryGroups(target);
 			updateGroupNamedDeliveryDate(target);
@@ -66,7 +70,7 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 	@Override
 	protected void createUpdateShipGroupData(AbstractOrderEntryModel entryModel, AbstractOrderData target) 
 	{
-		if(!getFeatureSplitShippingAllowedStrategy().isCartAllowedToUseSplitShipping(entryModel.getOrder()))
+		if(!isSplitShippingAllowed())
 		{
 			super.createUpdateShipGroupData(entryModel, target);
 			return;
@@ -170,7 +174,6 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 		}
 	}
 
-
 	public ShippingEstimatesStrategy getShippingEstimatesStrategy() 
 	{
 		return shippingEstimatesStrategy;
@@ -190,5 +193,13 @@ public class SplitDeliveryOrderEntryGroupPopulator extends DeliveryOrderEntryGro
 	public void setFeatureSplitShippingAllowedStrategy(
 			FeatureSplitShippingAllowedStrategy featureSplitShippingAllowedStrategy) {
 		this.featureSplitShippingAllowedStrategy = featureSplitShippingAllowedStrategy;
+	}
+
+	public boolean isSplitShippingAllowed() {
+		return splitShippingAllowed;
+	}
+
+	public void setSplitShippingAllowed(boolean splitShippingAllowed) {
+		this.splitShippingAllowed = splitShippingAllowed;
 	}
 }

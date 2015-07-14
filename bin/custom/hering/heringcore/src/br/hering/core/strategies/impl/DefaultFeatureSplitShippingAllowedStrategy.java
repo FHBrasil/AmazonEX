@@ -43,20 +43,20 @@ public class DefaultFeatureSplitShippingAllowedStrategy implements FeatureSplitS
 			return false;
 		}
 		
-		if(CollectionUtils.isNotEmpty(cart.getEntries()) && cart.getEntries().size() > 2)
+		if(CollectionUtils.isNotEmpty(cart.getEntries()) && cart.getEntries().size() > 1)
 		{
-			Boolean found = null;
+			Boolean previousShippingEstimate = null;
 			boolean isImmediateShipping;
 			for(AbstractOrderEntryModel entry : cart.getEntries())
 			{
 				isImmediateShipping = getShippingEstimatesStrategy().isImmediateShipping(entry);
-				if(found != null && found.booleanValue() != isImmediateShipping)
+				if(previousShippingEstimate != null && previousShippingEstimate.booleanValue() != isImmediateShipping)
 				{
 					return true;
 				}
 				else
 				{
-					found =  isImmediateShipping;
+					previousShippingEstimate =  isImmediateShipping;
 				}
 			}
 		}

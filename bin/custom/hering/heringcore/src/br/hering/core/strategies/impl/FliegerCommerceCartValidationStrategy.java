@@ -47,8 +47,8 @@ public class FliegerCommerceCartValidationStrategy extends DefaultCartValidation
 			
 			if(!getFeatureSplitShippingAllowedStrategy().isCartAllowedToUseSplitShipping(cartModel))
 			{
-				LOG.debug(String.format("Cart %s is not allowed to use the splitting feature, turning off SplitDeliveryEnabled flag for cart %s", 
-						cartModel.getStore().getUid(), cartModel.getCode()));
+				LOG.debug(String.format("Cart %s is not allowed to use the splitting feature, turning off SplitDeliveryEnabled", 
+						cartModel.getCode()));
 				
 				modifications.add(createDisabledSplitDeliveryModification());
 				turnOffCartSplitDeliveryOption(cartModel);
@@ -72,6 +72,7 @@ public class FliegerCommerceCartValidationStrategy extends DefaultCartValidation
 	private void turnOffCartSplitDeliveryOption(final CartModel cartModel) 
 	{
 		cartModel.setSplitDeliveryEnabled(false);
+		cartModel.setCalculated(false);
 		getModelService().save(cartModel);
 		getModelService().refresh(cartModel);
 	}
