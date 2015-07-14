@@ -20,7 +20,7 @@
 				<c:when test="${false}"><span class="status-prod-wishlist texto-vermelho">Reservado</span></c:when>
 				<c:otherwise><span class="status-prod-wishlist texto-vermelho">Não comprado</span></c:otherwise>
 			</c:choose>
-			<a class="excluir-prod-wishlist texto-verde" href="/store/w/${product.code}/remove">
+			<a class="excluir-prod-wishlist texto-verde" href="/w/${product.code}/remove">
 				Excluir
 				<!-- <img alt="" src="assets/images/ico-x-wishlist.jpg"> -->
 			</a>
