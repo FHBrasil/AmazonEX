@@ -31,6 +31,6 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	
 	public CustomerModel changePhoneNumber(CustomerModel customerModel, String phone);
 	
-	public CustomerModel updateCustomerSubscriptions(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth);
+	public CustomerModel subscribeTipsNewsletter(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth);
 	
 }

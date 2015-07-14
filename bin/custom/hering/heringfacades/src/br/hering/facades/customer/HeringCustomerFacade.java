@@ -33,7 +33,7 @@ public interface HeringCustomerFacade extends CustomerFacade
 	
 	public CustomerData changePhoneNumber(String phone);
 	
-	public CustomerData updateCustomerSubscriptions(Boolean tipsNewsletter, Date dateOfBirth);
+	public CustomerData subscribeTipsNewsletter(Boolean tipsNewsletter, Date dateOfBirth);
 	
 	public void registerGuest(GuestRegisterData guestData) throws DuplicateUidException;
 

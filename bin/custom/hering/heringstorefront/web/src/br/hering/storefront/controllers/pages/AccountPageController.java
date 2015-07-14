@@ -774,23 +774,22 @@ public class AccountPageController extends AbstractSearchPageController {
 		
 		CustomerData customerData = customerFacade.getCurrentCustomer();
 		
-		//verificar formato Date MM/dd/yyyy
-		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
-		try 
+		if (customerData != null)
 		{
-			Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
-			
-			if (customerData != null)
+			//tips newsletter
+			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
+			try 
 			{
-				heringCustomerFacade.updateCustomerSubscriptions(tipsNewsletter, dateOfBirth); //enviar os quatro booleans
+				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletter, dateOfBirth);
+
+			} 
+			catch (ParseException e) 
+			{
+				//e.printStackTrace();
 			}
-		} 
-		catch (ParseException e) 
-		{
-			//e.printStackTrace();
 		}
-		
-		
+
 
 		return REDIRECT_MY_ACCOUNT;
 

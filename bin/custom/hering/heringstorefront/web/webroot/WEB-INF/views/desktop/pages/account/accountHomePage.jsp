@@ -198,7 +198,7 @@
 								</div>
 							</div>
 						</div>
-						<button>Submit</button>
+						<button>Confirm</button>
 					</div>					
 				</form>
 			</div>

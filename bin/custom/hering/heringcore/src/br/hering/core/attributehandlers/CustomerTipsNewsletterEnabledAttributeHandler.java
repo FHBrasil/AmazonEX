@@ -1,5 +1,8 @@
 package br.hering.core.attributehandlers;
 
+import java.util.Collection;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -9,6 +12,7 @@ import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
 import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
+import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 import com.fliegersoftware.newslettersubscription.services.NewsletterSubscriptionService;
 
 import de.hybris.platform.commercefacades.user.data.CustomerData;
@@ -72,10 +76,22 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 	@Override
 	public Boolean get(CustomerModel customerModel) {
 
-		//procura se ja existe uma subscription
-		//se customermodel.getTips()... 
+		Collection<NewsletterSubscriptionModel> customerSubscriptions = customerModel.getNewsletterSubscriptions();
 		
-		return null;
+		if (CollectionUtils.isNotEmpty(customerSubscriptions))				
+		{
+			for (NewsletterSubscriptionModel subscription : customerSubscriptions)
+			{
+				SubscriptionType type = subscription.getSubscriptionType();
+				if (type == SubscriptionType.TIPS_NEWSLETTER)
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+
 	}
 
 	@Override
@@ -98,9 +114,7 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		subscription.setLanguageIsoCode(customerData.getLanguage().getIsocode());
 		subscription.setStoreCode(getNewsletterSubscriptionFacade().getCurrentBaseStoreCode());
 		subscription.setSubscriptionType(subscriptionTypeData);
-		
-						
-		//create subscription of type TIPS_NEWSLETTER
+								
 		if (tipsNewsletterEnabled)
 		{	
 			try 
@@ -112,7 +126,6 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 				//e.printStackTrace();
 			}
 		}
-		//delete subscription of type TIPS_NEWSLETTER
 		else
 		{
 			try 
