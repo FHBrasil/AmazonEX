@@ -318,7 +318,7 @@ function formGuestOnClick(){
 				else
 				{
 					$('body').append(customModal);				    
-					$('#customModal .modal-body').append($('#returnMessages').html());
+					$('#customModal .modal-body').append(data);
 					setTimeout(function(){
 					  	$('#customModal').modal("show");
 					}, 500);
@@ -326,7 +326,7 @@ function formGuestOnClick(){
 			},
 			error : function(data) {
 				$('body').append(customModal);				    
-			    $('#customModal .modal-body').append($('#returnMessages').html());
+			    $('#customModal .modal-body').append(data);
 			    setTimeout(function(){
 			    	$('#customModal').modal("show");
 			    }, 500);				    
