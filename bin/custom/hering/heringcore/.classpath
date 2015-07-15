@@ -15,5 +15,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/notificationservices"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/newslettersubscription"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
+	<classpathentry kind="src" path="/wishlist"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

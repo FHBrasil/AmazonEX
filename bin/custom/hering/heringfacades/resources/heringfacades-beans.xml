@@ -96,6 +96,7 @@
 	</bean>
 	
 	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData" extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
+		<property name="defaultWishlist" type="br.hering.facades.wishlist.data.HeringWishlistData" />
 		<property name="birthday" type="java.util.Date" />
 		<property name="gender" type="de.hybris.platform.core.enums.Gender"/>
 		<property name="cpfcnpj" type="java.lang.String" />
@@ -208,8 +209,8 @@
 		<property name="publicName" type="String" />
 		<property name="description" type="String" />
 		<property name="principal" type="Boolean" />
+		<property name="totalEntriesNumber" type="int" />
 		<property name="entries" type="java.util.List&lt;br.hering.facades.wishlist.data.HeringWishlistEntryData>" />
-		<property name="user" type="de.hybris.platform.commercefacades.user.data.CustomerData"/>
 	</bean>
 
 	<bean class="br.hering.facades.wishlist.data.HeringWishlistEntryData">

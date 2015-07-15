@@ -136,6 +136,8 @@ import br.hering.storefront.util.SelectOption;
 
 import org.springframework.context.MessageSource;
 
+import com.flieger.bonussystem.data.BonusSystemData;
+
 /**
  * Controller for home page.
  * 
@@ -241,7 +243,7 @@ public class AccountPageController extends AbstractSearchPageController {
 
 	@Resource(name = "defaultHeringCheckoutFacade")
 	private DefaultHeringCheckoutFacade defaultHeringCheckoutFacade;
-
+	
 	protected WishlistValidator getWishlistValidator() {
 		return wishlistValidator;
 	}
@@ -398,7 +400,11 @@ public class AccountPageController extends AbstractSearchPageController {
 		final CustomerData customerData = customerFacade.getCurrentCustomer();
 		final HeringAddressForm addressForm = getPreparedAddressForm();
 		final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
-
+		final BonusSystemData bonusData = customerData.getBonusSystem();
+		
+		double bonusPoints = bonusData == null ? .0 : bonusData.getPoints();
+		
+		model.addAttribute("bonusSystemPoints", bonusPoints);
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs(null));
 		model.addAttribute("metaRobots", "no-index,no-follow");
 		model.addAttribute("customerData", customerData);

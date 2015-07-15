@@ -72,10 +72,10 @@ public class HeringWishlistPopulator implements Populator<HeringWishlistModel, H
 			entries.add(heringWishlistEntryConverter.convert(entry));
 		}
 		target.setEntries(entries);
+		target.setTotalEntriesNumber(entries.size());
 		target.setName(source.getName());
 		target.setPrincipal(source.getDefault());
 		target.setPublicName(source.getPublicName());
-		target.setUser(customerConverter.convert((CustomerModel) source.getUser()));
 	}
 
 	/**

@@ -182,7 +182,7 @@ public class WishListController extends AbstractSearchPageController
 		//model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.wishlist"));
 		model.addAttribute("wishlist", wishlist);
 		model.addAttribute("wishPK", wishlistPK);
-		model.addAttribute("daysLeft", daysLeft(wishlist.getUser().getBirthday()));
+		//model.addAttribute("daysLeft", daysLeft(wishlist.getUser().getBirthday()));
 		model.addAttribute("userLocation", customerLocationService.getUserLocation());
 
 		//storeContentPageTitleInModel(model, getPageTitleResolver().resolveContentPageTitle(WISHLIST_PUBLIC_CMS_PAGE));
