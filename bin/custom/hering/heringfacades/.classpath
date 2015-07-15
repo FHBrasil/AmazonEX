@@ -11,5 +11,6 @@
 	<classpathentry kind="src" path="/adyen"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wishlist"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
