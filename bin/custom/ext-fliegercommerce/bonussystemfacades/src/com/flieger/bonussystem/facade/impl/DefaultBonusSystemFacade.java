@@ -28,7 +28,6 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.util.Assert;
 
 import com.flieger.bonussystem.BonusSystemCreationStrategy;
 import com.flieger.bonussystem.data.BonusSystemData;
@@ -83,7 +82,10 @@ public class DefaultBonusSystemFacade implements BonusSystemFacade
 	@Override
 	public Double getPoints(final ProductModel product)
 	{
-		Assert.notNull(product, "product is null");
+		if (product == null)
+		{
+			return Double.valueOf(0);
+		}
 
 		final BonusSystemModel bonusSystem = getUserBonusSystem();
 

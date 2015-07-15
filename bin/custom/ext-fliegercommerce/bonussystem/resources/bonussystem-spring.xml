@@ -39,6 +39,11 @@
 	<alias name="defaultBonusSystemEntryConverter" alias="bonusSystemEntryConverter" />
 	<bean id="defaultBonusSystemEntryConverter" class="com.flieger.facades.converters.BonusSystemEntryConverter" scope="tenant" />
 	
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="customerConverter"/>
+		<property name="add" ref="customerBonusSystemPopulator"/>
+	</bean>
+	
 	<!-- Services -->
 	<alias alias="bonusSystemService" name="defaultBonusSystemService"/>
 	<bean id="defaultBonusSystemService" class="com.flieger.services.impl.DefaultBonusSystemService" >
