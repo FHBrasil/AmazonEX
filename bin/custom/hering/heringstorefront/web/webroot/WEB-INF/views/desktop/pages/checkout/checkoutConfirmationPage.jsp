@@ -19,6 +19,7 @@
 					type="hidden" class="orderTotalPrice"
 					value="${orderData.totalPrice.value}" />
 			</div> --%>
+	<div id="returnMessages" style="display: none !important;"><common:globalMessages /></div>
 	<order:orderModalPanels order="${orderData}" />		
 	<order:orderConfirmationRulesAccountUser />
 	<order:orderConfirmationTrustedShops />
