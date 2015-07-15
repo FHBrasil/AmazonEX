@@ -1,17 +1,14 @@
 package com.paypal.hybris.facade.order.converters.populator;
 
+import java.math.BigDecimal;
+
 import de.hybris.platform.acceleratorfacades.order.data.OrderEntryGroupData;
 import de.hybris.platform.acceleratorfacades.order.populators.OrderEntryGroupPopulator;
 import de.hybris.platform.commercefacades.product.data.PriceData;
 import de.hybris.platform.commercefacades.product.data.PriceDataType;
 import de.hybris.platform.core.model.c2l.CurrencyModel;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
-import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.util.TaxValue;
-
-import org.apache.commons.lang.BooleanUtils;
-
-import java.math.BigDecimal;
 
 
 /**
