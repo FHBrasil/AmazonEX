@@ -15,7 +15,7 @@ import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.TitleModel;
 import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
-import de.hybris.platform.servicelayer.user.UserService;
+//import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.services.BaseStoreService;
 
 
@@ -26,7 +26,7 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 	
 	private BaseStoreService baseStoreService;
 	
-	private UserService userService;
+	//private UserService userService;
 
 	private CustomerNameStrategy customerNameStrategy;
 
@@ -117,14 +117,14 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 		this.customerNameStrategy = customerNameStrategy;
 	}
 	
-	public UserService getUserService() {
+/*	public UserService getUserService() {
 		return userService;
 	}
 
 	@Required
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
+	}*/
 	
 	public NewsletterSubscriptionService getNewsletterSubscriptionService() {
 		return newsletterSubscriptionService;

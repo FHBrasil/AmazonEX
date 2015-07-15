@@ -22,7 +22,7 @@ import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.TitleModel;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
-import de.hybris.platform.servicelayer.user.UserService;
+//import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.services.BaseStoreService;
 
 public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel>{
@@ -34,7 +34,7 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 	
 	private BaseStoreService baseStoreService;
 	
-	private UserService userService;
+	//private UserService userService;
 
 	private CustomerNameStrategy customerNameStrategy;
 
@@ -148,14 +148,14 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		this.customerNameStrategy = customerNameStrategy;
 	}
 
-	public UserService getUserService() {
+/*	public UserService getUserService() {
 		return userService;
 	}
 
 	@Required
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
+	}*/
 	
 /*	public Converter<SubscriptionType, SubscriptionTypeData> getSubscriptionTypeModelToDataConverter() {
 		return subscriptionTypeModelToDataConverter;
