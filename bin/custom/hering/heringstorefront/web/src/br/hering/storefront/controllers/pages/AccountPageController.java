@@ -1738,11 +1738,6 @@ public class AccountPageController extends AbstractSearchPageController {
 		populateModel(model, searchPageData, showMode);
 		final String urlPublicWishlist = heringWishlistFacade.getWishlistPK();
 
-		List<ProductData> productList = new ArrayList<ProductData>();
-		for(HeringWishlistEntryData entry : searchPageData.getResults()) {
-			productList.add(entry.getProduct());
-		}
-
 		storeCmsPageInModel(model, getContentPageForLabelOrId(WISHLIST_ENTRIES_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(WISHLIST_ENTRIES_CMS_PAGE));
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.wishlist"));
@@ -1750,7 +1745,6 @@ public class AccountPageController extends AbstractSearchPageController {
 		model.addAttribute("urlPublicWishlist", urlPublicWishlist);
 		model.addAttribute("urlPublicWishlistShare", urlPublicWishlistShare);
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
-		model.addAttribute("productList", productList);
 		return ControllerConstants.Views.Pages.Account.AccountWishlistEntriesPage;
 	}
 

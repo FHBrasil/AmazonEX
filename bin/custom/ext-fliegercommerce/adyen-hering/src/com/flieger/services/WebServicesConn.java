@@ -42,8 +42,7 @@ public class WebServicesConn
 		LOG.debug("Setting credentials for WebService Authentication.");
 		// Basic HTTP Authentication:
 		((Stub) port)._setProperty(Call.USERNAME_PROPERTY, Config.getParameter(Credentials.WS_USER));
-//		((Stub) port)._setProperty(Call.PASSWORD_PROPERTY, Config.getParameter(Credentials.PWD_USER));
-		((Stub) port)._setProperty(Call.PASSWORD_PROPERTY, Credentials.PWD_USER);
+		((Stub) port)._setProperty(Call.PASSWORD_PROPERTY, Config.getParameter(Credentials.PWD_USER));
 	}
 
 	private PaymentPortType getPaymentPortType()

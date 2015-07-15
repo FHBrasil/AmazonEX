@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="details" tagdir="/WEB-INF/tags/desktop/showcaseproductdetail" %>
-<%@ attribute name="className" required="false" type="java.lang.String" %>
-<%@ attribute name="products" required="true" type="java.util.List" %>
 <%@ taglib prefix="wishlist" tagdir="/WEB-INF/tags/desktop/wishlist" %>
+<%@ attribute name="className" required="false" type="java.lang.String" %>
+<%@ attribute name="wishlistEntries" required="true" type="java.util.List" %>
 
-<c:forEach items="${products}" var="product" varStatus="status">
+<c:forEach items="${wishlistEntries}" var="entry" varStatus="status">
+	<c:set var="product" value="${entry.product}"/>
 	<c:url var="productUrl" value="${product.url}"></c:url>
 	<div class="product ${className}" index="${status.index}">
 		<div class="photo">

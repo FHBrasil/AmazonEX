@@ -359,7 +359,7 @@
         <property name="heringWishlistService" ref="heringWishlistService" />
         <property name="productService" ref="productService" />
         <property name="productFacade" ref="productFacade" />
-		<property name="cartService" ref="cartService"/>
+        <property name="cartService" ref="cartService" />
         <property name="heringWishlistConverter" ref="heringWishlistConverter" />
         <property name="heringWishlistEntryConverter" ref="heringWishlistEntryConverter" />
         <!-- <property name="productPrimaryImagePopulator" ref="productPrimaryImagePopulator"/> 
@@ -425,16 +425,18 @@
         <property name="typeService" ref="typeService" />
     </bean>
 
-	<alias alias="wishlistDao" name="defaultHeringWishlistDao" />
-	<bean id="defaultHeringWishlistDao" class="br.hering.core.wishlist.impl.daos.impl.DefaultHeringWishlist2Dao" parent="defaultWishlistDao">
-		<property name="sessionService" ref="sessionService"/>
-	</bean>
-	
-	<alias name="defaultHeringWishlistService" alias="heringWishlistService"/>
-	<bean id="defaultHeringWishlistService" 
-			class="br.hering.core.wishlist.impl.DefaultHeringWishlistService" parent="defaultWishlistService" scope="tenant">
-	</bean>
-	
+    <alias alias="wishlistDao" name="defaultHeringWishlistDao" />
+    <bean id="defaultHeringWishlistDao"
+        class="br.hering.core.wishlist.impl.daos.impl.DefaultHeringWishlist2Dao"
+        parent="defaultWishlistDao">
+        <property name="sessionService" ref="sessionService" />
+    </bean>
+
+    <alias name="defaultHeringWishlistService" alias="heringWishlistService" />
+    <bean id="defaultHeringWishlistService" class="br.hering.core.wishlist.impl.DefaultHeringWishlistService"
+        parent="defaultWishlistService" scope="tenant">
+    </bean>
+
     <!-- End Wishlist reverse populators definitions -->
     <bean id="customerEmailContext" class="br.hering.facades.process.email.context.CustomerEmailContext"
         parent="abstractEmailContext" scope="prototype">
@@ -718,7 +720,7 @@
     <bean id="defaultHeringOrderHistoryPopulator" class="br.hering.facades.populators.HeringOrderHistoryPopulator"
         parent="defaultOrderHistoryPopulator">
         <property name="heringOrderService" ref="heringOrderService" />
-        <property name="orderEntryConverter" ref="orderEntryConverter"/>
+        <property name="orderEntryConverter" ref="orderEntryConverter" />
     </bean>
 
     <alias name="defaultHeringProductFeatureListPopulator" alias="productFeatureListPopulator" />
@@ -801,17 +803,25 @@
         class="br.hering.facades.usergroup.impl.DefaultHeringCustomerGroupFacade"
         parent="customerGroupFacade">
     </bean>
-    
-	<bean id="bonusSystemCreationStrategy" class="br.hering.facades.bonussystem.strategies.DefaultHeringBonusSystemCreationStrategy">
-		<property name="bonusSystemDao" ref="bonusSystemDao"/>
-		<property name="bonusSystemService" ref="bonusSystemService"/>
-		<property name="userService" ref="userService"/>
-	</bean>
+
+    <bean id="bonusSystemCreationStrategy"
+        class="br.hering.facades.bonussystem.strategies.DefaultHeringBonusSystemCreationStrategy">
+        <property name="bonusSystemDao" ref="bonusSystemDao" />
+        <property name="bonusSystemService" ref="bonusSystemService" />
+        <property name="userService" ref="userService" />
+    </bean>
 
     <alias name="splitDeliveryOrderEntryGroupPopulator" alias="deliveryOrderEntryGroupPopulator" />
     <bean id="splitDeliveryOrderEntryGroupPopulator" parent="defaultOrderEntryGroupPopulator"
         class="br.hering.facades.populators.order.SplitDeliveryOrderEntryGroupPopulator">
-        <property name="featureSplitShippingAllowedStrategy" ref="featureSplitShippingAllowedStrategy"/>
-        <property name="shippingEstimatesStrategy" ref="shippingEstimatesStrategy"/>
+        <property name="featureSplitShippingAllowedStrategy" ref="featureSplitShippingAllowedStrategy" />
+        <property name="shippingEstimatesStrategy" ref="shippingEstimatesStrategy" />
     </bean>
+    
+    <alias name="defaultOrderEntryGroupPopulatorReplacer" alias="deliveryOrderEntryGroupPopulator" />
+    <bean id="defaultOrderEntryGroupPopulatorReplacer" parent="splitDeliveryOrderEntryGroupPopulator">
+        <replaced-method name="updateGroupTotalPriceWithTax"
+            replacer="orderEntryGroupPopulatorReplacer" />
+    </bean>
+
 </beans>
