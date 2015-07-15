@@ -780,7 +780,8 @@ public class AccountPageController extends AbstractSearchPageController {
 			@RequestParam (defaultValue = "false") final boolean scheduledNewsletterEnabled, 
 			@RequestParam (defaultValue = "false") final boolean tipsNewsletterEnabled, 
 			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth, 
-			@RequestParam (defaultValue = "false") final boolean reviewShoppingExperienceEnabled) 
+			@RequestParam (defaultValue = "false") final boolean reviewShoppingExperienceEnabled, 
+			@RequestParam (defaultValue = "false") final boolean reviewOrderedProductsEnabled) 
 			throws CMSItemNotFoundException {
 		
 		CustomerData customerData = customerFacade.getCurrentCustomer();
@@ -803,6 +804,8 @@ public class AccountPageController extends AbstractSearchPageController {
 			}
 	
 			heringCustomerFacade.reviewShoppingExperience(reviewShoppingExperienceEnabled);
+			
+			heringCustomerFacade.reviewOrderedProducts(reviewOrderedProductsEnabled);
 			
 		}
 

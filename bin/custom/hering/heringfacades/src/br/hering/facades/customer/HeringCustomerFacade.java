@@ -39,6 +39,8 @@ public interface HeringCustomerFacade extends CustomerFacade
 	
 	public CustomerData reviewShoppingExperience(Boolean reviewShoppingExperience);
 	
+	public CustomerData reviewOrderedProducts(Boolean rreviewOrderedProducts);
+	
 	public void registerGuest(GuestRegisterData guestData) throws DuplicateUidException;
 
 }

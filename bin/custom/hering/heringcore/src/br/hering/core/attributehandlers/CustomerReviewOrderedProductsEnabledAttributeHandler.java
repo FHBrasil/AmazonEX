@@ -19,7 +19,7 @@ import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.services.BaseStoreService;
 
 
-public class CustomerScheduledNewsletterEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel> {
+public class CustomerReviewOrderedProductsEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel>{
 
 	
 	private NewsletterSubscriptionService newsletterSubscriptionService;
@@ -29,7 +29,7 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 	private UserService userService;
 
 	private CustomerNameStrategy customerNameStrategy;
-
+	
 	
 	@Override
 	public Boolean get(CustomerModel customerModel) {
@@ -41,7 +41,7 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 			for (NewsletterSubscriptionModel subscription : customerSubscriptions)
 			{
 				SubscriptionType type = subscription.getSubscriptionType();
-				if (type == SubscriptionType.SCHEDULED_NEWSLETTER)
+				if (type == SubscriptionType.REVIEW_ORDERED_PRODUCT)
 				{
 					return true;
 				}
@@ -53,8 +53,8 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 	}
 
 	@Override
-	public void set(CustomerModel customerModel, Boolean scheduledNewsletterEnabled) {
-		
+	public void set(CustomerModel customerModel, Boolean reviewOrderedProductsEnabled) {
+			
 		NewsletterSubscriptionModel subscription = new NewsletterSubscriptionModel();
 		
 		final String[] names = customerNameStrategy.splitName(customerModel.getName());
@@ -67,11 +67,11 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 		subscription.setTitle(title);
 		subscription.setLanguage(customerModel.getSessionLanguage());
 		subscription.setStore(getBaseStoreService().getCurrentBaseStore());		
-		final SubscriptionType subscriptionType = SubscriptionType.SCHEDULED_NEWSLETTER;
+		final SubscriptionType subscriptionType = SubscriptionType.REVIEW_ORDERED_PRODUCT;
 		subscription.setSubscriptionType(subscriptionType);
 		subscription.setCustomer(customerModel);
-							
-		if (scheduledNewsletterEnabled)
+										
+		if (reviewOrderedProductsEnabled)
 		{	
 			try 
 			{
@@ -133,5 +133,4 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 		this.newsletterSubscriptionService = newsletterSubscriptionService;
 	}
 
-	
 }

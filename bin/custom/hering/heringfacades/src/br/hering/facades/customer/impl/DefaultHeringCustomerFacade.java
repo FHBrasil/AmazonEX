@@ -218,6 +218,24 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	}
 	
 	
+	/**
+	 * @author Luiza
+	 */
+	public CustomerData reviewOrderedProducts(final Boolean reviewOrderedProducts)
+	{
+		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
+
+		customerModel = heringCustomerAccountService.reviewOrderedProducts(customerModel, reviewOrderedProducts);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
+	
+	
 	@Override
 	protected void validateDataBeforeUpdate(final CustomerData customerData)
 	{

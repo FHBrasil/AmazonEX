@@ -37,4 +37,6 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	
 	public CustomerModel reviewShoppingExperience(CustomerModel customerModel, Boolean reviewShoppingExperience);	
 	
+	public CustomerModel reviewOrderedProducts(CustomerModel customerModel, Boolean reviewOrderedProducts);
+	
 }

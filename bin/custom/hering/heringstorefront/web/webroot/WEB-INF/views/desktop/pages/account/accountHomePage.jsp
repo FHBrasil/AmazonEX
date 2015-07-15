@@ -192,7 +192,7 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox"> Einladung zur Produkt-Bewertung (1x pro Bestellung)<br><small>Bewerte deine Einkäufe und hilf anderen Eltern bei der Auswahl der passenden Produkte. Wir belohnen jede Produktbewertung mit tollen Gewinnchancen!</small></label>
+									<label><input type="checkbox" name="reviewOrderedProductsEnabled"> Einladung zur Produkt-Bewertung (1x pro Bestellung)<br><small>Bewerte deine Einkäufe und hilf anderen Eltern bei der Auswahl der passenden Produkte. Wir belohnen jede Produktbewertung mit tollen Gewinnchancen!</small></label>
 								</div>
 							</div>
 						</div>

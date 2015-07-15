@@ -8,8 +8,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-import br.hering.facades.customer.impl.DefaultHeringCustomerFacade;
-
 import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
 import com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData;
 import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
