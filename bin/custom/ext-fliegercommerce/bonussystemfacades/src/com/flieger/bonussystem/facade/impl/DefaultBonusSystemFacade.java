@@ -4,7 +4,6 @@
 package com.flieger.bonussystem.facade.impl;
 
 import de.hybris.platform.commercefacades.order.price.data.DiscountData;
-import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
 import de.hybris.platform.core.model.order.CartModel;
@@ -18,7 +17,6 @@ import de.hybris.platform.order.CartService;
 import de.hybris.platform.order.exceptions.CalculationException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
-import de.hybris.platform.store.services.BaseStoreService;
 
 import java.util.Collection;
 import java.util.Date;
@@ -28,7 +26,6 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.util.Assert;
 
 import com.flieger.bonussystem.BonusSystemCreationStrategy;
 import com.flieger.bonussystem.data.BonusSystemData;
@@ -83,7 +80,10 @@ public class DefaultBonusSystemFacade implements BonusSystemFacade
 	@Override
 	public Double getPoints(final ProductModel product)
 	{
-		Assert.notNull(product, "product is null");
+		if (product == null)
+		{
+			return Double.valueOf(0);
+		}
 
 		final BonusSystemModel bonusSystem = getUserBonusSystem();
 

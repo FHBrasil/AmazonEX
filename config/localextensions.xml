@@ -70,12 +70,12 @@
         <extension name="notificationservices" />
         <extension name="wishlist" />
         <extension name="adyen" />
-        <extension name="clearsaleantifraude" />
+        <!-- <extension name="clearsaleantifraude" /> -->
         <extension name="paypal" />
         <extension name="fliegercommercecms" />
         <extension name="bazaarvoice" />
 
-        <!-- Flieger Commer AddOn -->
+        <!-- Flieger Commerce AddOn -->
         <extension name="paypaladdon" />
 
         <!-- KPFamily custom extensions -->

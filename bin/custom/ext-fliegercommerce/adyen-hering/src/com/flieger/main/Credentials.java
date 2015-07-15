@@ -10,8 +10,7 @@ public class Credentials {
 
 	public static final String MERCHANT_ACCOUNT = "merchant.account";
 	public static final String WS_USER = "ws.user";
-//	public static final String PWD_USER = "pwd.user";
-	public static final String PWD_USER = "!T3q<DY#!Nb}1Z^8YNd9D/A]^";
+	public static final String PWD_USER = "pwd.user";
 
 	public static final String BOLETO_BRAND = "boleto.brand";
 	
