@@ -2,10 +2,38 @@
 <%@ taglib prefix="c" 			uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ycommerce"	uri="http://hybris.com/tld/ycommercetags" %>
 <%@ taglib prefix="fmt" 		uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="format" 	tagdir="/WEB-INF/tags/shared/format" %>
-<%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
-<%@ attribute name="order" required="true" type="de.hybris.platform.commercefacades.order.data.OrderData" %>
+<%@ taglib prefix="format" 		tagdir="/WEB-INF/tags/shared/format" %>
+<%@ taglib prefix="product" 	tagdir="/WEB-INF/tags/desktop/product"%>
+<%@ attribute name="order" 		required="true" type="de.hybris.platform.commercefacades.order.data.OrderData" %>
 
+<div class="col-sm-4">
+	<h1><spring:theme code="text.fliegercommerce.texto145"/></h1>
+	<p><spring:theme code="text.fliegercommerce.texto146"/>&nbsp;${email}</p>
+	<p><b><spring:theme code="text.fliegercommerce.texto147"/>&nbsp;${order.code}</b></p>
+	<c:choose>
+		<c:when test="${order.paymentMode.code == 'Advance'}">
+			<p><spring:theme code="text.fliegercommerce.texto148"/></p>
+			<dl>
+				<dt><spring:theme code="text.fliegercommerce.texto149"/></dt>
+				<dd><spring:theme code="text.fliegercommerce.texto156"/></dd>
+				<dt><spring:theme code="text.fliegercommerce.texto150"/></dt>
+				<dd>[FIXED]DE59600800000110906600</dd>
+				<dt><spring:theme code="text.fliegercommerce.texto151"/></dt>
+				<dd>[FIXED]DRESDEFF600</dd>
+				<dt><spring:theme code="text.fliegercommerce.texto152"/></dt>
+				<dd>${order.totalPrice.formattedValue}</dd>
+				<dt><spring:theme code="text.fliegercommerce.texto153"/></dt>
+				<dd>[FIXED]0001NC1H 1436184885226</dd>
+			</dl>
+			<a href="javascript:window.print()" class="btn btn-default"><spring:theme code="text.fliegercommerce.texto154"/></a>
+			<p class="small margin-top"><spring:theme code="text.fliegercommerce.texto155"/></p>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+</div>
+
+<%-- 
 <div id="modal-order-resume">
 	<div id="your-order" class="fancybox-content content" style="display: block;">
 		<header>
@@ -131,3 +159,4 @@
 		</section>
 	</div>
 </div>
+--%>

@@ -45,14 +45,12 @@
             <formElement:formInputBox idKey="register.email" labelKey="register.email" path="email"
                 inputCSS="text form-control" mandatory="true" hideInputErrorOnField="true" />
 		</div>
-		<div class="form-group">
-			<label for="password">Passwort</label>
+		<div class="form-group">			
             <formElement:formPasswordBox idKey="password" labelKey="register.pwd" path="pwd"
                 inputCSS="text password strength form-control" mandatory="true" 
                 placeholder="Passwort" hideInputErrorOnField="true" />
 		</div>
-		<div class="form-group">
-			<label for="password">Passwort widerholen</label>
+		<div class="form-group">			
             <formElement:formPasswordBox idKey="register.checkPwd" labelKey="register.checkPwd"
                 path="checkPwd" inputCSS="text password form-control" mandatory="true"
                 hideInputErrorOnField="true" placeholder="Passwort widerholen" />

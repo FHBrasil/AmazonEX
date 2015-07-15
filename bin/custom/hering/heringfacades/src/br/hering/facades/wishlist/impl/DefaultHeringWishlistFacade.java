@@ -3,6 +3,21 @@
  */
 package br.hering.facades.wishlist.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Required;
+
+import br.hering.core.model.HeringWishlistModel;
+import br.hering.core.wishlist.HeringWishlistService;
+import br.hering.facades.wishlist.WishlistFacade;
+import br.hering.facades.wishlist.data.HeringWishlistData;
+import br.hering.facades.wishlist.data.HeringWishlistEntryData;
+import de.hybris.platform.commercefacades.product.ProductFacade;
+import de.hybris.platform.commercefacades.product.ProductOption;
+import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
+import de.hybris.platform.core.PK;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.core.model.product.UnitModel;
@@ -14,27 +29,6 @@ import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.wishlist2.enums.Wishlist2EntryPriority;
 import de.hybris.platform.wishlist2.model.Wishlist2EntryModel;
 import de.hybris.platform.wishlist2.model.Wishlist2Model;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import br.hering.core.model.HeringWishlistModel;
-import br.hering.core.wishlist.HeringWishlistService;
-import br.hering.facades.wishlist.WishlistFacade;
-import br.hering.facades.wishlist.data.HeringWishlistData;
-import br.hering.facades.wishlist.data.HeringWishlistEntryData;
-
-import de.hybris.platform.commercefacades.product.ProductFacade;
-import de.hybris.platform.commercefacades.product.ProductOption;
-import de.hybris.platform.commercefacades.product.data.ProductData;
-import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
-import de.hybris.platform.core.PK;
-
-import java.util.Arrays;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Required;
 
 /**
  * @author flieger

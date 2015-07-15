@@ -1,5 +1,8 @@
 $(document).ready(function() {
 	
+	//date picker
+	$('#birthday').datepicker();
+	
 	//toggle method payment
 	$('.closePayments').click(function(){
 		  $('.paycollapse.collapse.in').collapse('hide');
@@ -94,6 +97,30 @@ $(document).ready(function() {
 //				+ $('section#selected-address').find('div.address-info')
 //					.find('input[type=hidden].e-code').val();
 //		window.location = url + addressCodeParam;
+//	});
+	
+	//Submit form register guest in orderConfirmation
+//	$('#formRegisterGuest').find('.btn-primary').click(function(){
+//		var pwd = $('#formRegisterGuest').find('#pwd').val();
+//		var checkPwd = $('#formRegisterGuest').find('#checkPwd').val();
+//		if(pwd !== '' && checkPwd !== ''){
+//			$.ajax({
+//				async : true,
+//				url : "",
+//				type : 'POST',
+//				//dataType : 'json',
+//				data : $('form#formRegisterGuest').serialize(),
+//				success : function(data) {
+//					$('#accountCreatedSucessfully').collapse('show');
+//				},
+//				error : function(data) {
+//					alert("error");
+//				}
+//			});
+//		}
+//		else{
+//			return;
+//		}
 //	});
 	
 	$('#Advance').collapse(true);

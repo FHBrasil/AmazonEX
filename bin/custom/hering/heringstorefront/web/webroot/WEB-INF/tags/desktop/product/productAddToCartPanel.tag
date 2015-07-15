@@ -44,7 +44,7 @@
             <div class="col-xs-8 margin-top">
                 <input type="hidden" name="productCodePost" value="${product.code}" />
                 <c:if test="${allowAddToCart}">
-                    <button type="${buttonType}" class="btn btn-primary btn-lg" href="#cartModal" data-toggle="modal">
+                    <button type="${buttonType}" class="btn btn-primary btn-lg" data-toggle="modal">
                         <spring:theme code="cart.page.add" />
                     </button>
                     <product:modalAddToCartComplete />

@@ -54,7 +54,7 @@
 					<div class="list-mode product-wishlist">
 						<wishlist:productList
 								className="" 
-								products="${productList}" />
+								wishlistEntries="${searchPageData.results}" />
 					</div>
 
 					<nav:pagination top="false" supportShowPaged="${isShowPageAllowed}"
