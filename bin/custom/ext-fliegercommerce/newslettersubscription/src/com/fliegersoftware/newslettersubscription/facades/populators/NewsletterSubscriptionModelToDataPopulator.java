@@ -44,8 +44,7 @@ public class NewsletterSubscriptionModelToDataPopulator implements Populator<New
 				target.setTitleCode(titleCode);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 			
 		final String languageIsoCode = source.getLanguage().getIsocode();

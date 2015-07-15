@@ -847,6 +847,7 @@
 		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
 		<property name="customerNameStrategy" ref="customerNameStrategy"/>
 		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
 	</bean>
 	
 	<bean id="customerScheduledNewsletterEnabledAttributeHandler" 
@@ -854,6 +855,17 @@
 		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
 		<property name="customerNameStrategy" ref="customerNameStrategy"/>
 		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<bean id="customerReviewShoppingExperienceEnabledAttributeHandler" 
+	class="br.hering.core.attributehandlers.CustomerReviewShoppingExperienceEnabledAttributeHandler">
+		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
+		<property name="customerNameStrategy" ref="customerNameStrategy"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
+		<property name="subscriptionTypeModelToDataConverter" ref="subscriptionTypeModelToDataConverter"/>
+		
 	</bean>
 
 	<alias name="defaultFeatureSplitShippingAllowedStrategy" alias="featureSplitShippingAllowedStrategy"/>

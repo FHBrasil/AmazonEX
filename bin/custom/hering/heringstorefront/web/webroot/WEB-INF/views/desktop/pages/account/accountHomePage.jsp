@@ -187,7 +187,7 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox"> Einladung zur Trusted Shops-Bewertung (1x pro Bestellung)<br><small>Bewerte Dein Einkaufserlebnis bei Babyartikel.de und erhalte für jede Bewertung tolle Gewinnchancen.</small></label>
+									<label><input type="checkbox" name="reviewShoppingExperienceEnabled"> Einladung zur Trusted Shops-Bewertung (1x pro Bestellung)<br><small>Bewerte Dein Einkaufserlebnis bei Babyartikel.de und erhalte für jede Bewertung tolle Gewinnchancen.</small></label>
 								</div>
 							</div>
 						</div>

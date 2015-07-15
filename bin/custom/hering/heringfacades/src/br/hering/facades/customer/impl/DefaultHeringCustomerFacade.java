@@ -168,12 +168,47 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	/**
 	 * @author Luiza
 	 */
+	public CustomerData subscribeScheduledNewsletter(final Boolean scheduledNewsletter)
+	{
+		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
+
+		customerModel = heringCustomerAccountService.subscribeScheduledNewsletter(customerModel, scheduledNewsletter);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
+	
+	/**
+	 * @author Luiza
+	 */
 	public CustomerData subscribeTipsNewsletter(final Boolean tipsNewsletter, final Date dateOfBirth)
 	{
 		
 		CustomerModel customerModel = getCurrentSessionCustomer();	
 
 		customerModel = heringCustomerAccountService.subscribeTipsNewsletter(customerModel, tipsNewsletter, dateOfBirth);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
+	
+	
+	/**
+	 * @author Luiza
+	 */
+	public CustomerData reviewShoppingExperience(final Boolean reviewShoppingExperience)
+	{
+		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
+
+		customerModel = heringCustomerAccountService.reviewShoppingExperience(customerModel, reviewShoppingExperience);
 
 		CustomerData customerData = new CustomerData();
 		customerConverter.convert(customerModel, customerData);

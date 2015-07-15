@@ -15,7 +15,7 @@ import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.TitleModel;
 import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
-//import de.hybris.platform.servicelayer.user.UserService;
+import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.services.BaseStoreService;
 
 
@@ -26,7 +26,7 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 	
 	private BaseStoreService baseStoreService;
 	
-	//private UserService userService;
+	private UserService userService;
 
 	private CustomerNameStrategy customerNameStrategy;
 
@@ -54,8 +54,6 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 
 	@Override
 	public void set(CustomerModel customerModel, Boolean scheduledNewsletterEnabled) {
-
-		final SubscriptionType subscriptionType = SubscriptionType.SCHEDULED_NEWSLETTER;
 		
 		NewsletterSubscriptionModel subscription = new NewsletterSubscriptionModel();
 		
@@ -65,10 +63,11 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 		subscription.setLastName(names[1]);
 		subscription.setEmail(customerModel.getUid());
 		subscription.setGender(customerModel.getGender());
-		//TitleModel title = getUserService().getTitleForCode("mr");
-		//subscription.setTitle(title);
+		TitleModel title = getUserService().getTitleForCode("mr");
+		subscription.setTitle(title);
 		subscription.setLanguage(customerModel.getSessionLanguage());
 		subscription.setStore(getBaseStoreService().getCurrentBaseStore());		
+		final SubscriptionType subscriptionType = SubscriptionType.SCHEDULED_NEWSLETTER;
 		subscription.setSubscriptionType(subscriptionType);
 		subscription.setCustomer(customerModel);
 		
@@ -117,14 +116,14 @@ public class CustomerScheduledNewsletterEnabledAttributeHandler implements Dynam
 		this.customerNameStrategy = customerNameStrategy;
 	}
 	
-/*	public UserService getUserService() {
+	public UserService getUserService() {
 		return userService;
 	}
 
 	@Required
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}*/
+	}
 	
 	public NewsletterSubscriptionService getNewsletterSubscriptionService() {
 		return newsletterSubscriptionService;
