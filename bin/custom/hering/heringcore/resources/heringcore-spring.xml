@@ -864,10 +864,9 @@
 		<property name="customerNameStrategy" ref="customerNameStrategy"/>
 		<property name="baseStoreService" ref="baseStoreService"/>
 		<property name="userService" ref="userService"/>
-		<property name="subscriptionTypeModelToDataConverter" ref="subscriptionTypeModelToDataConverter"/>
 	</bean>
 	
- 	<bean id="customerReviewOrderedProductsEnabledAttributeHandler" 
+ 	<bean id="CustomerReviewOrderedProductsEnabledAttributeHandler" 
 	class="br.hering.core.attributehandlers.CustomerReviewOrderedProductsEnabledAttributeHandler">
 		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
 		<property name="customerNameStrategy" ref="customerNameStrategy"/>

@@ -163,7 +163,7 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	public CustomerModel reviewShoppingExperience(CustomerModel customerModel, Boolean reviewShoppingExperience)
 	{
 		
-		//customerModel.setReviewShoppingExperienceEnabled(reviewShoppingExperience);
+		customerModel.setReviewShoppingExperienceEnabled(reviewShoppingExperience);
 				
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
@@ -176,7 +176,7 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	public CustomerModel reviewOrderedProducts(CustomerModel customerModel, Boolean reviewOrderedProducts)
 	{
 		
-		//customerModel.setReviewOrderedProductsEnabled(reviewOrderedProducts);
+		customerModel.setReviewOrderedProductsEnabled(reviewOrderedProducts);
 				
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);

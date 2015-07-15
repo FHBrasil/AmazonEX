@@ -34,20 +34,7 @@ public class CustomerReviewShoppingExperienceEnabledAttributeHandler implements 
 	private UserService userService;
 
 	private CustomerNameStrategy customerNameStrategy;
-	
-	private static final Logger LOG = Logger.getLogger(CustomerReviewShoppingExperienceEnabledAttributeHandler.class);
 
-	private Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter;
-	
-	public Converter<SubscriptionType, SubscriptionTypeData> getSubscriptionTypeModelToDataConverter() {
-		return subscriptionTypeModelToDataConverter;
-	}
-
-	@Required
-	public void setSubscriptionTypeModelToDataConverter(
-			Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter) {
-		this.subscriptionTypeModelToDataConverter = subscriptionTypeModelToDataConverter;
-	}
 
 	@Override
 	public Boolean get(CustomerModel customerModel) {
@@ -61,11 +48,6 @@ public class CustomerReviewShoppingExperienceEnabledAttributeHandler implements 
 				SubscriptionType type = subscription.getSubscriptionType();
 				if (type == SubscriptionType.REVIEW_SHOPPING_EXPERIENCE)
 				{
-					
-					SubscriptionTypeData data = new SubscriptionTypeData();
-					subscriptionTypeModelToDataConverter.convert(type, data);   	
-
-					LOG.info("REVIEW: " + data.getName());
 					return true;
 				}
 			}
