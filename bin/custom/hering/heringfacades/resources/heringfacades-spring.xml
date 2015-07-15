@@ -546,8 +546,10 @@
         scope="prototype" />
 
     <alias name="brCustomerPopulator" alias="customerPopulator" />
-    <bean id="brCustomerPopulator" class="br.hering.facades.populators.HeringCustomerPopulator"
-        parent="defaultCustomerPopulator"></bean>
+    <bean id="brCustomerPopulator" class="br.hering.facades.populators.HeringCustomerPopulator" parent="defaultCustomerPopulator">
+    	 <property name="heringWishlistConverter" ref="heringWishlistConverter" />   
+    	  <property name="heringWishlistService" ref="heringWishlistService" /> 
+    </bean>
 
     <alias name="brCustomerReversePopulator" alias="customerReversePopulator" />
     <bean id="brCustomerReversePopulator" class="br.hering.facades.populators.HeringCustomerReversePopulator"
