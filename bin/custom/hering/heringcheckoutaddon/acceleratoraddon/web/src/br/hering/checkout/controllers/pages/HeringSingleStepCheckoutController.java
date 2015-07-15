@@ -868,10 +868,10 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             GlobalMessages.addErrorMessage(model, "checkout.error.deliveryAddress.blank");
             return this.prepareSingleStepCheckout(model);
         }
-        if (cartData.getDeliveryMode() == null) {
-            GlobalMessages.addErrorMessage(model, "checkout.error.deliveryMode.blank");
-            return this.prepareSingleStepCheckout(model);
-        }
+//        if (cartData.getDeliveryMode() == null) {
+//            GlobalMessages.addErrorMessage(model, "checkout.error.deliveryMode.blank");
+//            return this.prepareSingleStepCheckout(model);
+//        }
         if (validateCart(redirectModel)) {
             return REDIRECT_PREFIX + "/cart";
         }
@@ -945,10 +945,10 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             GlobalMessages.addErrorMessage(model, "checkout.error.deliveryAddress.blank");
             return this.prepareSingleStepCheckout(model);
         }
-        if (cartData.getDeliveryMode() == null) {
-            GlobalMessages.addErrorMessage(model, "checkout.error.deliveryMode.blank");
-            return this.prepareSingleStepCheckout(model);
-        }
+//        if (cartData.getDeliveryMode() == null) {
+//            GlobalMessages.addErrorMessage(model, "checkout.error.deliveryMode.blank");
+//            return this.prepareSingleStepCheckout(model);
+//        }
         if (validateCart(redirectModel)) {
             return REDIRECT_PREFIX + "/cart";
         }

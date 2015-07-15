@@ -132,8 +132,17 @@ public class CheckoutController extends AbstractCheckoutController
 	}
 
 
-	@RequestMapping(value = "/orderConfirmation/" + ORDER_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.POST)
-	public String orderConfirmation(final GuestRegisterForm form, final BindingResult bindingResult, final Model model,
+//	@RequestMapping(value = "/orderConfirmation/" + ORDER_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.POST)
+//	public String orderConfirmation(final GuestRegisterForm form, final BindingResult bindingResult, final Model model,
+//			final HttpServletRequest request, final HttpServletResponse response, final RedirectAttributes redirectModel)
+//			throws CMSItemNotFoundException
+//	{
+//		getGuestRegisterValidator().validate(form, bindingResult);
+//		return processRegisterGuestUserRequest(form, bindingResult, model, request, response, redirectModel);
+//	}
+	
+	@RequestMapping(value = "/guestConvert" , method = RequestMethod.POST, produces="text/plain")	
+	public @ResponseBody String guestConvert(final GuestRegisterForm form, final BindingResult bindingResult, final Model model,
 			final HttpServletRequest request, final HttpServletResponse response, final RedirectAttributes redirectModel)
 			throws CMSItemNotFoundException
 	{
@@ -167,7 +176,7 @@ public class CheckoutController extends AbstractCheckoutController
 		if (bindingResult.hasErrors())
 		{
 			GlobalMessages.addErrorMessage(model, "form.global.error");
-			return processOrderCode(form.getOrderCode(), model, request);
+			return getMessageSource().getMessage("form.global.error", null, getI18nService().getCurrentLocale());
 		}
 		try
 		{
@@ -181,7 +190,6 @@ public class CheckoutController extends AbstractCheckoutController
 				LOG.error("Login Error", e);
 			}
 			getSessionService().removeAttribute(WebConstants.ANONYMOUS_CHECKOUT);
-			model.addAttribute("accountCreatedSucess", Boolean.TRUE);
 		}
 		catch (final DuplicateUidException e)
 		{
@@ -191,10 +199,10 @@ public class CheckoutController extends AbstractCheckoutController
 			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER,
 					"guest.checkout.existingaccount.register.error", new Object[]
 					{ form.getUid() });
-			return REDIRECT_PREFIX + request.getHeader("Referer");
+			return getMessageSource().getMessage("guest.checkout.existingaccount.register.error", null, getI18nService().getCurrentLocale());
 		}
 
-		return REDIRECT_PREFIX + "/my-account";
+		return Boolean.TRUE.toString();
 	}
 
 	protected String processOrderCode(final String orderCode, final Model model, final HttpServletRequest request)
