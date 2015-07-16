@@ -1,3 +1,6 @@
+var customModal = $('<div id="customModal" class="modal fade"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> <h2 class="modal-title"></h2> </div> <div class="modal-body"> </div> <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
+var returnMessage = $('<div id="customMsg" class="row"> <div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert">&times;</a> <strong>Error!</strong>&nbsp;</div> </div>');
+
 $(document).ready(function() {
 	
 	//date picker
@@ -98,6 +101,53 @@ $(document).ready(function() {
 //					.find('input[type=hidden].e-code').val();
 //		window.location = url + addressCodeParam;
 //	});
+	
+	//Submit form register guest in orderConfirmation
+	var $form = $('form#formRegisterGuest');
+	
+	$form.on('submit', function(ev){
+	    ev.preventDefault();
+	    
+	    var returnMessageCustom = $('<div id="customMsg" class="row"> <div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert">&times;</a> <strong>Error!</strong>&nbsp;</div> </div>');
+
+		$.ajax({
+			url : "/checkout/guestConvert",
+			type : 'POST',
+			data : $form.serialize(),
+			success : function(data) {
+				if(data.valueOf() == 'true')
+				{	
+					$('#sectionFormGuest').slideUp(250, function(){ 
+						$(this).remove();
+					});
+					setTimeout(function(){
+						$('#accountCreatedSucessfully').slideDown(250, function(){
+							//
+						});
+					}, 500);
+				}
+				else
+				{						
+					$('.prehead141211').append(returnMessageCustom);	
+					$('#customMsg .alert-danger').append(data);
+					setTimeout(function(){
+						$('#customMsg').slideUp(250, function(){
+							$(this.remove());
+						});
+					}, 5000);
+				}
+			},
+			error : function(data) {				
+				$('.prehead141211').append(returnMessageCustom);	
+				$('#customMsg .alert-danger').append(data);
+				setTimeout(function(){
+					$('#customMsg').slideUp(250, function(){
+						$(this.remove());
+					});
+				}, 5000);
+			}
+		});
+	});
 	
 	$('#Advance').collapse(true);
 	
@@ -287,55 +337,6 @@ $(document).ready(function() {
 	});
 	
 });
-
-var customModal = $('<div id="customModal" class="modal fade"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> <h2 class="modal-title"></h2> </div> <div class="modal-body"> </div> <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
-
-//Submit form register guest in orderConfirmation
-function formGuestOnClick(){
-	var pwd = $('form#formRegisterGuest').find('#pwd').val();
-	var checkPwd = $('form#formRegisterGuest').find('#checkPwd').val();
-	$('#customModal .modal-body').empty();
-	var form = $('form#formRegisterGuest');
-	if($(form)[0].checkValidity()){
-		$.ajax({
-			url : "/checkout/guestConvert",
-			type : 'POST',
-			//dataType : 'json',
-//			contentType: "text/plain",
-			data : $('form#formRegisterGuest').serialize(),
-			success : function(data) {
-				if(data.valueOf() == 'true')
-				{
-//					$('#sectionFormGuest').slideUp(250, function(){ 
-//						$(this).remove();
-//					});
-					$('body').append(customModal);				    
-					$('#customModal .modal-body').append($('#accountCreatedSucessfully').html());
-					setTimeout(function(){
-					  	$('#customModal').modal("show");
-					}, 500);
-				}
-				else
-				{
-					$('body').append(customModal);				    
-					$('#customModal .modal-body').append(data);
-					setTimeout(function(){
-					  	$('#customModal').modal("show");
-					}, 500);
-				}
-			},
-			error : function(data) {
-				$('body').append(customModal);				    
-			    $('#customModal .modal-body').append(data);
-			    setTimeout(function(){
-			    	$('#customModal').modal("show");
-			    }, 500);				    
-			}
-		});
-	}
-	
-	return true;
-}
 
 /*! Selects delivery method */
 function bindDeliveryMethod_onChange() {

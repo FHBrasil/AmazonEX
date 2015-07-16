@@ -24,6 +24,8 @@ public interface HeringCustomerFacade extends CustomerFacade
 {
 
 	public CustomerModel cpfCnpjAlreadyExists(String cpfCnpj);
+	
+	public CustomerModel emailAlreadyExists(final String email);
 
 	public void createGuestUserForAnonymousCheckout(String email, String cpfcnpj, String name, Date birthday, Gender gender) throws DuplicateUidException;
 

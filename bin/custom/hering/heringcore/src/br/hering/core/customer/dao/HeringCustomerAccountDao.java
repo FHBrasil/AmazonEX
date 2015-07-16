@@ -24,6 +24,8 @@ public interface HeringCustomerAccountDao extends CustomerAccountDao
 {
 	public CustomerModel getCustomerByCpf(String cpf);
 	
+	public CustomerModel getCustomerByEmail(final String email);
+	
 	PaymentInfoModel findPaymentInfoByCustomer(CustomerModel customerModel, String code);
 	
 	List<OrderModel> findOrdersByCustomerAndDateAndStatus(final UserModel customerModel,
