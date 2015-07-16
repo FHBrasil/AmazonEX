@@ -324,14 +324,27 @@
       					<persistence type="dynamic" attributeHandler="customerDefaultPhoneNumberAttributeHandler" />
       					<modifiers read="true" write="true" />
 					</attribute>
-					<attribute qualifier="youngestChildDateOfBirth" type="java.util.Date">
-                        <modifiers />
-                        <persistence type="property" />                        
-                    </attribute>
+					<attribute qualifier="scheduledNewsletterEnabled" type="boolean" >
+      					<persistence type="dynamic" attributeHandler="customerScheduledNewsletterEnabledAttributeHandler" />
+      					<modifiers read="true" write="true" />
+					</attribute>
 					<attribute qualifier="tipsNewsletterEnabled" type="boolean" >
       					<persistence type="dynamic" attributeHandler="customerTipsNewsletterEnabledAttributeHandler" />
       					<modifiers read="true" write="true" />
-					</attribute>                                    
+					</attribute> 
+					<attribute qualifier="youngestChildDateOfBirth" type="java.util.Date">
+                        <modifiers />
+                        <persistence type="property" />                        
+                    </attribute> 
+                    <attribute qualifier="reviewOrderedProductsEnabled" type="boolean" >
+      					<persistence type="dynamic" attributeHandler="customerReviewOrderedProductsEnabledAttributeHandler" />
+      					<modifiers read="true" write="true" />
+					</attribute>
+					<attribute qualifier="reviewShoppingExperienceEnabled" type="boolean" >
+      					<persistence type="dynamic" attributeHandler="customerReviewShoppingExperienceEnabledAttributeHandler" />
+      					<modifiers read="true" write="true" />
+					</attribute>   
+					
                 </attributes>
             </itemtype>
             

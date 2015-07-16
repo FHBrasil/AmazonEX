@@ -132,6 +132,19 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	}
 	
 	
+	public CustomerModel subscribeScheduledNewsletter(CustomerModel customerModel, Boolean scheduledNewsletter)
+	{
+		
+		customerModel.setScheduledNewsletterEnabled(scheduledNewsletter);
+				
+		modelService.save(customerModel);
+		modelService.refresh(customerModel);
+
+		return customerModel;
+		
+	}
+	
+	
 	public CustomerModel subscribeTipsNewsletter(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth)
 	{
 		
@@ -146,5 +159,30 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		
 	}
 	
+	
+	public CustomerModel reviewShoppingExperience(CustomerModel customerModel, Boolean reviewShoppingExperience)
+	{
+		
+		customerModel.setReviewShoppingExperienceEnabled(reviewShoppingExperience);
+				
+		modelService.save(customerModel);
+		modelService.refresh(customerModel);
+
+		return customerModel;
+		
+	}
+	
+	
+	public CustomerModel reviewOrderedProducts(CustomerModel customerModel, Boolean reviewOrderedProducts)
+	{
+		
+		customerModel.setReviewOrderedProductsEnabled(reviewOrderedProducts);
+				
+		modelService.save(customerModel);
+		modelService.refresh(customerModel);
+
+		return customerModel;
+		
+	}
 	
 }

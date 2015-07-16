@@ -36,8 +36,6 @@ public class CustomerNewsletterSubscriptionsPopulator implements Populator<Custo
 	public void populate(CustomerModel source, CustomerData target) throws ConversionException
 	{
 
-		//LOG.info("populating customer subscriptions");
-
 		final List <NewsletterSubscriptionData> newsletterSubscriptionDataList = new ArrayList<NewsletterSubscriptionData>();
 			
 		Collection<NewsletterSubscriptionModel> newsletterSubscriptionModelCollection = source.getNewsletterSubscriptions(); 
