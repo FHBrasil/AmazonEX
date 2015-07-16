@@ -77,7 +77,7 @@ public class CustomerReviewShoppingExperienceEnabledAttributeHandler implements 
 		final SubscriptionType subscriptionType = SubscriptionType.REVIEW_SHOPPING_EXPERIENCE;
 		subscription.setSubscriptionType(subscriptionType);
 		subscription.setCustomer(customerModel);
-										
+	
 		if (reviewShoppingExperienceEnabled)
 		{	
 			try 
