@@ -17,7 +17,10 @@
 <script type="text/javascript" src="${themeResourcePath}/assets/js/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/trustedshops.js"></script>
 <script type="text/javascript" src="${themeResourcePath}/assets/js/fancybox/helpers/jquery.fancybox-media.js"></script>
-<script type="text/javascript" src="${commonResourcePath}/js/jquery-ui-1.9.2.custom.min.js"></script>
+<%-- For works the datepicker of the newsletter form --%>
+<c:if test="${pageType != 'ORDERCONFIRMATION'}">
+	<script type="text/javascript" src="${commonResourcePath}/js/jquery-ui-1.9.2.custom.min.js"></script>
+</c:if>
 <%-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> --%>
 <script type="text/javascript" src="${commonResourcePath}/js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="${commonResourcePath}/js/waypoints.min.1.1.5.js"></script>
@@ -92,6 +95,8 @@
     <script type="text/javascript" src="${commonResourcePath}/js/customer.js"></script>
 </c:if>
 <c:if test="${pageType == 'ORDERCONFIRMATION'}">
+	<%-- For works the datepicker of the newsletter form --%>
+	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/singleStepCheckout.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.silentorderpost.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.updatebillingaddress.js"></script>

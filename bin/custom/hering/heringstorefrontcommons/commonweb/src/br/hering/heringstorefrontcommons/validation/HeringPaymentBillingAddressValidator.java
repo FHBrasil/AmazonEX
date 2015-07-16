@@ -67,7 +67,7 @@ public class HeringPaymentBillingAddressValidator implements Validator
 		validateStringField(addressForm.getLastName(), BrazilianAddressField.LASTNAME, MAX_CHARS_LARGE_FIELD, errors);
 		validateStringField(addressForm.getLine1(), BrazilianAddressField.LINE1, MAX_CHARS_LARGE_FIELD, errors);
 		validateStringField(addressForm.getTownCity(), BrazilianAddressField.TOWN, MAX_CHARS_LARGE_FIELD, errors);
-		validatePostalCode(addressForm.getPostcode(), BrazilianAddressField.POSTCODE, MAX_POSTCODE_LENGTH, errors);
+		validateStringField(addressForm.getPostcode(), BrazilianAddressField.POSTCODE, MAX_POSTCODE_LENGTH, errors);
 		
 		final HeringAddressForm heringForm = (HeringAddressForm) addressForm;
 		validateStringField(heringForm.getNumber(), BrazilianAddressField.STREETNUMBER, MAX_CHARS_STREET_NUMBER_FIELD, errors);		
