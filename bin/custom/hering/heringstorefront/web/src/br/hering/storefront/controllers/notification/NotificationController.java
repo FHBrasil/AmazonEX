@@ -505,11 +505,11 @@ public class NotificationController
 					+ "AND {pte:" + PaymentTransactionEntryModel.TYPE +"} = ?paymentTransactionType";
 			
 			FlexibleSearchQuery query = new FlexibleSearchQuery(fsDefault);
-			if(notification.getPaymentMethod().contains("boleto")){
+//			if(notification.getPaymentMethod().contains("boleto")){
 				query.addQueryParameter("adyenReference", notification.getPspReference());
-			} else {
-				query.addQueryParameter("adyenReference", notification.getOriginalReference());
-			}
+//			} else {
+//				query.addQueryParameter("adyenReference", notification.getOriginalReference());
+//			}
 			query.addQueryParameter("merchantReference", notification.getMerchantReference());
 			query.addQueryParameter("paymentTransactionType", transactionType);
 			
