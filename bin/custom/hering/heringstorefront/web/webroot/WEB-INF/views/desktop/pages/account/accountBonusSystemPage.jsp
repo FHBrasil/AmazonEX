@@ -14,22 +14,25 @@
 
 
 <template:page pageTitle="${pageTitle}">
-	<div id="main-wrapper">
-		<div class="container">
-			<header id="page-header">
-				<h1><spring:theme code="text.account.yourAccount" text="Your Account" /></h1>
-				<div class="breadcrumb">
-					<breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}"/>
-				</div>
-			</header>
-			<section class="order-details page with-sidebar loyalty-program">
-				<nav:accountNav/>
-				<div class="right">
+<div class="container">
+	<breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}"/>	
+</div>
+<!-- 	<div id="main-wrapper"> -->
+<!-- 		<div class="container"> -->
+<!-- 			<header id="page-header"> -->
+<%-- 				<h1><spring:theme code="text.account.yourAccount" text="Your Account" /></h1> --%>
+<!-- 				<div class="breadcrumb"> -->
+<%-- 					<breadcrumb:breadcrumb breadcrumbs="${breadcrumbs}"/> --%>
+<!-- 				</div> -->
+<!-- 			</header> -->
+<!-- 			<section class="order-details page with-sidebar loyalty-program"> -->
+<%-- 				<nav:accountNav/> --%>
+<!-- 				<div class="right"> -->
 					<cms:pageSlot position="SideContent" var="feature" element="div" class="span-6 zoneA">
 						<cms:component component="${feature}" />
 					</cms:pageSlot>
-				</div>
-			</section>
-		</div>
-	</div>
+<!-- 				</div> -->
+<!-- 			</section> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 </template:page>

@@ -32,7 +32,9 @@
 				<div class="col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<a href="#" class="sparfucsIcon">${bonusSystemPoints}</a>
+							<a href="/de/my-account/bonus-system" class="sparfucsIcon">
+								<fmt:formatNumber maxFractionDigits="0" value="${bonusDataPoints}"/>
+							</a>
 							<br>
 							Du bist ein Sparfuchs!
 							<br>

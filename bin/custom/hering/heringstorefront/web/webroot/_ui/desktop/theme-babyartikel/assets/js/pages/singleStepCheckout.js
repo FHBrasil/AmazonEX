@@ -99,30 +99,6 @@ $(document).ready(function() {
 //		window.location = url + addressCodeParam;
 //	});
 	
-	//Submit form register guest in orderConfirmation
-//	$('#formRegisterGuest').find('.btn-primary').click(function(){
-//		var pwd = $('#formRegisterGuest').find('#pwd').val();
-//		var checkPwd = $('#formRegisterGuest').find('#checkPwd').val();
-//		if(pwd !== '' && checkPwd !== ''){
-//			$.ajax({
-//				async : true,
-//				url : "",
-//				type : 'POST',
-//				//dataType : 'json',
-//				data : $('form#formRegisterGuest').serialize(),
-//				success : function(data) {
-//					$('#accountCreatedSucessfully').collapse('show');
-//				},
-//				error : function(data) {
-//					alert("error");
-//				}
-//			});
-//		}
-//		else{
-//			return;
-//		}
-//	});
-	
 	$('#Advance').collapse(true);
 	
 	$('form.billing').find('button.btn-primary').click(function(){		
@@ -312,6 +288,54 @@ $(document).ready(function() {
 	
 });
 
+var customModal = $('<div id="customModal" class="modal fade"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> <h2 class="modal-title"></h2> </div> <div class="modal-body"> </div> <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
+
+//Submit form register guest in orderConfirmation
+function formGuestOnClick(){
+	var pwd = $('form#formRegisterGuest').find('#pwd').val();
+	var checkPwd = $('form#formRegisterGuest').find('#checkPwd').val();
+	$('#customModal .modal-body').empty();
+	var form = $('form#formRegisterGuest');
+	if($(form)[0].checkValidity()){
+		$.ajax({
+			url : "/checkout/guestConvert",
+			type : 'POST',
+			//dataType : 'json',
+//			contentType: "text/plain",
+			data : $('form#formRegisterGuest').serialize(),
+			success : function(data) {
+				if(data.valueOf() == 'true')
+				{
+//					$('#sectionFormGuest').slideUp(250, function(){ 
+//						$(this).remove();
+//					});
+					$('body').append(customModal);				    
+					$('#customModal .modal-body').append($('#accountCreatedSucessfully').html());
+					setTimeout(function(){
+					  	$('#customModal').modal("show");
+					}, 500);
+				}
+				else
+				{
+					$('body').append(customModal);				    
+					$('#customModal .modal-body').append(data);
+					setTimeout(function(){
+					  	$('#customModal').modal("show");
+					}, 500);
+				}
+			},
+			error : function(data) {
+				$('body').append(customModal);				    
+			    $('#customModal .modal-body').append(data);
+			    setTimeout(function(){
+			    	$('#customModal').modal("show");
+			    }, 500);				    
+			}
+		});
+	}
+	
+	return true;
+}
 
 /*! Selects delivery method */
 function bindDeliveryMethod_onChange() {

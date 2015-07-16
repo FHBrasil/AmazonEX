@@ -20,7 +20,6 @@ import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.services.BaseStoreService;
 
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;

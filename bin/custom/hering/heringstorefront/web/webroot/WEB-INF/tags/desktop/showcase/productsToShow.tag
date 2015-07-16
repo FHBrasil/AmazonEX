@@ -25,8 +25,31 @@
 			<details:viewmore productUrl="${productUrl}"/>--%>	
 	    </div>
 	</div>
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 6}">
+		<c:url var="productUrl" value="${product.url}"></c:url>
+		<div class="box150102 ${className}">
+			<cms:pageSlot position="Section3A" var="component">
+	        	<cms:component component="${component}" />
+	    	</cms:pageSlot>
+		</div>
+	</c:if>
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 13}">
+		<c:url var="productUrl" value="${product.url}"></c:url>
+		<div class="box150102 ${className}">
+			<cms:pageSlot position="Section3B" var="component">
+	        	<cms:component component="${component}" />
+	    	</cms:pageSlot>
+		</div>
+	</c:if>
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 21}">
+		<c:url var="productUrl" value="${product.url}"></c:url>
+		<div class="box150102 ${className}">
+			<cms:pageSlot position="Section3C" var="component">
+	        	<cms:component component="${component}" />
+	    	</cms:pageSlot>
+		</div>
+	</c:if>
 </c:forEach>
-
 
 
 <%-- code original
