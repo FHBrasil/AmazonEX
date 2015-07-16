@@ -336,14 +336,15 @@
                         <modifiers />
                         <persistence type="property" />                        
                     </attribute> 
+                    <attribute qualifier="reviewOrderedProductsEnabled" type="boolean" >
+      					<persistence type="dynamic" attributeHandler="customerReviewOrderedProductsEnabledAttributeHandler" />
+      					<modifiers read="true" write="true" />
+					</attribute>
 					<attribute qualifier="reviewShoppingExperienceEnabled" type="boolean" >
       					<persistence type="dynamic" attributeHandler="customerReviewShoppingExperienceEnabledAttributeHandler" />
       					<modifiers read="true" write="true" />
 					</attribute>   
-					<attribute qualifier="reviewOrderedProductsEnabled" type="boolean" >
-      					<persistence type="dynamic" attributeHandler="customerReviewOrderedProductsEnabledAttributeHandler" />
-      					<modifiers read="true" write="true" />
-					</attribute> 
+					
                 </attributes>
             </itemtype>
             

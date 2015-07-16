@@ -805,7 +805,7 @@ public class AccountPageController extends AbstractSearchPageController {
 	
 			heringCustomerFacade.reviewShoppingExperience(reviewShoppingExperienceEnabled);
 			
-			//heringCustomerFacade.reviewOrderedProducts(reviewOrderedProductsEnabled);
+			heringCustomerFacade.reviewOrderedProducts(reviewOrderedProductsEnabled);
 			
 		}
 
