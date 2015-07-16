@@ -71,7 +71,7 @@
                 </ycommerce:testId>
             </c:when>
             <c:otherwise>
-                <li id="${( pageNumber -1 )}"><a class="active">${pageNumber}</a></li>
+                <li id="${( pageNumber -1 )}" class="active"><a>${pageNumber}</a></li>
             </c:otherwise>
         </c:choose>
     </c:forEach>

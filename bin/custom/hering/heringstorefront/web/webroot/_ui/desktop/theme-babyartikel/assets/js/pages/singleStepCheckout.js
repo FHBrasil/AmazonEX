@@ -1,3 +1,6 @@
+var customModal = $('<div id="customModal" class="modal fade"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> <h2 class="modal-title"></h2> </div> <div class="modal-body"> </div> <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
+var returnMessage = $('<div id="customMsg" class="row"> <div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert">&times;</a> <strong>Error!</strong>&nbsp;</div> </div>');
+
 $(document).ready(function() {
 	
 	//date picker
@@ -100,28 +103,51 @@ $(document).ready(function() {
 //	});
 	
 	//Submit form register guest in orderConfirmation
-//	$('#formRegisterGuest').find('.btn-primary').click(function(){
-//		var pwd = $('#formRegisterGuest').find('#pwd').val();
-//		var checkPwd = $('#formRegisterGuest').find('#checkPwd').val();
-//		if(pwd !== '' && checkPwd !== ''){
-//			$.ajax({
-//				async : true,
-//				url : "",
-//				type : 'POST',
-//				//dataType : 'json',
-//				data : $('form#formRegisterGuest').serialize(),
-//				success : function(data) {
-//					$('#accountCreatedSucessfully').collapse('show');
-//				},
-//				error : function(data) {
-//					alert("error");
-//				}
-//			});
-//		}
-//		else{
-//			return;
-//		}
-//	});
+	var $form = $('form#formRegisterGuest');
+	
+	$form.on('submit', function(ev){
+	    ev.preventDefault();
+	    
+	    var returnMessageCustom = $('<div id="customMsg" class="row"> <div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert">&times;</a> <strong>Error!</strong>&nbsp;</div> </div>');
+
+		$.ajax({
+			url : "/checkout/guestConvert",
+			type : 'POST',
+			data : $form.serialize(),
+			success : function(data) {
+				if(data.valueOf() == 'true')
+				{	
+					$('#sectionFormGuest').slideUp(250, function(){ 
+						$(this).remove();
+					});
+					setTimeout(function(){
+						$('#accountCreatedSucessfully').slideDown(250, function(){
+							//
+						});
+					}, 500);
+				}
+				else
+				{						
+					$('.prehead141211').append(returnMessageCustom);	
+					$('#customMsg .alert-danger').append(data);
+					setTimeout(function(){
+						$('#customMsg').slideUp(250, function(){
+							$(this.remove());
+						});
+					}, 5000);
+				}
+			},
+			error : function(data) {				
+				$('.prehead141211').append(returnMessageCustom);	
+				$('#customMsg .alert-danger').append(data);
+				setTimeout(function(){
+					$('#customMsg').slideUp(250, function(){
+						$(this.remove());
+					});
+				}, 5000);
+			}
+		});
+	});
 	
 	$('#Advance').collapse(true);
 	
@@ -311,7 +337,6 @@ $(document).ready(function() {
 	});
 	
 });
-
 
 /*! Selects delivery method */
 function bindDeliveryMethod_onChange() {

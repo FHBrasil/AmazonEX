@@ -137,6 +137,7 @@ import br.hering.storefront.util.SelectOption;
 import org.springframework.context.MessageSource;
 
 import com.flieger.bonussystem.data.BonusSystemData;
+import com.flieger.bonussystem.facade.BonusSystemFacade;
 
 /**
  * Controller for home page.
@@ -231,6 +232,9 @@ public class AccountPageController extends AbstractSearchPageController {
 
 	@Resource
 	private CustomerData customerData;
+	
+	@Resource
+	private BonusSystemFacade bonusSystemFacade;
 
 	@Resource
 	ModelService modelService;
@@ -400,11 +404,9 @@ public class AccountPageController extends AbstractSearchPageController {
 		final CustomerData customerData = customerFacade.getCurrentCustomer();
 		final HeringAddressForm addressForm = getPreparedAddressForm();
 		final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
-		final BonusSystemData bonusData = customerData.getBonusSystem();
 		
-		double bonusPoints = bonusData == null ? .0 : bonusData.getPoints();
-		
-		model.addAttribute("bonusSystemPoints", bonusPoints);
+
+		model.addAttribute("bonusDataPoints", bonusSystemFacade.getCurrentUserBonusSystem().getPoints());
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs(null));
 		model.addAttribute("metaRobots", "no-index,no-follow");
 		model.addAttribute("customerData", customerData);
@@ -776,28 +778,38 @@ public class AccountPageController extends AbstractSearchPageController {
 	 */
 	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
 	@RequireHardLogIn
-	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter, 
-			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth) 
+	public String subscriptions(
+			@RequestParam (defaultValue = "false") final boolean scheduledNewsletterEnabled, 
+			@RequestParam (defaultValue = "false") final boolean tipsNewsletterEnabled, 
+			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth, 
+			@RequestParam (defaultValue = "false") final boolean reviewShoppingExperienceEnabled, 
+			@RequestParam (defaultValue = "false") final boolean reviewOrderedProductsEnabled) 
 			throws CMSItemNotFoundException {
 		
 		CustomerData customerData = customerFacade.getCurrentCustomer();
 		
 		if (customerData != null)
 		{
+			
+			heringCustomerFacade.subscribeScheduledNewsletter(scheduledNewsletterEnabled);
+					
 			//tips newsletter
 			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
 			try 
 			{
 				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
-				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletter, dateOfBirth);
-
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);
 			} 
 			catch (ParseException e) 
 			{
 				//e.printStackTrace();
 			}
+	
+			heringCustomerFacade.reviewShoppingExperience(reviewShoppingExperienceEnabled);
+			
+			heringCustomerFacade.reviewOrderedProducts(reviewOrderedProductsEnabled);
+			
 		}
-
 
 		return REDIRECT_MY_ACCOUNT;
 

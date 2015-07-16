@@ -33,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.hering.core.customer.exceptions.CustomerAuthenticationException;
 import br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade;
 import br.hering.facades.order.HeringOrderFacade;
+import br.hering.facades.customer.HeringCustomerFacade;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
 
@@ -88,6 +89,9 @@ public class CheckoutController extends AbstractCheckoutController
 	
 	@Resource(name = "heringOrderFacade")
 	private HeringOrderFacade heringOrderFacade;
+	
+	@Resource(name = "heringCustomerFacade")
+	private HeringCustomerFacade heringCustomerFacade;
 
 	@Resource
 	private BaseStoreService baseStoreService;
@@ -132,8 +136,17 @@ public class CheckoutController extends AbstractCheckoutController
 	}
 
 
-	@RequestMapping(value = "/orderConfirmation/" + ORDER_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.POST)
-	public String orderConfirmation(final GuestRegisterForm form, final BindingResult bindingResult, final Model model,
+//	@RequestMapping(value = "/orderConfirmation/" + ORDER_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.POST)
+//	public String orderConfirmation(final GuestRegisterForm form, final BindingResult bindingResult, final Model model,
+//			final HttpServletRequest request, final HttpServletResponse response, final RedirectAttributes redirectModel)
+//			throws CMSItemNotFoundException
+//	{
+//		getGuestRegisterValidator().validate(form, bindingResult);
+//		return processRegisterGuestUserRequest(form, bindingResult, model, request, response, redirectModel);
+//	}
+	
+	@RequestMapping(value = "/guestConvert" , method = RequestMethod.POST, produces="text/plain")	
+	public @ResponseBody String guestConvert(final GuestRegisterForm form, final BindingResult bindingResult, final Model model,
 			final HttpServletRequest request, final HttpServletResponse response, final RedirectAttributes redirectModel)
 			throws CMSItemNotFoundException
 	{
@@ -166,8 +179,8 @@ public class CheckoutController extends AbstractCheckoutController
 	{
 		if (bindingResult.hasErrors())
 		{
-			GlobalMessages.addErrorMessage(model, "form.global.error");
-			return processOrderCode(form.getOrderCode(), model, request);
+			GlobalMessages.addErrorMessage(model, "form.guest.fieldMismatch");
+			return getMessageSource().getMessage("form.guest.fieldMismatch", null, getI18nService().getCurrentLocale());
 		}
 		try
 		{
@@ -181,7 +194,6 @@ public class CheckoutController extends AbstractCheckoutController
 				LOG.error("Login Error", e);
 			}
 			getSessionService().removeAttribute(WebConstants.ANONYMOUS_CHECKOUT);
-			model.addAttribute("accountCreatedSucess", Boolean.TRUE);
 		}
 		catch (final DuplicateUidException e)
 		{
@@ -191,10 +203,10 @@ public class CheckoutController extends AbstractCheckoutController
 			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER,
 					"guest.checkout.existingaccount.register.error", new Object[]
 					{ form.getUid() });
-			return REDIRECT_PREFIX + request.getHeader("Referer");
+			return getMessageSource().getMessage("guest.checkout.existingaccount.register.error", null, getI18nService().getCurrentLocale());
 		}
 
-		return REDIRECT_PREFIX + "/my-account";
+		return Boolean.TRUE.toString();
 	}
 
 	protected String processOrderCode(final String orderCode, final Model model, final HttpServletRequest request)
@@ -213,10 +225,11 @@ public class CheckoutController extends AbstractCheckoutController
 		model.addAttribute("allItems", orderDetails.getEntries());
 		model.addAttribute("deliveryAddress", orderDetails.getDeliveryAddress());
 		model.addAttribute("deliveryMode", orderDetails.getDeliveryMode());
-		model.addAttribute("paymentInfo", orderDetails.getPaymentInfo());
+		model.addAttribute("paymentInfo", orderDetails.getPaymentInfo());		
 		model.addAttribute("pageType", HeringPageType.ORDERCONFIRMATION.name());
-		final String uid = orderDetails.getUser().getUid();
-		model.addAttribute("email", uid.replaceAll("[a-z0-9\\-]*\\|", ""));		
+		final String uid = orderDetails.getUser().getUid().replaceAll("[a-z0-9\\-]*\\|", "");
+		model.addAttribute("email", uid);
+		model.addAttribute("customer", heringCustomerFacade.emailAlreadyExists(uid));
 
 		final String boletoUrl = "/boleto-img/jpg/boleto-" + orderCode + ".jpg";
 		

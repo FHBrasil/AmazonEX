@@ -2,6 +2,7 @@
 <%@ taglib prefix="details" tagdir="/WEB-INF/tags/desktop/showcaseproductdetail" %>
 <%@ attribute name="className" required="true" type="java.lang.String" %>
 <%@ attribute name="products" required="true" type="java.util.ArrayList" %>
+<%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
 <c:forEach items="${products}" var="product" varStatus="status">
@@ -25,8 +26,25 @@
 			<details:viewmore productUrl="${productUrl}"/>--%>	
 	    </div>
 	</div>
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 5}">
+		<cms:pageSlot position="Section3A" var="component">
+	        <cms:component component="${component}" />
+	    </cms:pageSlot>
+	    <c:url var="productUrl" value="${product.url}"></c:url>
+	</c:if>
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 12}">
+		<cms:pageSlot position="Section3B" var="component">
+	        <cms:component component="${component}" />
+	    </cms:pageSlot>
+	    <c:url var="productUrl" value="${product.url}"></c:url>
+	</c:if>
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 20}">
+		<cms:pageSlot position="Section3C" var="component">
+	        <cms:component component="${component}" />
+	    </cms:pageSlot>
+	    <c:url var="productUrl" value="${product.url}"></c:url>
+	</c:if>
 </c:forEach>
-
 
 
 <%-- code original

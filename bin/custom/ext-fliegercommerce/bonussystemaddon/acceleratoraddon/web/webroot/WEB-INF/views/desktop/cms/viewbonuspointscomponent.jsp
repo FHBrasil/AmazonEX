@@ -2,103 +2,47 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="bonus" tagdir="/WEB-INF/tags/addons/bonussystemaddon/desktop/bonussystem"%>
 
-<section id="program-info">
-	<header>
-		<h2>
-			<spring:theme code="account.bonusSystem.title" />
-		</h2>
-	</header>
-
+<div class="container">
 	<c:choose>
 	<c:when test="${not empty bonusSystem}">
-		<h3>Como funciona?</h3>
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Praesent vulputate ullamcorper tincidunt. Sed semper magna id dui
-			laoreet laoreet. Cras ligula nulla, sollicitudin eget arcu sed,
-			faucibus tincidunt ante.
-		</p>
-
-		<h3>Seus Pontos</h3>
-
-		<div class="seus-pontos">
-			<p class="btn-group">
-				<strong>${bonusSystem.points}</strong>
-				<span>Total de pontos acumulados</span>
-			</p>
-			<c:if test="${fn:length(bonusSystem.entries) > 0}">
-			<p class="btn-group">
-				<c:set var="lastBonus" value="0"/>
-				<c:forEach items="${bonusSystem.entries}" var="entry">
-					<c:if test="${entry.points > 0}">
-						<c:set var="lastBonus" value="${entry.points}"/>
-					</c:if>
-				</c:forEach>
-				<strong>${lastBonus > 0 ? lastBonus : 0}</strong>
-				<span><spring:theme code="account.bonusSystem.lastBuy" /></span>
-			</p>
-			</c:if>
+		<c:set var="intFox" value="${fn:split(bonusSystem.points/10, '.')}" />
+		<div class="col-sm-12 col-md-8">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class=" panel panel-default">
+						<div class="panel-body">
+							<span class="onefox big">
+								<fmt:formatNumber maxFractionDigits="0" value="${bonusSystem.points}"/>
+							</span>
+							<c:forEach begin="1" end="${intFox[0]>390 ? 390 : intFox[0]}">
+								<span class="onefox"></span>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+			</div>
+			<bonus:tableInfoHistory type="bonuslist" bonusSystem="${bonusSystem}"/>
+			<bonus:tableInfoHistory type="prebooked" bonusSystem="${bonusSystem}" />
 		</div>
-
-		<c:if test="${fn:length(bonusSystem.entries) > 0}">
-			<h3><spring:theme code="account.bonusSystem.history" /></h3>
-			<table>
-				<tbody>
-				<c:forEach items="${bonusSystem.entries}" var="entry">
-					<c:if test="${entry.referenceType == 'Order'}">
-					<tr>
-						<td><strong>Pedido:</strong> ${entry.reference}</td>
-						<c:choose>
-						<c:when test="${entry.points > 0}">
-						<td><strong>Pontos acumulados:</strong> ${entry.points}</td>
-						</c:when>
-						<c:otherwise>
-						<td><strong>Pontos usados:</strong> ${-entry.points}</td>
-						</c:otherwise>
-						</c:choose>
-						<%--<td><strong>Validade:</strong> <fmt:formatDate value="${entry.date}" type="DATE" dateStyle="short" /></td>--%>
-					</tr>
-					</c:if>
-				</c:forEach>
-				</tbody>
-			</table>
-		</c:if>
-
+		<div class="col-sm-12 col-md-4">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class=" panel panel-default">
+						<div class="panel-heading">Punkte sammeln und sparen!
+						</div>
+						<div class="panel-body">
+							<p>Mit jedem Einkauf bei Babyartikel.de erhalten Sie Bonuspunkte. Die Punkte können Sie beim nächsten Einkauf in Rabatte umwandeln. Achten Sie auf den roten Fuchs und werden Sie Sparweltmeister!</p>
+						</div>
+					</div>
+				</div>		
+			</div>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<p><spring:theme code="account.bonusSystem.notMember" /></p>
 	</c:otherwise>
 	</c:choose>
-</section>
+</div>
 
-
-
-
-<%-- <p class="btn-group">
-	<span class="btn btn-points">Total de pontos acumulados: ${bonusSystem.points}</span>
-</p>
-<c:if test="${fn:length(bonusSystem.entries) > 0}">
-	<p class="btn-group">
-		<span class="btn btn-points">Pontos acumulados na ï¿½ltima compra: ${bonusSystem.entries[fn:length(bonusSystem.entries)-1].points}</span>
-	</p>
-
-	<h2>Histï¿½rico de pontos acumulados:</h2>
-
-	<table>
-		<tbody>
-		<c:forEach items="${bonusSystem.entries}" var="entry">
-			<tr>
-				<td><strong>Pedido:</strong> ${entry.reference}</td>
-				<td><strong>Pontos acumulados:</strong> ${entry.points}</td>
-				<td><strong>Validade:</strong> ${entry.date}</td>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
-</c:if> --%>
-
-<%--<nav class="componente-paginacao estilo-escuro">
-	<a href="#">&lt;</a> <a href="#">1</a> <a class="ativo">2</a> <a
-		href="#">3</a> <a href="#">4</a> <a href="#">5</a> <a href="#">&gt;</a>
-</nav>--%>

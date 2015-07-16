@@ -168,12 +168,65 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 	/**
 	 * @author Luiza
 	 */
+	public CustomerData subscribeScheduledNewsletter(final Boolean scheduledNewsletter)
+	{
+		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
+
+		customerModel = heringCustomerAccountService.subscribeScheduledNewsletter(customerModel, scheduledNewsletter);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
+	
+	/**
+	 * @author Luiza
+	 */
 	public CustomerData subscribeTipsNewsletter(final Boolean tipsNewsletter, final Date dateOfBirth)
 	{
 		
 		CustomerModel customerModel = getCurrentSessionCustomer();	
 
 		customerModel = heringCustomerAccountService.subscribeTipsNewsletter(customerModel, tipsNewsletter, dateOfBirth);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
+	
+	
+	/**
+	 * @author Luiza
+	 */
+	public CustomerData reviewShoppingExperience(final Boolean reviewShoppingExperience)
+	{
+		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
+
+		customerModel = heringCustomerAccountService.reviewShoppingExperience(customerModel, reviewShoppingExperience);
+
+		CustomerData customerData = new CustomerData();
+		customerConverter.convert(customerModel, customerData);
+			
+		return customerData;
+		
+	}
+	
+	
+	/**
+	 * @author Luiza
+	 */
+	public CustomerData reviewOrderedProducts(final Boolean reviewOrderedProducts)
+	{
+		
+		CustomerModel customerModel = getCurrentSessionCustomer();	
+
+		customerModel = heringCustomerAccountService.reviewOrderedProducts(customerModel, reviewOrderedProducts);
 
 		CustomerData customerData = new CustomerData();
 		customerConverter.convert(customerModel, customerData);
@@ -306,6 +359,13 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		
 		return customer;
 
+	}
+	
+	@Override
+	public CustomerModel emailAlreadyExists(final String email)
+	{
+		KPCustomerAccountService customerAccountService = (KPCustomerAccountService) getCustomerAccountService();
+		return customerAccountService.getCustomerByEmail(email);
 	}
 
 
