@@ -23,8 +23,8 @@
 					</div>
 				</div>
 			</div>
-<%-- 			<bonus:tableInfoHistory type="bonuslist" bonusSystem="${bonusSystem}" /> --%>
-<%-- 			<bonus:tableInfoHistory type="prebooked" bonusSystem="${bonusSystem.bookEntries}" /> --%>
+			<bonus:tableInfoHistory type="bonuslist" bonusSystem="${bonusSystem}"/>
+			<bonus:tableInfoHistory type="prebooked" bonusSystem="${bonusSystem}" />
 		</div>
 		<div class="col-sm-12 col-md-4">
 			<div class="row">
