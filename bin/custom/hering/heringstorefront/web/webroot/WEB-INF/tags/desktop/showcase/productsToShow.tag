@@ -2,6 +2,7 @@
 <%@ taglib prefix="details" tagdir="/WEB-INF/tags/desktop/showcaseproductdetail" %>
 <%@ attribute name="className" required="true" type="java.lang.String" %>
 <%@ attribute name="products" required="true" type="java.util.ArrayList" %>
+<%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
 <c:forEach items="${products}" var="product" varStatus="status">
