@@ -306,9 +306,9 @@ function formGuestOnClick(){
 			success : function(data) {
 				if(data.valueOf() == 'true')
 				{
-					$('#sectionFormGuest').slideUp(250, function(){ 
-						$(this).remove();
-					});
+//					$('#sectionFormGuest').slideUp(250, function(){ 
+//						$(this).remove();
+//					});
 					$('body').append(customModal);				    
 					$('#customModal .modal-body').append($('#accountCreatedSucessfully').html());
 					setTimeout(function(){
