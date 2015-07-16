@@ -453,3 +453,8 @@
 	#toggleBonuslist, #togglePrebooked {border-width: 1px;}
 	.onefox {background-image: url('/_ui/desktop/theme-babyartikel/assets/images/sparfuchs24.gif');display:inline-block;background-repeat: no-repeat;width:30px;height:30px;background-position: left center;float:left;}
 	.onefox.big {background-image: url('/_ui/desktop/theme-babyartikel/assets/images/sparfuchs89.gif');height:90px;padding-left:90px;width:240px;font-size:60px;text-align:center;}
+
+	
+#togglebonuslist, #toggleprebooked {
+  border-width: 1px;
+}

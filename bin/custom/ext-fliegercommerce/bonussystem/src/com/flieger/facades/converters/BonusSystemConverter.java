@@ -73,6 +73,7 @@ public class BonusSystemConverter extends AbstractPopulatingConverter<BonusSyste
 			entries.add(bonusSystemEntryConverter.convert(logModel));
 		}
 
+		target.setBookedEntries(entries);
 		target.setEntries(entries);
 	}
 
