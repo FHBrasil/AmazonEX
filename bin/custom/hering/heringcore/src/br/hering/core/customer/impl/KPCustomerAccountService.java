@@ -18,6 +18,8 @@ public interface KPCustomerAccountService extends CustomerAccountService
 {
 	public CustomerModel getCustomerByCpfCnpj(String cpfCnpj);
 	
+	public CustomerModel getCustomerByEmail(final String email);
+	
 	HeringDebitPaymentInfoModel createPaymentSubscription(	final CustomerModel customerModel, 
 																				final HeringDebitPaymentInfoModel model,
 																				final BillingInfo billing, 
