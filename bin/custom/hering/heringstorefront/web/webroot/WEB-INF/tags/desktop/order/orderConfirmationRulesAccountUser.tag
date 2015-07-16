@@ -61,14 +61,14 @@
 	</c:if>
 	<c:if test="${not orderData.guestCustomer}">
 		<!-- RENDER IF (customer has account) and (customer not has birthdate) -->
-		<h2>Newsletter f&uuml;r Philipp</h2>
-		<p>Abonnieren Sie unseren personalisierten Newsletter mit interessanten Infos zu Ihrer SSW und passenden Tipps zum Alter Ihres Kindes. Selbstverst&auml;ndlich jederzeit abbestellbar:</p>
+		<h2>Newsletter f&uuml;r ${orderData.user.name}</h2>
+		<p>[FIXED FORM]Abonnieren Sie unseren personalisierten Newsletter mit interessanten Infos zu Ihrer SSW und passenden Tipps zum Alter Ihres Kindes. Selbstverst&auml;ndlich jederzeit abbestellbar:</p>
 		<div class="panel panel-default panel-secure150203">
 			<div class="panel-body">
 				<form>
 					<div class="form-group">
 						<label for="inputEmail">E-Mail</label>
-						<input type="email" class="form-control" id="inputEmail" value="phil@oidudniudd.de">
+						<input type="email" class="form-control" id="inputEmail" value="${email}">
 					</div>
 					<div class="form-group">
 						<label for="birthday" class="control-label">Entbindungstermin / Geburtstag</label>
@@ -91,19 +91,20 @@
 			<p>Super! Sie erhalten ab sofort w&ouml;chentlich unseren Newsletter!</p>
 			<!-- END RENDER IF -->
 		</div>
-	</c:if>
-	<!-- RENDER IF (customer has account) and (customer has birthdate) -->
-	<h2>Werde Teil unserer Community!</h2>
-	<p>Verbinde dich mit unseren sozialen Netzwerken, erhalte News und Infos rund ums Baby und werde Teil einer Gemeinschaft stolzer Eltern!</p>
-	<p class="social150121 becomesocial margin-top">
-		<a href="#"><span class="babicon babicon-facebook"> </span></a>
-		<a href="#"><span class="babicon babicon-google"> </span></a>
-		<a href="#"><span class="babicon babicon-twitter"> </span></a>
-		<a href="#"><span class="babicon babicon-wordpress"> </span></a>
-		<a href="#"><span class="babicon babicon-youtube"> </span></a>
-		<a href="#"><span class="babicon babicon-instagram"> </span></a>
-		<a href="#"><span class="babicon babicon-pinterest"> </span></a>
-	</p>
-
-	<!-- END RENDER IF -->
+		
+		<!-- RENDER IF (customer has account) and (customer has birthdate) -->
+		<h2>Werde Teil unserer Community!</h2>
+		<p>Verbinde dich mit unseren sozialen Netzwerken, erhalte News und Infos rund ums Baby und werde Teil einer Gemeinschaft stolzer Eltern!</p>
+		<p class="social150121 becomesocial margin-top">
+			<a href="#"><span class="babicon babicon-facebook"> </span></a>
+			<a href="#"><span class="babicon babicon-google"> </span></a>
+			<a href="#"><span class="babicon babicon-twitter"> </span></a>
+			<a href="#"><span class="babicon babicon-wordpress"> </span></a>
+			<a href="#"><span class="babicon babicon-youtube"> </span></a>
+			<a href="#"><span class="babicon babicon-instagram"> </span></a>
+			<a href="#"><span class="babicon babicon-pinterest"> </span></a>
+		</p>
+	
+		<!-- END RENDER IF -->
+	</c:if>	
 </div>
