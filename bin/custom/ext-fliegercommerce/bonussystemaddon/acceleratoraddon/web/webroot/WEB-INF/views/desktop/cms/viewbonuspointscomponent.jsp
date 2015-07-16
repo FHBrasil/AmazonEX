@@ -195,7 +195,9 @@
 									<tr>
 										<td>+${entry.points}</td>
 										<td>${entry.reference}</td>
-										<td class="hidden-xs">${entry.date}</td>
+										<td class="hidden-xs">
+											<fmt:formatDate value="${entry.date}" pattern="dd.MM.yy"/>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -203,9 +205,11 @@
 								<c:set var="endList" value="${fn:length(bonusSystem.entries)}" />
 								<c:forEach items="${bonusSystem.entries}" var="entry" begin="10" end="${endList}">
 									<tr>
-										<td>+${entry.points}</td>
+										<td>${entry.points > 0 ? "+" : ""} ${entry.points}</td>
 										<td>${entry.reference}</td>
-										<td class="hidden-xs">${entry.date}</td>
+										<td class="hidden-xs">
+											<fmt:formatDate value="${entry.date}" pattern="dd.MM.yy"/>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -297,6 +301,10 @@
 <!-- 					</div> -->
 <!-- 				</div> -->
 <!-- 			</div> -->
+
+
+
+
 		</div>
 		<div class="col-sm-12 col-md-4">
 			<div class="row">
