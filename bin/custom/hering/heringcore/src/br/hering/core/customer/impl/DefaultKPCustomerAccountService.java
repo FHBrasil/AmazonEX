@@ -287,6 +287,13 @@ public class DefaultKPCustomerAccountService extends DefaultCustomerAccountServi
 		HeringCustomerAccountDao customerDao = (HeringCustomerAccountDao) getCustomerAccountDao();
 		return customerDao.getCustomerByCpf(cpfCnpj);
 	}
+	
+	@Override
+	public CustomerModel getCustomerByEmail(final String email)
+	{
+		HeringCustomerAccountDao customerDao = (HeringCustomerAccountDao) getCustomerAccountDao();
+		return customerDao.getCustomerByEmail(email);
+	}
 
 	public CartService getCartService()
 	{
