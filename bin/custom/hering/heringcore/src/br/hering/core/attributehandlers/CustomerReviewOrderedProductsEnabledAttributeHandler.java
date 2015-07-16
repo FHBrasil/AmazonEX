@@ -63,8 +63,10 @@ public class CustomerReviewOrderedProductsEnabledAttributeHandler implements Dyn
 		subscription.setLastName(names[1]);
 		subscription.setEmail(customerModel.getUid());
 		subscription.setGender(customerModel.getGender());
-		TitleModel title = getUserService().getTitleForCode("mr");
-		subscription.setTitle(title);
+		if (customerModel.getTitle() != null)
+		{
+			subscription.setTitle(customerModel.getTitle());
+		}		
 		subscription.setLanguage(customerModel.getSessionLanguage());
 		subscription.setStore(getBaseStoreService().getCurrentBaseStore());		
 		final SubscriptionType subscriptionType = SubscriptionType.REVIEW_ORDERED_PRODUCT;

@@ -31,10 +31,15 @@ public class NewsletterSubscriptionModelToDataPopulator implements Populator<New
 		target.setLastName(source.getLastName());
 		target.setEmail(source.getEmail());
 		
-		final String genderCode = source.getGender().getCode();
-		if (genderCode != null)
-		{
-			target.setGenderCode(genderCode);
+		
+		try {
+			final String genderCode = source.getGender().getCode();
+			if (genderCode != null)
+			{
+				target.setGenderCode(genderCode);
+			}
+		} catch (Exception e1) {
+			//e1.printStackTrace();
 		}		
 		
 		try {
