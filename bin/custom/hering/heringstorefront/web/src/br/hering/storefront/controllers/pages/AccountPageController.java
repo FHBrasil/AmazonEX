@@ -405,7 +405,7 @@ public class AccountPageController extends AbstractSearchPageController {
 		final HeringAddressForm addressForm = getPreparedAddressForm();
 		final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
 		
-		
+
 		model.addAttribute("bonusDataPoints", bonusSystemFacade.getCurrentUserBonusSystem().getPoints());
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs(null));
 		model.addAttribute("metaRobots", "no-index,no-follow");
@@ -778,28 +778,38 @@ public class AccountPageController extends AbstractSearchPageController {
 	 */
 	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
 	@RequireHardLogIn
-	public String subscriptions(@RequestParam (defaultValue = "false") final boolean tipsNewsletter, 
-			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth) 
+	public String subscriptions(
+			@RequestParam (defaultValue = "false") final boolean scheduledNewsletterEnabled, 
+			@RequestParam (defaultValue = "false") final boolean tipsNewsletterEnabled, 
+			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth, 
+			@RequestParam (defaultValue = "false") final boolean reviewShoppingExperienceEnabled, 
+			@RequestParam (defaultValue = "false") final boolean reviewOrderedProductsEnabled) 
 			throws CMSItemNotFoundException {
 		
 		CustomerData customerData = customerFacade.getCurrentCustomer();
 		
 		if (customerData != null)
 		{
+			
+			heringCustomerFacade.subscribeScheduledNewsletter(scheduledNewsletterEnabled);
+					
 			//tips newsletter
 			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
 			try 
 			{
 				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
-				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletter, dateOfBirth);
-
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);
 			} 
 			catch (ParseException e) 
 			{
 				//e.printStackTrace();
 			}
+	
+			heringCustomerFacade.reviewShoppingExperience(reviewShoppingExperienceEnabled);
+			
+			heringCustomerFacade.reviewOrderedProducts(reviewOrderedProductsEnabled);
+			
 		}
-
 
 		return REDIRECT_MY_ACCOUNT;
 
