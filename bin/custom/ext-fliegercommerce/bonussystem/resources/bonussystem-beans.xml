@@ -14,6 +14,7 @@
 	<bean class="com.flieger.bonussystem.data.BonusSystemData">
 		<property name="entries" type="java.util.List&lt;com.flieger.bonussystem.data.BonusSystemEntryData>"/>
 		<property name="points" type="double"/>
+		<property name="bookedEntries" type="java.util.List&lt;com.flieger.bonussystem.data.BonusSystemEntryData>"/>
 	</bean>
 	<bean class="com.flieger.bonussystem.data.BonusSystemEntryData">
 		<property name="date" type="java.util.Date"/>
