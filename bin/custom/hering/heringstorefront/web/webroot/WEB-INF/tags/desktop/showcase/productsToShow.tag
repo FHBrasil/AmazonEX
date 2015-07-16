@@ -26,19 +26,19 @@
 			<details:viewmore productUrl="${productUrl}"/>--%>	
 	    </div>
 	</div>
-	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 6}">
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 5}">
 		<cms:pageSlot position="Section3A" var="component">
 	        <cms:component component="${component}" />
 	    </cms:pageSlot>
 	    <c:url var="productUrl" value="${product.url}"></c:url>
 	</c:if>
-	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 13}">
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 12}">
 		<cms:pageSlot position="Section3B" var="component">
 	        <cms:component component="${component}" />
 	    </cms:pageSlot>
 	    <c:url var="productUrl" value="${product.url}"></c:url>
 	</c:if>
-	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 21}">
+	<c:if test="${searchPageData.pagination.currentPage eq 0 and status.count eq 20}">
 		<cms:pageSlot position="Section3C" var="component">
 	        <cms:component component="${component}" />
 	    </cms:pageSlot>
