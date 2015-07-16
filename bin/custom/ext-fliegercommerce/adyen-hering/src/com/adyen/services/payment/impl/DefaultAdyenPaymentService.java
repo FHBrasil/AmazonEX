@@ -12,6 +12,7 @@ import de.hybris.platform.payment.commands.result.SubscriptionResult;
 import de.hybris.platform.payment.dto.BillingInfo;
 import de.hybris.platform.payment.dto.CardInfo;
 import de.hybris.platform.payment.dto.NewSubscription;
+import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.dto.TransactionStatusDetails;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.impl.DefaultPaymentServiceImpl;
@@ -43,6 +44,7 @@ import com.adyen.services.payment.AdyenDebitAuthorizationResult;
 import com.adyen.services.payment.AdyenPaymentService;
 import com.adyen.services.recurring.AdyenRecurringDetailsResult;
 import com.adyen.services.recurring.AdyenRecurringListDetailsRequest;
+import com.flieger.constants.AdyenTransactionStatus;
 import com.flieger.main.Credentials;
 import com.flieger.payment.jalo.AdyenCreateSubscriptionRequest;
 import com.flieger.payment.model.HeringDebitPaymentInfoModel;
@@ -158,71 +160,101 @@ implements AdyenPaymentService
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.hybris.platform.payment.impl.DefaultPaymentServiceImpl#capture(de.hybris.platform.payment.model.
-	 * PaymentTransactionModel)
-	 */
-	@Override
-	public PaymentTransactionEntryModel capture(PaymentTransactionModel transaction) throws AdapterException
-	{
-		String newEntryCode = getNewEntryCode(transaction);
-		
-		AdyenCardPaymentService cardPaymentService = (AdyenCardPaymentService) this.getCardPaymentService();
-		
-		PaymentTransactionEntryModel auth = null;
-		for (PaymentTransactionEntryModel model : transaction.getEntries())
-		{
-			if (model.getType().equals(PaymentTransactionType.AUTHORIZATION))
-			{
-				auth = model;
-				break;
-			}
-		}
+     * (non-Javadoc)
+     * 
+     * @see de.hybris.platform.payment.impl.DefaultPaymentServiceImpl#capture(de.hybris.platform.payment.model.
+     * PaymentTransactionModel)
+     */
+    @Override
+    public PaymentTransactionEntryModel capture(final PaymentTransactionModel transaction) throws AdapterException
+    {
+        String captureCode = getNewEntryCode(transaction);
 
-		String baseStoreUid = DEFAULT_STORE_UID;
-		if(transaction.getOrder() != null 
-				&& transaction.getOrder().getStore() != null 
-				&& StringUtils.isNotBlank(transaction.getOrder().getStore().getUid()))
-		{
-			baseStoreUid = transaction.getOrder().getStore().getUid();
-		}		
-		//chega aqui
-		AdyenCaptureResult result = 
-				cardPaymentService.capture(
-						new AdyenCaptureRequest(transaction.getPaymentProvider(), newEntryCode,
-				getParam(Credentials.MERCHANT_ACCOUNT + "." + baseStoreUid), Currency.getInstance(auth.getCurrency().getIsocode()), auth.getAmount(), 
-				auth.getAdyenReference(), auth.getAdyenAuthorizationCode()));
-		
-		transaction.setRequestId(result.getRequestId());
-		transaction.setRequestToken(result.getRequestToken());
+        final AdyenCardPaymentService cardPaymentService = (AdyenCardPaymentService) this.getCardPaymentService();
 
-		this.modelService.save(transaction);
-		
-		PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService
-				.create(PaymentTransactionEntryModel.class);
-		entry.setAmount(result.getTotalAmount());
-		
-		if(result.getTransactionStatusDetails().equals(TransactionStatusDetails.SUCCESFULL)) 
-		{
-			if (result.getCurrency() != null) {
-				entry.setCurrency(this.commonI18NService.getCurrency(result.getCurrency().getCurrencyCode()));
-			}
-			entry.setType(PaymentTransactionType.CAPTURE);
-			entry.setRequestId(result.getRequestId());
-			entry.setRequestToken(result.getRequestToken());
-			entry.setTime(result.getRequestTime() == null ? new Date() : result.getRequestTime());
-			entry.setPaymentTransaction(transaction);
-			entry.setTransactionStatus(result.getTransactionStatus().toString());
-			entry.setTransactionStatusDetails(result.getTransactionStatusDetails().toString());
-			entry.setCode(newEntryCode);
-			entry.setAdyenReference(result.getAdyenReference());
-			entry.setAdyenMerchantReference(auth.getAdyenMerchantReference());
-		}
-		this.modelService.save(entry);
-		this.modelService.refresh(transaction);
-		return entry;
-	}
+        PaymentTransactionEntryModel auth = null;
+        PaymentTransactionEntryModel captureEntry = null;
+        for (final PaymentTransactionEntryModel entry : transaction.getEntries())
+        {
+            if (        auth == null 
+                    && entry.getType().equals(PaymentTransactionType.AUTHORIZATION))
+            {
+                auth = entry;
+            }
+            else if (   captureEntry == null
+                        && entry.getType().equals(PaymentTransactionType.CAPTURE))
+            {
+                captureEntry = entry;
+            }
+        }
+        
+        PaymentTransactionEntryModel thisCapture = 
+                (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
+
+        //se houve uma <b>tentativa</b> de captura que não teve sucesso, tenta novamente, senão retorna a captura que já foi feita
+        if (captureEntry != null)
+        {
+            if(TransactionStatus.ERROR.name().equals(captureEntry.getTransactionStatus()))
+            {
+                if(TransactionStatusDetails.COMMUNICATION_PROBLEM.name().equals(captureEntry.getTransactionStatus()))
+                {
+                    thisCapture = captureEntry;
+                    captureCode = captureEntry.getCode();
+                }// se não é communication problem, então pode ser Insufficient balance on payment  ou Operation requested after maximum period allowed: 5 days
+                else 
+                {
+                    return captureEntry;//the payment has already been captured                                                                     
+                }
+            }
+            else 
+            {
+                return captureEntry;//the payment has already been captured
+            }
+        }
+        
+        final String baseStoreUid = transaction.getOrder().getStore().getUid();
+        
+        final AdyenCaptureRequest captureRequest = 
+                new AdyenCaptureRequest(transaction.getPaymentProvider(),
+                        captureCode, 
+                        getParam(Credentials.MERCHANT_ACCOUNT + "." + baseStoreUid), 
+                        Currency.getInstance(auth.getCurrency().getIsocode()), 
+                        auth.getAmount(), auth.getAdyenReference(), 
+                        auth.getAdyenAuthorizationCode());
+        
+        final AdyenCaptureResult captureResult = 
+                cardPaymentService.capture(captureRequest);
+        
+        thisCapture.setAmount(captureResult.getTotalAmount());
+
+        if (captureResult.getCurrency() != null)
+        {
+            thisCapture.setCurrency(
+                    this.commonI18NService.getCurrency(
+                            captureResult.getCurrency().getCurrencyCode()));
+        }
+        thisCapture.setType(PaymentTransactionType.CAPTURE);
+        thisCapture.setTime(captureResult.getRequestTime() == null ? new Date() : captureResult.getRequestTime());
+        thisCapture.setPaymentTransaction(transaction);
+        
+        final String status = 
+                TransactionStatus.ACCEPTED.equals(captureResult.getTransactionStatus()) ? 
+                        AdyenTransactionStatus.CAPTURE_RECEIVED : 
+                            captureResult.getTransactionStatus().toString();
+        
+        thisCapture.setTransactionStatus(status);
+        
+        thisCapture.setTransactionStatusDetails(
+                captureResult.getTransactionStatusDetails().toString());
+        
+        thisCapture.setCode(captureCode);
+        thisCapture.setAdyenReference(captureResult.getAdyenReference());
+        thisCapture.setAdyenMerchantReference(auth.getAdyenMerchantReference());
+        
+        this.modelService.save(thisCapture);
+        this.modelService.refresh(transaction);
+        return thisCapture;
+    }
 
 	/*
 	 * (non-Javadoc)
