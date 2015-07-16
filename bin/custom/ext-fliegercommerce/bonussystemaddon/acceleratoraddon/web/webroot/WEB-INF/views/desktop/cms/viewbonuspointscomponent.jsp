@@ -6,174 +6,18 @@
 <div class="container">
 	<c:choose>
 	<c:when test="${not empty bonusSystem}">
+		<c:set var="intFox" value="${fn:split(bonusSystem.points/10, '.')}" />
 		<div class="col-sm-12 col-md-8">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class=" panel panel-default">
 						<div class="panel-body">
-							<span class="onefox big">${bonusSystem.points}</span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
-							<span class="onefox"></span>
+							<span class="onefox big">
+								<fmt:formatNumber maxFractionDigits="0" value="${bonusSystem.points}"/>
+							</span>
+							<c:forEach begin="1" end="${intFox[0]>390 ? 390 : intFox[0]}">
+								<span class="onefox"></span>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -193,8 +37,11 @@
 							<tbody>
 								<c:forEach items="${bonusSystem.entries}" var="entry" begin="0" end="9">
 									<tr>
-										<td>+${entry.points}</td>
-										<td>${entry.reference}</td>
+										<td>
+											${entry.points > 0 ? "+" : ""} 
+											<fmt:formatNumber maxFractionDigits="0" value="${entry.points}"/>
+										</td>
+										<td><a href="/de/my-account/order/${entry.reference}">${entry.reference}</a></td>
 										<td class="hidden-xs">
 											<fmt:formatDate value="${entry.date}" pattern="dd.MM.yy"/>
 										</td>
@@ -205,8 +52,11 @@
 								<c:set var="endList" value="${fn:length(bonusSystem.entries)}" />
 								<c:forEach items="${bonusSystem.entries}" var="entry" begin="10" end="${endList}">
 									<tr>
-										<td>${entry.points > 0 ? "+" : ""} ${entry.points}</td>
-										<td>${entry.reference}</td>
+										<td>
+											${entry.points > 0 ? "+" : ""} 
+											<fmt:formatNumber maxFractionDigits="0" value="${entry.points}"/>
+										</td>
+										<td><a href="/de/my-account/order/${entry.reference}">${entry.reference}</a></td>
 										<td class="hidden-xs">
 											<fmt:formatDate value="${entry.date}" pattern="dd.MM.yy"/>
 										</td>
