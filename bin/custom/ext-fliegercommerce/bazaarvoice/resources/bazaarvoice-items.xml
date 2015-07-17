@@ -31,6 +31,19 @@
 			</attributes>
 		</itemtype>
 
+		<itemtype code="BazaarvoiceProductFeedImportCronJob" extends="CronJob"
+			autocreate="true" generate="true">
+			<attributes>
+				<attribute qualifier="bazaarvoiceStorefront" type="CMSSite">
+					<description>Bazaarvoice credential information</description>
+					<modifiers initial="true" read="true" write="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
 		<itemtype code="BazaarvoiceConfig" autocreate="true"
 			generate="true">
 			<attributes>

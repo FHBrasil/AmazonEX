@@ -34,6 +34,9 @@
 		<property name="typeCode" value="CMSSite"/>
 	</bean>
 
+	<!-- Bean for BV cronjob import reviews -->
+     <bean id="bazaarvoiceImportReviewsPerformable" class="com.bazaarvoice.hybris.cronjob.BazaarvoiceImportReviewsPerformable" parent="abstractJobPerformable" />
+    
 	<!-- <bean id="bazaarvoiceComponentRenderer"
 		class="com.bazaarvoice.hybris.component.renderer.BazaarvoiceComponentRenderer">
 		<property name="typeService" ref="typeService" />
