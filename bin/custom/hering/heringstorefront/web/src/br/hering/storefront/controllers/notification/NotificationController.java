@@ -42,6 +42,7 @@ import de.hybris.platform.servicelayer.search.SearchResult;
 
 /**
  * @author flieger
+ * @author felipe
  */
 @Controller
 public class NotificationController

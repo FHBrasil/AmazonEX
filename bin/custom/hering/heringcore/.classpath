@@ -16,5 +16,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/newslettersubscription"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry kind="src" path="/wishlist"/>
+	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-beans-3.1.4.RELEASE.jar"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
