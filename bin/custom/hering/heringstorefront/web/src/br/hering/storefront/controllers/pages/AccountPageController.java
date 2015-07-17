@@ -793,18 +793,19 @@ public class AccountPageController extends AbstractSearchPageController {
 			
 			heringCustomerFacade.subscribeScheduledNewsletter(scheduledNewsletterEnabled);
 					
-			//tips newsletter
 			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
 			try 
-			{
+			{				
 				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
-				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);				
 			} 
 			catch (ParseException e) 
 			{
+				Date dateOfBirth = null;			
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);
 				//e.printStackTrace();
 			}
-	
+		
 			heringCustomerFacade.reviewShoppingExperience(reviewShoppingExperienceEnabled);
 			
 			heringCustomerFacade.reviewOrderedProducts(reviewOrderedProductsEnabled);

@@ -6,13 +6,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-
-//import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
-//import com.fliegersoftware.newslettersubscription.data.SubscriptionTypeData;
 import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
 import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
 import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscriptionNotFound;
-//import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 import com.fliegersoftware.newslettersubscription.services.NewsletterSubscriptionService;
 
@@ -28,8 +24,6 @@ import de.hybris.platform.store.services.BaseStoreService;
 public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel>{
 
 	
-	//private NewsletterSubscriptionFacade newsletterSubscriptionFacade;
-	
 	private NewsletterSubscriptionService newsletterSubscriptionService;
 	
 	private BaseStoreService baseStoreService;
@@ -38,9 +32,6 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 
 	private CustomerNameStrategy customerNameStrategy;
 
-	//private Converter<CustomerModel, CustomerData> customerConverter;
-	
-	//private Converter<SubscriptionType, SubscriptionTypeData> subscriptionTypeModelToDataConverter;
 	
 	private static final Logger LOG = Logger.getLogger(CustomerTipsNewsletterEnabledAttributeHandler.class);
 
