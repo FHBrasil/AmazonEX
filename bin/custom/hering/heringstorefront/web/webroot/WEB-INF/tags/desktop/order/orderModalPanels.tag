@@ -29,6 +29,10 @@
 			<p class="small margin-top"><spring:theme code="text.fliegercommerce.texto155"/></p>
 		</c:when>
 		<c:otherwise>
+			<dl>
+				<dt><spring:theme code="text.fliegercommerce.texto152"/></dt>
+				<dd>${order.totalPrice.formattedValue}</dd>
+			</dl>
 		</c:otherwise>
 	</c:choose>
 </div>
