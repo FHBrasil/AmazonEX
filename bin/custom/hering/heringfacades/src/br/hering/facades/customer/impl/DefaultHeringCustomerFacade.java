@@ -360,6 +360,13 @@ public class DefaultHeringCustomerFacade extends DefaultCustomerFacade implement
 		return customer;
 
 	}
+	
+	@Override
+	public CustomerModel emailAlreadyExists(final String email)
+	{
+		KPCustomerAccountService customerAccountService = (KPCustomerAccountService) getCustomerAccountService();
+		return customerAccountService.getCustomerByEmail(email);
+	}
 
 
 	/* (non-Javadoc)

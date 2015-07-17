@@ -17,13 +17,13 @@
 				<dt><spring:theme code="text.fliegercommerce.texto149"/></dt>
 				<dd><spring:theme code="text.fliegercommerce.texto156"/></dd>
 				<dt><spring:theme code="text.fliegercommerce.texto150"/></dt>
-				<dd>[FIXED]DE59600800000110906600</dd>
+				<dd><spring:theme code="orderConfirmation.Iban"/></dd>
 				<dt><spring:theme code="text.fliegercommerce.texto151"/></dt>
-				<dd>[FIXED]DRESDEFF600</dd>
+				<dd><spring:theme code="orderConfirmation.Bic"/></dd>
 				<dt><spring:theme code="text.fliegercommerce.texto152"/></dt>
 				<dd>${order.totalPrice.formattedValue}</dd>
 				<dt><spring:theme code="text.fliegercommerce.texto153"/></dt>
-				<dd>[FIXED]0001NC1H 1436184885226</dd>
+				<dd><spring:theme code="orderConfirmation.Usage"/></dd>
 			</dl>
 			<a href="javascript:window.print()" class="btn btn-default"><spring:theme code="text.fliegercommerce.texto154"/></a>
 			<p class="small margin-top"><spring:theme code="text.fliegercommerce.texto155"/></p>
