@@ -28,6 +28,10 @@ public final class BazaarvoiceConstants extends GeneratedBazaarvoiceConstants
 	public static final String XML_BASE_FILE_NAME = "xmlBaseFileName";
 	public static final String LOCAL_XML_OUTPUT_DIRECTORY = "localXmlOutputDirectory";
 	public static final String LOCAL_XML_ARCHIVE_DIRECTORY = "localXmlArchiveDirectory";
+	public static final String FTP_IMPORT_DIRECTORY = "ftpImportDirectory";
+	public static final String FTP_IMPORT_FILE = "ftpImportFileName";
+	public static final String LOCAL_DIRECTORY_TO_DOWNLOAD = "localDirectoryToDownload";
+	public static final String FILE_BAZAAR_RATING = "fileBazaarRating";
 
 
 
