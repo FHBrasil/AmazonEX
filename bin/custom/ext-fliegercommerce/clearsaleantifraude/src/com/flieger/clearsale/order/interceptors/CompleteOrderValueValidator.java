@@ -164,7 +164,7 @@ public class CompleteOrderValueValidator implements PrepareInterceptor
             {
                 LOG.info(String.format("Trying to capture. order:{code:%s}",
                         orderModel.getCode()));
-                final boolean retorno = true; //capturePayment(orderModel);
+                final boolean retorno = capturePayment(orderModel);
                 LOG.info(String.format("Order: [%s] was captured? [%s]",
                         orderModel.getCode(),
                         String.valueOf(retorno)));
