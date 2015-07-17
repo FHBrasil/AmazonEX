@@ -80,7 +80,7 @@ public class AdyenCardPaymentServiceImpl extends DefaultCardPaymentServiceImpl i
 			{
 				commandFactory = getCommandFactoryRegistry().getFactory(request.getPaymentProvider());
 			}
-			CaptureCommand captureCommand = commandFactory.createCommand(AdyenCaptureCommand.class);
+			CaptureCommand captureCommand = commandFactory.createCommand(CaptureCommand.class);
 			result = captureCommand.perform(request);
 			
 		}
