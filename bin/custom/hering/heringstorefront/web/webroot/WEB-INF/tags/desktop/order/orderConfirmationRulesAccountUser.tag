@@ -105,7 +105,7 @@
 			<p class="social150121 becomesocial margin-top">
 				<a href="https://www.facebook.com/babyartikel" target="_blank"><span class="babicon babicon-facebook"> </span></a>
 				<a href="https://plus.google.com/107938801813595561303" target="_blank"><span class="babicon babicon-google"> </span></a>
-				<a href="#" target="_blank"><span class="babicon babicon-twitter"> </span></a>
+				<a href="https://twitter.com/babyartikel" target="_blank"><span class="babicon babicon-twitter"> </span></a>
 				<a href="http://www.babyartikel.de/magazin" target="_blank"><span class="babicon babicon-wordpress"> </span></a>
 				<a href="http://www.youtube.com/babyartikel" target="_blank"><span class="babicon babicon-youtube"> </span></a>
 				<a href="http://instagram.com/babyartikel/" target="_blank"><span class="babicon babicon-instagram"> </span></a>
