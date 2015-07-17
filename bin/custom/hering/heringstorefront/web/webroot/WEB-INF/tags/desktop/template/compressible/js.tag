@@ -80,6 +80,10 @@
 <c:if test="${pageType == 'ACCOUNTPAGE'}">
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/sua-conta.js"></script>
     <script type="text/javascript" src="${commonResourcePath}/js/customer.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/scheduledNewsletter.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/tipsNewsletter.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/reviewShoppingExperience.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/reviewOrderedProducts.js"></script>
     <!-- <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/searchOrderHistory.js"></script> -->
 </c:if>
 <c:if test="${pageType == 'CART'}">
