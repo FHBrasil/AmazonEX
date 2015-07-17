@@ -19,6 +19,7 @@ import com.adyen.services.recurring.RecurringDetailsResult;
 import com.flieger.adyen.command.AuthorizationCommand;
 import com.flieger.adyen.command.CaptureCommand;
 import com.flieger.adyen.command.RecurringDetailsCommand;
+import com.flieger.adyen.commands.impl.AdyenCaptureCommand;
 
 
 /**
@@ -79,7 +80,7 @@ public class AdyenCardPaymentServiceImpl extends DefaultCardPaymentServiceImpl i
 			{
 				commandFactory = getCommandFactoryRegistry().getFactory(request.getPaymentProvider());
 			}
-			CaptureCommand captureCommand = commandFactory.createCommand(CaptureCommand.class);
+			CaptureCommand captureCommand = commandFactory.createCommand(AdyenCaptureCommand.class);
 			result = captureCommand.perform(request);
 			
 		}
