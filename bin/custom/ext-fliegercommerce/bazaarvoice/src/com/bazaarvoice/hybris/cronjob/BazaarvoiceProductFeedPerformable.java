@@ -256,9 +256,9 @@ public class BazaarvoiceProductFeedPerformable extends AbstractJobPerformable<Ba
 			String server = bazaarvoiceConfig.getFtpServer();
 			final boolean transferResult;
 			if(server.toLowerCase().substring(0,4).equals("sftp")){
-				//transferResult = transferFileToSFTPServer(compressedFiles, server);
+				transferResult = transferFileToSFTPServer(compressedFiles, server);
 				//BV SSH channel do not work, but the BV FTP server is working well with sftp server link
-				transferResult = transferFileToServer(compressedFiles);
+				//transferResult = transferFileToServer(compressedFiles);
 			} else {
 				transferResult = transferFileToServer(compressedFiles);
 			}

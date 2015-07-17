@@ -135,8 +135,7 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	public CustomerModel subscribeScheduledNewsletter(CustomerModel customerModel, Boolean scheduledNewsletter)
 	{
 		
-		customerModel.setScheduledNewsletterEnabled(scheduledNewsletter);
-				
+		customerModel.setScheduledNewsletterEnabled(scheduledNewsletter);		
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
 
@@ -148,13 +147,23 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	public CustomerModel subscribeTipsNewsletter(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth)
 	{
 		
-		customerModel.setYoungestChildDateOfBirth(dateOfBirth);
+		if (tipsNewsletter)
+		{
+			if (dateOfBirth != null)
+			{
+				customerModel.setYoungestChildDateOfBirth(dateOfBirth);
+				customerModel.setTipsNewsletterEnabled(tipsNewsletter);
+			}
+		}		
+		else
+		{
+			customerModel.setYoungestChildDateOfBirth(null);
+			customerModel.setTipsNewsletterEnabled(tipsNewsletter);
+		}
 		
-		customerModel.setTipsNewsletterEnabled(tipsNewsletter);
-				
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
-
+		
 		return customerModel;
 		
 	}

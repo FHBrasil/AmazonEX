@@ -4,7 +4,11 @@
  */
 package br.hering.facades.populators;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,8 +53,33 @@ public class HeringCustomerPopulator extends CustomerPopulator
 		target.setPrimaryKey(source.getPk().getLongValueAsString());
 		
 		target.setDefaultPhoneNumber(source.getDefaultPhoneNumber());
-
 		
+		Date date = source.getYoungestChildDateOfBirth();		 
+		try 
+		{
+			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+			String dateOfBirth = formatter.format(date);
+			target.setYoungestChildDateOfBirth(dateOfBirth);
+		} 
+		catch (Exception e) 
+		{
+			//e.printStackTrace();
+		}
+		
+		if (source.isScheduledNewsletterEnabled()){
+			target.setScheduledNewsletterChecked("checked");
+		}
+		if (source.isTipsNewsletterEnabled()){
+			target.setTipsNewsletterChecked("checked");
+		}
+		if (source.isReviewShoppingExperienceEnabled()){
+			target.setReviewShoppingExperienceChecked("checked");
+		}
+		if (source.isReviewOrderedProductsEnabled()){
+			target.setReviewOrderedProductsChecked("checked");
+		}
+		
+
 		List<String> orders = new LinkedList<String>();
 		
 		for (OrderModel model : source.getOrders())

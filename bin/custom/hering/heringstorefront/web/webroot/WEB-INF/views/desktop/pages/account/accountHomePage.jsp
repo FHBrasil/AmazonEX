@@ -163,7 +163,7 @@
 					<div class="form-group">
 						<div class="col-xs-12">
 							<div class="checkbox">
-								<label><input type="checkbox" name="scheduledNewsletterEnabled"> Angebotsnewsletter (wöchentlich)<br><small>Kein Angebot mehr verpassen. Wir senden dir einmal wöchentlich die besten Schnäppchen.</small></label>
+								<label><input type="checkbox" name="scheduledNewsletterEnabled" ${customerData.scheduledNewsletterChecked}> Angebotsnewsletter (wöchentlich)<br><small>Kein Angebot mehr verpassen. Wir senden dir einmal wöchentlich die besten Schnäppchen.</small></label>
 							</div>
 						</div>
 					</div>
@@ -171,11 +171,11 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox"  name="tipsNewsletterEnabled"> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
+									<label><input type="checkbox"  name="tipsNewsletterEnabled" ${customerData.tipsNewsletterChecked}> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
 									<div class="form-group col-sm-6">
 										<label for="birthday" class="control-label"><small>Entbindungstermin / Geburtstag</small></label>
 										<div class="input-group input-append date" id="birthday" data-date="01.01.2015" data-date-format="dd.mm.yyyy" style="padding-left:20px;">
-											<input type="text" name="youngestChildDateOfBirth" size="16" class="form-control span2" value="01.01.2015">
+											<input type="text" name="youngestChildDateOfBirth" size="16" class="form-control span2" value="${customerData.youngestChildDateOfBirth}">
 											<span class="input-group-btn add-on">
 												<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span></button>
 											</span>
@@ -187,14 +187,14 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox" name="reviewShoppingExperienceEnabled"> Einladung zur Trusted Shops-Bewertung (1x pro Bestellung)<br><small>Bewerte Dein Einkaufserlebnis bei Babyartikel.de und erhalte für jede Bewertung tolle Gewinnchancen.</small></label>
+									<label><input type="checkbox" name="reviewShoppingExperienceEnabled" ${customerData.reviewShoppingExperienceChecked}> Einladung zur Trusted Shops-Bewertung (1x pro Bestellung)<br><small>Bewerte Dein Einkaufserlebnis bei Babyartikel.de und erhalte für jede Bewertung tolle Gewinnchancen.</small></label>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox" name="reviewOrderedProductsEnabled"> Einladung zur Produkt-Bewertung (1x pro Bestellung)<br><small>Bewerte deine Einkäufe und hilf anderen Eltern bei der Auswahl der passenden Produkte. Wir belohnen jede Produktbewertung mit tollen Gewinnchancen!</small></label>
+									<label><input type="checkbox" name="reviewOrderedProductsEnabled" ${customerData.reviewOrderedProductsChecked}> Einladung zur Produkt-Bewertung (1x pro Bestellung)<br><small>Bewerte deine Einkäufe und hilf anderen Eltern bei der Auswahl der passenden Produkte. Wir belohnen jede Produktbewertung mit tollen Gewinnchancen!</small></label>
 								</div>
 							</div>
 						</div>
