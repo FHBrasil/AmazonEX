@@ -31,6 +31,7 @@ import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.order.payment.CreditCardPaymentInfoModel;
 import de.hybris.platform.payment.dto.CardType;
 import de.hybris.platform.payment.dto.TransactionStatus;
+import de.hybris.platform.payment.dto.TransactionStatusDetails;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.servicelayer.event.EventService;
@@ -306,16 +307,16 @@ public class NotificationController
         {
             return;
         }
+        LOG.info("entry.pk:" + entryModel.getPk());
         if (!notification.getPaymentMethod().contains("boletobancario"))
         {
-            OrderModel orderModel = null;
-            CartModel cartModel = null;
             AbstractOrderModel model = entryModel.getPaymentTransaction().getOrder();
+            LOG.info("order.code" + model.getCode());
             if (!notification.getSuccess().booleanValue())
             {
-                LOG.info("Order [" + model.getCode() + "] não capturada. Razão ["
+                LOG.info("Order [" + model.getCode() + "] nao capturada. Razao ["
                         + notification.getReason() + "]");
-                entryModel.setTransactionStatus(TransactionStatus.ERROR.name());
+                entryModel.setTransactionStatus(TransactionStatus.REJECTED.name());
                 entryModel.setTransactionStatusDetails(notification.getReason());
                 model.setStatus(OrderStatus.PAYMENT_NOT_CAPTURED);
                 model.setPaymentStatus(PaymentStatus.NOTPAID);
@@ -323,29 +324,39 @@ public class NotificationController
             else
             {
                 entryModel.setTransactionStatus(TransactionStatus.ACCEPTED.name());
-                model.setStatus(OrderStatus.COMPLETED);
-                model.setPaymentStatus(PaymentStatus.PAID);
-                LOG.info("Order [" + model.getCode() + "] capturada via CC.");
+                entryModel.setTransactionStatusDetails(TransactionStatusDetails.SUCCESFULL.name());
             }
             modelService.save(entryModel);
+            modelService.save(model);
+            OrderModel orderModel = null;
             if (entryModel.getPaymentTransaction().getOrder() instanceof OrderModel) {
-                LOG.info("instanceof OrderModel");
                 orderModel = (OrderModel) model;
+            } else {
+                LOG.info("AbstractOrderModel associated with cart is not instance of Order");
+                return;
+            }
+            if (checkIfAllTransactionStatusAreAccepted(orderModel))
+            {
+                orderModel.setStatus(OrderStatus.COMPLETED);
+                orderModel.setPaymentStatus(PaymentStatus.PAID);
+                LOG.info("Order [" + orderModel.getCode() + "] capturada via CC.");
                 modelService.save(orderModel);
-            } else if (entryModel.getPaymentTransaction().getOrder() instanceof CartModel) {
-                LOG.info("instanceof CartModel");
-                cartModel = (CartModel) model;
-                modelService.save(cartModel);
-            }
-            if (orderModel != null) {
                 orderPayedEvent.setOrder(orderModel);
+                LOG.info("DISPARO DE EMAIL NotificationContorller ORDER[" + orderModel.getCode()
+                        + "]");
+                eventService.publishEvent(orderPayedEvent);
             }
-            LOG.info("DISPARO DE EMAIL NotificationContorller ORDER[" + orderModel.getCode() + "]");
-            eventService.publishEvent(orderPayedEvent);
+            else
+            {
+                LOG.info(
+                        String.format(
+                                "Not all Transactions are captured yed. order:{code:%s}",
+                                orderModel.getCode()));
+            }
         }
         else
         {
-            LOG.info("Notificação de CAPTURE para Cartão de Crédito não reconhecida. ["
+            LOG.info("Notificacao de CAPTURE para Cartao de Credito nao reconhecida. ["
                     + notification.toString() + "]");
         }
     }
@@ -537,6 +548,41 @@ public class NotificationController
         {
             LOG.error(e.getMessage(), e);
             return null;
+        }
+    }
+    
+    
+    /**
+     * @param order
+     * @return boolean
+     */
+    private boolean checkIfAllTransactionStatusAreAccepted(final OrderModel order)
+    {
+        try
+        {
+            Assert.notNull(order, "order cannot be null");
+            final String fsDefault =
+                    " SELECT {pte.pk} "
+                            + " FROM {Order AS o"
+                            + " join PaymentTransaction as pt on {o.pk} = {pt.order}"
+                            + " join PaymentTransactionEntry as pte on {pt.pk} = {pte.paymentTransaction}"
+                            + "} "
+                            + " WHERE {o:" + OrderModel.CODE + "} = ?code "
+                            + " AND {pte:" + PaymentTransactionEntryModel.TRANSACTIONSTATUS
+                            + "} = ?transactionStatus "
+                            + " AND {pte:" + PaymentTransactionEntryModel.TYPE + "} = ?type";
+            FlexibleSearchQuery query = new FlexibleSearchQuery(fsDefault);
+            query.addQueryParameter("code", order.getCode());
+            query.addQueryParameter("transactionStatus", TransactionStatus.ACCEPTED.name());
+            query.addQueryParameter("type", PaymentTransactionType.CAPTURE);
+            SearchResult<PaymentTransactionEntryModel> result =
+                    getFlexibleSearchService().search(query);
+            modelService.refresh(order);
+            return order.getPaymentTransactions().size() == result.getCount();
+        } catch (Exception e)
+        {
+            LOG.error("Unexpected Error ", e);
+            return false;
         }
     }
 }
