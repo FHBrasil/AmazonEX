@@ -358,7 +358,7 @@ implements AdyenPaymentService
    	
 		transaction.setRequestId(result.getRequestId());
 		transaction.setRequestToken(result.getRequestToken());
-		transaction.setPaymentProvider(result.getPaymentProvider());
+		transaction.setPaymentProvider(paymentProvider);
 		
 		this.modelService.save(transaction);
 		
@@ -444,7 +444,7 @@ implements AdyenPaymentService
 		
 		transaction.setRequestId(result.getRequestId());
 		transaction.setRequestToken(result.getRequestToken());
-		transaction.setPaymentProvider(result.getPaymentProvider());
+		transaction.setPaymentProvider(paymentProvider);
 		
 		this.modelService.save(transaction);
 		
@@ -532,7 +532,7 @@ implements AdyenPaymentService
 		
 		transaction.setRequestId(result.getRequestId());
 		transaction.setRequestToken(result.getRequestToken());
-		transaction.setPaymentProvider(result.getPaymentProvider());
+		transaction.setPaymentProvider(paymentProvider);
 		
 		this.modelService.save(transaction);
 		
