@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/payment"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/adyen"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/commerceservices"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
