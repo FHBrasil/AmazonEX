@@ -28,5 +28,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorstorefrontcommons"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/recommendation"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/eventtracking"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/commerceservices"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
