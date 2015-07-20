@@ -51,7 +51,6 @@ import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
 import br.hering.storefront.util.MetaSanitizerUtil;
 
-import com.flieger.eventtracking.data.EventTrackRequest;
 import com.flieger.eventtracking.facade.EventTrackerFacade;
 import com.flieger.recommendation.facades.RecommendationFacade;
 
@@ -654,7 +653,4 @@ public class ProductPageController extends AbstractPageController
 	public void setEventTrackerFacade(EventTrackerFacade eventTrackerFacade) {
 		this.eventTrackerFacade = eventTrackerFacade;
 	}
-
-
-
 }
