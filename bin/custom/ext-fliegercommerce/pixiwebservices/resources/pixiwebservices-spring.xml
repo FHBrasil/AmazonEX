@@ -95,10 +95,19 @@
     <bean id="defaultPixiBMEcatProductTagPopulator"
         class="com.pixi.webservices.converters.populators.bmecat.product.DefaultPixiBMEcatProductTagPopulator" />
     <!-- end of Populators definitions -->
+    
+    <!-- Definitions for createTarget methods -->
+    <bean id="exportOrder" class="com.pixi.webservices.jaxb.order.export.Order" />
+    <bean id="exportOrderInfo" class="com.pixi.webservices.jaxb.order.export.OrderInfo" />
+    <bean id="exportAddress" class="com.pixi.webservices.jaxb.order.export.Address" />
+    <bean id="exportBMECAT" class="com.pixi.webservices.jaxb.product.export.BMECAT" />
+    <bean id="exportHeader" class="com.pixi.webservices.jaxb.product.export.Header" />
+    <bean id="exportArticle" class="com.pixi.webservices.jaxb.product.export.Article" />
+    <!-- end of Definitions for createTarget methods -->
 
     <!-- Converters definitions -->
     <bean id="defaultPixiOrderConverter" parent="abstractPopulatingConverter">
-        <property name="targetClass" value="com.pixi.webservices.jaxb.order.export.Order" />
+        <lookup-method name="createTarget" bean="exportOrder"/>
         <property name="populators">
             <list>
                 <ref bean="pixiOrderHeaderPopulator" />
@@ -108,7 +117,7 @@
     </bean>
 
     <bean id="defaultPixiOrderInfoConverter" parent="abstractPopulatingConverter">
-        <property name="targetClass" value="com.pixi.webservices.jaxb.order.export.OrderInfo" />
+        <lookup-method name="createTarget" bean="exportOrderInfo"/>
         <property name="populators">
             <list>
                 <ref bean="pixiOrderInfoPopulator" />
@@ -120,7 +129,7 @@
     </bean>
 
     <bean id="defaultPixiAddressConverter" parent="abstractPopulatingConverter">
-        <property name="targetClass" value="com.pixi.webservices.jaxb.order.export.Address" />
+        <lookup-method name="createTarget" bean="exportAddress"/>
         <property name="populators">
             <list>
                 <ref bean="pixiAddressPopulator" />
@@ -131,7 +140,7 @@
     <!-- Catalog converters -->
 
     <bean id="defaultPixiBMEcatConverter" parent="abstractPopulatingConverter">
-        <property name="targetClass" value="com.pixi.webservices.jaxb.product.export.BMECAT" />
+        <lookup-method name="createTarget" bean="exportBMECAT"/>
         <property name="populators">
             <list>
                 <ref bean="pixiBMEcatPopulator" />
@@ -140,7 +149,7 @@
     </bean>
 
     <bean id="defaultPixiBMEcatHeaderConverter" parent="abstractPopulatingConverter">
-        <property name="targetClass" value="com.pixi.webservices.jaxb.product.export.Header" />
+        <lookup-method name="createTarget" bean="exportHeader"/>
         <property name="populators">
             <list>
                 <ref bean="pixiBMEcatHeaderPopulator" />
@@ -152,7 +161,7 @@
     </bean>
 
     <bean id="defaultPixiBMEcatProductConverter" parent="abstractPopulatingConverter">
-        <property name="targetClass" value="com.pixi.webservices.jaxb.product.export.Article" />
+        <lookup-method name="createTarget" bean="exportArticle"/>
         <property name="populators">
             <list>
                 <ref bean="pixiBMEcatProductPopulator" />
