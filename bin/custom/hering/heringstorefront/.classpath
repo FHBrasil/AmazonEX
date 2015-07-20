@@ -24,7 +24,6 @@
 	<classpathentry kind="lib" path="lib/SintegraIE-0.2.jar"/>
 	<classpathentry kind="src" path="/carrier"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/newsletteraddon"/>
-	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-integration-core-2.1.0.RELEASE.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/addoncommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorstorefrontcommons"/>
