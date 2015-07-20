@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="bonus" tagdir="/WEB-INF/tags/addons/bonussystemaddon/desktop/bonussystem"%>
 
 <div class="container">
@@ -29,13 +30,9 @@
 		<div class="col-sm-12 col-md-4">
 			<div class="row">
 				<div class="col-xs-12">
-					<div class=" panel panel-default">
-						<div class="panel-heading">Punkte sammeln und sparen!
-						</div>
-						<div class="panel-body">
-							<p>Mit jedem Einkauf bei Babyartikel.de erhalten Sie Bonuspunkte. Die Punkte können Sie beim nächsten Einkauf in Rabatte umwandeln. Achten Sie auf den roten Fuchs und werden Sie Sparweltmeister!</p>
-						</div>
-					</div>
+					<cms:pageSlot position="SideContent" var="component">
+            			<cms:component component="${component}" />
+        			</cms:pageSlot>
 				</div>		
 			</div>
 		</div>
@@ -45,4 +42,3 @@
 	</c:otherwise>
 	</c:choose>
 </div>
-
