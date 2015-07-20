@@ -43,8 +43,4 @@
 	
 	<alias name="defaultFindProductsBlacklistStrategy" alias="findProductsBlacklistStrategy"/>
 	<bean id="defaultFindProductsBlacklistStrategy" class="com.flieger.recommendation.strategies.impl.DefaultFindProductsBlacklistStrategy"/>
-	
-	<alias name="defaultFindCustomerUUIDForRecommendations" alias="findCustomerUUIDForRecommendations"/>
-	<bean id="defaultFindCustomerUUIDForRecommendations" class="com.flieger.recommendation.strategies.impl.DefaultFindCustomerUUIDForRecommendations">
-	</bean>
 </beans>

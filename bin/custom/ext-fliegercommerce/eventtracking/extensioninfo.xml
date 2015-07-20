@@ -13,8 +13,7 @@
   
 -->
 <extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
-   <extension abstractclassprefix="Generated" classprefix="Recommendation" managername="RecommendationManager" 
-   	managersuperclass="de.hybris.platform.jalo.extension.Extension" name="recommendation">
-      <coremodule generated="true" manager="com.flieger.recommendation.jalo.RecommendationManager" packageroot="com.flieger.recommendation"/>
+   <extension abstractclassprefix="Generated" classprefix="Eventtracking" managername="EventtrackingManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="eventtracking">
+      <coremodule generated="true" manager="com.flieger.eventtracking.jalo.EventtrackingManager" packageroot="com.flieger.eventtracking"/>
    </extension>
 </extensioninfo>
