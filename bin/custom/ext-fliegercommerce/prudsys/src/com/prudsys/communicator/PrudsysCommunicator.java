@@ -14,15 +14,22 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.client.RestTemplate;
 
+import com.prudsys.data.PrudsysBasketEventTrackRequest;
 import com.prudsys.data.PrudsysBasketRecommendationRequest;
 import com.prudsys.data.PrudsysBrandRecommendationRequest;
 import com.prudsys.data.PrudsysCategoryRecommendationRequest;
+import com.prudsys.data.PrudsysCategoryViewEventTrackRequest;
+import com.prudsys.data.PrudsysClickEventTrackRequest;
 import com.prudsys.data.PrudsysErrorPageRecommendationRequest;
+import com.prudsys.data.PrudsysEventTrackRequest;
 import com.prudsys.data.PrudsysHomePageRecommendationRequest;
+import com.prudsys.data.PrudsysOrderEventTrackRequest;
 import com.prudsys.data.PrudsysProductRecommendationRequest;
+import com.prudsys.data.PrudsysProductViewEventTrackRequest;
 import com.prudsys.data.PrudsysRecommendationRequest;
 import com.prudsys.data.PrudsysRecommendationResponse;
 import com.prudsys.data.PrudsysSearchResultEmptyRecommendationRequest;
+import com.prudsys.data.PrudsysUserToSessionEventTrackRequest;
 
 
 /**
@@ -35,57 +42,98 @@ public class PrudsysCommunicator
 
 	private final Logger LOG = Logger.getLogger(PrudsysCommunicator.class);
 
+	public void trackProductView(final PrudsysProductViewEventTrackRequest request)
+	{
+		callPrudsysEventTrackingRest(request);
+	}
+
+	public void trackCategoryView(final PrudsysCategoryViewEventTrackRequest request)
+	{
+		callPrudsysEventTrackingRest(request);
+	}
+
+	public void trackClickEvent(final PrudsysClickEventTrackRequest request)
+	{
+		callPrudsysEventTrackingRest(request);
+	}
+
+	public void trackBasketEvent(final PrudsysBasketEventTrackRequest request)
+	{
+		callPrudsysEventTrackingRest(request);
+	}
+
+	public void trackOrderEvent(final PrudsysOrderEventTrackRequest request)
+	{
+		callPrudsysEventTrackingRest(request);
+	}
+
+	public void trackUserToSessionEvent(final PrudsysUserToSessionEventTrackRequest request)
+	{
+		callPrudsysEventTrackingRest(request);
+	}
+
 	public List<PrudsysRecommendationResponse> getRecommendationsForCategory(final PrudsysCategoryRecommendationRequest request)
 	{
-		final String result = callPrudsysRest(request);
+		final String result = callPrudsysRecommendationRest(request);
 
 		return convertToResponse(result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForProduct(final PrudsysProductRecommendationRequest request)
 	{
-		final String result = callPrudsysRest(request);
+		final String result = callPrudsysRecommendationRest(request);
 		return convertToResponse(result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForBrand(final PrudsysBrandRecommendationRequest request)
 	{
-		final String result = callPrudsysRest(request);
+		final String result = callPrudsysRecommendationRest(request);
 		return convertToResponse(result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForBasket(final PrudsysBasketRecommendationRequest request)
 	{
-		final String result = callPrudsysRest(request);
+		final String result = callPrudsysRecommendationRest(request);
 		return convertToResponse(result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForHomePage(final PrudsysHomePageRecommendationRequest request)
 	{
-		final String result = callPrudsysRest(request);
+		final String result = callPrudsysRecommendationRest(request);
 		return convertToResponse(result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForSearchResultEmptyPage(
 			final PrudsysSearchResultEmptyRecommendationRequest request)
 	{
-		final String result = callPrudsysRest(request);
+		final String result = callPrudsysRecommendationRest(request);
 		return convertToResponse(result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForErrorPage(final PrudsysErrorPageRecommendationRequest request)
 	{
-		final String result = callPrudsysRest(request);
+		final String result = callPrudsysRecommendationRest(request);
 		return convertToResponse(result);
 	}
 
-	private String callPrudsysRest(final PrudsysRecommendationRequest request)
+	private String callPrudsysEventTrackingRest(final PrudsysEventTrackRequest request)
 	{
 		final RestTemplate restTemplate = new RestTemplate();
 		final String uri = getPrudsysRestUriBuilder().buildUriForRequest(request);
 		final String result = restTemplate.getForObject(uri, String.class);
 
-		LOG.debug("Uri:" + uri + "\n" + result);
+		LOG.debug("Tracking URI:" + uri + "\n" + result);
+
+		return result;
+	}
+
+	private String callPrudsysRecommendationRest(final PrudsysRecommendationRequest request)
+	{
+		final RestTemplate restTemplate = new RestTemplate();
+		final String uri = getPrudsysRestUriBuilder().buildUriForRequest(request);
+		final String result = restTemplate.getForObject(uri, String.class);
+
+		LOG.debug("Recommendation URI:" + uri + "\n" + result);
 
 		return result;
 	}
