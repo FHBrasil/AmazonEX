@@ -121,7 +121,7 @@ public class PrudsysRestUriBuilder
 			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
 		}
 
-		return link;
+		return "http://www.babyartikel.de/prudsys/PrudsysProxy/?link=" + link;
 	}
 
 	public String buildUriForRequest(final PrudsysEventTrackRequest request)
@@ -195,7 +195,7 @@ public class PrudsysRestUriBuilder
 			link = link.replaceAll(CONSTANT_USER_ID, ((PrudsysUserToSessionEventTrackRequest) request).getUserId());
 		}
 
-		return link;
+		return "http://www.babyartikel.de/prudsys/PrudsysProxy/?link=" + link;
 	}
 
 	public String getStringRepresentation(final List<String> list)
