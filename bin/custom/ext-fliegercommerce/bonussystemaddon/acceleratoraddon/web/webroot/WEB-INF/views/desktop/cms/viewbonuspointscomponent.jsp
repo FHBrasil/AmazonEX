@@ -29,13 +29,9 @@
 		<div class="col-sm-12 col-md-4">
 			<div class="row">
 				<div class="col-xs-12">
-					<div class=" panel panel-default">
-						<div class="panel-heading">Punkte sammeln und sparen!
-						</div>
-						<div class="panel-body">
-							<p>Mit jedem Einkauf bei Babyartikel.de erhalten Sie Bonuspunkte. Die Punkte können Sie beim nächsten Einkauf in Rabatte umwandeln. Achten Sie auf den roten Fuchs und werden Sie Sparweltmeister!</p>
-						</div>
-					</div>
+					<cms:pageSlot position="SideContent" var="component">
+            			<cms:component component="${component}" />
+        			</cms:pageSlot>
 				</div>		
 			</div>
 		</div>
@@ -45,4 +41,3 @@
 	</c:otherwise>
 	</c:choose>
 </div>
-
