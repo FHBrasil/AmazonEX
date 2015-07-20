@@ -34,6 +34,13 @@
 		<property name="typeCode" value="CMSSite"/>
 	</bean>
 
+	<bean id="productReviewAverageRatingBazaarvoiceProvider"
+			class="com.bazaarvoice.hybris.solrfacetsearch.provider.impl.ProductReviewAverageRatingBazaarvoiceProvider"
+			parent="productReviewAverageRatingValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="customerReviewService" ref="customerReviewService"/>
+	</bean>
+	
 	<!-- Bean for BV cronjob import reviews -->
      <bean id="bazaarvoiceImportReviewsPerformable" class="com.bazaarvoice.hybris.cronjob.BazaarvoiceImportReviewsPerformable" parent="abstractJobPerformable" />
     
@@ -90,3 +97,4 @@
 
 
 </beans>
+
