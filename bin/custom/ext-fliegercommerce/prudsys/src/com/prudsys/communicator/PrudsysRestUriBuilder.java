@@ -3,16 +3,25 @@
  */
 package com.prudsys.communicator;
 
-import org.apache.commons.lang.ArrayUtils;
+import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.prudsys.data.PrudsysBasketEventTrackRequest;
 import com.prudsys.data.PrudsysBasketRecommendationRequest;
 import com.prudsys.data.PrudsysBrandRecommendationRequest;
 import com.prudsys.data.PrudsysCategoryRecommendationRequest;
+import com.prudsys.data.PrudsysCategoryViewEventTrackRequest;
+import com.prudsys.data.PrudsysClickEventTrackRequest;
 import com.prudsys.data.PrudsysErrorPageRecommendationRequest;
+import com.prudsys.data.PrudsysEventTrackRequest;
 import com.prudsys.data.PrudsysHomePageRecommendationRequest;
+import com.prudsys.data.PrudsysOrderEventTrackRequest;
 import com.prudsys.data.PrudsysProductRecommendationRequest;
+import com.prudsys.data.PrudsysProductViewEventTrackRequest;
 import com.prudsys.data.PrudsysRecommendationRequest;
 import com.prudsys.data.PrudsysSearchResultEmptyRecommendationRequest;
+import com.prudsys.data.PrudsysUserToSessionEventTrackRequest;
 
 
 /**
@@ -61,7 +70,7 @@ public class PrudsysRestUriBuilder
 			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
 			link = link.replaceAll(CONSTANT_VALUE, ((PrudsysProductRecommendationRequest) request).getProductId());
 			link = link.replaceAll(CONSTANT_BLACKLIST_VALUES,
-					ArrayUtils.toString(((PrudsysProductRecommendationRequest) request).getBlackList()));
+					getStringRepresentation(((PrudsysProductRecommendationRequest) request).getBlackList()));
 		}
 
 		if (request instanceof PrudsysBrandRecommendationRequest)
@@ -82,7 +91,7 @@ public class PrudsysRestUriBuilder
 			link = link.replaceAll(CONSTANT_RE_ID, reid);
 			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
 			link = link.replaceAll(CONSTANT_VALUE,
-					ArrayUtils.toString(((PrudsysBasketRecommendationRequest) request).getProductList()));
+					getStringRepresentation(((PrudsysBasketRecommendationRequest) request).getProductList()));
 		}
 
 		if (request instanceof PrudsysHomePageRecommendationRequest)
@@ -113,5 +122,84 @@ public class PrudsysRestUriBuilder
 		}
 
 		return link;
+	}
+
+	public String buildUriForRequest(final PrudsysEventTrackRequest request)
+	{
+		String link = null;
+		if (request instanceof PrudsysProductViewEventTrackRequest)
+		{
+			link = PrudsysConfiguration.track_event_productview.getString();
+			link = link.replaceAll(CONSTANT_HOST, host);
+			link = link.replaceAll(CONSTANT_PORT, port);
+			link = link.replaceAll(CONSTANT_RE_ID, reid);
+			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
+			link = link.replaceAll(CONSTANT_VALUE, ((PrudsysProductViewEventTrackRequest) request).getProductId());
+		}
+
+		if (request instanceof PrudsysCategoryViewEventTrackRequest)
+		{
+			link = PrudsysConfiguration.track_event_categoryview.getString();
+			link = link.replaceAll(CONSTANT_HOST, host);
+			link = link.replaceAll(CONSTANT_PORT, port);
+			link = link.replaceAll(CONSTANT_RE_ID, reid);
+			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
+			link = link.replaceAll(CONSTANT_VALUE, ((PrudsysCategoryViewEventTrackRequest) request).getCategoryId());
+		}
+
+		if (request instanceof PrudsysClickEventTrackRequest)
+		{
+			link = PrudsysConfiguration.track_event_click.getString();
+			link = link.replaceAll(CONSTANT_HOST, host);
+			link = link.replaceAll(CONSTANT_PORT, port);
+			link = link.replaceAll(CONSTANT_RE_ID, reid);
+			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
+			link = link.replaceAll(CONSTANT_VALUE, ((PrudsysClickEventTrackRequest) request).getItemId());
+			link = link.replaceAll(CONSTANT_TEMPLATE, ((PrudsysClickEventTrackRequest) request).getTemplate());
+			link = link.replaceAll(CONSTANT_BOX, ((PrudsysClickEventTrackRequest) request).getBox());
+		}
+
+		if (request instanceof PrudsysBasketEventTrackRequest)
+		{
+			link = PrudsysConfiguration.track_event_basket.getString();
+			link = link.replaceAll(CONSTANT_HOST, host);
+			link = link.replaceAll(CONSTANT_PORT, port);
+			link = link.replaceAll(CONSTANT_RE_ID, reid);
+			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
+			link = link
+					.replaceAll(CONSTANT_VALUES, getStringRepresentation(((PrudsysBasketEventTrackRequest) request).getItemids()));
+			link = link.replaceAll(CONSTANT_QUANTITY,
+					getStringRepresentation(((PrudsysBasketEventTrackRequest) request).getQuantities()));
+		}
+
+		if (request instanceof PrudsysOrderEventTrackRequest)
+		{
+			link = PrudsysConfiguration.track_event_order.getString();
+			link = link.replaceAll(CONSTANT_HOST, host);
+			link = link.replaceAll(CONSTANT_PORT, port);
+			link = link.replaceAll(CONSTANT_RE_ID, reid);
+			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
+			link = link.replaceAll(CONSTANT_VALUES, getStringRepresentation(((PrudsysOrderEventTrackRequest) request).getItemids()));
+			link = link.replaceAll(CONSTANT_QUANTITY,
+					getStringRepresentation(((PrudsysOrderEventTrackRequest) request).getQuantities()));
+			link = link.replaceAll(CONSTANT_UTP, getStringRepresentation(((PrudsysOrderEventTrackRequest) request).getUtp()));
+		}
+
+		if (request instanceof PrudsysUserToSessionEventTrackRequest)
+		{
+			link = PrudsysConfiguration.event_usertosession.getString();
+			link = link.replaceAll(CONSTANT_HOST, host);
+			link = link.replaceAll(CONSTANT_PORT, port);
+			link = link.replaceAll(CONSTANT_RE_ID, reid);
+			link = link.replaceAll(CONSTANT_SESSION_ID, request.getSessionId());
+			link = link.replaceAll(CONSTANT_USER_ID, ((PrudsysUserToSessionEventTrackRequest) request).getUserId());
+		}
+
+		return link;
+	}
+
+	public String getStringRepresentation(final List<String> list)
+	{
+		return StringUtils.join(list, ",");
 	}
 }

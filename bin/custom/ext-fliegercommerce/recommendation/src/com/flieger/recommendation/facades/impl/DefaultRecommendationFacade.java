@@ -149,7 +149,7 @@ public class DefaultRecommendationFacade implements RecommendationFacade
 
 		final RecommendationRequest request = new RecommendationRequest();
 		request.setValues(new HashMap<String, Object>());
-		request.getValues().put("sessionId", getFindCustomerUUIDForRecommendations().findCustomerUUIDForRecommendations(customer));
+		request.getValues().put("sessionId", getFindCustomerUUIDForRecommendations().findCustomerUUID(customer));
 
 		return request;
 	}
