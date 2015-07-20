@@ -17,6 +17,7 @@
         <requires-extension name="clearsaleantifraude" />
         <requires-extension name="exacttarget" />
         <requires-extension name="notificationservices" />
+        <requires-extension name="prudsys"/>
         <coremodule generated="true" manager="br.hering.core.jalo.HeringCoreManager"
             packageroot="br.hering.core" />
         <hmcmodule extensionclassname="br.hering.core.hmc.HeringCoreHMCExtension" />

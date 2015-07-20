@@ -5,55 +5,6 @@
 
         <path dir="${HYBRIS_BIN_DIR}" />
 
-        <!-- ext-platform -->
-        <extension name="admincockpit" />
-        <extension name="backoffice" />
-        <extension name="cockpit" />
-        <extension name="hmc" />
-        <extension name="mcc" />
-        <extension name="platformhmc" />
-        <extension name="btg" />
-        <extension name="btgcockpit" />
-
-        <!-- ext-commerce -->
-        <extension name="commercesearch" />
-        <extension name="commercesearchbackoffice" />
-        <extension name="commercesearchhmc" />
-        <extension name="commerceservices" />
-        <extension name="basecommerce" />
-        <extension name="payment" />
-        <extension name="promotions" />
-        <extension name="voucher" />
-        <extension name="customerreview" />
-        <extension name="ticketsystem" />
-        <extension name="solrfacetsearch" />
-        <extension name="solrfacetsearchhmc" />
-        <extension name="commercefacades" />
-
-        <!-- ext-content -->
-        <extension name="productcockpit" />
-        <extension name="cms2" />
-        <extension name="cms2lib" />
-        <extension name="cmscockpit" />
-
-        <!-- ext-channel -->
-        <extension name="cscockpit" />
-        <extension name="instore" />
-
-        <!-- ext-addon -->
-        <extension name="addonsupport" />
-        <extension name="addoncommon" />
-        <extension name="b2ccheckoutaddon" />
-
-        <extension name="ycommercewebservices" />
-        <extension name="ycommercewebserviceshmc" />
-
-        <!-- ext-accelerator -->
-        <extension name="acceleratorservices" />
-        <extension name="acceleratorfacades" />
-        <extension name="acceleratorcms" />
-        <extension name="acceleratorstorefrontcommons" />
-        <extension name="mediaconversion" />
         <extension name="mediaimportation" />
 
         <!-- Flieger Commerce extensions -->
@@ -70,15 +21,12 @@
         <extension name="notificationservices" />
         <extension name="wishlist" />
         <extension name="adyen" />
-        <!-- <extension name="clearsaleantifraude" /> -->
         <extension name="paypal" />
         <extension name="fliegercommercecms" />
         <extension name="bazaarvoice" />
 
-        <!-- Flieger Commerce AddOn -->
         <extension name="paypaladdon" />
 
-        <!-- KPFamily custom extensions -->
         <extension name="kpfamilycore" />
         <extension name="kpfamilyhmc" />
         <extension name="kpfamilycockpits" />
@@ -93,6 +41,6 @@
         <extension name="bonussystem"/>
         <extension name="bonussystemaddon"/>
         <extension name="bonussystemhmc"/>
-
+<!--         <extension name="prudsys"/> -->
     </extensions>
 </hybrisconfig>
