@@ -41,6 +41,6 @@
         <extension name="bonussystem"/>
         <extension name="bonussystemaddon"/>
         <extension name="bonussystemhmc"/>
-<!--         <extension name="prudsys"/> -->
+        
     </extensions>
 </hybrisconfig>

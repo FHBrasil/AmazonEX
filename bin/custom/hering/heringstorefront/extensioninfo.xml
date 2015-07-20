@@ -6,7 +6,7 @@
     hybris. --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
     <extension abstractclassprefix="Generated" classprefix="HeringStorefront" name="heringstorefront">
         <requires-extension name="bonussystemaddon"/>
-<requires-extension name="heringstorefrontcommons"/>
+		<requires-extension name="heringstorefrontcommons"/>
         <requires-extension name="heringcheckoutaddon"/>
         <requires-extension name="b2ccheckoutaddon"/>
         <requires-extension name="exacttarget"/>
@@ -15,11 +15,10 @@
         <requires-extension name="acceleratorstorefrontcommons"/>
         <requires-extension name="heringfacades"/>
         <requires-extension name="textboxinfoaddon"/>
-        <!-- <requires-extension name="captchaaddon" /> -->
         <requires-extension name="paypaladdon"/>
         <requires-extension name="newsletteraddon"/>
         <requires-extension name="bazaarvoice"/>
-
+        <requires-extension name="prudsys"/>
         <webmodule jspcompile="false" webroot="/heringstorefront"/>
     </extension>
 </extensioninfo>
