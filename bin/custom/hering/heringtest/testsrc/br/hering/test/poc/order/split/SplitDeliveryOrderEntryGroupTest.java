@@ -12,6 +12,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -35,7 +36,8 @@ import de.hybris.platform.core.model.order.AbstractOrderModel;
 import de.hybris.platform.store.services.BaseStoreService;
 
 
-@UnitTest
+//@UnitTest
+@Ignore
 public class SplitDeliveryOrderEntryGroupTest 
 {
 	private final static Logger LOG = Logger.getLogger(SplitDeliveryOrderEntryGroupTest.class);

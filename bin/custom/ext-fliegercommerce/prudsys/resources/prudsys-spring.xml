@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+    <bean id="recommendationResultValueData" class="com.flieger.recommendation.data.RecommendationResultValueData" scope="prototype"/>
+    <bean id="prudsysRecommendationRequest" class="com.prudsys.data.PrudsysRecommendationRequest" scope="prototype"/>
+           
+    <alias name="defaultPrudsysRecommendationService" alias="recommendationService"/>
+	<bean id="defaultPrudsysRecommendationService" class="com.prudsys.services.impl.PrudsysRecommendationService">
+		<property name="prudsysCommunicator" ref="prudsysCommunicator"/>
+		<property name="prudsysRecommendationResultValueConverter" ref="prudsysRecommendationResultValueConverter"/>
+		<property name="prudsysRecommendationRequestConverter" ref="prudsysRecommendationRequestConverter"/>
+	</bean>
+	
+	<bean id="prudsysCommunicator" class="com.prudsys.communicator.PrudsysCommunicator">
+		<property name="prudsysRestUriBuilder" ref="prudsysRestUriBuilder"/>
+	</bean>
+	
+	<bean id="prudsysRestUriBuilder" class="com.prudsys.communicator.PrudsysRestUriBuilder" />
+           
+    <alias name="defaultPrudsysRecommendationRequestConverter" alias="prudsysRecommendationRequestConverter"/>
+	<bean id="defaultPrudsysRecommendationRequestConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="prudsysRecommendationRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="prudsysRecommendationRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultPrudsysRecommendationResultValueConverter" alias="prudsysRecommendationResultValueConverter"/>
+	<bean id="defaultPrudsysRecommendationResultValueConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="recommendationResultValueData"/>
+		<property name="populators">
+			<list>
+				<ref bean="prudsysRecommendationResultValuePopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultPrudsysRecommendationResultProductPopulator" alias="recommendationResultProductPopulator"/>
+	<bean id="defaultPrudsysRecommendationResultProductPopulator" class="com.prudsys.populators.PrudsysRecommendationResultProductPopulator">
+		<property name="priceDataFactory" ref="priceDataFactory" />
+	</bean>
+	
+	<alias name="defaultPrudsysRecommendationRequestPopulator" alias="prudsysRecommendationRequestPopulator"/>
+	<bean id="defaultPrudsysRecommendationRequestPopulator" class="com.prudsys.populators.PrudsysRecommendationRequestPopulator"/>
+	
+	<alias name="defaultPrudsysRecommendationResultValuePopulator" alias="prudsysRecommendationResultValuePopulator"/>
+	<bean id="defaultPrudsysRecommendationResultValuePopulator" class="com.prudsys.populators.PrudsysRecommendationResultValuePopulator"/>
+</beans>

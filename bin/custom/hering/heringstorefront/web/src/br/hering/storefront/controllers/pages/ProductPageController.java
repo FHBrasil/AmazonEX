@@ -13,46 +13,13 @@
  */
 package br.hering.storefront.controllers.pages;
 
-import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.ProductBreadcrumbBuilder;
-import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.ReviewForm;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.ReviewValidator;
-import de.hybris.platform.acceleratorstorefrontcommons.util.XSSFilterUtil;
-import de.hybris.platform.acceleratorstorefrontcommons.variants.VariantSortStrategy;
-import de.hybris.platform.catalog.enums.ProductReferenceTypeEnum;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
-import de.hybris.platform.cms2.model.pages.AbstractPageModel;
-import de.hybris.platform.cms2.servicelayer.services.CMSPageService;
-import de.hybris.platform.commercefacades.order.CartFacade;
-import de.hybris.platform.commercefacades.order.data.CartData;
-import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
-import de.hybris.platform.commercefacades.product.ProductFacade;
-import de.hybris.platform.commercefacades.product.ProductOption;
-import de.hybris.platform.commercefacades.product.data.BaseOptionData;
-import de.hybris.platform.commercefacades.product.data.ImageData;
-import de.hybris.platform.commercefacades.product.data.ImageDataType;
-import de.hybris.platform.commercefacades.product.data.ProductData;
-import de.hybris.platform.commercefacades.product.data.ProductReferenceData;
-import de.hybris.platform.commercefacades.product.data.ReviewData;
-import de.hybris.platform.commerceservices.url.UrlResolver;
-import de.hybris.platform.core.model.product.ProductModel;
-import de.hybris.platform.europe1.model.PriceRowModel;
-import de.hybris.platform.order.CartService;
-import de.hybris.platform.product.ProductService;
-import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
-import de.hybris.platform.store.services.BaseStoreService;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +50,38 @@ import br.hering.facades.wishlist.impl.DefaultHeringWishlistFacade;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
 import br.hering.storefront.util.MetaSanitizerUtil;
+
+import com.flieger.recommendation.facades.RecommendationFacade;
+
+import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.ProductBreadcrumbBuilder;
+import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.ReviewForm;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.ReviewValidator;
+import de.hybris.platform.acceleratorstorefrontcommons.util.XSSFilterUtil;
+import de.hybris.platform.acceleratorstorefrontcommons.variants.VariantSortStrategy;
+import de.hybris.platform.catalog.enums.ProductReferenceTypeEnum;
+import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.cms2.model.pages.AbstractPageModel;
+import de.hybris.platform.cms2.servicelayer.services.CMSPageService;
+import de.hybris.platform.commercefacades.order.CartFacade;
+import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.product.ProductFacade;
+import de.hybris.platform.commercefacades.product.ProductOption;
+import de.hybris.platform.commercefacades.product.data.BaseOptionData;
+import de.hybris.platform.commercefacades.product.data.ImageData;
+import de.hybris.platform.commercefacades.product.data.ImageDataType;
+import de.hybris.platform.commercefacades.product.data.ProductData;
+import de.hybris.platform.commercefacades.product.data.ProductReferenceData;
+import de.hybris.platform.commercefacades.product.data.ReviewData;
+import de.hybris.platform.commerceservices.url.UrlResolver;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.europe1.model.PriceRowModel;
+import de.hybris.platform.order.CartService;
+import de.hybris.platform.product.ProductService;
+import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
+import de.hybris.platform.store.services.BaseStoreService;
 
 /**
  * Controller for product details page
@@ -128,6 +127,9 @@ public class ProductPageController extends AbstractPageController
 	
 	@Resource(name = "heringWishlistFacade")
 	private DefaultHeringWishlistFacade heringWishlistFacade;
+	
+	@Resource
+	private RecommendationFacade recommendationFacade;
 	
 	@Resource
 	private VariantsUtils variantsUtils;
@@ -268,7 +270,7 @@ public class ProductPageController extends AbstractPageController
         }
 		return ControllerConstants.Views.Fragments.Product.ZoomImagesPopup;
 	}
-
+	
 	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/quickView", method = RequestMethod.GET)
 	public String showQuickView(@PathVariable("productCode") final String productCode, final Model model,
 			final HttpServletRequest request)
@@ -290,7 +292,7 @@ public class ProductPageController extends AbstractPageController
 	{
 		final ProductModel productModel = productService.getProductForCode(productCode);
 		
-		String msg = "<font color=\"#FF0000\">Informa����o indispon��vel no momento</font>";
+		String msg = "<font color=\"#FF0000\">Informa������������o indispon������vel no momento</font>";
 		
 		if(productModel instanceof HeringSizeVariantProductModel)
 		{
@@ -301,9 +303,9 @@ public class ProductPageController extends AbstractPageController
 			
 			if(threshold != null && priceRow.getPrice().doubleValue() >= threshold.doubleValue())
 			{
-				msg = "<font color=\"#3E9C00\">Frete: Gr��tis</font>";
+				msg = "<font color=\"#3E9C00\">Frete: Gr������tis</font>";
 			}
-			//XXX remoção de dependencia com extension carrier
+			//XXX remo����o de dependencia com extension carrier
 //			else{
 //				
 //				DeliveryModeData deliveryMode = calculateDeliveryFacade.getCheaperDeliveryMode(zipCode, weight, priceRow.getPrice().doubleValue());
@@ -372,7 +374,7 @@ public class ProductPageController extends AbstractPageController
 		
 		if (error) {
 			response.put("success", "false");
-			response.put("msg", "Por favor complete todos os campos mandat��rios da avalia����o");
+			response.put("msg", "Por favor complete todos os campos mandat������rios da avalia������������o");
 		} else {
 			
 			final ReviewData review = new ReviewData();
@@ -383,7 +385,7 @@ public class ProductPageController extends AbstractPageController
 			productFacade.postReview(productCode, review);
 			
 			response.put("success", "true");
-			response.put("msg", "Obrigado, caso sua avalia����o seja aprovada n��s iremos public��-la.");
+			response.put("msg", "Obrigado, caso sua avalia������������o seja aprovada n������s iremos public������-la.");
 		}
 			
 		return JSONUtil.toJSON(response);
@@ -488,6 +490,8 @@ public class ProductPageController extends AbstractPageController
 				ProductOption.VARIANT_AVAILABLE, ProductOption.STOCK, ProductOption.VOLUME_PRICES,
 				ProductOption.DELIVERY_MODE_AVAILABILITY));
 
+		model.addAttribute("recommendations", getRecommendationFacade().getRecommendationsForProduct(productData));
+		
 		sortVariantOptionData(productData);
 		model.addAttribute("percentageRating", percentageRating(productData));
 		storeCmsPageInModel(model, getPageForProduct(productModel));
@@ -626,6 +630,14 @@ public class ProductPageController extends AbstractPageController
 	protected AbstractPageModel getPageForProduct(final ProductModel product) throws CMSItemNotFoundException
 	{
 		return cmsPageService.getPageForProduct(product);
+	}
+
+	public RecommendationFacade getRecommendationFacade() {
+		return recommendationFacade;
+	}
+
+	public void setRecommendationFacade(RecommendationFacade recommendationFacade) {
+		this.recommendationFacade = recommendationFacade;
 	}
 
 
