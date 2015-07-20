@@ -61,7 +61,6 @@
 	<bean id="completeOrderValueValidator" class="com.flieger.clearsale.order.interceptors.CompleteOrderValueValidator">
 		<property name="modelService" ref="modelService"/>
 		<property name="customerAccountService" ref="customerAccountService"/>
-		<property name="defaultAdyenPaymentService" ref="defaultAdyenPaymentService"/>
 		<property name="commonI18NService" ref="commonI18NService"/>
 		<property name="flexibleSearchService" ref="flexibleSearchService"/>
 		<property name="paymentProvider" value="Adyen"/>

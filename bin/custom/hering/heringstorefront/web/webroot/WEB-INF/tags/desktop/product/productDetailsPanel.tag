@@ -57,10 +57,6 @@
 		</div>					
 		<%--<product:productDetailsFooter product="${product}" />--%>
 	</div>
-	<%--
-	<cms:pageSlot position="Section2" var="feature" element="div" class="span-8 section2 cms_disp-img_slot last">
-		<cms:component component="${feature}"/>
-	</cms:pageSlot>--%>
 	<div class="clearfix"></div>
 </div>
 <div class="margin-top margin-bottom">
@@ -70,7 +66,9 @@
 	<div class="col-sm-6">
 		<div class="row">
 			<p class="col-xs-4">
-				<product:productBonuspoints product="${product}"/>
+				<cms:pageSlot position="Section2" var="component">
+            		<cms:component component="${component}" />
+        		</cms:pageSlot>
 			</p>
 			<p class="col-xs-8">
 				<product:productInstallmentWithKlarna product="${product}"/>

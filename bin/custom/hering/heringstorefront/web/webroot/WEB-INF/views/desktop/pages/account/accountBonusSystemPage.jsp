@@ -28,7 +28,7 @@
 <!-- 			<section class="order-details page with-sidebar loyalty-program"> -->
 <%-- 				<nav:accountNav/> --%>
 <!-- 				<div class="right"> -->
-					<cms:pageSlot position="SideContent" var="feature" element="div" class="span-6 zoneA">
+					<cms:pageSlot position="Section1" var="feature" element="div" class="span-6 zoneA">
 						<cms:component component="${feature}" />
 					</cms:pageSlot>
 <!-- 				</div> -->

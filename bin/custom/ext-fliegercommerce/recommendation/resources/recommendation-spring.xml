@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+	<alias name="defaultRecommendationFacade" alias="recommendationFacade"/>
+	<bean id="defaultRecommendationFacade" class="com.flieger.recommendation.facades.impl.DefaultRecommendationFacade">
+		<property name="recommendationService" ref="recommendationService"/>
+		<property name="recommendationResultProductConverter" ref="recommendationResultProductConverter"/>
+		<property name="findProductsBlacklistStrategy" ref="findProductsBlacklistStrategy"/>
+		<property name="findCustomerUUIDForRecommendations" ref="findCustomerUUIDForRecommendations"/>
+		<property name="productService" ref="productService"/>
+		<property name="categoryService" ref="categoryService"/>
+		<property name="cartService" ref="cartService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<alias name="defaultRecommendationResultProductConverter" alias="recommendationResultProductConverter"/>
+	<bean id="defaultRecommendationResultProductConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="productData"/>
+		<property name="populators">
+			<list>
+				<ref bean="recommendationResultProductPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultFindProductsBlacklistStrategy" alias="findProductsBlacklistStrategy"/>
+	<bean id="defaultFindProductsBlacklistStrategy" class="com.flieger.recommendation.strategies.impl.DefaultFindProductsBlacklistStrategy"/>
+</beans>

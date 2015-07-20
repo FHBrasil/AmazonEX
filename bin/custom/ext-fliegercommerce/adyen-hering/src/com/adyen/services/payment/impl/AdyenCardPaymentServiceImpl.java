@@ -19,6 +19,7 @@ import com.adyen.services.recurring.RecurringDetailsResult;
 import com.flieger.adyen.command.AuthorizationCommand;
 import com.flieger.adyen.command.CaptureCommand;
 import com.flieger.adyen.command.RecurringDetailsCommand;
+import com.flieger.adyen.commands.impl.AdyenCaptureCommand;
 
 
 /**

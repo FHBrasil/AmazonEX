@@ -76,10 +76,10 @@
         <transition name="NOK" to="sendPaymentFailedNotification" />
     </action>
 
-    <action id="takePayment" bean="takePaymentAction">
-        <transition name="OK" to="splitOrder" />
-        <transition name="NOK" to="sendPaymentFailedNotification" />
-    </action>
+<!--     <action id="takePayment" bean="takePaymentAction"> -->
+<!--         <transition name="OK" to="splitOrder" /> -->
+<!--         <transition name="NOK" to="sendPaymentFailedNotification" /> -->
+<!--     </action> -->
 
     <action id="cancelOrder" bean="cancelWholeOrderAuthorizationAction">
         <transition name="OK" to="failed" />

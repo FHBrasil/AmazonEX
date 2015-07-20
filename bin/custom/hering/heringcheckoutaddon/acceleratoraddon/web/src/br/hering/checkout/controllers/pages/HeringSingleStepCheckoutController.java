@@ -629,12 +629,12 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
         if (voucherData != null) {
             model.addAttribute("isVoucherFreeShipping", voucherData.isFreeShipping());
             model.addAttribute("success", Boolean.TRUE.toString());
-            model.addAttribute("successMessage", "Vale-Crédito aplicado com sucesso.");
+            model.addAttribute("successMessage", "Vale-Cr��dito aplicado com sucesso.");
         } else {
             model.addAttribute("isVoucherFreeShipping", Boolean.FALSE.toString());
             model.addAttribute("success", Boolean.FALSE.toString());
             model.addAttribute("isVoucherAmountEqualsOrderAmount", Boolean.FALSE.toString());
-            model.addAttribute("successMessage", "Erro ao aplicar o Vale-Crédito.");
+            model.addAttribute("successMessage", "Erro ao aplicar o Vale-Cr��dito.");
         }
         model.addAttribute("cartData", cartData);
         model.addAttribute("deliveryMethods", getDeliveryModes());
@@ -702,11 +702,11 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             heringVoucherFacade.releaseVoucher(voucherCode);
             model.addAttribute("isVoucherFreeShipping", Boolean.FALSE.toString());
             model.addAttribute("success", Boolean.TRUE.toString());
-            model.addAttribute("successMessage", "Vale-Crédito removido com sucesso.");
+            model.addAttribute("successMessage", "Vale-Cr��dito removido com sucesso.");
         } catch (VoucherOperationException e) {
             LOG.error("error", e);
             model.addAttribute("success", Boolean.FALSE.toString());
-            model.addAttribute("successMessage", "Erro ao remover o Vale-Crédito.");
+            model.addAttribute("successMessage", "Erro ao remover o Vale-Cr��dito.");
             // In case voucher was not released
             try {
                 VoucherData voucherData = heringVoucherFacade.getVoucher(voucherCode);
@@ -1387,7 +1387,7 @@ public class HeringSingleStepCheckoutController extends HeringMultiStepCheckoutC
             paymentDetailsForm.setExpiryMonth(paymentInfo.getExpiryMonth());
             paymentDetailsForm.setExpiryYear(paymentInfo.getExpiryYear());
             paymentDetailsForm.setInstalment(paymentInfo.getInstallment());
-            paymentDetailsForm.setNameOnCard(paymentInfo.getCardAccountHolderName());
+            paymentDetailsForm.setNameOnCard(paymentInfo.getAccountHolderName() );
             paymentDetailsForm.setPaymentMode(HeringcheckoutaddonWebConstants.CREDITCARD);
         } else if (cartData.getCustomPaymentInfo() != null) {
             // Boleto or Debit card

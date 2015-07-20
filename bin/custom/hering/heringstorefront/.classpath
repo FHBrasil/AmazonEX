@@ -23,13 +23,10 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/notificationservices"/>
 	<classpathentry kind="lib" path="lib/SintegraIE-0.2.jar"/>
 	<classpathentry kind="src" path="/carrier"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/newsletteraddon"/>
-	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-integration-core-2.1.0.RELEASE.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/addoncommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorstorefrontcommons"/>
-	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-context-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-core-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-web-3.1.4.RELEASE.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/recommendation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/eventtracking"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
