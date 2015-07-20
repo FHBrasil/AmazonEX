@@ -26,6 +26,7 @@ import com.flieger.services.WebServicesConn;
 
 /**
  * @author flieger
+ * @author felipe
  * 
  */
 public class AdyenCaptureCommand implements CaptureCommand

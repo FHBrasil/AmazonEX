@@ -33,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.hering.core.customer.exceptions.CustomerAuthenticationException;
 import br.hering.facades.flow.impl.SessionOverrideCheckoutFlowFacade;
 import br.hering.facades.order.HeringOrderFacade;
+import br.hering.facades.customer.HeringCustomerFacade;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
 
@@ -88,6 +89,9 @@ public class CheckoutController extends AbstractCheckoutController
 	
 	@Resource(name = "heringOrderFacade")
 	private HeringOrderFacade heringOrderFacade;
+	
+	@Resource(name = "heringCustomerFacade")
+	private HeringCustomerFacade heringCustomerFacade;
 
 	@Resource
 	private BaseStoreService baseStoreService;
@@ -175,8 +179,8 @@ public class CheckoutController extends AbstractCheckoutController
 	{
 		if (bindingResult.hasErrors())
 		{
-			GlobalMessages.addErrorMessage(model, "form.global.error");
-			return getMessageSource().getMessage("form.global.error", null, getI18nService().getCurrentLocale());
+			GlobalMessages.addErrorMessage(model, "form.guest.fieldMismatch");
+			return getMessageSource().getMessage("form.guest.fieldMismatch", null, getI18nService().getCurrentLocale());
 		}
 		try
 		{
@@ -221,10 +225,11 @@ public class CheckoutController extends AbstractCheckoutController
 		model.addAttribute("allItems", orderDetails.getEntries());
 		model.addAttribute("deliveryAddress", orderDetails.getDeliveryAddress());
 		model.addAttribute("deliveryMode", orderDetails.getDeliveryMode());
-		model.addAttribute("paymentInfo", orderDetails.getPaymentInfo());
+		model.addAttribute("paymentInfo", orderDetails.getPaymentInfo());		
 		model.addAttribute("pageType", HeringPageType.ORDERCONFIRMATION.name());
-		final String uid = orderDetails.getUser().getUid();
-		model.addAttribute("email", uid.replaceAll("[a-z0-9\\-]*\\|", ""));		
+		final String uid = orderDetails.getUser().getUid().replaceAll("[a-z0-9\\-]*\\|", "");
+		model.addAttribute("email", uid);
+		model.addAttribute("customer", heringCustomerFacade.emailAlreadyExists(uid));
 
 		final String boletoUrl = "/boleto-img/jpg/boleto-" + orderCode + ".jpg";
 		

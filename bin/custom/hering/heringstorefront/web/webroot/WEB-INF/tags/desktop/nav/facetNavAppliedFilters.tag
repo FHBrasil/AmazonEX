@@ -37,16 +37,14 @@
             <c:choose>
                 <c:when test="${fn:startsWith(breadcrumb.facetValueName, '#')}">
                     <div class="btn btn-d">
-                        <a href="${removeQueryUrl}"><span>${breadcrumb.facetName}:
+                        <a href="${removeQueryUrl}"><div>${breadcrumb.facetName}:
                                 <div class="remove_item_left_name facet_block-label itemSelecionadoBreadcrumb faceta-${breadcrumb.facetValueName}" style="background-color:${breadcrumb.facetValueName}; width:15px; height:15px;display:inline!important;position: absolute;top: 9px;left: 35px">
-                                <a class="close-f">x</a></div>
-                        </span></a>
+                        <span class="close-f">x</span></div></a>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="btn btn-d">
-                        <a href="${removeQueryUrl}"><span>${breadcrumb.facetName}:${breadcrumb.facetValueName}</span></a>
-                        <a class="close-f">x</a>
+                        <a href="${removeQueryUrl}"><div>${breadcrumb.facetName}:${breadcrumb.facetValueName} <span class="close-f">x</span></div></a>
                     </div>
                 </c:otherwise>
             </c:choose>

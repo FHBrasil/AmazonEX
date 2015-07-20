@@ -3,7 +3,6 @@ package br.hering.core.attributehandlers;
 import java.util.Collection;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.fliegersoftware.newslettersubscription.enums.SubscriptionType;
@@ -12,16 +11,15 @@ import com.fliegersoftware.newslettersubscription.exceptions.NewsletterSubscript
 import com.fliegersoftware.newslettersubscription.model.NewsletterSubscriptionModel;
 import com.fliegersoftware.newslettersubscription.services.NewsletterSubscriptionService;
 
-import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.TitleModel;
-import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.model.attribute.DynamicAttributeHandler;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.services.BaseStoreService;
 
-public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel>{
+
+public class CustomerReviewOrderedProductsEnabledAttributeHandler implements DynamicAttributeHandler<Boolean, CustomerModel>{
 
 	
 	private NewsletterSubscriptionService newsletterSubscriptionService;
@@ -31,14 +29,11 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 	private UserService userService;
 
 	private CustomerNameStrategy customerNameStrategy;
-
 	
-	private static final Logger LOG = Logger.getLogger(CustomerTipsNewsletterEnabledAttributeHandler.class);
-
 	
 	@Override
 	public Boolean get(CustomerModel customerModel) {
-
+		
 		Collection<NewsletterSubscriptionModel> customerSubscriptions = customerModel.getNewsletterSubscriptions();
 		
 		if (CollectionUtils.isNotEmpty(customerSubscriptions))				
@@ -46,7 +41,7 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 			for (NewsletterSubscriptionModel subscription : customerSubscriptions)
 			{
 				SubscriptionType type = subscription.getSubscriptionType();
-				if (type == SubscriptionType.TIPS_NEWSLETTER)
+				if (type == SubscriptionType.REVIEW_ORDERED_PRODUCT)
 				{
 					return true;
 				}
@@ -54,12 +49,12 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		}
 
 		return false;
-
+		
 	}
 
 	@Override
-	public void set(CustomerModel customerModel, Boolean tipsNewsletterEnabled) {
-				
+	public void set(CustomerModel customerModel, Boolean reviewOrderedProductsEnabled) {
+			
 		NewsletterSubscriptionModel subscription = new NewsletterSubscriptionModel();
 		
 		final String[] names = customerNameStrategy.splitName(customerModel.getName());
@@ -71,15 +66,14 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		if (customerModel.getTitle() != null)
 		{
 			subscription.setTitle(customerModel.getTitle());
-		}	
-		subscription.setLanguage(customerModel.getSessionLanguage());		
+		}		
+		subscription.setLanguage(customerModel.getSessionLanguage());
 		subscription.setStore(getBaseStoreService().getCurrentBaseStore());		
-		final SubscriptionType subscriptionType = SubscriptionType.TIPS_NEWSLETTER;			
+		final SubscriptionType subscriptionType = SubscriptionType.REVIEW_ORDERED_PRODUCT;
 		subscription.setSubscriptionType(subscriptionType);
 		subscription.setCustomer(customerModel);
-		
-								
-		if (tipsNewsletterEnabled)
+										
+		if (reviewOrderedProductsEnabled)
 		{	
 			try 
 			{
@@ -102,8 +96,8 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 			}
 		}
 		
-		
 	}
+	
 	
 	public BaseStoreService getBaseStoreService() {
 		return baseStoreService;
@@ -122,7 +116,7 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 	public void setCustomerNameStrategy(CustomerNameStrategy customerNameStrategy) {
 		this.customerNameStrategy = customerNameStrategy;
 	}
-
+	
 	public UserService getUserService() {
 		return userService;
 	}
@@ -140,6 +134,5 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 	public void setNewsletterSubscriptionService(NewsletterSubscriptionService newsletterSubscriptionService) {
 		this.newsletterSubscriptionService = newsletterSubscriptionService;
 	}
-
 
 }

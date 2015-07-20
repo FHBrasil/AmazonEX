@@ -105,8 +105,11 @@
 		<property name="orders" type="java.util.Collection&lt;java.lang.String>" />
 		<property name="primaryKey" type="java.lang.String"/>
 		<property name="defaultPhoneNumber" type="java.lang.String" />
-		<property name="youngestChildDateOfBirth" type="java.lang.String" />
-		<property name="tipsNewsletterEnabled" type="boolean" />
+ 		<property name="youngestChildDateOfBirth" type="java.lang.String" />
+ 		<property name="scheduledNewsletterChecked" type="java.lang.String" />	
+ 		<property name="tipsNewsletterChecked" type="java.lang.String" />
+ 		<property name="reviewOrderedProductsChecked" type="java.lang.String" />
+ 		<property name="reviewShoppingExperienceChecked" type="java.lang.String" />	
 	</bean>
         
     <bean class="de.hybris.platform.commercefacades.user.data.RegisterData">

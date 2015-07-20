@@ -31,6 +31,12 @@ public interface HeringCustomerAccountService extends CustomerAccountService
 	
 	public CustomerModel changePhoneNumber(CustomerModel customerModel, String phone);
 	
+	public CustomerModel subscribeScheduledNewsletter(CustomerModel customerModel, Boolean scheduledNewsletter);
+			
 	public CustomerModel subscribeTipsNewsletter(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth);
+	
+	public CustomerModel reviewShoppingExperience(CustomerModel customerModel, Boolean reviewShoppingExperience);	
+	
+	public CustomerModel reviewOrderedProducts(CustomerModel customerModel, Boolean reviewOrderedProducts);
 	
 }

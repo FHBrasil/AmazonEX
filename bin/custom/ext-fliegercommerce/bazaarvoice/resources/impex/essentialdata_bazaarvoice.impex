@@ -5,7 +5,8 @@
 ## Importing settings (bazaarvoiceConfig)
 #########################################
 INSERT_UPDATE BazaarvoiceConfig; code[unique=true]; clientName; ftpUserName; ftpPassword; zone; seoKey; ftpServer; showReviewsScript;showQuestionsScript; isFamiliesEnabled
-;BV_Babyartikel;kp-family;a3AtZmFtaWx5;azR5UHNuTXklMTc5;MainSiteHybris5;kp-family-1d6daae5652b820af2d4f4ba28f6c04e;sftp7.bazaarvoice.com;"";"";false
+;BV_Babyartikel;kp-family;kp-family;k4yPsnMy%179;MainSiteHybris5;kp-family-1d6daae5652b820af2d4f4ba28f6c04e;sftp7-stg.bazaarvoice.com;"";"";false
+
 
 ## Setting bazaarvoiceConfig to websites
 ########################################
@@ -27,4 +28,11 @@ INSERT_UPDATE Trigger;cronJob(code)[unique=true];cronExpression
 ;bvProductFeedBabyartikel; 0 2 22 * * ?
 
 
+## Create a new cronjob to import reviews from BV
+#################################
+INSERT_UPDATE BazaarvoiceProductFeedImportCronJob;code[unique=true];job(code)[unique=true];singleExecutable;sessionLanguage(isocode);bazaarvoicestorefront(uid)
+;bazaarvoiceImportReviewsCronJob;bazaarvoiceImportReviewsPerformable;false;de;babyartikel
 
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+#% afterEach: impex.getLastImportedItem().setActivationTime(new Date());
+;bazaarvoiceImportReviewsCronJob; 0 1 22 * * ?

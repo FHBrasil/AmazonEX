@@ -23,18 +23,33 @@
                 <div class="modal-body">
 					<div class="form-inline" style="margin-bottom:15px;">
 						<div class="radio">
-							<input type="radio" name="addresstype" id="addresstype-address" class="closeNewAddress" checked="true">
-							<label for="addresstype-address" class="closeNewAddress" data-toggle="collapse" data-target=".toggleNewAddress">
+							<input type="radio" name="addresstype" id="addresstype-address" checked="true" onclick="selectTypeAddress('address')">
+							<label for="addresstype-address">
 								<spring:theme code="checkout.single.address"/>
 							</label>
 						</div>
 						<div class="radio"style="margin-left:15px;">
-							<input type="radio" name="addresstype" id="addresstype-packstation" class="closeNewAddress" >
-							<label for="addresstype-packstation" class="closeNewAddress" data-toggle="collapse" data-target=".toggleNewAddress">
+							<input type="radio" name="addresstype" id="addresstype-packstation" onclick="selectTypeAddress('packstation')">
+							<label for="addresstype-packstation">
 								<spring:theme code="checkout.single.address.packStation"/>
 							</label>
 						</div>
-					</div>					
+					</div>	
+					<script type="text/javascript">
+						function selectTypeAddress(type)
+						{
+							if(type == "address")
+							{
+								$('.toggleNewAddress').collapse('show');
+								$('.toggleNewPackstation').collapse('hide');
+							}
+							else if(type == "packstation")
+							{
+								$('.toggleNewAddress').collapse('hide');
+								$('.toggleNewPackstation').collapse('show');
+							}
+						}
+					</script>				
     				<form:form method="post" commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse in">
 				        <input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
 				        <form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
@@ -65,7 +80,7 @@
 					        </button>					        
 				        </div>
 				    </form:form>				    
-				    <form:form method="post" commandName="packstationAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse out">
+				    <form:form method="post" commandName="packstationAddressForm" cssClass="addEditDeliveryAddressForm toggleNewPackstation collapse addresscollapse out">
 				       	<input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
 				       	<form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
 				        <form:hidden path="shippingAddress" value="true" />

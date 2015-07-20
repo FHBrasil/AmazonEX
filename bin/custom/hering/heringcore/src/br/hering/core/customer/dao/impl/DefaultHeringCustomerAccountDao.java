@@ -60,6 +60,18 @@ public class DefaultHeringCustomerAccountDao extends DefaultCustomerAccountDao i
 		return null;
 		
 	}
+	
+	@Override
+	public CustomerModel getCustomerByEmail(final String email)
+	{
+		ServicesUtil.validateParameterNotNull(email, "Email must not be null");
+		Map queryParams = new HashMap();
+		queryParams.put("email", email);
+
+		SearchResult result = getFlexibleSearchService().search("SELECT {pk} FROM {Customer} WHERE {uid} = ?email",
+		queryParams);
+		return ((result.getCount() > 0) ? (CustomerModel) result.getResult().get(0) : null);		
+	}
 
 	@Override
 	public PaymentInfoModel findPaymentInfoByCustomer(CustomerModel customerModel, String code)

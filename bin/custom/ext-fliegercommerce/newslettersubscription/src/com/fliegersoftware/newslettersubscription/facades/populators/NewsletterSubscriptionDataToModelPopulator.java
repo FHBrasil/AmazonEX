@@ -62,7 +62,6 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 			target.setGender(genderEnumValue);
 		}
 		
-				
 		final String titleCode = source.getTitleCode();		
 		final TitleModel titleModel = getUserService().getTitleForCode(titleCode);
 		if (titleModel != null)
@@ -70,7 +69,6 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 			target.setTitle(titleModel);
 		}
 		
-
 		final String languageIsoCode = source.getLanguageIsoCode();
 		final LanguageModel languageModel = getCommonI18NService().getLanguage(languageIsoCode);
 		if (languageModel != null)

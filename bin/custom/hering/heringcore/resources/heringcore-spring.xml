@@ -845,9 +845,33 @@
 	<bean id="customerTipsNewsletterEnabledAttributeHandler" 
 	class="br.hering.core.attributehandlers.CustomerTipsNewsletterEnabledAttributeHandler">
 		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
-		<property name="newsletterSubscriptionFacade" ref="newsletterSubscriptionFacade"/>
-		<property name="customerConverter" ref="customerConverter"/>
-		<property name="subscriptionTypeModelToDataConverter" ref="subscriptionTypeModelToDataConverter"/>
+		<property name="customerNameStrategy" ref="customerNameStrategy"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<bean id="customerScheduledNewsletterEnabledAttributeHandler" 
+	class="br.hering.core.attributehandlers.CustomerScheduledNewsletterEnabledAttributeHandler">
+		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
+		<property name="customerNameStrategy" ref="customerNameStrategy"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<bean id="customerReviewOrderedProductsEnabledAttributeHandler" 
+	class="br.hering.core.attributehandlers.CustomerReviewOrderedProductsEnabledAttributeHandler">
+		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
+		<property name="customerNameStrategy" ref="customerNameStrategy"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<bean id="customerReviewShoppingExperienceEnabledAttributeHandler" 
+	class="br.hering.core.attributehandlers.CustomerReviewShoppingExperienceEnabledAttributeHandler">
+		<property name="newsletterSubscriptionService" ref="newsletterSubscriptionService"/>
+		<property name="customerNameStrategy" ref="customerNameStrategy"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
 	</bean>
 
 	<alias name="defaultFeatureSplitShippingAllowedStrategy" alias="featureSplitShippingAllowedStrategy"/>
