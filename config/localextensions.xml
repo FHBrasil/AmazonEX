@@ -36,6 +36,7 @@
         <extension name="storecatalogfeed" />
         <extension name="pixicore" />
         <extension name="pixiapi" />
+        <extension name="pixiwebservices" />
         <extension name="newslettersubscription" />
         <extension name="newsletteraddon" />
         <extension name="bonussystem"/>
