@@ -53,7 +53,7 @@ INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[
 ;$solrIndexedType; oldPrice          	  ;double ;            ;	;    ;    ;    ;    ;;
 ;$solrIndexedType; priceValue             ;double ;            ;true;    ;    ;    ;    ;productPriceValueProvider;
 ;$solrIndexedType; keywords               ;text   ;            ;    ;true;    ;	   ;	;productKeywordsValueProvider;
-;$solrIndexedType; reviewAvgRating        ;double ;            ;    ;true;    ;    ;    ;productReviewAverageRatingValueProvider;
+;$solrIndexedType; reviewAvgRating        ;double ;            ;    ;true;    ;    ;    ;productReviewAverageRatingBazaarvoiceProvider;
 ;$solrIndexedType; img-60Wx60H          	;string ;            ;    ;    ;    ;    ;  ;image60ValueProvider;
 ;$solrIndexedType; img-190Wx190H            ;string ;            ;    ;    ;true;    ;  ;image190ValueProvider;
 ;$solrIndexedType; url                    ;string ;            ;    ;true;    ;    ;    ;productUrlValueProvider;
