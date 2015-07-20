@@ -21,6 +21,27 @@
            
     <bean id="recommendationResultValueData" class="com.flieger.recommendation.data.RecommendationResultValueData" scope="prototype"/>
     <bean id="prudsysRecommendationRequest" class="com.prudsys.data.PrudsysRecommendationRequest" scope="prototype"/>
+    <bean id="prudsysEventTrackRequest" class="com.prudsys.data.PrudsysEventTrackRequest" scope="prototype"/>
+           
+    <alias name="defaultPrudsysEventTrackerService" alias="eventTrackerService"/>
+	<bean id="defaultPrudsysEventTrackerService" class="com.prudsys.services.impl.PrudsysEventTrackerService">
+		<property name="prudsysCommunicator" ref="prudsysCommunicator"/>
+		<property name="prudsysEventTrackRequestConverter" ref="prudsysEventTrackRequestConverter"/>
+	</bean>
+	
+	<alias name="defaultPrudsysEventTrackRequestConverter" alias="prudsysEventTrackRequestConverter"/>
+	<bean id="defaultPrudsysEventTrackRequestConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="prudsysEventTrackRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="prudsysEventTrackRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultPrudsysEventTrackRequestPopulator" alias="prudsysEventTrackRequestPopulator"/>
+	<bean id="defaultPrudsysEventTrackRequestPopulator" class="com.prudsys.populators.PrudsysEventTrackRequestPopulator">
+	</bean>
            
     <alias name="defaultPrudsysRecommendationService" alias="recommendationService"/>
 	<bean id="defaultPrudsysRecommendationService" class="com.prudsys.services.impl.PrudsysRecommendationService">
@@ -65,4 +86,8 @@
 	
 	<alias name="defaultPrudsysRecommendationResultValuePopulator" alias="prudsysRecommendationResultValuePopulator"/>
 	<bean id="defaultPrudsysRecommendationResultValuePopulator" class="com.prudsys.populators.PrudsysRecommendationResultValuePopulator"/>
+	
+	<alias name="defaultPrudsysFindCustomerUUID" alias="findCustomerUUIDForRecommendations"/>
+	<alias name="defaultPrudsysFindCustomerUUID" alias="findCustomerUUIDForEventTracking"/>
+	<bean id="defaultPrudsysFindCustomerUUID" class="com.prudsys.strategies.impl.DefaultPrudsysFindCustomerUUID"/>
 </beans>

@@ -51,6 +51,8 @@ import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
 import br.hering.storefront.util.MetaSanitizerUtil;
 
+import com.flieger.eventtracking.data.EventTrackRequest;
+import com.flieger.eventtracking.facade.EventTrackerFacade;
 import com.flieger.recommendation.facades.RecommendationFacade;
 
 import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.ProductBreadcrumbBuilder;
@@ -130,6 +132,9 @@ public class ProductPageController extends AbstractPageController
 	
 	@Resource
 	private RecommendationFacade recommendationFacade;
+	
+	@Resource
+	private EventTrackerFacade eventTrackerFacade;
 	
 	@Resource
 	private VariantsUtils variantsUtils;
@@ -492,6 +497,8 @@ public class ProductPageController extends AbstractPageController
 
 		model.addAttribute("recommendations", getRecommendationFacade().getRecommendationsForProduct(productData));
 		
+		getEventTrackerFacade().trackProductView(productData);
+		
 		sortVariantOptionData(productData);
 		model.addAttribute("percentageRating", percentageRating(productData));
 		storeCmsPageInModel(model, getPageForProduct(productModel));
@@ -638,6 +645,14 @@ public class ProductPageController extends AbstractPageController
 
 	public void setRecommendationFacade(RecommendationFacade recommendationFacade) {
 		this.recommendationFacade = recommendationFacade;
+	}
+
+	public EventTrackerFacade getEventTrackerFacade() {
+		return eventTrackerFacade;
+	}
+
+	public void setEventTrackerFacade(EventTrackerFacade eventTrackerFacade) {
+		this.eventTrackerFacade = eventTrackerFacade;
 	}
 
 

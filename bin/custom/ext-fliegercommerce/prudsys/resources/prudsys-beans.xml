@@ -16,6 +16,39 @@
 -->
 
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+	<bean class="com.prudsys.data.PrudsysEventTrackRequest">
+		<property name="sessionId" type="String" />
+	</bean>
+	
+	<bean class="com.prudsys.data.PrudsysProductViewEventTrackRequest" extends="com.prudsys.data.PrudsysEventTrackRequest">
+		<property name="productId" type="String" />
+	</bean>
+	
+	<bean class="com.prudsys.data.PrudsysCategoryViewEventTrackRequest" extends="com.prudsys.data.PrudsysEventTrackRequest">
+		<property name="categoryId" type="String" />
+	</bean>
+	
+	<bean class="com.prudsys.data.PrudsysClickEventTrackRequest" extends="com.prudsys.data.PrudsysEventTrackRequest">
+		<property name="itemId" type="String" />
+		<property name="template" type="String" />
+		<property name="box" type="String" />
+	</bean>
+	
+	<bean class="com.prudsys.data.PrudsysBasketEventTrackRequest" extends="com.prudsys.data.PrudsysEventTrackRequest">
+		<property name="itemids" type="java.util.List&lt;String&gt;" />
+		<property name="quantities" type="java.util.List&lt;String&gt;" />
+	</bean>
+	
+	<bean class="com.prudsys.data.PrudsysOrderEventTrackRequest" extends="com.prudsys.data.PrudsysEventTrackRequest">
+		<property name="itemids" type="java.util.List&lt;String&gt;" />
+		<property name="quantities" type="java.util.List&lt;String&gt;" />
+		<property name="utp" type="java.util.List&lt;String&gt;" />
+	</bean>
+	
+	<bean class="com.prudsys.data.PrudsysUserToSessionEventTrackRequest" extends="com.prudsys.data.PrudsysEventTrackRequest">
+		<property name="userId" type="String" />
+	</bean>
+		
 	<bean class="com.prudsys.data.PrudsysRecommendationRequest">
 		<property name="sessionId" type="String" />
 	</bean>
