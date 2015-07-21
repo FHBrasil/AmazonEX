@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>01-02-03 Warenkorb prüfen</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">01-02-03 Warenkorb prüfen</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>01-02-03</td>
+	<td>Warenkorb prüfen</td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Kunde prüft Inhalt des Warenkorbs.</td>
+	<td>Warenkorb enthält ${Anzahl} Produkt mit dem Namen ${Produkt} zum Preis von ${Preis}.</td>
+</tr>
+<!--Hier war eine Pause nötig da sonst der Assert des Titels fehlschlägt-->
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<!--Zahlart 'Einzelne Kasse' auswählen-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div[class=&quot;span-24&quot;] select[id=&quot;selectAltCheckoutFlow&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=selectAltCheckoutFlow</td>
+	<td>label=${Kassenart}</td>
+</tr>
+<!--Prüfung ob die beiden Bezahlen Buttons auf der Seite vorhanden sind-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div[class=&quot;span-10 last&quot;] button[id=&quot;checkoutButtonTop&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div[class=&quot;span-20 last&quot;] button[id=&quot;checkoutButtonBottom&quot;]</td>
+	<td></td>
+</tr>
+<!--Rudimentäre Prüfung ob der Warenkorb korrekt ist-->
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div[class=&quot;span-24&quot;] div[class=&quot;item_container&quot;] dd[class=&quot;total&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=quantity0</td>
+	<td>${Anzahl}</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div[class=&quot;span-24&quot;] div[class=&quot;item_container&quot;] dd[class=&quot;total&quot;]</td>
+	<td>${Preis}</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div[class=&quot;span-8 last right&quot;] div[class=&quot;item_container&quot;] p</td>
+	<td>${MwSt_ohne_Versandkosten}</td>
+</tr>
+<!--Bezahl-Button klicken und mit der Bestellung fortfahren-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=checkoutButtonTop</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=checkoutButtonBottom</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=selectAltCheckoutFlow</td>
+	<td>${Kassenart_Inhalt_Selectbox}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=checkoutButtonBottom</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

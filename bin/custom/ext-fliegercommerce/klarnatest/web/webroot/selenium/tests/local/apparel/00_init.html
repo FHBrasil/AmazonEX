@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>Init global parameters</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Init global parameters</td></tr>
+</thead><tbody>
+<!--Accelerator's version: 4.6, 4.7.8-->
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>4.7.8</td>
+	<td>ACCVERSION</td>
+</tr>
+<!--ge_config-->
+<tr>
+	<td>ge_setTCNameConfig</td>
+	<td>5</td>
+	<td></td>
+</tr>
+<!--URLs-->
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>/yacceleratorstorefront/?site=electronics</td>
+	<td>SHOP_URL</td>
+</tr>
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>Homepage</td>
+	<td>SHOP_ASSERT</td>
+</tr>
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>/hmc/hybris</td>
+	<td>URL_HMC</td>
+</tr>
+<!--User-->
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>admin</td>
+	<td>HMC_ADMIN</td>
+</tr>
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>nimda</td>
+	<td>HMC_ADMIN_PW</td>
+</tr>
+<!--Start new session-->
+<tr>
+	<td>open</td>
+	<td>${SHOP_URL}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>deleteAllVisibleCookies</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

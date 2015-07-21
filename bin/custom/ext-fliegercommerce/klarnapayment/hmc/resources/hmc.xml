@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2012 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<configuration	xmlns="hybris.de/schemas/hmc/generic"
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xsi:schemaLocation="hybris.de/schemas/hmc/generic hmc.xsd">
+
+	<!-- Configuration for extension klarnapayment -->
+	<explorertree>
+		<group name="KlarnaAdmin">
+			<typeref description="typeref.klarnaconfig.description" type="KlarnaConfig"/>
+			<typeref description="typeref.updatependingklarnastatusorderscronjob.description" type="UpdatePendingKlarnaStatusOrdersCronJob"/>
+		</group>
+	</explorertree>
+	<type mode="append" name="KlarnaConfig" icon="ext/klarnapayment/images/icons/klarna.png"  >
+		<organizer>
+			<search mode="append">
+				<condition attribute="baseStore"/>
+				<condition attribute="countryConfig" />
+				<condition attribute="merchantId"/>
+				<condition attribute="campaignActive"/>
+				<condition attribute="accountActive"/>
+				<condition attribute="invoiceActive"/>
+			</search>
+			<result>
+				<listview>
+					<itemlayout mode="replace">
+						<attribute name="baseStore" width="200"/>
+						<attribute name="countryConfig" width="200"/>
+						<attribute name="merchantId" width="100"/>
+						<attribute name="description" width="200"/>
+					</itemlayout>
+				</listview>
+				<editview>
+					<itemlayout mode="replace">
+						<attribute name="baseStore" width="200"/>
+						<attribute name="countryConfig" width="200"/>
+						<attribute name="merchantId" width="100"/>
+						<attribute name="description" width="200"/>
+					</itemlayout>
+				</editview>
+				<treeview>
+					<itemlayout mode="replace">
+						<attribute name="baseStore" width="200"/>
+						<attribute name="countryConfig" width="200"/>
+						<attribute name="merchantId" width="100"/>
+						<attribute name="description" width="200"/>
+					</itemlayout>
+				</treeview>
+			</result>
+			<editor>
+				<tab name="tab.klarnaconfig.properties" position="1" >
+					<section name="section.klarnaconfig.properties" >
+						<listlayout>
+							<attribute labelwidth="200" name="description" width="300"/>
+							<attribute labelwidth="200" name="baseStore" width="300"/>
+							<attribute labelwidth="200" name="countryConfig" width="300"/>
+							<attribute labelwidth="200" name="absolutDiscountDescriptionText" width="300"/>
+							<attribute labelwidth="200" name="relativeDiscountDescriptionText" width="300"/>
+						</listlayout>
+					</section>
+					<section name="section.klarnaconfig.authentication.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="merchantId" width="300" />
+							<attribute labelwidth="200" name="sharedSecret" width="300" />
+						</listlayout>
+					</section>
+					<section name="section.klarnaconfig.active.paymentmethod.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="invoiceActive" width="300"/>
+							<attribute labelwidth="200" name="accountActive" width="300"/>
+							<attribute labelwidth="200" name="campaignActive" width="300"/>
+						</listlayout>
+					</section>
+					<section name="section.klarnaconfig.shopsetting.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="accountMaxValue" width="300" />
+							<attribute labelwidth="200" name="accountMinValue" width="300" />
+							<attribute labelwidth="200" name="showMonthlyCostOnProductDetail" width="300" />
+							<attribute labelwidth="200" name="invoiceFee" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+				<tab name="tab.klarnaconfig.pclass.properties" position="2" >
+					<section name="section.klarnaconfig.pclass.properties">
+						<listlayout>
+							<attribute labelwidth="100" name="pClass" width="550" />
+						</listlayout>
+					</section>
+					<section name="section.klarnaconfig.fetchpclass.properties">
+						<table>
+							<tr>
+								<td>
+									<action autosave="true"
+										type="item"
+										classname="de.getit.hybris.klarna.payment.hmc.FetchPClassesAction"
+										name="fetchPClassesAction" >
+									</action>
+								</td>
+							</tr>
+						</table>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+		<defaultreference mode="replace">
+			<itemlayout>
+				<attribute name="countryConfig"/>
+				<attribute name="baseStore"/>
+			</itemlayout>
+		</defaultreference>
+	</type>
+	<type mode="append" name="KlarnaPClass" icon="ext/klarnapayment/images/icons/klarna.png" >
+		<organizer>
+			<search mode="append">
+				<condition attribute="id"/>
+				<condition attribute="country"/>
+				<condition attribute="merchantId"/>
+				<condition attribute="type"/>
+			</search>
+			<result>
+				<listview>
+					<itemlayout mode="replace">
+						<attribute name="id" width="100"/>
+						<attribute name="country" width="100"/>
+						<attribute name="merchantId" width="100"/>
+						<attribute name="type" width="100"/>
+						<attribute name="description" width="200"/>
+					</itemlayout>
+				</listview>
+				<editview>
+					<itemlayout mode="replace">
+						<attribute name="id" width="200"/>
+						<attribute name="country" width="200"/>
+						<attribute name="merchantId" width="200"/>
+						<attribute name="type" width="200"/>
+						<attribute name="description" width="200"/>
+					</itemlayout>
+				</editview>
+				<treeview>
+					<itemlayout mode="replace">
+						<attribute name="id" width="200"/>
+						<attribute name="country" width="200"/>
+						<attribute name="merchantId" width="200"/>
+						<attribute name="type" width="200"/>
+						<attribute name="description" width="200"/>
+					</itemlayout>
+				</treeview>
+			</result>
+			<editor>
+				<tab name="tab.klarnapclass.properties" position="1" >
+					<section name="section.klarnapclass.properties" >
+						<listlayout>
+							<attribute labelwidth="200" name="id" width="300" editable="false" />
+							<attribute labelwidth="200" name="description" width="300" editable="false"/>
+							<attribute labelwidth="200" name="country" width="300" editable="false"/>
+							<attribute labelwidth="200" name="merchantId" width="300" editable="false"/>
+							<attribute labelwidth="200" name="type" width="300" editable="false"/>
+							<attribute labelwidth="200" name="expire" width="300" editable="false"/>
+							<attribute labelwidth="200" name="interestrate" width="300" editable="false"/>
+							<attribute labelwidth="200" name="invoicefee" width="300" editable="false"/>
+							<attribute labelwidth="200" name="startfee" width="300" editable="false"/>
+							<attribute labelwidth="200" name="minamount" width="300" editable="false"/>
+							<attribute labelwidth="200" name="months" width="300" editable="false"/>
+							<attribute labelwidth="200" name="klarnaConfig" width="300" editable="false" />
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+		<defaultreference mode="replace" >
+			<itemlayout >
+				<attribute name="id"/>
+				<attribute name="country"/>
+				<attribute name="merchantId"/>
+				<attribute name="type"/>
+				<attribute name="description"/>
+			</itemlayout>
+		</defaultreference>
+	</type>
+	<type mode="append" name="KlarnaCountryConfig" icon="ext/klarnapayment/images/icons/klarna.png" >
+		<organizer>
+			<search mode="append">
+				<condition attribute="country"/>
+			</search>
+			<result>
+				<listview>
+					<itemlayout mode="replace">
+						<attribute name="country" width="200"/>
+					</itemlayout>
+				</listview>
+				<editview>
+					<itemlayout mode="replace">
+						<attribute name="country" width="200"/>
+					</itemlayout>
+				</editview>
+				<treeview>
+					<itemlayout mode="replace">
+						<attribute name="country" width="200"/>
+					</itemlayout>
+				</treeview>
+			</result>
+			<editor>
+				<tab name="tab.klarnacountryconfig.properties" position="1" >
+					<section name="section.klarnacountryconfig.properties" >
+						<listlayout>
+							<attribute labelwidth="200" name="country" width="300"/>
+							<attribute labelwidth="200" name="currency" width="300"/>
+							<attribute labelwidth="200" name="language" width="300"/>
+							
+							<attribute labelwidth="200" name="pnoPattern" width="300"/>
+							<attribute labelwidth="200" name="birthdayFormat" width="300"/>
+							
+							<attribute labelwidth="200" name="getAddressAllowed" width="300"/>
+							<attribute labelwidth="200" name="hasAccountAllowed" width="300"/>
+							<attribute labelwidth="200" name="houseNumberInStreet" width="300"/>
+							<attribute labelwidth="200" name="useBirthdayAsPno" width="300"/>
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+		<defaultreference mode="replace">
+			<itemlayout>
+				<attribute name="country"/>
+			</itemlayout>
+		</defaultreference>
+	</type>
+	<type mode="append" name="KlarnaPaymentInfo" icon="ext/klarnapayment/images/icons/klarna.png" >
+		<organizer>
+			<search mode="append">
+				<condition attribute="eid"/>
+				<condition attribute="rno"/>
+				<condition attribute="pclass"/>
+			</search>
+			<result>
+				<listview>
+					<itemlayout mode="replace">
+						<attribute name="eid" width="200"/>
+						<attribute name="rno" width="200"/>
+						<attribute name="pclass" width="200"/>
+					</itemlayout>
+				</listview>
+				<editview>
+					<itemlayout mode="replace">
+						<attribute name="eid" width="200"/>
+						<attribute name="rno" width="200"/>
+						<attribute name="pclass" width="200"/>
+					</itemlayout>
+				</editview>
+				<treeview>
+					<itemlayout mode="replace">
+						<attribute name="eid" width="200"/>
+						<attribute name="rno" width="200"/>
+						<attribute name="pclass" width="200"/>
+					</itemlayout>
+				</treeview>
+			</result>
+			<editor>
+				<tab name="tab.klarnapaymentinfo.properties" position="1" >
+					<section name="section.klarnapaymentinfo.properties" >
+						<listlayout>
+							<attribute labelwidth="200" name="eid" width="300"/>
+							<attribute labelwidth="200" name="rno" width="300"/>
+							<attribute labelwidth="200" name="pclass" width="300"/>
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+		<defaultreference mode="replace" >
+			<itemlayout>
+				<attribute name="eid"/>
+				<attribute name="rno"/>
+			</itemlayout>
+		</defaultreference>
+	</type>
+	<type mode="append" name="Address" >
+		<organizer>
+			<editor>
+				<tab name="tab.common" position="0">
+					<section name="section.address.address" mode="replace" position="1">
+						<columnlayout>
+							<row>
+								<attribute name="streetname"/>
+								<attribute name="streetnumber"/>
+							</row>
+							<row>
+								<attribute name="postalcode"/>
+								<attribute name="town"/>
+							</row>
+							<row>
+								<attribute name="country"/>
+								<attribute name="houseextension"/>
+							</row>
+						</columnlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+</configuration>
