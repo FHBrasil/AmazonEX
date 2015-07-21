@@ -1,4 +1,3 @@
-<%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
@@ -22,7 +21,7 @@
 				<format:price priceData="${recommendation.price}" displayFreeForZero="true" />
 			<br>
 			<span class="glyphicon stars">
-				<bazaarvoice:inlineRatings product="${recommendation}" />
+				<bazaarvoice:inlineRatings product="${product}" />
 			</span>
 		</div>
 	</c:forEach>
