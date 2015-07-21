@@ -23,7 +23,6 @@ var tipsNewsletter = {
                 url: '/my-account/tips-newsletter',
                 data: data,
                 success: function(data) {
-                	alert("SUBSCRIBE TO TIPS NEWSLETTER");
                 	// faz alguma coisa com os dados retornados
                 }
             });

@@ -173,16 +173,17 @@
 			
 				<div id="toggleMails" class="collapse">
 			
+					<script type="text/javascript" src="${themeResourcePath}/js/tipsNewsletterDate.js"></script>
 					<script type="text/javascript" src="${themeResourcePath}/js/tipsNewsletter.js"></script>		
 					<form id="tipsNewsletter" class="form-horizontal" action="my-account/tips-newsletter" method="GET">
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="checkbox">
-									<label><input type="checkbox"  name="tipsNewsletterEnabled" ${customerData.tipsNewsletterChecked}> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
+									<label><input type="checkbox"  name="tipsNewsletterEnabled" id="tipsNewsletterCheckbox" ${customerData.tipsNewsletterChecked} disabled> Schwangerschafts-Newsletter (wöchentlich)<br><small>Erfahre in jeder SSW, wie sich dein Baby entwickelt und erhalte praktische Tipps und passende Angebote.</small></label>
 									<div class="form-group col-sm-6">
 										<label for="birthday" class="control-label"><small>Entbindungstermin / Geburtstag</small></label>
 										<div class="input-group input-append date" id="birthday" data-date="01.01.2015" data-date-format="dd.mm.yyyy" style="padding-left:20px;">
-											<input type="text" name="youngestChildDateOfBirth" size="16" class="form-control span2" value="${customerData.youngestChildDateOfBirth}">
+											<input type="text" name="youngestChildDateOfBirth" id="tipsNewsletterDate" size="16" class="form-control span2" value="${customerData.youngestChildDateOfBirth}">
 											<span class="input-group-btn add-on">
 												<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span></button>
 											</span>
