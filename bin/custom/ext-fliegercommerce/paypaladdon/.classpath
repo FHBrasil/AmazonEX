@@ -15,11 +15,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/hmc"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/platform"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/paypal"/>
-	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-beans-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/HYBRIS/kpfamily_5/bin/platform/ext/core/lib/spring-web-3.1.4.RELEASE.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/addoncommon"/>
-	<classpathentry kind="lib" path="/platform/ext/core/lib/spring-context-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/acceleratorservices/web/webroot/WEB-INF/lib/spring-webmvc-3.1.4.RELEASE.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/heringfacades"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

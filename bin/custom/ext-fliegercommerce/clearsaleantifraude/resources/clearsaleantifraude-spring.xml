@@ -50,11 +50,11 @@
 	</bean>
 	
 <!-- 	Cronjob de pesquisa de status no clearsale	 -->
-	<bean id="clearsaleStatusPerformable" class="com.flieger.clearsale.jobs.ClearsaleStatusPerformable" parent="abstractJobPerformable">
-		<property name="providerName" value="ClearSale" />
+<!-- 	<bean id="clearsaleStatusPerformable" class="com.flieger.clearsale.jobs.ClearsaleStatusPerformable" parent="abstractJobPerformable"> -->
+<!-- 		<property name="providerName" value="ClearSale" /> -->
 <!-- 		<property name="defaultClearSaleSOAPServices" ref="defaultClearSaleSOAPServices"/> -->
-		<property name="modelService" ref="modelService"/>
-	</bean>
+<!-- 		<property name="modelService" ref="modelService"/> -->
+<!-- 	</bean> -->
 	
 	<!-- VALIDATOR -->
 	<alias alias="orderValueValidator" name="completeOrderValueValidator"/>

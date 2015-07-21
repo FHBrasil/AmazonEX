@@ -36,6 +36,7 @@ public class PrudsysRecommendationResultValuePopulator implements
 
 		final Map<String, Object> values = new HashMap<String, Object>();
 
+		values.put("template", source.getTemplate());
 		values.put("boxId", source.getBoxId());
 		values.put("netUnitPrice", source.getNetUnitPrice());
 		values.put("onlineFlag", Boolean.valueOf(source.isOnlineFlag()));

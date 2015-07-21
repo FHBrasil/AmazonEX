@@ -3,19 +3,42 @@
  */
 package com.fliegersoftware.addon.paypal.facades;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+
 import br.hering.core.model.order.payment.PaypalPaymentInfoModel;
 import br.hering.facades.facades.order.impl.DefaultHeringCheckoutFacade;
 
 import com.fliegersoftware.addon.paypal.constants.PaypaladdonConstants;
+import com.paypal.hybris.constants.PaypalConstants;
+import com.paypal.hybris.data.AbstractResultData;
+import com.paypal.hybris.data.DoAuthorizationRequestData;
+import com.paypal.hybris.data.DoAuthorizationResultData;
+import com.paypal.hybris.data.DoExpressCheckoutPaymentRequestData;
+import com.paypal.hybris.data.DoExpressCheckoutPaymentResultData;
+import com.paypal.hybris.data.PaymentInfoData;
+import com.paypal.hybris.data.PaymentStatus;
+import com.paypal.hybris.data.PendingReason;
+import com.paypal.hybris.data.ResultErrorData;
 import com.paypal.hybris.facade.impl.PayPalPaymentFacade;
+import com.paypal.hybris.service.PaypalPaymentService;
 
-import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
+import de.hybris.platform.acceleratorservices.enums.UiExperienceLevel;
 import de.hybris.platform.acceleratorservices.uiexperience.UiExperienceService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
 import de.hybris.platform.commercefacades.order.data.CartData;
-import de.hybris.platform.acceleratorservices.enums.UiExperienceLevel;
 import de.hybris.platform.core.model.c2l.CurrencyModel;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
@@ -31,31 +54,6 @@ import de.hybris.platform.servicelayer.config.ConfigurationService;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 import de.hybris.platform.servicelayer.session.SessionService;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
-
-import com.paypal.hybris.constants.PaypalConstants;
-import com.paypal.hybris.data.AbstractResultData;
-import com.paypal.hybris.data.DoAuthorizationRequestData;
-import com.paypal.hybris.data.DoAuthorizationResultData;
-import com.paypal.hybris.data.DoExpressCheckoutPaymentRequestData;
-import com.paypal.hybris.data.DoExpressCheckoutPaymentResultData;
-import com.paypal.hybris.data.PaymentInfoData;
-import com.paypal.hybris.data.PaymentStatus;
-import com.paypal.hybris.data.PendingReason;
-import com.paypal.hybris.data.ResultErrorData;
-import com.paypal.hybris.service.PaypalPaymentService;
 
 /**
  * @author Aliaksei_Sery (EPAM Systems)

@@ -1,0 +1,201 @@
+<?com.pixi.webservices.jaxb version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="ORDER">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ORDER_HEADER"/>
+        <xs:element ref="ORDER_ITEM_LIST"/>
+        <xs:element ref="ORDER_SUMMARY"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+      <xs:attribute name="version" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ORDER_HEADER">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="CONTROL_INFO"/>
+        <xs:element ref="ORDER_INFO"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CONTROL_INFO">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="GENERATOR_INFO"/>
+        <xs:element ref="GENERATION_DATE"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GENERATOR_INFO" type="xs:string"/>
+  <xs:element name="GENERATION_DATE" type="xs:date"/>
+  <xs:element name="ORDER_INFO">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ORDER_ID"/>
+        <xs:element ref="ORDER_DATE"/>
+        <xs:element ref="DATABASE"/>
+        <xs:element ref="SHOPID"/>
+        <xs:element ref="SHOP_NOTE"/>
+        <xs:element ref="ORDER_SHIPLOCK"/>
+        <xs:element ref="ORDER_PARTIES"/>
+        <xs:element ref="PRICE_CURRENCY"/>
+        <xs:element ref="PAYMENT"/>
+        <xs:element name="TRANSPORT_REMARKS" type="xs:string"/>
+        <xs:element ref="GIFT_MESSAGE"/>
+        <xs:element maxOccurs="unbounded" ref="REMARK"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ORDER_ID" type="xs:string"/>
+  <xs:element name="ORDER_DATE" type="xs:date"/>
+  <xs:element name="DATABASE" type="xs:string"/>
+  <xs:element name="SHOPID" type="xs:string"/>
+  <xs:element name="SHOP_NOTE" type="xs:string"/>
+  <xs:element name="ORDER_SHIPLOCK" type="xs:string"/>
+  <xs:element name="ORDER_PARTIES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="BUYER_PARTY"/>
+        <xs:element ref="SUPPLIER_PARTY"/>
+        <xs:element ref="INVOICE_PARTY"/>
+        <xs:element ref="SHIPMENT_PARTIES"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BUYER_PARTY" type="PARTY"/>
+  <xs:element name="SUPPLIER_PARTY" type="PARTY"/>
+  <xs:element name="INVOICE_PARTY" type="PARTY"/>
+  <xs:element name="SHIPMENT_PARTIES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="DELIVERY_PARTY"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DELIVERY_PARTY" type="PARTY"/>
+  <xs:element name="PRICE_CURRENCY" type="xs:string"/>
+  <xs:element name="PAYMENT">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PAGAMENTO_TEMP" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PAGAMENTO_TEMP">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="GIFT_MESSAGE" type="xs:string"/>
+  <xs:element name="REMARK">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="type" use="required" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ORDER_ITEM_LIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ORDER_ITEM"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ORDER_ITEM">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="LINE_ITEM_ID"/>
+        <xs:element ref="DESCRIPTION_SHORT"/>
+        <xs:element ref="ARTICLE_ID"/>
+        <xs:element ref="QUANTITY"/>
+        <xs:element name="ORDER_UNIT" type="xs:string"/>
+        <xs:element ref="ARTICLE_PRICE"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LINE_ITEM_ID" type="xs:string"/>
+  <xs:element name="DESCRIPTION_SHORT" type="xs:string"/>
+  <xs:element name="ARTICLE_ID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SUPPLIER_AID"/>
+        <xs:element name="ITEM_NOTE" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SUPPLIER_AID" type="xs:string"/>
+  <xs:element name="QUANTITY" type="xs:int"/>
+  <xs:element name="ARTICLE_PRICE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FULL_PRICE"/>
+        <xs:element ref="DISCOUNT_PERC"/>
+        <xs:element ref="DISCOUNT_VALUE"/>
+        <xs:element ref="PRICE_AMOUNT"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FULL_PRICE" type="xs:decimal"/>
+  <xs:element name="DISCOUNT_PERC" type="xs:decimal"/>
+  <xs:element name="DISCOUNT_VALUE" type="xs:decimal"/>
+  <xs:element name="PRICE_AMOUNT" type="xs:decimal"/>
+  <xs:element name="ORDER_SUMMARY">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TOTAL_ITEM_NUM"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TOTAL_ITEM_NUM" type="xs:int"/>
+  <xs:complexType name="PARTY">
+      <xs:sequence>
+        <xs:element ref="PARTY_ID"/>
+        <xs:element ref="ADDRESS"/>
+      </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PARTY_ID">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="type" use="required" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ADDRESS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SAL"/>
+        <xs:element ref="NAME"/>
+        <xs:element ref="NAME2"/>
+        <xs:element ref="NAME3"/>
+        <xs:element ref="STREET"/>
+        <xs:element ref="ZIP"/>
+        <xs:element ref="CITY"/>
+        <xs:element ref="COUNTRY"/>
+        <xs:element ref="ADDRESS_REMARKS"/>
+        <xs:element ref="VAT_ID"/>
+        <xs:element ref="CHARGE_VAT"/>
+        <xs:element ref="PHONE"/>
+        <xs:element ref="FAX"/>
+        <xs:element ref="EMAIL"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SAL" type="xs:string"/>
+  <xs:element name="NAME" type="xs:string"/>
+  <xs:element name="NAME2" type="xs:string"/>
+  <xs:element name="NAME3" type="xs:string"/>
+  <xs:element name="STREET" type="xs:string"/>
+  <xs:element name="ZIP" type="xs:string"/>
+  <xs:element name="CITY" type="xs:string"/>
+  <xs:element name="COUNTRY" type="xs:string"/>
+  <xs:element name="ADDRESS_REMARKS" type="xs:string"/>
+  <xs:element name="VAT_ID" type="xs:string"/>
+  <xs:element name="CHARGE_VAT" type="xs:string"/>
+  <xs:element name="PHONE" type="xs:string"/>
+  <xs:element name="FAX" type="xs:string"/>
+  <xs:element name="EMAIL" type="xs:string"/>
+</xs:schema>

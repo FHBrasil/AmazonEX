@@ -117,7 +117,7 @@
 	
 	 <bean id="importProductPicturesJobPerformable" class="br.hering.fulfilmentprocess.jobs.ImportProductPicturesJobPerformable" parent="abstractJobPerformable"/> 
 	
-	<bean id="clearsaleOrderResendJobPerformable" class="br.hering.fulfilmentprocess.jobs.ClearsaleOrderResendJobPerformable" parent="abstractJobPerformable"/>
+<!-- 	<bean id="clearsaleOrderResendJobPerformable" class="br.hering.fulfilmentprocess.jobs.ClearsaleOrderResendJobPerformable" parent="abstractJobPerformable"/> -->
 	
 	<bean id="productStatusUpdateJobPerformable" class="br.hering.fulfilmentprocess.jobs.ProdutoStatusUpdatePerformable">
 		<property name="modelService" ref="modelService"/>

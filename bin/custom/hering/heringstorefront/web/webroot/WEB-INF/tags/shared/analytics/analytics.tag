@@ -3,4 +3,4 @@
 
 <script type="text/javascript" src="${sharedResourcePath}/js/analyticsmediator.js"></script>
 <%-- <analytics:googleAnalytics/> --%>
-<analytics:jirafe/>
+<%-- <analytics:jirafe/> --%>

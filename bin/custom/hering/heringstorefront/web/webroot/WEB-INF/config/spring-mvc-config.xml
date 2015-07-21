@@ -95,7 +95,7 @@
 			</property>
 		</bean>
 		<bean class="br.hering.storefront.interceptors.beforeview.UiExperienceMetadataViewHandler"  />
-		<bean class="br.hering.storefront.interceptors.beforeview.AnalyticsPropertiesBeforeViewHandler" />
+<!-- 		<bean class="br.hering.storefront.interceptors.beforeview.AnalyticsPropertiesBeforeViewHandler" /> -->
 		<bean class="br.hering.storefront.interceptors.beforeview.ConfigGranuleBeforeViewHandler" >
 			<property name="siteConfigService" ref="siteConfigService"/>
 		</bean>

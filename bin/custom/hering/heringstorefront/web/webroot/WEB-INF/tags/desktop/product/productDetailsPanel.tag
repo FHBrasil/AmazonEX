@@ -65,14 +65,14 @@
 	<div class="col-sm-6 visible-xs visible-sm"></div>
 	<div class="col-sm-6">
 		<div class="row">
-			<p class="col-xs-4">
+			<div class="col-xs-4">
 				<cms:pageSlot position="Section2" var="component">
             		<cms:component component="${component}" />
         		</cms:pageSlot>
-			</p>
-			<p class="col-xs-8">
+			</div>
+			<div class="col-xs-8">
 				<product:productInstallmentWithKlarna product="${product}"/>
-			</p>
+			</div>
 		</div>
 	</div>
 </div>	

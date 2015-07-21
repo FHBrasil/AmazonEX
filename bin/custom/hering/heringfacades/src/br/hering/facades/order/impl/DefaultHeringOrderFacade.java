@@ -96,6 +96,12 @@ public class DefaultHeringOrderFacade extends DefaultOrderFacade implements Heri
 	public void validateBoleto(String code) throws InvalidBoletoException {
 		getOrderService().validateBoleto(getOrder(code));
 	}
+	
+	@Override
+	public OrderModel getOrderModelByCode(final String orderCode)
+	{
+		return getOrder(orderCode);
+	}
 
 	protected OrderModel getOrder(String code) {
 		final BaseStoreModel baseStoreModel = getBaseStoreService().getCurrentBaseStore();
