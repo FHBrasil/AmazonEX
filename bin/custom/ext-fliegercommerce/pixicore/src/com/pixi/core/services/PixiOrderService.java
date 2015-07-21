@@ -3,16 +3,19 @@
  */
 package com.pixi.core.services;
 
-import de.hybris.platform.core.model.order.OrderModel;
-
 import java.util.List;
 
+import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.store.BaseStoreModel;
 
 /**
  * @author franthescollymaneira
- *
  */
 public interface PixiOrderService
 {
-	List<OrderModel> findNotExportedOrders();
+    
+    List<OrderModel> findNotExportedOrders();
+    
+    
+    OrderModel getOrderForCodeAndStore(String code, BaseStoreModel store);
 }
