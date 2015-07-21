@@ -8,7 +8,7 @@
 
 <div class="col-sm-4">
 	<c:choose>
-		<c:when test="${orderData.guestCustomer && empty customer}">
+		<c:when test="${orderData.guestCustomer && not alreadyHasAccount}">
 			<%-- RENDER ONLY if e-mail-address not has customer account --%>
 			<div id="accountCreatedSucessfully" style="display: none;">
 				<%-- RENDER IF form sent sucessfully --%>
@@ -65,40 +65,46 @@
 				<%-- END RENDER ONLY --%>
 			</div>	
 		</c:when>
-		<c:when test="${not orderData.guestCustomer && not empty customer && empty customer.birthday}">
+		<c:when test="${not orderData.guestCustomer && alreadyHasAccount && not alreadyNewsletterSubscription}">
 			<%-- RENDER IF (customer has account) and (customer not has birthdate) --%>
-			<h2><spring:theme code="text.fliegercommerce.texto174" />&nbsp;${customer.name}</h2>
-			<p>[FIXED FORM]<spring:theme code="text.fliegercommerce.texto175" /></p>
-			<div class="panel panel-default panel-secure150203">
-				<div class="panel-body">
-					<form>
-						<div class="form-group">
-							<label for="inputEmail"><spring:theme code="text.fliegercommerce.texto164"/></label>
-							<input type="email" class="form-control" id="inputEmail" value="${email}">
-						</div>
-						<div class="form-group">
-							<label for="birthday" class="control-label"><spring:theme code="text.fliegercommerce.texto181" /></label>
-							<div class="input-group input-append date" id="birthday" data-date="01.01.2015" data-date-format="dd.mm.yyyy">
-								<input type="text" size="16" class="form-control span2" value="01.01.2015">
-								<span class="input-group-btn add-on">
-									<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span></button>
-								</span>
-							</div>	
-						</div>					
-						<button type="submit" class="btn btn-primary"><spring:theme code="text.fliegercommerce.texto176" /></button>
-					</form>
-				</div>
-			</div>
-			<p class="small margin-top text-muted"><spring:theme code="text.fliegercommerce.texto169" /></p>
-			<%-- END RENDER IF --%>
-			<div id="newsletterSucessfully" class="modal fade">
+			<div id="newsletterSubscriptionSucessfully" style="display: none;">
 				<%-- RENDER IF form sent sucessfully --%>
 				<h2><spring:theme code="text.fliegercommerce.texto177" /></h2>
 				<p><spring:theme code="text.fliegercommerce.texto178" /></p>
 				<%-- END RENDER IF --%>
 			</div>
+			<div id="sectionFormNewsletter">
+				<h2><spring:theme code="text.fliegercommerce.texto174" />&nbsp;${customerData.firstName}</h2>
+				<p><spring:theme code="text.fliegercommerce.texto175" /></p>
+				<div class="panel panel-default panel-secure150203">
+					<div class="panel-body">
+						<form:form id="newsletterSubscriptionFormComponent" class="orderConfirmation" method="POST" action="/newsletter/newsletter-register">
+							<input type="hidden" name="firstName" value="${customerData.firstName}"/> 
+							<input type="hidden" name="lastName" value="${customerData.lastName}"/>
+							<input type="hidden" name="genderCode" value="${customerData.gender.code}"/>
+							<input type="hidden" name="titleCode" value="${customerData.titleCode}"/>
+							<div class="form-group">
+								<label for="inputEmail"><spring:theme code="text.fliegercommerce.texto164"/></label>
+								<input type="email" class="form-control" id="inputEmail" name="email" value="${customerData.uid}">
+							</div>
+							<div class="form-group">
+								<label for="birthday" class="control-label"><spring:theme code="text.fliegercommerce.texto181" /></label>
+								<div class="input-group input-append date" id="birthday" data-date="01.01.2015" data-date-format="mm.dd.yyyy">
+									<input type="text" size="16" class="form-control span2" name="birthDay" value="01.01.2015">
+									<span class="input-group-btn add-on">
+										<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span></button>
+									</span>
+								</div>	
+							</div>					
+							<button type="submit" class="btn btn-primary"><spring:theme code="text.fliegercommerce.texto176" /></button>
+						</form:form>
+					</div>
+				</div>
+				<p class="small margin-top text-muted"><spring:theme code="text.fliegercommerce.texto169" /></p>				
+			</div>		
+			<%-- END RENDER IF --%>	
 		</c:when>
-		<c:when test="${not orderData.guestCustomer && not empty customer && not empty customer.birthday}">
+		<c:when test="${not orderData.guestCustomer && alreadyHasAccount && alreadyNewsletterSubscription}">
 			<%-- RENDER IF (customer has account) and (customer has birthdate) --%>
 			<h2><spring:theme code="text.fliegercommerce.texto179" /></h2>
 			<p><spring:theme code="text.fliegercommerce.texto180" /></p>

@@ -219,17 +219,24 @@ public class CheckoutController extends AbstractCheckoutController
 		{
 			return getCheckoutRedirectUrl();
 		}
-
+		
+		final String uid = orderDetails.getUser().getUid().replaceAll("[a-z0-9\\-]*\\|", "");
+		final boolean alreadyHasAccount = heringCustomerFacade.emailAlreadyExists(uid) != null;
+		boolean alreadyNewsletterSubscription = false;
+		if(alreadyHasAccount)
+			alreadyNewsletterSubscription = !heringCustomerFacade.emailAlreadyExists(uid).getNewsletterSubscriptions().isEmpty();
+		
 		model.addAttribute("orderCode", orderCode);
 		model.addAttribute("orderData", orderDetails);
 		model.addAttribute("allItems", orderDetails.getEntries());
 		model.addAttribute("deliveryAddress", orderDetails.getDeliveryAddress());
 		model.addAttribute("deliveryMode", orderDetails.getDeliveryMode());
 		model.addAttribute("paymentInfo", orderDetails.getPaymentInfo());		
-		model.addAttribute("pageType", HeringPageType.ORDERCONFIRMATION.name());
-		final String uid = orderDetails.getUser().getUid().replaceAll("[a-z0-9\\-]*\\|", "");
+		model.addAttribute("pageType", HeringPageType.ORDERCONFIRMATION.name());		
 		model.addAttribute("email", uid);
-		model.addAttribute("customer", heringCustomerFacade.emailAlreadyExists(uid));
+		model.addAttribute("customerData", alreadyHasAccount ? heringCustomerFacade.getCurrentCustomer() : null);
+		model.addAttribute("alreadyHasAccount", alreadyHasAccount);
+		model.addAttribute("alreadyNewsletterSubscription", alreadyNewsletterSubscription);
 
 		final String boletoUrl = "/boleto-img/jpg/boleto-" + orderCode + ".jpg";
 		

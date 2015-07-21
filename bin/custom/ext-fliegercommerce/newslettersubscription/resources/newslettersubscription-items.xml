@@ -57,7 +57,11 @@
 					</attribute>
 					<attribute qualifier="email" type="java.lang.String">
 						<persistence type="property" />
-					</attribute>					
+					</attribute>
+					<attribute qualifier="birthDay" type="java.util.Date">
+                        <modifiers read="true" write="true" optional="true" />
+                        <persistence type="property" />
+                    </attribute>					
 					<attribute qualifier="store" type="BaseStore">
 						<persistence type="property" />
 					</attribute>					

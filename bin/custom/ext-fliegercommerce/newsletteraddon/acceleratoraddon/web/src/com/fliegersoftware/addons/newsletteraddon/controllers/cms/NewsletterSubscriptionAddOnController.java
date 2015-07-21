@@ -1,6 +1,9 @@
 package com.fliegersoftware.addons.newsletteraddon.controllers.cms;
 
 import java.util.List;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -137,7 +140,8 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 			@RequestParam(value = "lastName") final String lastName,
 			@RequestParam(value = "email") final String email,
 			@RequestParam(value = "titleCode") final String titleCode,
-			@RequestParam(value = "genderCode") final String genderCode)
+			@RequestParam(value = "genderCode") final String genderCode,
+			@RequestParam(value = "birthDay") String birthDay)
 	{
 
 		final NewsletterSubscriptionData data = new NewsletterSubscriptionData();
@@ -146,8 +150,22 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		data.setLastName(lastName);
 		data.setEmail(email);
 		data.setGenderCode(genderCode);
-		data.setTitleCode(titleCode);
-				
+		data.setTitleCode((titleCode != null && !titleCode.isEmpty()) ? titleCode : "mr");
+		data.setCustomer(customerFacade.getCurrentCustomer());
+		
+		if(birthDay != null && !birthDay.isEmpty())
+		{
+			birthDay = birthDay.replace(".", "/");
+			try{
+				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+				Date birthDayDate = sdf.parse(birthDay);
+				data.setBirthDay(birthDayDate);
+			}
+			catch(ParseException e){
+				e.printStackTrace();
+			}			
+		}
+						
 		final String storeCode = getNewsletterSubscriptionFacade().getCurrentBaseStoreCode();
 		data.setStoreCode(storeCode);
 		
@@ -163,6 +181,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		try
 		{
 			getNewsletterSubscriptionFacade().subscribe(data);
+			
 			final String message = getMessageSource().getMessage("text.fliegercommerce.texto125", null, getI18nService().getCurrentLocale());
 			//Cadastrado com sucesso!
 			return message;
