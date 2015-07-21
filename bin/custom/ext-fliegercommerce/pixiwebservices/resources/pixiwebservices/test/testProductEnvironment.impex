@@ -1,0 +1,10 @@
+#
+# Import Sample Customers
+# 
+$productCatalog=babyartikelProductCatalog
+$defaultCurrency=EUR
+$defaultLanguage=de
+
+UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];defaultCurrency(isocode)
+;$productCatalog;Staged;$defaultCurrency
+;$productCatalog;Online;$defaultCurrency

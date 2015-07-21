@@ -1,61 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- [y] hybris Platform
-
- Copyright (c) 2000-2013 hybris AG
- All rights reserved.
-
- This software is the confidential and proprietary information of hybris
- ("Confidential Information"). You shall not disclose such Confidential
- Information and shall use it only in accordance with the terms of the
- license agreement you entered into with hybris.
--->
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
 
 
-<!-- 
-  WARNING: This is the Spring WEB configuration file. If you want to replace
-  items or managers you have to do this from the extensions core configuration 
-  file (pixiwebservices/resources/pixiwebservices-spring.xml) 
-  -->
+<!-- WARNING: This is the Spring WEB configuration file. If you want to replace 
+	items or managers you have to do this from the extensions core configuration 
+	file (pixiwebservices/resources/pixiwebservices-spring.xml) -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-           http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd
+      http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd
+      http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/security
+	  http://www.springframework.org/schema/security/spring-security.xsd">
 
-    
-	<!--  Configure the class to use for jalo session creation -->
-	<!-- <bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
-		<property name="targetClassName" value="com.pixi.webservices.jalo.PixiwebservicesJaloSession"/>
-	</bean>-->
+	<import resource="classpath:/acceleratorcms/spring/web-spring-context.xml" />
+	<context:component-scan base-package="com.pixi.webservices.controller" />
+
+	<security:global-method-security
+		secured-annotations="enabled" />
+
+	<mvc:annotation-driven
+		ignoreDefaultModelOnRedirect="true">
+		<mvc:message-converters>
+			<!-- <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/> -->
+			<bean class="com.pixi.webservices.jaxb.factory.Jaxb2HttpMessageConverter">
+				<property name="jaxbContextFactory" ref="jaxbContextFactory" />
+				<property name="marshallerProperties">
+					<map>
+						<entry key="jaxb.formatted.output">
+							<value type="java.lang.Boolean">true</value>
+						</entry>
+						<entry key="jaxb.encoding" value="UTF-8" />
+						<entry key="eclipselink.media-type" value="application/xml" />
+					</map>
+				</property>
+				<property name="unmarshallerProperties">
+					<map merge="true">
+						<entry key="eclipselink.media-type" value="application/xml" />
+					</map>
+				</property>
+				<property name="supportedMediaTypes">
+					<list>
+						<!-- { MediaType.APPLICATION_XML, MediaType.TEXT_XML, new MediaType("application", 
+							"*+xml") }); -->
+						<util:constant id="xml"
+							static-field="org.springframework.http.MediaType.APPLICATION_XML" />
+						<util:constant id="textXml"
+							static-field="org.springframework.http.MediaType.TEXT_XML" />
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean id="jaxbContextFactory"
+		class="com.pixi.webservices.jaxb.factory.MoxyJaxbContextFactoryImpl">
+		<property name="wrapCollections" value="false" />
+		<property name="typeAdapters">
+			<list>
+				<value>com.pixi.webservices.jaxb.adapter.DateAdapter</value>
+				<value>com.pixi.webservices.jaxb.adapter.StringAdapter</value>
+				<value>com.pixi.webservices.jaxb.adapter.BooleanAdapter</value>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Spring managed FilterChain for hybris Filter stack -->
 	<bean id="pixiwebservicesPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
 		<constructor-arg>
 			<list>
-				<ref bean="log4jFilter"/>
-				<ref bean="dynamicTenantActivationFilter"/>
-				<ref bean="sessionFilter"/>
-           		<ref bean="pixiwebservicesSecureMediaFilter"/>				
+				<ref bean="log4jFilter" />
+				<ref bean="dynamicTenantActivationFilter" />
+				<ref bean="sessionFilter" />
+				<ref bean="pixiwebservicesSecureMediaFilter" />
+				<ref bean="pixiSecurityFilter" />
+				<ref bean="pixiSiteFilter" />
 			</list>
 		</constructor-arg>
 	</bean>
- 
-   <bean id="pixiwebservicesSecureMediaFilter" class="de.hybris.platform.servicelayer.web.SecureMediaFilter">
-       <property name="mediaPermissionService" ref="mediaPermissionService"/>
-       <property name="modelService" ref="modelService"/>
-       <property name="userService" ref="userService"/>
-       <property name="mediaService" ref="mediaService"/>
-      <!-- <property name="secureMediaToken" value="securemedias"/>  securemedias is default but you may overwrite it -->
-     </bean>	
 
-	<!-- 
-	 WARNING: 
-	 Do NOT override hybris managers or items within the web module!
-	 Use always the core spring configuration file (pixiwebservices-spring.xml) in
-	 the extensions resources/ directory.
-	 -->
+	<bean id="pixiSiteFilter" class="com.pixi.webservices.filters.PixiSiteFilter">
+		<property name="cmsSiteService" ref="cmsSiteService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="contextInformationLoader" ref="contextInformationLoader" />
+	</bean>
+
+	<bean id="pixiSecurityFilter" class="com.pixi.webservices.filters.PixiSecurityFilter"/>
+	
+	<bean id="pixiwebservicesSecureMediaFilter" class="de.hybris.platform.servicelayer.web.SecureMediaFilter">
+		<property name="mediaPermissionService" ref="mediaPermissionService" />
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+		<property name="mediaService" ref="mediaService" />
+	</bean>
+
+	<!-- SECURITY -->
+	<security:authentication-manager alias="pixiAuthManager">
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="${pixiwebservices.pixi.guest.username}" password="${pixiwebservices.pixi.guest.password}" 
+					authorities="${pixiwebservices.pixi.guest.role}" />
+				<security:user name="${pixiwebservices.pixi.auth.username}" password="${pixiwebservices.pixi.auth.password}" 
+					authorities="${pixiwebservices.pixi.auth.role}" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<bean id="pixiTokenUtils" class="com.pixi.webservices.controller.auth.PixiTokenUtils" scope="prototype" />
+
 </beans>

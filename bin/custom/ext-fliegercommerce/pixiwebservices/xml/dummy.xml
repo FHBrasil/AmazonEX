@@ -1,0 +1,170 @@
+<ORDER type="standard" version="1.0">
+	<ORDER_HEADER>
+		<CONTROL_INFO>
+			<GENERATOR_INFO><![CDATA[KP-Family, Babyartikel.de]]></GENERATOR_INFO>
+			<GENERATION_DATE>2015-01-08T16:47:10-0200</GENERATION_DATE>
+		</CONTROL_INFO>
+		<ORDER_INFO>
+			<ORDER_ID>acceptanceTestOrder1</ORDER_ID>
+			<ORDER_DATE>2011-04-17T15:10:00-0300</ORDER_DATE>
+			<DATABASE>pixi_KPF</DATABASE>
+			<SHOPID>KPF</SHOPID>
+			<SHOP_NOTE></SHOP_NOTE>
+			<ORDER_SHIPLOCK>N</ORDER_SHIPLOCK>
+			<ORDER_PARTIES>
+				<BUYER_PARTY>
+					<PARTY>
+						<PARTY_ID type="buyer_specific"></PARTY_ID>
+						<ADDRESS>
+							<SAL>Herr</SAL>
+							<NAME>Test1</NAME>
+							<NAME2>Test1 Abroba 1 middle2 1</NAME2>
+							<NAME3>User</NAME3>
+							<STREET>11 Test Street 1</STREET>
+							<ZIP>AB1 CD2</ZIP>
+							<CITY>Munich</CITY>
+							<COUNTRY>Deutschland</COUNTRY>
+							<ADDRESS_REMARKS></ADDRESS_REMARKS>
+							<VAT_ID>19%</VAT_ID>
+							<CHARGE_VAT>yes</CHARGE_VAT>
+							<PHONE>+11 1234567</PHONE>
+							<FAX></FAX>
+							<EMAIL>TestUser1@test.com</EMAIL>
+						</ADDRESS>
+					</PARTY>
+				</BUYER_PARTY>
+				<SUPPLIER_PARTY>
+					<PARTY>
+						<PARTY_ID type="buyer_specific"></PARTY_ID>
+						<ADDRESS>
+							<SAL>Herr</SAL>
+							<NAME>Test1</NAME>
+							<NAME2>Test1 Abroba 1 middle2 1</NAME2>
+							<NAME3>User</NAME3>
+							<STREET>11 Test Street 1</STREET>
+							<ZIP>AB1 CD2</ZIP>
+							<CITY>Munich</CITY>
+							<COUNTRY>Deutschland</COUNTRY>
+							<ADDRESS_REMARKS></ADDRESS_REMARKS>
+							<VAT_ID>19%</VAT_ID>
+							<CHARGE_VAT>yes</CHARGE_VAT>
+							<PHONE>+11 1234567</PHONE>
+							<FAX></FAX>
+							<EMAIL>TestUser1@test.com</EMAIL>
+						</ADDRESS>
+					</PARTY>
+				</SUPPLIER_PARTY>
+				<INVOICE_PARTY>
+					<PARTY>
+						<PARTY_ID type="buyer_specific"></PARTY_ID>
+						<ADDRESS>
+							<SAL>Herr</SAL>
+							<NAME>Test1</NAME>
+							<NAME2>Test1 Abroba 1 middle2 1</NAME2>
+							<NAME3>User</NAME3>
+							<STREET>11 Test Street 1</STREET>
+							<ZIP>AB1 CD2</ZIP>
+							<CITY>Munich</CITY>
+							<COUNTRY>Deutschland</COUNTRY>
+							<ADDRESS_REMARKS></ADDRESS_REMARKS>
+							<VAT_ID>19%</VAT_ID>
+							<CHARGE_VAT>yes</CHARGE_VAT>
+							<PHONE>+11 1234567</PHONE>
+							<FAX></FAX>
+							<EMAIL>TestUser1@test.com</EMAIL>
+						</ADDRESS>
+					</PARTY>
+				</INVOICE_PARTY>
+				<SHIPMENT_PARTIES>
+					<DELIVERY_PARTY>
+						<PARTY>
+							<PARTY_ID type="buyer_specific"></PARTY_ID>
+							<ADDRESS>
+								<SAL>Herr</SAL>
+								<NAME>Test1</NAME>
+								<NAME2>Test1 Abroba 1 middle2 1</NAME2>
+								<NAME3>User</NAME3>
+								<STREET>11 Test Street 1</STREET>
+								<ZIP>AB1 CD2</ZIP>
+								<CITY>Munich</CITY>
+								<COUNTRY>Deutschland</COUNTRY>
+								<ADDRESS_REMARKS></ADDRESS_REMARKS>
+								<VAT_ID>19%</VAT_ID>
+								<CHARGE_VAT>yes</CHARGE_VAT>
+								<PHONE>+11 1234567</PHONE>
+								<FAX></FAX>
+								<EMAIL>TestUser1@test.com</EMAIL>
+							</ADDRESS>
+						</PARTY>
+					</DELIVERY_PARTY>
+				</SHIPMENT_PARTIES>
+			</ORDER_PARTIES>
+			<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
+			<PAYMENT>
+				<PAGAMENTO_TEMP xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string">pagamento
+					temporario</PAGAMENTO_TEMP>
+			</PAYMENT>
+			<TRANSPORT_REMARKS>DHL;;;|||08.01.2015</TRANSPORT_REMARKS>
+			<GIFT_MESSAGE></GIFT_MESSAGE>
+			<REMARK type="discount">10.50</REMARK>
+			<REMARK type="shipping">10.00</REMARK>
+			<REMARK type="shippingvendor">PREMIUM-GROSS</REMARK>
+			<REMARK type="VoucherCode"></REMARK>
+		</ORDER_INFO>
+	</ORDER_HEADER>
+	<ORDER_ITEM_LIST>
+		<ORDER_ITEM>
+			<LINE_ITEM_ID>8796584575022</LINE_ITEM_ID>
+			<DESCRIPTION_SHORT><![CDATA[abroba]]></DESCRIPTION_SHORT>
+			<ARTICLE_ID>
+				<SUPPLIER_AID>666</SUPPLIER_AID>
+				<ITEM_NOTE>666-X-DV</ITEM_NOTE>
+			</ARTICLE_ID>
+			<QUANTITY>4</QUANTITY>
+			<ORDER_UNIT><![CDATA[Stück]]></ORDER_UNIT>
+			<ARTICLE_PRICE type="udp_gross_customer">
+				<FULL_PRICE>122.32</FULL_PRICE>
+				<DISCOUNT_PERC>0</DISCOUNT_PERC>
+				<DISCOUNT_VALUE>0</DISCOUNT_VALUE>
+				<PRICE_AMOUNT>30.58</PRICE_AMOUNT>
+			</ARTICLE_PRICE>
+		</ORDER_ITEM>
+		<ORDER_ITEM>
+			<LINE_ITEM_ID>8796584607790</LINE_ITEM_ID>
+			<DESCRIPTION_SHORT><![CDATA[]]>
+			</DESCRIPTION_SHORT>
+			<ARTICLE_ID>
+				<SUPPLIER_AID>300020465</SUPPLIER_AID>
+				<ITEM_NOTE></ITEM_NOTE>
+			</ARTICLE_ID>
+			<QUANTITY>1</QUANTITY>
+			<ORDER_UNIT><![CDATA[Stück]]></ORDER_UNIT>
+			<ARTICLE_PRICE type="udp_gross_customer">
+				<FULL_PRICE>145.1</FULL_PRICE>
+				<DISCOUNT_PERC>0</DISCOUNT_PERC>
+				<DISCOUNT_VALUE>0</DISCOUNT_VALUE>
+				<PRICE_AMOUNT>145.1</PRICE_AMOUNT>
+			</ARTICLE_PRICE>
+		</ORDER_ITEM>
+		<ORDER_ITEM>
+			<LINE_ITEM_ID>8796584640558</LINE_ITEM_ID>
+			<DESCRIPTION_SHORT><![CDATA[Protektor Pro Tec IPS Back Pads black/red XL]]></DESCRIPTION_SHORT>
+			<ARTICLE_ID>
+				<SUPPLIER_AID>300060401</SUPPLIER_AID>
+				<ITEM_NOTE></ITEM_NOTE>
+			</ARTICLE_ID>
+			<QUANTITY>2</QUANTITY>
+			<ORDER_UNIT><![CDATA[Stück]]></ORDER_UNIT>
+			<ARTICLE_PRICE type="udp_gross_customer">
+				<FULL_PRICE>107.06</FULL_PRICE>
+				<DISCOUNT_PERC>0</DISCOUNT_PERC>
+				<DISCOUNT_VALUE>0</DISCOUNT_VALUE>
+				<PRICE_AMOUNT>53.53</PRICE_AMOUNT>
+			</ARTICLE_PRICE>
+		</ORDER_ITEM>
+	</ORDER_ITEM_LIST>
+	<ORDER_SUMMARY>
+		<TOTAL_ITEM_NUM>3</TOTAL_ITEM_NUM>
+	</ORDER_SUMMARY>
+</ORDER>
