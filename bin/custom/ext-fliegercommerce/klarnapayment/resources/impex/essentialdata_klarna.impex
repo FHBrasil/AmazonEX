@@ -1,0 +1,9 @@
+######################
+# Configuration part #
+######################
+
+## Importing settings (klarna)
+#########################################
+INSERT_UPDATE KlarnaConfig;description;basestore(uid);countryConfig(country(isocode))[unique=true];absolutDiscountDescriptionText;relativeDiscountDescriptionText;merchantId;sharedSecret;invoiceActive;accountActive;campaignActive;accountMaxValue;accountMinValue;showMonthlyCostOnProductDetail
+;'Configuration for klarna gateway belonging to basestore klarna';babyartikel;DE;'Absolute discounts of';'Relative discounts of';4504;NwfDqseaAvvtDJR;true;true;false;1000;100;true
+
