@@ -59,8 +59,9 @@ public class PrudsysRecommendationResultProductPopulator implements Populator<Re
 
 	protected void populateProductImages(final RecommendationResultValueData source, final ProductData target)
 	{
+		String prefixImage = "http://88.198.78.166/../";
 		final ImageData imageData = new ImageData();
-		imageData.setUrl(this.<String> getValue(source, "imageUrl"));
+		imageData.setUrl(prefixImage + this.<String> getValue(source, "imageUrl"));
 
 		target.setImages(Collections.singletonList(imageData));
 	}
