@@ -150,7 +150,7 @@ public class NewsletterSubscriptionAddOnController extends AbstractAddOnPageCont
 		data.setLastName(lastName);
 		data.setEmail(email);
 		data.setGenderCode(genderCode);
-		data.setTitleCode((titleCode != null && !titleCode.isEmpty()) ? titleCode : "mr");
+		data.setTitleCode((titleCode != null && !titleCode.isEmpty()) ? titleCode : "ms");
 		data.setCustomer(customerFacade.getCurrentCustomer());
 		
 		if(birthDay != null && !birthDay.isEmpty())
