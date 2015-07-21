@@ -3,7 +3,7 @@
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/desktop/product"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
-
+<%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
 <p class="h4 text-left">Das k&ouml;nnte Dir auch gefallen:</p>
 <div class="text-center panel150120">
@@ -21,7 +21,9 @@
 			<span class="glyphicon glyphicon-stop text-onstock"></span> 
 				<format:price priceData="${recommendation.price}" displayFreeForZero="true" />
 			<br>
-			<span class="glyphicon stars"><span style="width:90%"></span></span>
+			<span class="glyphicon stars">
+				<bazaarvoice:inlineRatings product="${recommndation}" />
+			</span>
 		</div>
 	</c:forEach>
 </div>
