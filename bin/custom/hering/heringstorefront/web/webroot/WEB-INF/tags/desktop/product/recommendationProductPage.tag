@@ -6,6 +6,18 @@
 
 <%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData"%>
 
+<c:if test="${pageType == 'PRODUCT'}">
+	<script type="text/javascript">
+		$BV.ui('rr', 'inline_ratings', {
+			productIds : [
+				<c:forEach items="${recommendations}" var="product">
+					'${product.code}',
+				</c:forEach>
+			],
+			containerPrefix : 'BVRRInlineRating'
+		});
+	</script>
+</c:if>
 <p class="h4 text-left">Das k&ouml;nnte Dir auch gefallen:</p>
 <div class="text-center panel150120">
 	<c:forEach items="${recommendations}" var="recommendation">
