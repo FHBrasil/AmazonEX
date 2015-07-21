@@ -4,6 +4,8 @@
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
 <%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
+<%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData"%>
+
 <p class="h4 text-left">Das k&ouml;nnte Dir auch gefallen:</p>
 <div class="text-center panel150120">
 	<c:forEach items="${recommendations}" var="recommendation">
