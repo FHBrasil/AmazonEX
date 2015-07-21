@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:if test="${not empty googleAnalyticsTrackingId}">
+<%-- <c:if test="${not empty googleAnalyticsTrackingId}"> --%>
+<c:if test="${false}">
 <script type="text/javascript">
 /* Google Analytics */
 
