@@ -1,0 +1,169 @@
+<?com.pixi.webservices.jaxb version="1.0" encoding="ISO-8859-1"?>
+<BMECAT version="1.2">
+	<HEADER>
+		<GENERATOR_INFO>Name Ihres Shop-Systems - BMEcat Export</GENERATOR_INFO>
+		<CATALOG>
+			<LANGUAGE>deu</LANGUAGE>
+			<CATALOG_ID>catalog1</CATALOG_ID>
+			<CATALOG_VERSION>1.0</CATALOG_VERSION>
+			<CATALOG_NAME> 13.10.2011 BMECat Export</CATALOG_NAME>
+			<CURRENCY>EUR</CURRENCY>
+			<DATABASE>Name der pixi* Datenbank</DATABASE>
+			<SHOPID>Mandanten ID</SHOPID>
+			<DATEEXPORT>UNIX-Zeitstempel</DATEEXPORT>
+			<EXPORT_DATE>Datums-Zeitstempel</EXPORT_DATE>
+		</CATALOG>
+		<SUPPLIER>
+			<SUPPLIER_NAME />
+			<ADDRESS type="supplier">
+				<NAME>OXID eShop 4</NAME>
+				<STREET>Musterstr.10</STREET>
+				<ZIP>79098</ZIP>
+				<CITY>Musterstadt</CITY>
+				<COUNTRY>Deutschland</COUNTRY>
+			</ADDRESS>
+		</SUPPLIER>
+		<BUYER>
+			<BUYER_ID>1234</BUYER_ID>
+			<BUYER_NAME>Fraunhofer IAO</BUYER_NAME>
+			<ADDRESS type="buyer">
+				<NAME>Fraunhofer IAO</NAME>
+				<NAME2>Marktstrategieteam Electronic Business Systems</NAME2>
+				<STREET>Holzgartenstrasse 17</STREET>
+				<ZIP>70174</ZIP>
+				<CITY>Stuttgart</CITY>
+				<COUNTRY>Germany</COUNTRY>
+			</ADDRESS>
+		</BUYER>
+	</HEADER>
+	<!--Transaction section - mandatory -->
+	<T_NEW_CATALOG>
+		<ARTICLE>
+			<SUPPLIER_AID>18201-180160-bl</SUPPLIER_AID>
+			<ARTICLE_DETAILS>
+				<DESCRIPTION_SHORT>Matratze Comfort Plus, Größe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
+				<EAN>4000053269821</EAN>
+				<MANUFACTURER_NAME>Comfort</MANUFACTURER_NAME>
+				<SEGMENT>Matratzen</SEGMENT>
+				<WEIGHT>10</WEIGHT>
+				<INTERNAL_ITEM_NUMBER>UnsereArtikelnummer</INTERNAL_ITEM_NUMBER>
+			</ARTICLE_DETAILS>
+			<ARTICLE_FEATURES>
+				<FEATURE>
+					<FNAME>ID Comfort</FNAME>
+					<FVALUE>12345</FVALUE>
+				</FEATURE>
+				<FEATURE>
+					<FNAME>EK Comfort</FNAME>
+					<FVALUE>99.00</FVALUE>
+				</FEATURE>
+				<FEATURE>
+					<FNAME>Europe1PriceFactory.PTG</FNAME>
+					<FVALUE>MWST_HIGH</FVALUE>
+				</FEATURE>
+				<FEATURE>
+					<FNAME>MIN_STOCK_QTY</FNAME>
+					<FVALUE>5</FVALUE>
+				</FEATURE>
+				<SerialNumberRequired>0</SerialNumberRequired>
+				<CustomsTariffNumber>12456</CustomsTariffNumber>
+				<CustomsCountryOfOrigin>DE</CustomsCountryOfOrigin>
+				<CustomsTariffText>Betten</CustomsTariffText>
+			</ARTICLE_FEATURES>
+			<ARTICLE_PRICE_DETAILS>
+				<ARTICLE_PRICE price_type="gros_list">
+					<PRICE_AMOUNT>119</PRICE_AMOUNT>
+					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
+					<SUPPLPRICE_AMOUNT>95</SUPPLPRICE_AMOUNT>
+				</ARTICLE_PRICE>
+				<ARTICLE_PRICE price_type="net_list">
+					<PRICE_AMOUNT>100</PRICE_AMOUNT>
+					<PRICE_CURRENCY>EUR</PRICE_CURRENCY>
+					<SUPPLPRICE_AMOUNT>95</SUPPLPRICE_AMOUNT>
+				</ARTICLE_PRICE>
+			</ARTICLE_PRICE_DETAILS>
+			<!--optional -->
+			<ITEMTAGS>
+				<ITEMTAG>Wohnen</ITEMTAG>
+				<ITEMTAG>Wohnen</ITEMTAG>
+				<ITEMTAG>Wohnen</ITEMTAG>
+			</ITEMTAGS>
+			<!--optional -->
+			<MIME_INFO>
+				<MIME>
+					<MIME_TYPE>image/jpeg</MIME_TYPE>
+					<MIME_SOURCE>http://www.madgeniuses.net/images/Bild.jpg</MIME_SOURCE>
+					<MIME_PURPOSE>normal</MIME_PURPOSE>
+				</MIME>
+			</MIME_INFO>
+			<!--optional -->
+			<ARTICLE_ORDER_DETAILS>
+				<ORDER_UNIT>10</ORDER_UNIT>
+			</ARTICLE_ORDER_DETAILS>
+		</ARTICLE>
+		<ARTICLE>
+         <SUPPLIER_AID>18201-180160-bl</SUPPLIER_AID>
+         <ARTICLE_DETAILS>
+            <DESCRIPTION_SHORT>Matratze Comfort Plus, Größe: 180 x 160 cm, Farbe: blau</DESCRIPTION_SHORT>
+            <EAN>4000053269821</EAN>
+            <MANUFACTURER_NAME>Comfort</MANUFACTURER_NAME>
+            <SEGMENT>Matratzen</SEGMENT>
+            <WEIGHT>10</WEIGHT>
+            <INTERNAL_ITEM_NUMBER>UnsereArtikelnummer</INTERNAL_ITEM_NUMBER>
+         </ARTICLE_DETAILS>
+         <ARTICLE_FEATURES>
+            <FEATURE>
+               <FNAME>ID Comfort</FNAME>
+               <FVALUE>12345</FVALUE>
+            </FEATURE>
+            <FEATURE>
+               <FNAME>EK Comfort</FNAME>
+               <FVALUE>99.00</FVALUE>
+            </FEATURE>
+            <FEATURE>
+               <FNAME>Europe1PriceFactory.PTG</FNAME>
+               <FVALUE>MWST_HIGH</FVALUE>
+            </FEATURE>
+            <FEATURE>
+               <FNAME>MIN_STOCK_QTY</FNAME>
+               <FVALUE>5</FVALUE>
+            </FEATURE>
+            <SerialNumberRequired>0</SerialNumberRequired>
+            <CustomsTariffNumber>12456</CustomsTariffNumber>
+            <CustomsCountryOfOrigin>DE</CustomsCountryOfOrigin>
+            <CustomsTariffText>Betten</CustomsTariffText>
+         </ARTICLE_FEATURES>
+         <ARTICLE_PRICE_DETAILS>
+            <ARTICLE_PRICE price_type="gros_list">
+               <PRICE_AMOUNT>119</PRICE_AMOUNT>
+               <PRICE_CURRENCY>EUR</PRICE_CURRENCY>
+               <SUPPLPRICE_AMOUNT>95</SUPPLPRICE_AMOUNT>
+            </ARTICLE_PRICE>
+            <ARTICLE_PRICE price_type="net_list">
+               <PRICE_AMOUNT>100</PRICE_AMOUNT>
+               <PRICE_CURRENCY>EUR</PRICE_CURRENCY>
+               <SUPPLPRICE_AMOUNT>95</SUPPLPRICE_AMOUNT>
+            </ARTICLE_PRICE>
+         </ARTICLE_PRICE_DETAILS>
+         <!--optional -->
+         <ITEMTAGS>
+            <ITEMTAG>Wohnen</ITEMTAG>
+            <ITEMTAG>Wohnen</ITEMTAG>
+            <ITEMTAG>Wohnen</ITEMTAG>
+            <ITEMTAG>Wohnen</ITEMTAG>
+         </ITEMTAGS>
+         <!--optional -->
+         <MIME_INFO>
+            <MIME>
+               <MIME_TYPE>image/jpeg</MIME_TYPE>
+               <MIME_SOURCE>http://www.madgeniuses.net/images/Bild.jpg</MIME_SOURCE>
+               <MIME_PURPOSE>normal</MIME_PURPOSE>
+            </MIME>
+         </MIME_INFO>
+         <!--optional -->
+         <ARTICLE_ORDER_DETAILS>
+            <ORDER_UNIT>10</ORDER_UNIT>
+         </ARTICLE_ORDER_DETAILS>
+      </ARTICLE>
+	</T_NEW_CATALOG>
+</BMECAT>
