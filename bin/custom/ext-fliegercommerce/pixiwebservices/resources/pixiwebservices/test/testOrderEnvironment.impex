@@ -1,0 +1,180 @@
+#
+# Import Sample Customers
+# 
+$customergroup=customergroup
+
+$passwordEncoding=md5
+$defaultPassword=12341234
+$setPassword=@password[translator=de.hybris.platform.impex.jalo.translators.ConvertPlaintextToEncodedUserPasswordTranslator][default='$passwordEncoding:$defaultPassword']
+
+
+# Create Customer Group
+INSERT_UPDATE Usergroup;uid[unique=true];groups(uid)[mode=append]
+
+# Payment Modes
+INSERT_UPDATE StandardPaymentMode;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];active;paymentinfotype(code)
+;creditcard;Kreditkarte;creditcard;Bezahlung per Keditkarte;payment with creditcard;true;CreditCardPaymentInfo
+;debitentry;Bankeinzug;Bank Collection;Bezahlung per Bankeinzug;payment with bank collection;true;DebitPaymentInfo
+;invoice;Rechnung;Invoice;per Rechnung bezahlen;payment with invoice;true;InvoicePaymentInfo
+;advance;Vorkasse;Advance;per Vorkasse bezahlen;payment in advance;true;AdvancePaymentInfo
+;;
+
+INSERT_UPDATE StandardPaymentModeValue;paymentmode(code)[unique=true];currency(isoCode)[unique=true];value;;;;
+;creditcard;EUR;0;;;;
+;debitentry;EUR;0;;;;;;
+;invoice;EUR;1,5;;;;;;
+;advance;EUR;10;;;;;;
+;;
+INSERT_UPDATE DeliveryMode;code[unique=true];active;net;supportedpaymentmodes(code);
+;courier;true;false;creditcard;Kreditkarte;creditcard,debitentry,invoice,advance;
+;postService;true;false;creditcard,debitentry,invoice,advance;
+;collect;true;false;invoice,advance;
+;;
+
+# Sample customers
+INSERT_UPDATE Customer;originalUid[unique=true];uid[unique=true];title(code);name;description;sessionLanguage(isocode);sessionCurrency(isocode);groups(uid);$setPassword;&userId
+;TestUser1@test.com;testuser1@test.com;mr;test user 1;test user;de;EUR;$customergroup;;user4
+;TestUser2@test.com;testuser2@test.com;mr;test user 2;test user;de;EUR;$customergroup;;user5
+;TestUser3@test.com;testuser3@test.com;mr;test user 3;test user;de;EUR;$customergroup;;user6
+
+# Sample customer addresses
+INSERT_UPDATE Address;&addId;owner(&userId)[unique=true];streetname[unique=true];postalcode[unique=true];duplicate[unique=true];town;country(isocode);region(isocode);billingAddress;contactAddress;shippingAddress;unloadingAddress;firstname;lastname;email;gender(code);middlename;middlename2;phone1;title(code);url;company;fax;department
+;addr4;user4;11 Test Street 1;AB1 CD2;false;Munich;DE;;true;true;true;true;Test1;User;TestUser1@test.com;MALE;Abroba 1;middle2 1;+11 1234567;mr;;Hybris;;
+;addr5;user5;22 Test Street 2;AB1 CD2;false;Munich;DE;;true;true;true;true;Test2;User;TestUser2@test.com;MALE;Abroba 2;middle2 2;+22 1234567;mr;;Hybris;;
+;addr6;user6;33 Test Street 3;AB1 CD2;false;Munich;DE;;true;true;true;true;Test3;User;TestUser3@test.com;MALE;Abroba 3;middle2 3;+33 1234567;mr;;Hybris;;
+
+# Set default payment and shipping addresses for sample customers
+UPDATE Customer;uid[unique=true];defaultPaymentAddress(&addId);defaultShipmentAddress(&addId)
+;testuser1@test.com;addr4;addr4
+;testuser2@test.com;addr5;addr5
+;testuser3@test.com;addr6;addr6
+
+INSERT_UPDATE ProductPercentageDiscountPromotion;PromotionGroup(Identifier);enabled[default=true][unique=true];code[unique=true];title;description;percentageDiscount;priority;
+;apparelUKPromoGrp;true;testDiscount;10% discount;10% discount;10;500;
+
+INSERT_UPDATE Discount;code[unique=true];value;priority;global;currency(isocode);name[lang=de];name[lang=en]
+;totally_free;100;0;false;;alles gratis;all free
+;eighty_percent;80;0;false;;kostet 20%;20% of the price
+;fifty_percent;50;0;false;;kostet nur die Hslfte;half the price
+;tenAndALittleOff;10,5;10;true;EUR;10,50 Euro weniger;10,50 Euro less
+
+
+INSERT_UPDATE Order;code[unique=true];user(uid);date[dateformat=dd.MM.yyyy HH:mm];currency(isocode);net;deliveryMode(code[default='premium-gross']);paymentMode(code);Discounts(code);calculated;site(uid);store(uid);status(code)
+;acceptanceTestOrder1;testuser1@test.com;17.04.2011 15:10;EUR;false;;advance;tenAndALittleOff;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder2;testuser1@test.com;17.04.2011 15:12;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder3;testuser1@test.com;17.04.2011 15:14;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder4;testuser1@test.com;17.04.2011 15:16;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder5;testuser1@test.com;17.04.2011 15:18;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder6;testuser1@test.com;17.04.2011 15:20;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder7;testuser1@test.com;17.04.2011 15:22;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder8;testuser2@test.com;17.04.2011 15:24;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder9;testuser2@test.com;17.04.2011 15:26;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder0;testuser2@test.com;17.04.2011 15:28;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder10;testuser3@test.com;17.04.2011 15:30;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder11;testuser3@test.com;17.04.2011 15:32;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+;acceptanceTestOrder12;testuser3@test.com;17.04.2011 15:34;EUR;false;;advance;;false;babyartikel;babyartikel;CREATED
+"#%   impex.getLastImportedItem().setDeliveryAddress(impex.getLastImportedItem().getUser().getDefaultDeliveryAddress());impex.getLastImportedItem().setPaymentAddress(impex.getLastImportedItem().getUser().getDefaultPaymentAddress());";
+"#%   impex.getLastImportedItem().calculate();";
+
+UPDATE ArticleState;code[unique=true];internalCode
+;current;A
+;deprecated;X
+;old;Z
+
+UPDATE ShippingMethod;code[unique=true];internalCode
+;dropshipping;DV
+;warehouse;ZL
+
+INSERT_UPDATE HeringProduct;code[unique=true];catalogVersion(catalog(id),version)[unique=true];name[lang=de];articleState(internalCode);shippingMethod(internalCode)
+;666;babyartikelProductCatalog:Online;abroba;X;DV
+
+INSERT_UPDATE OrderEntry;order(code)[unique=true];product(code,catalogVersion(catalog(id),version))[unique=true];quantity;calculated;unit(code);entryNumber;basePrice;totalPrice
+;acceptanceTestOrder1;666:babyartikelProductCatalog:Online;4;false;pieces;0;30,58;122,32
+;acceptanceTestOrder1;300020465:babyartikelProductCatalog:Online;1;false;pieces;1;145,1;145,1
+;acceptanceTestOrder1;300060401:babyartikelProductCatalog:Online;2;false;pieces;2;53,53;107,06
+
+INSERT_UPDATE OrderEntry;order(code)[unique=true];product(code,catalogVersion(catalog(id),version))[unique=true];quantity;calculated;unit(code);entryNumber;
+;acceptanceTestOrder2;300147490:babyartikelProductCatalog:Online;3;false;pieces;0
+;acceptanceTestOrder2;300020465:babyartikelProductCatalog:Online;1;false;pieces;1
+;acceptanceTestOrder2;300060401:babyartikelProductCatalog:Online;2;false;pieces;2
+;acceptanceTestOrder3;300147490:babyartikelProductCatalog:Online;2;false;pieces;0
+;acceptanceTestOrder3;300020465:babyartikelProductCatalog:Online;1;false;pieces;1
+;acceptanceTestOrder3;300060401:babyartikelProductCatalog:Online;2;false;pieces;2
+;acceptanceTestOrder4;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder4;300020465:babyartikelProductCatalog:Online;2;false;pieces;1
+;acceptanceTestOrder4;300060401:babyartikelProductCatalog:Online;2;false;pieces;2
+;acceptanceTestOrder5;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder5;300020465:babyartikelProductCatalog:Online;3;false;pieces;1
+;acceptanceTestOrder5;300060401:babyartikelProductCatalog:Online;2;false;pieces;2
+;acceptanceTestOrder6;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder6;300020465:babyartikelProductCatalog:Online;4;false;pieces;1
+;acceptanceTestOrder6;300060401:babyartikelProductCatalog:Online;2;false;pieces;2
+;acceptanceTestOrder7;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder7;300020465:babyartikelProductCatalog:Online;5;false;pieces;1
+;acceptanceTestOrder7;300060401:babyartikelProductCatalog:Online;2;false;pieces;2
+;acceptanceTestOrder8;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder8;300020465:babyartikelProductCatalog:Online;1;false;pieces;1
+;acceptanceTestOrder8;300060401:babyartikelProductCatalog:Online;1;false;pieces;2
+;acceptanceTestOrder9;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder9;300020465:babyartikelProductCatalog:Online;2;false;pieces;1
+;acceptanceTestOrder9;300060401:babyartikelProductCatalog:Online;5;false;pieces;2
+;acceptanceTestOrder10;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder10;300020465:babyartikelProductCatalog:Online;3;false;pieces;1
+;acceptanceTestOrder10;300060401:babyartikelProductCatalog:Online;7;false;pieces;2
+;acceptanceTestOrder11;300147490:babyartikelProductCatalog:Online;4;false;pieces;0
+;acceptanceTestOrder11;300020465:babyartikelProductCatalog:Online;1;false;pieces;1
+;acceptanceTestOrder11;300060401:babyartikelProductCatalog:Online;3;false;pieces;2
+;acceptanceTestOrder12;300147490:babyartikelProductCatalog:Online;5;false;pieces;0
+;acceptanceTestOrder12;300020465:babyartikelProductCatalog:Online;7;false;pieces;1
+;acceptanceTestOrder12;300060401:babyartikelProductCatalog:Online;2;false;pieces;2
+
+INSERT_UPDATE CreditCardPaymentInfo;code[unique=true];user(uid)[unique=true];ccOwner;number;type(code);validFromMonth;validFromYear;validToMonth;validToYear;subscriptionId;duplicate[default=false];saved[default=true]
+;ccid1;testuser1@test.com;John Acceptance;4012888888881881;visa;1;2010;12;2013;1231;
+;ccid2;testuser1@test.com;John Acceptance;4012888888881882;visa;2;2010;12;2013;1232;
+;ccid3;testuser1@test.com;John Acceptance;4012888888881883;visa;3;2010;12;2013;1233;
+;ccid4;testuser1@test.com;John Acceptance;4012888888881884;visa;4;2010;12;2013;1234;
+;ccid5;testuser1@test.com;John Acceptance;4012888888881885;visa;5;2010;12;2013;1235;
+;ccid6;testuser1@test.com;John Acceptance;4012888888881886;visa;6;2010;12;2013;1236;
+;ccid7;testuser2@test.com;John Acceptance;4012888888881887;visa;7;2010;12;2013;1237;
+;ccid8;testuser2@test.com;John Acceptance;4012888888881888;visa;8;2010;12;2013;1238;
+;ccid9;testuser2@test.com;John Acceptance;4012888888881889;visa;9;2010;12;2013;1239;
+;ccid10;testuser3@test.com;John Acceptance;4012888888881820;visa;10;2010;12;2013;12310;
+;ccid11;testuser3@test.com;John Acceptance;4012888888881832;visa;11;2010;12;2013;12311;
+;ccid12;testuser3@test.com;John Acceptance;4012888888881854;visa;12;2010;12;2013;12312;
+
+UPDATE OrderEntryStatus;code[unique=true];externalCode;
+;CHARGEBACK;STO;
+;SHIPPED;AUS;
+;RETURNED;RET;
+;AWAITING_PAYMENT;HAL;
+;AWAITING_SHIPPING;ANG;
+;PROCESSING;EIN;
+;NOT_AVAILABLE;NLB;
+;DIRECT_SHIPMENT;FUT;
+;DIRECT_SHIPMENT_PACKED;FUS;
+;EXCHANGE;MIN;
+
