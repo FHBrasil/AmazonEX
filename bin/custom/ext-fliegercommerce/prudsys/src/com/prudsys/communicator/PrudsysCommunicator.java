@@ -76,44 +76,44 @@ public class PrudsysCommunicator
 	{
 		final String result = callPrudsysRecommendationRest(request);
 
-		return convertToResponse(result);
+		return convertToResponse("categorypage", result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForProduct(final PrudsysProductRecommendationRequest request)
 	{
 		final String result = callPrudsysRecommendationRest(request);
-		return convertToResponse(result);
+		return convertToResponse("productpage", result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForBrand(final PrudsysBrandRecommendationRequest request)
 	{
 		final String result = callPrudsysRecommendationRest(request);
-		return convertToResponse(result);
+		return convertToResponse("brandpage", result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForBasket(final PrudsysBasketRecommendationRequest request)
 	{
 		final String result = callPrudsysRecommendationRest(request);
-		return convertToResponse(result);
+		return convertToResponse("basketpage", result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForHomePage(final PrudsysHomePageRecommendationRequest request)
 	{
 		final String result = callPrudsysRecommendationRest(request);
-		return convertToResponse(result);
+		return convertToResponse("homepage", result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForSearchResultEmptyPage(
 			final PrudsysSearchResultEmptyRecommendationRequest request)
 	{
 		final String result = callPrudsysRecommendationRest(request);
-		return convertToResponse(result);
+		return convertToResponse("no-resultpage", result);
 	}
 
 	public List<PrudsysRecommendationResponse> getRecommendationsForErrorPage(final PrudsysErrorPageRecommendationRequest request)
 	{
 		final String result = callPrudsysRecommendationRest(request);
-		return convertToResponse(result);
+		return convertToResponse("errorpage", result);
 	}
 
 	private String callPrudsysEventTrackingRest(final PrudsysEventTrackRequest request)
@@ -139,21 +139,23 @@ public class PrudsysCommunicator
 	}
 
 	/**
+	 * @param template
+	 *           YTODO
 	 * @param result
 	 * @return
 	 */
-	private List<PrudsysRecommendationResponse> convertToResponse(final String result)
+	private List<PrudsysRecommendationResponse> convertToResponse(final String template, final String result)
 	{
 		final List<PrudsysRecommendationResponse> responseList = new ArrayList<PrudsysRecommendationResponse>();
 		try
 		{
 			final JSONArray jsonArrayResult = new JSONArray(result);
 
-			parseJsonObj(responseList, jsonArrayResult.getJSONObject(0).getJSONArray("box1"), "box1");
+			parseJsonObj(responseList, jsonArrayResult.getJSONObject(0).getJSONArray("box1"), "box1", template);
 
 			if (jsonArrayResult.length() > 1)
 			{
-				parseJsonObj(responseList, jsonArrayResult.getJSONObject(1).getJSONArray("box2"), "box2");
+				parseJsonObj(responseList, jsonArrayResult.getJSONObject(1).getJSONArray("box2"), "box2", template);
 			}
 		}
 		catch (final JSONException e)
@@ -164,7 +166,8 @@ public class PrudsysCommunicator
 		return responseList;
 	}
 
-	private void parseJsonObj(final List<PrudsysRecommendationResponse> responseList, final JSONArray obj, final String boxId)
+	private void parseJsonObj(final List<PrudsysRecommendationResponse> responseList, final JSONArray obj, final String boxId,
+			final String template)
 	{
 		PrudsysRecommendationResponse responseItem;
 		JSONObject obj2 = null;
@@ -176,6 +179,7 @@ public class PrudsysCommunicator
 
 				obj2 = obj.getJSONObject(i);
 
+				responseItem.setTemplate(template);
 				responseItem.setBoxId(boxId);
 				responseItem.setBrand(obj2.getString("brand"));
 				responseItem.setDescription(obj2.getString("description"));

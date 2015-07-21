@@ -9,6 +9,7 @@ import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.product.data.CategoryData;
 import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
+import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.product.ProductModel;
@@ -17,6 +18,8 @@ import de.hybris.platform.order.CartService;
 import de.hybris.platform.order.OrderService;
 import de.hybris.platform.product.ProductService;
 import de.hybris.platform.servicelayer.user.UserService;
+import de.hybris.platform.store.BaseStoreModel;
+import de.hybris.platform.store.services.BaseStoreService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +50,10 @@ public class DefaultEventTrackerFacade implements EventTrackerFacade
 	private OrderService orderService;
 
 	private UserService userService;
+
+	private BaseStoreService baseStoreService;
+
+	private CustomerAccountService customerAccountService;
 
 	private FindCustomerUUIDForEventTracking findCustomerUUIDForEventTracking;
 
@@ -99,7 +106,9 @@ public class DefaultEventTrackerFacade implements EventTrackerFacade
 	@Override
 	public void trackOrderEvent(final OrderData order)
 	{
-		final OrderModel orderModel = new OrderModel();//TODO precisa recuperar o pedido aqui
+		final BaseStoreModel storeModel = getBaseStoreService().getBaseStoreForUid(order.getStore());
+		final OrderModel orderModel = getCustomerAccountService().getOrderDetailsForGUID(order.getCode(), storeModel);
+
 		final EventTrackRequest eventTrackRequest = createEventTrackRequest();
 
 		eventTrackRequest.getValues().put("order", orderModel);
@@ -204,5 +213,27 @@ public class DefaultEventTrackerFacade implements EventTrackerFacade
 	public void setFindCustomerUUIDForEventTracking(final FindCustomerUUIDForEventTracking findCustomerUUIDForEventTracking)
 	{
 		this.findCustomerUUIDForEventTracking = findCustomerUUIDForEventTracking;
+	}
+
+	public CustomerAccountService getCustomerAccountService()
+	{
+		return customerAccountService;
+	}
+
+	@Required
+	public void setCustomerAccountService(final CustomerAccountService customerAccountService)
+	{
+		this.customerAccountService = customerAccountService;
+	}
+
+	public BaseStoreService getBaseStoreService()
+	{
+		return baseStoreService;
+	}
+
+	@Required
+	public void setBaseStoreService(final BaseStoreService baseStoreService)
+	{
+		this.baseStoreService = baseStoreService;
 	}
 }

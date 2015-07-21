@@ -35,6 +35,11 @@ public interface BonusSystemFacade
 	 * @return
 	 */
 	Double getCartPoints();
+	
+	/**
+	 * @return
+	 */
+	Double getOrderConfirmationPoints(final OrderModel orderModel);
 
 	/**
 	 * @param points
