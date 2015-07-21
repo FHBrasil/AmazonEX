@@ -54,6 +54,7 @@ public class NewsletterSubscriptionDataToModelPopulator implements Populator<New
 		target.setFirstName(source.getFirstName());
 		target.setLastName(source.getLastName());
 		target.setEmail(source.getEmail());
+		target.setBirthDay(source.getBirthDay());
 			
 		final String genderCode = source.getGenderCode();	
 		final Gender genderEnumValue = getEnumerationService().getEnumerationValue(Gender.class, genderCode);

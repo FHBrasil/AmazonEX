@@ -4,6 +4,7 @@
 package br.hering.facades.order;
 
 import de.hybris.platform.commercefacades.order.OrderFacade;
+import de.hybris.platform.core.model.order.OrderModel;
 
 import br.hering.fulfilmentprocess.services.impl.InvalidBoletoException;
 
@@ -22,6 +23,7 @@ public interface HeringOrderFacade extends OrderFacade
 	
 	String getBoletoURL(String orderCode);
 
+	OrderModel getOrderModelByCode(final String orderCode);
 	/**
 	 * @param orderCode
 	 */

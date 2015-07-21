@@ -7,6 +7,7 @@
         <product:productPageTabs />
     <div class="col-sm-4 col-md-6 col-lg-5 col-lg-offset-1 recs150126 text-center">
         <product:productSocialSharing />
+        <product:recommendationProductPage product="${product}" />
     </div>
 </div>
 <%-- code original
