@@ -65,17 +65,6 @@
 		containerPrefix : 'BVRRInlineRating'
 		});
 		</c:if>
-		
-		<c:if test="${pageType == 'PRODUCT'}">
-		$BV.ui('rr', 'inline_ratings', {
-			productIds : [
-				<c:forEach items="${searchPageData.results}" var="product">
-				'${product.code}',
-				</c:forEach>
-			],
-			containerPrefix : 'BVRRInlineRating'
-			});
-		</c:if>
 	</script>
 </c:if>
 </head>
