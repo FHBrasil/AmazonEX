@@ -39,9 +39,9 @@ ACC.product.displayAddToCartPopup = function(cartResult, statusText, xhr, formEl
 	
 		
 	
-	if (typeof ACC.minicart.refreshMiniCartCount == 'function') {
-		ACC.minicart.refreshMiniCartCount();
-	}
+//	if (typeof ACC.minicart.refreshMiniCartCount == 'function') {
+//		ACC.minicart.refreshMiniCartCount();
+//	}
 	var productCode = $('[name=productCodePost]', formElement).val();
 	var quantityField = $('[name=qty]', formElement).val();
 	var quantity = 1;
