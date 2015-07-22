@@ -109,7 +109,7 @@
 			</div>		
 			<%-- END RENDER IF --%>	
 		</c:when>
-		<c:when test="${not orderData.guestCustomer && alreadyHasAccount && alreadyNewsletterSubscription}">
+		<c:when test="${(not orderData.guestCustomer && alreadyHasAccount && alreadyNewsletterSubscription) || (orderData.guestCustomer && alreadyHasAccount)}">
 			<%-- RENDER IF (customer has account) and (customer has birthdate) --%>
 			<h2><spring:theme code="text.fliegercommerce.texto179" /></h2>
 			<p><spring:theme code="text.fliegercommerce.texto180" /></p>
