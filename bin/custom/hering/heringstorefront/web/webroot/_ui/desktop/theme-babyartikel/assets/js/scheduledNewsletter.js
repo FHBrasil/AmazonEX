@@ -23,8 +23,6 @@ var scheduledNewsletter = {
                 url: '/my-account/scheduled-newsletter',
                 data: data,
                 success: function(data) {
-                	alert("SUBSCRIBE TO SCHEDULED NEWSLETTER");
-                	// faz alguma coisa com os dados retornados
                 }
             });
 

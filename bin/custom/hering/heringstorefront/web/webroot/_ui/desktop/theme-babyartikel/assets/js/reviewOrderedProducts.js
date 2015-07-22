@@ -23,8 +23,6 @@ var reviewOrderedProducts = {
                 url: '/my-account/review-ordered-products',
                 data: data,
                 success: function(data) {
-                	alert("SUBSCRIBE TO REVIEW ORDERED PRODUCTS");
-                	// faz alguma coisa com os dados retornados
                 }
             });
 

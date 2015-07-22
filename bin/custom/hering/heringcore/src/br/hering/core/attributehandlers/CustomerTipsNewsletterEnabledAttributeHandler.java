@@ -66,8 +66,11 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		
 		subscription.setFirstName(names[0]);
 		subscription.setLastName(names[1]);
-		subscription.setEmail(customerModel.getUid());
-		subscription.setGender(customerModel.getGender());
+		subscription.setEmail(customerModel.getUid());		
+		if (customerModel.getGender() != null)
+		{
+			subscription.setGender(customerModel.getGender());
+		}			
 		if (customerModel.getTitle() != null)
 		{
 			subscription.setTitle(customerModel.getTitle());
@@ -78,31 +81,21 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		subscription.setSubscriptionType(subscriptionType);
 		subscription.setCustomer(customerModel);
 		
-								
-		if (tipsNewsletterEnabled)
-		{	
-			try 
-			{
+		if (tipsNewsletterEnabled && customerModel.getYoungestChildDateOfBirth()!= null){
+			try {
 				getNewsletterSubscriptionService().subscribe(subscription);
-			} 
-			catch (DuplicatedNewsletterSubscriptionException e) 
-			{
+			} catch (DuplicatedNewsletterSubscriptionException e) {
 				//e.printStackTrace();
 			}
 		}
-		else
-		{
-			try 
-			{
+		else {
+			try {
 				getNewsletterSubscriptionService().unsubscribe(subscription);
-			} 
-			catch (NewsletterSubscriptionNotFound e) 
-			{
+			} catch (NewsletterSubscriptionNotFound e) {
 				//e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
 	
 	public BaseStoreService getBaseStoreService() {
