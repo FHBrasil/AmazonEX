@@ -24,6 +24,7 @@
         <extension name="paypal" />
         <extension name="fliegercommercecms" />
         <extension name="bazaarvoice" />
+        <extension name="klarnapayment" />
 
         <extension name="paypaladdon" />
 

@@ -1,0 +1,9 @@
+"#";;
+"# Import the Solr configuration for the Klarna Apparel store and Currencies NOK, SEK, DKK";;
+"#";;
+"$facetSearchConfigName=apparelIndex";;
+"$indexCurrencies=EUR, NOK, SEK, DKK";;
+;;
+;;
+"UPDATE SolrFacetSearchConfig";"name[unique=true]";"currencies(isocode)"
+;"$facetSearchConfigName";"$indexCurrencies"
