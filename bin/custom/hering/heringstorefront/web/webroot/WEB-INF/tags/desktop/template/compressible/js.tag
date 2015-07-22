@@ -86,6 +86,7 @@
     <script type="text/javascript" src="${themeResourcePath}/assets/js/tipsNewsletterDate.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/reviewShoppingExperience.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/reviewOrderedProducts.js"></script>
+    
 </c:if>
 <c:if test="${pageType == 'CART'}">
     <script type="text/javascript" src="${commonResourcePath}/js/acc.cart.js"></script>

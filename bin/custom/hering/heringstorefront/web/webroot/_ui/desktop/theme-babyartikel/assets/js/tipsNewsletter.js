@@ -28,14 +28,10 @@ var tipsNewsletter = {
                 	if ($('#tipsNewsletterCheckbox').checked) {
                 		sessionStorage.setItem(selector, true);
                 		$(id).prop('disabled', true);
-                		console.log("aqui");
-                		//$('#tipsNewsletterCheckbox').prop('disabled', true);
                 	}
                 	else {
                 		sessionStorage.setItem(selector, false);
                 		$(id).prop('disabled', false);
-                		console.log("oi");
-                		//$('#tipsNewsletterCheckbox').prop('disabled', false);
                 	}
                 }
             

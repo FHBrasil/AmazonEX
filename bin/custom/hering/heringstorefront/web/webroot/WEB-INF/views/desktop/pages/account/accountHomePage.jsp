@@ -174,7 +174,7 @@
 				<div id="toggleMails" class="collapse">
 			
 					<script type="text/javascript" src="${themeResourcePath}/js/tipsNewsletterDate.js"></script>
-					<script type="text/javascript" src="${themeResourcePath}/js/tipsNewsletter.js"></script>		
+					<script type="text/javascript" src="${themeResourcePath}/js/tipsNewsletter.js"></script>	
 					<form id="tipsNewsletter" class="form-horizontal" action="my-account/tips-newsletter" method="GET">
 						<div class="form-group">
 							<div class="col-xs-12">
