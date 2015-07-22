@@ -66,8 +66,11 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		
 		subscription.setFirstName(names[0]);
 		subscription.setLastName(names[1]);
-		subscription.setEmail(customerModel.getUid());
-		subscription.setGender(customerModel.getGender());
+		subscription.setEmail(customerModel.getUid());		
+		if (customerModel.getGender() != null)
+		{
+			subscription.setGender(customerModel.getGender());
+		}			
 		if (customerModel.getTitle() != null)
 		{
 			subscription.setTitle(customerModel.getTitle());

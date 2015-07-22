@@ -147,6 +147,7 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 	public CustomerModel subscribeTipsNewsletter(CustomerModel customerModel, Boolean tipsNewsletter, Date dateOfBirth)
 	{
 		
+		
 		if (tipsNewsletter)
 		{
 			if (dateOfBirth != null)
@@ -157,13 +158,13 @@ public class DefaultHeringCustomerAccountService extends DefaultCustomerAccountS
 		}		
 		else
 		{
-			customerModel.setYoungestChildDateOfBirth(null);
+			customerModel.setYoungestChildDateOfBirth(dateOfBirth);
 			customerModel.setTipsNewsletterEnabled(tipsNewsletter);
 		}
 		
 		modelService.save(customerModel);
 		modelService.refresh(customerModel);
-		
+
 		return customerModel;
 		
 	}
