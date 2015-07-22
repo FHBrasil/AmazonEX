@@ -36,20 +36,26 @@
 						</div>
 					</div>	
 					<script type="text/javascript">
+						var count = 0;
+					
 						function selectTypeAddress(type)
 						{
-							if(type == "address")
+							if(type == "address" && count > 0)
 							{
 								$('.toggleNewAddress').collapse('show');
 								$('.toggleNewPackstation').collapse('hide');
+						
 							}
 							else if(type == "packstation")
 							{
 								$('.toggleNewAddress').collapse('hide');
 								$('.toggleNewPackstation').collapse('show');
+								
+								if(count == 0)
+									count++;
 							}
 						}
-					</script>				
+					</script>			
     				<form:form method="post" commandName="heringAddressForm" cssClass="addEditDeliveryAddressForm toggleNewAddress collapse addresscollapse in">
 				        <input type="hidden" id="saveInAddressBook" name="saveInAddressBook" value="true">
 				        <form:hidden path="addressId" class="add_edit_delivery_address_id" status="${not empty suggestedAddresses ? 'hasSuggestedAddresses' : ''}" />
