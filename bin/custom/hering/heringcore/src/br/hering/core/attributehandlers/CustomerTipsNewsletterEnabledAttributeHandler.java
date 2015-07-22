@@ -81,31 +81,21 @@ public class CustomerTipsNewsletterEnabledAttributeHandler implements DynamicAtt
 		subscription.setSubscriptionType(subscriptionType);
 		subscription.setCustomer(customerModel);
 		
-								
-		if (tipsNewsletterEnabled)
-		{	
-			try 
-			{
+		if (tipsNewsletterEnabled && customerModel.getYoungestChildDateOfBirth()!= null){
+			try {
 				getNewsletterSubscriptionService().subscribe(subscription);
-			} 
-			catch (DuplicatedNewsletterSubscriptionException e) 
-			{
+			} catch (DuplicatedNewsletterSubscriptionException e) {
 				//e.printStackTrace();
 			}
 		}
-		else
-		{
-			try 
-			{
+		else {
+			try {
 				getNewsletterSubscriptionService().unsubscribe(subscription);
-			} 
-			catch (NewsletterSubscriptionNotFound e) 
-			{
+			} catch (NewsletterSubscriptionNotFound e) {
 				//e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
 	
 	public BaseStoreService getBaseStoreService() {
