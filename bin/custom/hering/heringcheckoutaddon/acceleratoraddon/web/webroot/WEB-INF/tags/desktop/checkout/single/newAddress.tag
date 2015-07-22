@@ -36,17 +36,23 @@
 						</div>
 					</div>	
 					<script type="text/javascript">
+						var count = 0;
+					
 						function selectTypeAddress(type)
 						{
-							if(type == "address")
+							if(type == "address" && count > 0)
 							{
 								$('.toggleNewAddress').collapse('show');
 								$('.toggleNewPackstation').collapse('hide');
+						
 							}
 							else if(type == "packstation")
 							{
 								$('.toggleNewAddress').collapse('hide');
 								$('.toggleNewPackstation').collapse('show');
+								
+								if(count == 0)
+									count++;
 							}
 						}
 					</script>				
