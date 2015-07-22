@@ -64,6 +64,7 @@ import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
 import br.hering.storefront.util.MetaSanitizerUtil;
 
+import com.flieger.eventtracking.facade.EventTrackerFacade;
 
 /**
  * Controller for a category page
@@ -109,6 +110,9 @@ public class CategoryPageController extends AbstractSearchPageController
 	
 	@Resource(name = "productFacade")	
 	private HeringProductFacade productFacade;	
+	
+	@Resource
+	private EventTrackerFacade eventTrackerFacade;
 
 	@SuppressWarnings("boxing")
 	@RequestMapping(value = CATEGORY_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
@@ -186,6 +190,8 @@ public class CategoryPageController extends AbstractSearchPageController
 		if(request.getServerName().toLowerCase().indexOf("hering") >= 0  ) {
 			return getViewPage(categorySearch.categoryPage, this.isShowListHeringEnabled);
 		}		
+		
+		eventTrackerFacade.trackCategoryView(convertCategoryModelIntoData(category));
 		
 		return getViewPage(categorySearch.categoryPage, this.isShowListEnabled);
 	}
@@ -321,6 +327,16 @@ public class CategoryPageController extends AbstractSearchPageController
 			}
 		}
 		return PAGE_ROOT + PRODUCT_GRID_PAGE;
+	}
+	
+	private CategoryData convertCategoryModelIntoData(final CategoryModel categoryModel)
+	{
+		final CategoryData categoryData = new CategoryData();
+		if(categoryModel != null){
+			categoryData.setCode(categoryModel.getCode());
+			categoryData.setName(categoryModel.getName());
+		}
+		return categoryData;
 	}
 
 	@ExceptionHandler(UnknownIdentifierException.class)
