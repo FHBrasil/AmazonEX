@@ -266,7 +266,7 @@ public class CheckoutController extends AbstractCheckoutController
 		
 		model.addAttribute("orderCode", orderCode);
 		model.addAttribute("orderData", orderDetails);
-		model.addAttribute("orderPoints", bonusSystemFacade.getOrderConfirmationPoints(heringOrderFacade.getOrderModelByCode(orderCode)).intValue());
+		model.addAttribute("orderPoints", Math.round(bonusSystemFacade.getOrderConfirmationPoints(heringOrderFacade.getOrderModelByCode(orderCode))));
 		model.addAttribute("allItems", orderDetails.getEntries());
 		model.addAttribute("deliveryAddress", orderDetails.getDeliveryAddress());
 		model.addAttribute("deliveryMode", orderDetails.getDeliveryMode());
