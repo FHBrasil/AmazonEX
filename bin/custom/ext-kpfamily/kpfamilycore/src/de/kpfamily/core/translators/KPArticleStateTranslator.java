@@ -10,7 +10,12 @@ import de.hybris.platform.jalo.JaloInvalidParameterException;
 public class KPArticleStateTranslator extends AbstractValueTranslator {
     
     /**
+     * Return the respective country as it is, used for exporting data.
      * 
+     * @param input
+     *            country exported
+     * @return value of input parameter as it is
+     * @author jfelipe
      */
     @Override
     public String exportValue(Object input) throws JaloInvalidParameterException {
@@ -25,12 +30,16 @@ public class KPArticleStateTranslator extends AbstractValueTranslator {
     public Object importValue(String input, Item item) throws JaloInvalidParameterException {
         switch (input.trim()) {
             case "A":
-                return "A";
-            case "x":
+            case "AF":
+            case "AL":
+            case "RP":
             case "X":
-                return "X";
-            default:
-                return "Z";
+            case "Z":
+            case "ZL":
+            case "x":
+            case "z":
+                return "";
         }
+        return "";
     }
 }
