@@ -201,7 +201,7 @@
 </noscript>
 <script async defer src="//static.chaordicsystems.com/static/loader.js" data-apikey="hering-v5"
     data-initialize="false"></script>--%>
-
+<%-- 
 <script type="text/javascript">
     (function () { 
     var _tsid = 'XA2EF864014A142CF9EDC2483FE556551'; 
@@ -218,3 +218,4 @@
     __ts.parentNode.insertBefore(_ts, __ts);
     })();
 </script>
+--%>
