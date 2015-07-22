@@ -81,6 +81,12 @@
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/sua-conta.js"></script>
     <script type="text/javascript" src="${commonResourcePath}/js/customer.js"></script>
     <!-- <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/searchOrderHistory.js"></script> -->
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/scheduledNewsletter.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/tipsNewsletter.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/tipsNewsletterDate.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/reviewShoppingExperience.js"></script>
+    <script type="text/javascript" src="${themeResourcePath}/assets/js/reviewOrderedProducts.js"></script>
+    
 </c:if>
 <c:if test="${pageType == 'CART'}">
     <script type="text/javascript" src="${commonResourcePath}/js/acc.cart.js"></script>
@@ -100,7 +106,7 @@
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/singleStepCheckout.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.silentorderpost.js"></script>
     <script type="text/javascript" src="${themeResourcePath}/assets/js/pages/acc.updatebillingaddress.js"></script>
-    <script src="//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script>
+<!--     <script src="//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script> -->
 </c:if>
 <c:if test="${pageType == 'SINGLESTEPCHECKOUT'}">
 	<script type="text/javascript" src="${commonResourcePath}/js/acc.cart.js"></script>
@@ -195,7 +201,7 @@
 </noscript>
 <script async defer src="//static.chaordicsystems.com/static/loader.js" data-apikey="hering-v5"
     data-initialize="false"></script>--%>
-
+<%-- 
 <script type="text/javascript">
     (function () { 
     var _tsid = 'XA2EF864014A142CF9EDC2483FE556551'; 
@@ -212,3 +218,4 @@
     __ts.parentNode.insertBefore(_ts, __ts);
     })();
 </script>
+--%>

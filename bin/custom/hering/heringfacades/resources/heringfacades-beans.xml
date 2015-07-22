@@ -108,6 +108,7 @@
  		<property name="youngestChildDateOfBirth" type="java.lang.String" />
  		<property name="scheduledNewsletterChecked" type="java.lang.String" />	
  		<property name="tipsNewsletterChecked" type="java.lang.String" />
+ 		<property name="tipsNewsletterDisabled" type="java.lang.String" />
  		<property name="reviewOrderedProductsChecked" type="java.lang.String" />
  		<property name="reviewShoppingExperienceChecked" type="java.lang.String" />	
 	</bean>

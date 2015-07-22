@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2012 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+			
+			<!-- Typecodes
+		#########################################
+		## Itemtypes
+		#########################################
+		ItemTypeCode: 16500 	ItemType: KlarnaConfig
+		ItemTypeCode: 16501		ItemType: KlarnaPClass
+		ItemTypeCode: 16502		ItemType: KlarnaCountryConfig
+		
+		
+		#########################################
+		## Relation
+		#########################################
+		
+		-->
+		
+
+	
+	<enumtypes>
+		<!-- Extend the PaymentStatus -->
+		<enumtype code="KlarnaStatus" generate="true" autocreate="true" dynamic="true">
+			<value code="KLARNA_DENIED">
+				<description>reject of the account or invoice request</description>
+			</value>
+			<value code="KLARNA_ACCEPTED">
+				<description>account or invoice request is accepted</description>
+			</value>
+			<value code="KLARNA_PENDING">
+				<description>Pending - suspected fraud - during 24 hours it will be switched to accepted or denied </description>
+			</value>
+		</enumtype>
+		<enumtype code="KlarnaPClassType" generate="true" autocreate="true" dynamic="true">
+			<value code="CAMPAIGN">
+				<description>Klarna payment method Campaign</description>
+			</value>
+			<value code="ACCOUNT">
+				<description>Klarna payment method Account</description>
+			</value>
+			<value code="SPECIAL">
+				<description>Special variant of the Klarna payment method Campaign</description>
+			</value>
+			<value code="FIXED">
+				<description>Special variant of the Klarna payment method Campaign</description>
+			</value>
+			<value code="DELAY">
+				<description>Special variant of the Klarna payment method Campaign</description>
+			</value>
+			<value code="MOBILE">
+				<description>Special variant of the Klarna payment method Campaign</description>
+			</value>
+		</enumtype>
+	</enumtypes>
+
+
+	<relations>
+		<!-- BaseStore2KlarnaConfigRel -->
+		<relation code="BaseStore2KlarnaConfigRel" localized="false" autocreate="true" generate="true">
+			<description>This relation between BaseStoe and KlarnaConfig.</description>
+			<sourceElement qualifier="baseStore" type="BaseStore" cardinality="one">
+				<modifiers read="true" write="true" search="true" optional="false" unique="true"/>
+			</sourceElement>
+			<targetElement qualifier="klarnaConfig" type="KlarnaConfig" cardinality="many" collectiontype="set" >
+				<modifiers read="true" write="true" search="true" optional="true" />
+			</targetElement>
+		</relation>
+		<!--  KlarnaConfig2PClassRel -->
+		<relation code="KlarnaConfig2PClassRel" localized="false" autocreate="true" generate="true">
+			<description>The relation between KlarnaConfig and PClasses</description>
+			<sourceElement qualifier="klarnaConfig" type="KlarnaConfig" cardinality="one">
+				<modifiers initial="true" read="true" write="false" search="true" optional="true" />
+			</sourceElement>
+			<targetElement qualifier="pClass" type="KlarnaPClass" cardinality="many" collectiontype="set">
+				<modifiers initial="true" write="false" read="true" search="true" optional="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+
+	<itemtypes>
+	
+		<typegroup name="Klarna">
+		<!-- KlarnaConfig -->
+			<itemtype generate="true" code="KlarnaConfig" 
+				jaloclass="de.getit.hybris.klarna.payment.jalo.KlarnaConfig" extends="GenericItem" autocreate="true">
+				<description>country specific configuration type for Klarna invoice, account and campaign</description>
+				<deployment table="klarnaConfig" typecode="16500" />
+				<attributes>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<description>localized description for the type</description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="merchantId" type="int">
+						<description>Merchant ID or Estore ID, an Integer above 0</description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="sharedSecret" type="java.lang.String">
+						<description> The shared secret which accompanied your merchantId</description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="invoiceFee" type="Product">
+						<description>transaction fee for invoice. The fee is configured by a product.</description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="invoiceActive" type="boolean">
+						<description>activate or deactivate the invoice payment for the Klarna configuration</description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+						<defaultvalue>false</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="accountActive" type="boolean">
+						<description>activate or deactivate the account payment for the Klarna configuration</description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+						<defaultvalue>false</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="campaignActive" type="boolean">
+						<description>activate or deactivate the campaign payment for the Klarna configuration</description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="accountMinValue" type="java.lang.Double">
+						<description>minimum value for a product or cart to receive an accounting offer </description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="accountMaxValue" type="java.lang.Double">
+						<description>maximum value for a product or cart to receive an accounting offer </description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="showMonthlyCostOnProductDetail" type="boolean">
+						<description>active or deactivate account offer on the product detail page </description>
+						<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="false" />
+						<defaultvalue>true</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="countryConfig" type="KlarnaCountryConfig" >
+						<modifiers initial="false" write="true" read="true" unique="true" optional="false" search="true"  />
+						<description>Klarna Country Config</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="absolutDiscountDescriptionText" type="localized:java.lang.String" >
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="false"  />
+						<description>localized description text for absolute discount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="relativeDiscountDescriptionText" type="localized:java.lang.String" >
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="false"  />
+						<description>localized description text for absolute discount</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<!-- KlarnaPaymentInfo Renamed Attributes -->
+			<itemtype code="KlarnaPaymentInfo" extends="PaymentInfo"
+						jaloclass="de.getit.hybris.klarna.payment.jalo.KlarnaPaymentInfo" autocreate="true" generate="true">
+					<description>payment info for Klarna Account, Campaign and Invoice</description>
+				<attributes>
+					<attribute qualifier="rno" type="java.lang.String">
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+						<description>you be able to identifie a placed payment klarna payment by the reservationNumber(reno)</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="eid" type="int">
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+						<description>Merchant ID or Estore ID, an Integer above 0</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="pclass" type="int">
+						<modifiers initial="false" write="true" read="true" optional="true" search="true" />
+						<description>The id references to an Klarna-PClass-Instance</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<!-- KlarnaPClass -->
+			<itemtype code="KlarnaPClass" extends="GenericItem"
+					jaloclass="de.getit.hybris.klarna.payment.jalo.KlarnaPClass" autocreate="true" generate="true">
+				<description>The pClass-Type contains the financing conditions</description>
+				<deployment table="klarnaPClass" typecode="16501" />
+				<attributes>
+					<attribute qualifier="id" type="int" >
+						<modifiers initial="true" write="false" read="true" unique="true" optional="false" search="true" />
+						<description>unique identifier</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="type" type="KlarnaPClassType">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="true" />
+						<description> minimum amount for purchase/product.</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="description" type="java.lang.String">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>The description for this PClass. HTML entities for special characters</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="months" type="int">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>Number of months for this PClass</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="startfee" type="double">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>starting fee</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="invoicefee" type="double">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>invoice/handling fee</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="interestrate" type="double">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>interest rate</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="minamount" type="double">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description> minimum amount for purchase/product.</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="country" type="Country">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="true" />
+						<description>country</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="expire" type="java.util.Date">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>Expire date / valid until date </description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="merchantId" type="int">
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="true" />
+						<description>Merchant ID / Estore ID</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+	
+			
+			<!-- KlarnaCountryConfig - add additional fields for Klarna online financing -->
+			<itemtype code="KlarnaCountryConfig" extends="GenericItem"
+					jaloclass="de.getit.hybris.klarna.payment.jalo.KlarnaCountryConfig" autocreate="true" generate="true">>
+				<description>Klarna specific configuration for a country</description>
+				<deployment table="klarnaCountryConf" typecode="16502" />
+				<attributes>
+					<attribute qualifier="country" type="Country" >
+						<modifiers initial="true" write="false" read="true" unique="true" optional="false" search="true" />
+						<description></description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="language" type="Language" >
+						<modifiers initial="true" write="false" read="true" unique="true" optional="false" search="true" />
+						<description></description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="currency" type="Currency" >
+						<modifiers initial="true" write="false" read="true" unique="true" optional="false" search="true" />
+						<description></description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="hasAccountAllowed" type="boolean" >
+						<modifiers initial="true" write="false" read="true" unique="false" optional="false" search="false" />
+						<description>Is the Klarna-API-Action 'hasAccount' allowed for the Country</description>
+						<defaultvalue>false</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="getAddressAllowed" type="boolean" >
+						<modifiers initial="true" write="false" read="true" unique="false" optional="false" search="false" />
+						<description>Is the Klarna-API-Action 'getAddress' allowed for the Country</description>
+						<defaultvalue>false</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="pnoPattern" type="java.lang.String" >
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>Pattern for the personal identification number of a Klarna Customer</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="useBirthdayAsPno" type="boolean" >
+						<modifiers initial="true" write="false" read="true" unique="false" optional="false" search="false" />
+						<description>should the Birthday used for pno</description>
+						<defaultvalue>false</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="birthdayFormat" type="java.lang.String" >
+						<modifiers initial="true" write="false" read="true" unique="false" optional="true" search="false" />
+						<description>DateFormat for birthday used as pno</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="houseNumberInStreet" type="boolean" >
+						<modifiers initial="true" write="false" read="true" unique="false" optional="false" search="false" />
+						<description>Should HouseNumber appended to Street in KlarnaAddr</description>
+						<defaultvalue>false</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="UpdatePendingKlarnaStatusOrdersCronJob" autocreate="true" generate="true" extends="CronJob"
+	    			jaloclass="de.getit.hybris.klarna.payment.jalo.UpdatePendingKlarnaStatusOrdersCronJob">
+	    		<attributes>
+	    			<attribute qualifier="maxPendingHours" type="java.lang.Integer">
+	    				<persistence type="property"/>
+	    				<modifiers read="true" write="true" optional="false" search="false"/>
+	    				<defaultvalue>25</defaultvalue>
+	    			</attribute>
+	    		
+	    		</attributes>
+	    	</itemtype>
+		</typegroup>
+			
+		<typegroup name="Hybris">
+			<!-- Address - add additional field 'pno'  -->
+			<itemtype code="Address" autocreate="false" generate="false">
+				<description>Add additional field to address for Klarna Payment 'pno'</description>
+				<attributes>
+					<attribute qualifier="pno" type="java.lang.String">
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+						<description>personal identification number of a Klarna customer</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="houseExtension" type="java.lang.String">
+						<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+						<description>house extension information, only needed for the Netherlands.</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="AbstractOrder" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="klarnaStatus" type="KlarnaStatus">
+						<persistence type="property"></persistence>
+						<modifiers search="true" optional="true" write="true" read="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="Product" generate="false" autocreate="false">
+				<attributes>					
+					<attribute qualifier="klarnaInvoiceFee" type="boolean">
+						<modifiers search="true" optional="true" write="true" read="true" />
+						<description>identifies a product as klarna invoice fee product</description>
+						<defaultvalue>false</defaultvalue>					
+						<persistence type="property"></persistence>						
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

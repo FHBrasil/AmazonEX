@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>01-01-05 KLARNA-25 Klarna Ratenrechner auf Produktdetailseite</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">01-01-05 KLARNA-25 Klarna Ratenrechner auf Produktdetailseite</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>01-01-05</td>
+	<td>KLARNA-25 Klarna Ratenrechner auf Produktdetailseite</td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Prüfung ob der Klarna Ratenrecher für das Land mit dem Kürzel ${Klarna_Landeskuerzel} und der Klarna-Informations-Layer für das Land mit dem Kürzel ${Klarna_Landeskuerzel} wird auf der Produktdetailseite korrekt dargestellt.</td>
+	<td>Der Klarna Ratenrecher für das Land mit dem Kürzel ${Klarna_Landeskuerzel} und der Klarna-Informations-Layer für das Land mit dem Kürzel ${Klarna_Landeskuerzel} wird auf der Produktdetailseite korrekt dargestellt.</td>
+</tr>
+<!--Prüfung ob das 'Ratenkauf-Klarna' Logo angezeigt wird-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#product_klarna_link_to_account &gt; div &gt; img</td>
+	<td></td>
+</tr>
+<!--Prüfung ob die von Klarna angebotene Monatsrate korrekt angezeigt wird-->
+<tr>
+	<td>assertText</td>
+	<td>css=div.prod &gt; div.prod &gt; p</td>
+	<td>${Klarna_Finanzieren_Vor_Dem_Betrag} ${Klarna_Monatsrate_Produktdetailseite} ${Klarna_Finanzieren_Hinter_Dem_Betrag}</td>
+</tr>
+<!--Prüfung ob der 'Lesen Sie mehr!' Link vorhanden ist-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=klarna-link-dynamic-${Klarna_Landeskuerzel}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=klarna-link-dynamic-${Klarna_Landeskuerzel}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<!--Prüfung ob die Informationen in dem 'Lesen Sie mehr!' Link angezeigt werden-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div[id=&quot;klarna-terms-popup&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=img[alt=&quot;Klarna&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=img[alt=&quot;Klarna&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=klarna-terms-popup-close</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=klarna-terms-popup-close</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

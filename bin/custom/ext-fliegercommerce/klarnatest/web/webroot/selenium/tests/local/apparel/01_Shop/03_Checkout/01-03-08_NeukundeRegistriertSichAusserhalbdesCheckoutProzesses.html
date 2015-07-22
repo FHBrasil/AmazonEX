@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>01-03-08 Neukunde Registriert Sich Ausserhalb des Checkout Prozesses</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">01-03-08 Neukunde Registriert Sich Ausserhalb des Checkout Prozesses</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>01-03-08</td>
+	<td>Neukunde Registriert Sich Ausserhalb des Checkout Prozesses</td>
+</tr>
+<tr>
+	<td>ge_designateTCParameters</td>
+	<td>{TCVariableName1},{TCVariableName2}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Kunde aus ${Land} befindet sich auf der Anmeldungs-/Registrierungsseite und möchte sich neu registrieren</td>
+	<td>Kunde aus&nbsp;&nbsp;${Land} mit den Login-Daten: Benutzername ${Datumsstempel}_${Neukundenregistrierung_Email} und Passwort ${Datumsstempel}_${Neukundenregistrierung_Kennwort} hat sich neu registriert</td>
+</tr>
+<!--Prüfen ob alle Eingabefelder vorhanden sind-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=register.title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=register.firstName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=register.lastName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=register.email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=register.checkPwd</td>
+	<td></td>
+</tr>
+<!--Eingabefelder mit eindeutigen Werten ausfüllen-->
+<tr>
+	<td>select</td>
+	<td>id=register.title</td>
+	<td>label=Herr</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=register.firstName</td>
+	<td>${Datumsstempel}_${Neukundenregistrierung_Vorname}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=register.lastName</td>
+	<td>${Datumsstempel}_${Neukundenregistrierung_Nachname}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=register.email</td>
+	<td>${Datumsstempel}_${Neukundenregistrierung_Email}</td>
+</tr>
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>${Datumsstempel}_${Neukundenregistrierung_Email}</td>
+	<td>Neukunde_Username</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>${Datumsstempel}_${Neukundenregistrierung_Kennwort}</td>
+</tr>
+<tr>
+	<td>ge_setTCParameter</td>
+	<td>${Datumsstempel}_${Neukundenregistrierung_Kennwort}</td>
+	<td>Neukunde_Passwort</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=register.checkPwd</td>
+	<td>${Datumsstempel}_${Neukundenregistrierung_Kennwort}</td>
+</tr>
+<!--Neukundenegistrierung abschliessen und mit Bezahlvorgang fortsetzen-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=button.form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button.form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -97,6 +97,12 @@ public class DefaultBonusSystemFacade implements BonusSystemFacade
 	{
 		return Double.valueOf(getOrderPoints(getCartService().getSessionCart()));
 	}
+	
+	@Override
+	public Double getOrderConfirmationPoints(final OrderModel orderModel)
+	{
+		return Double.valueOf(getOrderPoints(orderModel));
+	}
 
 	@Override
 	public void generateCartDiscount(final double points) throws CalculationException

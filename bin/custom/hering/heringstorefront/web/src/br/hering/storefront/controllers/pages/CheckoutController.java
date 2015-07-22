@@ -37,7 +37,11 @@ import br.hering.facades.customer.HeringCustomerFacade;
 import br.hering.storefront.controllers.ControllerConstants;
 import br.hering.storefront.util.HeringPageType;
 
+import com.flieger.bonussystem.facade.BonusSystemFacade;
 import com.flieger.payment.data.BoletoPaymentInfoData;
+import com.fliegersoftware.newslettersubscription.data.NewsletterSubscriptionData;
+import com.fliegersoftware.newslettersubscription.exceptions.DuplicatedNewsletterSubscriptionException;
+import com.fliegersoftware.newslettersubscription.facades.NewsletterSubscriptionFacade;
 
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
@@ -52,6 +56,7 @@ import de.hybris.platform.cms2.servicelayer.services.CMSSiteService;
 import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.product.ProductFacade;
+import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.servicelayer.exceptions.ModelNotFoundException;
 import de.hybris.platform.store.services.BaseStoreService;
@@ -95,6 +100,12 @@ public class CheckoutController extends AbstractCheckoutController
 
 	@Resource
 	private BaseStoreService baseStoreService;
+	
+	@Resource
+	private BonusSystemFacade bonusSystemFacade;
+	
+	@Resource
+	private NewsletterSubscriptionFacade newsletterSubscriptionFacade;
 	
 	@Resource
 	private CMSSiteService cmsSiteService;
@@ -182,6 +193,9 @@ public class CheckoutController extends AbstractCheckoutController
 			GlobalMessages.addErrorMessage(model, "form.guest.fieldMismatch");
 			return getMessageSource().getMessage("form.guest.fieldMismatch", null, getI18nService().getCurrentLocale());
 		}
+		
+		final boolean checkedNewsletterSubscription = request.getParameter("registerNewsletter") != null;		
+		
 		try
 		{
 			getCustomerFacade().changeGuestToCustomer(form.getPwd(), form.getOrderCode());
@@ -204,6 +218,30 @@ public class CheckoutController extends AbstractCheckoutController
 					"guest.checkout.existingaccount.register.error", new Object[]
 					{ form.getUid() });
 			return getMessageSource().getMessage("guest.checkout.existingaccount.register.error", null, getI18nService().getCurrentLocale());
+		}		
+		
+		if(checkedNewsletterSubscription)
+		{
+			final NewsletterSubscriptionData data = new NewsletterSubscriptionData();
+			final CustomerData customerData = heringCustomerFacade.getCurrentCustomer();
+			
+			data.setFirstName(customerData.getFirstName());
+			data.setLastName(customerData.getLastName());
+			data.setEmail(customerData.getUid());
+			data.setGenderCode(customerData.getGender() != null ? customerData.getGender().getCode() : "FEMALE");
+			data.setTitleCode((customerData.getTitleCode() != null && !customerData.getTitleCode().isEmpty()) ? customerData.getTitleCode() : "ms");
+			data.setCustomer(customerData);
+			data.setStoreCode(newsletterSubscriptionFacade.getCurrentBaseStoreCode());
+			data.setLanguageIsoCode(customerData.getLanguage().getIsocode());
+			
+			try
+			{
+				newsletterSubscriptionFacade.subscribe(data);
+			}
+			catch (DuplicatedNewsletterSubscriptionException e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		return Boolean.TRUE.toString();
@@ -228,6 +266,7 @@ public class CheckoutController extends AbstractCheckoutController
 		
 		model.addAttribute("orderCode", orderCode);
 		model.addAttribute("orderData", orderDetails);
+		model.addAttribute("orderPoints", Math.round(bonusSystemFacade.getOrderConfirmationPoints(heringOrderFacade.getOrderModelByCode(orderCode))));
 		model.addAttribute("allItems", orderDetails.getEntries());
 		model.addAttribute("deliveryAddress", orderDetails.getDeliveryAddress());
 		model.addAttribute("deliveryMode", orderDetails.getDeliveryMode());
@@ -236,7 +275,7 @@ public class CheckoutController extends AbstractCheckoutController
 		model.addAttribute("email", uid);
 		model.addAttribute("customerData", alreadyHasAccount ? heringCustomerFacade.getCurrentCustomer() : null);
 		model.addAttribute("alreadyHasAccount", alreadyHasAccount);
-		model.addAttribute("alreadyNewsletterSubscription", alreadyNewsletterSubscription);
+		model.addAttribute("alreadyNewsletterSubscription", alreadyNewsletterSubscription);		
 
 		final String boletoUrl = "/boleto-img/jpg/boleto-" + orderCode + ".jpg";
 		

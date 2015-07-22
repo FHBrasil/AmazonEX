@@ -24,6 +24,7 @@
         <extension name="paypal" />
         <extension name="fliegercommercecms" />
         <extension name="bazaarvoice" />
+        <extension name="klarnapayment" />
 
         <extension name="paypaladdon" />
 
@@ -36,7 +37,7 @@
         <extension name="storecatalogfeed" />
         <extension name="pixicore" />
         <extension name="pixiapi" />
-        <extension name="pixiwebservices" />
+       <!--  <extension name="pixiwebservices" /> -->
         <extension name="newslettersubscription" />
         <extension name="newsletteraddon" />
         <extension name="bonussystem"/>

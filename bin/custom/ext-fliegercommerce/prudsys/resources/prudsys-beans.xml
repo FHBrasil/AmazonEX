@@ -78,6 +78,7 @@
 	<bean class="com.prudsys.data.PrudsysSearchResultEmptyRecommendationRequest" extends="com.prudsys.data.PrudsysRecommendationRequest"/>
 	
 	<bean class="com.prudsys.data.PrudsysRecommendationResponse">
+		<property name="template" type="String" />
 		<property name="boxId" type="String" />
 		<property name="netUnitPrice" type="java.math.BigDecimal" />
 		<property name="onlineFlag" type="boolean" />

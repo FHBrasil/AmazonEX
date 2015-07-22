@@ -6,6 +6,8 @@
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <%@ taglib prefix="form" 		uri="http://www.springframework.org/tags/form"%>
 
+<c:set var="more" value="+"/>
+
 <div class="col-sm-4">
 	<c:choose>
 		<c:when test="${orderData.guestCustomer && not alreadyHasAccount}">
@@ -14,7 +16,7 @@
 				<%-- RENDER IF form sent sucessfully --%>
 				<h2><spring:theme code="text.fliegercommerce.texto170" /></h2>
 				<p>
-					<b>[FIXED]+840&nbsp;<spring:theme code="text.fliegercommerce.texto161" /></b>&nbsp;
+					<b>${more}${orderPoints}&nbsp;<spring:theme code="text.fliegercommerce.texto161" /></b>&nbsp;
 					<spring:theme code="text.fliegercommerce.texto171" />&nbsp;${email}&nbsp;
 					<spring:theme code="text.fliegercommerce.texto172" />&nbsp;
 					<spring:theme code="text.fliegercommerce.texto173" />
@@ -24,12 +26,12 @@
 			<div id="sectionFormGuest">
 				<h2>
 					<spring:theme code="text.fliegercommerce.texto157" />&nbsp;
-					[FIXED]<span class="fox150706">+840</span>&nbsp;
+					<span class="fox150706">${more}${orderPoints}</span>&nbsp;
 					<spring:theme code="text.fliegercommerce.texto158" />
 				</h2>
 				<p>
 					<spring:theme code="text.fliegercommerce.texto159"/>&nbsp;
-					<b><spring:theme code="text.fliegercommerce.texto160"/>&nbsp;[FIXED]+840&nbsp;<spring:theme code="text.fliegercommerce.texto161"/></b>,&nbsp;
+					<b><spring:theme code="text.fliegercommerce.texto160"/>&nbsp;${more}${orderPoints}&nbsp;<spring:theme code="text.fliegercommerce.texto161"/></b>,&nbsp;
 					<spring:theme code="text.fliegercommerce.texto162"/>
 				</p>
 				<p><spring:theme code="text.fliegercommerce.texto163"/></p>
@@ -51,11 +53,14 @@
 									inputCSS="form-control" path="checkPwd" placeholder="Passwort widerholen" mandatory="true"/>
 							</div>				
 							<%-- RENDER ONLY if user not has opt-in --%>
-							<div class="checkbox">
-								<label><input type="checkbox" checked="true">[FIXED]<spring:theme code="text.fliegercommerce.texto167" />*</label>
-							</div>
+							<c:if test="${not alreadyNewsletterSubscription}">
+								<div class="checkbox">
+									<label><input type="checkbox" name="registerNewsletter" checked="true">
+										<spring:theme code="text.fliegercommerce.texto167" />*</label>
+								</div>
+							</c:if>
 							<%-- END RENDER ONLY --%>		
-							<input class="btn btn-primary" type="submit" value="[FIXED]+840 <spring:theme code='text.fliegercommerce.texto168' />">			
+							<input class="btn btn-primary" type="submit" value="${more}${orderPoints} <spring:theme code='text.fliegercommerce.texto168' />">			
 						</form:form>				
 					</div>
 				</div>
@@ -122,5 +127,5 @@
 		<c:otherwise>
 			<%-- EMPTY --%>
 		</c:otherwise>
-	</c:choose>
+	</c:choose>	
 </div>

@@ -28,5 +28,7 @@
 		<property name="cartService" ref="cartService"/>
 		<property name="orderService" ref="orderService"/>
 		<property name="userService" ref="userService"/>
+		<property name="customerAccountService" ref="customerAccountService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
 	</bean>
 </beans>

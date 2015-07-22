@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>02-01-99 Aus der hMC ausloggen</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">02-01-99 Aus der hMC ausloggen</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>02-01-99</td>
+	<td>Aus der hMC ausloggen</td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Aus der hMC ausloggen</td>
+	<td>Der Logout aus der hMC war erfolgreich</td>
+</tr>
+<!--Aus der hMC ausloggen-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=Toolbar/ImageToolbarAction[closesession]_img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=Toolbar/ImageToolbarAction[closesession]_img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>${hMCLoginSeitentitel}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

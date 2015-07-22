@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>01-03-05 Neukunde wählt Zahlungsmethode im Checkout Prozess aus</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">01-03-05 Neukunde wählt Zahlungsmethode im Checkout Prozess aus</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>01-03-05</td>
+	<td>Neukunde wählt Zahlungsmethode im Checkout Prozess aus</td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Der Kunde mit dem Klarna Status ${Klarna_Status} aus ${Land} gibt seine jeweilig gesetzte länderspezifische Klarna Zahlungsmethode ${Klarna_Selected_Payment_Method} ein und speichert diese.</td>
+	<td>Der Kunde mit dem Klarna Status ${Klarna_Status} aus ${Land} hat seine jeweilig gesetzte länderspezifische Klarna Zahlungsmethode ${Klarna_Selected_Payment_Method} eingeben und speichern können.</td>
+</tr>
+<!--Prüfung ob bereits zuvor eine Zahlungsmethode eingegeben wurde-->
+<tr>
+	<td>storeElementPresent</td>
+	<td>css=button.form.change_payment_method_button</td>
+	<td>isPresent</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${isPresent}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${isPresent} == false</td>
+	<td>Zahlungsmethode_Bearbeiten_Ist_Ein_Link</td>
+</tr>
+<!--Neukunde klickt auf den Button 'Zahlungsmethode bearbeiten'-->
+<tr>
+	<td>label</td>
+	<td>Zahlungsmethode_Bearbeiten_Ist_Ein_Button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=button.form.change_payment_method_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button.form.change_payment_method_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>Zahlungsdateneingabe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Zahlungsmethode_Bearbeiten_Ist_Ein_Link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>refreshAndWait</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=${Zahlungsmethode_Bearbeiten_Link}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>Zahlungsdateneingabe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Zahlungsdateneingabe</td>
+	<td></td>
+</tr>
+<!--Prüfung ob der Zahlungsdetails Layer inkl. aller Eingabefelder angezeigt wird-->
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>${Klarna_Zahlungsarten_Ueberschrift}</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<!--Test Rechnungsadresse gleich Lieferadresse-->
+<tr>
+	<td>assertText</td>
+	<td>css=div.payment_details_right_col &gt; h1</td>
+	<td>${Klarna_Zahlungsarten_Rechnungsadresse_Ueberschrift}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.payment_details_right_col &gt; p</td>
+	<td>${Klarna_Zahlungsarten_Rechnungsadresse_Gleich_Lieferadresse}</td>
+</tr>
+<!--Kunde wählt Klarna Zahlart aus-->
+<tr>
+	<td>echo</td>
+	<td>${Klarna_Selected_Payment_Method}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>${Klarna_Selected_Payment_Method}</td>
+	<td></td>
+</tr>
+<!--Klarna Account-->
+<tr>
+	<td>label</td>
+	<td>Klarna_Account</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>name=paymentModeCode</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=label</td>
+	<td>${Klarna_Zahlungsart_Account}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=paymentModeCode</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=payment.klarnaPhoneNo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=payment.klarnaPhoneNo</td>
+	<td>${Neukundenregistrierung_Mobilfunknummer}</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>id=payment.klarnaBirthOfDate</td>
+	<td>Geburtsdatumsfeld_Vorhanden</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${Geburtsdatumsfeld_Vorhanden}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${Geburtsdatumsfeld_Vorhanden} == true</td>
+	<td>KEIN_NORDISCHES_LAND_KEIN_GEBURTSDATUMSFELD_INVOICE</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>PrüfungObZahlungsartKorrektGespeichertWurde</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>KEIN_NORDISCHES_LAND_KEIN_GEBURTSDATUMSFELD_ACCOUNT</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=genderCode1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=genderCode2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=genderCode1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=payment.klarnaBirthOfDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=payment.klarnaBirthOfDate</td>
+	<td>${Neukundenregistrierung_Geburtsdatum_Tag}${Neukundenregistrierung_Geburtsdatum_Monat}${Neukundenregistrierung_Geburtsdatum_Jahr}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>PrüfungObZahlungsartKorrektGespeichertWurde</td>
+	<td></td>
+</tr>
+<!--Klarna Invoice-->
+<tr>
+	<td>label</td>
+	<td>Klarna_Invoice</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@name='paymentModeCode'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dl[@id='klarnapayment_modes_dl']/dt[2]/label</td>
+	<td>${Klarna_Zahlungsart_Invoice_Vor_Dem_Betrag}${Klarna_Zahlungsart_Invoice_Betrag}${Klarna_Zahlungsart_Invoice_Hinter_Dem_Betrag}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='paymentModeCode'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=payment.klarnaPhoneNo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=payment.klarnaPhoneNo</td>
+	<td>${Neukundenregistrierung_Mobilfunknummer}</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>id=payment.klarnaBirthOfDate</td>
+	<td>Geburtsdatumsfeld_Vorhanden</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${Geburtsdatumsfeld_Vorhanden}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${Geburtsdatumsfeld_Vorhanden} == true</td>
+	<td>KEIN_NORDISCHES_LAND_KEIN_GEBURTSDATUMSFELD_INVOICE</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>PrüfungObZahlungsartKorrektGespeichertWurde</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>KEIN_NORDISCHES_LAND_KEIN_GEBURTSDATUMSFELD_INVOICE</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=genderCode1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=genderCode2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=genderCode1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=payment.klarnaBirthOfDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=payment.klarnaBirthOfDate</td>
+	<td>${Neukundenregistrierung_Geburtsdatum_Tag}${Neukundenregistrierung_Geburtsdatum_Monat}${Neukundenregistrierung_Geburtsdatum_Jahr}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>PrüfungObZahlungsartKorrektGespeichertWurde</td>
+	<td></td>
+</tr>
+<!--Klarna Campaign-->
+<tr>
+	<td>label</td>
+	<td>Klarna_Campaign</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@name='paymentModeCode'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=label</td>
+	<td>${Klarna_Zahlungsart_Account}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dl[@id='klarnapayment_modes_dl']/dt[2]/label</td>
+	<td>${Klarna_Zahlungsart_Invoice_Vor_Dem_Betrag}${Klarna_Zahlungsart_Invoice_Betrag}${Klarna_Zahlungsart_Invoice_Hinter_Dem_Betrag}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dl[@id='klarnapayment_modes_dl']/dt[3]/label</td>
+	<td>${Klarna_Zahlungsart_Campaign}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='paymentModeCode'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=payment.klarnaPhoneNo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=payment.klarnaPhoneNo</td>
+	<td>${Neukundenregistrierung_Mobilfunknummer}</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>id=payment.klarnaBirthOfDate</td>
+	<td>Geburtsdatumsfeld_Vorhanden</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${Geburtsdatumsfeld_Vorhanden}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${Geburtsdatumsfeld_Vorhanden} == true</td>
+	<td>KEIN_NORDISCHES_LAND_KEIN_GEBURTSDATUMSFELD_INVOICE</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>PrüfungObZahlungsartKorrektGespeichertWurde</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>KEIN_NORDISCHES_LAND_KEIN_GEBURTSDATUMSFELD_CAMPAIGN</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=lastInTheForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotolabel</td>
+	<td>PrüfungObZahlungsartKorrektGespeichertWurde</td>
+	<td></td>
+</tr>
+<!--TODO: Prüfung ob die Zahlungsmethode korrekt gespeichert worden ist-->
+<tr>
+	<td>label</td>
+	<td>PrüfungObZahlungsartKorrektGespeichertWurde</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>${Klarna_Zahlungsarten_Rechnungsadresse_Gleich_Lieferadresse}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#checkout_summary_payment_div &gt; div.item_container_holder &gt; div.title_holder &gt; h2 &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

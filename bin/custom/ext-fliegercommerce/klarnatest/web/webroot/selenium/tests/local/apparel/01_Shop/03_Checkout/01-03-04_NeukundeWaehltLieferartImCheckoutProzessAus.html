@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>01-03-04 Neukunde wählt Lieferart im Checkout Prozess aus</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">01-03-04 Neukunde wählt Lieferart im Checkout Prozess aus</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>01-03-04</td>
+	<td>Neukunde wählt Lieferart im Checkout Prozess aus</td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Neukunde wählt die Lieferart ${Lieferart_Bezeichnung_Ausgewaehlt} im Checkout Prozess aus</td>
+	<td>Neukunde hat die Lieferart ${Lieferart_Bezeichnung_Ausgewaehlt} im Checkout Prozess ausgewählt</td>
+</tr>
+<!--Neukunde prüft ob Standardversandart per default ausgewählt ist und klickt den Link 'Lieferart bearbeiten'-->
+<tr>
+	<td>pause</td>
+	<td>4000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#checkout_summary_deliverymode_div &gt; div.item_container_holder &gt; div.item_container &gt; ul &gt; li</td>
+	<td>${Lieferart_Bezeichnung_Ausgewaehlt}</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=${Lieferart_Bearbeiten_Link}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=${Lieferart_Bearbeiten_Link}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h2</td>
+	<td>${Ueberschrift_Lieferart_Auswaehlen}</td>
+</tr>
+<!--Neukunde speichert und schließt den Layer 'Lieferart bearbeiten'-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=use_this_delivery_method</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=use_this_delivery_method</td>
+	<td></td>
+</tr>
+<!--Prüfung ob ausgewählt Lieferart angezeigt worden ist-->
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

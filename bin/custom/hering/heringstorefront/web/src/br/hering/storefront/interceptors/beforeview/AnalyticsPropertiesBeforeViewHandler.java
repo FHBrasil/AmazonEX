@@ -63,7 +63,7 @@ public class AnalyticsPropertiesBeforeViewHandler implements BeforeViewHandler
 		}
 		final String serverName = request.getServerName();
 		// Add config properties for google analytics
-		addHostProperty(serverName, modelAndView, ThirdPartyConstants.Google.ANALYTICS_TRACKING_ID, ANALYTICS_TRACKING_ID);
+//		addHostProperty(serverName, modelAndView, ThirdPartyConstants.Google.ANALYTICS_TRACKING_ID, ANALYTICS_TRACKING_ID);
 		// Add config properties for jirafe analytics
 		addHostProperty(serverName, modelAndView, ThirdPartyConstants.Jirafe.API_URL, JIRAFE_API_URL);
 		addHostProperty(serverName, modelAndView, ThirdPartyConstants.Jirafe.API_TOKEN, JIRAFE_API_TOKEN);
