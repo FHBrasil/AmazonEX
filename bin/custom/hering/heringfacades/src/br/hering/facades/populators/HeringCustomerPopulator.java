@@ -71,6 +71,11 @@ public class HeringCustomerPopulator extends CustomerPopulator
 		}
 		if (source.isTipsNewsletterEnabled()){
 			target.setTipsNewsletterChecked("checked");
+			target.setTipsNewsletterDisabled("");
+		}
+		else{
+			target.setTipsNewsletterChecked("");
+			target.setTipsNewsletterDisabled("disabled");
 		}
 		if (source.isReviewShoppingExperienceEnabled()){
 			target.setReviewShoppingExperienceChecked("checked");
