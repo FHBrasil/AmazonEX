@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>01-02-01 Produkt aus Detailansicht zum Warenkorb hinzufuegen</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">01-02-01 Produkt aus Detailansicht zum Warenkorb hinzufuegen</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>01-02-01</td>
+	<td>Produkt aus Detailansicht zum Warenkorb hinzufuegen</td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Kunde legt Produkt aus der Detailansicht ${Anzahl}-mal in den Warenkorb.</td>
+	<td>Das Produkt mit der Bezeichnung ${Produkt} wurden ${Anzahl}-mal in den Warenkorb gelegt.</td>
+</tr>
+<!--Prüfung ob man sich auf Produktdetailseite befindet-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div[id=&quot;productDetailUpdateable&quot;]</td>
+	<td></td>
+</tr>
+<!--Prüfung ob das gewünschte Produkt angezeigt wird-->
+<tr>
+	<td>isTextPresent</td>
+	<td> ${Produkt_Detailseite}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>isTextPresent</td>
+	<td> ${Preis}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>isTextPresent</td>
+	<td> ${SKU}</td>
+	<td></td>
+</tr>
+<!--Vorhandensein des Warenkorbbuttons wird geprüft und im Anschluss geklickt-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=form[id=&quot;addToCartForm&quot;] input[value=&quot;${SKU}&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form[id=&quot;addToCartForm&quot;] button[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div[class=&quot;cart_modal_popup&quot;] div[class=&quot;prod_info&quot;] div[class=&quot;prod_price&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

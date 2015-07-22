@@ -35,7 +35,7 @@
 				<format:price priceData="${recommendation.price}" displayFreeForZero="true" />
 			<br>
 			<span class="glyphicon stars">
-				<bazaarvoice:inlineRatings product="${product}" />
+				<bazaarvoice:inlineRatings product="${recommendation}" />
 			</span>
 		</div>
 	</c:forEach>

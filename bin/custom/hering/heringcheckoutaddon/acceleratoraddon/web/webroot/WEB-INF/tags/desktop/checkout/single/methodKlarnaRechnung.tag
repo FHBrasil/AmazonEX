@@ -25,7 +25,9 @@
 <div class="form-group">
 	<div class="checkbox">
 		<label>
-			<input type="checkbox"> Mit der &Uuml;bermittlung der f&uuml;r die Abwicklung der gew&auml;hlten Klarna Zahlungsmethode und einer Identit&auml;ts- und Bonit&auml;tspr&uuml;fung erforderlichen Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung f&uuml;r die Zukunft widerrufen. Es gelten die <a href="#">AGB von Babyartikel.de</a>. 
+			<input type="checkbox"> Mit der &Uuml;bermittlung der f&uuml;r die Abwicklung der gew&auml;hlten
+            Klarna Zahlungsmethode und einer Identit&auml;ts- und Bonit&auml;tspr&uuml;fung
+            erforderlichen Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung f&uuml;r die Zukunft widerrufen. Es gelten die <a href="#">AGB von Babyartikel.de</a>. 
 		</label>
 	</div>
 </div>

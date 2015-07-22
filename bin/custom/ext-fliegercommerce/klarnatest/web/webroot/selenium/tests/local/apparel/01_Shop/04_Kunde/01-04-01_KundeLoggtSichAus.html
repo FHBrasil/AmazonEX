@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>01-04-01 Kunde loggt sich aus</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">01-04-01 Kunde loggt sich aus</td></tr>
+</thead><tbody>
+<tr>
+	<td>ge_tearUpTC</td>
+	<td>01-04-01</td>
+	<td>Kunde loggt sich aus</td>
+</tr>
+<tr>
+	<td>ge_setTCDescription</td>
+	<td>Kunde loggt sich aus</td>
+	<td>Kunde hat sich erfolgreich ausgeloggt</td>
+</tr>
+<!--Kunde loggt sich aus-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=${Abmelden_Link}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=${Abmelden_Link}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=${Anmelden_Registrieren_Link}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ge_tearDownTC</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
