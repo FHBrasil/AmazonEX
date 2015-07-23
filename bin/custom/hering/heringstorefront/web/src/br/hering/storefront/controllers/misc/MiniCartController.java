@@ -66,24 +66,24 @@ public class MiniCartController extends AbstractController
 	@Resource(name = "baseStoreService")
 	private BaseStoreService baseStoreService;
 
-	@RequestMapping(value = "/cart/miniCart/" + TOTAL_DISPLAY_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
-	public String getMiniCart(@PathVariable final String totalDisplay, final Model model)
+	@RequestMapping(value = "/cart/miniCart/", method = RequestMethod.GET)
+	public String getMiniCart(final Model model)
 	{
 		final CartData cartData = cartFacade.getMiniCart();
-		model.addAttribute("totalPrice", cartData.getTotalPrice());
-		model.addAttribute("subTotal", cartData.getSubTotal());
-		if (cartData.getDeliveryCost() != null)
-		{
-			final PriceData withoutDelivery = cartData.getDeliveryCost();
-			withoutDelivery.setValue(cartData.getTotalPrice().getValue().subtract(cartData.getDeliveryCost().getValue()));
-			model.addAttribute("totalNoDelivery", withoutDelivery);
-		}
-		else
-		{
-			model.addAttribute("totalNoDelivery", cartData.getTotalPrice());
-		}
+//		model.addAttribute("totalPrice", cartData.getTotalPrice());
+//		model.addAttribute("subTotal", cartData.getSubTotal());
+//		if (cartData.getDeliveryCost() != null)
+//		{
+//			final PriceData withoutDelivery = cartData.getDeliveryCost();
+//			withoutDelivery.setValue(cartData.getTotalPrice().getValue().subtract(cartData.getDeliveryCost().getValue()));
+//			model.addAttribute("totalNoDelivery", withoutDelivery);
+//		}
+//		else
+//		{
+//			model.addAttribute("totalNoDelivery", cartData.getTotalPrice());
+//		}
 		model.addAttribute("totalItems", cartData.getTotalUnitCount());
-		model.addAttribute("totalDisplay", totalDisplay);
+//		model.addAttribute("totalDisplay", totalDisplay);
 		return ControllerConstants.Views.Fragments.Cart.MiniCartPanel;
 	}
 
