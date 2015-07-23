@@ -15,7 +15,7 @@
 <%-- 		          action="${registerAndCheckoutActionUrl}" /> --%>
 <%--                 <sec:authorize ifAnyGranted="ROLE_ANONYMOUS"> --%>
 		                <c:url value="/login/checkout/guest" var="guestCheckoutUrl" />
-		                <user:guestCheckout actionNameKey= "checkout.login.guestCheckout"
+		                <user:guestCheckout actionNameKey="checkout.login.guestCheckout"
 		                      action="${guestCheckoutUrl}" /> 
 <%--         		</sec:authorize> --%>
 	</div>
@@ -117,5 +117,5 @@
 <!--             </div> -->
 <%--         </section> --%>
 <%--     </section> --%>
-
 </template:page>
+
