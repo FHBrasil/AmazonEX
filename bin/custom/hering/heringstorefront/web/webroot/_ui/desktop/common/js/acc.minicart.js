@@ -48,19 +48,26 @@ ACC.minicart = {
     },
     
     refreshMiniCartCount : function() {
-        $.ajax({
+    	
+    	console.log("/cart/miniCart/?"
+                + Math.floor(Math.random() * 101) * (new Date().getTime()));
+    	
+    	$.ajax({
             dataType : "json",
-            url : ACC.minicart.$layer.attr("data-refreshMiniCartUrl")
+            url : "/cart/miniCart/?"
                     + Math.floor(Math.random() * 101) * (new Date().getTime()),
             success : function(data) {
-                $(".miniCart .count").html(data.miniCartCount);
-
-                var quant_mcart = $('#carrinho .bag .count').text();
-            	if(quant_mcart != 0)
-            		$('.fa.fa-fw.fa-shopping-cart').append('<span>'+quant_mcart+'</span>');
-                
-                $(".miniCart .price").html(data.miniCartPrice);
-                ACC.minicart.$layer.data("needRefresh", true);
+            	
+            	$(".yCmsComponent span.count150519").html(data.cartCount);
+            	
+//                $(".miniCart .count").html(data.miniCartCount);
+//
+//                var quant_mcart = $('#carrinho .bag .count').text();
+//            	if(quant_mcart != 0)
+//            		$('.fa.fa-fw.fa-shopping-cart').append('<span>'+quant_mcart+'</span>');
+//                
+//                $(".miniCart .price").html(data.miniCartPrice);
+//                ACC.minicart.$layer.data("needRefresh", true);
             }
         });
     }
