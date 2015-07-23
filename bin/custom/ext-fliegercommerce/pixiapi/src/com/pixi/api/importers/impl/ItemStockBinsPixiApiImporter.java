@@ -18,6 +18,7 @@ import com.pixi.api.core.PixiFunctionParameter;
 import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.exceptions.SOAPResponseErrorException;
 import com.pixi.api.importers.AbstractPixiApiImporter;
+import com.pixi.api.result.ItemInfoResult;
 import com.pixi.api.result.ItemStockBinsResult;
 
 /**
@@ -28,7 +29,7 @@ import com.pixi.api.result.ItemStockBinsResult;
  * @author jfelipe
  */
 public class ItemStockBinsPixiApiImporter extends AbstractPixiApiImporter {
-
+    
     private static final Logger LOG = Logger
             .getLogger(ItemStockBinsPixiApiImporter.class);
     //
@@ -37,8 +38,8 @@ public class ItemStockBinsPixiApiImporter extends AbstractPixiApiImporter {
     private static final String BIN_SORT_NUM = "BinSortNum";
     private static final String EAN = "EAN";
     private static final String ITEM_NUMBER_INT = "ItemNRInt";
-
-
+    
+    
     /**
      * 
      */
@@ -49,8 +50,8 @@ public class ItemStockBinsPixiApiImporter extends AbstractPixiApiImporter {
         validParameters.add(PixiParameterType.ITEM_SUPPLIER_NUMBER);
         validParameters.add(PixiParameterType.ITEM_NUMBER_INTERNAL);
     }
-
-
+    
+    
     /**
      * Imports the stock bins from Pixi. <br/>
      * 
@@ -71,17 +72,15 @@ public class ItemStockBinsPixiApiImporter extends AbstractPixiApiImporter {
      */
     @Override
     public List<ItemStockBinsResult> importData(
-            List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException,
-            KeyManagementException, NoSuchAlgorithmException {
+            List<PixiFunctionParameter> functionParameters) {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
         }
         return importItemStockBinsResult(functionParameters);
     }
-
-
+    
+    
     /**
      * Imports the stock bins from Pixi. <br/>
      * 
@@ -101,52 +100,55 @@ public class ItemStockBinsPixiApiImporter extends AbstractPixiApiImporter {
      * @throws KeyManagementException
      */
     private List<ItemStockBinsResult> importItemStockBinsResult(
-            List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException,
-            KeyManagementException, NoSuchAlgorithmException {
+            List<PixiFunctionParameter> functionParameters) {
         List<ItemStockBinsResult> results = new ArrayList<ItemStockBinsResult>();
         checkValidParameters(functionParameters);
-        SOAPMessage request = getPixiSoapApi().buildMessage(
-                PixiFunction.GET_ITEM_STOCK_BINS, functionParameters);
-        SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(
-                request);
-        if (response != null) {
-            Node responseXml = null;
-            responseXml = response
-                    .getSOAPBody()
-                    .getElementsByTagName(
-                            PixiApiResponseTags.SQLROWSET1.getValue()).item(0);
-            if (responseXml != null) {
-                for (int i = 0; i < responseXml.getChildNodes().getLength(); i++) {
-                    Node row = responseXml.getChildNodes().item(i);
-                    ItemStockBinsResult result = new ItemStockBinsResult();
-                    for (int j = 0; j < row.getChildNodes().getLength(); j++) {
-                        Node currentTag = row.getChildNodes().item(j);
-                        String currentTagValue = currentTag.getTextContent()
-                                .trim();
-                        switch (currentTag.getNodeName()) {
-                            case BIN_NAME:
-                                result.setBinName(currentTagValue);
-                                break;
-                            case QUANTITY:
-                                int quantity = Integer.parseInt(currentTagValue);
-                                result.setQuantity(quantity);
-                                break;
-                            case BIN_SORT_NUM:
-                                int binSortNum = Integer.parseInt(currentTagValue);
-                                result.setBinSortNum(binSortNum);
-                                break;
-                            case EAN:
-                                result.setEan(currentTagValue);
-                                break;
-                            case ITEM_NUMBER_INT:
-                                result.setItemNrInt(currentTagValue);
-                                break;
+        SOAPMessage request;
+        try {
+            request = getPixiSoapApi().buildMessage(
+                    PixiFunction.GET_ITEM_STOCK_BINS, functionParameters);
+            SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(
+                    request);
+            if (response != null) {
+                Node responseXml = null;
+                responseXml = response
+                        .getSOAPBody()
+                        .getElementsByTagName(
+                                PixiApiResponseTags.SQLROWSET1.getValue()).item(0);
+                if (responseXml != null) {
+                    for (int i = 0; i < responseXml.getChildNodes().getLength(); i++) {
+                        Node row = responseXml.getChildNodes().item(i);
+                        ItemStockBinsResult result = new ItemStockBinsResult();
+                        for (int j = 0; j < row.getChildNodes().getLength(); j++) {
+                            Node currentTag = row.getChildNodes().item(j);
+                            String currentTagValue = currentTag.getTextContent()
+                                    .trim();
+                            switch (currentTag.getNodeName()) {
+                                case BIN_NAME:
+                                    result.setBinName(currentTagValue);
+                                    break;
+                                case QUANTITY:
+                                    int quantity = Integer.parseInt(currentTagValue);
+                                    result.setQuantity(quantity);
+                                    break;
+                                case BIN_SORT_NUM:
+                                    int binSortNum = Integer.parseInt(currentTagValue);
+                                    result.setBinSortNum(binSortNum);
+                                    break;
+                                case EAN:
+                                    result.setEan(currentTagValue);
+                                    break;
+                                case ITEM_NUMBER_INT:
+                                    result.setItemNrInt(currentTagValue);
+                                    break;
+                            }
                         }
+                        results.add(result);
                     }
-                    results.add(result);
                 }
             }
+        } catch (KeyManagementException | NoSuchAlgorithmException | SOAPException e) {
+            // Nothing to do in this case...
         }
         return results;
     }

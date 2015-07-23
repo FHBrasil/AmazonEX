@@ -29,7 +29,7 @@ import com.pixi.api.result.ItemDeliveryInfoResult;
  * @author jfelipe
  */
 public class ItemDeliveryInfoPixiApiImporter extends AbstractPixiApiImporter {
-
+    
     private static final Logger LOG = Logger
             .getLogger(ItemDeliveryInfoPixiApiImporter.class);
     //
@@ -37,8 +37,8 @@ public class ItemDeliveryInfoPixiApiImporter extends AbstractPixiApiImporter {
     private static final String SUPPLIER_NUMBER = "SupplNr";
     private static final String SUPPLIER_ORDER_QUANTITY = "SupplierOrderQty";
     private static final String ESTIMATED_DELIVERY = "EstimatedDelivery";
-
-
+    
+    
     /**
      * 
      */
@@ -49,8 +49,8 @@ public class ItemDeliveryInfoPixiApiImporter extends AbstractPixiApiImporter {
         validParameters.add(PixiParameterType.ITEM_SUPPLIER_NUMBER);
         validParameters.add(PixiParameterType.ITEM_NUMBER_INTERNAL);
     }
-
-
+    
+    
     /**
      * Imports the item delivery info from Pixi. <br/>
      * 
@@ -69,17 +69,15 @@ public class ItemDeliveryInfoPixiApiImporter extends AbstractPixiApiImporter {
      */
     @Override
     public List<ItemDeliveryInfoResult> importData(
-            List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException,
-            KeyManagementException, NoSuchAlgorithmException {
+            List<PixiFunctionParameter> functionParameters) {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
         }
         return importItemDeliveryInfos(functionParameters);
     }
-
-
+    
+    
     /**
      * Imports the item delivery info from Pixi. <br/>
      * 
@@ -97,50 +95,53 @@ public class ItemDeliveryInfoPixiApiImporter extends AbstractPixiApiImporter {
      * @throws KeyManagementException
      */
     private List<ItemDeliveryInfoResult> importItemDeliveryInfos(
-            List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException,
-            KeyManagementException, NoSuchAlgorithmException {
+            List<PixiFunctionParameter> functionParameters) {
         List<ItemDeliveryInfoResult> results = new ArrayList<ItemDeliveryInfoResult>();
         checkValidParameters(functionParameters);
-        SOAPMessage request = getPixiSoapApi().buildMessage(
-                PixiFunction.GET_ITEM_DELIVERY_INFO, functionParameters);
-        SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(
-                request);
-        Node responseXml = null;
-        responseXml = response
-                .getSOAPBody()
-                .getElementsByTagName(PixiApiResponseTags.SQLROWSET1.getValue())
-                .item(0);
-        if (responseXml != null) {
-            for (int i = 0; i < responseXml.getChildNodes().getLength(); i++) {
-                Node rowTag = responseXml.getChildNodes().item(i);
-                if (rowTag != null) {
-                    ItemDeliveryInfoResult result = new ItemDeliveryInfoResult();
-                    for (int j = 0; j < rowTag.getChildNodes().getLength(); j++) {
-                        Node currentTag = rowTag.getChildNodes().item(j);
-                        String currentTagValue = currentTag.getTextContent()
-                                .trim();
-                        switch (currentTag.getNodeName()) {
-                            case SUPPLIER_ORDER_NUMBER:
-                                result.setSupplierOrderNr(currentTagValue);
-                                break;
-                            case SUPPLIER_NUMBER:
-                                result.setSupplNr(currentTagValue);
-                                break;
-                            case SUPPLIER_ORDER_QUANTITY:
-                                int supplierorderQuantity = Integer
-                                        .parseInt(currentTagValue);
-                                result.setSupplierOrderQty(supplierorderQuantity);
-                                break;
-                            case ESTIMATED_DELIVERY:
-                                Date estimatedDeliveryDate = parseStringToDate(currentTagValue);
-                                result.setEstimatedDelivery(estimatedDeliveryDate);
-                                break;
+        SOAPMessage request;
+        try {
+            request = getPixiSoapApi().buildMessage(
+                    PixiFunction.GET_ITEM_DELIVERY_INFO, functionParameters);
+            SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(
+                    request);
+            Node responseXml = null;
+            responseXml = response
+                    .getSOAPBody()
+                    .getElementsByTagName(PixiApiResponseTags.SQLROWSET1.getValue())
+                    .item(0);
+            if (responseXml != null) {
+                for (int i = 0; i < responseXml.getChildNodes().getLength(); i++) {
+                    Node rowTag = responseXml.getChildNodes().item(i);
+                    if (rowTag != null) {
+                        ItemDeliveryInfoResult result = new ItemDeliveryInfoResult();
+                        for (int j = 0; j < rowTag.getChildNodes().getLength(); j++) {
+                            Node currentTag = rowTag.getChildNodes().item(j);
+                            String currentTagValue = currentTag.getTextContent()
+                                    .trim();
+                            switch (currentTag.getNodeName()) {
+                                case SUPPLIER_ORDER_NUMBER:
+                                    result.setSupplierOrderNr(currentTagValue);
+                                    break;
+                                case SUPPLIER_NUMBER:
+                                    result.setSupplNr(currentTagValue);
+                                    break;
+                                case SUPPLIER_ORDER_QUANTITY:
+                                    int supplierorderQuantity = Integer
+                                            .parseInt(currentTagValue);
+                                    result.setSupplierOrderQty(supplierorderQuantity);
+                                    break;
+                                case ESTIMATED_DELIVERY:
+                                    Date estimatedDeliveryDate = parseStringToDate(currentTagValue);
+                                    result.setEstimatedDelivery(estimatedDeliveryDate);
+                                    break;
+                            }
                         }
+                        results.add(result);
                     }
-                    results.add(result);
                 }
             }
+        } catch (KeyManagementException | NoSuchAlgorithmException | SOAPException e) {
+            // FIXME: Log this exception and see what we can do about it...
         }
         return results;
     }

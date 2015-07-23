@@ -114,11 +114,6 @@ public class OrderNumberByOrderNumberExternalPixiApiImporterTest {
             Assert.assertEquals("Wrong exception message. ", "The given PixiFunctionParameter "
                     + "list has an invalid parameters: " + PixiParameterType.BIN_NAME.getValue(),
                     actualException.getMessage());
-        } catch (SOAPResponseErrorException actualException) {
-            SOAPResponseErrorException expectedException = new SOAPResponseErrorException();
-            Assert.assertEquals(
-                    "Should have thrown an exception of type InvalidParameterException",
-                    expectedException.getClass(), actualException.getClass());
         } catch (Exception e) {
             Assert.assertTrue("Should not have thrown an exception. Type: "
                     + e.getClass().getName() + ". Message: " + e.getMessage(), false);

@@ -31,13 +31,13 @@ import com.pixi.api.result.KeyValuePairResult;
  * @author jfelipe
  */
 public class UpdatedInvoicesPixiApiImporter extends AbstractPixiApiImporter {
-
+    
     private static final Logger LOG = Logger.getLogger(UpdatedInvoicesPixiApiImporter.class
             .getName());
     private static final String INVOICE_KEY = "InvoiceKey";
     private static final String INVOICE_NUMBER = "InvoiceNr";
-
-
+    
+    
     /**
      * 
      */
@@ -45,81 +45,77 @@ public class UpdatedInvoicesPixiApiImporter extends AbstractPixiApiImporter {
         super();
         validParameters.add(PixiParameterType.SINCE_DATE);
     }
-
-
+    
+    
     /**
-	 * 
-	 * @param functionParameters
-	 *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
-	 *            - {@link PixiParameterType#SINCE_DATE}<br/>
-	 * @return
-	 * 
-	 * @throws SOAPException
-	 *             in case errors occurred during the Pixi API request
-	 * @throws SOAPResponseErrorException
-	 *             in case errors ocurred during the Pixi API response
-	 *
-	 * @author jfelipe
-	 * @throws NoSuchAlgorithmException
-	 * @throws KeyManagementException
-	 */
+     * @param functionParameters
+     *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
+     *            - {@link PixiParameterType#SINCE_DATE}<br/>
+     * @return
+     * @throws SOAPException
+     *             in case errors occurred during the Pixi API request
+     * @throws SOAPResponseErrorException
+     *             in case errors ocurred during the Pixi API response
+     * @author jfelipe
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
+     */
     @Override
-    public List<KeyValuePairResult> importData(List<PixiFunctionParameter> functionParameters)
-            throws SOAPResponseErrorException, SOAPException, KeyManagementException, NoSuchAlgorithmException {
+    public List<KeyValuePairResult> importData(List<PixiFunctionParameter> functionParameters) {
         if (functionParameters == null || functionParameters.isEmpty()) {
             throw new InvalidParameterException(
                     "The PixiAPI function parameter should not be null.");
         }
         return importUpdatedInvoices(functionParameters);
     }
-
-
+    
+    
     /**
-     * 
      * @param functionParameters
      *            Parameters to be passed to Pixi API. Valid parameters are: <br/>
      *            - {@link PixiParameterType#SINCE_DATE}<br/>
-     * 
      * @return
-     * 
      * @throws SOAPException
      *             in case errors occurred during the Pixi API request
      * @throws SOAPResponseErrorException
      *             in case errors ocurred during the Pixi API response
-     *
      * @author jfelipe
-     * @throws NoSuchAlgorithmException 
-     * @throws KeyManagementException 
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
      */
     private List<KeyValuePairResult> importUpdatedInvoices(
-            List<PixiFunctionParameter> functionParameters) throws SOAPResponseErrorException,
-            SOAPException, KeyManagementException, NoSuchAlgorithmException {
+            List<PixiFunctionParameter> functionParameters) {
         List<KeyValuePairResult> updatedInvoices = new ArrayList<KeyValuePairResult>();
         checkValidParameters(functionParameters);
-        SOAPMessage request = getPixiSoapApi().buildMessage(
-                PixiFunction.GET_UPDATED_INVOICES, functionParameters);
-        SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(request);
-        SOAPBody responseBody = response.getSOAPBody();
-        NodeList responseXml = responseBody.getElementsByTagName(PixiApiResponseTags.SQLROWSET1
-                .getValue());
-        if (responseXml != null) {
-            NodeList rowTags = responseXml.item(0).getChildNodes();
-            for (int i = 0; i < rowTags.getLength(); i++) {
-                NodeList row = rowTags.item(i).getChildNodes();
-                String invoiceKey = null;
-                String invoiceNumber = null;
-                for (int j = 0; j < row.getLength(); j++) {
-                    Node currentTag = row.item(j);
-                    if (INVOICE_KEY.equalsIgnoreCase(currentTag.getNodeName())) {
-                        invoiceKey = currentTag.getTextContent().trim();
-                    } else if (INVOICE_NUMBER.equalsIgnoreCase(currentTag.getNodeName())) {
-                        invoiceNumber = currentTag.getTextContent().trim();
+        SOAPMessage request;
+        try {
+            request = getPixiSoapApi().buildMessage(
+                    PixiFunction.GET_UPDATED_INVOICES, functionParameters);
+            SOAPMessage response = getPixiSoapApi().sendPixiWebServiceRequest(request);
+            SOAPBody responseBody = response.getSOAPBody();
+            NodeList responseXml = responseBody.getElementsByTagName(PixiApiResponseTags.SQLROWSET1
+                    .getValue());
+            if (responseXml != null) {
+                NodeList rowTags = responseXml.item(0).getChildNodes();
+                for (int i = 0; i < rowTags.getLength(); i++) {
+                    NodeList row = rowTags.item(i).getChildNodes();
+                    String invoiceKey = null;
+                    String invoiceNumber = null;
+                    for (int j = 0; j < row.getLength(); j++) {
+                        Node currentTag = row.item(j);
+                        if (INVOICE_KEY.equalsIgnoreCase(currentTag.getNodeName())) {
+                            invoiceKey = currentTag.getTextContent().trim();
+                        } else if (INVOICE_NUMBER.equalsIgnoreCase(currentTag.getNodeName())) {
+                            invoiceNumber = currentTag.getTextContent().trim();
+                        }
+                    }
+                    if (!Strings.isNullOrEmpty(invoiceKey) && !Strings.isNullOrEmpty(invoiceNumber)) {
+                        updatedInvoices.add(new KeyValuePairResult(invoiceKey, invoiceNumber));
                     }
                 }
-                if (!Strings.isNullOrEmpty(invoiceKey) && !Strings.isNullOrEmpty(invoiceNumber)) {
-                    updatedInvoices.add(new KeyValuePairResult(invoiceKey, invoiceNumber));
-                }
             }
+        } catch (KeyManagementException | NoSuchAlgorithmException | SOAPException e) {
+            // Nothing to do in this case...
         }
         return updatedInvoices;
     }
