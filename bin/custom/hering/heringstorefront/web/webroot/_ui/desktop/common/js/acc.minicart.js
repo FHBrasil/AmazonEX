@@ -49,9 +49,6 @@ ACC.minicart = {
     
     refreshMiniCartCount : function() {
     	
-    	console.log("/cart/miniCart/?"
-                + Math.floor(Math.random() * 101) * (new Date().getTime()));
-    	
     	$.ajax({
             dataType : "json",
             url : "/cart/miniCart/?"
