@@ -771,11 +771,11 @@ public class AccountPageController extends AbstractSearchPageController {
 
 	}
 	
-	/**
+/*	*//**
 	 * Adding method to catch subscriptions
 	 * 
 	 * @author luiza
-	 */
+	 *//*
 	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String subscriptions(
@@ -814,8 +814,91 @@ public class AccountPageController extends AbstractSearchPageController {
 
 		return REDIRECT_MY_ACCOUNT;
 
+	}*/
+	
+	
+	
+	@RequestMapping(value = "/scheduled-newsletter", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String updateScheduledNewsletter(
+			@RequestParam (defaultValue = "false") final boolean scheduledNewsletterEnabled) 
+			throws CMSItemNotFoundException {
+		
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{
+			heringCustomerFacade.subscribeScheduledNewsletter(scheduledNewsletterEnabled);			
+		}
+
+		return REDIRECT_MY_ACCOUNT;
+
 	}
 	
+	
+	@RequestMapping(value = "/tips-newsletter", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String updateTipsNewsletter(
+			@RequestParam (defaultValue = "false") final boolean tipsNewsletterEnabled, 
+			@RequestParam(value = "youngestChildDateOfBirth") final String youngestChildDateOfBirth) 
+			throws CMSItemNotFoundException {
+		
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{
+			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
+			try 
+			{				
+				Date dateOfBirth = formatter.parse(youngestChildDateOfBirth);
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);				
+			} 
+			catch (ParseException e) 
+			{
+				Date dateOfBirth = null;			
+				heringCustomerFacade.subscribeTipsNewsletter(tipsNewsletterEnabled, dateOfBirth);
+			}			
+		}
+
+		return REDIRECT_MY_ACCOUNT;
+
+	}
+	
+	
+	@RequestMapping(value = "/review-shopping-experience", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String updateReviewShoppingExperience(
+			@RequestParam (defaultValue = "false") final boolean reviewShoppingExperienceEnabled) 
+			throws CMSItemNotFoundException {
+		
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{
+			heringCustomerFacade.reviewShoppingExperience(reviewShoppingExperienceEnabled);			
+		}
+
+		return REDIRECT_MY_ACCOUNT;
+
+	}
+	
+	
+	@RequestMapping(value = "/review-ordered-products", method = RequestMethod.GET)
+	@RequireHardLogIn
+	public String updateReviewOrderedProducts(
+			@RequestParam (defaultValue = "false") final boolean reviewOrderedProductsEnabled) 
+			throws CMSItemNotFoundException {
+		
+		CustomerData customerData = customerFacade.getCurrentCustomer();
+		
+		if (customerData != null)
+		{
+			heringCustomerFacade.reviewOrderedProducts(reviewOrderedProductsEnabled);			
+		}
+
+		return REDIRECT_MY_ACCOUNT;
+
+	}
 	
 
 	/**
