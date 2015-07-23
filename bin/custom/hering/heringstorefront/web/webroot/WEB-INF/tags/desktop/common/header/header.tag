@@ -34,8 +34,12 @@
                 <cms:pageSlot position="MiniCart" var="cart" limit="1">
                     <cms:component component="${cart}" element="div" />
                 </cms:pageSlot>
-                <a class="active" href="#"><span class="babicon babicon-heart"></span><span class="count150519">12</span></a>
-                <a class="" href="<c:url value="/login"/>"><span class="babicon babicon-user"></span></a>
+                <a class="active" href="<c:url value="/my-account/my-wishlist"/>">
+                    <span class="babicon babicon-heart"></span><span class="count150519">12</span>
+                </a>
+                <a class="" href="<c:url value="/login"/>">
+                    <span class="babicon babicon-user"></span>
+                </a>
             </div>
             <div class="clearfix"></div>
             <div class="headtext150519 text-center hidden-xs">

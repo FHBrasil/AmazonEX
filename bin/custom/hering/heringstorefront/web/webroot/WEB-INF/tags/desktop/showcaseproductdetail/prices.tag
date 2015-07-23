@@ -26,7 +26,7 @@
 			</span>
 		</c:otherwise>
 	</c:choose>
-	<c:choose>
+	<%--<c:choose>
 		<c:when test="${product.priceParcels > 1}">
 			<p>
 				${product.priceParcels}
@@ -34,8 +34,8 @@
 				<b>${product.parcelUnitPrice}</b>
 			</p>
 		</c:when>
-		<%--<c:otherwise>
+		<c:otherwise>
 			<spring:theme code="product.payment.methods.not.parceled"/>
-		</c:otherwise>--%>
-	</c:choose>
+		</c:otherwise>
+	</c:choose>--%>
 </div>
