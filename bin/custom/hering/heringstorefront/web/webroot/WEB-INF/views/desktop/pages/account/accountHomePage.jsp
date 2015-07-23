@@ -32,7 +32,7 @@
 				<div class="col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<a href="/de/my-account/bonus-system" class="sparfucsIcon">
+							<a href="<c:url value="/my-account/bonus-system"/>" class="sparfucsIcon">
 								<fmt:formatNumber maxFractionDigits="0" value="${bonusDataPoints}"/>
 							</a>
 							<br>
@@ -44,7 +44,7 @@
 				<div class="col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<a href="#" style="font-size:60px;">
+							<a href="<c:url value="/my-account/my-wishlist"/>" style="font-size:60px;">
 								<span class="glyphicon glyphicon-heart"></span>
 								666
 							</a>

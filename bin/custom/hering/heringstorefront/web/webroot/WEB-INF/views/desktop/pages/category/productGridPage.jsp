@@ -37,10 +37,10 @@
                 </ycommerce:testId>
             </h1>
         </div>
-
-        <div class="searchData">
-            <input type="hidden" class="userCode" value="${searchPageData.freeTextSearch}" /> 
-            <input type="hidden" class="textSearch" value="${searchPageData.freeTextSearch}" />
+ 
+        <div class="categoryData">
+            <input type="hidden" class="category" value="${categoryName}" /> 
+            <input type="hidden" class="categoryGender" value="${categoryGender}" />
         </div>
 
     <div class="container">
