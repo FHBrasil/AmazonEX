@@ -51,8 +51,7 @@ ACC.minicart = {
     	
     	$.ajax({
             dataType : "json",
-            url : "/cart/miniCart/?"
-                    + Math.floor(Math.random() * 101) * (new Date().getTime()),
+            url : "/cart/miniCart/?",
             success : function(data) {
             	
             	$(".yCmsComponent span.count150519").html(data.cartCount);
