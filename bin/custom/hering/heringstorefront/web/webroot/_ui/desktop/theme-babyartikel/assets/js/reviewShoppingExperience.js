@@ -23,8 +23,6 @@ var reviewShoppingExperience = {
                 url: '/my-account/review-shopping-experience',
                 data: data,
                 success: function(data) {
-                	alert("SUBSCRIBE TO REVIEW SHOPPING EXPERIENCE");
-                	// faz alguma coisa com os dados retornados
                 }
             });
 

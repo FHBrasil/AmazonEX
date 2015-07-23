@@ -16,8 +16,6 @@ var tipsNewsletter = {
             
             var data = $(this).serialize();
             var url = $(this).attr('action');
-            var id = '#tipsNewsletterCheckbox';
-            var selector = 'input' + id;
 
             $.ajax({
             	async : true,
@@ -25,14 +23,7 @@ var tipsNewsletter = {
                 url: '/my-account/tips-newsletter',
                 data: data,
                 success: function(data) {
-                	if ($('#tipsNewsletterCheckbox').checked) {
-                		sessionStorage.setItem(selector, true);
-                		$(id).prop('disabled', true);
-                	}
-                	else {
-                		sessionStorage.setItem(selector, false);
-                		$(id).prop('disabled', false);
-                	}
+                	//
                 }
             
             });
@@ -40,6 +31,25 @@ var tipsNewsletter = {
             return false;
 
         });
+        
+        $('#tipsNewsletterCheckbox').change(function() {
+    		
+        	if (document.getElementById('tipsNewsletterCheckbox').checked) {
+        		
+        		$('#tipsNewsletterDate').prop('required', true);
+        	}
+        	else {
+        		$('#tipsNewsletterDate').prop('required', false);
+        	}
+        	
+            if($('#tipsNewsletterDate:required').val() === '') {
+                $('#tipsNewsletterDate:required').after('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Pflichtfeld. </div>');
+            }
+
+
+        		
+        });
+        
     }
 
 }
