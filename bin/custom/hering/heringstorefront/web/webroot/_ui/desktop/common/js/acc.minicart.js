@@ -47,29 +47,27 @@ ACC.minicart = {
         });
     },
     
-    refreshMiniCartCount : function() {
     	var qtd_cart = $(".yCmsComponent .active span.count150519").html();
     	var qtd_add = $(".addToCartForm input[name='qty']").val(); 
     	
     	var total = parseInt(qtd_cart)+parseInt(qtd_add);
     	
-    	$(".yCmsComponent .active span.count150519").html(total);
     	
 //        $.ajax({
 //            dataType : "json",
 //            url : ACC.minicart.$layer.attr("data-refreshMiniCartUrl")
 //                    + Math.floor(Math.random() * 101) * (new Date().getTime()),
 //            success : function(data) {
-//                $(".miniCart .count").html(data.miniCartCount);
-//
-//                var quant_mcart = $('#carrinho .bag .count').text();
-//            	if(quant_mcart != 0)
-//            		$('.fa.fa-fw.fa-shopping-cart').append('<span>'+quant_mcart+'</span>');
-//                
-//                $(".miniCart .price").html(data.miniCartPrice);
-//                ACC.minicart.$layer.data("needRefresh", true);
-//            }
-//        });
+    	
+    	$.ajax({
+            dataType : "json",
+            url : "/cart/miniCart/?"
+                    + Math.floor(Math.random() * 101) * (new Date().getTime()),
+            success : function(data) {
+            	
+            	$(".yCmsComponent span.count150519").html(data.cartCount);
+            }
+        });
     }
 };
 
