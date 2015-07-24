@@ -5,7 +5,7 @@
 <%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
 <%@ attribute name="product" required="true" type="de.hybris.platform.commercefacades.product.data.ProductData"%>
-
+<%@ attribute name="orientation" required="true" type="java.lang.String" %>
 <c:if test="${pageType == 'PRODUCT'}">
 	<script type="text/javascript">
 		$BV.ui('rr', 'inline_ratings', {

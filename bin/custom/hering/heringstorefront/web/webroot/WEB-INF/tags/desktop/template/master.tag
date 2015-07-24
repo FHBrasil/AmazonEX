@@ -52,7 +52,7 @@
 </c:if>
 
 <%-- BazaarVoice JavaScript --%>
-<c:if test="${showBV == 'true'}">
+<c:if test="${showBV == 'true' && pageType != 'ACCOUNTPAGE'}">
 	<bvJavascript:bazaarvoiceHeaderJavascript />
 	<script type="text/javascript">
 		<c:if test="${not empty searchPageData.results}">

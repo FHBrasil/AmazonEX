@@ -18,7 +18,7 @@
 <%@ taglib prefix="details" tagdir="/WEB-INF/tags/desktop/showcaseproductdetail" %>
 <%@ taglib prefix="wishlist" tagdir="/WEB-INF/tags/desktop/wishlist" %>
 
-<template:page pageTitle="${pageTitle}">
+<template:page pageTitle="${pageTitle}" showBV="true">
 <div id="globalMessages">
 	<common:globalMessages/>
 </div>
