@@ -64,7 +64,7 @@
 						<c:if test="${not empty orderHistoryPreview}">
 							<c:forEach items="${orderHistoryPreview}" var="order" begin="0" end="2">
 								<div class="col-sm-4">
-									<a class="panel panel-default order150311" href="/de/my-account/order/${order.code}">
+									<a class="panel panel-default order150311" href="/my-account/order/${order.code}">
 										<span class="title150311">
 											<c:if test="${order.status == 'COMPLETED'}">
 												<span class="glyphicon glyphicon-ok"></span>
@@ -103,7 +103,7 @@
 								<c:set var="endList" value="${fn:length(orderHistoryPreview)}" />
 								<c:forEach items="${orderHistoryPreview}" var="order" begin="3" end="${endList}">
 									<div class="col-sm-4">
-										<a class="panel panel-default order150311" href="/de/my-account/order/${order.code}">
+										<a class="panel panel-default order150311" href="/my-account/order/${order.code}">
 											<span class="title150311">
 												<c:if test="${order.status == 'COMPLETED'}">
 													<span class="glyphicon glyphicon-ok"></span>
