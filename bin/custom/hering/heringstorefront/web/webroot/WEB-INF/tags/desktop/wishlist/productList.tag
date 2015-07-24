@@ -8,7 +8,7 @@
  <script type="text/javascript">
   $BV.ui('rr', 'inline_ratings', {
    productIds : [
-    <c:forEach items="${wishlistEntries}" var="entry">
+    <c:forEach items="${wishlistEntries}" var="product">
      '${entry.product.code}',
     </c:forEach>
    ],
