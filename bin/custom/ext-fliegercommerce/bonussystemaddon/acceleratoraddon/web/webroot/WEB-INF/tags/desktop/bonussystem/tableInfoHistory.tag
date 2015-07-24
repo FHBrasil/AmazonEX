@@ -33,7 +33,7 @@
 								${entry.points > 0 ? "+" : ""} 
 								<fmt:formatNumber maxFractionDigits="0" value="${entry.points}"/>
 							</td>
-							<td><a href="/de/my-account/order/${entry.reference}">${entry.reference}</a></td>
+							<td><a href="/my-account/order/${entry.reference}">${entry.reference}</a></td>
 							<td class="hidden-xs">
 								<fmt:formatDate value="${entry.date}" pattern="dd.MM.yy"/>
 							</td>
@@ -48,7 +48,7 @@
 								${entry.points > 0 ? "+" : ""} 
 								<fmt:formatNumber maxFractionDigits="0" value="${entry.points}"/>
 							</td>
-							<td><a href="/de/my-account/order/${entry.reference}">${entry.reference}</a></td>
+							<td><a href="/my-account/order/${entry.reference}">${entry.reference}</a></td>
 							<td class="hidden-xs">
 								<fmt:formatDate value="${entry.date}" pattern="dd.MM.yy"/>
 							</td>

@@ -896,5 +896,14 @@
 	<alias name="fliegerCommerceFindDeliveryCostStrategy" alias="findDeliveryCostStrategy" />
     <bean id="fliegerCommerceFindDeliveryCostStrategy" parent="defaultFindDeliveryCostStrategy"
     	class="br.hering.core.order.impl.FliegerCommerceFindDeliveryCostStrategy"/>
+    	
+	<alias name="defaulFliegercommercetUrlEncoderService" alias="urlEncoderService"/>
+	<bean id="defaulFliegercommercetUrlEncoderService" parent="defaultUrlEncoderService">
+		<property name="urlEncodingAttributeManagerMap">
+			<map>
+				<entry key="storefront" value-ref="storeFrontAttributeManager"/>
+			</map>
+		</property>
+	</bean>
 
 </beans>

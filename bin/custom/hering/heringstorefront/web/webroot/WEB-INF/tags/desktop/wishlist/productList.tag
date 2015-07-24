@@ -3,45 +3,33 @@
 <%@ taglib prefix="wishlist" tagdir="/WEB-INF/tags/desktop/wishlist" %>
 <%@ attribute name="className" required="false" type="java.lang.String" %>
 <%@ attribute name="wishlistEntries" required="true" type="java.util.List" %>
+<%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
 <c:forEach items="${wishlistEntries}" var="entry" varStatus="status">
 	<c:set var="product" value="${entry.product}"/>
 	<c:url var="productUrl" value="${product.url}"></c:url>
-	<div class="product ${className}" index="${status.index}">
-		<div class="photo">
-			<a href="${productUrl}" class="productMainLink">
-				<details:image images="${product.previewImages}" format="store"/>
-			</a>
-		</div>
-		<%--<div class="brinde_produto"><img alt="" src="http://placehold.it/72x72"></div>--%>
-		<%--<div class="compare"><label><input type="checkbox">Comparar</label></div>--%>
-		<div class="info">
-			<c:choose>
-				<c:when test="${entry.received > 0}"><span class="status-prod-wishlist texto-azul">Comprado</span></c:when>
-				<c:when test="${false}"><span class="status-prod-wishlist texto-vermelho">Reservado</span></c:when>
-				<c:otherwise><span class="status-prod-wishlist texto-vermelho">Não comprado</span></c:otherwise>
-			</c:choose>
-			<a class="excluir-prod-wishlist texto-verde" href="/w/${product.code}/remove">
-				Excluir
-				<!-- <img alt="" src="assets/images/ico-x-wishlist.jpg"> -->
-			</a>
+	<div class="wish150506">
+		<div class="col-xs-12 wrap150506">
+			<div class="thumbnail">
+				<a href="${productUrl}" class="productMainLink">
+					<details:image images="${product.previewImages}" format="store"/>
+				</a>
+			</div> 	
 			<details:title productName="${product.name}" productUrl="${productUrl}"/>
-			<details:stamps product="${product}"/>
-			<details:singleColor product="${product}"/>
-			<details:singleSize product="${product}"/>
 			<details:prices product="${product}"/>
-			<c:choose>
-			<c:when test="${themeName == 'kids'}">
-				<div class="btn-group">
-					<wishlist:addToCart product="${product}"/>
-					<details:viewmore productUrl="${productUrl}"/>
+			<br />
+			<span class="glyphicon stars">
+				<bazaarvoice:inlineRatings product="${product}"/>
+			</span>
+			<div class="row qty150506">
+				<div class="col-xs-12 text-right">
+					<span class="title150506">Schenken</span>
+					<wishlist:addToCart product="${product}"/>	
 				</div>
-			</c:when>
-			<c:otherwise>
-				<wishlist:addToCart product="${product}"/>
-				<details:viewmore productUrl="${productUrl}"/>
-			</c:otherwise>
-			</c:choose>
-	    </div>
+			</div>
+		</div>
+		<!-- Render only, if wishlist owner logged in -->
+		<a href="/w/${product.code}/remove" class="removeitem"><span class="glyphicon glyphicon-remove-sign"></span></a>
+		<!-- END Render... -->
 	</div>
 </c:forEach>
