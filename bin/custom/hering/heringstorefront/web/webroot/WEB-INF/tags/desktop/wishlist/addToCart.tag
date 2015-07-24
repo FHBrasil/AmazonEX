@@ -5,5 +5,5 @@
 
 <c:url var="addUrl" value="/w/${product.code}/addToCart"/>
 <a class="add addToCartButton" href="${addUrl}">
-	<spring:theme code="cart.page.add"/>
+	<span class="babicon babicon-babyartikel-basketplus"></span>
 </a>

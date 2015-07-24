@@ -1,6 +1,6 @@
 ACC.track = {
     trackAddToCart : function(productCode, quantity, cartData) {
-        window.mediator.publish('trackAddToCart', {
+    	window.mediator.publish('trackAddToCart', {
             productCode : productCode,
             quantity : quantity,
             cartData : cartData

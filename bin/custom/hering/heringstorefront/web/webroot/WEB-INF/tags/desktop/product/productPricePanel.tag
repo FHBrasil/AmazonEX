@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <p class="price"> <format:fromPrice priceData="${product.price}" /><%--<sup>75&nbsp;&euro;</sup>--%></p>
-<p>[FIXED]<small>inkl. MwSt.<br />zzgl. Versand</small></p>
+<p><small>inkl. MwSt.<br />${product.price.value < 40 ? 'zzgl. Versand' : 'versandkostenfrei' }</small></p>
 
 
 

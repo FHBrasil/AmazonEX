@@ -424,6 +424,7 @@ public class AccountPageController extends AbstractSearchPageController {
 		// model.addAttribute("orderData", getOrderData());
 		model.addAttribute("pageType", HeringPageType.ACCOUNTPAGE.name());
 		model.addAttribute("orderHistoryPreview", searchPageData.getResults());
+		model.addAttribute("searchPageData", searchPageData);
 
 		return ControllerConstants.Views.Pages.Account.AccountHomePage;
 	}

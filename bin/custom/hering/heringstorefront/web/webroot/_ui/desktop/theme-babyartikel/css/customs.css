@@ -458,3 +458,30 @@
 #togglebonuslist, #toggleprebooked {
   border-width: 1px;
 }
+
+
+/* CSS for wishlist */
+	.wish150506 .thumbnail {height: 190px;display:table;width:100%;padding:0;margin:0;border:0;}
+	.wish150506 .thumbnail a {display:table-cell;vertical-align:bottom;}
+	.wish150506 .thumbnail a > img {max-width:190px;max-height:190px;}
+	.wish150506 {height:379px;margin-bottom:10px;margin-top:10px;}
+	.wish150506 a.item150615, h2 {display:block;height:60px;overflow:hidden;font-size:14px;}
+	.wish150506 b {display:block;}
+	.wish150506 del {color: #c7438e;}
+	.wish150506 {position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;float:left;}
+	.wish150506.inactive {zoom: 1;filter: alpha(opacity=50);opacity: 0.5;}
+	.wish150506 .removeitem {position: absolute;right:0;top:0;font-size:20px;}
+	.wrap150506 {border: 1px solid #F0F0F0;border-radius:5px;height: 380px;}
+	.wrap150506 .countdown {height:290px;padding:15px;}
+	.wrap150506 .countdown h2 {font-size:120px;font-weight:bold;}
+	.qty150506 {text-align:left;margin-top:15px;background-color: #F0F0F0;padding: 7px 0;font-size: 24px;
+font-weight: bold;}
+	.qty150506 span {font-weight:normal;}
+	.qty150506 small {font-size:50%}
+	.qty150506 a:hover {text-decoration:none;}
+	.title150506 {font-size:12px;display:block;}
+	
+	@media (max-width:768px){.wish150506 {width:50%;}}
+	@media (max-width:480px){.wish150506 {width:100%;}}
+	@media (min-width:768px){.wish150506 {width:33.3333%;}}
+	@media (min-width:992px){.wish150506 {width:25%;}}

@@ -130,6 +130,10 @@
                         <modifiers />
                         <persistence type="property" />
                     </attribute>
+                    <attribute qualifier="mainCategory" type="Category">
+                        <modifiers />
+                        <persistence type="property" />
+                    </attribute>
                 </attributes>
             </itemtype>
 

@@ -32,7 +32,7 @@
 				<div class="col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<a href="/de/my-account/bonus-system" class="sparfucsIcon">
+							<a href="<c:url value="/my-account/bonus-system"/>" class="sparfucsIcon">
 								<fmt:formatNumber maxFractionDigits="0" value="${bonusDataPoints}"/>
 							</a>
 							<br>
@@ -44,7 +44,7 @@
 				<div class="col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<a href="#" style="font-size:60px;">
+							<a href="<c:url value="/my-account/my-wishlist"/>" style="font-size:60px;">
 								<span class="glyphicon glyphicon-heart"></span>
 								666
 							</a>
@@ -64,7 +64,7 @@
 						<c:if test="${not empty orderHistoryPreview}">
 							<c:forEach items="${orderHistoryPreview}" var="order" begin="0" end="2">
 								<div class="col-sm-4">
-									<a class="panel panel-default order150311" href="/de/my-account/order/${order.code}">
+									<a class="panel panel-default order150311" href="/my-account/order/${order.code}">
 										<span class="title150311">
 											<c:if test="${order.status == 'COMPLETED'}">
 												<span class="glyphicon glyphicon-ok"></span>
@@ -103,7 +103,7 @@
 								<c:set var="endList" value="${fn:length(orderHistoryPreview)}" />
 								<c:forEach items="${orderHistoryPreview}" var="order" begin="3" end="${endList}">
 									<div class="col-sm-4">
-										<a class="panel panel-default order150311" href="/de/my-account/order/${order.code}">
+										<a class="panel panel-default order150311" href="/my-account/order/${order.code}">
 											<span class="title150311">
 												<c:if test="${order.status == 'COMPLETED'}">
 													<span class="glyphicon glyphicon-ok"></span>
