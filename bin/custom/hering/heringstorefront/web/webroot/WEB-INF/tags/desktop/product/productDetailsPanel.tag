@@ -66,7 +66,7 @@
 	<div class="col-sm-6">
 		<div class="row">
 			<div class="col-xs-4">
-				<cms:pageSlot position="Section2" var="component">
+				<cms:pageSlot position="SideContent" var="component">
             		<cms:component component="${component}" />
         		</cms:pageSlot>
 			</div>

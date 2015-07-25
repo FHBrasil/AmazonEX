@@ -5,6 +5,17 @@
 <%@ attribute name="wishlistEntries" required="true" type="java.util.List" %>
 <%@ taglib prefix="bazaarvoice" tagdir="/WEB-INF/tags/addons/bazaarvoice/desktop/bazaarvoice"%>
 
+ <script type="text/javascript">
+  $BV.ui('rr', 'inline_ratings', {
+   productIds : [
+    <c:forEach items="${wishlistEntries}" var="entry">
+     '${entry.product.code}',
+    </c:forEach>
+   ],
+   containerPrefix : 'BVRRInlineRating'
+  });
+ </script>
+
 <c:forEach items="${wishlistEntries}" var="entry" varStatus="status">
 	<c:set var="product" value="${entry.product}"/>
 	<c:url var="productUrl" value="${product.url}"></c:url>
