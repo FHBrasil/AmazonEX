@@ -1,7 +1,6 @@
 package de.kpfamily.services.pixi.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,13 +14,13 @@ import com.pixi.api.core.PixiParameterType;
 import com.pixi.api.result.OrderHeaderResult;
 import com.pixi.api.result.OrderLineResult;
 import com.pixi.core.services.PixiOrderEntryService;
+import com.pixi.core.services.PixiOrderService;
 
 import de.hybris.platform.basecommerce.enums.OrderEntryStatus;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.OrderEntryModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.order.OrderService;
-import de.hybris.platform.order.impl.DefaultOrderService;
 import de.hybris.platform.processengine.BusinessProcessService;
 import de.hybris.platform.servicelayer.internal.service.AbstractBusinessService;
 import de.kpfamily.services.order.KPOrderEntryService;
@@ -38,6 +37,8 @@ public class DefaultPixiOrderEntryService extends AbstractBusinessService
     private OrderEntryStatusProcessUIDGeneratorStrategy orderEntryStatusProcessUIDGeneratorStrategy;
     @Resource
     private KPOrderEntryService orderEntryService;
+    @Resource
+    private PixiOrderService pixiOrderService;
     @Resource
     private PixiApiImporter orderHeaderPixiApiImporter;
     @Resource
@@ -63,7 +64,7 @@ public class DefaultPixiOrderEntryService extends AbstractBusinessService
         //
         // Must save the entry and update the order status
         getModelService().save(entry);
-        updateOrderStatus(entry);
+        updateOrderEntryStatus(entry);
     }
     
     
@@ -73,20 +74,13 @@ public class DefaultPixiOrderEntryService extends AbstractBusinessService
      * 
      * @param entry
      */
-    private void updateOrderStatus(OrderEntryModel entry) {
-        // TODO 1: update order lines status using pixi api
-    }
-    
-    
-    /**
-     * @param order
-     */
-    private void updatePixiAPIOrderLinesStatus(OrderModel order) {
+    private void updateOrderEntryStatus(OrderEntryModel entry) {
         List<PixiFunctionParameter> parameters = new ArrayList<PixiFunctionParameter>();
         PixiFunctionParameter orderId = new PixiFunctionParameter();
         orderId.setType(PixiParameterType.ORDER_NUMBER);
-        orderId.setValue(order.getCode());
+        orderId.setValue(entry.getOrder().getPk().toString());
         parameters.add(orderId);
+        // FIXME: Isso foi mockado porque não temos conexão com a Pixi API ainda.
         List<OrderHeaderResult> orders = (List<OrderHeaderResult>)
                 getOrderHeaderPixiApiImporter().importData(parameters);
         if (orders.isEmpty()) {
@@ -98,6 +92,7 @@ public class DefaultPixiOrderEntryService extends AbstractBusinessService
             LOG.debug("No order lines to update.");
             return;
         }
+        OrderModel order = entry.getOrder();
         for (AbstractOrderEntryModel orderEntry : order.getEntries()) {
             if (orderEntry.getProduct() == null) {
                 LOG.debug("Entry: " + orderEntry.getPk().toString() + "(" + order.getCode()
@@ -108,12 +103,15 @@ public class DefaultPixiOrderEntryService extends AbstractBusinessService
                 if (!orderLine.getItemNrInt().equals(orderEntry.getProduct().getCode())) {
                     continue;
                 }
-                // FIXME: get the right status comming from Pixi API
-                orderEntry.setStatus(OrderEntryStatus.SHIPPED);
-                // TODO: set reserved account
-                //
-                // EnumerationValue status = service.getKPOrderEntryStatusByExternalCode(line
-                // .getStatus());
+                OrderEntryStatus pixiOrderEntryStatus = getOrderEntryService()
+                        .findOrderEntryStatusByExternalCode(orderLine.getStatus());
+                if (pixiOrderEntryStatus != null) {
+                    orderEntry.setStatus(pixiOrderEntryStatus);
+                } else {
+                    LOG.error("Unknown order entry status:" + orderLine.getStatus());
+                }
+                // FIXME: ver como setar o reserved stock count.
+                // FIXME: ver o que quer dizer esse "item" da versão 4.
                 // if (status != null) {
                 // item.setAttribute(Attributes.OrderEntry.KPSTATUS, status);
                 // entry.setKPOrderEntryStatus(status);
@@ -187,4 +185,18 @@ public class DefaultPixiOrderEntryService extends AbstractBusinessService
     public void setOrderLinePixiApiImporter(PixiApiImporter orderLinePixiApiImporter) {
         this.orderLinePixiApiImporter = orderLinePixiApiImporter;
     }
+
+
+    
+    public PixiOrderService getPixiOrderService() {
+        return pixiOrderService;
+    }
+
+
+    
+    public void setPixiOrderService(PixiOrderService pixiOrderService) {
+        this.pixiOrderService = pixiOrderService;
+    }
+    
+    
 }
