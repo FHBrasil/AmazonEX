@@ -15,6 +15,11 @@ import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 
+/**
+ * 
+ * @author felipe
+ *
+ */
 public class DefaultPixiAddressPopulator implements Populator<AddressModel, Address> 
 {
 	private Logger LOG = Logger.getLogger(DefaultPixiAddressPopulator.class);
@@ -35,10 +40,14 @@ public class DefaultPixiAddressPopulator implements Populator<AddressModel, Addr
 		target.setNAME3(source.getLastname());
 		target.setPHONE(source.getPhone1());
 		target.setADDRESSREMARKS(source.getAppartment());
-		target.setSAL(source.getTitle().getName());
+		target.setSAL(getTile(source));
 		target.setSTREET(getStreetAddress(source));
 		target.setZIP(source.getPostalcode());
 	}
+
+    private String getTile(AddressModel source) {
+        return source.getTitle() != null ? source.getTitle().getName() : "";
+    }
 	
 	private String getStreetAddress(AddressModel address) 
 	{
