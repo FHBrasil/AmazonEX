@@ -72,8 +72,11 @@
 				<td height="267px" width="20%" class="structureViewSection" style="vertical-align:top;">
 					<cockpit code="UpSelling" />
 				</td>
-				<td class="structureViewSection" colspan="4" style="vertical-align:top;">
+				<td class="structureViewSection" colspan="2" style="vertical-align:top;">
 					<cockpit code="Tabs" />
+				</td>
+				<td class="structureViewSection" colspan="2" style="vertical-align:top;">
+					<cockpit code="SideContent" />
 				</td>
 			</tr>
 			<tr>
