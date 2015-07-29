@@ -44,5 +44,11 @@
         <extension name="bonussystemaddon"/>
         <extension name="bonussystemhmc"/>
         
+        <extension name="amazoncore"/>
+        <extension name="amazonpayment"/>
+        <extension name="amazonloginaddon"/>
+        <extension name="amazonpaymentaddon"/>
+        <extension name="amazonrest"/>
+        
     </extensions>
 </hybrisconfig>

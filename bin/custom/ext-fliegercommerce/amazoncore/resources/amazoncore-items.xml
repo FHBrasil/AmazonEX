@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="PaymentTransactionType" autocreate="false" generate="false">
+			<description>Amazon specific payment transaction type</description>
+			<value code="ORDER" />
+			<value code="REAUTHORIZATION"></value>
+			<value code="SALE" />
+		</enumtype>
+		<enumtype code="PaymentActionType" autocreate="true" generate="true">
+			<description>Amazon available values for payment action</description>
+			<value code="ORDER" />
+			<value code="AUTHORIZATION" />
+			<value code="SALE" />
+		</enumtype>
+	</enumtypes>
+	
+	<itemtypes>
+	
+		<itemtype code="AmazonPaymentInfo" extends="PaymentInfo" autocreate="true" generate="true">
+			<attributes>
+				<!-- Token and transactionId are duplicated in case it will be more convenient
+					to store them here -->
+				<attribute qualifier="token" type="java.lang.String">
+					<description>Token for Amazon operations chain</description>
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+				<attribute qualifier="paymentAction" type="PaymentActionType">
+					<description>Payment action for Amazon operations chain</description>
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="payerId" type="java.lang.String">
+					<description>PayerId for DoExpressCheckoutPayment Amazon operation</description>
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+				<attribute qualifier="payer" type="java.lang.String">
+					<description>Payer for payment information display</description>
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+				<attribute qualifier="billingAgreementID" type="java.lang.String">
+					<persistence type="property"></persistence>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+				<attribute qualifier="useReferenceTransaction" type="java.lang.Boolean">
+					<description>Defines if the reference transaction(billing agreement) is used for order</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="AmazonOrder" autocreate="true" generate="true" extends="GenericItem" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonOrder">
+			<deployment table="AmazonOrder" typecode="31214"/>
+			<attributes>
+				<attribute qualifier="order" type="AbstractOrder" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true"/>
+				</attribute>
+				<attribute qualifier="orderCode" type="java.lang.String" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="internalOrderReferenceId" type="java.lang.String" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonOrderReferenceId" type="java.lang.String" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonAuthorizationId" type="java.lang.String" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="reasonCode" type="java.lang.String" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="state" type="java.lang.String" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true" />
+				</attribute>
+				<attribute qualifier="expirationTime" type="java.util.Date" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="authorizationAmount" type="java.lang.Double" generate="true">
+					<description>total value paid for customer.</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="authorizationFee" type="java.lang.Double" generate="true">
+					<description>total fee paid for customer.</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="cancelRequested" type="java.lang.Boolean" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+					<defaultvalue>false</defaultvalue>
+				</attribute>
+				<attribute qualifier="refundRequested" type="java.lang.Boolean" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+					<defaultvalue>false</defaultvalue>
+				</attribute>
+				<attribute qualifier="captureRequested" type="java.lang.Boolean" generate="true">
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+					<defaultvalue>false</defaultvalue>
+				</attribute>
+			</attributes>
+		</itemtype>
+	
+<!-- 		<itemtype code="AmazonCartBackup" autocreate="true" generate="true" extends="Cart" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonCartBackup" /> -->
+	
+<!-- 		<itemtype code="CheckAmazonOrderJob" extends="Job" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.job.CheckAmazonOrderJob"/> -->
+		
+<!-- 		<itemtype code="CancelAmazonOrderJob" extends="Job" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.job.CancelAmazonOrderJob"/> -->
+	</itemtypes>
+</items>

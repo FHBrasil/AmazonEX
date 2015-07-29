@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+    
+<!--     <alias name="defaultPaymentService" alias="paymentService"/> -->
+<!-- 	<bean name="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService" scope="tenant"> -->
+<!-- 	</bean> -->
+           
+	<bean name="amazonCommandFactory" 
+		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
+		scope="tenant">
+		<property name="paymentProvider" value="Amazon" />
+		<property name="commands">
+			<map>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.AuthorizeCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.AuthorizeCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CaptureCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CaptureCommandImpl" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+    <alias name="defaultAmazonPaymentService" alias="amazonPaymentService"/>
+    <bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
+    	<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
+    </bean>
+    
+    <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
+    <bean id="defaultMwsAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonPaymentService">
+    </bean>
+</beans>
