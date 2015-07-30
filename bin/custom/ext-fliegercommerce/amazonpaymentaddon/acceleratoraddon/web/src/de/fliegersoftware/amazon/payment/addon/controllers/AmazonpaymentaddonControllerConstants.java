@@ -20,6 +20,8 @@ import de.fliegersoftware.amazon.payment.addon.model.AmazonWalletComponentModel;
  */
 public interface AmazonpaymentaddonControllerConstants
 {
+	final String ADDON_PREFIX = "addon:/amazonpaymentaddon/";
+
 	interface Actions {
 		interface Cms {
 			String _Prefix = "/view/";
@@ -28,6 +30,15 @@ public interface AmazonpaymentaddonControllerConstants
 			String AmazonAddressBookComponent = _Prefix + AmazonAddressBookComponentModel._TYPECODE + _Suffix;
 			String AmazonPayButtonComponent = _Prefix + AmazonPayButtonComponentModel._TYPECODE + _Suffix;
 			String AmazonWalletComponent = _Prefix + AmazonWalletComponentModel._TYPECODE + _Suffix;
+		}
+	}
+
+	interface Views {
+		interface Pages {
+			interface Checkout {
+				String AmazonCheckoutPage = ADDON_PREFIX +
+						"pages/checkout/amazonCheckout";
+			}
 		}
 	}
 }

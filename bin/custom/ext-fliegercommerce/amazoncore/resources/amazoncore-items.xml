@@ -20,7 +20,7 @@
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
 	<enumtypes>
-		<enumtype code="PaymentTransactionType" autocreate="false" generate="false">
+		<!--<enumtype code="PaymentTransactionType" autocreate="false" generate="false">
 			<description>Amazon specific payment transaction type</description>
 			<value code="ORDER" />
 			<value code="REAUTHORIZATION"></value>
@@ -31,7 +31,7 @@
 			<value code="ORDER" />
 			<value code="AUTHORIZATION" />
 			<value code="SALE" />
-		</enumtype>
+		</enumtype>-->
 	</enumtypes>
 	
 	<itemtypes>
