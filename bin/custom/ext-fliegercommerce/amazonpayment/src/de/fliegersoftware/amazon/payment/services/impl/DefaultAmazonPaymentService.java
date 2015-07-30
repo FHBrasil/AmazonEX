@@ -19,14 +19,50 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
+import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
+import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceResponse;
+import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceResult;
+import com.amazonservices.mws.offamazonpayments.model.CaptureDetails;
 import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
 import com.amazonservices.mws.offamazonpayments.model.CaptureResult;
+import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
+import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationResult;
+import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceResponse;
+import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceResult;
+import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResponse;
+import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsResponse;
+import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsResponse;
+import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes;
+import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
+import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
 import com.amazonservices.mws.offamazonpayments.model.Price;
+import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
+import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
+import com.amazonservices.mws.offamazonpayments.model.RefundResult;
+import com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes;
+import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResponse;
+import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResult;
 
+import de.fliegersoftware.amazon.payment.exception.AmazonException;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 
@@ -247,6 +283,98 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return entry;
 	}
 	
+	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException 
+	{
+		final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
+		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
+
+		if(StringUtils.isNotBlank(addressConsentToken))
+		{
+			request.setAddressConsentToken(addressConsentToken);
+		}
+
+		GetOrderReferenceDetailsResult result = mwsAmazonPaymentService.getOrderReferenceDetails(request);
+		OrderReferenceDetails details = result.getOrderReferenceDetails();
+		return details;
+	}
+
+	public CaptureDetails getCaptureDetails(String amazonCaptureId) throws AdapterException {
+		GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
+		request.setAmazonCaptureId(amazonCaptureId);
+		GetCaptureDetailsResult result = mwsAmazonPaymentService.getCaptureDetails(request);
+		return result.getCaptureDetails();
+	}
+
+	public AuthorizationDetails getAuthorizationDetails(String amazonAuthorizationId) throws AdapterException {
+		GetAuthorizationDetailsRequest request = new GetAuthorizationDetailsRequest();
+		request.setAmazonAuthorizationId(amazonAuthorizationId);
+		GetAuthorizationDetailsResult result = mwsAmazonPaymentService.getAuthorizationDetails(request);
+		return result.getAuthorizationDetails();
+	}
+	
+	public RefundDetails getRefundDetails(String amazonRefundId) throws AdapterException {
+		GetRefundDetailsRequest request = new GetRefundDetailsRequest();
+		request.setAmazonRefundId(amazonRefundId);
+		GetRefundDetailsResult result = mwsAmazonPaymentService.getRefundDetails(request);
+		return result.getRefundDetails();
+	}
+	
+	private OrderReferenceDetails setOrderReferenceDetails(String amazonOrderReferenceId, OrderReferenceAttributes orderReferenceAttributes) throws AdapterException {
+			SetOrderReferenceDetailsRequest request = new SetOrderReferenceDetailsRequest();
+			request.setOrderReferenceAttributes(orderReferenceAttributes);
+			request.setAmazonOrderReferenceId(amazonOrderReferenceId);
+			SetOrderReferenceDetailsResult result = mwsAmazonPaymentService.setOrderReferenceDetails(request);
+			return result.getOrderReferenceDetails();
+	}
+	
+	public void confirmOrder(String amazonOrderReferenceId) throws AdapterException {
+		ConfirmOrderReferenceRequest request = new ConfirmOrderReferenceRequest();
+		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
+		
+		// TODO
+//		mwsAmazonPaymentService.confirmOrderReference(request);
+	}
+	
+	public CancelOrderReferenceResult cancelOrder(final String amazonOrderReferenceId, final String cancelationReason) throws AdapterException
+	{
+		final CancelOrderReferenceRequest request = new CancelOrderReferenceRequest();
+		request.setCancelationReason(cancelationReason);
+		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
+
+		return mwsAmazonPaymentService.cancelOrderReference(request);
+	}
+	
+	public CloseOrderReferenceResult closeOrderReference(final String amazonOrderReferenceId, final String closureReason) throws AdapterException
+	{
+		CloseOrderReferenceRequest request = new CloseOrderReferenceRequest();
+		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
+		request.setClosureReason(closureReason);
+		CloseOrderReferenceResult result = mwsAmazonPaymentService.closeOrderReference(request);
+		return result;
+	}
+	
+	public CloseAuthorizationResult closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException
+	{
+		CloseAuthorizationRequest request = new CloseAuthorizationRequest();
+		request.setAmazonAuthorizationId(amazonAuthorizationId);
+		request.setClosureReason(closureReason);
+		CloseAuthorizationResult result = mwsAmazonPaymentService.closeAuthorization(request);
+		return result;
+	}
+	
+	public RefundResult refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
+			Currency currency, String sellerRefundNote, String softDescriptor) {
+		RefundRequest request = new RefundRequest();
+		request.setAmazonCaptureId(amazonCaptureId);
+		request.setRefundReferenceId(refundReferenceId);
+		request.setRefundAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
+		request.setSellerRefundNote(sellerRefundNote);
+		request.setSoftDescriptor(softDescriptor);
+		
+		RefundResult result = mwsAmazonPaymentService.refund(request);
+		return result;
+	}
+	
 	private BillingInfo createBillingInfo(AddressModel address) {
 		if (address == null) {
 			return null;
@@ -272,11 +400,31 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return billingInfo;
 	}
 	
+	private OrderReferenceAttributes getOrderReferenceAttributes(String orderCode, String amount, String currency) {
+		OrderReferenceAttributes orderReferenceAttributes = new OrderReferenceAttributes();
+		orderReferenceAttributes.setSellerOrderAttributes(getSellerOrderAttributes(orderCode));
+		orderReferenceAttributes.setOrderTotal(getOrderTotal(amount, currency));
+		return orderReferenceAttributes;
+	}
+	
+	private OrderTotal getOrderTotal(String amount, String currency) {
+		OrderTotal orderTotal = new OrderTotal();
+		orderTotal.setAmount(amount);
+		orderTotal.setCurrencyCode(currency);
+		return orderTotal;
+	}
+	
 	private Price getAmount(String amount, String currency) {
 		Price authorizationAmount = new Price();
 		authorizationAmount.setAmount(amount);
 		authorizationAmount.setCurrencyCode(currency);
 		return authorizationAmount;
+	}
+	
+	private SellerOrderAttributes getSellerOrderAttributes(String code) {
+		SellerOrderAttributes sellerOrderAttributes = new SellerOrderAttributes();
+		sellerOrderAttributes.setSellerOrderId(code);
+		return sellerOrderAttributes;
 	}
 	
 }

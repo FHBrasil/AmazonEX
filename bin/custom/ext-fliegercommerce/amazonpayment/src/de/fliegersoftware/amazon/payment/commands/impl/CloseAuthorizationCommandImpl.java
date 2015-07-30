@@ -5,32 +5,31 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
-import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
-import com.amazonservices.mws.offamazonpayments.model.RefundResponse;
-import com.amazonservices.mws.offamazonpayments.model.RefundResult;
+import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
+import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationResponse;
+import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationResult;
 
-import de.fliegersoftware.amazon.payment.commands.RefundCommand;
+import de.fliegersoftware.amazon.payment.commands.CloseAuthorizationCommand;
 
 /**
  * @author taylor.savegnago
  * 
  */
-@Component("refundCommand")
-public class RefundCommandImpl extends AbstractCommandImpl implements RefundCommand {
+@Component("closeAuthorizationCommand")
+public class CloseAuthorizationCommandImpl extends AbstractCommandImpl implements CloseAuthorizationCommand {
 
-	private final static Logger LOG = Logger.getLogger(RefundCommandImpl.class);
+	private final static Logger LOG = Logger.getLogger(CloseAuthorizationCommandImpl.class);
 
 
 	@Override
-	public RefundResult perform(final RefundRequest req) {
+	public CloseAuthorizationResult perform(final CloseAuthorizationRequest req) {
 		try {
 			LOG.info("-----------------------------------------------------");
-			LOG.info("RefundCommandImpl perform requested");
+			LOG.info("CloseAuthorizationCommandImpl perform requested");
 			LOG.info("-----------------------------------------------------");
-			
-			req.setSellerId(getSellerId());
-			RefundResponse refund = offAmazonPaymentsService.refund(req);
-			final RefundResult result = refund.getRefundResult();
+
+			CloseAuthorizationResponse closeAuthorization = offAmazonPaymentsService.closeAuthorization(req);
+			final CloseAuthorizationResult result = closeAuthorization.getCloseAuthorizationResult();
 
 			return result;
 
@@ -45,4 +44,5 @@ public class RefundCommandImpl extends AbstractCommandImpl implements RefundComm
 			return null;
 		}
 	}
+
 }
