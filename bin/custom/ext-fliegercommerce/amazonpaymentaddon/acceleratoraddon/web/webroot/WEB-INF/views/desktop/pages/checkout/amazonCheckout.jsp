@@ -18,17 +18,17 @@
 	<cms:pageSlot position="BottomHeaderSlot" var="component">
 		<cms:component component="${component}" />
 	</cms:pageSlot>
-	<cms:pageSlot position="Section1" var="component">
-		<cms:component component="${component}" />
+	<cms:pageSlot position="Section1" var="component" element="div" class="col-sm-4">
+		<cms:component component="${component}" class="col-sm-4"/>
 	</cms:pageSlot>
-	<cms:pageSlot position="Section2A" var="component">
-		<cms:component component="${component}" />
+	<cms:pageSlot position="Section2A" var="component" element="div" class="col-sm-4">
+		<cms:component component="${component}" class="col-sm-4"/>
 	</cms:pageSlot>
-	<cms:pageSlot position="Section2B" var="component">
-		<cms:component component="${component}" />
+	<cms:pageSlot position="Section2B" var="component" element="div" class="col-sm-4">
+		<cms:component component="${component}" class="col-sm-4"/>
 	</cms:pageSlot>
 	<cms:pageSlot position="Section3" var="component">
-		<cms:component component="${component}" />
+		<cms:component component="${component}" class="col-sm-4"/>
 	</cms:pageSlot>
 	
 </template:page>
