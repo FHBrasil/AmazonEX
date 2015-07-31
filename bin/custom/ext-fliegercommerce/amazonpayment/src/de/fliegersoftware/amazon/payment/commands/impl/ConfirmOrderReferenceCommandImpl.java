@@ -5,34 +5,26 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
-import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
-import com.amazonservices.mws.offamazonpayments.model.RefundResponse;
-import com.amazonservices.mws.offamazonpayments.model.RefundResult;
-
-import de.fliegersoftware.amazon.payment.commands.RefundCommand;
+import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceResponse;
 
 /**
  * @author taylor.savegnago
  * 
  */
-@Component("refundCommand")
-public class RefundCommandImpl extends AbstractCommandImpl implements RefundCommand {
+@Component("confirmOrderReferenceCommand")
+public class ConfirmOrderReferenceCommandImpl extends AbstractCommandImpl {
 
-	private final static Logger LOG = Logger.getLogger(RefundCommandImpl.class);
+	private final static Logger LOG = Logger.getLogger(ConfirmOrderReferenceCommandImpl.class);
 
 
-	@Override
-	public RefundResult perform(final RefundRequest req) {
+	public void perform(final ConfirmOrderReferenceRequest req) {
 		try {
 			LOG.info("-----------------------------------------------------");
-			LOG.info("RefundCommandImpl perform requested");
+			LOG.info("ConfirmOrderReferenceCommandImpl perform requested");
 			LOG.info("-----------------------------------------------------");
-			
-			req.setSellerId(getSellerId());
-			RefundResponse refund = offAmazonPaymentsService.refund(req);
-			final RefundResult result = refund.getRefundResult();
 
-			return result;
+			ConfirmOrderReferenceResponse confirm = offAmazonPaymentsService.confirmOrderReference(req);
 
 		} catch (OffAmazonPaymentsServiceException ex) {
 			System.out.println("Caught Exception: " + ex.getMessage());
@@ -42,7 +34,7 @@ public class RefundCommandImpl extends AbstractCommandImpl implements RefundComm
 			System.out.println("Request ID: " + ex.getRequestId());
 			System.out.println("XML: " + ex.getXML());
 			System.out.println("ResponseHeaderMetadata: " + ex.getResponseHeaderMetadata());
-			return null;
 		}
 	}
+
 }

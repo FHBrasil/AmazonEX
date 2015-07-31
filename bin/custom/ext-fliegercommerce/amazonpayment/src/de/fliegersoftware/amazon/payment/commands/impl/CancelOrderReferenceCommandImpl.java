@@ -5,32 +5,31 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
-import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
-import com.amazonservices.mws.offamazonpayments.model.RefundResponse;
-import com.amazonservices.mws.offamazonpayments.model.RefundResult;
+import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceResponse;
+import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceResult;
 
-import de.fliegersoftware.amazon.payment.commands.RefundCommand;
+import de.fliegersoftware.amazon.payment.commands.CancelOrderReferenceCommand;
 
 /**
  * @author taylor.savegnago
  * 
  */
-@Component("refundCommand")
-public class RefundCommandImpl extends AbstractCommandImpl implements RefundCommand {
+@Component("cancelOrderReferenceCommand")
+public class CancelOrderReferenceCommandImpl extends AbstractCommandImpl implements CancelOrderReferenceCommand {
 
-	private final static Logger LOG = Logger.getLogger(RefundCommandImpl.class);
+	private final static Logger LOG = Logger.getLogger(CancelOrderReferenceCommandImpl.class);
 
 
 	@Override
-	public RefundResult perform(final RefundRequest req) {
+	public CancelOrderReferenceResult perform(final CancelOrderReferenceRequest req) {
 		try {
 			LOG.info("-----------------------------------------------------");
-			LOG.info("RefundCommandImpl perform requested");
+			LOG.info("CancelOrderReferenceCommandImpl perform requested");
 			LOG.info("-----------------------------------------------------");
-			
-			req.setSellerId(getSellerId());
-			RefundResponse refund = offAmazonPaymentsService.refund(req);
-			final RefundResult result = refund.getRefundResult();
+
+			CancelOrderReferenceResponse cancel = offAmazonPaymentsService.cancelOrderReference(req);
+			final CancelOrderReferenceResult result = cancel.getCancelOrderReferenceResult();
 
 			return result;
 
@@ -45,4 +44,5 @@ public class RefundCommandImpl extends AbstractCommandImpl implements RefundComm
 			return null;
 		}
 	}
+
 }

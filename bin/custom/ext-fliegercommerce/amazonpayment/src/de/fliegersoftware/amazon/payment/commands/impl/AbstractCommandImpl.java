@@ -2,8 +2,6 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsService;

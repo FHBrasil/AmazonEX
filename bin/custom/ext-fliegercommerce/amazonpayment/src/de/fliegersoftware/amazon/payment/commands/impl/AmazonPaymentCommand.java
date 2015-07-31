@@ -1,9 +1,7 @@
-package de.fliegersoftware.amazon.payment.commands.impl;
+//package de.fliegersoftware.amazon.payment.commands.impl;
 ///**
 // * 
 // */
-//package de.fliegersoftware.amazon.commands.impl;
-//
 //import de.hybris.platform.jalo.Item;
 //import de.hybris.platform.jalo.c2l.C2LManager;
 //import de.hybris.platform.jalo.c2l.Country;
@@ -61,10 +59,8 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRequest;
 //import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResponse;
 //
-//import de.fliegersoftware.amazon.exception.AmazonPaymentException;
-//import de.fliegersoftware.amazon.jalo.AmazonOrder;
-//import de.fliegersoftware.amazon.util.AmazonConfig;
-//import de.fliegersoftware.jalo.AmazonManager;
+//import de.fliegersoftware.amazon.payment.exception.AmazonException;
+//import de.fliegersoftware.amazon.payment.util.AmazonConfig;
 //
 ///**
 // * @author douglas.canalli
@@ -115,12 +111,12 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //
 //	/* GETS - START */
 //	
-//	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId) throws AmazonPaymentException 
+//	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId) throws AmazonException 
 //	{
 //		return getOrderReferenceDetails(amazonOrderReferenceId, null);
 //	}
 //	
-//	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addConsentToken) throws AmazonPaymentException 
+//	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addConsentToken) throws AmazonException 
 //	{
 //		try 
 //		{
@@ -139,11 +135,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		} 
 //		catch (OffAmazonPaymentsServiceException e) 
 //		{
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public Map<String, String> getOrderReferenceDetailsMap(final String amazonOrderReferenceId, final String addConsentToken) throws AmazonPaymentException {
+//	public Map<String, String> getOrderReferenceDetailsMap(final String amazonOrderReferenceId, final String addConsentToken) throws AmazonException {
 //		OrderReferenceDetails orderReferenceDetails = getOrderReferenceDetails(amazonOrderReferenceId, addConsentToken);
 //		Map<String, String> map = new HashMap<String, String>();
 //		map.put("amazonOrderReferenceId", orderReferenceDetails.getAmazonOrderReferenceId());
@@ -170,7 +166,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		return map;
 //	}
 //	
-//	public Country getCountry(String findCountry) throws AmazonPaymentException {
+//	public Country getCountry(String findCountry) throws AmazonException {
 //		OrderReferenceDetails orderReferenceDetails = getOrderReferenceDetails(findCountry);
 //		if(	orderReferenceDetails == null || 
 //			orderReferenceDetails.getDestination() == null ||
@@ -181,7 +177,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		return C2LManager.getInstance().getCountryByIsoCode(orderReferenceDetails.getDestination().getPhysicalDestination().getCountryCode().toLowerCase());
 //	}	
 //	
-//	public void printOrderReferenceDetails(String amazonOrderReferenceId) throws AmazonPaymentException {
+//	public void printOrderReferenceDetails(String amazonOrderReferenceId) throws AmazonException {
 //		OrderReferenceDetails details = getOrderReferenceDetails(amazonOrderReferenceId);
 //		System.out.println(details.getAmazonOrderReferenceId());
 //		System.out.println(details.getSellerNote());
@@ -237,7 +233,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		
 //	}
 //	
-//	public AuthorizationDetails getAuthorizationDetails(String amazonAuthorizationId) throws AmazonPaymentException {
+//	public AuthorizationDetails getAuthorizationDetails(String amazonAuthorizationId) throws AmazonException {
 //		try {
 //			GetAuthorizationDetailsRequest request = new GetAuthorizationDetailsRequest();
 //			request.setAmazonAuthorizationId(amazonAuthorizationId);
@@ -245,11 +241,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			GetAuthorizationDetailsResponse response = service.getAuthorizationDetails(request);
 //			return response.getGetAuthorizationDetailsResult().getAuthorizationDetails();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //
-//	public CaptureDetails getCaptureDetails(String amazonAuthorizationId) throws AmazonPaymentException {
+//	public CaptureDetails getCaptureDetails(String amazonAuthorizationId) throws AmazonException {
 //		try {
 //			AuthorizationDetails authorizationDetails = getAuthorizationDetails(amazonAuthorizationId);
 //			GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
@@ -258,11 +254,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			GetCaptureDetailsResponse response = service.getCaptureDetails(request);
 //			return response.getGetCaptureDetailsResult().getCaptureDetails();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public CaptureDetails getCaptureDetailsByCaptureId(String amazonCaptureId) throws AmazonPaymentException {
+//	public CaptureDetails getCaptureDetailsByCaptureId(String amazonCaptureId) throws AmazonException {
 //		try {
 //			GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
 //			request.setAmazonCaptureId(amazonCaptureId);
@@ -270,11 +266,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			GetCaptureDetailsResponse response = service.getCaptureDetails(request);
 //			return response.getGetCaptureDetailsResult().getCaptureDetails();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public boolean isRefundRequested(String amazonAuthorizationId) throws AmazonPaymentException {
+//	public boolean isRefundRequested(String amazonAuthorizationId) throws AmazonException {
 //		boolean refundRequested = CollectionUtils.isNotEmpty(getAllRefundDetails(amazonAuthorizationId));
 //		if(!refundRequested) {
 //			AmazonOrder amazonOrder = findAmazonOrderByAmazonAuthorizationId(amazonAuthorizationId);
@@ -283,7 +279,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		return refundRequested;
 //	}
 //	
-//	public boolean isSuccessPaidOrder(String amazonAuthorizationId) throws AmazonPaymentException {
+//	public boolean isSuccessPaidOrder(String amazonAuthorizationId) throws AmazonException {
 //		AuthorizationDetails checkAuthorizationDetails = getAuthorizationDetails(amazonAuthorizationId);
 //		return isSuccessPaidOrder(checkAuthorizationDetails);
 //	}
@@ -298,7 +294,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //	
 //	/* FUNCTIONS - START */
 //	
-//	private OrderReferenceDetails setOrderReferenceDetails(String amazonOrderReferenceId, String orderCode, String amount) throws AmazonPaymentException {
+//	private OrderReferenceDetails setOrderReferenceDetails(String amazonOrderReferenceId, String orderCode, String amount) throws AmazonException {
 //		try {
 //			SetOrderReferenceDetailsRequest request = new SetOrderReferenceDetailsRequest();
 //			request.setOrderReferenceAttributes(getOrderReferenceAttributes(orderCode, amount));
@@ -307,19 +303,19 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			SetOrderReferenceDetailsResponse response = service.setOrderReferenceDetails(request);
 //			return response.getSetOrderReferenceDetailsResult().getOrderReferenceDetails();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public String authorize(String amazonOrderReferenceId, String amount) throws AmazonPaymentException {
+//	public String authorize(String amazonOrderReferenceId, String amount) throws AmazonException {
 //		return authorize(amazonOrderReferenceId, amount, true);
 //	}	
 //	
-//	public String authorizeTest(String amazonOrderReferenceId, String amount, String params) throws AmazonPaymentException {
+//	public String authorizeTest(String amazonOrderReferenceId, String amount, String params) throws AmazonException {
 //		return authorize(amazonOrderReferenceId, amount, params, 0);
 //	}
 //	
-//	public String authorize(String amazonOrderReferenceId, String amount, boolean captureNow) throws AmazonPaymentException {
+//	public String authorize(String amazonOrderReferenceId, String amount, boolean captureNow) throws AmazonException {
 //		try {
 //			AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 //			authorizeRequest.setSellerId(getSellerId());
@@ -331,31 +327,31 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			AuthorizationDetails authorizationDetails = response.getAuthorizeResult().getAuthorizationDetails();
 //			return authorizationDetails.getAmazonAuthorizationId();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public void setOrderDetails(String amazonOrderReferenceId, String orderCode, String amount) throws AmazonPaymentException {
+//	public void setOrderDetails(String amazonOrderReferenceId, String orderCode, String amount) throws AmazonException {
 //		setOrderReferenceDetails(amazonOrderReferenceId, orderCode, amount);
 //	}
 //	
-//	public void confirmOrder(String amazonOrderReferenceId) throws AmazonPaymentException {
+//	public void confirmOrder(String amazonOrderReferenceId) throws AmazonException {
 //		try {
 //			ConfirmOrderReferenceRequest request = new ConfirmOrderReferenceRequest();
 //			request.setSellerId(getSellerId());
 //			request.setAmazonOrderReferenceId(amazonOrderReferenceId);
 //			service.confirmOrderReference(request);
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public void finalizeCheckout(String amazonOrderReferenceId, String orderCode, String amount) throws AmazonPaymentException {
+//	public void finalizeCheckout(String amazonOrderReferenceId, String orderCode, String amount) throws AmazonException {
 //		setOrderReferenceDetails(amazonOrderReferenceId, orderCode, amount);
 //		confirmOrder(amazonOrderReferenceId);
 //	}
 //	
-//	public String closeOrder(String amazonOrderReferenceId, String closureReason) throws AmazonPaymentException  {
+//	public String closeOrder(String amazonOrderReferenceId, String closureReason) throws AmazonException  {
 //		try {
 //			CloseOrderReferenceRequest request = new CloseOrderReferenceRequest();
 //			request.setAmazonOrderReferenceId(amazonOrderReferenceId);
@@ -364,11 +360,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			CloseOrderReferenceResponse response = service.closeOrderReference(request);
 //			return response.getCloseOrderReferenceResult().toXMLFragment();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public String closeAuthorizationOrder(String amazonAuthorizationId, String closureReason) throws AmazonPaymentException {
+//	public String closeAuthorizationOrder(String amazonAuthorizationId, String closureReason) throws AmazonException {
 //		try {
 //			CloseAuthorizationRequest request = new CloseAuthorizationRequest();
 //			request.setAmazonAuthorizationId(amazonAuthorizationId);
@@ -377,15 +373,15 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			CloseAuthorizationResponse response = service.closeAuthorization(request);
 //			return response.getCloseAuthorizationResult().toXMLFragment();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public RefundResult refund(String amazonAuthorizationId) throws AmazonPaymentException {
+//	public RefundResult refund(String amazonAuthorizationId) throws AmazonException {
 //		return refund(amazonAuthorizationId, FULL_REFUND_CHECKOUT_NOTE);
 //	}
 //	
-//	public RefundResult refund(String amazonAuthorizationId, String sellerRefundNote) throws AmazonPaymentException {
+//	public RefundResult refund(String amazonAuthorizationId, String sellerRefundNote) throws AmazonException {
 //		try {
 //			CaptureDetails captureDetails = getCaptureDetails(amazonAuthorizationId);
 //			RefundRequest request = new RefundRequest();
@@ -397,7 +393,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			RefundResponse response = service.refund(request);
 //			return response.getRefundResult();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	/* FUNCTIONS - END */
@@ -441,7 +437,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //	/* METHODS AUX - END */
 //
 //	/* HMC - START */
-//	public AmazonOrder saveAmazonOrder(Order order, String amazonAuthorizationId) throws AmazonPaymentException {
+//	public AmazonOrder saveAmazonOrder(Order order, String amazonAuthorizationId) throws AmazonException {
 //		AuthorizationDetails authorizationDetails = getAuthorizationDetails(amazonAuthorizationId);
 //		AmazonOrder amazonOrder = findAmazonOrderByAmazonAuthorizationId(amazonAuthorizationId);
 //		if(amazonOrder == null) {
@@ -464,7 +460,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			try {
 //				amazonOrder = saveAmazonOrder(order, amazonAuthorizationId);
 //				amazonOrder.setAttribute(AmazonOrder.REFUNDREQUESTED, true);
-//			} catch (AmazonPaymentException e) {
+//			} catch (AmazonException e) {
 //				e.logMessage();
 //			} catch (Exception e) {
 //				log.error("Error while setting attribute refund requested as true", e);
@@ -472,7 +468,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		}
 //		try {
 //			refund(amazonAuthorizationId);
-//		} catch (AmazonPaymentException e) {
+//		} catch (AmazonException e) {
 //			e.logMessage();
 //		}
 //	}
@@ -534,7 +530,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		return result.size() > 0 ? result.get(0) : null;
 //	}
 //	
-//	public List<RefundDetails> getAllRefundDetails(String amazonAuthorizationId) throws AmazonPaymentException {
+//	public List<RefundDetails> getAllRefundDetails(String amazonAuthorizationId) throws AmazonException {
 //		List<RefundDetails> refundDetails = new ArrayList<RefundDetails>();
 //		CaptureDetails captureDetails = getCaptureDetails(amazonAuthorizationId);
 //		List<String> members = null;
@@ -546,7 +542,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		return refundDetails;
 //	}
 //	
-//	public RefundDetails getRefundDetails(String amazonAuthorizationId, String amazonRefundId) throws AmazonPaymentException {
+//	public RefundDetails getRefundDetails(String amazonAuthorizationId, String amazonRefundId) throws AmazonException {
 //		try {
 //			GetRefundDetailsRequest request = new GetRefundDetailsRequest();
 //			request.setAmazonRefundId(amazonRefundId);
@@ -554,11 +550,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			GetRefundDetailsResponse response = service.getRefundDetails(request);
 //			return response.getGetRefundDetailsResult().getRefundDetails();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public void closeOrderIfFullRefundExists(String orderCode) throws AmazonPaymentException {
+//	public void closeOrderIfFullRefundExists(String orderCode) throws AmazonException {
 //		AuthorizationDetails authorizationDetails = findAuthorizationDetailsByOrderCode(orderCode);
 //		if(authorizationDetails != null) {
 //			List<RefundDetails> allRefundDetails = getAllRefundDetails(authorizationDetails.getAmazonAuthorizationId());
@@ -569,7 +565,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		}
 //	}
 //
-//	public void closeOrderIfFullRefundExists(String orderCode, String closureReason) throws AmazonPaymentException {
+//	public void closeOrderIfFullRefundExists(String orderCode, String closureReason) throws AmazonException {
 //		AuthorizationDetails authorizationDetails = findAuthorizationDetailsByOrderCode(orderCode);
 //		if(authorizationDetails != null) {
 //			List<RefundDetails> allRefundDetails = getAllRefundDetails(authorizationDetails.getAmazonAuthorizationId());
@@ -580,17 +576,17 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		}
 //	}
 //	
-//	private AuthorizationDetails findAuthorizationDetailsByOrderCode(String orderCode) throws AmazonPaymentException {
+//	private AuthorizationDetails findAuthorizationDetailsByOrderCode(String orderCode) throws AmazonException {
 //		AmazonOrder amazonOrder = findAmazonOrderByOrderReferenceId(orderCode);
 //		return amazonOrder == null ? null : getAuthorizationDetails(amazonOrder.getAmazonAuthorizationId());
 //	}
 //	
 //	/* HMC - END */
 //
-//	public AmazonPaymentException getAmazonPaymentException(OffAmazonPaymentsServiceException e) {
-//		AmazonPaymentException amazonPaymentException = new AmazonPaymentException(e);
-//		amazonPaymentException.logMessage();
-//		return amazonPaymentException;
+//	public AmazonException getAmazonException(OffAmazonPaymentsServiceException e) {
+//		AmazonException AmazonException = new AmazonException(e);
+//		AmazonException.logMessage();
+//		return AmazonException;
 //	}
 //
 //	/**
@@ -743,9 +739,9 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //	 * @param sellerAuthorizationNote
 //	 * @param code
 //	 * @return AmazonAuthorizationId
-//	 * @throws AmazonPaymentException 
+//	 * @throws AmazonException 
 //	 */
-//	public String authorize(String amazonOrderReferenceId, String amount, String sellerAuthorizationNote, int code) throws AmazonPaymentException {
+//	public String authorize(String amazonOrderReferenceId, String amount, String sellerAuthorizationNote, int code) throws AmazonException {
 //		try {
 //			AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 //			authorizeRequest.setSellerId(getSellerId());
@@ -777,11 +773,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			
 //			return authorizationDetails.getAmazonAuthorizationId();
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e);
+//			throw getAmazonException(e);
 //		}
 //	}
 //	
-//	public RefundDetails getRefundDetails(String refundId) throws AmazonPaymentException {
+//	public RefundDetails getRefundDetails(String refundId) throws AmazonException {
 //		try {
 //			GetRefundDetailsRequest request = new GetRefundDetailsRequest();
 //			request.setAmazonRefundId(refundId);
@@ -790,11 +786,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			RefundDetails refundDetails = response.getGetRefundDetailsResult().getRefundDetails();
 //			return refundDetails;
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e); 
+//			throw getAmazonException(e); 
 //		}
 //	}
 //	
-//	public CaptureResult capture(String amazonAuthorizationId, Price captureAmount, String sellerCaptureNote) throws AmazonPaymentException {
+//	public CaptureResult capture(String amazonAuthorizationId, Price captureAmount, String sellerCaptureNote) throws AmazonException {
 //		try {
 //			CaptureRequest request = new CaptureRequest();
 //			request.setAmazonAuthorizationId(amazonAuthorizationId);
@@ -806,11 +802,11 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //			CaptureResult result = capture.getCaptureResult();
 //			return result;
 //		} catch (OffAmazonPaymentsServiceException e) {
-//			throw getAmazonPaymentException(e); 
+//			throw getAmazonException(e); 
 //		}
 //	}
 //	
-//	public CancelOrderReferenceResponse cancelOrder(final String amazonOrderReferenceId, final String reason) throws AmazonPaymentException
+//	public CancelOrderReferenceResponse cancelOrder(final String amazonOrderReferenceId, final String reason) throws AmazonException
 //	{
 //		try
 //		{
@@ -823,7 +819,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 //		}
 //		catch (final OffAmazonPaymentsServiceException e)
 //		{
-//			throw new AmazonPaymentException(e);
+//			throw new AmazonException(e);
 //		}
 //	}
 //}
