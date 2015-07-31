@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <p>Payment</p>
-<c:url value="/login/checkout" var="returnUrl" />
+<c:url value="/checkout/amazon" var="returnUrl" />
 <script type='text/javascript'>
 	window.onAmazonLoginReady = function() {
-		amazon.Login.setClientId('amzn1.application-oa2-client.cf951894c12c4307abfaa1ec199adced');
+		amazon.Login.setClientId('${clientId}');
 	};
 </script>
 <script type="text/javascript" src="${amazonWidgetsUrl} "></script>

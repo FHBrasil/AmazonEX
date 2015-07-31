@@ -10,6 +10,7 @@ import de.hybris.platform.acceleratorservices.controllers.page.PageType;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.commercefacades.order.data.CartData;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -20,10 +21,14 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	@RequestMapping(method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
+		// sets checkout data
+		CartData cartData = getCheckoutFacade().getCheckoutCart();
+		model.addAttribute("cartData", cartData);
+		model.addAttribute("deliveryMethods", getCheckoutFacade().getSupportedDeliveryModes());
+
+		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));
-
 		model.addAttribute("pageType", PageType.CHECKOUTPAGE.name());
-
 		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.AmazonCheckoutPage;
 	}
 }

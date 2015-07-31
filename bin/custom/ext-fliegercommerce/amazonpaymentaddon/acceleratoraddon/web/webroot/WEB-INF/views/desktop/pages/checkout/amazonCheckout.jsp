@@ -10,6 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
+<%@ taglib prefix="multi-checkout" tagdir="/WEB-INF/tags/addons/b2ccheckoutaddon/desktop/checkout/multi" %>
 
 <template:page pageTitle="${pageTitle}" hideHeaderLinks="true">
 	<div id="globalMessages">
@@ -18,15 +19,18 @@
 	<cms:pageSlot position="BottomHeaderSlot" var="component">
 		<cms:component component="${component}" />
 	</cms:pageSlot>
-	<cms:pageSlot position="Section1" var="component" element="div" class="col-sm-4">
-		<cms:component component="${component}" class="col-sm-4"/>
+	<cms:pageSlot position="Section1" var="component">
+		<cms:component component="${component}"/>
 	</cms:pageSlot>
 	<cms:pageSlot position="Section2A" var="component" element="div" class="col-sm-4">
-		<cms:component component="${component}" class="col-sm-4"/>
+		<cms:component component="${component}"/>
 	</cms:pageSlot>
 	<cms:pageSlot position="Section2B" var="component" element="div" class="col-sm-4">
-		<cms:component component="${component}" class="col-sm-4"/>
+		<cms:component component="${component}"/>
 	</cms:pageSlot>
+	<div class="col-sm-4">
+		<multi-checkout:deliveryMethodSelector deliveryMethods="${deliveryMethods}" selectedDeliveryMethodId="${cartData.deliveryMode.code}"/>
+	</div>
 	<cms:pageSlot position="Section3" var="component">
 		<cms:component component="${component}" class="col-sm-4"/>
 	</cms:pageSlot>

@@ -54,4 +54,8 @@
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
     <bean id="defaultMwsAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonPaymentService">
     </bean>
+    
+    <bean name="defaultAmazonCommerceCheckoutService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonCommerceCheckoutService"
+    	parent="defaultCommerceCheckoutService">
+    </bean>
 </beans>
