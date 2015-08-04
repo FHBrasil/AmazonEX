@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.amazonservices.mws.offamazonpayments.model.Address;
 import com.amazonservices.mws.offamazonpayments.model.Destination;
@@ -18,9 +19,11 @@ import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonCon
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
+import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
 import de.hybris.platform.acceleratorservices.controllers.page.PageType;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.user.data.AddressData;
@@ -56,10 +59,10 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		model.addAttribute("pageType", PageType.CHECKOUTPAGE.name());
 		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.AmazonCheckoutPage;
 	}
-	
+
 	@RequestMapping(value = "/select-delivery-address", method = RequestMethod.POST)
-	public String onAddressSelect(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId) {
-		LOG.info("AmazonCheckout - onAddressSelect");
+	public String doSelectDeliveryAddress(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
+		LOG.info("AmazonCheckout - doSelectDeliveryAddress");
 		if (!hasValidCart()) {
 			return REDIRECT_URL_CART;
 		}
@@ -95,7 +98,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			String line3 = d.getAddressLine3();
 			boolean l2Empty = StringUtils.isEmpty(line2);
 			boolean l3Empty = StringUtils.isEmpty(line3);
-			
+
 			address.setLine1(line1);
 			address.setLine2(
 					(l2Empty ? "" : line2)
@@ -104,25 +107,30 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			address.setFirstName(d.getName());
 			address.setTown(d.getCity());
 			address.setDistrict(d.getDistrict());
-			RegionData region = new RegionData();
-			region.setName(d.getStateOrRegion());
-			region.setCountryIso(d.getCountryCode());
-			address.setRegion(region);
 			address.setPostalCode(d.getPostalCode());
-			CountryData country = new CountryData();
-			country.setIsocode(d.getCountryCode());
-			address.setCountry(country);
+			address.setCountry(getI18NFacade().getCountryForIsocode(d.getCountryCode()));
 			address.setPhone(d.getPhone());
+
+			if(getCheckoutFacade().setDeliveryAddress(address)) {
+				GlobalMessages.addInfoMessage(model, "amazonpaymentaddon.address.select-success");
+			} else {
+				GlobalMessages.addErrorMessage(model, "amazonpaymentaddon.address.select-failed");
+			}
 		}
 		return REDIRECT_URL_AMAZON_CHECKOUT;
 	}
-	
+
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
 	public String placeOrder(final Model model) {
 		LOG.info("AmazonCheckout - placeOrder");
-		if(amazonCheckoutFacade.authorizePayment(null)) {
+		if(getCheckoutFacade().authorizePayment(null)) {
 			
 		}
 		return null;
+	}
+
+	@Override
+	protected AmazonCheckoutFacade getCheckoutFacade() {
+		return amazonCheckoutFacade;
 	}
 }

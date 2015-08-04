@@ -4,6 +4,7 @@ import de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutSer
 import de.hybris.platform.core.model.ItemModel;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
+import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
@@ -87,10 +88,12 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 		}
 		return transactionEntryModel;
 	}
-	
-	/* (non-Javadoc)
-	 * @see de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService#getPaymentService()
-	 */
+
+	@Override
+	protected boolean isValidDeliveryAddress(CartModel cartModel, AddressModel addressModel) {
+		return true;
+	}
+
 	@Override
 	protected AmazonPaymentService getPaymentService()
 	{

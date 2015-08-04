@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 
@@ -34,7 +36,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 				final AmazonPaymentInfoModel amazonPaymentInfoModel = (AmazonPaymentInfoModel) cartModel.getPaymentInfo();
 				if (amazonPaymentInfoModel != null && StringUtils.isNotBlank(amazonPaymentInfoModel.getToken()))
 				{
-					final PaymentTransactionEntryModel paymentTransactionEntryModel = getAmazonCommerceCheckoutService().authorizePayment(
+					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizePayment(
 							cartModel, securityCode, getPaymentProvider());
 	
 					return paymentTransactionEntryModel != null
@@ -44,11 +46,11 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 			}
 		}
 		return false;
-	}	
+	}
 	
-	protected AmazonCommerceCheckoutService getAmazonCommerceCheckoutService()
+	protected AmazonCommerceCheckoutService getCommerceCheckoutService()
 	{
-		return (AmazonCommerceCheckoutService) getCommerceCheckoutService();
+		return (AmazonCommerceCheckoutService) super.getCommerceCheckoutService();
 	}
 
 }

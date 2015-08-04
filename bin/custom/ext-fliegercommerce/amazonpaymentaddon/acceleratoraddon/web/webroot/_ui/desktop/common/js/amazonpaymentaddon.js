@@ -42,14 +42,14 @@ if(!ACC.amazon)
 						type: 'post',
 						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId }
 					}).success(function(response){
-							// do something with the response...
-							// like display shipping or taxes to the customer
+						// do something with the response...
+						// like display shipping or taxes to the customer
 					})
 					.error(function (xht, textStatus, ex) {
-						alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
+						// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
 					})
 					.complete(function () {
-						alert("complete");
+						// alert("complete");
 					});
 					// Replace the following code with the action that you want to perform 
 					// after the address is selected.
@@ -87,6 +87,6 @@ if(!ACC.amazon)
 		}
 	})
 	.fail(function( jqxhr, settings, exception ) {
-		alert( "Triggered ajaxError handler." );
+		//alert( "Triggered ajaxError handler." );
 	});
 //});
