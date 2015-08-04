@@ -283,6 +283,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return entry;
 	}
 	
+	@Override
 	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException 
 	{
 		final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
@@ -298,6 +299,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return details;
 	}
 
+	@Override
 	public CaptureDetails getCaptureDetails(String amazonCaptureId) throws AdapterException {
 		GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
 		request.setAmazonCaptureId(amazonCaptureId);
@@ -305,6 +307,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return result.getCaptureDetails();
 	}
 
+	@Override
 	public AuthorizationDetails getAuthorizationDetails(String amazonAuthorizationId) throws AdapterException {
 		GetAuthorizationDetailsRequest request = new GetAuthorizationDetailsRequest();
 		request.setAmazonAuthorizationId(amazonAuthorizationId);
@@ -312,6 +315,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return result.getAuthorizationDetails();
 	}
 	
+	@Override
 	public RefundDetails getRefundDetails(String amazonRefundId) throws AdapterException {
 		GetRefundDetailsRequest request = new GetRefundDetailsRequest();
 		request.setAmazonRefundId(amazonRefundId);
@@ -319,7 +323,8 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return result.getRefundDetails();
 	}
 	
-	private OrderReferenceDetails setOrderReferenceDetails(String amazonOrderReferenceId, OrderReferenceAttributes orderReferenceAttributes) throws AdapterException {
+	@Override
+	public OrderReferenceDetails setOrderReferenceDetails(String amazonOrderReferenceId, OrderReferenceAttributes orderReferenceAttributes) throws AdapterException {
 			SetOrderReferenceDetailsRequest request = new SetOrderReferenceDetailsRequest();
 			request.setOrderReferenceAttributes(orderReferenceAttributes);
 			request.setAmazonOrderReferenceId(amazonOrderReferenceId);
@@ -327,6 +332,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			return result.getOrderReferenceDetails();
 	}
 	
+	@Override
 	public void confirmOrder(String amazonOrderReferenceId) throws AdapterException {
 		ConfirmOrderReferenceRequest request = new ConfirmOrderReferenceRequest();
 		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
@@ -335,6 +341,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 //		mwsAmazonPaymentService.confirmOrderReference(request);
 	}
 	
+	@Override
 	public CancelOrderReferenceResult cancelOrder(final String amazonOrderReferenceId, final String cancelationReason) throws AdapterException
 	{
 		final CancelOrderReferenceRequest request = new CancelOrderReferenceRequest();
@@ -344,6 +351,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return mwsAmazonPaymentService.cancelOrderReference(request);
 	}
 	
+	@Override
 	public CloseOrderReferenceResult closeOrderReference(final String amazonOrderReferenceId, final String closureReason) throws AdapterException
 	{
 		CloseOrderReferenceRequest request = new CloseOrderReferenceRequest();
@@ -353,6 +361,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return result;
 	}
 	
+	@Override
 	public CloseAuthorizationResult closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException
 	{
 		CloseAuthorizationRequest request = new CloseAuthorizationRequest();
@@ -362,6 +371,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return result;
 	}
 	
+	@Override
 	public RefundResult refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
 			Currency currency, String sellerRefundNote, String softDescriptor) {
 		RefundRequest request = new RefundRequest();

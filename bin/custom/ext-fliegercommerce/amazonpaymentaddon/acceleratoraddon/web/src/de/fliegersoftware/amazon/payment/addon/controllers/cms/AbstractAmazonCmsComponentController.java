@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import de.fliegersoftware.amazon.payment.util.AmazonConfig;
 import de.hybris.platform.addonsupport.controllers.cms.AbstractCMSAddOnComponentController;
 import de.hybris.platform.cms2.model.contents.components.AbstractCMSComponentModel;
-import de.hybris.platform.util.Config;
 
 public abstract class AbstractAmazonCmsComponentController<T extends AbstractCMSComponentModel> extends AbstractCMSAddOnComponentController<T> {
 	protected static Properties properties = AmazonConfig.getProperties();
@@ -32,6 +31,6 @@ public abstract class AbstractAmazonCmsComponentController<T extends AbstractCMS
 		for(Entry<Object, Object> prop : properties.entrySet()) {
 			model.addAttribute((String)prop.getKey(), prop.getValue());
 		}
-		model.addAttribute("clientId", "amzn1.application-oa2-client.cf951894c12c4307abfaa1ec199adced");
+		model.addAttribute("clientId", "amzn1.application-oa2-client.3a8eb36356824cb4b58183861bbcb8d1");
 	}
 }
