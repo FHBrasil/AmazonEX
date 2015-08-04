@@ -23,7 +23,9 @@
 <!--     <alias name="defaultPaymentService" alias="paymentService"/> -->
 <!-- 	<bean name="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService" scope="tenant"> -->
 <!-- 	</bean> -->
-           
+	<bean id="addressData" class="de.hybris.platform.commercefacades.user.data.AddressData" scope="prototype"/>
+	<bean id="amazonOrderReferenceDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData" scope="prototype"/>
+	
 	<bean name="amazonCommandFactory" 
 		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
 		scope="tenant">
@@ -38,10 +40,77 @@
 				</entry>
 				<entry>
 					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CancelCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CancelCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CancelOrderReferenceCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CancelOrderReferenceCommandImpl" />
+				</entry>
+				<entry>
+					<key>
 						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CaptureCommand</value>
 					</key>
 					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CaptureCommandImpl" />
 				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CloseAuthorizationCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CloseAuthorizationCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CloseOrderReferenceCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CloseOrderReferenceCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.ConfirmOrderReferenceCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.ConfirmOrderReferenceCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetAuthorizationDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetAuthorizationDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetCaptureDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetCaptureDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetOrderReferenceDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetOrderReferenceDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetRefundDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetRefundDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.RefundCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.RefundCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.SetOrderReferenceDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.SetOrderReferenceDetailsCommandImpl" />
+				</entry>
+				
 			</map>
 		</property>
 	</bean>
@@ -49,13 +118,41 @@
     <alias name="defaultAmazonPaymentService" alias="amazonPaymentService"/>
     <bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
     	<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
+    	<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
     </bean>
     
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
     <bean id="defaultMwsAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonPaymentService">
+    	<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />
     </bean>
     
     <bean name="defaultAmazonCommerceCheckoutService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonCommerceCheckoutService"
     	parent="defaultCommerceCheckoutService">
+    </bean>
+    
+    <bean id="amazonOrderReferenceDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceDetailsPopulator">
+        <property name="amazonAddressConverter" ref="amazonAddressConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonOrderReferenceDetailsConverter" alias="amazonOrderReferenceDetailsConverter" />
+    <bean id="defaultAmazonOrderReferenceDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonOrderReferenceDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonOrderReferenceDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="amazonAddressPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAddressPopulator" />
+    
+    <alias name="defaultAmazonAddressConverter" alias="amazonAddressConverter" />
+    <bean id="defaultAmazonAddressConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="addressData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonAddressPopulator" />
+            </list>
+        </property>
     </bean>
 </beans>

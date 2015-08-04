@@ -17,13 +17,9 @@
 
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
 
-	<!--
-		Example Data POJO
-	
-	<bean class="de.fliegersoftware.amazon.core.data.MyPojo">
-		<property name="id" type="String"/>
-		<property name="flag" type="boolean"/>
+	<bean class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData">
+		<property name="amazonOrderReferenceId" type="String"/>
+		<property name="addressData" type="de.hybris.platform.commercefacades.user.data.AddressData" />
 	</bean>
-	-->
 
 </beans>

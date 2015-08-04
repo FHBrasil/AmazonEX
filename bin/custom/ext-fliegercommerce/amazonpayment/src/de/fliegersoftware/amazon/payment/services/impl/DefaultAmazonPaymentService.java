@@ -9,6 +9,7 @@ import de.hybris.platform.payment.impl.DefaultPaymentServiceImpl;
 import de.hybris.platform.payment.methods.CardPaymentService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.session.SessionService;
@@ -61,6 +62,8 @@ import com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes;
 import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResponse;
 import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResult;
+import com.flieger.payment.data.HeringDebitPaymentInfoData;
+import com.flieger.payment.model.HeringDebitPaymentInfoModel;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.payment.exception.AmazonException;
@@ -85,6 +88,9 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource
 	private MWSAmazonPaymentService mwsAmazonPaymentService;
+	
+	@Resource
+    private Converter<OrderReferenceDetails, AmazonOrderReferenceDetailsData> amazonOrderReferenceDetailsConverter;
 	
 	/**
 	 * @return the modelService
@@ -179,6 +185,15 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	public void setMwsAmazonPaymentService(MWSAmazonPaymentService mwsAmazonPaymentService)
 	{
 		this.mwsAmazonPaymentService = mwsAmazonPaymentService;
+	}
+
+	public Converter<OrderReferenceDetails, AmazonOrderReferenceDetailsData> getAmazonOrderReferenceDetailsConverter() {
+		return amazonOrderReferenceDetailsConverter;
+	}
+
+	public void setAmazonOrderReferenceDetailsConverter(
+			Converter<OrderReferenceDetails, AmazonOrderReferenceDetailsData> amazonOrderReferenceDetailsConverter) {
+		this.amazonOrderReferenceDetailsConverter = amazonOrderReferenceDetailsConverter;
 	}
 
 	/*
@@ -297,7 +312,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 
 		GetOrderReferenceDetailsResult result = mwsAmazonPaymentService.getOrderReferenceDetails(request);
 		OrderReferenceDetails details = result.getOrderReferenceDetails();
-		return details;
+		return amazonOrderReferenceDetailsConverter.convert(details);
 	}
 
 	@Override
