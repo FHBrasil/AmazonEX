@@ -3,6 +3,7 @@
  */
 package de.fliegersoftware.amazon.payment.services;
 
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.PaymentService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -51,7 +52,7 @@ public interface AmazonPaymentService extends PaymentService
 	
 	public PaymentTransactionEntryModel capture(PaymentTransactionModel transaction) throws AdapterException;
 	
-	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException;
+	public AmazonOrderReferenceDetailsData getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException;
 
 	public CaptureDetails getCaptureDetails(String amazonCaptureId) throws AdapterException;
 

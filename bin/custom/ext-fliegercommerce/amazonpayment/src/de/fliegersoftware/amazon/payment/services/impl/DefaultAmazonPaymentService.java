@@ -62,6 +62,7 @@ import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRe
 import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResponse;
 import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResult;
 
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.payment.exception.AmazonException;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
@@ -284,7 +285,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	}
 	
 	@Override
-	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException 
+	public AmazonOrderReferenceDetailsData getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException 
 	{
 		final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
 		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
