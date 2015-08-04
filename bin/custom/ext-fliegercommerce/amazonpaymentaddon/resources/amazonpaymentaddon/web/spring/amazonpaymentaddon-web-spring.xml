@@ -30,5 +30,29 @@
 		<property name="typeCode" value="AmazonWalletComponent" />
 		<property name="renderer" ref="amazonWalletComponentRenderer" />
 	</bean>-->
-	
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties 
+		resource bundle as javascript variables -->
+	<bean id="defaultAmazonPaymentaddonJavaScriptMessageResourceAccessor"
+		parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="amazonpaymentaddon" />
+	</bean>
+
+	<bean id="defaultAmazonPaymentaddonBeforeViewJsPropsHandlerAdaptee"
+		parent="abstractBeforeViewJsPropsHandlerAdaptee"
+		class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource"
+			ref="defaultAmazonPaymentaddonJavaScriptMessageResourceAccessor" />
+	</bean>
+
+	<bean id="getAmazonPaymentaddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultAmazonPaymentaddonBeforeViewJsPropsHandlerAdaptee" />
+		</property>
+	</bean>
+
+	<bean id="AmazonPaymentaddonBeforeViewHandlerListMergeDirective"
+		depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getAmazonPaymentaddonBeforeViewHandler" />
+	</bean>
 </beans>

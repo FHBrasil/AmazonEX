@@ -42,6 +42,12 @@
 					</key>
 					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CaptureCommandImpl" />
 				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetOrderReferenceDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetOrderReferenceDetailsCommandImpl"/>
+				</entry>
 			</map>
 		</property>
 	</bean>
@@ -53,6 +59,7 @@
     
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
     <bean id="defaultMwsAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonPaymentService">
+    	<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />
     </bean>
     
     <bean name="defaultAmazonCommerceCheckoutService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonCommerceCheckoutService"
