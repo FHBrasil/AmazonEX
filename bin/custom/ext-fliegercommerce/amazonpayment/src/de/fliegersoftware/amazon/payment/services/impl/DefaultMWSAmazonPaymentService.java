@@ -59,7 +59,6 @@ public class DefaultMWSAmazonPaymentService extends DefaultPaymentServiceImpl im
 	@Override
 	public AuthorizeResult authorize(AuthorizeRequest request) throws AdapterException {
 		try {
-			
 			CommandFactory commandFactory = this.commandFactoryRegistry.getFactory("Amazon");
 			AuthorizeCommand command = commandFactory.createCommand(AuthorizeCommand.class);
 			AuthorizeResult result = command.perform(request);

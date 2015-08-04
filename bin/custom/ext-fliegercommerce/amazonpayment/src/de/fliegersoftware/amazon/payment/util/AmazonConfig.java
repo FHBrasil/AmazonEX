@@ -38,11 +38,11 @@ public class AmazonConfig {
 			@Override
 			public Properties getProperties() {
 				Properties properties = new Properties();
-				properties.put(ACCESS_KEY_ID, "AKIAIFFB2ZRRS4MGDGXA");
-				properties.put(SECRET_ACCESS_KEY, "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");
+				properties.put(ACCESS_KEY_ID, "AKIAI6WXQHLXKDEUQPMA");
+				properties.put(SECRET_ACCESS_KEY, "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");
 				properties.put(APPLICATION_NAME, "KPFamily Sandbox");
 				properties.put(APPLICATION_VERSION, "");
-				properties.put(SELLER_ID, "A2CE40B6BVZ5XY");
+				properties.put(SELLER_ID, "A3NZCWJS2BIERH");
 				properties.put(CURRENCY, "EUR");
 				//IMPORTANT: Use "LIVE" for Production or "SANBOX" for Sandbox use:
 				properties.put(ENVIRONMENT, "SANDBOX");
