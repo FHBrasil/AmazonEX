@@ -61,6 +61,15 @@
 		<property name="storeName" type="String"/>
 		<property name="customInformation" type="String"/>
 	</bean>
-
+	
+	<bean class="de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData">
+		<property name="amazonRefundId" type="String"/>
+		<property name="refundReferenceId" type="String"/>
+		<property name="sellerRefundNote" type="String"/>
+		<property name="refundAmount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="feeRefunded" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="refundStatus" type="String"/>
+		<property name="softDescriptor" type="String"/>
+	</bean>
 
 </beans>
