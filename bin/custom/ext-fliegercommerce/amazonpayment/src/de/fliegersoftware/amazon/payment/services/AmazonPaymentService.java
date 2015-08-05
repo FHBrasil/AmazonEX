@@ -3,6 +3,7 @@
  */
 package de.fliegersoftware.amazon.payment.services;
 
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.PaymentService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -51,7 +52,7 @@ public interface AmazonPaymentService extends PaymentService
 	
 	public PaymentTransactionEntryModel capture(PaymentTransactionModel transaction) throws AdapterException;
 	
-	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException;
+	public AmazonOrderReferenceDetailsData getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException;
 
 	public CaptureDetails getCaptureDetails(String amazonCaptureId) throws AdapterException;
 
@@ -61,13 +62,13 @@ public interface AmazonPaymentService extends PaymentService
 	
 	public OrderReferenceDetails setOrderReferenceDetails(String amazonOrderReferenceId, OrderReferenceAttributes orderReferenceAttributes) throws AdapterException;
 	
-	public void confirmOrder(String amazonOrderReferenceId) throws AdapterException;
+	public void confirmOrderReference(String amazonOrderReferenceId) throws AdapterException;
 	
-	public CancelOrderReferenceResult cancelOrder(final String amazonOrderReferenceId, final String cancelationReason) throws AdapterException;
+	public void cancelOrderReference(final String amazonOrderReferenceId, final String cancelationReason) throws AdapterException;
 	
-	public CloseOrderReferenceResult closeOrderReference(final String amazonOrderReferenceId, final String closureReason) throws AdapterException;
+	public void closeOrderReference(final String amazonOrderReferenceId, final String closureReason) throws AdapterException;
 	
-	public CloseAuthorizationResult closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException;
+	public void closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException;
 	
 	public RefundResult refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
 			Currency currency, String sellerRefundNote, String softDescriptor);

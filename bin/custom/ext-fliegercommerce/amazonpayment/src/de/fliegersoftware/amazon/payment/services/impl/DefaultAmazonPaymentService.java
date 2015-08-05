@@ -65,6 +65,7 @@ import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRe
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
 import com.flieger.payment.model.HeringDebitPaymentInfoModel;
 
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.payment.exception.AmazonException;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
@@ -299,7 +300,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	}
 	
 	@Override
-	public OrderReferenceDetails getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException 
+	public AmazonOrderReferenceDetailsData getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException 
 	{
 		final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
 		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
@@ -348,42 +349,39 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	}
 	
 	@Override
-	public void confirmOrder(String amazonOrderReferenceId) throws AdapterException {
+	public void confirmOrderReference(String amazonOrderReferenceId) throws AdapterException {
 		ConfirmOrderReferenceRequest request = new ConfirmOrderReferenceRequest();
 		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
 		
-		// TODO
-//		mwsAmazonPaymentService.confirmOrderReference(request);
+		mwsAmazonPaymentService.confirmOrderReferenceCommand(request);
 	}
 	
 	@Override
-	public CancelOrderReferenceResult cancelOrder(final String amazonOrderReferenceId, final String cancelationReason) throws AdapterException
+	public void cancelOrderReference(final String amazonOrderReferenceId, final String cancelationReason) throws AdapterException
 	{
 		final CancelOrderReferenceRequest request = new CancelOrderReferenceRequest();
 		request.setCancelationReason(cancelationReason);
 		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
 
-		return mwsAmazonPaymentService.cancelOrderReference(request);
+		mwsAmazonPaymentService.cancelOrderReference(request);
 	}
 	
 	@Override
-	public CloseOrderReferenceResult closeOrderReference(final String amazonOrderReferenceId, final String closureReason) throws AdapterException
+	public void closeOrderReference(final String amazonOrderReferenceId, final String closureReason) throws AdapterException
 	{
 		CloseOrderReferenceRequest request = new CloseOrderReferenceRequest();
 		request.setAmazonOrderReferenceId(amazonOrderReferenceId);
 		request.setClosureReason(closureReason);
-		CloseOrderReferenceResult result = mwsAmazonPaymentService.closeOrderReference(request);
-		return result;
+		mwsAmazonPaymentService.closeOrderReference(request);
 	}
 	
 	@Override
-	public CloseAuthorizationResult closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException
+	public void closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException
 	{
 		CloseAuthorizationRequest request = new CloseAuthorizationRequest();
 		request.setAmazonAuthorizationId(amazonAuthorizationId);
 		request.setClosureReason(closureReason);
-		CloseAuthorizationResult result = mwsAmazonPaymentService.closeAuthorization(request);
-		return result;
+		mwsAmazonPaymentService.closeAuthorization(request);
 	}
 	
 	@Override

@@ -19,6 +19,7 @@ import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
 import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationResult;
 import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
 import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceResult;
+import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResult;
 import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsRequest;
@@ -37,6 +38,7 @@ import de.fliegersoftware.amazon.payment.commands.CancelOrderReferenceCommand;
 import de.fliegersoftware.amazon.payment.commands.CaptureCommand;
 import de.fliegersoftware.amazon.payment.commands.CloseAuthorizationCommand;
 import de.fliegersoftware.amazon.payment.commands.CloseOrderReferenceCommand;
+import de.fliegersoftware.amazon.payment.commands.ConfirmOrderReferenceCommand;
 import de.fliegersoftware.amazon.payment.commands.GetAuthorizationDetailsCommand;
 import de.fliegersoftware.amazon.payment.commands.GetCaptureDetailsCommand;
 import de.fliegersoftware.amazon.payment.commands.GetOrderReferenceDetailsCommand;
@@ -265,6 +267,19 @@ public class DefaultMWSAmazonPaymentService extends DefaultPaymentServiceImpl im
 			CloseOrderReferenceResult result = command.perform(request);
 
 			return result;
+			
+		} catch (CommandNotSupportedException e) {
+			throw new AdapterException(e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public void confirmOrderReferenceCommand(ConfirmOrderReferenceRequest request) throws AdapterException {
+		try {
+			
+			CommandFactory commandFactory = this.commandFactoryRegistry.getFactory("Amazon");
+			ConfirmOrderReferenceCommand command = commandFactory.createCommand(ConfirmOrderReferenceCommand.class);
+			command.perform(request);
 			
 		} catch (CommandNotSupportedException e) {
 			throw new AdapterException(e.getMessage(), e);
