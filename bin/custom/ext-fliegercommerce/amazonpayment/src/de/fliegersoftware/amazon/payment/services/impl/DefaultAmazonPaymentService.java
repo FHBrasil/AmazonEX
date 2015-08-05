@@ -65,6 +65,7 @@ import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRe
 import com.flieger.payment.data.HeringDebitPaymentInfoData;
 import com.flieger.payment.model.HeringDebitPaymentInfoModel;
 
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.payment.exception.AmazonException;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
@@ -91,6 +92,9 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource
     private Converter<OrderReferenceDetails, AmazonOrderReferenceDetailsData> amazonOrderReferenceDetailsConverter;
+	
+	@Resource
+    private Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter;
 	
 	/**
 	 * @return the modelService
@@ -194,6 +198,15 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	public void setAmazonOrderReferenceDetailsConverter(
 			Converter<OrderReferenceDetails, AmazonOrderReferenceDetailsData> amazonOrderReferenceDetailsConverter) {
 		this.amazonOrderReferenceDetailsConverter = amazonOrderReferenceDetailsConverter;
+	}
+
+	public Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> getAmazonOrderReferenceAttributesReverseConverter() {
+		return amazonOrderReferenceAttributesReverseConverter;
+	}
+
+	public void setAmazonOrderReferenceAttributesReverseConverter(
+			Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter) {
+		this.amazonOrderReferenceAttributesReverseConverter = amazonOrderReferenceAttributesReverseConverter;
 	}
 
 	/*
@@ -340,12 +353,12 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	}
 	
 	@Override
-	public OrderReferenceDetails setOrderReferenceDetails(String amazonOrderReferenceId, OrderReferenceAttributes orderReferenceAttributes) throws AdapterException {
+	public AmazonOrderReferenceDetailsData setOrderReferenceDetails(String amazonOrderReferenceId, AmazonOrderReferenceAttributesData amazonOrderReferenceAttributesData) throws AdapterException {
 			SetOrderReferenceDetailsRequest request = new SetOrderReferenceDetailsRequest();
-			request.setOrderReferenceAttributes(orderReferenceAttributes);
+			request.setOrderReferenceAttributes(amazonOrderReferenceAttributesReverseConverter.convert(amazonOrderReferenceAttributesData));
 			request.setAmazonOrderReferenceId(amazonOrderReferenceId);
 			SetOrderReferenceDetailsResult result = mwsAmazonPaymentService.setOrderReferenceDetails(request);
-			return result.getOrderReferenceDetails();
+			return amazonOrderReferenceDetailsConverter.convert(result.getOrderReferenceDetails());
 	}
 	
 	@Override
