@@ -16,6 +16,7 @@ import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
 import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationResult;
 import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
 import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceResult;
+import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResult;
 import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsRequest;
@@ -45,6 +46,8 @@ public interface MWSAmazonPaymentService extends PaymentService
 	public CloseAuthorizationResult closeAuthorization(CloseAuthorizationRequest request) throws AdapterException;
 	
 	public CloseOrderReferenceResult closeOrderReference(CloseOrderReferenceRequest request) throws AdapterException;
+	
+	public void confirmOrderReferenceCommand(ConfirmOrderReferenceRequest request) throws AdapterException;
 	
 	public GetAuthorizationDetailsResult getAuthorizationDetails(GetAuthorizationDetailsRequest request) throws AdapterException;
 	

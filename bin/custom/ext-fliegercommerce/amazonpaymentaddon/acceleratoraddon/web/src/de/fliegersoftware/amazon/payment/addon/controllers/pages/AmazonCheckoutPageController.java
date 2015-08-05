@@ -11,24 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.amazonservices.mws.offamazonpayments.model.Address;
-import com.amazonservices.mws.offamazonpayments.model.Destination;
-import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
-
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
-import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
-import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
 import de.hybris.platform.acceleratorservices.controllers.page.PageType;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.data.CartData;
-import de.hybris.platform.commercefacades.user.data.AddressData;
-import de.hybris.platform.commercefacades.user.data.CountryData;
-import de.hybris.platform.commercefacades.user.data.RegionData;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -89,29 +81,9 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 //			}
 //		}
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
-			OrderReferenceDetails details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, null);
-			Destination dest = details.getDestination();
-			Address d = dest.getPhysicalDestination();
-			AddressData address = new AddressData();
-			String line1 = d.getAddressLine1();
-			String line2 = d.getAddressLine2();
-			String line3 = d.getAddressLine3();
-			boolean l2Empty = StringUtils.isEmpty(line2);
-			boolean l3Empty = StringUtils.isEmpty(line3);
+			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, null);
 
-			address.setLine1(line1);
-			address.setLine2(
-					(l2Empty ? "" : line2)
-					+ (l2Empty || l3Empty ? "" : " ")
-					+ (l3Empty ? "" : line3));
-			address.setFirstName(d.getName());
-			address.setTown(d.getCity());
-			address.setDistrict(d.getDistrict());
-			address.setPostalCode(d.getPostalCode());
-			address.setCountry(getI18NFacade().getCountryForIsocode(d.getCountryCode()));
-			address.setPhone(d.getPhone());
-
-			if(getCheckoutFacade().setDeliveryAddress(address)) {
+			if(getCheckoutFacade().setDeliveryAddress(details.getAddressData())) {
 				GlobalMessages.addInfoMessage(model, "amazonpaymentaddon.address.select-success");
 			} else {
 				GlobalMessages.addErrorMessage(model, "amazonpaymentaddon.address.select-failed");
