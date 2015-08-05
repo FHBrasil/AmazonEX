@@ -1,5 +1,50 @@
 package de.fliegersoftware.amazon.payment.services.impl;
 
+import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.Date;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
+import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
+import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
+import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
+import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.CaptureDetails;
+import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
+import com.amazonservices.mws.offamazonpayments.model.CaptureResult;
+import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
+import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes;
+import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
+import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
+import com.amazonservices.mws.offamazonpayments.model.Price;
+import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
+import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
+import com.amazonservices.mws.offamazonpayments.model.RefundResult;
+import com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes;
+import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResult;
+
+import de.fliegersoftware.amazon.core.data.AmazonAuthorizationDetailsData;
+import de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData;
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
+import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
+import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
+import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.payment.AdapterException;
@@ -13,63 +58,6 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.session.SessionService;
-
-import java.math.BigDecimal;
-import java.util.Currency;
-import java.util.Date;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
-import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
-import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
-import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
-import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceRequest;
-import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceResponse;
-import com.amazonservices.mws.offamazonpayments.model.CancelOrderReferenceResult;
-import com.amazonservices.mws.offamazonpayments.model.CaptureDetails;
-import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
-import com.amazonservices.mws.offamazonpayments.model.CaptureResult;
-import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
-import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationResult;
-import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
-import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceResponse;
-import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceResult;
-import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
-import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
-import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResponse;
-import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResult;
-import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsRequest;
-import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsResponse;
-import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsResult;
-import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
-import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
-import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResult;
-import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsRequest;
-import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsResponse;
-import com.amazonservices.mws.offamazonpayments.model.GetRefundDetailsResult;
-import com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes;
-import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
-import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
-import com.amazonservices.mws.offamazonpayments.model.Price;
-import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
-import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
-import com.amazonservices.mws.offamazonpayments.model.RefundResult;
-import com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes;
-import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRequest;
-import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResponse;
-import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsResult;
-import com.flieger.payment.data.HeringDebitPaymentInfoData;
-import com.flieger.payment.model.HeringDebitPaymentInfoModel;
-
-import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
-import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
-import de.fliegersoftware.amazon.payment.exception.AmazonException;
-import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
-import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 
 /**
  * @author taylor.savegnago
@@ -94,7 +82,17 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
     private Converter<OrderReferenceDetails, AmazonOrderReferenceDetailsData> amazonOrderReferenceDetailsConverter;
 	
 	@Resource
+    private Converter<CaptureDetails, AmazonCaptureDetailsData> amazonCaptureDetailsConverter;
+	
+	@Resource
+    private Converter<RefundDetails, AmazonRefundDetailsData> amazonRefundDetailsConverter;
+	
+	@Resource
+    private Converter<AuthorizationDetails, AmazonAuthorizationDetailsData> amazonAuthorizationDetailsConverter;
+	
+	@Resource
     private Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter;
+	
 	
 	/**
 	 * @return the modelService
@@ -207,6 +205,33 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	public void setAmazonOrderReferenceAttributesReverseConverter(
 			Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter) {
 		this.amazonOrderReferenceAttributesReverseConverter = amazonOrderReferenceAttributesReverseConverter;
+	}
+	
+	public Converter<CaptureDetails, AmazonCaptureDetailsData> getAmazonCaptureDetailsConverter() {
+		return amazonCaptureDetailsConverter;
+	}
+
+	public void setAmazonCaptureDetailsConverter(
+			Converter<CaptureDetails, AmazonCaptureDetailsData> amazonCaptureDetailsConverter) {
+		this.amazonCaptureDetailsConverter = amazonCaptureDetailsConverter;
+	}
+
+	public Converter<RefundDetails, AmazonRefundDetailsData> getAmazonRefundDetailsConverter() {
+		return amazonRefundDetailsConverter;
+	}
+
+	public void setAmazonRefundDetailsConverter(
+			Converter<RefundDetails, AmazonRefundDetailsData> amazonRefundDetailsConverter) {
+		this.amazonRefundDetailsConverter = amazonRefundDetailsConverter;
+	}
+
+	public Converter<AuthorizationDetails, AmazonAuthorizationDetailsData> getAmazonAuthorizationDetailsConverter() {
+		return amazonAuthorizationDetailsConverter;
+	}
+
+	public void setAmazonAuthorizationDetailsConverter(
+			Converter<AuthorizationDetails, AmazonAuthorizationDetailsData> amazonAuthorizationDetailsConverter) {
+		this.amazonAuthorizationDetailsConverter = amazonAuthorizationDetailsConverter;
 	}
 
 	/*
@@ -329,27 +354,27 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	}
 
 	@Override
-	public CaptureDetails getCaptureDetails(String amazonCaptureId) throws AdapterException {
+	public AmazonCaptureDetailsData getCaptureDetails(String amazonCaptureId) throws AdapterException {
 		GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
 		request.setAmazonCaptureId(amazonCaptureId);
 		GetCaptureDetailsResult result = mwsAmazonPaymentService.getCaptureDetails(request);
-		return result.getCaptureDetails();
+		return amazonCaptureDetailsConverter.convert(result.getCaptureDetails());
 	}
 
 	@Override
-	public AuthorizationDetails getAuthorizationDetails(String amazonAuthorizationId) throws AdapterException {
+	public AmazonAuthorizationDetailsData getAuthorizationDetails(String amazonAuthorizationId) throws AdapterException {
 		GetAuthorizationDetailsRequest request = new GetAuthorizationDetailsRequest();
 		request.setAmazonAuthorizationId(amazonAuthorizationId);
 		GetAuthorizationDetailsResult result = mwsAmazonPaymentService.getAuthorizationDetails(request);
-		return result.getAuthorizationDetails();
+		return amazonAuthorizationDetailsConverter.convert(result.getAuthorizationDetails());
 	}
 	
 	@Override
-	public RefundDetails getRefundDetails(String amazonRefundId) throws AdapterException {
+	public AmazonRefundDetailsData getRefundDetails(String amazonRefundId) throws AdapterException {
 		GetRefundDetailsRequest request = new GetRefundDetailsRequest();
 		request.setAmazonRefundId(amazonRefundId);
 		GetRefundDetailsResult result = mwsAmazonPaymentService.getRefundDetails(request);
-		return result.getRefundDetails();
+		return amazonRefundDetailsConverter.convert(result.getRefundDetails());
 	}
 	
 	@Override
@@ -398,7 +423,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	}
 	
 	@Override
-	public RefundResult refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
+	public AmazonRefundDetailsData refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
 			Currency currency, String sellerRefundNote, String softDescriptor) {
 		RefundRequest request = new RefundRequest();
 		request.setAmazonCaptureId(amazonCaptureId);
@@ -408,7 +433,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		request.setSoftDescriptor(softDescriptor);
 		
 		RefundResult result = mwsAmazonPaymentService.refund(request);
-		return result;
+		return amazonRefundDetailsConverter.convert(result.getRefundDetails());
 	}
 	
 	private BillingInfo createBillingInfo(AddressModel address) {

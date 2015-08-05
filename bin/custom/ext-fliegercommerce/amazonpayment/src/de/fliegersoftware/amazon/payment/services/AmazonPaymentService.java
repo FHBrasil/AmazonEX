@@ -3,8 +3,11 @@
  */
 package de.fliegersoftware.amazon.payment.services;
 
+import de.fliegersoftware.amazon.core.data.AmazonAuthorizationDetailsData;
+import de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
+import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.PaymentService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -55,11 +58,11 @@ public interface AmazonPaymentService extends PaymentService
 	
 	public AmazonOrderReferenceDetailsData getOrderReferenceDetails(final String amazonOrderReferenceId, final String addressConsentToken) throws AdapterException;
 
-	public CaptureDetails getCaptureDetails(String amazonCaptureId) throws AdapterException;
+	public AmazonCaptureDetailsData getCaptureDetails(String amazonCaptureId) throws AdapterException;
 
-	public AuthorizationDetails getAuthorizationDetails(String amazonAuthorizationId) throws AdapterException;
+	public AmazonAuthorizationDetailsData getAuthorizationDetails(String amazonAuthorizationId) throws AdapterException;
 	
-	public RefundDetails getRefundDetails(String amazonRefundId) throws AdapterException;
+	public AmazonRefundDetailsData getRefundDetails(String amazonRefundId) throws AdapterException;
 	
 	public AmazonOrderReferenceDetailsData setOrderReferenceDetails(String amazonOrderReferenceId, AmazonOrderReferenceAttributesData amazonOrderReferenceAttributesData) throws AdapterException;
 	
@@ -71,6 +74,6 @@ public interface AmazonPaymentService extends PaymentService
 	
 	public void closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException;
 	
-	public RefundResult refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
+	public AmazonRefundDetailsData refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
 			Currency currency, String sellerRefundNote, String softDescriptor);
 }

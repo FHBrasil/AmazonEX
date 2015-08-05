@@ -27,6 +27,7 @@
 	<bean id="priceData" class="de.hybris.platform.commercefacades.product.data.PriceData" scope="prototype"/>
 	<bean id="amazonOrderReferenceDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData" scope="prototype"/>
 	<bean id="amazonCaptureDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData" scope="prototype"/>
+	<bean id="amazonRefundDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData" scope="prototype"/>
 	<bean id="orderTotal" class="com.amazonservices.mws.offamazonpayments.model.OrderTotal" scope="prototype"/>
 	
 	<bean name="amazonCommandFactory" 
@@ -121,6 +122,9 @@
     <bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
     	<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
     	<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
+    	<property name="amazonCaptureDetailsConverter" ref="amazonCaptureDetailsConverter"/>
+    	<property name="amazonAuthorizationDetailsConverter" ref="amazonAuthorizationDetailsConverter"/>
+    	<property name="amazonRefundDetailsConverter" ref="amazonRefundDetailsConverter"/>
     	<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
     </bean>
     
@@ -157,6 +161,20 @@
         <property name="populators">
             <list>
                 <ref bean="amazonCaptureDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="amazonAuthorizationDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAuthorizationDetailsPopulator">
+        <property name="amazonPriceConverter" ref="amazonPriceConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonAuthorizationDetailsConverter" alias="amazonAuthorizationDetailsConverter" />
+    <bean id="defaultAmazonAuthorizationDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonAuthorizationDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonAuthorizationDetailsPopulator" />
             </list>
         </property>
     </bean>
@@ -217,4 +235,17 @@
         <property name="amazonOrderTotalReverseConverter" ref="amazonOrderTotalReverseConverter" />
     </bean>
 	
+    <bean id="amazonRefundDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonRefundDetailsPopulator">
+        <property name="amazonPriceConverter" ref="amazonPriceConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonRefundDetailsConverter" alias="amazonRefundDetailsConverter" />
+    <bean id="defaultAmazonRefundDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonRefundDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonRefundDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
 </beans>
