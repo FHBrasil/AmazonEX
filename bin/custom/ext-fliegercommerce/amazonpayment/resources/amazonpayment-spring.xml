@@ -24,7 +24,10 @@
 <!-- 	<bean name="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService" scope="tenant"> -->
 <!-- 	</bean> -->
 	<bean id="addressData" class="de.hybris.platform.commercefacades.user.data.AddressData" scope="prototype"/>
+	<bean id="priceData" class="de.hybris.platform.commercefacades.product.data.PriceData" scope="prototype"/>
 	<bean id="amazonOrderReferenceDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData" scope="prototype"/>
+	<bean id="amazonCaptureDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData" scope="prototype"/>
+	<bean id="orderTotal" class="com.amazonservices.mws.offamazonpayments.model.OrderTotal" scope="prototype"/>
 	
 	<bean name="amazonCommandFactory" 
 		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
@@ -118,6 +121,7 @@
     <bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
     	<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
     	<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
+    	<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
     </bean>
     
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
@@ -143,7 +147,23 @@
         </property>
     </bean>
     
-    <bean id="amazonAddressPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAddressPopulator" />
+    <bean id="amazonCaptureDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonCaptureDetailsPopulator">
+        <property name="amazonPriceConverter" ref="amazonPriceConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonCaptureDetailsConverter" alias="amazonCaptureDetailsConverter" />
+    <bean id="defaultAmazonCaptureDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonCaptureDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonCaptureDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultAmazonAddressPopulator" alias="amazonAddressPopulator"/>
+	<bean id="defaultAmazonAddressPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAddressPopulator">
+	</bean>
     
     <alias name="defaultAmazonAddressConverter" alias="amazonAddressConverter" />
     <bean id="defaultAmazonAddressConverter" parent="abstractPopulatingConverter">
@@ -154,4 +174,47 @@
             </list>
         </property>
     </bean>
+    
+    <alias name="defaultAmazonPricePopulator" alias="amazonPricePopulator"/>
+	<bean id="defaultAmazonPricePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonPricePopulator">
+	</bean>
+    
+    <alias name="defaultAmazonPriceConverter" alias="amazonPriceConverter" />
+    <bean id="defaultAmazonPriceConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="priceData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonPricePopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultAmazonOrderTotalReversePopulator" alias="amazonOrderTotalReversePopulator"/>
+	<bean id="defaultAmazonOrderTotalReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderTotalReversePopulator">
+	</bean>
+	
+	<alias name="defaultAmazonOrderTotalReverseConverter" alias="amazonOrderTotalReverseConverter" />
+    <bean id="defaultAmazonOrderTotalReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="orderTotal" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonOrderTotalReversePopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultAmazonOrderReferenceAttributesReverseConverter" alias="amazonOrderReferenceAttributesReverseConverter" />
+    <bean id="defaultAmazonOrderReferenceAttributesReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonOrderReferenceAttributesReverseData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonOrderReferenceAttributesReversePopulator" />
+            </list>
+        </property>
+    </bean>
+	
+	<bean id="amazonOrderReferenceAttributesReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceAttributesReversePopulator">
+        <property name="amazonOrderTotalReverseConverter" ref="amazonOrderTotalReverseConverter" />
+    </bean>
+	
 </beans>

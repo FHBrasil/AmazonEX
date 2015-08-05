@@ -22,18 +22,18 @@
 		<property name="addressData" type="de.hybris.platform.commercefacades.user.data.AddressData" />
 	</bean>
 	
-	<bean class="de.fliegersoftware.amazon.core.data.AmazonPriceData">
-		<property name="amount" type="String"/>
-		<property name="currencyCode" type="String"/>
-	</bean>
+<!-- 	<bean class="de.fliegersoftware.amazon.core.data.AmazonPriceData"> -->
+<!-- 		<property name="amount" type="String"/> -->
+<!-- 		<property name="currencyCode" type="String"/> -->
+<!-- 	</bean> -->
 	
 	<bean class="de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData">
 		<property name="amazonCaptureId" type="String"/>
 		<property name="captureReferenceId" type="String"/>
 		<property name="sellerCaptureNote" type="String"/>
-		<property name="captureAmount" type="de.fliegersoftware.amazon.core.data.AmazonPriceData" />
-		<property name="refundedAmount" type="de.fliegersoftware.amazon.core.data.AmazonPriceData" />
-		<property name="captureFee" type="de.fliegersoftware.amazon.core.data.AmazonPriceData" />
+		<property name="captureAmount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="refundedAmount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="captureFee" type="de.hybris.platform.commercefacades.product.data.PriceData" />
 		<property name="captureStatus" type="String"/>
 		<property name="softDescriptor" type="String"/>
 	</bean>
@@ -43,10 +43,23 @@
 		<property name="authorizationReferenceId" type="String"/>
 		<property name="addressData" type="de.hybris.platform.commercefacades.user.data.AddressData" />
 		<property name="sellerAuthorizationNote" type="String"/>
-		<property name="authorizationAmount" type="de.fliegersoftware.amazon.core.data.AmazonPriceData" />
-		<property name="authorizationFee" type="de.fliegersoftware.amazon.core.data.AmazonPriceData" />
+		<property name="authorizationAmount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="authorizationFee" type="de.hybris.platform.commercefacades.product.data.PriceData" />
 		<property name="softDescriptor" type="String"/>
 		<property name="addressVerificationCode" type="String"/>
+	</bean>
+	
+	<bean class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData">
+		<property name="platformId" type="String"/>
+		<property name="sellerNote" type="String"/>
+		<property name="orderTotal" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="sellerOrderAttributes" type="de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData"/>
+	</bean>
+	
+	<bean class="de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData">
+		<property name="sellerOrderId" type="String"/>
+		<property name="storeName" type="String"/>
+		<property name="customInformation" type="String"/>
 	</bean>
 
 
