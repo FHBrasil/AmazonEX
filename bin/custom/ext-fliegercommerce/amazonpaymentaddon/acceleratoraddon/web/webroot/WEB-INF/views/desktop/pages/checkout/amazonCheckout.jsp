@@ -33,24 +33,12 @@
 			deliveryMethods="${deliveryMethods}"
 			selectedDeliveryMethodId="${cartData.deliveryMode.code}" />
 
-		<c:url value="/checkout/multi/placeOrder" var="placeOrderUrl" />
+		<c:url value="/checkout/amazon/placeOrder" var="placeOrderUrl" />
 		<form:form action="${placeOrderUrl}" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
-			<c:if test="${requestSecurityCode}">
-				<form:input type="hidden" class="securityCodeClass" path="securityCode"/>
-				<button type="submit" class="positive right pad_right place-order placeOrderWithSecurityCode">
-					<spring:theme code="checkout.summary.placeOrder"/>
-				</button>
-			</c:if>
-			
-			<c:if test="${not requestSecurityCode}">
-				<button type="submit" class="positive right place-order">
-					<spring:theme code="checkout.summary.placeOrder"/>
-				</button>
-			</c:if>
-			<div class="terms">
-				<form:checkbox id="Terms1" path="termsCheck" />
-				<label for="Terms1"><spring:theme code="checkout.summary.placeOrder.readTermsAndConditions" arguments="${getTermsAndConditionsUrl}" /></label>
-			</div>
+			<input type="hidden" name="amazonOrderReferenceId"/>
+			<button type="submit" class="positive right place-order">
+				<spring:theme code="checkout.summary.placeOrder"/>
+			</button>
 		</form:form>
 	</div>
 	<cms:pageSlot position="Section3" var="component">

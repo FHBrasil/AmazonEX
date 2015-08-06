@@ -34,7 +34,8 @@ if(!ACC.amazon)
 				// amazonOrderReferenceId: amazonOrderReferenceId,
 				onOrderReferenceCreate: function(orderReference) {
 					ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
-					alert(amazonOrderReferenceId);
+					$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
+					alert(ACC.amazon.amazonOrderReferenceId);
 				},
 				onAddressSelect: function(orderReference) {
 					$.ajax({

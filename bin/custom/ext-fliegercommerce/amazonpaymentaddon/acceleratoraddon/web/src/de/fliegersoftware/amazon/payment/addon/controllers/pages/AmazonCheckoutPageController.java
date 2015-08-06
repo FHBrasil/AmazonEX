@@ -11,24 +11,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
-import com.amazonservices.mws.offamazonpayments.model.Address;
-import com.amazonservices.mws.offamazonpayments.model.Destination;
-import com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes;
-import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
-import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
-
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
+import de.fliegersoftware.amazon.payment.addon.form.AmazonPlaceOrderForm;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.hybris.platform.acceleratorservices.controllers.page.PageType;
-import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.data.CartData;
-import de.hybris.platform.commercefacades.user.data.AddressData;
-import de.hybris.platform.order.PaymentModeService;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -46,13 +39,13 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	private AmazonCheckoutFacade amazonCheckoutFacade;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@RequireHardLogIn
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
 		LOG.info("AmazonCheckout - checkoutPage");
 		// sets checkout data
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
 		model.addAttribute("cartData", cartData);
 		model.addAttribute("deliveryMethods", getCheckoutFacade().getSupportedDeliveryModes());
+		model.addAttribute("amazonPlaceOrderForm", new AmazonPlaceOrderForm());
 
 		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));
@@ -69,25 +62,6 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		if (!getCheckoutFacade().hasShippingItems()) {
 			return REDIRECT_URL_CART;
 		}
-//		if (StringUtils.isNotBlank(selectedAddressCode)) {
-//			final AddressData selectedAddressData = getCheckoutFacade().getDeliveryAddressForCode(selectedAddressCode);
-//			final boolean hasSelectedAddressData = selectedAddressData != null;
-//			if (hasSelectedAddressData) {
-//				final AddressData cartCheckoutDeliveryAddress = getCheckoutFacade().getCheckoutCart().getDeliveryAddress();
-//				if (isAddressIdChanged(cartCheckoutDeliveryAddress, selectedAddressData)) {
-//					selectedAddressData.setDefaultAddress(true);
-//					userFacade.editAddress(selectedAddressData);
-//					getCheckoutFacade().setDeliveryAddress(selectedAddressData);
-//					if (cartCheckoutDeliveryAddress != null && !cartCheckoutDeliveryAddress.isVisibleInAddressBook()) { // temporary
-//						// address
-//						// should
-//						// be
-//						// removed
-//						userFacade.removeAddress(cartCheckoutDeliveryAddress);
-//					}
-//				}
-//			}
-//		}
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
 			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, null);
 
@@ -101,18 +75,12 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	}
 
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
-	public String placeOrder(final Model model, @RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId) {
+	public String placeOrder(final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm) {
 		LOG.info("AmazonCheckout - placeOrder");
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
-//		OrderReferenceAttributes orderReferenceAttributes = new OrderReferenceAttributes();
-//		OrderTotal orderTotal = new OrderTotal();
-//		orderTotal.setCurrencyCode(cartData.getTotalPrice().getCurrencyIso());
-//		orderTotal.setAmount(cartData.getTotalPrice().getValue().toPlainString());
-//		orderReferenceAttributes.setOrderTotal(orderTotal);
-//		amazonPaymentService.setOrderReferenceDetails(amazonOrderReferenceId, orderReferenceAttributes);
 		AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
 		orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
-		amazonPaymentService.setOrderReferenceDetails(amazonOrderReferenceId, orderReferenceAttributesData);
+		amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
 		if(getCheckoutFacade().authorizePayment(null)) {
 			LOG.info("AmazonCheckout - payment ok");
 		} else {
