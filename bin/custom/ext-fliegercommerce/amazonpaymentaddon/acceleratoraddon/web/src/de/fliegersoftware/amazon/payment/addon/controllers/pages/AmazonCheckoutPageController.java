@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
+import com.amazonservices.mws.offamazonpayments.model.Address;
+import com.amazonservices.mws.offamazonpayments.model.Destination;
+import com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes;
+import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
+import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
+
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
@@ -21,6 +27,8 @@ import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.Abstrac
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.user.data.AddressData;
+import de.hybris.platform.order.PaymentModeService;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -93,12 +101,24 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	}
 
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
-	public String placeOrder(final Model model) {
+	public String placeOrder(final Model model, @RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId) {
 		LOG.info("AmazonCheckout - placeOrder");
+		CartData cartData = getCheckoutFacade().getCheckoutCart();
+//		OrderReferenceAttributes orderReferenceAttributes = new OrderReferenceAttributes();
+//		OrderTotal orderTotal = new OrderTotal();
+//		orderTotal.setCurrencyCode(cartData.getTotalPrice().getCurrencyIso());
+//		orderTotal.setAmount(cartData.getTotalPrice().getValue().toPlainString());
+//		orderReferenceAttributes.setOrderTotal(orderTotal);
+//		amazonPaymentService.setOrderReferenceDetails(amazonOrderReferenceId, orderReferenceAttributes);
+		AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
+		orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
+		amazonPaymentService.setOrderReferenceDetails(amazonOrderReferenceId, orderReferenceAttributesData);
 		if(getCheckoutFacade().authorizePayment(null)) {
-			
+			LOG.info("AmazonCheckout - payment ok");
+		} else {
+			LOG.info("AmazonCheckout - payment failed");
 		}
-		return null;
+		return REDIRECT_URL_AMAZON_CHECKOUT;
 	}
 
 	@Override
