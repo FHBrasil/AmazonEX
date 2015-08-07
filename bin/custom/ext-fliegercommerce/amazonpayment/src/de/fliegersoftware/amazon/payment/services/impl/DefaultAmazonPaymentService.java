@@ -3,6 +3,8 @@ package de.fliegersoftware.amazon.payment.services.impl;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -50,6 +52,7 @@ import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.dto.BillingInfo;
+import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.impl.DefaultPaymentServiceImpl;
 import de.hybris.platform.payment.methods.CardPaymentService;
@@ -266,6 +269,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 		authorizeRequest.setAuthorizationAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
 		authorizeRequest.setAmazonOrderReferenceId(subscriptionID);
+		authorizeRequest.setAuthorizationReferenceId(String.valueOf(System.currentTimeMillis()));
 		AuthorizeResult result = this.mwsAmazonPaymentService.authorize(authorizeRequest);
 		
 		transaction.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
@@ -285,7 +289,16 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		entry.setPaymentTransaction(transaction);
 		entry.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
 		entry.setRequestToken(result.getAuthorizationDetails().getAmazonAuthorizationId());
-		entry.setTransactionStatus(result.getAuthorizationDetails().getAuthorizationStatus().getState());
+		Map<String, String> statusMapping = new HashMap<String, String>();
+		statusMapping.put("Pending", TransactionStatus.ACCEPTED.name());
+		//statusMapping.put("Error", TransactionStatus.ERROR.name());
+		//statusMapping.put("Rejected", TransactionStatus.REJECTED.name());
+		//statusMapping.put("Review", TransactionStatus.REVIEW.name());
+		String key = result.getAuthorizationDetails().getAuthorizationStatus().getState();
+		if(statusMapping.containsKey(key))
+			entry.setTransactionStatus(statusMapping.get(key));
+		else
+			entry.setTransactionStatus(key);
 		entry.setTransactionStatusDetails(result.getAuthorizationDetails().getAuthorizationStatus().getReasonDescription());
 		entry.setCode(newEntryCode);
 		if (subscriptionID != null) {
