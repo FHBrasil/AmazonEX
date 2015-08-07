@@ -5,6 +5,8 @@ import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParamete
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.paypal.hybris.enums.PaymentActionType;
+
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
@@ -34,7 +36,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		{
 			if(cartModel.getPaymentInfo() instanceof AmazonPaymentInfoModel) {
 				final AmazonPaymentInfoModel amazonPaymentInfoModel = (AmazonPaymentInfoModel) cartModel.getPaymentInfo();
-				if (amazonPaymentInfoModel != null && StringUtils.isNotBlank(amazonPaymentInfoModel.getToken()))
+				if (amazonPaymentInfoModel != null && StringUtils.isNotBlank(amazonPaymentInfoModel.getAmazonOrderReferenceId()))
 				{
 					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizeAmazonPayment(cartModel, getPaymentProvider());
 	
@@ -58,7 +60,9 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 			if (StringUtils.isNotBlank(paymentInfoId))
 			{
 				final AmazonPaymentInfoModel amazonPaymentInfoModel = new AmazonPaymentInfoModel();
-				amazonPaymentInfoModel.setToken(paymentInfoId);
+				amazonPaymentInfoModel.setAmazonOrderReferenceId(paymentInfoId);
+				amazonPaymentInfoModel.setCode(paymentInfoId);
+				amazonPaymentInfoModel.setUser(getCurrentUserForCheckout());
 				return getCommerceCheckoutService().setPaymentInfo(cartModel, amazonPaymentInfoModel);
 			}
 		}

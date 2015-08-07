@@ -35,7 +35,6 @@ if(!ACC.amazon)
 				onOrderReferenceCreate: function(orderReference) {
 					ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
 					$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
-					alert(ACC.amazon.amazonOrderReferenceId);
 				},
 				onAddressSelect: function(orderReference) {
 					$.ajax({
