@@ -29,7 +29,8 @@
 	<bean id="amazonCaptureDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData" scope="prototype"/>
 	<bean id="amazonRefundDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData" scope="prototype"/>
 	<bean id="orderTotal" class="com.amazonservices.mws.offamazonpayments.model.OrderTotal" scope="prototype"/>
-	
+	<bean id="orderReferenceAttributes" class="com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes" scope="prototype"/>
+
 	<bean name="amazonCommandFactory" 
 		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
 		scope="tenant">
@@ -223,7 +224,7 @@
     
     <alias name="defaultAmazonOrderReferenceAttributesReverseConverter" alias="amazonOrderReferenceAttributesReverseConverter" />
     <bean id="defaultAmazonOrderReferenceAttributesReverseConverter" parent="abstractPopulatingConverter">
-        <lookup-method name="createTarget" bean="amazonOrderReferenceAttributesReverseData" />
+        <lookup-method name="createTarget" bean="orderReferenceAttributes" />
         <property name="populators">
             <list>
                 <ref bean="amazonOrderReferenceAttributesReversePopulator" />

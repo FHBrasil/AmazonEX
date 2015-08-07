@@ -30,6 +30,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	private static final Logger LOG = Logger.getLogger(AmazonCheckoutPageController.class);
 	private static final String AMAZON_CHECKOUT_CMS_PAGE_LABEL = "amazonCheckout";
 	private static final String REDIRECT_URL_AMAZON_CHECKOUT = REDIRECT_PREFIX + "/checkout/amazon";
+	private static final String REDIRECT_URL_SUMMARY = REDIRECT_PREFIX + "/checkout/multi/summary";
 	private static final String REDIRECT_URL_CART = REDIRECT_PREFIX + "/cart";
 
 	@Resource
@@ -74,6 +75,21 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		return REDIRECT_URL_AMAZON_CHECKOUT;
 	}
 
+	@RequestMapping(value = "/select-payment-method", method = RequestMethod.POST)
+	public String doSelectPaymentMethod(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
+		LOG.info("AmazonCheckout - doSelectDeliveryAddress");
+		if (!hasValidCart()) {
+			return REDIRECT_URL_CART;
+		}
+		if (!getCheckoutFacade().hasShippingItems()) {
+			return REDIRECT_URL_CART;
+		}
+		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
+			
+		}
+		return REDIRECT_URL_AMAZON_CHECKOUT;
+	}
+
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
 	public String placeOrder(final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm) {
 		LOG.info("AmazonCheckout - placeOrder");
@@ -81,10 +97,14 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
 		orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
 		amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
-		if(getCheckoutFacade().authorizePayment(null)) {
-			LOG.info("AmazonCheckout - payment ok");
-		} else {
-			LOG.info("AmazonCheckout - payment failed");
+		amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
+		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
+			if(getCheckoutFacade().authorizePayment(null)) {
+				LOG.info("AmazonCheckout - payment ok");
+				return REDIRECT_URL_SUMMARY;
+			} else {
+				LOG.info("AmazonCheckout - payment failed");
+			}
 		}
 		return REDIRECT_URL_AMAZON_CHECKOUT;
 	}
