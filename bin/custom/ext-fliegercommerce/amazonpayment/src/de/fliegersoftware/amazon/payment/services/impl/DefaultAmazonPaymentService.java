@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
 
 import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
@@ -202,6 +203,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return amazonOrderReferenceAttributesReverseConverter;
 	}
 
+	@Required
 	public void setAmazonOrderReferenceAttributesReverseConverter(
 			Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter) {
 		this.amazonOrderReferenceAttributesReverseConverter = amazonOrderReferenceAttributesReverseConverter;

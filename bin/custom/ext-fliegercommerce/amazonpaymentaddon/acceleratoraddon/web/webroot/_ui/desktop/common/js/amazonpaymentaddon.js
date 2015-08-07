@@ -34,14 +34,15 @@ if(!ACC.amazon)
 				// amazonOrderReferenceId: amazonOrderReferenceId,
 				onOrderReferenceCreate: function(orderReference) {
 					ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
-					alert(amazonOrderReferenceId);
+					$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
 				},
 				onAddressSelect: function(orderReference) {
 					$.ajax({
 						url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
 						type: 'post',
 						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId }
-					}).success(function(response){
+					})
+					.success(function(response){
 						// do something with the response...
 						// like display shipping or taxes to the customer
 					})
@@ -51,16 +52,6 @@ if(!ACC.amazon)
 					.complete(function () {
 						// alert("complete");
 					});
-					// Replace the following code with the action that you want to perform 
-					// after the address is selected.
-					// The amazonOrderReferenceId can be used to retrieve 
-					// the address details by calling the GetOrderReferenceDetails
-					// operation. If rendering the AddressBook and Wallet widgets on the
-					// same page, you should wait for this event before you render the
-					// Wallet widget for the first time.
-					// The Wallet widget will re-render itself on all subsequent 
-					// onAddressSelect events, without any action from you. It is not 
-					// recommended that you explicitly refresh it.
 				},
 				design: {
 					designMode: 'responsive'
@@ -74,8 +65,17 @@ if(!ACC.amazon)
 			new OffAmazonPayments.Widgets.Wallet({
 				sellerId: ACC.addons.amazonpaymentaddon.sellerId,
 				onPaymentSelect: function(orderReference) {
-					// Replace this code with the action that you want to perform
-					// after the payment method is selected.
+					$.ajax({
+						url: ACC.config.contextPath + '/checkout/amazon/select-payment-method',
+						type: 'post',
+						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId }
+					})
+					.success(function(response){
+					})
+					.error(function (xht, textStatus, ex) {
+					})
+					.complete(function () {
+					});
 				},
 				design: {
 					designMode: 'responsive'

@@ -1,14 +1,16 @@
 package de.fliegersoftware.amazon.payment.addon.facades;
 
+import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+
+import com.paypal.hybris.enums.PaymentActionType;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
-import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 
@@ -34,10 +36,9 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		{
 			if(cartModel.getPaymentInfo() instanceof AmazonPaymentInfoModel) {
 				final AmazonPaymentInfoModel amazonPaymentInfoModel = (AmazonPaymentInfoModel) cartModel.getPaymentInfo();
-				if (amazonPaymentInfoModel != null && StringUtils.isNotBlank(amazonPaymentInfoModel.getToken()))
+				if (amazonPaymentInfoModel != null && StringUtils.isNotBlank(amazonPaymentInfoModel.getAmazonOrderReferenceId()))
 				{
-					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizePayment(
-							cartModel, securityCode, getPaymentProvider());
+					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizeAmazonPayment(cartModel, getPaymentProvider());
 	
 					return paymentTransactionEntryModel != null
 							&& (TransactionStatus.ACCEPTED.name().equals(paymentTransactionEntryModel.getTransactionStatus()) || TransactionStatus.REVIEW
@@ -47,7 +48,28 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		}
 		return false;
 	}
-	
+
+	@Override
+	public boolean setPaymentDetails(final String paymentInfoId)
+	{
+		validateParameterNotNullStandardMessage("paymentInfoId", paymentInfoId);
+
+		final CartModel cartModel = getCart();
+		if (checkIfCurrentUserIsTheCartUser())
+		{
+			if (StringUtils.isNotBlank(paymentInfoId))
+			{
+				final AmazonPaymentInfoModel amazonPaymentInfoModel = new AmazonPaymentInfoModel();
+				amazonPaymentInfoModel.setAmazonOrderReferenceId(paymentInfoId);
+				amazonPaymentInfoModel.setCode(paymentInfoId);
+				amazonPaymentInfoModel.setUser(getCurrentUserForCheckout());
+				return getCommerceCheckoutService().setPaymentInfo(cartModel, amazonPaymentInfoModel);
+			}
+		}
+
+		return false;
+	}
+
 	protected AmazonCommerceCheckoutService getCommerceCheckoutService()
 	{
 		return (AmazonCommerceCheckoutService) super.getCommerceCheckoutService();

@@ -19,55 +19,16 @@
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
-	<enumtypes>
-		<!--<enumtype code="PaymentTransactionType" autocreate="false" generate="false">
-			<description>Amazon specific payment transaction type</description>
-			<value code="ORDER" />
-			<value code="REAUTHORIZATION"></value>
-			<value code="SALE" />
-		</enumtype>
-		<enumtype code="PaymentActionType" autocreate="true" generate="true">
-			<description>Amazon available values for payment action</description>
-			<value code="ORDER" />
-			<value code="AUTHORIZATION" />
-			<value code="SALE" />
-		</enumtype>-->
-	</enumtypes>
-	
 	<itemtypes>
 	
 		<itemtype code="AmazonPaymentInfo" extends="PaymentInfo" autocreate="true" generate="true">
 			<attributes>
 				<!-- Token and transactionId are duplicated in case it will be more convenient
 					to store them here -->
-				<attribute qualifier="token" type="java.lang.String">
-					<description>Token for Amazon operations chain</description>
-					<persistence type="property"></persistence>
-					<modifiers read="true" write="true" optional="true" />
-				</attribute>
-				<attribute qualifier="paymentAction" type="PaymentActionType">
-					<description>Payment action for Amazon operations chain</description>
-					<persistence type="property"></persistence>
-					<modifiers read="true" write="true" optional="false"/>
-				</attribute>
-				<attribute qualifier="payerId" type="java.lang.String">
-					<description>PayerId for DoExpressCheckoutPayment Amazon operation</description>
-					<persistence type="property"></persistence>
-					<modifiers read="true" write="true" optional="true" />
-				</attribute>
-				<attribute qualifier="payer" type="java.lang.String">
-					<description>Payer for payment information display</description>
-					<persistence type="property"></persistence>
-					<modifiers read="true" write="true" optional="true" />
-				</attribute>
-				<attribute qualifier="billingAgreementID" type="java.lang.String">
-					<persistence type="property"></persistence>
-					<modifiers read="true" write="true" optional="true" />
-				</attribute>
-				<attribute qualifier="useReferenceTransaction" type="java.lang.Boolean">
-					<description>Defines if the reference transaction(billing agreement) is used for order</description>
+				<attribute qualifier="amazonOrderReferenceId" type="java.lang.String">
+					<description>Order Reference Id for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true" />
+					<modifiers read="true" write="true" optional="false"/>
 				</attribute>
 			</attributes>
 		</itemtype>

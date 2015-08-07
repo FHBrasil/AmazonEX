@@ -60,12 +60,12 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 			final BigDecimal amount) {
 		PaymentTransactionEntryModel transactionEntryModel = null;
 		PaymentInfoModel paymentInfo = cartModel.getPaymentInfo();
-		if ((paymentInfo instanceof AmazonPaymentInfoModel) && (StringUtils.isNotBlank(((AmazonPaymentInfoModel) paymentInfo).getToken()))) {
+		if ((paymentInfo instanceof AmazonPaymentInfoModel) && (StringUtils.isNotBlank(((AmazonPaymentInfoModel) paymentInfo).getAmazonOrderReferenceId()))) {
 			Currency currency = getI18nService().getBestMatchingJavaCurrency(cartModel.getCurrency().getIsocode());
 			String merchantTransactionCode = getGenerateMerchantTransactionCodeStrategy().generateCode(cartModel);
 			
 			transactionEntryModel = getPaymentService().authorize(merchantTransactionCode, amount, currency, 
-					((AmazonPaymentInfoModel) paymentInfo).getToken(), 
+					((AmazonPaymentInfoModel) paymentInfo).getAmazonOrderReferenceId(), 
 					paymentProvider);
 			if (transactionEntryModel != null) {
 				PaymentTransactionModel paymentTransaction = transactionEntryModel

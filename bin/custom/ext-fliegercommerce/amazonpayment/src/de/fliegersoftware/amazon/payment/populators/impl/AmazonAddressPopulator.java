@@ -5,14 +5,16 @@
 package de.fliegersoftware.amazon.payment.populators.impl;
 
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
 
 import com.amazonservices.mws.offamazonpayments.model.Address;
 
+import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
-import de.hybris.platform.commercefacades.user.data.RegionData;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 
@@ -22,7 +24,9 @@ import de.hybris.platform.servicelayer.dto.converter.ConversionException;
  */
 public class AmazonAddressPopulator implements Populator<Address, AddressData>
 {
-   
+	@Resource(name = "i18NFacade")
+	private I18NFacade i18NFacade;
+
 	@Override
 	public void populate(Address source, AddressData target) throws ConversionException
 	{
@@ -45,10 +49,10 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 		target.setDistrict(source.getDistrict());
 		target.setCompanyName(source.getName());
 		
-		RegionData region = new RegionData();
-		region.setName(source.getStateOrRegion());
-		region.setCountryIso(source.getCountryCode());
-		target.setRegion(region);
+		//RegionData region = new RegionData();
+		//region.setName(source.getStateOrRegion());
+		target.setCountry(getI18NFacade().getCountryForIsocode(source.getCountryCode()));
+		//target.setRegion(region);
 		target.setPostalCode(source.getPostalCode());
 		
 		CountryData country = new CountryData();
@@ -56,5 +60,9 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 		target.setCountry(country);
 		target.setPhone(source.getPhone());
 		
-   }
+	}
+
+	protected I18NFacade getI18NFacade() {
+		return i18NFacade;
+	}
 }
