@@ -18,6 +18,7 @@ import java.util.Currency;
 import org.apache.commons.lang.StringUtils;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 
@@ -71,11 +72,7 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 				PaymentTransactionModel paymentTransaction = transactionEntryModel
 						.getPaymentTransaction();
 
-				if ((TransactionStatus.ACCEPTED.name()
-						.equals(transactionEntryModel.getTransactionStatus()))
-						|| (TransactionStatus.REVIEW.name()
-								.equals(transactionEntryModel
-										.getTransactionStatus()))) {
+				if (AmazonTransactionStatus.Pending.name().equals(transactionEntryModel.getTransactionStatus())) {
 					paymentTransaction.setOrder(cartModel);
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });
