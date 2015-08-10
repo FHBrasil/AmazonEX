@@ -266,6 +266,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 		authorizeRequest.setAuthorizationAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
 		authorizeRequest.setAmazonOrderReferenceId(subscriptionID);
+		authorizeRequest.setAuthorizationReferenceId(String.valueOf(System.currentTimeMillis()));
 		AuthorizeResult result = this.mwsAmazonPaymentService.authorize(authorizeRequest);
 		
 		transaction.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
