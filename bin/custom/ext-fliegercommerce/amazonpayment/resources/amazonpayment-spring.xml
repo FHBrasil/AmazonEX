@@ -250,4 +250,8 @@
             </list>
         </property>
     </bean>
+
+	<!-- jobs -->
+
+	<bean id="amazonPaymentCapturingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPaymentCapturingJobPerformable" parent="abstractJobPerformable"/>
 </beans>

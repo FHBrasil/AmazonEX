@@ -72,7 +72,8 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 				PaymentTransactionModel paymentTransaction = transactionEntryModel
 						.getPaymentTransaction();
 
-				if (AmazonTransactionStatus.Pending.name().equals(transactionEntryModel.getTransactionStatus())) {
+				if (AmazonTransactionStatus.Pending.name().equals(transactionEntryModel.getTransactionStatus())
+					|| AmazonTransactionStatus.Open.name().equals(transactionEntryModel.getTransactionStatus())) {
 					paymentTransaction.setOrder(cartModel);
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });

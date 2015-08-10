@@ -5,7 +5,7 @@
 # ============================================ #
 # Set contentCatalog before running this impex #
 # ============================================ #
-$contentCatalog=babyartikelContentCatalog
+$contentCatalog=
 
 #
 # Import the CMS content

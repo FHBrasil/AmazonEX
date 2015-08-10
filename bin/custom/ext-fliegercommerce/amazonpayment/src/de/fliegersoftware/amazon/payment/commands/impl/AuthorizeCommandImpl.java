@@ -13,6 +13,7 @@ import com.amazonservices.mws.offamazonpayments.model.AuthorizeResponse;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
 
 import de.fliegersoftware.amazon.payment.commands.AuthorizeCommand;
+import de.hybris.platform.util.Config;
 
 /**
  * @author taylor.savegnago
@@ -32,6 +33,7 @@ public AuthorizeResult perform(final AuthorizeRequest req) {
    	LOG.info("AuthorizationCommandImpl perform requested");
    	LOG.info("-----------------------------------------------------");
    	req.setSellerId(getSellerId());
+   	req.setTransactionTimeout(Integer.valueOf(Config.getParameter("amazonpaymentaddon.authorization.timeout")));
    	AuthorizeResponse authorize = offAmazonPaymentsService.authorize(req);
    	final AuthorizeResult result = authorize.getAuthorizeResult();
    	

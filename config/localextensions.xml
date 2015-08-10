@@ -6,6 +6,7 @@
         <path dir="${HYBRIS_BIN_DIR}" />
 
         <extension name="mediaimportation" />
+        <extension name="admincockpit"/>
 
         <!-- Flieger Commerce extensions -->
         <extension name="heringfulfilmentprocess" />

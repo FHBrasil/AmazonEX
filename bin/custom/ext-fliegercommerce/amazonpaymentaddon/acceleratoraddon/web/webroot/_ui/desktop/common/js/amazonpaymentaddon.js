@@ -3,8 +3,7 @@ if(!ACC)
 if(!ACC.amazon)
 	ACC.amazon = {};
 
-//$(document).ready(function() {
-	$.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
+$.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 	.done(function(script, textStatus){
 		window.onAmazonLoginReady = function() {
 			amazon.Login.setClientId(ACC.addons.amazonpaymentaddon.clientId);
@@ -35,6 +34,7 @@ if(!ACC.amazon)
 				onOrderReferenceCreate: function(orderReference) {
 					ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
 					$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
+					alert(orderReference.getAmazonOrderReferenceId());
 				},
 				onAddressSelect: function(orderReference) {
 					$.ajax({
@@ -89,4 +89,3 @@ if(!ACC.amazon)
 	.fail(function( jqxhr, settings, exception ) {
 		//alert( "Triggered ajaxError handler." );
 	});
-//});

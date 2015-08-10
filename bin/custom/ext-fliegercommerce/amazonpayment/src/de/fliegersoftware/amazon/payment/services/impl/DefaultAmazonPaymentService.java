@@ -272,32 +272,35 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		authorizeRequest.setAuthorizationReferenceId(String.valueOf(System.currentTimeMillis()));
 		AuthorizeResult result = this.mwsAmazonPaymentService.authorize(authorizeRequest);
 		
-		transaction.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
-		transaction.setRequestToken(result.getAuthorizationDetails().getAmazonAuthorizationId());
-		transaction.setPaymentProvider(paymentProvider);
-		this.modelService.save(transaction);
-
-		PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService
-				.create(PaymentTransactionEntryModel.class);
-		entry.setAmount(BigDecimal.valueOf(Double.parseDouble(result.getAuthorizationDetails().getAuthorizationAmount().getAmount())));
-		if (result.getAuthorizationDetails().getAuthorizationAmount() != null) {
-			entry.setCurrency(this.commonI18NService.getCurrency(result.getAuthorizationDetails().getAuthorizationAmount().getCurrencyCode()));
+		if(result != null) {
+			transaction.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
+			transaction.setRequestToken(result.getAuthorizationDetails().getAmazonAuthorizationId());
+			transaction.setPaymentProvider(paymentProvider);
+			this.modelService.save(transaction);
+	
+			PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService
+					.create(PaymentTransactionEntryModel.class);
+			entry.setAmount(BigDecimal.valueOf(Double.parseDouble(result.getAuthorizationDetails().getAuthorizationAmount().getAmount())));
+			if (result.getAuthorizationDetails().getAuthorizationAmount() != null) {
+				entry.setCurrency(this.commonI18NService.getCurrency(result.getAuthorizationDetails().getAuthorizationAmount().getCurrencyCode()));
+			}
+			entry.setType(PaymentTransactionType.AUTHORIZATION);
+			entry.setTime((result.getAuthorizationDetails().getAuthorizationStatus().getLastUpdateTimestamp() == null) ? new Date()
+					: result.getAuthorizationDetails().getAuthorizationStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
+			entry.setPaymentTransaction(transaction);
+			entry.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
+			entry.setRequestToken(result.getAuthorizationDetails().getAmazonAuthorizationId());
+			entry.setTransactionStatusDetails(result.getAuthorizationDetails().getAuthorizationStatus().getReasonDescription());
+			entry.setTransactionStatus(result.getAuthorizationDetails().getAuthorizationStatus().getState());
+			entry.setCode(newEntryCode);
+			if (subscriptionID != null) {
+				entry.setSubscriptionID(subscriptionID);
+			}
+			this.modelService.save(entry);
+			this.modelService.refresh(transaction);
+			return entry;
 		}
-		entry.setType(PaymentTransactionType.AUTHORIZATION);
-		entry.setTime((result.getAuthorizationDetails().getAuthorizationStatus().getLastUpdateTimestamp() == null) ? new Date()
-				: result.getAuthorizationDetails().getAuthorizationStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
-		entry.setPaymentTransaction(transaction);
-		entry.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
-		entry.setRequestToken(result.getAuthorizationDetails().getAmazonAuthorizationId());
-		entry.setTransactionStatusDetails(result.getAuthorizationDetails().getAuthorizationStatus().getReasonDescription());
-		entry.setTransactionStatus(result.getAuthorizationDetails().getAuthorizationStatus().getState());
-		entry.setCode(newEntryCode);
-		if (subscriptionID != null) {
-			entry.setSubscriptionID(subscriptionID);
-		}
-		this.modelService.save(entry);
-		this.modelService.refresh(transaction);
-		return entry;
+		return null;
 	}
 	
 	@Override
@@ -324,23 +327,26 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		
 		CaptureResult result = this.mwsAmazonPaymentService.capture(captureRequest);
 
-		PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
-		entry.setAmount(BigDecimal.valueOf(Double.parseDouble(result.getCaptureDetails().getCaptureAmount().getAmount())));
-		if (result.getCaptureDetails().getCaptureAmount() != null) {
-			entry.setCurrency(this.commonI18NService.getCurrency(result.getCaptureDetails().getCaptureAmount().getCurrencyCode()));
-		}
-		entry.setType(PaymentTransactionType.CAPTURE);
-		entry.setTime((result.getCaptureDetails().getCaptureStatus().getLastUpdateTimestamp() == null) ? new Date()
-				: result.getCaptureDetails().getCaptureStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
-		entry.setPaymentTransaction(transaction);
-		entry.setRequestId(result.getCaptureDetails().getCaptureReferenceId());
-		entry.setRequestToken(result.getCaptureDetails().getAmazonCaptureId());
-		entry.setTransactionStatus(result.getCaptureDetails().getCaptureStatus().getState());
-		entry.setTransactionStatusDetails(result.getCaptureDetails().getCaptureStatus().getReasonDescription());
-		entry.setCode(newEntryCode);
+		if(result != null) {
+			PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
+			entry.setAmount(BigDecimal.valueOf(Double.parseDouble(result.getCaptureDetails().getCaptureAmount().getAmount())));
+			if (result.getCaptureDetails().getCaptureAmount() != null) {
+				entry.setCurrency(this.commonI18NService.getCurrency(result.getCaptureDetails().getCaptureAmount().getCurrencyCode()));
+			}
+			entry.setType(PaymentTransactionType.CAPTURE);
+			entry.setTime((result.getCaptureDetails().getCaptureStatus().getLastUpdateTimestamp() == null) ? new Date()
+					: result.getCaptureDetails().getCaptureStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
+			entry.setPaymentTransaction(transaction);
+			entry.setRequestId(result.getCaptureDetails().getCaptureReferenceId());
+			entry.setRequestToken(result.getCaptureDetails().getAmazonCaptureId());
+			entry.setTransactionStatus(result.getCaptureDetails().getCaptureStatus().getState());
+			entry.setTransactionStatusDetails(result.getCaptureDetails().getCaptureStatus().getReasonDescription());
+			entry.setCode(newEntryCode);
 
-		this.modelService.save(entry);
-		return entry;
+			this.modelService.save(entry);
+			return entry;
+		}
+		return null;
 	}
 	
 	@Override

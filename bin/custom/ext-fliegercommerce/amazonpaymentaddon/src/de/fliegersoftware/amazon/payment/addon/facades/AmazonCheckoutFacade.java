@@ -39,7 +39,8 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizeAmazonPayment(cartModel, getPaymentProvider());
 	
 					return paymentTransactionEntryModel != null
-							&& (AmazonTransactionStatus.Pending.name().equals(paymentTransactionEntryModel.getTransactionStatus()));
+							&& (AmazonTransactionStatus.Pending.name().equals(paymentTransactionEntryModel.getTransactionStatus())
+								|| AmazonTransactionStatus.Open.name().equals(paymentTransactionEntryModel.getTransactionStatus()));
 				}
 			}
 		}
