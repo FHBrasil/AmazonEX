@@ -5,13 +5,11 @@ import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParamete
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.paypal.hybris.enums.PaymentActionType;
-
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
 import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 
 
@@ -41,8 +39,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizeAmazonPayment(cartModel, getPaymentProvider());
 	
 					return paymentTransactionEntryModel != null
-							&& (TransactionStatus.ACCEPTED.name().equals(paymentTransactionEntryModel.getTransactionStatus()) || TransactionStatus.REVIEW
-									.name().equals(paymentTransactionEntryModel.getTransactionStatus()));
+							&& (AmazonTransactionStatus.Pending.name().equals(paymentTransactionEntryModel.getTransactionStatus()));
 				}
 			}
 		}

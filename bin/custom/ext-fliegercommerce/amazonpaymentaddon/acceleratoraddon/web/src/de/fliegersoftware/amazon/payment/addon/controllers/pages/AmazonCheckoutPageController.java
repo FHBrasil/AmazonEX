@@ -22,6 +22,8 @@ import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.Abstrac
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.order.data.OrderData;
+import de.hybris.platform.order.InvalidCartException;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -91,7 +93,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	}
 
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
-	public String placeOrder(final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm) {
+	public String placeOrder(final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm
+			, final RedirectAttributes redirectModel) {
 		LOG.info("AmazonCheckout - placeOrder");
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
 		AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
@@ -101,7 +104,15 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
 			if(getCheckoutFacade().authorizePayment(null)) {
 				LOG.info("AmazonCheckout - payment ok");
-				return REDIRECT_URL_SUMMARY;
+				final OrderData orderData;
+				try {
+					orderData = getCheckoutFacade().placeOrder();
+				} catch (InvalidCartException e) {
+					LOG.error("Failed to place Order", e);
+					GlobalMessages.addErrorMessage(redirectModel, "checkout.placeOrder.failed");
+					return REDIRECT_URL_AMAZON_CHECKOUT;
+				}
+				return redirectToOrderConfirmationPage(orderData);
 			} else {
 				LOG.info("AmazonCheckout - payment failed");
 			}
