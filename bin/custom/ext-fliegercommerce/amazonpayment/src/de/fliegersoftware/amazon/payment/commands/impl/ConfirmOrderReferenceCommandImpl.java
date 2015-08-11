@@ -25,7 +25,7 @@ public class ConfirmOrderReferenceCommandImpl extends AbstractCommandImpl implem
 			LOG.info("-----------------------------------------------------");
 			LOG.info("ConfirmOrderReferenceCommandImpl perform requested");
 			LOG.info("-----------------------------------------------------");
-
+			
 			req.setSellerId(getSellerId());
 			offAmazonPaymentsService.confirmOrderReference(req);
 			

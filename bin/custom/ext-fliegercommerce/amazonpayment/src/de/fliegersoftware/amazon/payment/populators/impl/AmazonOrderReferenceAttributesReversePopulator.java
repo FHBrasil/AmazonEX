@@ -17,8 +17,10 @@ import org.springframework.util.Assert;
 
 import com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes;
 import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
+import com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
+import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
 import de.hybris.platform.commercefacades.product.data.PriceData;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
@@ -32,6 +34,8 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
 public class AmazonOrderReferenceAttributesReversePopulator implements Populator<AmazonOrderReferenceAttributesData, OrderReferenceAttributes>
 {
 	private Converter<PriceData, OrderTotal> amazonOrderTotalReverseConverter;
+	
+	private Converter<AmazonSellerOrderAttributesData, SellerOrderAttributes> amazonSellerOrderAttributesReverseConverter;
 
 	@Override
 	public void populate(final AmazonOrderReferenceAttributesData source, final OrderReferenceAttributes target)
@@ -46,6 +50,10 @@ public class AmazonOrderReferenceAttributesReversePopulator implements Populator
 		if (source.getOrderTotal() != null) {
 			target.setOrderTotal(amazonOrderTotalReverseConverter.convert(source.getOrderTotal()));
 		}
+		
+		if (source.getSellerOrderAttributes() != null) {
+			target.setSellerOrderAttributes(amazonSellerOrderAttributesReverseConverter.convert(source.getSellerOrderAttributes()));
+		}
 	}
 
 	public Converter<PriceData, OrderTotal> getAmazonOrderTotalReverseConverter() {
@@ -56,4 +64,13 @@ public class AmazonOrderReferenceAttributesReversePopulator implements Populator
 		this.amazonOrderTotalReverseConverter = amazonOrderTotalReverseConverter;
 	}
 
+	public Converter<AmazonSellerOrderAttributesData, SellerOrderAttributes> getAmazonSellerOrderAttributesReverseConverter() {
+		return amazonSellerOrderAttributesReverseConverter;
+	}
+
+	public void setAmazonSellerOrderAttributesReverseConverter(
+			Converter<AmazonSellerOrderAttributesData, SellerOrderAttributes> amazonSellerOrderAttributesReverseConverter) {
+		this.amazonSellerOrderAttributesReverseConverter = amazonSellerOrderAttributesReverseConverter;
+	}
+	
 }

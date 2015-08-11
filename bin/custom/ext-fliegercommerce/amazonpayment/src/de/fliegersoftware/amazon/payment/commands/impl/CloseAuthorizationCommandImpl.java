@@ -28,6 +28,7 @@ public class CloseAuthorizationCommandImpl extends AbstractCommandImpl implement
 			LOG.info("CloseAuthorizationCommandImpl perform requested");
 			LOG.info("-----------------------------------------------------");
 
+			req.setSellerId(getSellerId());
 			CloseAuthorizationResponse closeAuthorization = offAmazonPaymentsService.closeAuthorization(req);
 			final CloseAuthorizationResult result = closeAuthorization.getCloseAuthorizationResult();
 

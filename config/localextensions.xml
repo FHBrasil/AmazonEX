@@ -49,7 +49,7 @@
         <extension name="amazonpayment"/>
         <extension name="amazonloginaddon"/>
         <extension name="amazonpaymentaddon"/>
-        <extension name="amazonrest"/>
+<!--         <extension name="amazonrest"/> -->
         
     </extensions>
 </hybrisconfig>

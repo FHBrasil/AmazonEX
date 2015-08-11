@@ -28,6 +28,7 @@ public class CancelCommandImpl extends AbstractCommandImpl implements CancelComm
 			LOG.info("CancelCommandImpl perform requested");
 			LOG.info("-----------------------------------------------------");
 
+			req.setSellerId(getSellerId());
 			CancelOrderReferenceResponse cancel = offAmazonPaymentsService.cancelOrderReference(req);
 			final CancelOrderReferenceResult result = cancel.getCancelOrderReferenceResult();
 

@@ -96,10 +96,5 @@
 			</attributes>
 		</itemtype>
 	
-<!-- 		<itemtype code="AmazonCartBackup" autocreate="true" generate="true" extends="Cart" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonCartBackup" /> -->
-	
-<!-- 		<itemtype code="CheckAmazonOrderJob" extends="Job" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.job.CheckAmazonOrderJob"/> -->
-		
-<!-- 		<itemtype code="CancelAmazonOrderJob" extends="Job" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.job.CancelAmazonOrderJob"/> -->
 	</itemtypes>
 </items>
