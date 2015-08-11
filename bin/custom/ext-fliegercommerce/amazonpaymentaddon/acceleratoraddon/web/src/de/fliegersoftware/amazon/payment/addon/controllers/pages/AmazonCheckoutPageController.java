@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
+import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.addon.form.AmazonPlaceOrderForm;
@@ -97,9 +98,11 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			, final RedirectAttributes redirectModel) {
 		LOG.info("AmazonCheckout - placeOrder");
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
-		AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
-		orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
-		amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
+		{
+			AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
+			orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
+			amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
+		}
 		amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
 		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
 			if(getCheckoutFacade().authorizePayment(null)) {
@@ -107,6 +110,14 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 				final OrderData orderData;
 				try {
 					orderData = getCheckoutFacade().placeOrder();
+					{
+						AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
+						AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
+						sellerOrderAttributes.setSellerOrderId(orderData.getCode());
+						sellerOrderAttributes.setStoreName(orderData.getStore());
+						orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
+						amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
+					}
 				} catch (InvalidCartException e) {
 					LOG.error("Failed to place Order", e);
 					GlobalMessages.addErrorMessage(redirectModel, "checkout.placeOrder.failed");

@@ -321,7 +321,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		
 		CaptureRequest captureRequest = new CaptureRequest();
 		captureRequest.setAmazonAuthorizationId(transaction.getRequestToken());
-		captureRequest.setCaptureReferenceId(transaction.getRequestId());
+		captureRequest.setCaptureReferenceId(String.valueOf(System.currentTimeMillis()));
 		
 		captureRequest.setCaptureAmount(getAmount(String.valueOf(auth.getAmount()), auth.getCurrency().getIsocode()));
 		

@@ -1,5 +1,5 @@
 package de.fliegersoftware.amazon.payment.dto;
 
 public enum AmazonTransactionStatus {
-	Pending, Open, Declined
+	Pending, Open, Declined, Canceled, Closed
 }

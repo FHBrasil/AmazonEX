@@ -77,6 +77,7 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 					paymentTransaction.setOrder(cartModel);
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });
+					getPaymentService().capture(paymentTransaction);
 				} else {
 					getModelService().removeAll(
 							Arrays.asList(new ItemModel[] { paymentTransaction,
