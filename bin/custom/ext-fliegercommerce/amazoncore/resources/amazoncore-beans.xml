@@ -72,4 +72,7 @@
 		<property name="softDescriptor" type="String"/>
 	</bean>
 
+	<bean class="de.fliegersoftware.amazon.core.data.job.CheckAmazonOrderJob" />
+	
+	<bean class="de.fliegersoftware.amazon.core.data.job.CancelAmazonOrderJob" />
 </beans>
