@@ -267,6 +267,12 @@
         </property>
     </bean>
 
+	<alias alias="createOrderFromCartStrategy" name="amazonCreateOrderFromCartStrategy"/>
+	<bean name="amazonCreateOrderFromCartStrategy" parent="defaultCreateOrderFromCartStrategy"
+		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCreateOrderFromCartStrategy">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
 	<!-- jobs -->
 
 	<bean id="amazonPaymentCapturingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPaymentCapturingJobPerformable" parent="abstractJobPerformable"/>

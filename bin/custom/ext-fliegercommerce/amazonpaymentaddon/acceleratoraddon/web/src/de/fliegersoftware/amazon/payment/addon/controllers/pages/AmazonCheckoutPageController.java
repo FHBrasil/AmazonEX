@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
+import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.addon.form.AmazonPlaceOrderForm;
@@ -97,14 +98,17 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			, final RedirectAttributes redirectModel) {
 		LOG.info("AmazonCheckout - placeOrder");
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
+		OrderData orderData = getCheckoutFacade().createOrderFromCart();
 		AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
 		orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
+		AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
+		sellerOrderAttributes.setSellerOrderId(orderData.getCode());
+		orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
 		amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
 		amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
 		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
 			if(getCheckoutFacade().authorizePayment(null)) {
 				LOG.info("AmazonCheckout - payment ok");
-				final OrderData orderData;
 				try {
 					orderData = getCheckoutFacade().placeOrder();
 				} catch (InvalidCartException e) {

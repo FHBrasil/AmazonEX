@@ -4,12 +4,17 @@ import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParamete
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
+import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.order.InvalidCartException;
+import de.hybris.platform.order.OrderService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 
 
@@ -20,6 +25,8 @@ import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 {
 	private static final Logger LOG = Logger.getLogger(AmazonCheckoutFacade.class);
+
+	private OrderService orderService;
 
 	/*
 	 * (non-Javadoc)
@@ -68,9 +75,30 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		return false;
 	}
 
+	public OrderData createOrderFromCart() {
+		try {
+			CartModel cartModel = getCart();
+			OrderModel orderModel = getOrderService().createOrderFromCart(cartModel);
+			cartModel.setPreCreatedOrder(orderModel);
+			getModelService().saveAll(cartModel, orderModel);
+			return getOrderConverter().convert(orderModel);
+		} catch (InvalidCartException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	protected AmazonCommerceCheckoutService getCommerceCheckoutService()
 	{
 		return (AmazonCommerceCheckoutService) super.getCommerceCheckoutService();
 	}
 
+	protected OrderService getOrderService() {
+		return orderService;
+	}
+
+	@Required
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
 }
