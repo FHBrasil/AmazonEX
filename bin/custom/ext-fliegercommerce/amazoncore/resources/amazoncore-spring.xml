@@ -12,12 +12,12 @@
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
-           http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<!--
 	The hybris platform provides one single Spring application context for beans located at the jalo layer.
@@ -79,7 +79,22 @@
 	      	            !execution(* getPK(..))" />  	            
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
 	  -->
+  	<alias name="amazonUserFacade" alias="amazonUserFacade" />
 	
-			
-			
+	<bean id="amazonUserFacade" class="de.fliegersoftware.amazon.core.facades.impl.DefaultAmazonUserFacade">
+		<property name="amazonUserService" ref="amazonUserService" />
+		<property name="userService" ref="userService" />
+		<property name="modelService" ref="modelService" />
+		<property name="customerNameStrategy" ref="customerNameStrategy" />
+		<property name="customerAccountService" ref="customerAccountService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+	
+	<context:component-scan base-package="de.fliegersoftware.amazon.core"/>
+	
+	<alias name="defaultAmazonUserService" alias="amazonUserService"/>
+    <bean id="defaultAmazonUserService" class="de.fliegersoftware.amazon.core.impl.DefaultAmazonUserService">
+        <property name="amazonUserDAO" ref="amazonUserDAO"/>
+    </bean>
+	
 </beans>

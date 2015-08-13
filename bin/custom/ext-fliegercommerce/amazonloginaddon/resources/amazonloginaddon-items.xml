@@ -46,5 +46,8 @@
 			</attributes>
 		</itemtype>
 -->
+	<itemtype code="AmazonLoginComponent" autocreate="true" generate="true" extends="CMSParagraphComponent">
+	</itemtype>
+	
 	</itemtypes>
 </items>

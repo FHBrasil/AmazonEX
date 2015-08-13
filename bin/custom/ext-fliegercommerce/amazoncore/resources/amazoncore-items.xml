@@ -18,6 +18,13 @@
 
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
+			
+	<relations>
+		<relation localized="false" code="AmazonLoginRelation" generate="true" autocreate="true">
+			<sourceElement type="Customer" qualifier="customer" cardinality="one" />
+			<targetElement type="AmazonCustomer" qualifier="amazonCustomer" cardinality="many" />
+		</relation>
+	</relations>
 
 	<itemtypes>
 	
@@ -92,6 +99,14 @@
 					<persistence type="property"/>
 					<modifiers read="true" write="true" optional="true"/>
 					<defaultvalue>false</defaultvalue>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="AmazonCustomer" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonCustomer">
+			<attributes>
+				<attribute type="java.lang.String" qualifier="amazonCustomerId">
+					<persistence type="property" />
 				</attribute>
 			</attributes>
 		</itemtype>
