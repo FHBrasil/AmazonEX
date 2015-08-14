@@ -53,9 +53,9 @@
 		</bean>
 		
 		<bean id="amazonAuthenticationProvider" class="de.fliegersoftware.amazon.login.addon.security.AmazonAuthenticationProvider">
-		<property name="userDetailsService" ref="originalUidUserDetailsService" />
-		<property name="amazonUserFacade" ref="amazonUserFacade" />
-		<property name="sessionService" ref="sessionService"/>
-	</bean>
+			<property name="userDetailsService" ref="originalUidUserDetailsService" />
+			<property name="amazonUserFacade" ref="amazonUserFacade" />
+			<property name="sessionService" ref="sessionService"/>
+		</bean>
 		
 </beans>

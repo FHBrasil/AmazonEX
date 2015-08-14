@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
+import de.fliegersoftware.amazon.login.addon.constants.AmazonLoginAddonConstants;
 import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonLoginForm;
 import de.fliegersoftware.amazon.login.addon.security.AmazonAutoLoginStrategy;
@@ -136,7 +137,7 @@ public class AmazonLoginController extends AbstractPageController {
 		{
 			LOG.warn(e.getMessage());
 		}
-		return AmazonloginaddonControllerConstants.Views.Pages.AmazonConfirmAccountPage;
+		return AmazonLoginAddonConstants.Views.Pages.AmazonConfirmAccountPage;
 	}
 
 	private static String firstName(String name) 

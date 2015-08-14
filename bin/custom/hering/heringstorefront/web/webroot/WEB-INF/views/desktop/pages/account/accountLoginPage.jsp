@@ -33,6 +33,7 @@
                 <%-- login.tag --%>
                 <c:url value="/login/loginOver" var="loginActionUrl" />
                 <user:login actionNameKey="login.login" action="${loginActionUrl}" />
+                
             </div>
             <div class="col-sm-4">
                 <%-- loginBanner.tag --%>

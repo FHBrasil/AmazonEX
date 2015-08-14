@@ -13,9 +13,27 @@
  */
 package de.fliegersoftware.amazon.login.addon.controllers;
 
+import de.fliegersoftware.amazon.login.addon.model.AmazonLoginComponentModel;
+
 /**
  */
 public interface AmazonloginaddonControllerConstants
 {
-	// implement here controller constants used by this extension
+	final String ADDON_PREFIX = "addon:/amazonloginaddon/";
+
+	interface Actions {
+		interface Cms {
+			String _Prefix = "/view/";
+			String _Suffix = "Controller";
+
+			String AmazonLoginComponent = _Prefix + AmazonLoginComponentModel._TYPECODE + _Suffix;
+		}
+	}
+
+	interface Views {
+		interface Pages {
+			String AmazonConfirmAccountPage = ADDON_PREFIX
+					+ "pages/amazonConfirmAccountPage";
+		}
+	}
 }
