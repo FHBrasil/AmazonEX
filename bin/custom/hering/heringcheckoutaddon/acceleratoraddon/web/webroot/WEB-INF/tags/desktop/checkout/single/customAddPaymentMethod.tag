@@ -55,6 +55,9 @@
 	                	<c:if test="${paymentMode.code == 'klarna'}">
 	                		<methodPayment:methodKlarnaRechnung/>
 	                	</c:if>
+	                	<c:if test="${paymentMode.code == 'amazon'}">
+	                		<methodPayment:methodAmazon />
+	                	</c:if>
 					</div>
 				</div>
 		    </c:if>
