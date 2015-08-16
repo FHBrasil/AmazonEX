@@ -73,11 +73,11 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 						.getPaymentTransaction();
 
 				if (AmazonTransactionStatus.Pending.name().equals(transactionEntryModel.getTransactionStatus())
-					|| AmazonTransactionStatus.Open.name().equals(transactionEntryModel.getTransactionStatus())) {
+					|| AmazonTransactionStatus.Open.name().equals(transactionEntryModel.getTransactionStatus())
+					|| AmazonTransactionStatus.Closed.name().equals(transactionEntryModel.getTransactionStatus())) {
 					paymentTransaction.setOrder(cartModel);
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });
-					getPaymentService().capture(paymentTransaction);
 				} else {
 					getModelService().removeAll(
 							Arrays.asList(new ItemModel[] { paymentTransaction,

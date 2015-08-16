@@ -47,7 +47,8 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	
 					return paymentTransactionEntryModel != null
 							&& (AmazonTransactionStatus.Pending.name().equals(paymentTransactionEntryModel.getTransactionStatus())
-								|| AmazonTransactionStatus.Open.name().equals(paymentTransactionEntryModel.getTransactionStatus()));
+								|| AmazonTransactionStatus.Open.name().equals(paymentTransactionEntryModel.getTransactionStatus())
+								|| AmazonTransactionStatus.Closed.name().equals(paymentTransactionEntryModel.getTransactionStatus()));
 				}
 			}
 		}

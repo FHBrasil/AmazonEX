@@ -57,6 +57,12 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.AmazonCheckoutPage;
 	}
 
+	@RequestMapping(value = "/update-payment-amount", method = RequestMethod.POST)
+	public String doUpdatePaymentAmmount(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId) {
+		
+		return REDIRECT_URL_AMAZON_CHECKOUT;
+	}
+
 	@RequestMapping(value = "/select-delivery-address", method = RequestMethod.POST)
 	public String doSelectDeliveryAddress(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
 		LOG.info("AmazonCheckout - doSelectDeliveryAddress");
@@ -99,14 +105,14 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		LOG.info("AmazonCheckout - placeOrder");
 		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
 			CartData cartData = getCheckoutFacade().getCheckoutCart();
-   		OrderData orderData = getCheckoutFacade().createOrderFromCart();
-   		AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
-   		orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
-   		AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
-   		sellerOrderAttributes.setSellerOrderId(orderData.getCode());
-   		orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
-   		amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
-   		amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
+			OrderData orderData = getCheckoutFacade().createOrderFromCart();
+			AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
+			orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
+			AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
+			sellerOrderAttributes.setSellerOrderId(orderData.getCode());
+			orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
+			amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
+			amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
 			if(getCheckoutFacade().authorizePayment(null)) {
 				LOG.info("AmazonCheckout - payment ok");
 				try {
