@@ -89,6 +89,7 @@
 		</form:form>
 	</div>
 </div>
+<div id="LoginWithAmazon"></div>
 <small>
 	<a href="<c:url value='/login/pw/request'/>"
 	    data-url="<c:url value='/login/pw/request'/>" data-fancybox-type="iframe"
