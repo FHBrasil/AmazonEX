@@ -142,15 +142,14 @@ public class AmazonLoginController extends AbstractPageController {
 
 	private static String firstName(String name) 
 	{
-		String fn[] = new String[1];
-		fn = name.split(" ");
+		String fn[] = name.split(" ", 2);
+		
 		return fn[0];
 	}
 
 	private static String lastName(String name) 
 	{
-		String ln[] = new String[1];
-		ln = name.split(" ");
+		String ln[] = name.split(" ", 2);
 		try 
 		{
 			return ln[1];
@@ -159,7 +158,7 @@ public class AmazonLoginController extends AbstractPageController {
 		{
 			//
 		}
-		return "";
+		return "(Surname)";
 	}
 
 	public AmazonUserFacade getAmazonUserFacade() {
