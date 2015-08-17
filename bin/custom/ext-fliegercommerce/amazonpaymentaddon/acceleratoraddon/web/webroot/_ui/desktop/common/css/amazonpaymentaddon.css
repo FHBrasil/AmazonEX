@@ -1,9 +1,8 @@
 #addressBookWidgetDiv{height: 228px;}
 #walletWidgetDiv{height: 228px;}
-form #amazonPlaceOrderForm{
+.amazonLookalikeDiv{
 	border: 1px solid #bbb;
 	border-radius: 6px;
 	padding: 7px;
-	margin-top: 10px;
 	height: 228px;
 }

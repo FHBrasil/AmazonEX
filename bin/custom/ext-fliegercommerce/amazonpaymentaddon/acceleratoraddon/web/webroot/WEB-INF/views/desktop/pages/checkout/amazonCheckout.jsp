@@ -32,32 +32,50 @@
 	<cms:pageSlot position="Section2B" var="component" element="div" class="col-sm-4">
 		<cms:component component="${component}"/>
 	</cms:pageSlot>
-	<div class="col-sm-4">
+    
+    
+    
+    
+    
+    
+    
+	<div class="col-sm-4 amazonLookalikeDiv">
 		<div>
 			<c:set var="showTax" value="${false}"/>
-			<%--<cart:cartTotals cartData="${cartData}" showTaxEstimate="false" showTax="${showTax}"/>--%>
+			<cart:cartTotals cartData="${cartData}" showTaxEstimate="false" showTax="${showTax}"/>
 			<cart:cartPromotions cartData="${cartData}"/>
-			<multi-checkout:deliveryCartItems cartData="${cartData}"/>
-			<c:forEach items="${cartData.pickupOrderGroups}" var="groupData" varStatus="status">
-				<multi-checkout:pickupCartItems cartData="${cartData}" groupData="${groupData}" index="${status.index}" showHead="true" />
-			</c:forEach>
+			
 		</div>
 
 		<c:url value="/checkout/amazon/placeOrder" var="placeOrderUrl" />
-		<form:form action="${placeOrderUrl}" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
+		
+	</div>
+
+	<div class="col-sm-12 amazonLookalikeDiv">
+		<multi-checkout:deliveryCartItems cartData="${cartData}"/>
+		<c:forEach items="${cartData.pickupOrderGroups}" var="groupData" varStatus="status">
+			<multi-checkout:pickupCartItems cartData="${cartData}" groupData="${groupData}" index="${status.index}" showHead="true" />
+		</c:forEach>
+    </div>
+    <div class="col-sm-12 amazonLookalikeDiv">
+    
+    <form:form action="${placeOrderUrl}" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
 			<c:if test="${sandboxMode}">
-			<div>
 				<amazon-sandbox:sandboxModeControls />
-			</div>
 			</c:if>
 			<input type="hidden" name="amazonOrderReferenceId"/>
 			<button type="submit" class="positive right place-order">
 				<spring:theme code="checkout.summary.placeOrder"/>
 			</button>
 		</form:form>
-	</div>
+    
+    </div>
+    
+    
+    
+    
 	<cms:pageSlot position="Section3" var="component">
-		<cms:component component="${component}" class="col-sm-4"/>
+		<cms:component component="${component}" class="col-sm-12"/>
 	</cms:pageSlot>
 	
 </template:page>
