@@ -59,7 +59,9 @@
 	</div>
 	<div class="col-xs-12 text-right" style="margin-top:15px;margin-bottom:50px;">
 		<spring:theme code="basket.or" />&nbsp;
-		<a href="#"><img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/de/live/prod/image/lwa/gold/small/PwA.png"></a>
+		<cms:pageSlot position="Section1" var="component">
+	    	<cms:component component="${component}" />
+	    </cms:pageSlot>
 	</div>
 </div>
 
