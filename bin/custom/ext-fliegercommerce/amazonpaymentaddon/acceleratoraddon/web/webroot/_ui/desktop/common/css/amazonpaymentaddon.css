@@ -1,2 +1,9 @@
-#addressBookWidgetDiv{width: 350px; height: 228px;}
-#walletWidgetDiv{width: 350px; height: 228px;}
+#addressBookWidgetDiv{height: 228px;}
+#walletWidgetDiv{height: 228px;}
+form #amazonPlaceOrderForm{
+	border: 1px solid #bbb;
+	border-radius: 6px;
+	padding: 7px;
+	margin-top: 10px;
+	height: 228px;
+}
