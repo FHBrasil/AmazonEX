@@ -105,6 +105,7 @@
 		<!--  -->
 
 		<!-- MiniCart and CartPopup can occur on either secure or insecure pages -->
+		<security:intercept-url pattern="/cart" requires-channel="https"/>
 		<security:intercept-url pattern="/cart/rollover/*" requires-channel="any" />
 		<security:intercept-url pattern="/cart/miniCart/*" requires-channel="any" />
 
