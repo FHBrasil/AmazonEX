@@ -37,7 +37,7 @@
                 <a class="active" href="<c:url value="/my-account/my-wishlist"/>">
                     <span class="babicon babicon-heart"></span><span class="count150519">12</span>
                 </a>
-                <a class="" href="<c:url value="/login"/>">
+                <a class="" href="<c:url value="/my-account"/>">
                     <span class="babicon babicon-user"></span>
                 </a>
             </div>
