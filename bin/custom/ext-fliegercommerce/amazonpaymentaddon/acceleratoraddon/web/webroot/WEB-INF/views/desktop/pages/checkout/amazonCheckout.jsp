@@ -11,6 +11,7 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags/desktop/common"%>
 <%@ taglib prefix="breadcrumb" tagdir="/WEB-INF/tags/desktop/nav/breadcrumb"%>
 <%@ taglib prefix="multi-checkout" tagdir="/WEB-INF/tags/addons/b2ccheckoutaddon/desktop/checkout/multi" %>
+<%@ taglib prefix="amazon-sandbox" tagdir="/WEB-INF/tags/addons/amazonpaymentaddon/desktop/checkout/sandbox" %>
 
 <template:page pageTitle="${pageTitle}" hideHeaderLinks="true">
 	<div id="globalMessages">
@@ -40,10 +41,15 @@
 			<c:forEach items="${cartData.pickupOrderGroups}" var="groupData" varStatus="status">
 				<multi-checkout:pickupCartItems cartData="${cartData}" groupData="${groupData}" index="${status.index}" showHead="true" />
 			</c:forEach>
-		</div>	
+		</div>
 
 		<c:url value="/checkout/amazon/placeOrder" var="placeOrderUrl" />
 		<form:form action="${placeOrderUrl}" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
+			<c:if test="${sandboxMode}">
+			<div>
+				<amazon-sandbox:sandboxModeControls />
+			</div>
+			</c:if>
 			<input type="hidden" name="amazonOrderReferenceId"/>
 			<button type="submit" class="positive right place-order">
 				<spring:theme code="checkout.summary.placeOrder"/>

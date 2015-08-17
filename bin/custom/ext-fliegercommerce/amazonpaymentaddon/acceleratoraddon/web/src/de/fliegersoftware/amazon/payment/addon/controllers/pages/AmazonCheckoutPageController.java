@@ -17,6 +17,7 @@ import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.addon.form.AmazonPlaceOrderForm;
+import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.hybris.platform.acceleratorservices.controllers.page.PageType;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
@@ -25,6 +26,7 @@ import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.order.InvalidCartException;
+import de.hybris.platform.util.Config;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -50,6 +52,9 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		model.addAttribute("cartData", cartData);
 		model.addAttribute("deliveryMethods", getCheckoutFacade().getSupportedDeliveryModes());
 		model.addAttribute("amazonPlaceOrderForm", new AmazonPlaceOrderForm());
+
+		// sets sandbox mode if enabled
+		model.addAttribute("sandboxMode", Config.getBoolean(AmazonpaymentConstants.SANDBOX_MODE_CONFIG, false));
 
 		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));
