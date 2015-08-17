@@ -16,32 +16,4 @@ $contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCata
 # Create page
 #
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
-;;amazonCheckout;Amazon Checkout Page;ContentPage1Template;amazonCheckout
-
-#
-# Create Components
-#
-INSERT_UPDATE AmazonPayButtonComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
-;;AmazonCheckoutAmazonPayButtonComponent;AmazonPayButtonComponent;AmazonCheckoutAmazonPayButtonComponent
-
-INSERT_UPDATE AmazonAddressBookComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
-;;AmazonCheckoutAmazonAddressBookComponent;AmazonAddressBookComponent;AmazonCheckoutAmazonAddressBookComponent
-
-INSERT_UPDATE AmazonWalletComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
-;;AmazonCheckoutAmazonWalletComponent;AmazonWalletComponent;AmazonCheckoutAmazonWalletComponent
-
-#
-# Create slot
-#
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
-;;Section1Slot-AmazonCheckout;Default Section1 for Amazon Checkout Page;true;AmazonCheckoutAmazonPayButtonComponent
-;;Section2ASlot-AmazonCheckout;Default Section2A for Amazon Checkout Page;true;AmazonCheckoutAmazonAddressBookComponent
-;;Section2BSlot-AmazonCheckout;Default Section2B for Amazon Checkout Page;true;AmazonCheckoutAmazonWalletComponent
-
-#
-# Create slot for page
-#
-INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
-;;Section1-AmazonCheckout;Section1;amazonCheckout;Section1Slot-AmazonCheckout
-;;Section2A-AmazonCheckout;Section2A;amazonCheckout;Section2ASlot-AmazonCheckout
-;;Section2B-AmazonCheckout;Section2B;amazonCheckout;Section2BSlot-AmazonCheckout
+;;amazonAccountConfirmation;Amazon Confirm Account Page;ContentPage1Template;amazonAccountConfirmation
