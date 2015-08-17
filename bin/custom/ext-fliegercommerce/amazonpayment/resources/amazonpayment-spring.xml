@@ -273,6 +273,9 @@
 		<property name="flexibleSearchService" ref="flexibleSearchService" />
 	</bean>
 
+	<bean name="amazonSandboxSimulationFacade" class="de.fliegersoftware.amazon.payment.facades.impl.AmazonSandboxSimulationFacadeImpl">
+	</bean>
+
 	<!-- jobs -->
 
 	<bean id="amazonPaymentCapturingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPaymentCapturingJobPerformable" parent="abstractJobPerformable"/>

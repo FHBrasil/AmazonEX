@@ -43,6 +43,6 @@ public class AmazonSandboxSimulationConfig {
 	}
 
 	public void setSimulateRefundError(SimulateRefundError e) {
-		this.simulateRefundError = e ? != null ? e : SimulateRefundError.None;
+		this.simulateRefundError = e != null ? e : SimulateRefundError.None;
 	}
 }
