@@ -6,6 +6,7 @@
 <%@ taglib prefix="formElement" tagdir="/WEB-INF/tags/desktop/formElement"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="theme" tagdir="/WEB-INF/tags/shared/theme"%>
+<%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart"%>
 <%@ taglib prefix="user" tagdir="/WEB-INF/tags/desktop/user"%>
@@ -88,6 +89,7 @@
 		</form:form>
 	</div>
 </div>
+<div id="LoginWithAmazon"></div>
 <small>
 	<a href="<c:url value='/login/pw/request'/>"
 	    data-url="<c:url value='/login/pw/request'/>" data-fancybox-type="iframe"
@@ -97,9 +99,9 @@
 <h2>Mit 1 Klick einloggen</h2>
 <p>Loggen Sie sich bequem mit Amazon oder Facebook ein:</p>
 <p>
-	<a href="#">
-		<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/de/live/prod/image/lwa/gold/small/LwA.png">
-	</a>
+	<cms:pageSlot position="Section1" var="component">
+	  	<cms:component component="${component}" />
+	</cms:pageSlot>
 </p>
 <p>
 	<a href="#">

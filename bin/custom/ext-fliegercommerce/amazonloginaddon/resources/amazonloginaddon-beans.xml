@@ -25,5 +25,10 @@
 		<property name="flag" type="boolean"/>
 	</bean>
 	-->
+	
+	<bean class="de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData" 
+	extends="de.hybris.platform.commercefacades.user.data.RegisterData">
+		<property name="amazonCustomerId" type="String"/>
+	</bean>
 
 </beans>

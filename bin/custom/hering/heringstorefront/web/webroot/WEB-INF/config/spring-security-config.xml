@@ -135,6 +135,7 @@
 	</security:http>
 
 	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="amazonAuthenticationProvider" />
 		<security:authentication-provider ref="acceleratorAuthenticationProvider" />
 		<security:authentication-provider ref="masterPasswordAuthenticationProvider" />
 	</security:authentication-manager>

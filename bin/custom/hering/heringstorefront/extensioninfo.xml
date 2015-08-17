@@ -5,8 +5,9 @@
     it only in accordance with the terms of the license agreement you entered into with 
     hybris. --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
     <extension abstractclassprefix="Generated" classprefix="HeringStorefront" name="heringstorefront">
-        <requires-extension name="amazonpaymentaddon"/>
-<requires-extension name="amazonloginaddon"/>
+        <requires-extension name="amazonloginaddon"/>
+<requires-extension name="amazonpaymentaddon"/>
+
 <requires-extension name="bonussystemaddon"/>
 		<requires-extension name="heringstorefrontcommons"/>
         <requires-extension name="heringcheckoutaddon"/>

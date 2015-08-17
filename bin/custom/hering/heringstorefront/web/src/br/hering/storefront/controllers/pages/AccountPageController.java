@@ -406,7 +406,8 @@ public class AccountPageController extends AbstractSearchPageController {
 		final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
 		
 
-		model.addAttribute("bonusDataPoints", bonusSystemFacade.getCurrentUserBonusSystem().getPoints());
+		model.addAttribute("bonusDataPoints", 0);
+//		model.addAttribute("bonusDataPoints", bonusSystemFacade.getCurrentUserBonusSystem().getPoints());
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs(null));
 		model.addAttribute("metaRobots", "no-index,no-follow");
 		model.addAttribute("customerData", customerData);
