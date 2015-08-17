@@ -64,7 +64,9 @@ public class HeringProductSizeValueProvider extends OptionalModelPropertyFieldVa
 	
 			
 		Set<HeringSizeVariantProductModel> set = new TreeSet<HeringSizeVariantProductModel>(HeringComparatorFactory.getComparatorHeringSizeVariantProductModel());
-		set.addAll(allSizeVariants);
+		for(HeringSizeVariantProductModel i : set)
+			if(i.getSize() != null)
+				set.add(i);
 		
 		final List<FieldValue> values = new ArrayList<>();
 
