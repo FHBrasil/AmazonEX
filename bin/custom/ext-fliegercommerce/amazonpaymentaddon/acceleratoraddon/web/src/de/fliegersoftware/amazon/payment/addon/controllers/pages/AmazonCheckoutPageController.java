@@ -53,8 +53,9 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		model.addAttribute("deliveryMethods", getCheckoutFacade().getSupportedDeliveryModes());
 		model.addAttribute("amazonPlaceOrderForm", new AmazonPlaceOrderForm());
 
-		// sets sandbox mode if enabled
+		// renders extra controls based on configuration
 		model.addAttribute("sandboxMode", Config.getBoolean(AmazonpaymentConstants.SANDBOX_MODE_CONFIG, false));
+		model.addAttribute("chargeOnOrder", Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false));
 
 		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));
