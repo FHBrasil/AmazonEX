@@ -95,6 +95,11 @@
         class="fancybox"> <spring:theme code="login.link.forgottenPwd" />
     </a>
 </small>
+<p>
+	<cms:pageSlot position="Section0" var="component">
+	  	<cms:component component="${component}" />
+	</cms:pageSlot>
+</p>
 <h2>Mit 1 Klick einloggen</h2>
 <p>Loggen Sie sich bequem mit Amazon oder Facebook ein:</p>
 <p>
