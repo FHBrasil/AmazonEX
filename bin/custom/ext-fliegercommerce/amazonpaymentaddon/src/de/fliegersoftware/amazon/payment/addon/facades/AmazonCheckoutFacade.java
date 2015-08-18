@@ -13,8 +13,10 @@ import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorChecko
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.core.model.order.payment.PaymentModeModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.order.OrderService;
+import de.hybris.platform.order.PaymentModeService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 
 
@@ -27,6 +29,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	private static final Logger LOG = Logger.getLogger(AmazonCheckoutFacade.class);
 
 	private OrderService orderService;
+	private PaymentModeService paymentModeService;
 
 	/*
 	 * (non-Javadoc)
@@ -69,6 +72,8 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 				amazonPaymentInfoModel.setAmazonOrderReferenceId(paymentInfoId);
 				amazonPaymentInfoModel.setCode(paymentInfoId);
 				amazonPaymentInfoModel.setUser(getCurrentUserForCheckout());
+				PaymentModeModel paymentMode = getPaymentModeService().getPaymentModeForCode("amazon");
+				cartModel.setPaymentMode(paymentMode);
 				return getCommerceCheckoutService().setPaymentInfo(cartModel, amazonPaymentInfoModel);
 			}
 		}
@@ -101,5 +106,14 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	@Required
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
+	}
+
+	protected PaymentModeService getPaymentModeService() {
+		return paymentModeService;
+	}
+
+	@Required
+	public void setPaymentModeService(PaymentModeService paymentModeService) {
+		this.paymentModeService = paymentModeService;
 	}
 }
