@@ -16,15 +16,20 @@ import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
-import de.fliegersoftware.amazon.payment.addon.form.AmazonPlaceOrderForm;
+import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
+import de.fliegersoftware.amazon.payment.addon.forms.AmazonPlaceOrderForm;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.hybris.platform.acceleratorservices.controllers.page.PageType;
+import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
+import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.commercefacades.customer.CustomerFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
+import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.util.Config;
 
@@ -35,7 +40,6 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	private static final Logger LOG = Logger.getLogger(AmazonCheckoutPageController.class);
 	private static final String AMAZON_CHECKOUT_CMS_PAGE_LABEL = "amazonCheckout";
 	private static final String REDIRECT_URL_AMAZON_CHECKOUT = REDIRECT_PREFIX + "/checkout/amazon";
-	private static final String REDIRECT_URL_SUMMARY = REDIRECT_PREFIX + "/checkout/multi/summary";
 	private static final String REDIRECT_URL_CART = REDIRECT_PREFIX + "/cart";
 
 	@Resource
@@ -44,9 +48,18 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	@Resource
 	private AmazonCheckoutFacade amazonCheckoutFacade;
 
+	@Resource
+	private AmazonCustomerFacade amazonCustomerFacade;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
 		LOG.info("AmazonCheckout - checkoutPage");
+		
+		if(getCheckoutCustomerStrategy().isAnonymousCheckout()
+				&& !Boolean.TRUE.equals(getSessionService().getAttribute(WebConstants.ANONYMOUS_CHECKOUT))) {
+			model.addAttribute("sendGuestInformation", Boolean.TRUE);
+		}
+
 		// sets checkout data
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
 		model.addAttribute("cartData", cartData);
@@ -106,6 +119,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	}
 
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
+	@RequireHardLogIn
 	public String placeOrder(final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm
 			, final RedirectAttributes redirectModel) {
 		LOG.info("AmazonCheckout - placeOrder");
@@ -139,5 +153,10 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	@Override
 	protected AmazonCheckoutFacade getCheckoutFacade() {
 		return amazonCheckoutFacade;
+	}
+
+	@Override
+	protected AmazonCustomerFacade getCustomerFacade() {
+		return (AmazonCustomerFacade) super.getCustomerFacade();
 	}
 }

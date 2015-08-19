@@ -72,5 +72,10 @@
 	<cms:pageSlot position="Section3" var="component">
 		<cms:component component="${component}" class="col-sm-12"/>
 	</cms:pageSlot>
-	
+
+	<c:if test="${sendGuestInformation}">
+		<form:form id="amazonGuestInformation" action="/login/checkout/amazon/guest" method="POST">
+			<input type="hidden" name="amazonOrderReferenceId"/>
+		</form:form>
+	</c:if>
 </template:page>
