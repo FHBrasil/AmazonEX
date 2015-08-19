@@ -5,11 +5,39 @@ if(!ACC.amazon)
 
 ACC.amazon.enablePlaceOrder = {};
 
-window.onAmazonLoginReady = function() {
+if(window.onAmazonLoginReady) {
+	var parent = window.onAmazonLoginReady;
+	window.onAmazonLoginReady = function() {
+		parent();
+		paymentLoginHandler();
+	}
+} else {
+	window.onAmazonLoginReady = paymentLoginReadyHandler;
+}
+function paymentLoginReadyHandler() {
 	amazon.Login.setClientId(ACC.addons.amazonpaymentaddon.clientId);
 	ACC.amazon.enablePlaceOrder.loginReady = true;
 	checkEnableCheckout();
 };
+function checkEnableCheckout() {
+	var allOk = true;
+	for(var condition in ACC.amazon.enablePlaceOrder) {
+		allOk = allOk && ACC.amazon.enablePlaceOrder[condition];
+	}
+	var disable = !allOk;
+	window.$('#amazonPlaceOrder').attr('disabled', disable);
+};
+function postGuestInformation() {
+	var form = $('#amazonGuestInformation');
+	if(form.length) {
+		form.find('input[name="amazonOrderReferenceId"]').val(ACC.amazon.amazonOrderReferenceId);
+		$.ajax({
+			type: "POST",
+			url: form.attr('action'),
+			data: form.serialize()
+		});
+	}
+}
 $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 	.done(function(script, textStatus){
 		ACC.amazon.enablePlaceOrder.loginReady = false;
@@ -40,12 +68,14 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 				onOrderReferenceCreate: function(orderReference) {
 					ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
 					$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
+					postGuestInformation();
 				},
 				onAddressSelect: function(orderReference) {
 					$.ajax({
 						url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
 						type: 'post',
-						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId },
+						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
+							, CSRFToken: ACC.config.CSRFToken },
 						success: function(response){
 							// do something with the response...
 							// like display shipping or taxes to the customer
@@ -76,7 +106,8 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 					$.ajax({
 						url: ACC.config.contextPath + '/checkout/amazon/select-payment-method',
 						type: 'post',
-						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId },
+						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
+							, CSRFToken: ACC.config.CSRFToken },
 						success: function(response){
 						},
 						error: function (xht, textStatus, ex) {
@@ -101,14 +132,6 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 				ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = this.checked;
 				checkEnableCheckout();
 			});
-		}
-		function checkEnableCheckout() {
-			var allOk = true;
-			for(var condition in ACC.amazon.enablePlaceOrder) {
-				allOk = allOk && ACC.amazon.enablePlaceOrder[condition];
-			}
-			var disable = !allOk;
-			window.$('#amazonPlaceOrder').attr('disabled', disable);
 		}
 	})
 	.fail(function( jqxhr, settings, exception ) {

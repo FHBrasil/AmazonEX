@@ -6,7 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<spring:theme code="${code}" text="/" var="imagePath"/>
+<spring:theme code="${code}" text="http://placehold.it/10x10" var="imagePath"/>
 <c:choose>
 	<c:when test="${originalContextPath ne null}">
 		<c:url value="${imagePath}" var="imageUrl" context="${originalContextPath}"/>

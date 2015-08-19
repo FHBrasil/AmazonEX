@@ -5,7 +5,16 @@ if(!ACC.amazon)
 
 $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 	.done(function(script, textStatus){
-		window.onAmazonLoginReady = function() {
+		if(window.onAmazonLoginReady) {
+			var parent = window.onAmazonLoginReady;
+			window.onAmazonLoginReady = function() {
+				parent();
+				authenticationLoginReadyHandler();
+			}
+		} else {
+			window.onAmazonLoginReady = authenticationLoginReadyHandler;
+		}
+		function authenticationLoginReadyHandler() {
 			amazon.Login.setClientId(ACC.addons.amazonpaymentaddon.clientId);
 		};
 		if($('#LoginWithAmazon').length) {

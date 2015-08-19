@@ -1,10 +1,10 @@
-package de.fliegersoftware.amazon.payment.addon.form;
+package de.fliegersoftware.amazon.payment.addon.forms;
 
-public class AmazonPlaceOrderForm {
+public class AmazonGuestForm {
 
 	private String amazonOrderReferenceId;
 
-	public AmazonPlaceOrderForm() {
+	public AmazonGuestForm() {
 	}
 
 	public String getAmazonOrderReferenceId() {
