@@ -51,6 +51,8 @@
         <extension name="amazonpayment"/>
         <extension name="amazonloginaddon"/>
         <extension name="amazonpaymentaddon"/>
+        <extension name="amazonhmc"/>
+        <extension name="amazonhmcaddon"/>
 <!--         <extension name="amazonrest"/> -->
         
     </extensions>
