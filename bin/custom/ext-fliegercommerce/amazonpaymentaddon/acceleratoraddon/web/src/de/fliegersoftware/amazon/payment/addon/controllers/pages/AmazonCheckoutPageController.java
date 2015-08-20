@@ -53,8 +53,12 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
+		// redirects to cart if not ready for checkout
+		if (!hasValidCart() && !getCheckoutFacade().hasShippingItems()) {
+			return REDIRECT_URL_CART;
+		}
 		LOG.info("AmazonCheckout - checkoutPage");
-		
+
 		if(getCheckoutCustomerStrategy().isAnonymousCheckout()
 				&& !Boolean.TRUE.equals(getSessionService().getAttribute(WebConstants.ANONYMOUS_CHECKOUT))) {
 			model.addAttribute("sendGuestInformation", Boolean.TRUE);
