@@ -28,7 +28,9 @@ import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMe
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
+import de.hybris.platform.commercefacades.order.data.ZoneDeliveryModeData;
 import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.util.Config;
@@ -98,7 +100,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
 			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, null);
 
-			if(getCheckoutFacade().setDeliveryAddress(details.getAddressData())) {
+			if(getCheckoutFacade().setDeliveryAddress(details.getAddressData()) //
+				&& getCheckoutFacade().setDeliveryModeIfAvailable()) {
 				GlobalMessages.addInfoMessage(model, "amazonpaymentaddon.address.select-success");
 			} else {
 				GlobalMessages.addErrorMessage(model, "amazonpaymentaddon.address.select-failed");
