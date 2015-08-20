@@ -48,7 +48,10 @@ import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
+import de.hybris.platform.commercefacades.i18n.I18NFacade;
+import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.core.model.user.AddressModel;
+import de.hybris.platform.jalo.c2l.C2LManager;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.dto.BillingInfo;
@@ -78,6 +81,9 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	private CommonI18NService commonI18NService;
 	private CartService cartService;
 	private SessionService sessionService;
+	
+	@Resource(name = "i18NFacade")
+	private I18NFacade i18NFacade;
 	
 	@Resource
 	private MWSAmazonPaymentService mwsAmazonPaymentService;
@@ -237,6 +243,10 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	public void setAmazonAuthorizationDetailsConverter(
 			Converter<AuthorizationDetails, AmazonAuthorizationDetailsData> amazonAuthorizationDetailsConverter) {
 		this.amazonAuthorizationDetailsConverter = amazonAuthorizationDetailsConverter;
+	}
+
+	protected I18NFacade getI18NFacade() {
+		return i18NFacade;
 	}
 
 	/*
@@ -471,6 +481,16 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		billingInfo.setStreet2(address.getStreetnumber());
 
 		return billingInfo;
+	}
+	
+	public CountryData getCountry(final String amazonOrderReferenceId) {
+		AmazonOrderReferenceDetailsData amazonOrderReferenceDetailsData = getOrderReferenceDetails(amazonOrderReferenceId, null);
+		if(amazonOrderReferenceDetailsData != null && 
+				amazonOrderReferenceDetailsData.getAddressData() == null && 
+					amazonOrderReferenceDetailsData.getAddressData().getCountry() != null) {
+				return getI18NFacade().getCountryForIsocode(amazonOrderReferenceDetailsData.getAddressData().getCountry().getIsocode());
+		}
+		return getI18NFacade().getCountryForIsocode("DE");
 	}
 	
 	private OrderReferenceAttributes getOrderReferenceAttributes(String orderCode, String amount, String currency) {
