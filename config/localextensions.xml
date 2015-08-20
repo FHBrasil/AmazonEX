@@ -49,7 +49,9 @@
         <extension name="amazonpayment"/>
         <extension name="amazonloginaddon"/>
         <extension name="amazonpaymentaddon"/>
-        <extension name="amazonrest"/>
+        <extension name="amazonhmc"/>
+        <extension name="amazonhmcaddon"/>
+<!--         <extension name="amazonrest"/> -->
         
     </extensions>
 </hybrisconfig>

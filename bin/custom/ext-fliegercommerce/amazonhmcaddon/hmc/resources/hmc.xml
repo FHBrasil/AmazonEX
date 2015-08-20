@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2014 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<configuration xmlns="hybris.de/schemas/hmc/generic"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hybris.de/schemas/hmc/generic hmc.xsd">
+
+
+	<!-- Configuration for extension amazonhmcaddon -->
+
+	<explorertree>
+		<group name="amazonhmcaddongroup">
+			<typeref description="typeref.amazonconfig.description" type="AmazonConfig" />
+		</group>
+	</explorertree>
+
+	<type mode="append" name="AmazonConfig">
+		<organizer>
+			<search mode="replace" autoperform="true">
+				<condition attribute="merchantId" operator="contains"/>
+				<condition attribute="mwsAccessKey" operator="contains"/>
+				<condition attribute="sandboxMode" operator="yes"/>
+			</search>
+			<result>
+				<listview>
+					<itemlayout mode="replace">
+						<attribute name="merchantId" width="170"/>
+						<attribute name="mwsAccessKey" width="200"/>
+						<attribute name="sandboxMode" width="150"/>
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<tab name="tab.amazonconfig.basic.properties" position="1">
+					<section name="section.amazonconfig.credentials.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="merchantId" width="300" />
+							<attribute labelwidth="200" name="mwsAccessKey" width="300" />
+							<attribute labelwidth="200" name="mwsSecretKey" width="300" />
+						</listlayout>
+					</section>
+					<section name="section.amazonconfig.country.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="amazonConfigCountry"
+								width="300" />
+							<attribute labelwidth="200" name="otherCountry" width="300" />
+						</listlayout>
+					</section>
+					<section name="section.amazonconfig.connetiontestbutton.properties">
+						<columnlayout>
+							<row>
+								<action name="btn.amazonconfig.connection.test" classname="de.fliegersoftware.amazon.hmc.action.AmazonConnectionTestAction" type="item"></action>
+							</row>
+						</columnlayout>
+					</section>
+					<section name="section.amazonconfig.login.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="clientId" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.general.properties" position="2">
+					<section name="section.amazonconfig.general.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="enabled" width="300" />
+							<attribute labelwidth="200" name="operationMode" width="300" />
+							<attribute labelwidth="200" name="sandboxMode" width="300" />
+							<attribute labelwidth="200" name="hiddenButtonsMode"
+								width="300" />
+							<attribute labelwidth="200" name="ipWhitelisting"
+								width="300" />
+							<attribute labelwidth="200" name="IPN" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.login.properties" position="3">
+					<section name="section.amazonconfig.login.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="requestCompleteDeliveryAddress"
+								width="300" />
+							<attribute labelwidth="200" name="excludePackstationDelivery"
+								width="300" />
+							<attribute labelwidth="200" name="accountMatchingStrategy"
+								width="300" />
+							<attribute labelwidth="200" name="manualAddOnFirstLogin"
+								width="300" />
+							<attribute labelwidth="200" name="checkoutStrategy"
+								width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.advanced.properties" position="4">
+					<section name="section.amazonconfig.advanced.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="normalCheckout"
+								width="300" />
+							<attribute labelwidth="200" name="authorizationMode"
+								width="300" />
+							<attribute labelwidth="200" name="captureMode" width="300" />
+							<attribute labelwidth="200" name="enableERPMode" width="300" />
+							<attribute labelwidth="200" name="ipnReception" width="300" />
+							<attribute labelwidth="200" name="pollingFrequency"
+								width="300" />
+							<attribute labelwidth="200"
+								name="orderStatusOnSuccessfullAuthorization" width="300" />
+							<attribute labelwidth="200"
+								name="orderStatusOnSuccessfullShipping" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.log.properties" position="5">
+					<section name="section.amazonconfig.log.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="enableLog" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.appearance.properties" position="6">
+					<section name="section.amazonconfig.appearance.properties">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="200" name="payButtonSize"
+									width="100" />
+								<attribute labelwidth="200" name="loginButtonSize"
+									width="100" />
+							</row>
+							<row>
+								<attribute labelwidth="200" name="payButtonColor"
+									width="100" />
+								<attribute labelwidth="200" name="loginButtonColor"
+									width="100" />
+							</row>
+							<row>
+								<attribute labelwidth="200" name="addressWidgetHeight"
+									width="100" />
+								<attribute labelwidth="200" name="paymentWidgetHeight"
+									width="100" />
+							</row>
+							<row>
+								<attribute labelwidth="200" name="addressWidgetWidth"
+									width="100" />
+								<attribute labelwidth="200" name="paymentWidgetWidth"
+									width="100" />
+							</row>
+						</columnlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+	<type mode="append" name="Order">
+		<organizer>
+			<editor>
+				<tab name="tab.order.amazon.properties" position="6">
+					
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+</configuration>
