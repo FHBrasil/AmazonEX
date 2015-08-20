@@ -14,7 +14,6 @@ import com.amazonservices.mws.offamazonpayments.model.Address;
 
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
-import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 
@@ -54,12 +53,7 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 		target.setCountry(getI18NFacade().getCountryForIsocode(source.getCountryCode()));
 		//target.setRegion(region);
 		target.setPostalCode(source.getPostalCode());
-		
-		CountryData country = new CountryData();
-		country.setIsocode(source.getCountryCode());
-		target.setCountry(country);
 		target.setPhone(source.getPhone());
-		
 	}
 
 	protected I18NFacade getI18NFacade() {
