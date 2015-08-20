@@ -36,6 +36,10 @@ public interface AmazonpaymentaddonControllerConstants
 	interface Views {
 		interface Pages {
 			interface Checkout {
+				// standard pages
+				String CheckoutLoginPage =  "pages/checkout/checkoutLoginPage";
+
+				// addon pages
 				String AmazonCheckoutPage = ADDON_PREFIX +
 						"pages/checkout/amazonCheckout";
 			}

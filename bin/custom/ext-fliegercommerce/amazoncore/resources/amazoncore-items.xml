@@ -18,6 +18,13 @@
 
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
+			
+	<relations>
+		<relation localized="false" code="AmazonLoginRelation" generate="true" autocreate="true">
+			<sourceElement type="Customer" qualifier="customer" cardinality="one" />
+			<targetElement type="AmazonCustomer" qualifier="amazonCustomer" cardinality="many" />
+		</relation>
+	</relations>
 
 	<itemtypes>
 	
@@ -95,11 +102,14 @@
 				</attribute>
 			</attributes>
 		</itemtype>
-	
-<!-- 		<itemtype code="AmazonCartBackup" autocreate="true" generate="true" extends="Cart" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonCartBackup" /> -->
-	
-<!-- 		<itemtype code="CheckAmazonOrderJob" extends="Job" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.job.CheckAmazonOrderJob"/> -->
 		
-<!-- 		<itemtype code="CancelAmazonOrderJob" extends="Job" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.job.CancelAmazonOrderJob"/> -->
+		<itemtype code="AmazonCustomer" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonCustomer">
+			<attributes>
+				<attribute type="java.lang.String" qualifier="amazonCustomerId">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	
 	</itemtypes>
 </items>

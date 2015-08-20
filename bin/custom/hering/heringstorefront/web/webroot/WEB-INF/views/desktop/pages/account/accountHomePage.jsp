@@ -250,6 +250,9 @@
 					<div class="panel-heading"><span class="glyphicon glyphicon-link"></span> Verknüpfte Konten<div class="pull-right"><small><a href="#connectionsModal" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span></a></small></div>
 					</div>
 					<div class="panel-body">
+						<cms:pageSlot position="LeftContent" var="component">
+			               <cms:component component="${component}" />
+			            </cms:pageSlot>
 						<div style="float:left;height:64px;width:64px;background-image: url('layout/but_amazon64.png');background-repeat:no-repeat;">
 						</div>
 						<div style="float:left;height:64px;width:64px;background-image: url('layout/but_facebook64.png');background-repeat:no-repeat;">

@@ -20,5 +20,14 @@
 			xsi:noNamespaceSchemaLocation="items.xsd">
 			
 	<itemtypes>
+		<itemtype code="Cart" autocreate="false" generate="false">
+			<attributes>
+				<attribute type="Order" qualifier="preCreatedOrder">
+					<description>Carts may have an order pre-created and then reused on placeOrder</description>
+					<modifiers read="true" write="true" search="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
 	</itemtypes>
 </items>

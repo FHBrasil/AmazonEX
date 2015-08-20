@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-           http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<context:component-scan base-package="de.fliegersoftware.amazon.payment.addon.controllers"
 		scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
-
-	<!--<bean id="amazonAddressBookComponentRenderer" parent="addOnJspIncludeCMSComponentRenderer" />
-	<bean id="amazonAddressBookComponentRendererMapping" parent="addonCmsComponentRendererMapping">
-		<property name="typeCode" value="AmazonAddressBookComponent" />
-		<property name="renderer" ref="amazonAddressBookComponentRenderer" />
-	</bean>-->
-
-	<!--<bean id="amazonPayButtonComponentRenderer" parent="addOnJspIncludeCMSComponentRenderer" />
-	<bean id="amazonPayButtonComponentRendererMapping" parent="addonCmsComponentRendererMapping">
-		<property name="typeCode" value="AmazonPayButtonComponent" />
-		<property name="renderer" ref="amazonPayButtonComponentRenderer" />
-	</bean>-->
-
-	<!--<bean id="amazonWalletComponentRenderer" parent="addOnJspIncludeCMSComponentRenderer" />
-	<bean id="amazonWalletComponentRendererMapping" parent="addonCmsComponentRendererMapping">
-		<property name="typeCode" value="AmazonWalletComponent" />
-		<property name="renderer" ref="amazonWalletComponentRenderer" />
-	</bean>-->
+	<context:component-scan base-package="de.fliegersoftware.amazon.payment.addon.forms"
+		scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
 
 	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties 
 		resource bundle as javascript variables -->
@@ -55,4 +42,14 @@
 		depends-on="beforeViewHandlersList" parent="listMergeDirective">
 		<property name="add" ref="getAmazonPaymentaddonBeforeViewHandler" />
 	</bean>
+
+	<!-- creates sandbox interceptor -->
+	<bean id="amazonSandboxModeHandlerInterceptor"
+		class="de.fliegersoftware.amazon.payment.addon.controllers.pages.AmazonSandboxModeHandlerInterceptor">
+		<property name="amazonSandboxSimulationFacade" ref="amazonSandboxSimulationFacade"/>
+	</bean>
+
+	<mvc:interceptors>
+		<ref bean="amazonSandboxModeHandlerInterceptor"/>
+	</mvc:interceptors>
 </beans>

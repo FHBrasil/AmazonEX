@@ -13,6 +13,7 @@
         <extension name="heringcore" />
         <extension name="heringfacades" />
         <extension name="heringstorefront" />
+        
         <extension name="heringcockpits" />
         <extension name="heringstorefrontcommons" />
         <extension name="heringcheckoutaddon" />
@@ -29,6 +30,7 @@
 
         <extension name="paypaladdon" />
 
+		<extension name="babyartikelstore" />
         <extension name="kpfamilycore" />
         <extension name="kpfamilyhmc" />
         <extension name="kpfamilycockpits" />
@@ -49,7 +51,7 @@
         <extension name="amazonpayment"/>
         <extension name="amazonloginaddon"/>
         <extension name="amazonpaymentaddon"/>
-        <extension name="amazonrest"/>
+<!--         <extension name="amazonrest"/> -->
         
     </extensions>
 </hybrisconfig>

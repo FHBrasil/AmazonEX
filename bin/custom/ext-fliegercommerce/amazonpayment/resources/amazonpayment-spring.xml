@@ -30,7 +30,8 @@
 	<bean id="amazonRefundDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData" scope="prototype"/>
 	<bean id="orderTotal" class="com.amazonservices.mws.offamazonpayments.model.OrderTotal" scope="prototype"/>
 	<bean id="orderReferenceAttributes" class="com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes" scope="prototype"/>
-
+	<bean id="sellerOrderAttributes" class="com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes" scope="prototype"/>
+	
 	<bean name="amazonCommandFactory" 
 		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
 		scope="tenant">
@@ -235,6 +236,7 @@
 	
 	<bean id="amazonOrderReferenceAttributesReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceAttributesReversePopulator">
         <property name="amazonOrderTotalReverseConverter" ref="amazonOrderTotalReverseConverter" />
+        <property name="amazonSellerOrderAttributesReverseConverter" ref="amazonSellerOrderAttributesReverseConverter" />
     </bean>
 	
     <bean id="amazonRefundDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonRefundDetailsPopulator">
@@ -250,8 +252,32 @@
             </list>
         </property>
     </bean>
+     
+    <alias name="defaultAmazonSellerOrderAttributesReversePopulator" alias="amazonSellerOrderAttributesReversePopulator"/>
+	<bean id="defaultAmazonSellerOrderAttributesReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonSellerOrderAttributesReversePopulator">
+	</bean>
+	
+	<alias name="defaultAmazonSellerOrderAttributesReverseConverter" alias="amazonSellerOrderAttributesReverseConverter" />
+    <bean id="defaultAmazonSellerOrderAttributesReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="sellerOrderAttributes" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonSellerOrderAttributesReversePopulator" />
+            </list>
+        </property>
+    </bean>
+
+	<alias alias="createOrderFromCartStrategy" name="amazonCreateOrderFromCartStrategy"/>
+	<bean name="amazonCreateOrderFromCartStrategy" parent="defaultCreateOrderFromCartStrategy"
+		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCreateOrderFromCartStrategy">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<bean name="amazonSandboxSimulationFacade" class="de.fliegersoftware.amazon.payment.facades.impl.AmazonSandboxSimulationFacadeImpl">
+	</bean>
 
 	<!-- jobs -->
 
 	<bean id="amazonPaymentCapturingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPaymentCapturingJobPerformable" parent="abstractJobPerformable"/>
+   
 </beans>
