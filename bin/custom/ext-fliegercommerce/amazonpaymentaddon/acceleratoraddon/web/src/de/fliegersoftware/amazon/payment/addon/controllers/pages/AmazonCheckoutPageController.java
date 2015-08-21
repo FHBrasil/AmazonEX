@@ -1,14 +1,22 @@
 package de.fliegersoftware.amazon.payment.addon.controllers.pages;
 
+import java.util.Locale;
+import java.util.Properties;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
@@ -17,6 +25,7 @@ import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
+import de.fliegersoftware.amazon.payment.addon.forms.AmazonAjaxResponse;
 import de.fliegersoftware.amazon.payment.addon.forms.AmazonPlaceOrderForm;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
@@ -26,12 +35,8 @@ import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
-import de.hybris.platform.commercefacades.customer.CustomerFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
-import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
-import de.hybris.platform.commercefacades.order.data.ZoneDeliveryModeData;
-import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.util.Config;
 
@@ -52,6 +57,9 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 	@Resource
 	private AmazonCustomerFacade amazonCustomerFacade;
+
+	@Resource(name="themeSource")
+    private MessageSource messageSource;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
@@ -83,46 +91,50 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	}
 
 	@RequestMapping(value = "/update-payment-amount", method = RequestMethod.POST)
-	public String doUpdatePaymentAmmount(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId) {
-		
-		return REDIRECT_URL_AMAZON_CHECKOUT;
+	public @ResponseBody AmazonAjaxResponse doUpdatePaymentAmmount(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId) {
+		AmazonAjaxResponse response = new AmazonAjaxResponse();
+
+		return response;
 	}
 
-	@RequestMapping(value = "/select-delivery-address", method = RequestMethod.POST)
-	public String doSelectDeliveryAddress(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
+	@RequestMapping(value = "/select-delivery-address", method = RequestMethod.POST
+			, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AmazonAjaxResponse doSelectDeliveryAddress(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
 		LOG.info("AmazonCheckout - doSelectDeliveryAddress");
+		AmazonAjaxResponse response = new AmazonAjaxResponse();
 		if (!hasValidCart()) {
-			return REDIRECT_URL_CART;
+			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if (!getCheckoutFacade().hasShippingItems()) {
-			return REDIRECT_URL_CART;
+			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
 			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, null);
 
 			if(getCheckoutFacade().setDeliveryAddress(details.getAddressData()) //
 				&& getCheckoutFacade().setDeliveryModeIfAvailable()) {
-				GlobalMessages.addInfoMessage(model, "amazonpaymentaddon.address.select-success");
+				response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
 			} else {
-				GlobalMessages.addErrorMessage(model, "amazonpaymentaddon.address.select-failed");
+				response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
 			}
 		}
-		return REDIRECT_URL_AMAZON_CHECKOUT;
+		return response;
 	}
 
 	@RequestMapping(value = "/select-payment-method", method = RequestMethod.POST)
-	public String doSelectPaymentMethod(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
+	public @ResponseBody AmazonAjaxResponse doSelectPaymentMethod(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
 		LOG.info("AmazonCheckout - doSelectDeliveryAddress");
+		AmazonAjaxResponse response = new AmazonAjaxResponse();
 		if (!hasValidCart()) {
-			return REDIRECT_URL_CART;
+			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if (!getCheckoutFacade().hasShippingItems()) {
-			return REDIRECT_URL_CART;
+			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
 			
 		}
-		return REDIRECT_URL_AMAZON_CHECKOUT;
+		return response;
 	}
 
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
@@ -155,6 +167,16 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			}
 		}
 		return REDIRECT_URL_AMAZON_CHECKOUT;
+	}
+
+	protected String getLocalizedMessage(String code, Object... args) {
+		Locale locale = LocaleContextHolder.getLocale();
+		try {
+			return messageSource.getMessage(code, args, locale);
+		} catch (NoSuchMessageException e) {
+			// do nothing
+		}
+		return code;
 	}
 
 	@Override
