@@ -46,7 +46,7 @@
 
 
 	<div class="col-sm-12 amazonLookalikeDiv">
-		<multi-checkout:deliveryCartItems cartData="${cartData}"/>
+		<amazon-controls:deliveryItemCheckoutAmazon cartData="${cartData}"/>
 		<c:forEach items="${cartData.pickupOrderGroups}" var="groupData" varStatus="status">
 			<multi-checkout:pickupCartItems cartData="${cartData}" groupData="${groupData}" index="${status.index}" showHead="true" />
 		</c:forEach>
