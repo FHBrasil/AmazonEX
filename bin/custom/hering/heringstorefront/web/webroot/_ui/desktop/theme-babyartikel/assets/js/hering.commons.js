@@ -567,4 +567,5 @@ hering.commons = {
 
 $(document).ready(function() {
 	hering.commons.init();
+	babyartikel.checkoutAmazon.updateCartQuantity();
 });

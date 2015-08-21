@@ -1,8 +1,19 @@
 #addressBookWidgetDiv{height: 228px;}
 #walletWidgetDiv{height: 228px;}
+
 .amazonLookalikeDiv{
 	border: 1px solid #bbb;
 	border-radius: 6px;
-	padding: 7px;
-	height: 228px;
+	/* height: 228px; */
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.totalOrder{
+	border: 1px solid #bbb;
+	border-radius: 6px;
+}
+
+.widgetTotalOrder{
+	margin-top: 60px;
 }

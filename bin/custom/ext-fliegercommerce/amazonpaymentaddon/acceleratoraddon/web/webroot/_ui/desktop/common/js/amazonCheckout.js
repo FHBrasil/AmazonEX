@@ -32,7 +32,3 @@ babyartikel.checkoutAmazon = {
 	},
 	
 };
-
-$(document).ready(function(){	
-	babyartikel.checkoutAmazon.updateCartQuantity();
-});

@@ -86,6 +86,7 @@
 		<small><span class="stock150619 nostock big">Lieferung am Freitag, 17.08.2015</span></small>
 	</li> --%>
 </ol>
+
 <%-- If has items express shipping 
 <div class="checkbox" style="margin-top:-15px;margin-left:-5px;">
 	<label><input type="checkbox" data-toggle="collapse" data-target="#toggleDelivery,.itemdelivery160608"><spring:theme code="checkout.single.sendPositionsImmediately"/>&nbsp;(<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />)</label>
