@@ -21,7 +21,7 @@
 	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties 
 		resource bundle as javascript variables -->
 	<bean id="defaultAmazonPaymentaddonJavaScriptMessageResourceAccessor"
-		parent="abstractJavaScriptMessageResourceAccessor">
+		class="de.fliegersoftware.amazon.payment.addon.config.bundlesources.AmazonConfigJavaScriptMessageResourceAccessor">
 		<property name="addOnName" value="amazonpaymentaddon" />
 	</bean>
 
