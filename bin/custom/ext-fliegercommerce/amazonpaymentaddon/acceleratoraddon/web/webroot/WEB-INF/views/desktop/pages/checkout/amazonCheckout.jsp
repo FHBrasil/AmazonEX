@@ -35,22 +35,22 @@
 
 
 
-	<div class="col-sm-4 amazonLookalikeDiv">
-		<div>
-			<c:set var="showTax" value="${false}"/>
-			<cart:cartTotals cartData="${cartData}" showTaxEstimate="false" showTax="${showTax}"/>
-			<cart:cartPromotions cartData="${cartData}"/>
+	<div class="col-sm-4">
+		<div id="addressBookWidgetDiv" class="totalOrder">
+			<amazon-controls:totalOrder cartData="${cartData}"/>
 		</div>
 	</div>
 
 
-
+	<div class="col-sm-12">
 	<div class="col-sm-12 amazonLookalikeDiv">
-		<multi-checkout:deliveryCartItems cartData="${cartData}"/>
+		<amazon-controls:deliveryItemCheckoutAmazon cartData="${cartData}"/>
 		<c:forEach items="${cartData.pickupOrderGroups}" var="groupData" varStatus="status">
 			<multi-checkout:pickupCartItems cartData="${cartData}" groupData="${groupData}" index="${status.index}" showHead="true" />
 		</c:forEach>
 	</div>
+	</div>
+	<div class="col-sm-12">
 	<div class="col-sm-12 amazonLookalikeDiv">
 		<c:url value="/checkout/amazon/placeOrder" var="placeOrderUrl" />
 		<form:form action="${placeOrderUrl}" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
@@ -65,6 +65,7 @@
 				<spring:theme code="checkout.summary.placeOrder"/>
 			</button>
 		</form:form>
+	</div>
 	</div>
 
 

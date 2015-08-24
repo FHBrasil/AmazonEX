@@ -77,8 +77,9 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
 							, CSRFToken: ACC.config.CSRFToken },
 						success: function(response){
-							// do something with the response...
-							// like display shipping or taxes to the customer
+							if(response && response.showMessage) {
+								ACC.amazon.showToaster(response.showMessage);
+							}
 						},
 						error: function (xht, textStatus, ex) {
 							// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
@@ -109,6 +110,9 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
 							, CSRFToken: ACC.config.CSRFToken },
 						success: function(response){
+							if(response && response.showMessage) {
+								ACC.amazon.showToaster(response.showMessage);
+							}
 						},
 						error: function (xht, textStatus, ex) {
 						},
@@ -137,3 +141,16 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 	.fail(function( jqxhr, settings, exception ) {
 		//alert( "Triggered ajaxError handler." );
 	});
+
+ACC.amazon.toasterActive = undefined;
+ACC.amazon.showToaster = function(msg) {
+	var toaster = $("#toaster");
+	if(!toaster[0]) {
+		$("body").prepend('<div id="toaster"><div class="content"></div></div>');
+		toaster = $("#toaster");
+	}
+	clearTimeout(ACC.amazon.toasterActive);
+	toaster.find(".content").text(msg);
+	toaster.addClass("active");
+	ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 4000);
+};

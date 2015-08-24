@@ -1,8 +1,23 @@
 #addressBookWidgetDiv{height: 228px;}
 #walletWidgetDiv{height: 228px;}
+
 .amazonLookalikeDiv{
 	border: 1px solid #bbb;
 	border-radius: 6px;
-	padding: 7px;
-	height: 228px;
+	/* height: 228px; */
+    overflow: hidden;
+    margin-top: 20px;
 }
+
+.totalOrder{
+	border: 1px solid #bbb;
+	border-radius: 6px;
+}
+
+.widgetTotalOrder{
+	margin-top: 60px;
+}
+
+#toaster { position: fixed; width: 100%; top: -100px; bottom: 100%; text-align: center; z-index: 9999; -webkit-transition: 0.3s all linear; -moz-transition: 0.3s all linear; -o-transition: 0.3s all linear; transition: 0.3s all linear; } 
+#toaster .content { background: #000; background: rgba(33,131,168,0.9); max-width: 600px; display: inline-block; color: #FFF; margin: 0 10px; padding: 10px 20px; border-radius: 5px; } 
+#toaster.active { top: 10px; }
