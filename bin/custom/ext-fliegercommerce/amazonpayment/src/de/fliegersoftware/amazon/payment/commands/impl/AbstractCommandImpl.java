@@ -10,6 +10,7 @@ import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsService;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceClient;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
 
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.core.services.impl.DefaultAmazonConfigService;
 
 /**
@@ -22,27 +23,27 @@ public class AbstractCommandImpl {
 	protected static final String NOT_SUPPORTED_MESSAGE = "Command is not supported by Amazon extension: ";
 	
 	@Resource
-	public DefaultAmazonConfigService defaultAmazonConfigService;
+	protected AmazonConfigService amazonConfigService;
 	
 	protected String getSellerId() {
-		return defaultAmazonConfigService.getSellerId();
+		return amazonConfigService.getSellerId();
 	}
 	
 	protected OffAmazonPaymentsService getOffAmazonPaymentsService() {
 		OffAmazonPaymentsServiceConfig config;
 		OffAmazonPaymentsService service;
 		
-		config = new OffAmazonPaymentsServiceConfig(defaultAmazonConfigService.getAmazonProperties());
+		config = new OffAmazonPaymentsServiceConfig(amazonConfigService.getAmazonProperties());
 		service = new OffAmazonPaymentsServiceClient(config);
 		
 		return service;
 	}
 
-	public DefaultAmazonConfigService getDefaultAmazonConfigService() {
-		return defaultAmazonConfigService;
+	protected AmazonConfigService getAmazonConfigService() {
+		return amazonConfigService;
 	}
 
-	public void setDefaultAmazonConfigService(DefaultAmazonConfigService defaultAmazonConfigService) {
-		this.defaultAmazonConfigService = defaultAmazonConfigService;
+	public void setAmazonConfigService(AmazonConfigService defaultAmazonConfigService) {
+		this.amazonConfigService = defaultAmazonConfigService;
 	}
 }

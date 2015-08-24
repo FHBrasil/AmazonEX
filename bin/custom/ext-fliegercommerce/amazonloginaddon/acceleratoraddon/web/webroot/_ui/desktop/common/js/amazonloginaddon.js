@@ -3,7 +3,7 @@ if(!ACC)
 if(!ACC.amazon)
 	ACC.amazon = {};
 
-$.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
+$.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetsUrl)
 	.done(function(script, textStatus){
 		if(window.onAmazonLoginReady) {
 			var parent = window.onAmazonLoginReady;

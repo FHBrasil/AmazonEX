@@ -23,6 +23,7 @@
 	<bean id="defaultAmazonPaymentaddonJavaScriptMessageResourceAccessor"
 		class="de.fliegersoftware.amazon.payment.addon.config.bundlesources.AmazonConfigJavaScriptMessageResourceAccessor">
 		<property name="addOnName" value="amazonpaymentaddon" />
+		<property name="amazonConfigService" ref="amazonConfigService" />
 	</bean>
 
 	<bean id="defaultAmazonPaymentaddonBeforeViewJsPropsHandlerAdaptee"

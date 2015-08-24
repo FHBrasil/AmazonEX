@@ -19,15 +19,7 @@ public class AmazonPayButtonComponentController extends AbstractAmazonCmsCompone
 	protected void fillModel(HttpServletRequest request, Model model, AmazonPayButtonComponentModel component) {
 		super.fillModel(request, model, component);
 
-		String amazonWidgetUrl;
-		if(getRegion().equals("DE") && isSandboxMode()) {
-			amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/sandbox/lpa/js/Widgets.js";
-		} else if (getRegion().equals("DE") && !isSandboxMode()){
-			amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/lpa/js/Widgets.js";
-		} else {
-			amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/uk/sandbox/lpa/js/Widgets.js";
-		}
-
-		model.addAttribute("amazonWidgetsUrl", amazonWidgetUrl);
+		model.addAttribute("buttonColor", amazonConfigService.getPayButtonColor());
+		model.addAttribute("buttonSize", amazonConfigService.getPayButtonSize());
 	}
 }

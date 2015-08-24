@@ -14,6 +14,8 @@ import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResponse;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
 
+import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.commands.AuthorizeCommand;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationFacade;
@@ -39,10 +41,16 @@ public class AuthorizeCommandImpl extends AbstractCommandImpl implements Authori
 			LOG.info("AuthorizationCommandImpl perform requested");
 			LOG.info("-----------------------------------------------------");
 			req.setSellerId(getSellerId());
-			if(Config.getBoolean(AmazonpaymentConstants.SYNCHRONIOUS_CHECKOUT_CONFIG, false)) {
+//			if(Config.getBoolean(AmazonpaymentConstants.SYNCHRONIOUS_CHECKOUT_CONFIG, false)) {
+//				req.setTransactionTimeout(Integer.valueOf(0));
+//			}
+//			if(Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false)) {
+//				req.setCaptureNow(true);
+//			}
+			if(!amazonConfigService.isNormalCheckout()) {
 				req.setTransactionTimeout(Integer.valueOf(0));
 			}
-			if(Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false)) {
+			if(CaptureModeEnum.IMMEDIATE.equals(amazonConfigService.getCaptureMode())) {
 				req.setCaptureNow(true);
 			}
 			if(amazonSandboxSimulationFacade.isSimulation()) {

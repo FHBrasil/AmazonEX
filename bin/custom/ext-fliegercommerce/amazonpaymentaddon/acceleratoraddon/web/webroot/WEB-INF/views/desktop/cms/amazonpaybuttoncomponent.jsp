@@ -1,1 +1,1 @@
-<div id="AmazonPayButton"></div>
+<div id="AmazonPayButton" data-color="${buttonColor}" data-size="${buttonSize}"></div>

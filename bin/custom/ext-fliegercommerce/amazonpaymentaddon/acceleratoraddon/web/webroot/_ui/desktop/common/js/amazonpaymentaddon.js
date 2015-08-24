@@ -38,17 +38,21 @@ function postGuestInformation() {
 		});
 	}
 }
-$.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
+ACC.amazon.$ = $;
+$.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetsUrl)
 	.done(function(script, textStatus){
 		ACC.amazon.enablePlaceOrder.loginReady = false;
-		if($('#AmazonPayButton').length) {
+		if(ACC.amazon.$('#AmazonPayButton').length) {
 			var authRequest;
 			var returnUrl = ACC.config.contextPath + '/checkout/amazon';
+			var buttonColor = ACC.amazon.$('#AmazonPayButton').data("color");
+			if(!buttonColor) buttonColor = "Gold";
+			var buttonSize = ACC.amazon.$('#AmazonPayButton').data("size");
+			if(!buttonSize) buttonSize = "medium";
 			OffAmazonPayments.Button("AmazonPayButton", ACC.addons.amazonpaymentaddon.sellerId, {
 				type:  "PwA",
-				color: "Gold",
-				size:  "medium",
-				language: "en-GB",
+				color: buttonColor,
+				size:  buttonSize,
 
 				authorization: function() {
 					loginOptions =
@@ -60,18 +64,18 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 				}
 			});
 		}
-		if($('#addressBookWidgetDiv').length) {
+		if(ACC.amazon.$('#addressBookWidgetDiv').length) {
 			ACC.amazon.enablePlaceOrder.addressSelected = false;
 			new OffAmazonPayments.Widgets.AddressBook({
 				sellerId: ACC.addons.amazonpaymentaddon.sellerId,
 				// amazonOrderReferenceId: amazonOrderReferenceId,
 				onOrderReferenceCreate: function(orderReference) {
 					ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
-					$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
+					ACC.amazon.$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
 					postGuestInformation();
 				},
 				onAddressSelect: function(orderReference) {
-					$.ajax({
+					ACC.amazon.$.ajax({
 						url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
 						type: 'post',
 						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
@@ -99,12 +103,12 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 				}
 			}).bind("addressBookWidgetDiv");
 		}
-		if($('#walletWidgetDiv').length) {
+		if(ACC.amazon.$('#walletWidgetDiv').length) {
 			ACC.amazon.enablePlaceOrder.paymentSelected = false;
 			new OffAmazonPayments.Widgets.Wallet({
 				sellerId: ACC.addons.amazonpaymentaddon.sellerId,
 				onPaymentSelect: function(orderReference) {
-					$.ajax({
+					ACC.amazon.$.ajax({
 						url: ACC.config.contextPath + '/checkout/amazon/select-payment-method',
 						type: 'post',
 						data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
@@ -130,16 +134,16 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 				}
 			}).bind("walletWidgetDiv");
 		}
-		if($('#confirmChargeOnOrder').length) {
-			ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = $('#confirmChargeOnOrder')[0].checked;
-			$('#confirmChargeOnOrder').change(function() {
+		if(ACC.amazon.$('#confirmChargeOnOrder').length) {
+			ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = ACC.amazon.$('#confirmChargeOnOrder')[0].checked;
+			ACC.amazon.$('#confirmChargeOnOrder').change(function() {
 				ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = this.checked;
 				checkEnableCheckout();
 			});
 		}
 	})
 	.fail(function( jqxhr, settings, exception ) {
-		//alert( "Triggered ajaxError handler." );
+		alert( "Triggered ajaxError handler." );
 	});
 
 ACC.amazon.toasterActive = undefined;
