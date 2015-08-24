@@ -29,7 +29,7 @@ public class RefundCommandImpl extends AbstractCommandImpl implements RefundComm
 			LOG.info("-----------------------------------------------------");
 			
 			req.setSellerId(getSellerId());
-			RefundResponse refund = offAmazonPaymentsService.refund(req);
+			RefundResponse refund = getOffAmazonPaymentsService().refund(req);
 			final RefundResult result = refund.getRefundResult();
 
 			return result;

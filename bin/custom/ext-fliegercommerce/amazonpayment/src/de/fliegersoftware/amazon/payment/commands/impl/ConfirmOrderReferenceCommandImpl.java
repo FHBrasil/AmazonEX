@@ -27,7 +27,7 @@ public class ConfirmOrderReferenceCommandImpl extends AbstractCommandImpl implem
 			LOG.info("-----------------------------------------------------");
 			
 			req.setSellerId(getSellerId());
-			offAmazonPaymentsService.confirmOrderReference(req);
+			getOffAmazonPaymentsService().confirmOrderReference(req);
 			
 		} catch (OffAmazonPaymentsServiceException ex) {
 			System.out.println("Caught Exception: " + ex.getMessage());

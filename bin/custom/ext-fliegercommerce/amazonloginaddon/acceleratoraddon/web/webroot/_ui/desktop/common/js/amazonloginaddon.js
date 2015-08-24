@@ -24,7 +24,6 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetUrl)
 				type:  "LwA",
 				color: "Gold",
 				size:  "medium",
-				language: "en-GB",
 
 				authorization: function() {
 					loginOptions =

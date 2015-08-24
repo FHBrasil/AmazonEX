@@ -32,7 +32,7 @@ public GetAuthorizationDetailsResult perform(final GetAuthorizationDetailsReques
    	LOG.info("GetAuthorizationDetailsCommandImpl perform requested");
    	LOG.info("-----------------------------------------------------");
    	req.setSellerId(getSellerId());
-   	GetAuthorizationDetailsResponse authorizationDetail = offAmazonPaymentsService.getAuthorizationDetails(req);
+   	GetAuthorizationDetailsResponse authorizationDetail = getOffAmazonPaymentsService().getAuthorizationDetails(req);
    	final GetAuthorizationDetailsResult result = authorizationDetail.getGetAuthorizationDetailsResult();
    	
    	return result;

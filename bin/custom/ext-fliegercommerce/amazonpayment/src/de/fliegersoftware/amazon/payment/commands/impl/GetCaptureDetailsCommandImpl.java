@@ -32,7 +32,7 @@ public GetCaptureDetailsResult perform(final GetCaptureDetailsRequest req) {
    	LOG.info("GetCaptureDetailsCommandImpl perform requested");
    	LOG.info("-----------------------------------------------------");
    	req.setSellerId(getSellerId());
-   	GetCaptureDetailsResponse captureDetail = offAmazonPaymentsService.getCaptureDetails(req);
+   	GetCaptureDetailsResponse captureDetail = getOffAmazonPaymentsService().getCaptureDetails(req);
    	final GetCaptureDetailsResult result = captureDetail.getGetCaptureDetailsResult();
    	
    	return result;

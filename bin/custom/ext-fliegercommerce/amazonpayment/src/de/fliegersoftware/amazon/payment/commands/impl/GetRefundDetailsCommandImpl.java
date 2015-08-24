@@ -32,7 +32,7 @@ public GetRefundDetailsResult perform(final GetRefundDetailsRequest req) {
    	LOG.info("GetRefundDetailsCommandImpl perform requested");
    	LOG.info("-----------------------------------------------------");
    	req.setSellerId(getSellerId());
-   	GetRefundDetailsResponse refundDetail = offAmazonPaymentsService.getRefundDetails(req);
+   	GetRefundDetailsResponse refundDetail = getOffAmazonPaymentsService().getRefundDetails(req);
    	final GetRefundDetailsResult result = refundDetail.getGetRefundDetailsResult();
    	
    	return result;
