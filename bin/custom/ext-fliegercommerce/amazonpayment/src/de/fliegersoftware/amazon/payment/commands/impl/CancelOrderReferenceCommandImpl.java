@@ -29,7 +29,7 @@ public class CancelOrderReferenceCommandImpl extends AbstractCommandImpl impleme
 			LOG.info("-----------------------------------------------------");
 
 			req.setSellerId(getSellerId());
-			CancelOrderReferenceResponse cancel = offAmazonPaymentsService.cancelOrderReference(req);
+			CancelOrderReferenceResponse cancel = getOffAmazonPaymentsService().cancelOrderReference(req);
 			final CancelOrderReferenceResult result = cancel.getCancelOrderReferenceResult();
 
 			return result;

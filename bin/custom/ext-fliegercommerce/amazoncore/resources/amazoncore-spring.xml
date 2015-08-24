@@ -93,8 +93,13 @@
 	<context:component-scan base-package="de.fliegersoftware.amazon.core"/>
 	
 	<alias name="defaultAmazonUserService" alias="amazonUserService"/>
-    <bean id="defaultAmazonUserService" class="de.fliegersoftware.amazon.core.impl.DefaultAmazonUserService">
+    <bean id="defaultAmazonUserService" class="de.fliegersoftware.amazon.core.services.impl.DefaultAmazonUserService">
         <property name="amazonUserDAO" ref="amazonUserDAO"/>
+    </bean>
+    
+    <alias name="defaultAmazonConfigService" alias="amazonConfigService" />
+    <bean id="defaultAmazonConfigService" class="de.fliegersoftware.amazon.core.services.impl.DefaultAmazonConfigService">
+        <property name="baseStoreService" ref="baseStoreService" />
     </bean>
 	
 </beans>

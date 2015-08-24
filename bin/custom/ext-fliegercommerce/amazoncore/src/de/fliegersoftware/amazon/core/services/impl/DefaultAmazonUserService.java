@@ -1,4 +1,4 @@
-package de.fliegersoftware.amazon.core.impl;
+package de.fliegersoftware.amazon.core.services.impl;
 
 import org.springframework.beans.factory.annotation.Required;
 

@@ -3,6 +3,7 @@
  */
 package de.fliegersoftware.amazon.hmc.action;
 
+import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.hybris.platform.hmc.generic.AbstractActionChip;
 import de.hybris.platform.hmc.util.action.AbstractActionDialogChip;
 import de.hybris.platform.hmc.util.action.ActionEvent;
@@ -22,9 +23,6 @@ import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
-
-import de.fliegersoftware.amazon.hmc.jalo.config.AmazonConfig;
-
 
 /**
  * @author douglas.canalli

@@ -32,7 +32,7 @@ public SetOrderReferenceDetailsResult perform(final SetOrderReferenceDetailsRequ
    	LOG.info("SetOrderReferenceDetailsCommandImpl perform requested");
    	LOG.info("-----------------------------------------------------");
    	req.setSellerId(getSellerId());
-   	SetOrderReferenceDetailsResponse orderReferenceDetail = offAmazonPaymentsService.setOrderReferenceDetails(req);
+   	SetOrderReferenceDetailsResponse orderReferenceDetail = getOffAmazonPaymentsService().setOrderReferenceDetails(req);
    	final SetOrderReferenceDetailsResult result = orderReferenceDetail.getSetOrderReferenceDetailsResult();
    	
    	return result;
