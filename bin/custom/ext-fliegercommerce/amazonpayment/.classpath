@@ -20,5 +20,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/payment"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorfacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/amazoncore"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

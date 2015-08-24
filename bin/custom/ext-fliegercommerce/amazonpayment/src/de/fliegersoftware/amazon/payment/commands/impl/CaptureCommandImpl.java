@@ -29,7 +29,7 @@ public class CaptureCommandImpl extends AbstractCommandImpl implements CaptureCo
 			LOG.info("-----------------------------------------------------");
 			
 			req.setSellerId(getSellerId());
-			CaptureResponse capture = offAmazonPaymentsService.capture(req);
+			CaptureResponse capture = getOffAmazonPaymentsService().capture(req);
 			final CaptureResult result = capture.getCaptureResult();
 
 			return result;

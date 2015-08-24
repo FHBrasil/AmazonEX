@@ -29,7 +29,7 @@ public class CloseOrderReferenceCommandImpl extends AbstractCommandImpl implemen
 			LOG.info("-----------------------------------------------------");
 
 			req.setSellerId(getSellerId());
-			CloseOrderReferenceResponse closeOrderReference = offAmazonPaymentsService.closeOrderReference(req);
+			CloseOrderReferenceResponse closeOrderReference = getOffAmazonPaymentsService().closeOrderReference(req);
 			final CloseOrderReferenceResult result = closeOrderReference.getCloseOrderReferenceResult();
 
 			return result;
