@@ -56,7 +56,7 @@
 		<form:form action="${placeOrderUrl}" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
 			<input type="hidden" name="amazonOrderReferenceId"/>
 			<c:if test="${sandboxMode}">
-				<amazon-controls:sandboxModeControls showAuthorizeError="true" showCaptureErrors="true" />
+				<amazon-controls:sandboxModeControls showAuthorizeError="true" />
 			</c:if>
 			<c:if test="${chargeOnOrder}">
 				<amazon-controls:confirmChargeOnOrderControls />

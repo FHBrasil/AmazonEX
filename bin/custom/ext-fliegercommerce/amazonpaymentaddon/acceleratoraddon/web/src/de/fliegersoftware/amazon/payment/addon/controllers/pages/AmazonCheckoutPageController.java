@@ -132,7 +132,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 			if(getCheckoutFacade().setDeliveryAddress(details.getAddressData()) //
 				&& getCheckoutFacade().setDeliveryModeIfAvailable()) {
-				response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
+				// silent response
+				// response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
 			} else {
 				response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
 			}
@@ -268,13 +269,13 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 					orderData = getCheckoutFacade().placeOrder();
 				} catch (InvalidCartException e) {
 					LOG.error("Failed to place Order", e);
-					GlobalMessages.addErrorMessage(redirectModel, "checkout.placeOrder.failed");
+					GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, "checkout.placeOrder.failed");
 					return REDIRECT_URL_AMAZON_CHECKOUT;
 				}
 				return redirectToOrderConfirmationPage(orderData);
 			} else {
 				LOG.info("AmazonCheckout - payment failed");
-				GlobalMessages.addErrorMessage(redirectModel, getAmazonErrorMessage());
+				GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, getAmazonErrorMessage());
 			}
 		}
 		return REDIRECT_URL_AMAZON_CHECKOUT;
@@ -283,7 +284,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	protected String getLocalizedMessage(String code, Object... args) {
 		Locale locale = LocaleContextHolder.getLocale();
 		try {
-			return getMessageSource().getMessage(code, args, locale);
+			return messageSource.getMessage(code, args, locale);
 		} catch (NoSuchMessageException e) {
 			// do nothing
 		}
@@ -294,11 +295,12 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		String prefix = "amazon.authorization.error.";
 		String amazonErrorCode = getSessionService().getAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE);
 		if(!StringUtils.isEmpty(amazonErrorCode)) {
-			String message = getLocalizedMessage(prefix + amazonErrorCode);
-			if(!StringUtils.isEmpty(message) && ! amazonErrorCode.equals(message))
-				return message;
+			amazonErrorCode = prefix + amazonErrorCode;
+			String message = getLocalizedMessage(amazonErrorCode);
+			if(!StringUtils.isEmpty(message) && !amazonErrorCode.equals(message))
+				return amazonErrorCode;
 		}
-		return getLocalizedMessage("amazon.authorization.error.no.description");
+		return "amazon.authorization.error.no.description";
 	}
 
 	@Override

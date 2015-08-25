@@ -25,8 +25,6 @@ if(window.onAmazonLoginReady) {
 }
 function paymentLoginReadyHandler() {
 	amazon.Login.setClientId(ACC.addons.amazonaddon.clientId);
-	ACC.amazon.enablePlaceOrder.loginReady = true;
-	checkEnableCheckout();
 };
 function checkEnableCheckout() {
 	var allOk = true;
@@ -38,13 +36,15 @@ function checkEnableCheckout() {
 };
 function retrieveGuestInformation() {
 	amazon.Login.retrieveProfile(getUrlParam('access_token'), function(response) {
-		var form = $('#amazonGuestInformation');
-		if(form.length) {
-			form.find('input[name="amazonOrderReferenceId"]').val(ACC.amazon.amazonOrderReferenceId);
-			form.find('input[name="amazonGuestId"]').val(response.profile.CustomerId);
-			form.find('input[name="amazonGuestName"]').val(response.profile.Name);
-			form.find('input[name="amazonGuestEmail"]').val(response.profile.PrimaryEmail);
-			postGuestInformation();
+		if(response.success) {
+			var form = $('#amazonGuestInformation');
+			if(form.length) {
+				form.find('input[name="amazonOrderReferenceId"]').val(ACC.amazon.amazonOrderReferenceId);
+				form.find('input[name="amazonGuestId"]').val(response.profile.CustomerId);
+				form.find('input[name="amazonGuestName"]').val(response.profile.Name);
+				form.find('input[name="amazonGuestEmail"]').val(response.profile.PrimaryEmail);
+				postGuestInformation();
+			}
 		}
 	});
 }
@@ -61,7 +61,6 @@ function postGuestInformation() {
 ACC.amazon.$ = $;
 $.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl)
 	.done(function(script, textStatus){
-		ACC.amazon.enablePlaceOrder.loginReady = false;
 		if(ACC.amazon.$('#AmazonPayButton').length) {
 			var authRequest;
 			var returnUrl = ACC.config.contextPath + '/checkout/amazon';

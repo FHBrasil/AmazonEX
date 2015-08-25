@@ -47,6 +47,7 @@ import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
+import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
@@ -307,7 +308,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			if (subscriptionID != null) {
 				entry.setSubscriptionID(subscriptionID);
 			}
-			if ("Declined".equals(result.getAuthorizationDetails().getAuthorizationStatus().getState())) {
+			if (!AmazonTransactionStatus.Declined.name().equals(result.getAuthorizationDetails().getAuthorizationStatus().getState())) {
 				getSessionService().setAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE, result.getAuthorizationDetails().getAuthorizationStatus().getReasonCode());
 			}
 			this.modelService.save(entry);
