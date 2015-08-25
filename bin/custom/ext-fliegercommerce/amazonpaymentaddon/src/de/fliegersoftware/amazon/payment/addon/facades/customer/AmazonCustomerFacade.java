@@ -5,5 +5,5 @@ import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 
 public interface AmazonCustomerFacade extends CustomerFacade {
 
-	public void createGuestUserForAnonymousCheckout(String amazonOrderReferenceId) throws DuplicateUidException;
+	public void createGuestUserForAnonymousCheckout(String amazonOrderReferenceId, String email, String name) throws DuplicateUidException;
 }

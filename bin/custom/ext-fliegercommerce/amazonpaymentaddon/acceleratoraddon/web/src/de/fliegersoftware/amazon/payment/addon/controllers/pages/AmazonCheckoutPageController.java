@@ -25,6 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
+import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
@@ -56,6 +58,9 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	private static final String AMAZON_CHECKOUT_CMS_PAGE_LABEL = "amazonCheckout";
 	private static final String REDIRECT_URL_AMAZON_CHECKOUT = REDIRECT_PREFIX + "/checkout/amazon";
 	private static final String REDIRECT_URL_CART = REDIRECT_PREFIX + "/cart";
+
+	@Resource
+	private AmazonConfigService amazonConfigService;
 
 	@Resource
 	private AmazonPaymentService amazonPaymentService;
@@ -95,8 +100,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		createProductList(model);
 
 		// renders extra controls based on configuration
-		model.addAttribute("sandboxMode", Config.getBoolean(AmazonpaymentConstants.SANDBOX_MODE_CONFIG, false));
-		model.addAttribute("chargeOnOrder", Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false));
+		model.addAttribute("sandboxMode", Boolean.valueOf(amazonConfigService.isSandboxMode()));
+		model.addAttribute("chargeOnOrder", Boolean.valueOf(CaptureModeEnum.IMMEDIATE.equals(amazonConfigService.getCaptureMode())));
 
 		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));

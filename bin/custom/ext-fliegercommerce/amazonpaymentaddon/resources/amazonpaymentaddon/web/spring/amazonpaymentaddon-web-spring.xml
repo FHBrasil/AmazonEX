@@ -22,7 +22,7 @@
 		resource bundle as javascript variables -->
 	<bean id="defaultAmazonPaymentaddonJavaScriptMessageResourceAccessor"
 		class="de.fliegersoftware.amazon.payment.addon.config.bundlesources.AmazonConfigJavaScriptMessageResourceAccessor">
-		<property name="addOnName" value="amazonpaymentaddon" />
+		<property name="addOnName" value="amazonaddon" />
 		<property name="amazonConfigService" ref="amazonConfigService" />
 	</bean>
 

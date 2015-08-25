@@ -2,6 +2,7 @@ package de.fliegersoftware.amazon.core.services;
 
 import java.util.Properties;
 
+import de.fliegersoftware.amazon.core.enums.AuthorizationModeEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
 
 public interface AmazonConfigService {
@@ -30,6 +31,6 @@ public interface AmazonConfigService {
 	String getPayButtonSize();
 	int getPaymentWidgetWidth();
 	int getPaymentWidgetHeight();
-	boolean isNormalCheckout();
+	AuthorizationModeEnum getAuthorizationMode();
 	CaptureModeEnum getCaptureMode();
 }
