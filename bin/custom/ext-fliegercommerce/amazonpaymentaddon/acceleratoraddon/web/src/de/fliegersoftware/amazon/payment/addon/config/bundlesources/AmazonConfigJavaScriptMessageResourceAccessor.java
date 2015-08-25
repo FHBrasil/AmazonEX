@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import com.hybris.addon.common.config.bundlesources.JavaScriptMessageResourcesAccessor;
 
+import de.fliegersoftware.amazon.core.enums.OperationModeEnum;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.core.services.impl.DefaultAmazonConfigService;
 
@@ -17,38 +18,45 @@ public class AmazonConfigJavaScriptMessageResourceAccessor implements JavaScript
 
 	@Override
 	public Map<String, String> getAllMessages(Locale locale) {
-		Map<String, String> messages = new LinkedHashMap<String, String>();
-		for(Entry<Object, Object> prop : amazonConfigService.getAmazonProperties().entrySet()) {
-			messages.put((String)prop.getKey(), (String)prop.getValue());
-		}
-		messages.put("clientId", amazonConfigService.getClientId());
-
-		// configure widgets url
-		String amazonWidgetUrl;
-		String region = amazonConfigService.getRegion();
-		boolean sandboxMode = amazonConfigService.isSandboxMode();
-		if("DE".equals(region) && sandboxMode) {
-			amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/sandbox/lpa/js/Widgets.js";
-		} else if ("DE".equals(region) && !sandboxMode){
-			amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/lpa/js/Widgets.js";
+		Map<String, String> amazonConfigs = new LinkedHashMap<String, String>();
+		if (amazonConfigService.isEnabled()) {
+			amazonConfigs.put("isAmazonEnabled", "true");
+			
+			if (amazonConfigService.isHiddenButtonsMode()) {
+				amazonConfigs.put("isHiddenButtonsMode", "true");
+			}
+			if (OperationModeEnum.LOGINANDPAY.equals(amazonConfigService.getOperationMode()) || 
+					OperationModeEnum.LOGINONLY.equals(amazonConfigService.getOperationMode())) {
+				amazonConfigs.put("isAmazonLoginEnabled", "true");
+			}
+			
+			if (OperationModeEnum.LOGINANDPAY.equals(amazonConfigService.getOperationMode()) || 
+					OperationModeEnum.PAYONLY.equals(amazonConfigService.getOperationMode())) {
+				amazonConfigs.put("isAmazonPayEnabled", "true");
+			}
+		
+			amazonConfigs.put("clientId", amazonConfigService.getClientId());
+			amazonConfigs.put("sellerId", amazonConfigService.getSellerId());
+	
+			// configure widgets url
+			String amazonWidgetUrl;
+			String region = amazonConfigService.getRegion();
+			boolean sandboxMode = amazonConfigService.isSandboxMode();
+			amazonConfigs.put("region", region);
+			if("DE".equals(region) && sandboxMode) {
+				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/sandbox/lpa/js/Widgets.js";
+			} else if ("DE".equals(region) && !sandboxMode){
+				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/lpa/js/Widgets.js";
+			} else if(sandboxMode) {
+				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/uk/sandbox/lpa/js/Widgets.js";
+			} else {
+				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/uk/lpa/js/Widgets.js";
+			}
+			amazonConfigs.put("amazonWidgetsUrl", amazonWidgetUrl);
 		} else {
-			amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/uk/sandbox/lpa/js/Widgets.js";
+			amazonConfigs.put("isAmazonEnabled", "false");
 		}
-		messages.put("amazonWidgetsUrl", amazonWidgetUrl);
-//		messages.put("amazonWidgetUrl", "https://static-eu.payments-amazon.com/OffAmazonPayments/de/sandbox/lpa/js/Widgets.js");
-//		messages.put("clientId", "amzn1.application-oa2-client.3a8eb36356824cb4b58183861bbcb8d1");
-//		messages.put("accessKeyId", "AKIAI6WXQHLXKDEUQPMA");
-//		messages.put("secretAccessKey", "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");
-//		messages.put("applicationName", "KPFamily Sandbox");
-//		messages.put("applicationVersion", "");
-//		messages.put("sellerId", "A3NZCWJS2BIERH");
-//		messages.put("currency", "EUR");
-//
-//		messages.put("environment", "SANDBOX");
-//		messages.put("region", "DE");
-//		messages.put("placeOrderUrl", "http://localhost:9001/");
-//		messages.put("certCN", "sns.amazonaws.com");
-		return messages;
+		return amazonConfigs;
 	}
 
 	@Override

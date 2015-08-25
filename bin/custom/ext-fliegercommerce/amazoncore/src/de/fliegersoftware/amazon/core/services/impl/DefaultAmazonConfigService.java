@@ -6,7 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Required;
 
+import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
+import de.fliegersoftware.amazon.core.enums.OperationModeEnum;
 import de.fliegersoftware.amazon.core.model.config.AmazonConfigModel;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.hybris.platform.store.services.BaseStoreService;
@@ -45,6 +47,16 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	}
 	
 	@Override
+	public boolean isEnabled() {
+		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isEnabled();
+	}
+	
+	@Override
+	public boolean isEnableERPMode() {
+		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isEnableERPMode();
+	}
+	
+	@Override
 	public String getClientId() {
 		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getClientId();
 	}
@@ -62,6 +74,16 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	@Override
 	public boolean isSandboxMode() {
 		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isSandboxMode();
+	}
+
+	@Override
+	public boolean isHiddenButtonsMode() {
+		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isHiddenButtonsMode();
+	}
+
+	@Override
+	public OperationModeEnum getOperationMode() {
+		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getOperationMode();
 	}
 	
 	@Override
@@ -112,6 +134,11 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	@Override
 	public CaptureModeEnum getCaptureMode() {
 		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getCaptureMode();
+	}
+
+	@Override
+	public AccountMatchingStrategyEnum getAccountMatchingStrategy() {
+		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getAccountMatchingStrategy();
 	}
 	
 	protected BaseStoreService getBaseStoreService() {

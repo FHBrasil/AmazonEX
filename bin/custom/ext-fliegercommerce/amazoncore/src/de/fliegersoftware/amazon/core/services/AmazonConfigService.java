@@ -2,7 +2,9 @@ package de.fliegersoftware.amazon.core.services;
 
 import java.util.Properties;
 
+import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
+import de.fliegersoftware.amazon.core.enums.OperationModeEnum;
 
 public interface AmazonConfigService {
 
@@ -18,12 +20,15 @@ public interface AmazonConfigService {
 	public static final String CERT_CN = "certCN";
 
 	Properties getAmazonProperties();
+	boolean isEnabled();
+	boolean isEnableERPMode();
 	String getClientId();
 	String getSellerId();
 	String getRegion();
 	boolean isSandboxMode();
 	int getAddressWidgetWidth();
 	int getAddressWidgetHeight();
+	boolean isHiddenButtonsMode();
 	String getLoginButtonColor();
 	String getLoginButtonSize();
 	String getPayButtonColor();
@@ -32,4 +37,6 @@ public interface AmazonConfigService {
 	int getPaymentWidgetHeight();
 	boolean isNormalCheckout();
 	CaptureModeEnum getCaptureMode();
+	OperationModeEnum getOperationMode();
+	AccountMatchingStrategyEnum getAccountMatchingStrategy();
 }

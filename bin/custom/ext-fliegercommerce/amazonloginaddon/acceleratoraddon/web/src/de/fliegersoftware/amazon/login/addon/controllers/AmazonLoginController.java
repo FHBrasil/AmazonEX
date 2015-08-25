@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
+import de.fliegersoftware.amazon.core.model.AmazonCustomerModel;
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.login.addon.constants.AmazonLoginAddonConstants;
 import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonLoginForm;
@@ -43,13 +47,16 @@ public class AmazonLoginController extends AbstractPageController {
 	@Resource
 	private AmazonAutoLoginStrategy amazonAutoLoginStrategy;
 	
+	@Resource
+	private AmazonConfigService amazonConfigService;
+	
 	@Resource(name = "customerFacade")
 	private CustomerFacade customerFacade;
 	
 	@Resource(name = "autoLoginStrategy")
 	private AutoLoginStrategy autoLoginStrategy;
 
-	@RequestMapping(value = "/register/login-with-amazon", method = RequestMethod.GET)
+	@RequestMapping(value = "/register/login-with-amazon", method = RequestMethod.POST)
 	public String loginWithAmazon (
 			@RequestParam(value = "name") final String name,
 			@RequestParam(value = "primaryEmail") final String email,
@@ -59,7 +66,6 @@ public class AmazonLoginController extends AbstractPageController {
 			Model model)
 			throws CMSItemNotFoundException 
 	{
-
 		final AmazonLoginRegisterData registerData = new AmazonLoginRegisterData();
 		registerData.setFirstName(firstName(name));
 		registerData.setLastName(lastName(name));
@@ -67,7 +73,13 @@ public class AmazonLoginController extends AbstractPageController {
 		final String randomPass = UUID.randomUUID().toString();
 		registerData.setPassword(randomPass);
 		registerData.setAmazonCustomerId(customerId);
-		registerData.setTitleCode("mr");
+		
+		if(getAmazonUserFacade().isAmazonCustomerExisting(customerId))
+		{	
+			AmazonCustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(customerId);
+			amazonAutoLoginStrategy.login(amazonCustomerModel.getCustomer().getUid(), customerId, request, response);
+			return REDIRECT_PREFIX+MY_ACCOUNT;
+		}
 		
 		if(!getAmazonUserFacade().isUserExisting(email))
 		{			
@@ -83,14 +95,35 @@ public class AmazonLoginController extends AbstractPageController {
 				LOG.warn("DuplicateUidException for email "+email);
 				e.printStackTrace();
 			}	
-		}
-		else
-		{
-			if(!getAmazonUserFacade().isAmazonCustomerExisting(customerId))
-			{				
+		} else 
+		{			
+			if (AccountMatchingStrategyEnum.EMAILADDRESSBASED.equals(amazonConfigService.getAccountMatchingStrategy())) {
+				
 				return prepareAssociateAccount(model, email, customerId);
+			
+			} else if (AccountMatchingStrategyEnum.NOMATCHING.equals(amazonConfigService.getAccountMatchingStrategy())) 
+			{
+				String customerIdEmail = customerId + "|" + email;
+				if(!getAmazonUserFacade().isUserExisting(customerIdEmail))
+				{			
+					try 
+					{				
+						registerData.setLogin(customerIdEmail);
+						getAmazonUserFacade().register(registerData);
+						amazonAutoLoginStrategy.login(customerIdEmail, customerId, request, response);
+						
+						return REDIRECT_PREFIX+MY_ACCOUNT;
+					} 
+					catch (DuplicateUidException e) 
+					{
+						LOG.warn("DuplicateUidException for email "+customerIdEmail);
+						e.printStackTrace();
+					}	
+				}
 			}
 		}
+		
+		
 		amazonAutoLoginStrategy.login(email, customerId, request, response);
 		return REDIRECT_PREFIX+MY_ACCOUNT;
 	}
@@ -114,7 +147,33 @@ public class AmazonLoginController extends AbstractPageController {
 			
 			return REDIRECT_PREFIX+MY_ACCOUNT;
 		} 
-		catch (BadCredentialsException e)
+		catch (AuthenticationException e)
+		{
+			LOG.warn(e.getMessage());	
+			return prepareAssociateAccount(model, amazonForm.getEmail(), amazonForm.getAmazonId());
+		}
+	}
+	
+	@RequestMapping(value = "/register/no-merge-account", method = RequestMethod.POST)
+	public String noMergeAccount(final AmazonLoginForm amazonForm,
+			final BindingResult bindingResult,
+			final HttpServletRequest request,
+			final HttpServletResponse response,
+			final Model model) 
+	{		
+		final AmazonLoginRegisterData registerData = new AmazonLoginRegisterData();
+		registerData.setAmazonCustomerId(amazonForm.getAmazonId());
+		registerData.setLogin(amazonForm.getEmail());
+		
+		try
+		{
+			getAutoLoginStrategy().login(amazonForm.getEmail(), amazonForm.getPwd(), request, response);
+			
+			getAmazonUserFacade().update(registerData);
+			
+			return REDIRECT_PREFIX+MY_ACCOUNT;
+		} 
+		catch (AuthenticationException e)
 		{
 			LOG.warn(e.getMessage());	
 			return prepareAssociateAccount(model, amazonForm.getEmail(), amazonForm.getAmazonId());

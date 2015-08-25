@@ -69,6 +69,10 @@
 					<spring:theme code="text.amazon.associate.account"
 						text="Associate Account" />
 				</button>
+				<button class="positive" type="button">
+					<spring:theme code="text.amazon.associate.account"
+						text="Associate Account" />
+				</button>
 			</div>
 		</form:form>
 	</div>

@@ -54,8 +54,6 @@ public class DefaultAmazonUserFacade implements AmazonUserFacade {
 			newCustomer.setName(getCustomerNameStrategy().getName(registerData.getFirstName(), registerData.getLastName()));
 		}
 		
-		final TitleModel title = getUserService().getTitleForCode(registerData.getTitleCode());
-		newCustomer.setTitle(title);
 		setUidForRegister(registerData, newCustomer);
 		
 		newCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
