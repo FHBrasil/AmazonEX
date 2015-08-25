@@ -274,6 +274,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 				return redirectToOrderConfirmationPage(orderData);
 			} else {
 				LOG.info("AmazonCheckout - payment failed");
+				GlobalMessages.addErrorMessage(redirectModel, getAmazonErrorMessage());
 			}
 		}
 		return REDIRECT_URL_AMAZON_CHECKOUT;
@@ -282,11 +283,22 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	protected String getLocalizedMessage(String code, Object... args) {
 		Locale locale = LocaleContextHolder.getLocale();
 		try {
-			return messageSource.getMessage(code, args, locale);
+			return getMessageSource().getMessage(code, args, locale);
 		} catch (NoSuchMessageException e) {
 			// do nothing
 		}
 		return code;
+	}
+
+	protected String getAmazonErrorMessage() {
+		String prefix = "amazon.authorization.error.";
+		String amazonErrorCode = getSessionService().getAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE);
+		if(!StringUtils.isEmpty(amazonErrorCode)) {
+			String message = getLocalizedMessage(prefix + amazonErrorCode);
+			if(!StringUtils.isEmpty(message) && ! amazonErrorCode.equals(message))
+				return message;
+		}
+		return getLocalizedMessage("amazon.authorization.error.no.description");
 	}
 
 	@Override

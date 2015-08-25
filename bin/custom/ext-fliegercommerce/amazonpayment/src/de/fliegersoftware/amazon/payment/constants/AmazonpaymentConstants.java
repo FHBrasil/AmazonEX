@@ -28,4 +28,5 @@ public final class AmazonpaymentConstants extends GeneratedAmazonpaymentConstant
 	}
 
 	// implement here constants used by this extension
+	public static final String AMAZON_ERROR_CODE = "amazonErrorCode";
 }
