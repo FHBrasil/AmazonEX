@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Required;
 
+import de.fliegersoftware.amazon.core.enums.AuthorizationModeEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
 import de.fliegersoftware.amazon.core.model.config.AmazonConfigModel;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
@@ -103,10 +104,10 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	public int getPaymentWidgetWidth() {
 		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getPaymentWidgetWidth();
 	}
-	
+
 	@Override
-	public boolean isNormalCheckout() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isNormalCheckout();
+	public AuthorizationModeEnum getAuthorizationMode() {
+		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getAuthorizationMode();
 	}
 
 	@Override

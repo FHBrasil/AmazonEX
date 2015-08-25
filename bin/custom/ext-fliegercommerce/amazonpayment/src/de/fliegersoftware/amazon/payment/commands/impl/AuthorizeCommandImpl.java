@@ -14,6 +14,7 @@ import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResponse;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
 
+import de.fliegersoftware.amazon.core.enums.AuthorizationModeEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.commands.AuthorizeCommand;
@@ -47,7 +48,7 @@ public class AuthorizeCommandImpl extends AbstractCommandImpl implements Authori
 //			if(Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false)) {
 //				req.setCaptureNow(true);
 //			}
-			if(!amazonConfigService.isNormalCheckout()) {
+			if(AuthorizationModeEnum.AUTOMATICSYNCHRONOUS.equals(amazonConfigService.getAuthorizationMode())) {
 				req.setTransactionTimeout(Integer.valueOf(0));
 			}
 			if(CaptureModeEnum.IMMEDIATE.equals(amazonConfigService.getCaptureMode())) {

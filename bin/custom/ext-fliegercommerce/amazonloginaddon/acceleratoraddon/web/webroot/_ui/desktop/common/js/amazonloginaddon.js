@@ -3,7 +3,7 @@ if(!ACC)
 if(!ACC.amazon)
 	ACC.amazon = {};
 
-$.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetsUrl)
+$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl)
 	.done(function(script, textStatus){
 		if(window.onAmazonLoginReady) {
 			var parent = window.onAmazonLoginReady;
@@ -15,12 +15,12 @@ $.getScript(ACC.addons.amazonpaymentaddon.amazonWidgetsUrl)
 			window.onAmazonLoginReady = authenticationLoginReadyHandler;
 		}
 		function authenticationLoginReadyHandler() {
-			amazon.Login.setClientId(ACC.addons.amazonpaymentaddon.clientId);
+			amazon.Login.setClientId(ACC.addons.amazonaddon.clientId);
 		};
 		if($('#LoginWithAmazon').length) {
 			var authRequest;
 			var returnUrl = ACC.config.contextPath + '/register/login-with-amazon';
-			OffAmazonPayments.Button("LoginWithAmazon", ACC.addons.amazonpaymentaddon.sellerId, {
+			OffAmazonPayments.Button("LoginWithAmazon", ACC.addons.amazonaddon.sellerId, {
 				type:  "LwA",
 				color: "Gold",
 				size:  "medium",

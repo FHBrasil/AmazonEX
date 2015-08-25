@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,17 +18,13 @@ import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonCon
 import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
 import de.fliegersoftware.amazon.payment.addon.forms.AmazonGuestForm;
 import de.fliegersoftware.amazon.payment.addon.forms.validation.AmazonGuestValidator;
-import de.hybris.platform.acceleratorfacades.flow.CheckoutFlowFacade;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractLoginPageController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.GuestForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.LoginForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.RegisterForm;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.GuestValidator;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
-import de.hybris.platform.commercefacades.customer.CustomerFacade;
 import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
@@ -82,7 +79,9 @@ public class AmazonGuestLoginController extends AbstractLoginPageController {
 				return handleRegistrationError(model);
 			}
 			String amazonOrderReferenceId = form.getAmazonOrderReferenceId();
-			getCustomerFacade().createGuestUserForAnonymousCheckout(amazonOrderReferenceId);
+			String name = form.getAmazonGuestName();
+			String email = form.getAmazonGuestEmail();
+			getCustomerFacade().createGuestUserForAnonymousCheckout(amazonOrderReferenceId, email, name);
 			getGuidCookieStrategy().setCookie(request, response);
 			getSessionService().setAttribute(WebConstants.ANONYMOUS_CHECKOUT, Boolean.TRUE);
 		} catch (DuplicateUidException e) {
@@ -132,8 +131,7 @@ public class AmazonGuestLoginController extends AbstractLoginPageController {
 		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.CheckoutLoginPage;
 	}
 
-	protected AmazonGuestValidator getGuestValidator()
-	{
+	protected AmazonGuestValidator getGuestValidator() {
 		return amazonGuestValidator;
 	}
 
