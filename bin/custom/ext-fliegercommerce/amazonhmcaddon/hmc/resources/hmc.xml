@@ -199,13 +199,4 @@
 		</organizer>
 	</type>
 	
-	<type mode="append" name="Order">
-		<organizer>
-			<search mode="append" autoperform="true">
-				<condition attribute="paymentMode" operator="equal" />
-				<condition attribute="paymentStatus" operator="equal" />
-			</search>
-		</organizer>
-	</type>
-	
 </configuration>
