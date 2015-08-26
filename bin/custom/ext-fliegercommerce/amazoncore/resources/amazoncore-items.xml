@@ -32,10 +32,35 @@
 			<attributes>
 				<!-- Token and transactionId are duplicated in case it will be more convenient
 					to store them here -->
-				<attribute qualifier="amazonOrderReferenceId" type="java.lang.String">
+				<attribute qualifier="amazonOrderReferenceId" type="java.lang.String" generate="true">
 					<description>Order Reference Id for Amazon operations</description>
 					<persistence type="property"/>
 					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="amazonOrderStatus" type="java.lang.String" generate="true">
+					<description>Order Reference Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="amazonLastAuthorizationId" type="java.lang.String" generate="true">
+					<description>Last Authorization Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonAuthorizationStatus" type="java.lang.String" generate="true">
+					<description>Order Reference Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureId" type="java.lang.String" generate="true">
+					<description>Capture Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureStatus" type="java.lang.String" generate="true">
+					<description>Capture Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
 				</attribute>
 			</attributes>
 		</itemtype>
