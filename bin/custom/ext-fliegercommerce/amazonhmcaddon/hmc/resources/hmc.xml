@@ -156,13 +156,56 @@
 			</editor>
 		</organizer>
 	</type>
-	<type mode="append" name="Order">
+	
+	<type mode="append" name="AmazonPaymentInfo">
 		<organizer>
 			<editor>
-				<tab name="tab.order.amazon.properties" position="6">
-					
+				<tab name="tab.payment.amazon.properties" position="2">
+					<section name="section.payment.amazon.order">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="200" width="100" name="amazonOrderReferenceId" editable="false" />
+								<attribute labelwidth="200" width="100" name="amazonOrderStatus" editable="false" />
+							</row>
+							<row>
+								<action name="btn.amazonconfig.authorize" classname="de.fliegersoftware.amazon.hmc.action.AmazonAuthorizeAction" type="item"></action>
+							</row>
+						</columnlayout>
+					</section>
+					<section name="section.payment.amazon.authorization">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="200" width="100" name="amazonLastAuthorizationId" editable="false" />
+								<attribute labelwidth="200" width="100" name="amazonAuthorizationStatus" editable="false" />
+							</row>
+							<row>
+								<action name="btn.amazonconfig.capture" classname="de.fliegersoftware.amazon.hmc.action.AmazonCaptureAction" type="item"></action>
+							</row>
+						</columnlayout>
+					</section>
+					<section name="section.payment.amazon.capture">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="200" width="100" name="amazonCaptureId" editable="false" />
+								<attribute labelwidth="200" width="100" name="amazonCaptureStatus" editable="false" />
+							</row>
+							<row>
+								<action name="btn.amazonconfig.refund" classname="de.fliegersoftware.amazon.hmc.action.AmazonRefundAction" type="item"></action>
+							</row>
+						</columnlayout>
+					</section>
 				</tab>
 			</editor>
 		</organizer>
 	</type>
+	
+	<type mode="append" name="Order">
+		<organizer>
+			<search mode="append" autoperform="true">
+				<condition attribute="paymentMode" operator="equal" />
+				<condition attribute="paymentStatus" operator="equal" />
+			</search>
+		</organizer>
+	</type>
+	
 </configuration>
