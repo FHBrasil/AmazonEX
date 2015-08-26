@@ -1,10 +1,13 @@
 package de.fliegersoftware.amazon.payment.facades.impl;
 
+import javax.annotation.Resource;
+
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
 import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
 import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
 
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationConfig;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationFacade;
@@ -14,13 +17,16 @@ public class AmazonSandboxSimulationFacadeImpl implements AmazonSandboxSimulatio
 
 	private ThreadLocal<AmazonSandboxSimulationConfig> currentSessionConfig;
 
+	@Resource
+	private AmazonConfigService amazonConfigService;
+
 	public AmazonSandboxSimulationFacadeImpl() {
 		currentSessionConfig = new ThreadLocal<AmazonSandboxSimulationConfig>();
 	}
 
 	@Override
 	public boolean isSimulation() {
-		if(Config.getBoolean(AmazonpaymentConstants.SANDBOX_MODE_CONFIG, false)) {
+		if(amazonConfigService.isSandboxMode()) {
 			AmazonSandboxSimulationConfig config = currentSessionConfig.get();
 			return config != null;
 		}

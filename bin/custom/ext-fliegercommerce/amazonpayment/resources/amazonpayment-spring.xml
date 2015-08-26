@@ -120,16 +120,17 @@
 		</property>
 	</bean>
 
-    <alias name="defaultAmazonPaymentService" alias="amazonPaymentService"/>
-    <bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
-    	<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
-    	<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
-    	<property name="amazonCaptureDetailsConverter" ref="amazonCaptureDetailsConverter"/>
-    	<property name="amazonAuthorizationDetailsConverter" ref="amazonAuthorizationDetailsConverter"/>
-    	<property name="amazonRefundDetailsConverter" ref="amazonRefundDetailsConverter"/>
-    	<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
-    </bean>
-    
+	<alias name="defaultAmazonPaymentService" alias="amazonPaymentService"/>
+	<bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
+		<property name="sessionService" ref="sessionService"/>
+		<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
+		<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
+		<property name="amazonCaptureDetailsConverter" ref="amazonCaptureDetailsConverter"/>
+		<property name="amazonAuthorizationDetailsConverter" ref="amazonAuthorizationDetailsConverter"/>
+		<property name="amazonRefundDetailsConverter" ref="amazonRefundDetailsConverter"/>
+		<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
+	</bean>
+
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
     <bean id="defaultMwsAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonPaymentService">
     	<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />

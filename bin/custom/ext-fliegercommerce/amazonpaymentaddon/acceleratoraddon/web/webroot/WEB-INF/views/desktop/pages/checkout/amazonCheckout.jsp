@@ -56,7 +56,7 @@
 		<form:form action="${placeOrderUrl}" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
 			<input type="hidden" name="amazonOrderReferenceId"/>
 			<c:if test="${sandboxMode}">
-				<amazon-controls:sandboxModeControls showAuthorizeError="true" showCaptureErrors="true" />
+				<amazon-controls:sandboxModeControls showAuthorizeError="true" />
 			</c:if>
 			<c:if test="${chargeOnOrder}">
 				<amazon-controls:confirmChargeOnOrderControls />
@@ -77,6 +77,9 @@
 	<c:if test="${sendGuestInformation}">
 		<form:form id="amazonGuestInformation" action="/login/checkout/amazon/guest" method="POST">
 			<input type="hidden" name="amazonOrderReferenceId"/>
+			<input type="hidden" name="amazonGuestId"/>
+			<input type="hidden" name="amazonGuestName"/>
+			<input type="hidden" name="amazonGuestEmail"/>
 		</form:form>
 	</c:if>
 </template:page>

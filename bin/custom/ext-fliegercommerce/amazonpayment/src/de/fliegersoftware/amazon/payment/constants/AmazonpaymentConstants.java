@@ -28,7 +28,5 @@ public final class AmazonpaymentConstants extends GeneratedAmazonpaymentConstant
 	}
 
 	// implement here constants used by this extension
-	public static final String SYNCHRONIOUS_CHECKOUT_CONFIG = "amazonpayment.authorization.synchronouscheckout";
-	public static final String CHARGE_ON_ORDER_CONFIG = "amazonpayment.authorization.chargeonorder";
-	public static final String SANDBOX_MODE_CONFIG = "amazonpayment.authorization.sandboxmode";
+	public static final String AMAZON_ERROR_CODE = "amazonErrorCode";
 }

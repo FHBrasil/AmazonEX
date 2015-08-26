@@ -1,4 +1,4 @@
-package de.fliegersoftware.amazon.hmc.jalo.config;
+package de.fliegersoftware.amazon.core.jalo.config;
 
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.JaloBusinessException;

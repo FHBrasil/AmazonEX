@@ -18,6 +18,10 @@ public class AmazonLoginButtonComponentController extends AbstractAmazonCmsCompo
 	@Override
 	protected void fillModel(HttpServletRequest request, Model model, AmazonLoginComponentModel component) {
 		super.fillModel(request, model, component);
-
+		
+		model.addAttribute("buttonColor", amazonConfigService.getLoginButtonColor());
+		model.addAttribute("buttonSize", amazonConfigService.getLoginButtonSize());
+		
+		model.addAttribute("isHiddenButtonsMode", amazonConfigService.isHiddenButtonsMode());
 	}
 }

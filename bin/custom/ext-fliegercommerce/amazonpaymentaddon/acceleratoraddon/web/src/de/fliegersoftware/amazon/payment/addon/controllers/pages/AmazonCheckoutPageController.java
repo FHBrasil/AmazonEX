@@ -25,6 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonSellerOrderAttributesData;
+import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
 import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
@@ -56,6 +58,9 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	private static final String AMAZON_CHECKOUT_CMS_PAGE_LABEL = "amazonCheckout";
 	private static final String REDIRECT_URL_AMAZON_CHECKOUT = REDIRECT_PREFIX + "/checkout/amazon";
 	private static final String REDIRECT_URL_CART = REDIRECT_PREFIX + "/cart";
+
+	@Resource
+	private AmazonConfigService amazonConfigService;
 
 	@Resource
 	private AmazonPaymentService amazonPaymentService;
@@ -95,8 +100,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		createProductList(model);
 
 		// renders extra controls based on configuration
-		model.addAttribute("sandboxMode", Config.getBoolean(AmazonpaymentConstants.SANDBOX_MODE_CONFIG, false));
-		model.addAttribute("chargeOnOrder", Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false));
+		model.addAttribute("sandboxMode", Boolean.valueOf(amazonConfigService.isSandboxMode()));
+		model.addAttribute("chargeOnOrder", Boolean.valueOf(CaptureModeEnum.IMMEDIATE.equals(amazonConfigService.getCaptureMode())));
 
 		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));
@@ -127,7 +132,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 			if(getCheckoutFacade().setDeliveryAddress(details.getAddressData()) //
 				&& getCheckoutFacade().setDeliveryModeIfAvailable()) {
-				response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
+				// silent response
+				// response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
 			} else {
 				response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
 			}
@@ -263,12 +269,13 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 					orderData = getCheckoutFacade().placeOrder();
 				} catch (InvalidCartException e) {
 					LOG.error("Failed to place Order", e);
-					GlobalMessages.addErrorMessage(redirectModel, "checkout.placeOrder.failed");
+					GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, "checkout.placeOrder.failed");
 					return REDIRECT_URL_AMAZON_CHECKOUT;
 				}
 				return redirectToOrderConfirmationPage(orderData);
 			} else {
 				LOG.info("AmazonCheckout - payment failed");
+				GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, getAmazonErrorMessage());
 			}
 		}
 		return REDIRECT_URL_AMAZON_CHECKOUT;
@@ -282,6 +289,18 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			// do nothing
 		}
 		return code;
+	}
+
+	protected String getAmazonErrorMessage() {
+		String prefix = "amazon.authorization.error.";
+		String amazonErrorCode = getSessionService().getAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE);
+		if(!StringUtils.isEmpty(amazonErrorCode)) {
+			amazonErrorCode = prefix + amazonErrorCode;
+			String message = getLocalizedMessage(amazonErrorCode);
+			if(!StringUtils.isEmpty(message) && !amazonErrorCode.equals(message))
+				return amazonErrorCode;
+		}
+		return "amazon.authorization.error.no.description";
 	}
 
 	@Override
