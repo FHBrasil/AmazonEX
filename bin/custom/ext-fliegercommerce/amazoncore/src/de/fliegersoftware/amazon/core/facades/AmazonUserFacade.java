@@ -6,8 +6,9 @@ import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 
 public interface AmazonUserFacade {	
 	void register(final AmazonLoginRegisterData registerData) throws DuplicateUidException;
-	void update(AmazonLoginRegisterData registerData);
+	void update(final AmazonLoginRegisterData registerData);
 	boolean isUserExisting(String email);
 	AmazonCustomerModel getAmazonCustomer(String customerId);
 	boolean isAmazonCustomerExisting(String customerId);
+	void registerGuestUser(final AmazonLoginRegisterData registerData) throws DuplicateUidException;
 }

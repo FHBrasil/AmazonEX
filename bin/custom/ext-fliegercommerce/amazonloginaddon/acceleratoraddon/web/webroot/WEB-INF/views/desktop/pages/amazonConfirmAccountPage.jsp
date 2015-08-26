@@ -45,6 +45,7 @@
 
 		<br />
 			<form:hidden path="amazonId"/>
+			<form:hidden path="name"/>
 			
 			<label for="amazon.login.email" class="required">
 				<spring:theme code="amazon.login.email"/>
@@ -70,8 +71,8 @@
 						text="Associate Account" />
 				</button>
 				<button class="positive" type="button">
-					<spring:theme code="text.amazon.associate.account"
-						text="Associate Account" />
+					<spring:theme code="text.amazon.no.associate.account"
+						text="No Merge" />
 				</button>
 			</div>
 		</form:form>

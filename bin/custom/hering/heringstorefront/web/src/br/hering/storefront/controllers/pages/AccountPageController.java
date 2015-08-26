@@ -405,9 +405,10 @@ public class AccountPageController extends AbstractSearchPageController {
 		final HeringAddressForm addressForm = getPreparedAddressForm();
 		final HeringAddressForm packstationAddressForm = getPreparedAddressForm();
 		
-
-		model.addAttribute("bonusDataPoints", 0);
-//		model.addAttribute("bonusDataPoints", bonusSystemFacade.getCurrentUserBonusSystem().getPoints());
+		final String uid = customerData.getUid().replaceAll("[a-z0-9\\-]*\\|", "");
+		customerData.setUid(uid);
+		
+		model.addAttribute("bonusDataPoints", bonusSystemFacade.getCurrentUserBonusSystem().getPoints());
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs(null));
 		model.addAttribute("metaRobots", "no-index,no-follow");
 		model.addAttribute("customerData", customerData);
@@ -558,7 +559,10 @@ public class AccountPageController extends AbstractSearchPageController {
 		if (customerData.getTitleCode() != null) {
 			model.addAttribute("title", findTitleForCode(titles, customerData.getTitleCode()));
 		}
-
+		
+		final String uid = customerData.getUid().replaceAll("[a-z0-9\\-]*\\|", "");
+		customerData.setUid(uid);
+		
 		model.addAttribute("customerData", customerData);
 
 		if (Config.getBoolean("fliegercommerce.feature.enable.cpf", false)) {

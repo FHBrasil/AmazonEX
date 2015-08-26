@@ -92,34 +92,32 @@ public class AmazonLoginController extends AbstractPageController {
 			} 
 			catch (DuplicateUidException e) 
 			{
-				LOG.warn("DuplicateUidException for email "+email);
+				LOG.warn("DuplicateUidException for email " + email);
 				e.printStackTrace();
 			}	
 		} else 
 		{			
 			if (AccountMatchingStrategyEnum.EMAILADDRESSBASED.equals(amazonConfigService.getAccountMatchingStrategy())) {
 				
-				return prepareAssociateAccount(model, email, customerId);
+				return prepareAssociateAccount(model, name, email, customerId);
 			
 			} else if (AccountMatchingStrategyEnum.NOMATCHING.equals(amazonConfigService.getAccountMatchingStrategy())) 
 			{
-				String customerIdEmail = customerId + "|" + email;
-				if(!getAmazonUserFacade().isUserExisting(customerIdEmail))
-				{			
-					try 
-					{				
-						registerData.setLogin(customerIdEmail);
-						getAmazonUserFacade().register(registerData);
-						amazonAutoLoginStrategy.login(customerIdEmail, customerId, request, response);
-						
-						return REDIRECT_PREFIX+MY_ACCOUNT;
-					} 
-					catch (DuplicateUidException e) 
-					{
-						LOG.warn("DuplicateUidException for email "+customerIdEmail);
-						e.printStackTrace();
-					}	
-				}
+				try 
+				{				
+					getAmazonUserFacade().registerGuestUser(registerData);
+					
+					AmazonCustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(customerId);
+					
+					amazonAutoLoginStrategy.login(amazonCustomerModel.getCustomer().getUid(), customerId, request, response);
+
+					return REDIRECT_PREFIX+MY_ACCOUNT;
+				} 
+				catch (DuplicateUidException e) 
+				{
+					LOG.warn("DuplicateUidException for email " + email);
+					e.printStackTrace();
+				}	
 			}
 		}
 		
@@ -150,7 +148,7 @@ public class AmazonLoginController extends AbstractPageController {
 		catch (AuthenticationException e)
 		{
 			LOG.warn(e.getMessage());	
-			return prepareAssociateAccount(model, amazonForm.getEmail(), amazonForm.getAmazonId());
+			return prepareAssociateAccount(model, amazonForm.getName(), amazonForm.getEmail(), amazonForm.getAmazonId());
 		}
 	}
 	
@@ -164,27 +162,32 @@ public class AmazonLoginController extends AbstractPageController {
 		final AmazonLoginRegisterData registerData = new AmazonLoginRegisterData();
 		registerData.setAmazonCustomerId(amazonForm.getAmazonId());
 		registerData.setLogin(amazonForm.getEmail());
-		
-		try
-		{
-			getAutoLoginStrategy().login(amazonForm.getEmail(), amazonForm.getPwd(), request, response);
+		registerData.setFirstName(firstName(amazonForm.getName()));
+		registerData.setLastName(lastName(amazonForm.getName()));
+
+		try 
+		{				
+			getAmazonUserFacade().registerGuestUser(registerData);
 			
-			getAmazonUserFacade().update(registerData);
+			AmazonCustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(amazonForm.getAmazonId());
 			
+			amazonAutoLoginStrategy.login(amazonCustomerModel.getCustomer().getUid(), amazonForm.getAmazonId(), request, response);
+
 			return REDIRECT_PREFIX+MY_ACCOUNT;
 		} 
-		catch (AuthenticationException e)
+		catch (DuplicateUidException e) 
 		{
-			LOG.warn(e.getMessage());	
-			return prepareAssociateAccount(model, amazonForm.getEmail(), amazonForm.getAmazonId());
-		}
+			LOG.warn("DuplicateUidException for email "+amazonForm.getEmail());
+			return prepareAssociateAccount(model, amazonForm.getName(), amazonForm.getEmail(), amazonForm.getAmazonId());
+		}	
 	}
 	
-	private String prepareAssociateAccount(Model model, String email, String customerId)
+	private String prepareAssociateAccount(Model model, String name, String email, String customerId)
 	{
 		AmazonLoginForm amazonLoginForm = new AmazonLoginForm();
 
 		model.addAttribute("amazonLoginForm", amazonLoginForm);
+		amazonLoginForm.setName(name);
 		amazonLoginForm.setEmail(email);
 		amazonLoginForm.setAmazonId(customerId);
 		
