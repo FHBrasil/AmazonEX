@@ -54,8 +54,8 @@ import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRe
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
 import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
 
+import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
-import de.fliegersoftware.amazon.hmc.jalo.config.AmazonConfig;
 
 
 /**
@@ -175,7 +175,7 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 				.search("SELECT {pk} FROM {AmazonConfig}", AmazonConfig.class).getResult();
 		if (CollectionUtils.isNotEmpty(result))
 		{
-			final AmazonConfig next = result.iterator().next();
+			final de.fliegersoftware.amazon.core.jalo.config.AmazonConfig next = result.iterator().next();
 
 			final OffAmazonPaymentsServiceClient service = createOffAmazonPaymentService(next);
 
