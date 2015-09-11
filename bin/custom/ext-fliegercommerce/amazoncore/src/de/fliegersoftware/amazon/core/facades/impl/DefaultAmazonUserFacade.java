@@ -7,18 +7,15 @@ import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
 
-import de.fliegersoftware.amazon.core.AmazonUserService;
 import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
-import de.fliegersoftware.amazon.core.model.AmazonCustomerModel;
+import de.fliegersoftware.amazon.core.services.AmazonUserService;
 import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
-import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
+import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
-import de.hybris.platform.commerceservices.enums.CustomerType;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
-import de.hybris.platform.core.model.user.TitleModel;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
@@ -38,7 +35,7 @@ public class DefaultAmazonUserFacade implements AmazonUserFacade {
 	private CommonI18NService commonI18NService;
 
 	@Override
-	public AmazonCustomerModel getAmazonCustomer(String customerId) 
+	public CustomerModel getAmazonCustomer(String customerId) 
 	{	
 		return getAmazonUserService().getAmazonCustomer(customerId);
 	}
@@ -51,60 +48,59 @@ public class DefaultAmazonUserFacade implements AmazonUserFacade {
 		Assert.hasText(registerData.getFirstName(), "The field [FirstName] cannot be empty");
 		Assert.hasText(registerData.getLastName(), "The field [LastName] cannot be empty");
 
-		final CustomerModel newCustomer = getModelService().create(CustomerModel.class);
+		final CustomerModel amazonCustomer = getModelService().create(CustomerModel.class);
 		
 		if (StringUtils.isNotBlank(registerData.getFirstName()) && StringUtils.isNotBlank(registerData.getLastName()))
 		{
-			newCustomer.setName(getCustomerNameStrategy().getName(registerData.getFirstName(), registerData.getLastName()));
+			amazonCustomer.setName(getCustomerNameStrategy().getName(registerData.getFirstName(), registerData.getLastName()));
 		}
 		
-		setUidForRegister(registerData, newCustomer);
+		setUidForRegister(registerData, amazonCustomer);
 		
-		newCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
-		newCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
+		amazonCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
+		amazonCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
 		
-		getCustomerAccountService().register(newCustomer, registerData.getPassword());	
-		
-		AmazonCustomerModel amazonCustomer = getModelService().create(AmazonCustomerModel.class);
-		amazonCustomer.setCustomer(newCustomer);
 		amazonCustomer.setAmazonCustomerId(registerData.getAmazonCustomerId());
 		
-		getModelService().save(amazonCustomer);
-		
+		getCustomerAccountService().register(amazonCustomer, registerData.getPassword());	
 	}
 	
 	@Override
 	public void registerGuestUser(final AmazonLoginRegisterData registerData) throws DuplicateUidException {
-		final CustomerModel newCustomer = getModelService().create(CustomerModel.class);
+		final CustomerModel amazonCustomer = getModelService().create(CustomerModel.class);
 		final String guid = UUID.randomUUID().toString();
 
-		newCustomer.setUid(guid + "|" + registerData.getLogin());
+		amazonCustomer.setUid(guid + "|" + registerData.getLogin());
 		if (StringUtils.isNotBlank(registerData.getFirstName()) && StringUtils.isNotBlank(registerData.getLastName()))
 		{
-			newCustomer.setName(getCustomerNameStrategy().getName(registerData.getFirstName(), registerData.getLastName()));
+			amazonCustomer.setName(getCustomerNameStrategy().getName(registerData.getFirstName(), registerData.getLastName()));
 		}
-		newCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
-		newCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
-
-		getCustomerAccountService().register(newCustomer, guid);
-		
-		AmazonCustomerModel amazonCustomer = getModelService().create(AmazonCustomerModel.class);
-		amazonCustomer.setCustomer(newCustomer);
+		amazonCustomer.setSessionLanguage(getCommonI18NService().getCurrentLanguage());
+		amazonCustomer.setSessionCurrency(getCommonI18NService().getCurrentCurrency());
 		amazonCustomer.setAmazonCustomerId(registerData.getAmazonCustomerId());
 		
-		getModelService().save(amazonCustomer);
+		getCustomerAccountService().register(amazonCustomer, guid);
 	}
 	
 	@Override
 	public void update(AmazonLoginRegisterData registerData)
 	{
 		CustomerModel customer = userService.getUserForUID(registerData.getLogin(), CustomerModel.class);
-		AmazonCustomerModel amazonCustomer = new AmazonCustomerModel();
-		amazonCustomer.setCustomer(customer);
-		amazonCustomer.setAmazonCustomerId(registerData.getAmazonCustomerId());
+		customer.setAmazonCustomerId(registerData.getAmazonCustomerId());
+
+		getModelService().save(customer);
+	}
+	
+	@Override
+	public void deleteAmazonCustomer(CustomerData customerData)
+	{
+		CustomerModel amazonCustomer = userService.getUserForUID(customerData.getUid(), CustomerModel.class);
+		amazonCustomer.setAmazonCustomerId(null);
 
 		getModelService().save(amazonCustomer);
 	}
+	
+	
 	
 	@Override
 	public boolean isUserExisting(String email) 

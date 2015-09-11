@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
 import de.fliegersoftware.amazon.payment.addon.forms.AmazonGuestForm;
@@ -42,6 +43,8 @@ public class AmazonGuestLoginController extends AbstractLoginPageController {
 
 	@Resource(name = "amazonCustomerFacade")
 	private AmazonCustomerFacade amazonCustomerFacade;
+	
+	private AmazonUserFacade amazonUserFacade;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String doCheckoutLogin(@RequestParam(value = "error", defaultValue = "false") final boolean loginError,
@@ -78,10 +81,10 @@ public class AmazonGuestLoginController extends AbstractLoginPageController {
 				GlobalMessages.addErrorMessage(model, "form.global.error");
 				return handleRegistrationError(model);
 			}
-			String amazonOrderReferenceId = form.getAmazonOrderReferenceId();
 			String name = form.getAmazonGuestName();
 			String email = form.getAmazonGuestEmail();
-			getCustomerFacade().createGuestUserForAnonymousCheckout(amazonOrderReferenceId, email, name);
+			String amazonCustomerId = form.getAmazonGuestId();
+			getCustomerFacade().updateCartWithUserForAnonymousCheckout(amazonCustomerId, email, name);
 			getGuidCookieStrategy().setCookie(request, response);
 			getSessionService().setAttribute(WebConstants.ANONYMOUS_CHECKOUT, Boolean.TRUE);
 		} catch (DuplicateUidException e) {

@@ -17,10 +17,15 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	protected BaseStoreService baseStoreService;
 	
 	@Override
+	public boolean hasAmazonConfig() {
+		return getBaseStoreService().getCurrentBaseStore().getAmazonConfig() != null;
+	}
+	
+	@Override
 	public Properties getAmazonProperties() {
 		Properties properties = new Properties();
-		if (baseStoreService.getCurrentBaseStore().getAmazonConfig() != null) {
-			AmazonConfigModel amazonConfig = baseStoreService.getCurrentBaseStore().getAmazonConfig();
+		if (hasAmazonConfig()) {
+			AmazonConfigModel amazonConfig = getBaseStoreService().getCurrentBaseStore().getAmazonConfig();
 			properties.put(ACCESS_KEY_ID, amazonConfig.getMwsAccessKey());
 			properties.put(SECRET_ACCESS_KEY, amazonConfig.getMwsSecretKey());
 			properties.put(APPLICATION_VERSION, "");
@@ -47,97 +52,154 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	
 	@Override
 	public boolean isEnabled() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isEnabled();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isEnabled();
+		else
+			return false;
 	}
 	
 	@Override
 	public boolean isEnableERPMode() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isEnableERPMode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isEnableERPMode();
+		else
+			return false;
 	}
 	
 	@Override
 	public String getClientId() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getClientId();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getClientId();
+		else
+			return null;
 	}
 	
 	@Override
 	public String getSellerId() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getMerchantId();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getMerchantId();
+		else
+			return null;
 	}
 	
 	@Override
 	public String getRegion() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getAmazonConfigCountry().getCode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getAmazonConfigCountry().getCode();
+		else
+			return null;
 	}
 
 	@Override
 	public boolean isSandboxMode() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isSandboxMode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isSandboxMode();
+		else
+			return false;
 	}
 
 	@Override
 	public boolean isHiddenButtonsMode() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().isHiddenButtonsMode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isHiddenButtonsMode();
+		else
+			return false;
 	}
 
 	@Override
 	public OperationModeEnum getOperationMode() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getOperationMode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getOperationMode();
+		else
+			return null;
 	}
 	
 	@Override
 	public int getAddressWidgetWidth() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getAddressWidgetWidth();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getAddressWidgetWidth();
+		else
+			return 0;
 	}
 	
 	@Override
 	public int getAddressWidgetHeight() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getAddressWidgetHeight();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getAddressWidgetHeight();
+		else
+			return 0;
 	}
 	
 	@Override
 	public String getLoginButtonColor() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getLoginButtonColor().getCode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getLoginButtonColor().getCode();
+		else
+			return null;
 	}
 	
 	@Override
 	public String getLoginButtonSize() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getLoginButtonSize().getCode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getLoginButtonSize().getCode();
+		else
+			return null;
 	}
 	
 	@Override
 	public String getPayButtonColor() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getPayButtonColor().getCode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getPayButtonColor().getCode();
+		else
+			return null;
 	}
 	
 	@Override
 	public String getPayButtonSize() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getPayButtonSize().getCode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getPayButtonSize().getCode();
+		else
+			return null;
 	}
 	
 	@Override
 	public int getPaymentWidgetHeight() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getPaymentWidgetHeight();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getPaymentWidgetHeight();
+		else
+			return 0;
 	}
 	
 	@Override
 	public int getPaymentWidgetWidth() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getPaymentWidgetWidth();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getPaymentWidgetWidth();
+		else
+			return 0;
 	}
 
 	@Override
 	public AuthorizationModeEnum getAuthorizationMode() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getAuthorizationMode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getAuthorizationMode();
+		else
+			return null;
 	}
 
 	@Override
 	public CaptureModeEnum getCaptureMode() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getCaptureMode();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getCaptureMode();
+		else
+			return null;
 	}
 
 	@Override
 	public AccountMatchingStrategyEnum getAccountMatchingStrategy() {
-		return baseStoreService.getCurrentBaseStore().getAmazonConfig().getAccountMatchingStrategy();
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getAccountMatchingStrategy();
+		else
+			return null;
 	}
 	
 	protected BaseStoreService getBaseStoreService() {

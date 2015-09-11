@@ -1,5 +1,6 @@
 package de.fliegersoftware.amazon.payment.addon.controllers.pages;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
@@ -46,9 +47,9 @@ import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.CartModificationData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
+import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.order.InvalidCartException;
-import de.hybris.platform.util.Config;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -75,7 +76,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	private CartFacade cartFacade;
 
 	@Resource(name="themeSource")
-    private MessageSource messageSource;
+	private MessageSource messageSource;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
@@ -105,7 +106,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));
-//		model.addAttribute("pageType", PageType.CHECKOUTPAGE.name());
+		model.addAttribute("pageType", PageType.CHECKOUTPAGE.name());
 		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.AmazonCheckoutPage;
 	}
 
@@ -129,9 +130,13 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		}
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
 			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, null);
-
-			if(getCheckoutFacade().setDeliveryAddress(details.getAddressData()) //
-				&& getCheckoutFacade().setDeliveryModeIfAvailable()) {
+			
+			
+			if(details.getAddressData() != null
+				&& getCheckoutFacade().setDeliveryAddress(details.getAddressData())
+				&& getCheckoutFacade().setDeliveryModeIfAvailable()
+				&& amazonCheckoutFacade.isDeliveryCountrySupported(details.getAddressData().getCountry())) {
+				
 				// silent response
 				// response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
 			} else {
@@ -255,30 +260,36 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		LOG.info("AmazonCheckout - placeOrder");
 		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
 			CartData cartData = getCheckoutFacade().getCheckoutCart();
-			OrderData orderData = getCheckoutFacade().createOrderFromCart();
+			String orderCode = getCheckoutFacade().createOrderCodeFromCart();
 			AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
 			orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
 			AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
-			sellerOrderAttributes.setSellerOrderId(orderData.getCode());
+			sellerOrderAttributes.setSellerOrderId(orderCode);
 			orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
 			amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
 			amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
 			if(getCheckoutFacade().authorizePayment(null)) {
 				LOG.info("AmazonCheckout - payment ok");
 				try {
-					orderData = getCheckoutFacade().placeOrder();
+					OrderData orderData = getCheckoutFacade().placeOrder();
+					return redirectToOrderConfirmationPage(orderData);
 				} catch (InvalidCartException e) {
 					LOG.error("Failed to place Order", e);
 					GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, "checkout.placeOrder.failed");
 					return REDIRECT_URL_AMAZON_CHECKOUT;
 				}
-				return redirectToOrderConfirmationPage(orderData);
 			} else {
 				LOG.info("AmazonCheckout - payment failed");
 				GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, getAmazonErrorMessage());
 			}
 		}
 		return REDIRECT_URL_AMAZON_CHECKOUT;
+	}
+	
+	protected String redirectToOrderConfirmationPage(final OrderData orderData)
+	{
+		return REDIRECT_URL_ORDER_CONFIRMATION
+				+ (getCheckoutCustomerStrategy().isAnonymousCheckout() ? orderData.getGuid() + "?amazonLogout=true" : orderData.getCode());
 	}
 
 	protected String getLocalizedMessage(String code, Object... args) {
@@ -311,18 +322,5 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	@Override
 	protected AmazonCustomerFacade getCustomerFacade() {
 		return (AmazonCustomerFacade) super.getCustomerFacade();
-	}
-	
-	/**
-	 * Checks if there are any items in the cart.
-	 * 
-	 * @return returns true if items found in cart.
-	 */
-	protected boolean hasValidCart()
-	{
-		final CartData cartData = getCheckoutFlowFacade().getCheckoutCart();
-		final boolean validCart = cartData.getEntries() != null && !cartData.getEntries().isEmpty();
-
-		return validCart;
 	}
 }

@@ -8,6 +8,7 @@ import de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.PaymentService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -48,11 +49,11 @@ import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRe
  */
 public interface AmazonPaymentService extends PaymentService
 {
-	PaymentTransactionEntryModel authorize(final String merchantTransactionCode, 
-			final BigDecimal amount, 
-			final Currency currency,
-			final String paymentProvider,
-			final String merchantAccount) throws AdapterException;
+	PaymentTransactionEntryModel authorize(AmazonPaymentInfoModel paymentInfo
+			, final String merchantTransactionCode 
+			, final BigDecimal amount
+			, final Currency currency
+			, final String paymentProvider) throws AdapterException;
 	
 	public PaymentTransactionEntryModel capture(PaymentTransactionModel transaction) throws AdapterException;
 	
@@ -74,6 +75,6 @@ public interface AmazonPaymentService extends PaymentService
 	
 	public void closeAuthorization(final String amazonAuthorizationId, final String closureReason) throws AdapterException;
 	
-	public AmazonRefundDetailsData refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
+	public PaymentTransactionEntryModel refund(PaymentTransactionModel transaction, BigDecimal amount,
 			Currency currency, String sellerRefundNote, String softDescriptor);
 }

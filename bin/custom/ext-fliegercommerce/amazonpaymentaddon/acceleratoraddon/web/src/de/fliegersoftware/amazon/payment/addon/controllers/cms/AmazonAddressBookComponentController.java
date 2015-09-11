@@ -19,6 +19,9 @@ public class AmazonAddressBookComponentController extends AbstractAmazonCmsCompo
 	@Override
 	protected void fillModel(HttpServletRequest request, Model model, AmazonAddressBookComponentModel component) {
 		super.fillModel(request, model, component);
+		
+		model.addAttribute("addressWidgetHeight", String.valueOf(amazonConfigService.getAddressWidgetHeight()));
+		model.addAttribute("addressWidgetWidth", String.valueOf(amazonConfigService.getAddressWidgetWidth()));
 	}
 
 }

@@ -18,12 +18,30 @@
 
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
-			
+	
+	<enumtypes>
+		<enumtype code="PaymentTransactionType" autocreate="false"
+			generate="false">
+            <description>Amazon specific payment transaction type</description>
+			<value code="REFUND" />
+		</enumtype>
+	</enumtypes>
 	<itemtypes>
 		<itemtype code="Cart" autocreate="false" generate="false">
 			<attributes>
-				<attribute type="Order" qualifier="preCreatedOrder">
+				<attribute type="java.lang.String" qualifier="preCreatedOrderCode">
 					<description>Carts may have an order pre-created and then reused on placeOrder</description>
+					<modifiers read="true" write="true" search="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		<itemtype code="AmazonPaymentCaptureCronJob" autocreate="true"
+			generate="true" extends="CronJob"
+			jaloclass="de.fliegersoftware.amazon.payment.jalo.AmazonPaymentCaptureCronJob">
+			<attributes>
+				<attribute type="BaseSite" qualifier="site">
+					<description>Session's Site to consider when capturing payments</description>
 					<modifiers read="true" write="true" search="true" optional="true"/>
 					<persistence type="property"/>
 				</attribute>

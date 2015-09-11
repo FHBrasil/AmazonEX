@@ -1,1 +1,1 @@
-<div id="walletWidgetDiv"></div>
+<div id="walletWidgetDiv" style="height:${paymentWidgetHeight}px;"></div>

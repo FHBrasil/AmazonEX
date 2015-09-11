@@ -32,3 +32,8 @@ babyartikel.checkoutAmazon = {
 	},
 	
 };
+
+/*! Sends payment form */
+$('.confirm-purchaseAmazon').click(function() {
+	$('form#amazonPlaceOrderForm').submit();
+});

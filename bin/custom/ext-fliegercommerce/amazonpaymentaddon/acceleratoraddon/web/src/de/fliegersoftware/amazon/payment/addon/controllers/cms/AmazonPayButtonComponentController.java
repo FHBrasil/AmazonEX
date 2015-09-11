@@ -18,8 +18,5 @@ public class AmazonPayButtonComponentController extends AbstractAmazonCmsCompone
 	@Override
 	protected void fillModel(HttpServletRequest request, Model model, AmazonPayButtonComponentModel component) {
 		super.fillModel(request, model, component);
-
-		model.addAttribute("buttonColor", amazonConfigService.getPayButtonColor());
-		model.addAttribute("buttonSize", amazonConfigService.getPayButtonSize());
 	}
 }

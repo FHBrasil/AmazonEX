@@ -1,15 +1,17 @@
 package de.fliegersoftware.amazon.core.daos.impl;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.fliegersoftware.amazon.core.daos.AmazonUserDao;
-import de.fliegersoftware.amazon.core.model.AmazonCustomerModel;
+import de.hybris.platform.commerceservices.enums.CustomerType;
+import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
-import de.hybris.platform.servicelayer.search.SearchResult;
 
 @Component(value = "amazonUserDAO")
 public class DefaultAmazonUserDAO implements AmazonUserDao 
@@ -18,34 +20,43 @@ public class DefaultAmazonUserDAO implements AmazonUserDao
 	private FlexibleSearchService flexibleSearchService;
 
 	@Override
-	public AmazonCustomerModel getAmazonCustomer(String customerId) 
+	public CustomerModel getAmazonCustomer(String customerId) 
 	{		
-		final Map<String, Object> params = new HashMap<String, Object>();
-		params.put("customerId", customerId);
-		
-		final SearchResult<AmazonCustomerModel> result = flexibleSearchService.search(
-				"SELECT {p:" + AmazonCustomerModel.PK + "} "
-				 + "FROM {" + AmazonCustomerModel._TYPECODE + " AS p} "
-				 + "WHERE {p:"+AmazonCustomerModel.AMAZONCUSTOMERID+"}=?customerId", params);
+		List<CustomerModel> result = new ArrayList<CustomerModel>();
+        String query = " SELECT {p:" + CustomerModel.PK + "} "
+                + " FROM {" + CustomerModel._TYPECODE + " AS p } "
+                + " WHERE {p:"+ CustomerModel.AMAZONCUSTOMERID + "} = ?customerId "
+                + " AND ({p:" + CustomerModel.TYPE + "} IS NULL OR {p:" + CustomerModel.TYPE + "} <> ?guest)";
+        
+        FlexibleSearchQuery flexSearch = new FlexibleSearchQuery(query);
+        flexSearch.addQueryParameter("customerId", customerId);
+        flexSearch.addQueryParameter("guest", CustomerType.GUEST);
+        flexSearch.setResultClassList(Collections.singletonList(CustomerModel.class));
+        result = flexibleSearchService.<CustomerModel> search(flexSearch).getResult();
 
-		if (result.getCount() > 0)
+		if (result.size() > 0)
 		{
-			return result.getResult().get(0);
+			return result.get(0);
 		}
 		return null;
 	}
 
 	@Override
-	public boolean isAmazonCustomerExisting(String customerId) {
-		final Map<String, Object> params = new HashMap<String, Object>();
-		params.put("customerId", customerId);
-		
-		final SearchResult<AmazonCustomerModel> result = flexibleSearchService.search(
-				"SELECT {p:" + AmazonCustomerModel.PK + "} "
-				 + "FROM {" + AmazonCustomerModel._TYPECODE + " AS p} "
-				 + "WHERE {p:"+AmazonCustomerModel.AMAZONCUSTOMERID+"}=?customerId", params);
+	public boolean isAmazonCustomerExisting(String customerId) 
+	{
+		List<CustomerModel> result = new ArrayList<CustomerModel>();
+        String query = " SELECT {p:" + CustomerModel.PK + "} "
+                + " FROM {" + CustomerModel._TYPECODE + " AS p } "
+                + " WHERE {p:"+ CustomerModel.AMAZONCUSTOMERID + "} = ?customerId "
+                + " AND ({p:" + CustomerModel.TYPE + "} IS NULL OR {p:" + CustomerModel.TYPE + "} <> ?guest)";
+        
+        FlexibleSearchQuery flexSearch = new FlexibleSearchQuery(query);
+        flexSearch.addQueryParameter("customerId", customerId);
+        flexSearch.addQueryParameter("guest", CustomerType.GUEST);
+        flexSearch.setResultClassList(Collections.singletonList(CustomerModel.class));
+        result = flexibleSearchService.<CustomerModel> search(flexSearch).getResult();
 
-		if (result.getCount() > 0)
+		if (result.size() > 0)
 		{
 			return true;
 		}

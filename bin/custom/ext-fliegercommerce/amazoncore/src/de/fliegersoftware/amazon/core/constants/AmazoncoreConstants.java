@@ -26,4 +26,5 @@ public final class AmazoncoreConstants extends GeneratedAmazoncoreConstants
 	}
 
 	// implement here constants used by this extension
+	public static final String PAYMENT_PROVIDER_NAME = "Amazon";
 }

@@ -20,6 +20,7 @@ public interface AmazonConfigService {
 	public static final String PLACE_ORDER_URL = "placeOrderUrl";
 	public static final String CERT_CN = "certCN";
 
+	boolean hasAmazonConfig();
 	Properties getAmazonProperties();
 	boolean isEnabled();
 	boolean isEnableERPMode();

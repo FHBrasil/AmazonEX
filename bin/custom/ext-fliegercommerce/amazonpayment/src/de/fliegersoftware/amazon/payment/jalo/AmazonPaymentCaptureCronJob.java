@@ -1,4 +1,4 @@
-package de.fliegersoftware.amazon.core.jalo;
+package de.fliegersoftware.amazon.payment.jalo;
 
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.JaloBusinessException;
@@ -6,10 +6,10 @@ import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.type.ComposedType;
 import org.apache.log4j.Logger;
 
-public class AmazonCustomer extends GeneratedAmazonCustomer
+public class AmazonPaymentCaptureCronJob extends GeneratedAmazonPaymentCaptureCronJob
 {
 	@SuppressWarnings("unused")
-	private final static Logger LOG = Logger.getLogger( AmazonCustomer.class.getName() );
+	private final static Logger LOG = Logger.getLogger( AmazonPaymentCaptureCronJob.class.getName() );
 	
 	@Override
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException

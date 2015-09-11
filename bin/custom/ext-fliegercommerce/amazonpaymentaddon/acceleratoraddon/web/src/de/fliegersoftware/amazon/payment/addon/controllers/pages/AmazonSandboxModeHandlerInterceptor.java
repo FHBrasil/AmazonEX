@@ -3,9 +3,12 @@ package de.fliegersoftware.amazon.payment.addon.controllers.pages;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
 
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationConfig;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationFacade;
@@ -27,7 +30,7 @@ public class AmazonSandboxModeHandlerInterceptor extends HandlerInterceptorAdapt
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		if(shouldConfigSandboxMode(request, response, (HandlerMethod)handler)) {
-			amazonSandboxSimulationFacade.setSimulationConfig(getConfigFromRequest(request));
+			getAmazonSandboxSimulationFacade().setSimulationConfig(getConfigFromRequest(request));
 		}
 		return true;
 	}
@@ -36,14 +39,15 @@ public class AmazonSandboxModeHandlerInterceptor extends HandlerInterceptorAdapt
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		if(amazonSandboxSimulationFacade.isSimulation()) {
-			amazonSandboxSimulationFacade.clearSimulationConfig();
+		if(getAmazonSandboxSimulationFacade().isSimulation()) {
+			getAmazonSandboxSimulationFacade().clearSimulationConfig();
 		}
 	}
 
 	private boolean shouldConfigSandboxMode(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) {
 		return ("POST").equalsIgnoreCase(request.getMethod())
-				&& handler.getBeanType() == AmazonCheckoutPageController.class;
+				&& handler.getBeanType() == AmazonCheckoutPageController.class
+				&& getAmazonSandboxSimulationFacade().isSimulation();
 	}
 
 	private AmazonSandboxSimulationConfig getConfigFromRequest(HttpServletRequest request) {
@@ -74,6 +78,7 @@ public class AmazonSandboxModeHandlerInterceptor extends HandlerInterceptorAdapt
 		return amazonSandboxSimulationFacade;
 	}
 
+	@Required
 	public void setAmazonSandboxSimulationFacade(AmazonSandboxSimulationFacade amazonSandboxSimulationFacade) {
 		this.amazonSandboxSimulationFacade = amazonSandboxSimulationFacade;
 	}

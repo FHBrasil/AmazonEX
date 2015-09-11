@@ -1,7 +1,6 @@
 package de.fliegersoftware.amazon.payment.services.impl;
 
 import de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService;
-import de.hybris.platform.commerceservices.strategies.GenerateMerchantTransactionCodeStrategy;
 import de.hybris.platform.core.model.ItemModel;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
@@ -29,7 +28,6 @@ import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
  */
 public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckoutService implements AmazonCommerceCheckoutService
 {
-	private GenerateMerchantTransactionCodeStrategy generateMerchantTransactionCodeStrategy;
 	
 	@Override
 	public PaymentTransactionEntryModel authorizeAmazonPayment(CartModel cartModel, 
@@ -64,20 +62,19 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 		PaymentTransactionEntryModel transactionEntryModel = null;
 		PaymentInfoModel paymentInfo = cartModel.getPaymentInfo();
 		if ((paymentInfo instanceof AmazonPaymentInfoModel) && (StringUtils.isNotBlank(((AmazonPaymentInfoModel) paymentInfo).getAmazonOrderReferenceId()))) {
+			AmazonPaymentInfoModel amazonPaymentInfo = (AmazonPaymentInfoModel) paymentInfo;
 			Currency currency = getI18nService().getBestMatchingJavaCurrency(cartModel.getCurrency().getIsocode());
 			String merchantTransactionCode = getGenerateMerchantTransactionCodeStrategy().generateCode(cartModel);
 			
-			transactionEntryModel = getPaymentService().authorize(merchantTransactionCode, amount, currency, 
-					((AmazonPaymentInfoModel) paymentInfo).getAmazonOrderReferenceId(), 
+			transactionEntryModel = getPaymentService().authorize(amazonPaymentInfo, merchantTransactionCode, amount, currency, 
 					paymentProvider);
 			if (transactionEntryModel != null) {
 				PaymentTransactionModel paymentTransaction = transactionEntryModel
 						.getPaymentTransaction();
 
-				if (AmazonTransactionStatus.Pending.name().equals(transactionEntryModel.getTransactionStatus())
-					|| AmazonTransactionStatus.Open.name().equals(transactionEntryModel.getTransactionStatus())
-					|| AmazonTransactionStatus.Closed.name().equals(transactionEntryModel.getTransactionStatus())) {
+				if (TransactionStatus.ACCEPTED.name().equals(transactionEntryModel.getTransactionStatus())) {
 					paymentTransaction.setOrder(cartModel);
+					paymentTransaction.setInfo(amazonPaymentInfo);
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });
 				} else {
@@ -90,6 +87,7 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 		return transactionEntryModel;
 	}
 
+	@Override
 	protected boolean isValidDeliveryAddress(CartModel cartModel, AddressModel addressModel) {
 		return true;
 	}
@@ -98,11 +96,6 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 	protected AmazonPaymentService getPaymentService()
 	{
 		return (AmazonPaymentService)super.getPaymentService();
-	}
-
-	public GenerateMerchantTransactionCodeStrategy getGenerateMerchantTransactionCodeStrategy()
-	{
-		return this.generateMerchantTransactionCodeStrategy;
 	}
 
 }

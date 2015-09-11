@@ -18,7 +18,8 @@
 
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
-			
+	
+	
 	<enumtypes>
 		<enumtype code="AmazonConfigCountryEnum">
 			<value code="DE"></value>
@@ -75,23 +76,26 @@
 		
 		<enumtype code="ButtonSizeEnum">
 			<value code="Small"></value>
+			<value code="Medium"></value>
+			<value code="Large"></value>
 			<value code="Big"></value>
 		</enumtype>
 		
 		<enumtype code="ButtonColorEnum">
 			<value code="Gold"></value>
 			<value code="Gray"></value>
+			<value code="LightGray"></value>
 			<value code="Ink"></value>
 		</enumtype>
 	</enumtypes>
 	
 	<relations>
-		<relation localized="false" code="AmazonLoginRelation" generate="true" autocreate="true">
-			<sourceElement type="Customer" qualifier="customer" cardinality="one" />
-			<targetElement type="AmazonCustomer" qualifier="amazonCustomer" cardinality="many" />
+		<relation code="Refund2AmazonPaymentRelation" autocreate="true" generate="true" localized="false">
+			<sourceElement type="AmazonPaymentInfo" qualifier="amazonPaymentInfo" cardinality="one" />
+			<targetElement type="AmazonRefund" qualifier="refund" collectiontype="list" cardinality="many"/>
 		</relation>
 	</relations>
-
+	
 	<itemtypes>
 	
 		<itemtype code="AmazonPaymentInfo" extends="PaymentInfo" autocreate="true" generate="true">
@@ -104,9 +108,19 @@
 					<modifiers read="true" write="true" optional="false"/>
 				</attribute>
 				<attribute qualifier="amazonOrderStatus" type="java.lang.String" generate="true">
-					<description>Order Reference Id for Amazon operations</description>
+					<description>Order Status for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="false"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonOrderReasonCode" type="java.lang.String" generate="true">
+					<description>Order Reason Code for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonOrderAmount" type="java.lang.Double" generate="true">
+					<description>Order Amount for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
 				</attribute>
 				<attribute qualifier="amazonLastAuthorizationId" type="java.lang.String" generate="true">
 					<description>Last Authorization Id for Amazon operations</description>
@@ -114,9 +128,14 @@
 					<modifiers read="true" write="true" optional="true"/>
 				</attribute>
 				<attribute qualifier="amazonAuthorizationStatus" type="java.lang.String" generate="true">
-					<description>Order Reference Id for Amazon operations</description>
+					<description>Authorization Reference Id for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="false"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonAuthorizationReasonCode" type="java.lang.String" generate="true">
+					<description>Authorization Reason Code</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
 				</attribute>
 				<attribute qualifier="amazonCaptureId" type="java.lang.String" generate="true">
 					<description>Capture Id for Amazon operations</description>
@@ -124,77 +143,67 @@
 					<modifiers read="true" write="true" optional="true"/>
 				</attribute>
 				<attribute qualifier="amazonCaptureStatus" type="java.lang.String" generate="true">
-					<description>Capture Id for Amazon operations</description>
+					<description>Capture Status for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureReasonCode" type="java.lang.String" generate="true">
+					<description>Capture Status for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureRefundedAmount" type="java.lang.Double" generate="true">
+					<description>Refunded amount</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="refundRequestAmount" type="java.lang.Double" generate="true">
+					<description>Refund Amount operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="currencyRefundRequestAmount" type="java.lang.String" generate="true">
+					<description>currency to amazon operations</description>
 					<persistence type="property"/>
 					<modifiers read="true" write="true" optional="true"/>
 				</attribute>
 			</attributes>
 		</itemtype>
 		
-		<itemtype code="AmazonOrder" autocreate="true" generate="true" extends="GenericItem" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonOrder">
-			<deployment table="AmazonOrder" typecode="31214"/>
+		<itemtype code="AmazonRefund" extends="GenericItem" autocreate="true" generate="true">
+			<deployment table="AmazonRefund" typecode="20165" />
 			<attributes>
-				<attribute qualifier="order" type="AbstractOrder" generate="true">
+				<!-- Token and transactionId are duplicated in case it will be more convenient
+					to store them here -->
+				<attribute qualifier="amazonRefundId" type="java.lang.String" generate="true">
+					<description>Order Reference Id for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true"/>
+					<modifiers read="true" write="true" optional="false"/>
 				</attribute>
-				<attribute qualifier="orderCode" type="java.lang.String" generate="true">
+				<attribute qualifier="refundReferenceId" type="java.lang.String" generate="true">
+					<description>refundReferenceId for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
+					<modifiers read="true" write="true" optional="false"/>
 				</attribute>
-				<attribute qualifier="internalOrderReferenceId" type="java.lang.String" generate="true">
+				<attribute qualifier="refundAmount" type="java.lang.Double" generate="true">
+					<description>refundAmount for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
+					<modifiers read="true" write="true" optional="false"/>
 				</attribute>
-				<attribute qualifier="amazonOrderReferenceId" type="java.lang.String" generate="true">
+				<attribute qualifier="refundStatus" type="java.lang.String" generate="true">
+					<description>refundStatus for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
+					<modifiers read="true" write="true" optional="false"/>
 				</attribute>
-				<attribute qualifier="amazonAuthorizationId" type="java.lang.String" generate="true">
+				<attribute qualifier="refundReasonCode" type="java.lang.String" generate="true">
+					<description>refundReasonCode for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-				</attribute>
-				<attribute qualifier="reasonCode" type="java.lang.String" generate="true">
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-				</attribute>
-				<attribute qualifier="state" type="java.lang.String" generate="true">
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true" />
-				</attribute>
-				<attribute qualifier="expirationTime" type="java.util.Date" generate="true">
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-				</attribute>
-				<attribute qualifier="authorizationAmount" type="java.lang.Double" generate="true">
-					<description>total value paid for customer.</description>
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-				</attribute>
-				<attribute qualifier="authorizationFee" type="java.lang.Double" generate="true">
-					<description>total fee paid for customer.</description>
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-				</attribute>
-				<attribute qualifier="cancelRequested" type="java.lang.Boolean" generate="true">
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-					<defaultvalue>false</defaultvalue>
-				</attribute>
-				<attribute qualifier="refundRequested" type="java.lang.Boolean" generate="true">
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-					<defaultvalue>false</defaultvalue>
-				</attribute>
-				<attribute qualifier="captureRequested" type="java.lang.Boolean" generate="true">
-					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="true"/>
-					<defaultvalue>false</defaultvalue>
+					<modifiers read="true" write="true" optional="false"/>
 				</attribute>
 			</attributes>
 		</itemtype>
 		
-		<itemtype code="AmazonCustomer" autocreate="true" generate="true" jaloclass="de.fliegersoftware.amazon.core.jalo.AmazonCustomer">
+		<itemtype code="Customer" autocreate="false" generate="false">
 			<attributes>
 				<attribute type="java.lang.String" qualifier="amazonCustomerId">
 					<persistence type="property" />
@@ -218,28 +227,48 @@
 			<attributes>
 				<!-- basic configuration -->
 				<attribute qualifier="merchantId" type="java.lang.String">
-					<description>Merchant ID or Estore ID</description>
+					<description>Merchant ID or Store ID</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="mwsAccessKey" type="java.lang.String">
-					<description>Merchant Webservices Access Key</description>
+					<description>Merchant WebServices Access Key</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="mwsSecretKey" type="java.lang.String">
-					<description>Merchant Webservices Secret Key</description>
+					<description>Merchant WebServices Secret Key</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="applicationName" type="java.lang.String">
+					<description>Application Name</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="applicationVersion" type="java.lang.String">
+					<description>Application Version</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="amazonConfigCountry" type="AmazonConfigCountryEnum">
 					<description>Other Country</description>
-					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="testOrderReferenceId" type="java.lang.String">
+					<description>Order Reference Id for test credentials</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="otherCountry" type="java.lang.String">
 					<description>Other Country</description>
-					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="otherCountryCurrency" type="java.lang.String">
+					<description>Other Country</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="clientId" type="java.lang.String">

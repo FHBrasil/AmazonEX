@@ -1,5 +1,7 @@
 package de.fliegersoftware.amazon.payment.services.impl;
 
+import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil.setPaymentTransactionEntryStatus;
+
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
@@ -12,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
+import com.amazonservices.mws.offamazonpayments.model.Address;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
@@ -46,18 +49,22 @@ import de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
+import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.jalo.c2l.C2LManager;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.dto.BillingInfo;
 import de.hybris.platform.payment.dto.TransactionStatus;
+import de.hybris.platform.payment.dto.TransactionStatusDetails;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.impl.DefaultPaymentServiceImpl;
 import de.hybris.platform.payment.methods.CardPaymentService;
@@ -104,6 +111,11 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource
     private Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter;
+	
+	@Resource
+    private Converter<Address, AddressData> amazonAddressConverter;
+	
+	private Populator<AddressData, AddressModel> addressReversePopulator;
 	
 	
 	/**
@@ -251,6 +263,24 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return i18NFacade;
 	}
 
+	public Converter<Address, AddressData> getAmazonAddressConverter() {
+		return amazonAddressConverter;
+	}
+
+	public void setAmazonAddressConverter(
+			Converter<Address, AddressData> amazonAddressConverter) {
+		this.amazonAddressConverter = amazonAddressConverter;
+	}
+
+	public Populator<AddressData, AddressModel> getAddressReversePopulator() {
+		return addressReversePopulator;
+	}
+
+	public void setAddressReversePopulator(
+			Populator<AddressData, AddressModel> addressReversePopulator) {
+		this.addressReversePopulator = addressReversePopulator;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -259,60 +289,75 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	 * java.lang.String)
 	 */
 	@Override
-	public PaymentTransactionEntryModel authorize(
-			final String merchantTransactionCode, 
-			final BigDecimal amount, Currency currency,
-			final String subscriptionID, 
-			final String paymentProvider) throws AdapterException
+	public PaymentTransactionEntryModel authorize(final AmazonPaymentInfoModel paymentInfo
+			, final String merchantTransactionCode 
+			, final BigDecimal amount
+			, Currency currency
+			, final String paymentProvider) throws AdapterException
 	{
 		PaymentTransactionModel transaction = (PaymentTransactionModel) modelService.create(PaymentTransactionModel.class);
 		transaction.setCode(merchantTransactionCode);
 
-		return authorizeInternal(transaction, amount, currency, subscriptionID, paymentProvider);
+		return authorizeInternal(paymentInfo, transaction, amount, currency, paymentProvider);
 	}
 
-	private PaymentTransactionEntryModel authorizeInternal(
-			PaymentTransactionModel transaction, BigDecimal amount,
-			Currency currency,
-			String subscriptionID, String paymentProvider)
+	private PaymentTransactionEntryModel authorizeInternal(final AmazonPaymentInfoModel paymentInfo
+			, PaymentTransactionModel transaction
+			, BigDecimal amount
+			, Currency currency
+			, String paymentProvider)
 			throws AdapterException {
-		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.AUTHORIZATION);
+		String newEntryCode = getNewEntryCode(transaction);
 		
 		AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 		authorizeRequest.setAuthorizationAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
-		authorizeRequest.setAmazonOrderReferenceId(subscriptionID);
+		authorizeRequest.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
 		authorizeRequest.setAuthorizationReferenceId(String.valueOf(System.currentTimeMillis()));
 		AuthorizeResult result = this.mwsAmazonPaymentService.authorize(authorizeRequest);
 		
 		if(result != null) {
-			transaction.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
-			transaction.setRequestToken(result.getAuthorizationDetails().getAmazonAuthorizationId());
+			AuthorizationDetails details = result.getAuthorizationDetails();
+			transaction.setRequestId(details.getAuthorizationReferenceId());
+			transaction.setRequestToken(details.getAmazonAuthorizationId());
 			transaction.setPaymentProvider(paymentProvider);
 			this.modelService.save(transaction);
 	
 			PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService
 					.create(PaymentTransactionEntryModel.class);
-			entry.setAmount(BigDecimal.valueOf(Double.parseDouble(result.getAuthorizationDetails().getAuthorizationAmount().getAmount())));
-			if (result.getAuthorizationDetails().getAuthorizationAmount() != null) {
-				entry.setCurrency(this.commonI18NService.getCurrency(result.getAuthorizationDetails().getAuthorizationAmount().getCurrencyCode()));
+			entry.setAmount(BigDecimal.valueOf(Double.parseDouble(details.getAuthorizationAmount().getAmount())));
+			if (details.getAuthorizationAmount() != null) {
+				entry.setCurrency(this.commonI18NService.getCurrency(details.getAuthorizationAmount().getCurrencyCode()));
 			}
 			entry.setType(PaymentTransactionType.AUTHORIZATION);
-			entry.setTime((result.getAuthorizationDetails().getAuthorizationStatus().getLastUpdateTimestamp() == null) ? new Date()
-					: result.getAuthorizationDetails().getAuthorizationStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
+			entry.setTime((details.getAuthorizationStatus().getLastUpdateTimestamp() == null) ? new Date()
+					: details.getAuthorizationStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
 			entry.setPaymentTransaction(transaction);
-			entry.setRequestId(result.getAuthorizationDetails().getAuthorizationReferenceId());
-			entry.setRequestToken(result.getAuthorizationDetails().getAmazonAuthorizationId());
-			entry.setTransactionStatusDetails(result.getAuthorizationDetails().getAuthorizationStatus().getReasonDescription());
-			entry.setTransactionStatus(result.getAuthorizationDetails().getAuthorizationStatus().getState());
+			entry.setRequestId(details.getAuthorizationReferenceId());
+			entry.setRequestToken(details.getAmazonAuthorizationId());
+			entry.setTransactionStatusDetails(details.getAuthorizationStatus().getReasonDescription());
 			entry.setCode(newEntryCode);
-			if (subscriptionID != null) {
-				entry.setSubscriptionID(subscriptionID);
+
+			setPaymentTransactionEntryStatus(entry, AmazonTransactionStatus.valueOf(details.getAuthorizationStatus().getState()), details.getAuthorizationStatus().getReasonCode());
+
+			if (!TransactionStatus.ACCEPTED.name().equals(entry)) {
+				getSessionService().setAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE, details.getAuthorizationStatus().getReasonCode());
 			}
-			if (!AmazonTransactionStatus.Declined.name().equals(result.getAuthorizationDetails().getAuthorizationStatus().getState())) {
-				getSessionService().setAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE, result.getAuthorizationDetails().getAuthorizationStatus().getReasonCode());
-			}
-			this.modelService.save(entry);
-			this.modelService.refresh(transaction);
+			getModelService().save(entry);
+			getModelService().refresh(transaction);
+
+			paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
+			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
+			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
+			AddressData addressData = amazonAddressConverter.convert(details.getAuthorizationBillingAddress());
+			
+			final AddressModel addressModel = getModelService().create(AddressModel.class);
+			getAddressReversePopulator().populate(addressData, addressModel);
+			
+			getModelService().save(addressModel);
+			
+			paymentInfo.setBillingAddress(addressModel);
+			getModelService().save(paymentInfo);
+
 			return entry;
 		}
 		return null;
@@ -332,10 +377,10 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			throw new AdapterException(
 					"Could not capture without authorization");
 		}
-		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.CAPTURE);
+		String newEntryCode = getNewEntryCode(transaction);
 		
 		CaptureRequest captureRequest = new CaptureRequest();
-		captureRequest.setAmazonAuthorizationId(transaction.getRequestToken());
+		captureRequest.setAmazonAuthorizationId(auth.getRequestToken());
 		captureRequest.setCaptureReferenceId(String.valueOf(System.currentTimeMillis()));
 		
 		captureRequest.setCaptureAmount(getAmount(String.valueOf(auth.getAmount()), auth.getCurrency().getIsocode()));
@@ -344,21 +389,74 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 
 		if(result != null) {
 			PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
-			entry.setAmount(BigDecimal.valueOf(Double.parseDouble(result.getCaptureDetails().getCaptureAmount().getAmount())));
-			if (result.getCaptureDetails().getCaptureAmount() != null) {
-				entry.setCurrency(this.commonI18NService.getCurrency(result.getCaptureDetails().getCaptureAmount().getCurrencyCode()));
+			CaptureDetails details = result.getCaptureDetails();
+			entry.setAmount(BigDecimal.valueOf(Double.parseDouble(details.getCaptureAmount().getAmount())));
+			if (details.getCaptureAmount() != null) {
+				entry.setCurrency(this.commonI18NService.getCurrency(details.getCaptureAmount().getCurrencyCode()));
 			}
 			entry.setType(PaymentTransactionType.CAPTURE);
-			entry.setTime((result.getCaptureDetails().getCaptureStatus().getLastUpdateTimestamp() == null) ? new Date()
-					: result.getCaptureDetails().getCaptureStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
+			entry.setTime((details.getCaptureStatus().getLastUpdateTimestamp() == null) ? new Date()
+					: details.getCaptureStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
 			entry.setPaymentTransaction(transaction);
-			entry.setRequestId(result.getCaptureDetails().getCaptureReferenceId());
-			entry.setRequestToken(result.getCaptureDetails().getAmazonCaptureId());
-			entry.setTransactionStatus(result.getCaptureDetails().getCaptureStatus().getState());
-			entry.setTransactionStatusDetails(result.getCaptureDetails().getCaptureStatus().getReasonDescription());
+			entry.setRequestId(details.getCaptureReferenceId());
+			entry.setRequestToken(details.getAmazonCaptureId());
+
+			setPaymentTransactionEntryStatus(entry, AmazonTransactionStatus.valueOf(details.getCaptureStatus().getState()), details.getCaptureStatus().getReasonCode());
+
 			entry.setCode(newEntryCode);
 
 			this.modelService.save(entry);
+			this.modelService.refresh(transaction);
+			return entry;
+		}
+		return null;
+	}
+	
+	@Override
+	public PaymentTransactionEntryModel refund(PaymentTransactionModel transaction, BigDecimal amount,
+			Currency currency, String sellerRefundNote, String softDescriptor) {
+		PaymentTransactionEntryModel capture = null;
+		for (PaymentTransactionEntryModel pte : transaction.getEntries()) {
+			if (!(pte.getType().equals(PaymentTransactionType.CAPTURE)))
+				continue;
+			capture = pte;
+			break;
+		}
+
+		if (capture == null) {
+			throw new AdapterException(
+					"Could not refund without capture");
+		}
+		String newEntryCode = getNewEntryCode(transaction);
+
+		RefundRequest request = new RefundRequest();
+		request.setAmazonCaptureId(capture.getRequestToken());
+		request.setRefundReferenceId(String.valueOf(System.currentTimeMillis()));
+		request.setRefundAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
+		request.setSellerRefundNote(sellerRefundNote);
+		request.setSoftDescriptor(softDescriptor);
+		
+		RefundResult result = mwsAmazonPaymentService.refund(request);
+		if(result != null) {
+			PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
+			RefundDetails details = result.getRefundDetails();
+			entry.setAmount(BigDecimal.valueOf(Double.parseDouble(details.getRefundAmount().getAmount())));
+			if (details.getRefundAmount() != null) {
+				entry.setCurrency(this.commonI18NService.getCurrency(details.getRefundAmount().getCurrencyCode()));
+			}
+			entry.setType(PaymentTransactionType.REFUND);
+			entry.setTime((details.getRefundStatus().getLastUpdateTimestamp() == null) ? new Date()
+					: details.getRefundStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
+			entry.setPaymentTransaction(transaction);
+			entry.setRequestId(details.getRefundReferenceId());
+			entry.setRequestToken(details.getAmazonRefundId());
+
+			setPaymentTransactionEntryStatus(entry, AmazonTransactionStatus.valueOf(details.getRefundStatus().getState()), details.getRefundStatus().getReasonCode());
+
+			entry.setCode(newEntryCode);
+
+			this.modelService.save(entry);
+			this.modelService.refresh(transaction);
 			return entry;
 		}
 		return null;
@@ -447,20 +545,6 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		request.setAmazonAuthorizationId(amazonAuthorizationId);
 		request.setClosureReason(closureReason);
 		mwsAmazonPaymentService.closeAuthorization(request);
-	}
-	
-	@Override
-	public AmazonRefundDetailsData refund(final String amazonCaptureId, final String refundReferenceId, BigDecimal amount,
-			Currency currency, String sellerRefundNote, String softDescriptor) {
-		RefundRequest request = new RefundRequest();
-		request.setAmazonCaptureId(amazonCaptureId);
-		request.setRefundReferenceId(refundReferenceId);
-		request.setRefundAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
-		request.setSellerRefundNote(sellerRefundNote);
-		request.setSoftDescriptor(softDescriptor);
-		
-		RefundResult result = mwsAmazonPaymentService.refund(request);
-		return amazonRefundDetailsConverter.convert(result.getRefundDetails());
 	}
 	
 	private BillingInfo createBillingInfo(AddressModel address) {

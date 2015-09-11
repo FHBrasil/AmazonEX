@@ -66,11 +66,11 @@
 			<form:password idKey="pwd" path="pwd" inputCSS="text password" mandatory="true" />
 				
 			<div class="form-actions">
-				<button class="positive" type="submit">
+				<button class="positive" id="matchAmazonAccount" type="button">
 					<spring:theme code="text.amazon.associate.account"
 						text="Associate Account" />
 				</button>
-				<button class="positive" type="button">
+				<button class="positive" id="noMatchAmazonAccount" type="button">
 					<spring:theme code="text.amazon.no.associate.account"
 						text="No Merge" />
 				</button>

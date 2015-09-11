@@ -22,11 +22,6 @@
 		<property name="addressData" type="de.hybris.platform.commercefacades.user.data.AddressData" />
 	</bean>
 	
-<!-- 	<bean class="de.fliegersoftware.amazon.core.data.AmazonPriceData"> -->
-<!-- 		<property name="amount" type="String"/> -->
-<!-- 		<property name="currencyCode" type="String"/> -->
-<!-- 	</bean> -->
-	
 	<bean class="de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData">
 		<property name="amazonCaptureId" type="String"/>
 		<property name="captureReferenceId" type="String"/>

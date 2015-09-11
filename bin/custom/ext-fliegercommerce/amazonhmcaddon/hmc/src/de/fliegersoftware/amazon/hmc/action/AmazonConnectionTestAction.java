@@ -3,7 +3,6 @@
  */
 package de.fliegersoftware.amazon.hmc.action;
 
-import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.hybris.platform.hmc.generic.AbstractActionChip;
 import de.hybris.platform.hmc.util.action.AbstractActionDialogChip;
 import de.hybris.platform.hmc.util.action.ActionEvent;
@@ -13,6 +12,8 @@ import de.hybris.platform.hmc.webchips.Chip;
 import de.hybris.platform.jalo.JaloBusinessException;
 import de.hybris.platform.util.localization.Localization;
 
+import java.util.Currency;
+import java.util.Locale;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,14 +25,33 @@ import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceExceptio
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
 
+import de.fliegersoftware.amazon.core.constants.GeneratedAmazoncoreConstants.Enumerations.AmazonConfigCountryEnum;
+import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
+
+
 /**
- * @author douglas.canalli
+ * Provides for Amazon Control Panel view the action which will be responsible for the connection test
  * 
+ * @author douglas.canalli
  */
 public class AmazonConnectionTestAction extends ItemAction
 {
-
 	private GetOrderReferenceDetailsResponse orderReferenceDetails;
+
+	private static final String ACCESS_KEY_ID = "accessKeyId";
+	private static final String CURRENCY = "currency";
+	private static final String SECRET_ACCESS_KEY = "secretAccessKey";
+	private static final String APPLICATION_NAME = "applicationName";
+	private static final String APPLICATION_VERSION = "applicationVersion";
+	private static final String SELLER_ID = "sellerId";
+	private static final String ENVIRONMENT = "environment";
+	private static final String REGION = "region";
+	private static final String CERT_CN = "certCN";
+	private static final String CLIENT_ID = "clientId";
+	private static final String AMAZONWS = "sns.amazonaws.com";
+	private static final String SANDBOX = "SANDBOX";
+	private static final String LIVE = "LIVE";
+	private static final String TEST_ORDER = "S00-0000000-0000000";
 
 	private String errorMessage;
 
@@ -125,41 +145,82 @@ public class AmazonConnectionTestAction extends ItemAction
 		}
 		catch (final OffAmazonPaymentsServiceException e)
 		{
-			errorMessage = e.getMessage();
+			errorMessage = e.getLocalizedMessage();
 			LOG.error("Error while trying to get the order reference details response.", e);
 		}
 	}
 
 	/**
+	 * Get the country code from amazon configuration
+	 * 
+	 * @param amazonConfig
+	 * @return country code
+	 */
+	@SuppressWarnings("deprecation")
+	private String getCountryCode(final AmazonConfig amazonConfig)
+	{
+		if (de.fliegersoftware.amazon.core.constants.GeneratedAmazoncoreConstants.Enumerations.AmazonConfigCountryEnum.OTHER
+				.equals(amazonConfig.getAmazonConfigCountry()))
+		{
+			return amazonConfig.getOtherCountry();
+		}
+		return amazonConfig.getAmazonConfigCountry().getCode();
+	}
+
+	/**
+	 * @param amazonConfig
+	 * @return currency code
+	 */
+	private String getCurrencyByRegion(final AmazonConfig amazonConfig)
+	{
+		if (AmazonConfigCountryEnum.OTHER.equals(amazonConfig.getAmazonConfigCountry()))
+		{
+			return amazonConfig.getOtherCountryCurrency();
+		}
+
+		String countryCode = getCountryCode(amazonConfig);
+		try
+		{
+			if ("uk".equalsIgnoreCase(countryCode))
+			{
+				countryCode = "gb";
+			}
+			final Locale locale = new Locale("", countryCode);
+			final Currency currency = Currency.getInstance(locale);
+			return currency.getCurrencyCode();
+		}
+		catch (final Exception e)
+		{
+			LOG.error("Currency could not found for region", e);
+		}
+		return null;
+	}
+
+	/**
 	 * @param amazonConfig
 	 */
+	@SuppressWarnings("deprecation")
 	private OffAmazonPaymentsServiceClient createOffAmazonPaymentService(final AmazonConfig amazonConfig)
 	{
 		final Properties properties = new Properties();
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.ACCESS_KEY_ID, amazonConfig.getMwsAccessKey());
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.SECRET_ACCESS_KEY, amazonConfig.getMwsSecretKey());
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.APPLICATION_VERSION, "");
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.SELLER_ID, amazonConfig.getMerchantId());
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.REGION, amazonConfig.getAmazonConfigCountry().getCode());
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.CURRENCY, "EUR");
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.ENVIRONMENT, "");
-		properties.put("clientId", amazonConfig.getClientId());
-
-		if (amazonConfig.isSandboxMode() != null && amazonConfig.isSandboxMode().booleanValue())
-		{
-			properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.APPLICATION_NAME, "KPFamily Sandbox");
-			properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.ENVIRONMENT, "SANDBOX");
-			properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.PLACE_ORDER_URL, "http://localhost:9001/");
-		}
-		else
-		{
-			properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.ENVIRONMENT, "LIVE");
-			properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.PLACE_ORDER_URL, "http://www.babyartikel.de/");
-		}
-		properties.put(de.fliegersoftware.amazon.payment.util.AmazonConfig.CERT_CN, "sns.amazonaws.com");
+		properties.put(AmazonConnectionTestAction.ACCESS_KEY_ID, amazonConfig.getMwsAccessKey());
+		properties.put(AmazonConnectionTestAction.SECRET_ACCESS_KEY, amazonConfig.getMwsSecretKey());
+		properties.put(AmazonConnectionTestAction.SELLER_ID, amazonConfig.getMerchantId());
+		properties.put(AmazonConnectionTestAction.REGION, getCountryCode(amazonConfig));
+		properties.put(AmazonConnectionTestAction.CURRENCY, getCurrencyByRegion(amazonConfig));
+		properties.put(AmazonConnectionTestAction.APPLICATION_NAME, amazonConfig.getApplicationName());
+		properties.put(AmazonConnectionTestAction.APPLICATION_VERSION, amazonConfig.getApplicationVersion());
+		properties.put(AmazonConnectionTestAction.CLIENT_ID, amazonConfig.getClientId());
+		properties.put(AmazonConnectionTestAction.ENVIRONMENT, getEnvironment(amazonConfig.isSandboxMode()));
+		properties.put(AmazonConnectionTestAction.CERT_CN, AMAZONWS);
 
 		final OffAmazonPaymentsServiceConfig config = new OffAmazonPaymentsServiceConfig(properties);
 		return new OffAmazonPaymentsServiceClient(config);
+	}
+
+	private String getEnvironment(final Boolean sandbox)
+	{
+		return sandbox != null && sandbox.booleanValue() ? SANDBOX : LIVE;
 	}
 
 	/**
@@ -169,7 +230,8 @@ public class AmazonConnectionTestAction extends ItemAction
 	{
 		final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
 		request.setSellerId(amazonConfig.getMerchantId());
-		request.setAmazonOrderReferenceId("S02-1043731-5256796");
+		//XXX: check why this amazon order reference id doesn't work
+		request.setAmazonOrderReferenceId(amazonConfig.getTestOrderReferenceId());
 		return request;
 	}
 }

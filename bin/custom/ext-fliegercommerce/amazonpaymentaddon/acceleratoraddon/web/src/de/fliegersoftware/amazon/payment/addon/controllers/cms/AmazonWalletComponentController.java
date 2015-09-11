@@ -18,5 +18,8 @@ public class AmazonWalletComponentController extends AbstractAmazonCmsComponentC
 	@Override
 	protected void fillModel(HttpServletRequest request, Model model, AmazonWalletComponentModel component) {
 		super.fillModel(request, model, component);
+		
+		model.addAttribute("paymentWidgetHeight", String.valueOf(amazonConfigService.getPaymentWidgetHeight()));
+		model.addAttribute("paymentWidgetWidth", String.valueOf(amazonConfigService.getPaymentWidgetWidth()));
 	}
 }

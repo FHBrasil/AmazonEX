@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
-import de.fliegersoftware.amazon.core.model.AmazonCustomerModel;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.login.addon.constants.AmazonLoginAddonConstants;
 import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
@@ -30,7 +29,9 @@ import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.Abstrac
 import de.hybris.platform.acceleratorstorefrontcommons.security.AutoLoginStrategy;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
+import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
+import de.hybris.platform.core.model.user.CustomerModel;
 
 @Controller
 @Scope("tenant")
@@ -76,8 +77,8 @@ public class AmazonLoginController extends AbstractPageController {
 		
 		if(getAmazonUserFacade().isAmazonCustomerExisting(customerId))
 		{	
-			AmazonCustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(customerId);
-			amazonAutoLoginStrategy.login(amazonCustomerModel.getCustomer().getUid(), customerId, request, response);
+			CustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(customerId);
+			amazonAutoLoginStrategy.login(amazonCustomerModel.getUid(), customerId, request, response);
 			return REDIRECT_PREFIX+MY_ACCOUNT;
 		}
 		
@@ -107,9 +108,9 @@ public class AmazonLoginController extends AbstractPageController {
 				{				
 					getAmazonUserFacade().registerGuestUser(registerData);
 					
-					AmazonCustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(customerId);
+					CustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(customerId);
 					
-					amazonAutoLoginStrategy.login(amazonCustomerModel.getCustomer().getUid(), customerId, request, response);
+					amazonAutoLoginStrategy.login(amazonCustomerModel.getUid(), customerId, request, response);
 
 					return REDIRECT_PREFIX+MY_ACCOUNT;
 				} 
@@ -169,9 +170,9 @@ public class AmazonLoginController extends AbstractPageController {
 		{				
 			getAmazonUserFacade().registerGuestUser(registerData);
 			
-			AmazonCustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(amazonForm.getAmazonId());
+			CustomerModel amazonCustomerModel = getAmazonUserFacade().getAmazonCustomer(amazonForm.getAmazonId());
 			
-			amazonAutoLoginStrategy.login(amazonCustomerModel.getCustomer().getUid(), amazonForm.getAmazonId(), request, response);
+			amazonAutoLoginStrategy.login(amazonCustomerModel.getUid(), amazonForm.getAmazonId(), request, response);
 
 			return REDIRECT_PREFIX+MY_ACCOUNT;
 		} 
@@ -180,6 +181,28 @@ public class AmazonLoginController extends AbstractPageController {
 			LOG.warn("DuplicateUidException for email "+amazonForm.getEmail());
 			return prepareAssociateAccount(model, amazonForm.getName(), amazonForm.getEmail(), amazonForm.getAmazonId());
 		}	
+	}
+	
+	@RequestMapping(value = "/unmerge-amazon-account", method = RequestMethod.GET)
+	public String unmergeAmazonAccount(
+			final HttpServletRequest request,
+			final HttpServletResponse response,
+			final Model model) 
+	{		
+		
+		try
+		{
+			final CustomerData customerData = customerFacade.getCurrentCustomer();
+			
+			getAmazonUserFacade().deleteAmazonCustomer(customerData);
+			
+			return REDIRECT_PREFIX+MY_ACCOUNT;
+		} 
+		catch (AuthenticationException e)
+		{
+			LOG.warn(e.getMessage());
+			return REDIRECT_PREFIX+MY_ACCOUNT;
+		}
 	}
 	
 	private String prepareAssociateAccount(Model model, String name, String email, String customerId)

@@ -1,8 +1,8 @@
 package de.fliegersoftware.amazon.core.daos;
 
-import de.fliegersoftware.amazon.core.model.AmazonCustomerModel;
+import de.hybris.platform.core.model.user.CustomerModel;
 
 public interface AmazonUserDao {
-	AmazonCustomerModel getAmazonCustomer(String customerId);
+	CustomerModel getAmazonCustomer(String customerId);
 	boolean isAmazonCustomerExisting(String customerId);
 }

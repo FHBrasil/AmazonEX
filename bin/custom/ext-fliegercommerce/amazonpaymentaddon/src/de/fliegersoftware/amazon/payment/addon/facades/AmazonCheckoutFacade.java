@@ -2,21 +2,26 @@ package de.fliegersoftware.amazon.payment.addon.facades;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
+import de.fliegersoftware.amazon.core.constants.AmazoncoreConstants;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.OrderData;
+import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.order.payment.PaymentModeModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.order.OrderService;
 import de.hybris.platform.order.PaymentModeService;
+import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 
 
@@ -42,20 +47,15 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		final CartModel cartModel = getCart();
 		if (checkIfCurrentUserIsTheCartUser())
 		{
-			if(cartModel.getPaymentInfo() instanceof AmazonPaymentInfoModel) {
-				final AmazonPaymentInfoModel amazonPaymentInfoModel = (AmazonPaymentInfoModel) cartModel.getPaymentInfo();
-				if (amazonPaymentInfoModel != null && StringUtils.isNotBlank(amazonPaymentInfoModel.getAmazonOrderReferenceId()))
-				{
-					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizeAmazonPayment(cartModel, getPaymentProvider());
+			if(cartModel.getPaymentInfo() instanceof AmazonPaymentInfoModel
+					&& StringUtils.isNotBlank(((AmazonPaymentInfoModel)cartModel.getPaymentInfo()).getAmazonOrderReferenceId())) {
+					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizeAmazonPayment(cartModel, AmazoncoreConstants.PAYMENT_PROVIDER_NAME);
 	
 					return paymentTransactionEntryModel != null
-							&& (AmazonTransactionStatus.Pending.name().equals(paymentTransactionEntryModel.getTransactionStatus())
-								|| AmazonTransactionStatus.Open.name().equals(paymentTransactionEntryModel.getTransactionStatus())
-								|| AmazonTransactionStatus.Closed.name().equals(paymentTransactionEntryModel.getTransactionStatus()));
-				}
+							&& TransactionStatus.ACCEPTED.name().equals(paymentTransactionEntryModel.getTransactionStatus());
 			}
 		}
-		return false;
+		return super.authorizePayment(securityCode);
 	}
 
 	@Override
@@ -81,17 +81,29 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		return false;
 	}
 
-	public OrderData createOrderFromCart() {
+	public String createOrderCodeFromCart() {
 		try {
 			CartModel cartModel = getCart();
 			OrderModel orderModel = getOrderService().createOrderFromCart(cartModel);
-			cartModel.setPreCreatedOrder(orderModel);
-			getModelService().saveAll(cartModel, orderModel);
-			return getOrderConverter().convert(orderModel);
+			cartModel.setPreCreatedOrderCode(orderModel.getCode());
+			getModelService().save(cartModel);
+			return orderModel.getCode();
 		} catch (InvalidCartException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean isDeliveryCountrySupported(CountryData deliveryCountry) {
+		if (deliveryCountry != null) {
+			List<CountryData> deliveryCountriesSupported = super.getDeliveryCountries();
+			for (CountryData countryData : deliveryCountriesSupported) {
+				if (countryData.getIsocode().equalsIgnoreCase(deliveryCountry.getIsocode())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	protected AmazonCommerceCheckoutService getCommerceCheckoutService()

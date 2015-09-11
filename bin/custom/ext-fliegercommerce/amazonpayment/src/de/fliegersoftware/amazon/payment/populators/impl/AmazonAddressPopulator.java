@@ -45,7 +45,7 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 				+ (l3Empty ? "" : line3));
 		target.setFirstName(source.getName());
 		target.setTown(source.getCity());
-//		target.setDistrict(source.getDistrict());
+		target.setDistrict(source.getDistrict());
 		target.setCompanyName(source.getName());
 		
 		//RegionData region = new RegionData();

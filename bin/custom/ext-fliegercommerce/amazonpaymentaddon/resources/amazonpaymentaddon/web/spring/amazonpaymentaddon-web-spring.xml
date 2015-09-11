@@ -44,6 +44,36 @@
 		<property name="add" ref="getAmazonPaymentaddonBeforeViewHandler" />
 	</bean>
 
+	<!-- Instant Payment Notification handling -->
+	<bean id="amazonPaymentNotificationService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentNotificationService">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<bean id="baseAmazonNotificationHandler" abstract="true" class="de.fliegersoftware.amazon.payment.ipn.impl.BaseAmazonNotificationHandler">
+		<property name="amazonPaymentNotificationService" ref="amazonPaymentNotificationService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+
+	<bean id="IpnController" class="de.fliegersoftware.amazon.payment.addon.controllers.IpnController">
+		<property name="handlers">
+		<map key-type="com.amazonservices.mws.offamazonpaymentsipn.notifications.NotificationType">
+			<entry key="AuthorizationNotification">
+				<bean class="de.fliegersoftware.amazon.payment.ipn.impl.AuthorizationNotificationHandler"
+					parent="baseAmazonNotificationHandler"/>
+			</entry>
+			<entry key="CaptureNotification">
+				<bean class="de.fliegersoftware.amazon.payment.ipn.impl.CaptureNotificationHandler"
+					parent="baseAmazonNotificationHandler"/>
+			</entry>
+			<entry key="RefundNotification">
+				<bean class="de.fliegersoftware.amazon.payment.ipn.impl.RefundNotificationHandler"
+					parent="baseAmazonNotificationHandler"/>
+			</entry>
+		</map>
+		</property>
+	</bean>
+
 	<!-- creates sandbox interceptor -->
 	<bean id="amazonSandboxModeHandlerInterceptor"
 		class="de.fliegersoftware.amazon.payment.addon.controllers.pages.AmazonSandboxModeHandlerInterceptor">

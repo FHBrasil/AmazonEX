@@ -175,8 +175,8 @@ public class PaymentIntegrationTest extends ServicelayerTest
 			card.setExpirationYear(Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR) - 2));
 		}
 
-		final PaymentTransactionModel paymentTransaction = paymentService.authorize("code4" + codeNo++, BigDecimal.ONE,
-				Currency.getInstance("EUR"), "123", "Amazon").getPaymentTransaction();
+		final PaymentTransactionModel paymentTransaction = paymentService.authorize(paymentInfo, "code4" + codeNo++, BigDecimal.ONE,
+				Currency.getInstance("EUR"), "Amazon").getPaymentTransaction();
 		
 		cart.setPaymentTransactions(Collections.singletonList(paymentTransaction));
 		modelService.save(cart);

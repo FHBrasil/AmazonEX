@@ -3,10 +3,14 @@ package de.fliegersoftware.amazon.payment.addon.config.bundlesources;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
+import com.hybris.addon.common.config.bundlesources.JavaScriptMessageResourcesAccessor;
 
 import de.fliegersoftware.amazon.core.enums.OperationModeEnum;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
-import de.hybris.platform.addonsupport.config.bundlesources.JavaScriptMessageResourcesAccessor;
+import de.fliegersoftware.amazon.core.services.impl.DefaultAmazonConfigService;
 
 public class AmazonConfigJavaScriptMessageResourceAccessor implements JavaScriptMessageResourcesAccessor {
 
@@ -19,17 +23,23 @@ public class AmazonConfigJavaScriptMessageResourceAccessor implements JavaScript
 		if (amazonConfigService.isEnabled()) {
 			amazonConfigs.put("isAmazonEnabled", "true");
 			
-			if (amazonConfigService.isHiddenButtonsMode()) {
-				amazonConfigs.put("isHiddenButtonsMode", "true");
-			}
 			if (OperationModeEnum.LOGINANDPAY.equals(amazonConfigService.getOperationMode()) || 
 					OperationModeEnum.LOGINONLY.equals(amazonConfigService.getOperationMode())) {
 				amazonConfigs.put("isAmazonLoginEnabled", "true");
+			} else {
+				amazonConfigs.put("isAmazonLoginEnabled", "false");
 			}
 			
 			if (OperationModeEnum.LOGINANDPAY.equals(amazonConfigService.getOperationMode()) || 
 					OperationModeEnum.PAYONLY.equals(amazonConfigService.getOperationMode())) {
 				amazonConfigs.put("isAmazonPayEnabled", "true");
+			} else {
+				amazonConfigs.put("isAmazonPayEnabled", "false");
+			}
+			if (amazonConfigService.isHiddenButtonsMode()) {
+				amazonConfigs.put("isHiddenButtonsMode", "true");
+			} else {
+				amazonConfigs.put("isHiddenButtonsMode", "false");
 			}
 		
 			amazonConfigs.put("clientId", amazonConfigService.getClientId());
@@ -38,18 +48,27 @@ public class AmazonConfigJavaScriptMessageResourceAccessor implements JavaScript
 			// configure widgets url
 			String amazonWidgetUrl;
 			String region = amazonConfigService.getRegion();
-			boolean sandboxMode = amazonConfigService.isSandboxMode();
 			amazonConfigs.put("region", region);
-			if("DE".equals(region) && sandboxMode) {
-				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/sandbox/lpa/js/Widgets.js";
-			} else if ("DE".equals(region) && !sandboxMode){
-				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/de/lpa/js/Widgets.js";
-			} else if(sandboxMode) {
-				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/uk/sandbox/lpa/js/Widgets.js";
+			
+			boolean sandboxMode = amazonConfigService.isSandboxMode();
+			if (sandboxMode) {
+				amazonConfigs.put("isSandboxMode", "true");
 			} else {
-				amazonWidgetUrl = "https://static-eu.payments-amazon.com/OffAmazonPayments/uk/lpa/js/Widgets.js";
+				amazonConfigs.put("isSandboxMode", "false");
 			}
+			
+			OffAmazonPaymentsServiceConfig config = new OffAmazonPaymentsServiceConfig(amazonConfigService.getAmazonProperties());
+			amazonWidgetUrl = config.getWidgetURL();
 			amazonConfigs.put("amazonWidgetsUrl", amazonWidgetUrl);
+			
+			amazonConfigs.put("loginButtonColor", amazonConfigService.getLoginButtonColor());
+			amazonConfigs.put("loginButtonSize", amazonConfigService.getLoginButtonSize());
+			amazonConfigs.put("payButtonColor", amazonConfigService.getPayButtonColor());
+			amazonConfigs.put("payButtonSize", amazonConfigService.getPayButtonSize());
+			amazonConfigs.put("paymentWidgetHeight", String.valueOf(amazonConfigService.getPaymentWidgetHeight()));
+			amazonConfigs.put("paymentWidgetWidth", String.valueOf(amazonConfigService.getPaymentWidgetWidth()));
+			amazonConfigs.put("addressWidgetHeight", String.valueOf(amazonConfigService.getAddressWidgetHeight()));
+			amazonConfigs.put("addressWidgetWidth", String.valueOf(amazonConfigService.getAddressWidgetWidth()));
 		} else {
 			amazonConfigs.put("isAmazonEnabled", "false");
 		}
