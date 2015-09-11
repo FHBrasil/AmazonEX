@@ -18,5 +18,4 @@
 # Specifies the location of the spring context file putted automatically to the global platform application context.
 amazonloginaddon.application-context=amazonloginaddon-spring.xml
 
-heringstorefront.additionalWebSpringConfigs.amazonloginaddon=classpath:/amazonloginaddon/web/spring/amazonloginaddon-web-spring.xml
-heringstorefront.additionalWebSpringConfigs.addoncommon=classpath:/addoncommon/web/spring/addoncommon-web-spring.xml
+yacceleratorstorefront.additionalWebSpringConfigs.amazonloginaddon=classpath:/amazonloginaddon/web/spring/amazonloginaddon-web-spring.xml

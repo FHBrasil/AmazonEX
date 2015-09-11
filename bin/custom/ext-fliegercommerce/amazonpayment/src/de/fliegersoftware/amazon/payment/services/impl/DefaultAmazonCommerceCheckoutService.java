@@ -1,6 +1,7 @@
 package de.fliegersoftware.amazon.payment.services.impl;
 
 import de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService;
+import de.hybris.platform.commerceservices.strategies.GenerateMerchantTransactionCodeStrategy;
 import de.hybris.platform.core.model.ItemModel;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
@@ -28,6 +29,7 @@ import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
  */
 public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckoutService implements AmazonCommerceCheckoutService
 {
+	private GenerateMerchantTransactionCodeStrategy generateMerchantTransactionCodeStrategy;
 	
 	@Override
 	public PaymentTransactionEntryModel authorizeAmazonPayment(CartModel cartModel, 
@@ -88,7 +90,6 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 		return transactionEntryModel;
 	}
 
-	@Override
 	protected boolean isValidDeliveryAddress(CartModel cartModel, AddressModel addressModel) {
 		return true;
 	}
@@ -97,6 +98,11 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 	protected AmazonPaymentService getPaymentService()
 	{
 		return (AmazonPaymentService)super.getPaymentService();
+	}
+
+	public GenerateMerchantTransactionCodeStrategy getGenerateMerchantTransactionCodeStrategy()
+	{
+		return this.generateMerchantTransactionCodeStrategy;
 	}
 
 }

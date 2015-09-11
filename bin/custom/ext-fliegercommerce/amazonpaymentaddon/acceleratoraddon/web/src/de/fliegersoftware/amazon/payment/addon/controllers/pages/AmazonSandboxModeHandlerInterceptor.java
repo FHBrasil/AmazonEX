@@ -7,8 +7,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.hybris.addon.common.interceptors.BeforeControllerHandlerAdaptee;
-
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationConfig;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationFacade;
 import de.fliegersoftware.amazon.payment.facades.SimulateAuthorizeError;

@@ -17,7 +17,9 @@
                
       <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
       <!-- <requires-extension name="cms"/> -->         
-      
+      <requires-extension name="basecommerce"/>
+      <requires-extension name="commerceservices"/>
+      <requires-extension name="commercefacades"/>
 
       <coremodule generated="true" manager="de.fliegersoftware.amazon.core.jalo.AmazoncoreManager" packageroot="de.fliegersoftware.amazon.core"/>
 

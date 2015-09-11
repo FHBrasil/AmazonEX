@@ -276,7 +276,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			Currency currency,
 			String subscriptionID, String paymentProvider)
 			throws AdapterException {
-		String newEntryCode = getNewEntryCode(transaction);
+		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.AUTHORIZATION);
 		
 		AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 		authorizeRequest.setAuthorizationAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
@@ -332,7 +332,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			throw new AdapterException(
 					"Could not capture without authorization");
 		}
-		String newEntryCode = getNewEntryCode(transaction);
+		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.CAPTURE);
 		
 		CaptureRequest captureRequest = new CaptureRequest();
 		captureRequest.setAmazonAuthorizationId(transaction.getRequestToken());

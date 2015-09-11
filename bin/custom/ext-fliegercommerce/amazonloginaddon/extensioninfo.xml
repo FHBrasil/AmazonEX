@@ -20,7 +20,7 @@
 		<requires-extension name="hmc"/>
 		<requires-extension name="cms2"/>
 		<requires-extension name="acceleratorstorefrontcommons"/>
-		<requires-extension name="addoncommon"/>
+<!-- 		<requires-extension name="addoncommon"/> -->
 		<requires-extension name="amazoncore"/>
 
 		<coremodule generated="true" manager="de.fliegersoftware.amazon.login.addon.jalo.AmazonloginaddonManager" packageroot="de.fliegersoftware.amazon.login.addon"/>
