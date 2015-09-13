@@ -132,7 +132,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			
 			
 			if(details.getAddressData() != null
-				&& getCheckoutFacade().setDeliveryAddress(details.getAddressData())
+//				&& getCheckoutFacade().setDeliveryAddress(details.getAddressData())
 				&& getCheckoutFacade().setDeliveryModeIfAvailable()
 				&& amazonCheckoutFacade.isDeliveryCountrySupported(details.getAddressData().getCountry())) {
 				
