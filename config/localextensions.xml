@@ -34,9 +34,9 @@
 		<extension name="ticketsystem" />
 		<extension name="solrfacetsearch" />
 		<extension name="solrfacetsearchhmc" />
-<!-- 		<extension name="b2bcommerce" /> -->
-<!-- 		<extension name="b2bapprovalprocess" /> -->
-<!-- 		<extension name="b2badmincockpit" /> -->
+		<extension name="b2bcommerce" />
+		<extension name="b2bapprovalprocess" />
+		<extension name="b2badmincockpit" />
 		<extension name="oci" />
 		<extension name="wishlist" />
 		<extension name="commercefacades" />
@@ -46,7 +46,7 @@
 		<extension name="commercesearchsampledata" />
 		<extension name="apparelstore" />
 		<extension name="electronicsstore" />
-<!-- 		<extension name="b2bacceleratorsampledata" /> -->
+		<extension name="b2bacceleratorsampledata" />
 		<extension name="instoresampledata" />
 
 										
@@ -90,11 +90,11 @@
 		<extension name="yacceleratorstorefront" />
 		<extension name="yacceleratorinitialdata" />
 		<extension name="yacceleratorcockpits" />
-<!-- 		<extension name="yb2bacceleratorcore" /> -->
-<!-- 		<extension name="yb2bacceleratorfacades" /> -->
-<!-- 		<extension name="yb2bacceleratorinitialdata" /> -->
-<!-- 		<extension name="yb2bacceleratorstorefront" /> -->
-<!-- 		<extension name="yb2bacceleratortest" /> -->
+		<extension name="yb2bacceleratorcore" />
+		<extension name="yb2bacceleratorfacades" />
+		<extension name="yb2bacceleratorinitialdata" />
+		<extension name="yb2bacceleratorstorefront" />
+		<extension name="yb2bacceleratortest" />
 		<extension name="yinstoreinitialdata" />
 
 										
@@ -103,8 +103,8 @@
 		<extension name="acceleratorfacades" />
 		<extension name="acceleratorcms" />
 		<extension name="acceleratorstorefrontcommons" />
-<!-- 		<extension name="b2bacceleratorfacades" /> -->
-<!-- 		<extension name="b2bacceleratorservices" /> -->
+		<extension name="b2bacceleratorfacades" />
+		<extension name="b2bacceleratorservices" />
 		
 
 		<extension name="amazoncore"/>
