@@ -279,6 +279,11 @@
 	<bean name="amazonCreateOrderFromCartStrategy" parent="defaultCreateOrderFromCartStrategy"
 		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCreateOrderFromCartStrategy">
 	</bean>
+	
+	<alias alias="commerceDeliveryAddressStrategy" name="amazonCommerceDeliveryAddressStrategy"/>
+	<bean name="amazonCommerceDeliveryAddressStrategy" parent="defaultCommerceDeliveryAddressStrategy"
+		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCommerceDeliveryAddressStrategy">
+	</bean>
 
 	<bean name="amazonSandboxSimulationFacade" class="de.fliegersoftware.amazon.payment.facades.impl.AmazonSandboxSimulationFacadeImpl">
 	</bean>
