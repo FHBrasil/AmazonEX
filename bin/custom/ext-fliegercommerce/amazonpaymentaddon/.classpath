@@ -14,7 +14,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/b2ccheckoutaddon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/amazonpayment"/>
 	<classpathentry kind="lib" path="web/webroot/WEB-INF/lib/spring-webmvc-3.2.5.RELEASE.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/addoncommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/amazoncore"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/addonsupport"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

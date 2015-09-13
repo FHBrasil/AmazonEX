@@ -84,14 +84,20 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 var amazonForm = $("#amazonForm");
 if($("#matchAmazonAccount").length) {
 	$("#matchAmazonAccount").click(function() {
-		amazonForm.attr("action","/register/confirm-associate-account");
+		var actionForm = amazonForm.attr("action").split("/");
+		actionForm.pop();
+		actionForm.push('confirm-associate-account');
+		amazonForm.attr("action",actionForm.join('/'));
 		amazonForm.submit();
 	});
 }
 
 if($("#noMatchAmazonAccount").length) {
 	$("#noMatchAmazonAccount").click(function() {
-		amazonForm.attr("action","/register/no-merge-account");
+		var actionForm = amazonForm.attr("action").split("/");
+		actionForm.pop();
+		actionForm.push('no-merge-account');
+		amazonForm.attr("action",actionForm.join('/'));
 		amazonForm.submit();
 	});
 }

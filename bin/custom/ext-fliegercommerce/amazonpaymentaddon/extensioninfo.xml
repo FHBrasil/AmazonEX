@@ -16,7 +16,7 @@
 	<extension abstractclassprefix="Generated" classprefix="Amazonpaymentaddon" description="amazonpaymentaddon extension" managername="AmazonpaymentaddonManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="amazonpaymentaddon">
 
 		<requires-extension name="cms2"/>
-		<requires-extension name="addoncommon"/>
+		<requires-extension name="addonsupport"/>
 		<requires-extension name="amazonpayment"/>
 
 		<coremodule generated="true" manager="de.fliegersoftware.amazon.payment.addon.jalo.AmazonpaymentaddonManager" packageroot="de.fliegersoftware.amazon.payment.addon"/>

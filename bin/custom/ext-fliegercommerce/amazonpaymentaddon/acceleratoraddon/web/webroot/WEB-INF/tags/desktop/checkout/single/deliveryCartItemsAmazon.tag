@@ -53,21 +53,7 @@
 		        </div> 
 		        <div class="col-xs-4">
 	             	<small>               			
-	               		<c:choose>
-			               	<c:when test="${entry.product.fromPrice}">
-			                  	<s>
-			                   		<spring:theme code="checkout.single.details.cartItems.productPrice.from" />:
-			                        <fmt:formatNumber value="${entry.product.oldPrice}" type="number" minFractionDigits="2" />
-			                    </s>
-			    	            <strong>
-			                      	<spring:theme code="checkout.single.details.cartItems.productPrice.to" />:
-			                        <format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
-			                    </strong>
-			                </c:when>
-			                <c:otherwise>
-			                      	<format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
-			                </c:otherwise>
-			           	</c:choose>
+	                    <format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
 	                </small>
                 </div>
                 <div class="col-xs-4 text-right">	                		

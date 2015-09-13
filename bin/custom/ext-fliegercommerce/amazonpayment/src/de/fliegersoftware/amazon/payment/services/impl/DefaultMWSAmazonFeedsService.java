@@ -19,6 +19,7 @@ import javax.xml.bind.Marshaller;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.CollectionUtils;
 
@@ -94,7 +95,7 @@ public class DefaultMWSAmazonFeedsService implements MWSAmazonFeedsService {
 	protected String getFileMD5(String path) throws FileNotFoundException, IOException {
 		InputStream stream = new FileInputStream(path);
 		// content is a passed in InputStream
-        byte[] resultByte = DigestUtils.md5(stream);
+        byte[] resultByte = DigestUtils.md5(IOUtils.toByteArray(stream));
         String streamMD5 = new String(Base64.encodeBase64(resultByte));
 		stream.close();
 		return streamMD5;

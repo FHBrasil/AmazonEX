@@ -106,7 +106,6 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 		// sets cms data and pagetype
 		storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_CHECKOUT_CMS_PAGE_LABEL));
-		model.addAttribute("pageType", PageType.CHECKOUTPAGE.name());
 		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.AmazonCheckoutPage;
 	}
 
@@ -322,5 +321,18 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	@Override
 	protected AmazonCustomerFacade getCustomerFacade() {
 		return (AmazonCustomerFacade) super.getCustomerFacade();
+	}
+	
+	/**
+	 * Checks if there are any items in the cart.
+	 * 
+	 * @return returns true if items found in cart.
+	 */
+	protected boolean hasValidCart()
+	{
+		final CartData cartData = getCheckoutFlowFacade().getCheckoutCart();
+		final boolean validCart = cartData.getEntries() != null && !cartData.getEntries().isEmpty();
+
+		return validCart;
 	}
 }

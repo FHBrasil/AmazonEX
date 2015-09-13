@@ -307,7 +307,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			, Currency currency
 			, String paymentProvider)
 			throws AdapterException {
-		String newEntryCode = getNewEntryCode(transaction);
+		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.AUTHORIZATION);
 		
 		AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 		authorizeRequest.setAuthorizationAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
@@ -348,14 +348,14 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
 			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
-			AddressData addressData = amazonAddressConverter.convert(details.getAuthorizationBillingAddress());
-			
-			final AddressModel addressModel = getModelService().create(AddressModel.class);
-			getAddressReversePopulator().populate(addressData, addressModel);
-			
-			getModelService().save(addressModel);
-			
-			paymentInfo.setBillingAddress(addressModel);
+//			AddressData addressData = amazonAddressConverter.convert(details.getAuthorizationBillingAddress());
+//			
+//			final AddressModel addressModel = getModelService().create(AddressModel.class);
+//			getAddressReversePopulator().populate(addressData, addressModel);
+//			
+//			getModelService().save(addressModel);
+//			
+//			paymentInfo.setBillingAddress(addressModel);
 			getModelService().save(paymentInfo);
 
 			return entry;
@@ -377,7 +377,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			throw new AdapterException(
 					"Could not capture without authorization");
 		}
-		String newEntryCode = getNewEntryCode(transaction);
+		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.CAPTURE);
 		
 		CaptureRequest captureRequest = new CaptureRequest();
 		captureRequest.setAmazonAuthorizationId(auth.getRequestToken());
@@ -427,7 +427,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			throw new AdapterException(
 					"Could not refund without capture");
 		}
-		String newEntryCode = getNewEntryCode(transaction);
+		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.REFUND);
 
 		RefundRequest request = new RefundRequest();
 		request.setAmazonCaptureId(capture.getRequestToken());
