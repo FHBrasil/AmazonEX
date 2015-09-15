@@ -25,8 +25,11 @@ import de.hybris.platform.hmc.util.action.ActionResult;
 import de.hybris.platform.hmc.webchips.Chip;
 import de.hybris.platform.hmc.webchips.DisplayState;
 import de.hybris.platform.jalo.Item;
+import de.hybris.platform.jalo.media.Media;
+import de.hybris.platform.jalo.media.MediaManager;
 import de.hybris.platform.jalo.order.payment.PaymentInfo;
 import de.hybris.platform.jalo.type.ComposedType;
+import de.hybris.platform.util.Config;
 import de.hybris.platform.util.localization.Localization;
 
 import java.util.Collections;
@@ -35,9 +38,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
+import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
 
@@ -121,6 +126,10 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 		if (parent.getParent() instanceof GenericItemChip)
 		{
 			final GenericItemChip genericChip = (GenericItemChip) parent.getParent();
+			if ("AmazonConfig".equals(genericChip.getItemType().getCode()))
+			{
+				createLogMedia((AmazonConfig) genericChip.getItem());
+			}
 			if ("AmazonPaymentInfo".equals(genericChip.getItemType().getCode()))
 			{
 				paymentInfo = (AmazonPaymentInfo) genericChip.getItem();
@@ -179,6 +188,18 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 	{
 		try
 		{
+			if (item instanceof AmazonConfig)
+			{
+				final AmazonConfig config = (AmazonConfig) item;
+				if (Boolean.valueOf(config.isEnableLog()))
+				{
+					Logger.getLogger("de.fliegersoftware.amazon").setLevel(Level.INFO);
+				}
+				else
+				{
+					Logger.getLogger("de.fliegersoftware.amazon").setLevel(Level.OFF);
+				}
+			}
 			if (amazonTab != null && amazonTab.isValid())
 			{
 				paymentInfo = (PaymentInfo) item;
@@ -192,6 +213,33 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 			LOG.error("error while populate infos", e);
 		}
 		return actionResult;
+	}
+
+	private void createLogMedia(final AmazonConfig amazonConfig)
+	{
+		mediaUpdate: try
+		{
+			if (amazonConfig == null)
+			{
+				break mediaUpdate;
+			}
+			Media media = amazonConfig.getLog();
+			if (media == null)
+			{
+				media = MediaManager.getInstance().createMedia("logAmazon");
+			}
+			media.setRealFileName(Config.getParameter("amazon.fileName"));
+			//			media.setFile(new File(Config.getParameter("log4j.appender.AMAZON.File")));
+			media.setInternalURL(Config.getParameter("log4j.appender.AMAZON.File"));
+			media.setURL("/amazonhmc/log/amazon");
+			media.setURL2("/amazonhmc/log/amazon");
+			media.setMime("text/plain");
+			amazonConfig.setLog(media);
+		}
+		catch (final Exception e)
+		{
+			LOG.error("Error while trying to create the amazon log media", e);
+		}
 	}
 
 	@Override

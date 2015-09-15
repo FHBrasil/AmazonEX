@@ -36,7 +36,6 @@ import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
 import com.amazonservices.mws.offamazonpayments.model.Price;
 import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
 
-import de.fliegersoftware.amazon.core.constants.GeneratedAmazoncoreConstants.Enumerations.AmazonConfigCountryEnum;
 import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
 import de.fliegersoftware.amazon.core.jalo.AmazonRefund;
 import de.fliegersoftware.amazon.core.jalo.AmazoncoreManager;
@@ -114,8 +113,8 @@ public class AmazonCredentials
 			properties.put(AmazonCredentials.SELLER_ID, amazonConfig.getMerchantId());
 			properties.put(AmazonCredentials.REGION, getCountryCode(amazonConfig));
 			properties.put(AmazonCredentials.CURRENCY, getCurrencyByRegion(amazonConfig));
-			properties.put(AmazonCredentials.APPLICATION_NAME, amazonConfig.getApplicationName());
-			properties.put(AmazonCredentials.APPLICATION_VERSION, amazonConfig.getApplicationVersion());
+			properties.put(AmazonCredentials.APPLICATION_NAME, StringUtils.defaultString(amazonConfig.getApplicationName()));
+			properties.put(AmazonCredentials.APPLICATION_VERSION, StringUtils.defaultString(amazonConfig.getApplicationVersion()));
 			properties.put(AmazonCredentials.CLIENT_ID, amazonConfig.getClientId());
 			properties.put(AmazonCredentials.ENVIRONMENT, getEnvironment(amazonConfig.isSandboxMode()));
 			properties.put(AmazonCredentials.CERT_CN, AMAZONWS);
@@ -130,7 +129,7 @@ public class AmazonCredentials
 	 */
 	private String getCountryCode(final AmazonConfig amazonConfig)
 	{
-		if (AmazonConfigCountryEnum.OTHER.equals(amazonConfig.getAmazonConfigCountry()))
+		if ("Other".equalsIgnoreCase(amazonConfig.getAmazonConfigCountry().getCode()))
 		{
 			return amazonConfig.getOtherCountry();
 		}
@@ -143,7 +142,7 @@ public class AmazonCredentials
 	 */
 	private String getCurrencyByRegion(final AmazonConfig amazonConfig)
 	{
-		if (AmazonConfigCountryEnum.OTHER.equals(amazonConfig.getAmazonConfigCountry()))
+		if ("Other".equals(amazonConfig.getAmazonConfigCountry().getCode()))
 		{
 			return amazonConfig.getOtherCountryCurrency();
 		}
@@ -356,7 +355,7 @@ public class AmazonCredentials
 				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREID, "");
 				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTURESTATUS, "");
 				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREREASONCODE, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREREFUNDEDAMOUNT, 0);
+				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREREFUNDEDAMOUNT, 0d);
 			}
 			catch (final Exception e)
 			{

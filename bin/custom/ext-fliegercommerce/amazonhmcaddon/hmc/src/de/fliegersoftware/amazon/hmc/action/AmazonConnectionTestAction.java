@@ -25,7 +25,6 @@ import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceExceptio
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
 
-import de.fliegersoftware.amazon.core.constants.GeneratedAmazoncoreConstants.Enumerations.AmazonConfigCountryEnum;
 import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 
 
@@ -51,7 +50,6 @@ public class AmazonConnectionTestAction extends ItemAction
 	private static final String AMAZONWS = "sns.amazonaws.com";
 	private static final String SANDBOX = "SANDBOX";
 	private static final String LIVE = "LIVE";
-	private static final String TEST_ORDER = "S00-0000000-0000000";
 
 	private String errorMessage;
 
@@ -118,16 +116,18 @@ public class AmazonConnectionTestAction extends ItemAction
 
 		final AmazonConfig amazonConfig = (AmazonConfig) actionEvent.getData();
 
+		LOG.info("CallingGetOrderReferenceDetails");
 		final GetOrderReferenceDetailsRequest request = createGetOrderReferenceDetailsRequest(amazonConfig);
 		final OffAmazonPaymentsServiceClient service = createOffAmazonPaymentService(amazonConfig);
 		callOrderReferenceDetails(service, request);
 
 		if (StringUtils.isNotBlank(errorMessage))
 		{
+			LOG.info(errorMessage);
 			return new ActionResult(ActionResult.FAILED, errorMessage, false);
 		}
-
 		final String successMessage = Localization.getLocalizedString("msg.connection.test.success");
+		LOG.info(successMessage);
 
 		return new ActionResult(ActionResult.OK, successMessage, false);
 	}
@@ -159,8 +159,7 @@ public class AmazonConnectionTestAction extends ItemAction
 	@SuppressWarnings("deprecation")
 	private String getCountryCode(final AmazonConfig amazonConfig)
 	{
-		if (de.fliegersoftware.amazon.core.constants.GeneratedAmazoncoreConstants.Enumerations.AmazonConfigCountryEnum.OTHER
-				.equals(amazonConfig.getAmazonConfigCountry()))
+		if ("Other".equalsIgnoreCase(amazonConfig.getAmazonConfigCountry().getCode()))
 		{
 			return amazonConfig.getOtherCountry();
 		}
@@ -173,7 +172,7 @@ public class AmazonConnectionTestAction extends ItemAction
 	 */
 	private String getCurrencyByRegion(final AmazonConfig amazonConfig)
 	{
-		if (AmazonConfigCountryEnum.OTHER.equals(amazonConfig.getAmazonConfigCountry()))
+		if ("Other".equalsIgnoreCase(amazonConfig.getAmazonConfigCountry().getCode()))
 		{
 			return amazonConfig.getOtherCountryCurrency();
 		}

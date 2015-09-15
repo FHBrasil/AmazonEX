@@ -24,6 +24,7 @@
 				<condition attribute="amazonOrderReferenceId" operator="contains"/>
 				<condition attribute="amazonOrderAmount" operator="contains"/>
 				<condition attribute="user" operator="in"/>
+				<condition attribute="owner" operator="is not null"/>
 			</search>
 			<result mode="append" defaultview="list">
 				<listview>
@@ -149,6 +150,11 @@
 					<section name="section.amazonconfig.log.properties">
 						<listlayout>
 							<attribute labelwidth="200" name="enableLog" width="300" />
+							<attribute name="log" editable="false">
+								<customeditor
+			                        classname="de.fliegersoftware.amazon.hmc.AmazonDownloadMediaEditorChip">
+			                     </customeditor>
+							</attribute>
 						</listlayout>
 					</section>
 				</tab>
