@@ -41,4 +41,6 @@ public interface AmazonConfigService {
 	CaptureModeEnum getCaptureMode();
 	OperationModeEnum getOperationMode();
 	AccountMatchingStrategyEnum getAccountMatchingStrategy();
+	boolean isExcludePackstationDelivery();
+	String getOrderStatusOnSuccessfullShipping();
 }

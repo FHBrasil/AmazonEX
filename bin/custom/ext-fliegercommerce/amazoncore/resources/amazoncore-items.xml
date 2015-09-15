@@ -198,7 +198,7 @@
 				<attribute qualifier="refundReasonCode" type="java.lang.String" generate="true">
 					<description>refundReasonCode for Amazon operations</description>
 					<persistence type="property"/>
-					<modifiers read="true" write="true" optional="false"/>
+					<modifiers read="true" write="true" optional="true"/>
 				</attribute>
 			</attributes>
 		</itemtype>
@@ -382,6 +382,11 @@
 				<!-- Log settings -->
 				<attribute qualifier="enableLog" type="boolean">
 					<description>switch for enabling / disabling logging, exceptions should always be logged</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="log" type="Media">
+					<description>log file</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>

@@ -1,20 +1,29 @@
 package de.fliegersoftware.amazon.core.services.impl;
 
+import java.util.Currency;
+import java.util.Locale;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import de.fliegersoftware.amazon.core.enums.AuthorizationModeEnum;
 import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
 import de.fliegersoftware.amazon.core.enums.OperationModeEnum;
+import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.fliegersoftware.amazon.core.model.config.AmazonConfigModel;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.hybris.platform.store.services.BaseStoreService;
 
 public class DefaultAmazonConfigService implements AmazonConfigService {
+	private static final Logger LOG = Logger.getLogger(DefaultAmazonConfigService.class);
 	
 	protected BaseStoreService baseStoreService;
+	private static final String AMAZONWS = "sns.amazonaws.com";
+	private static final String SANDBOX = "SANDBOX";
+	private static final String LIVE = "LIVE";
 	
 	@Override
 	public boolean hasAmazonConfig() {
@@ -28,24 +37,13 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 			AmazonConfigModel amazonConfig = getBaseStoreService().getCurrentBaseStore().getAmazonConfig();
 			properties.put(ACCESS_KEY_ID, amazonConfig.getMwsAccessKey());
 			properties.put(SECRET_ACCESS_KEY, amazonConfig.getMwsSecretKey());
-			properties.put(APPLICATION_VERSION, "");
 			properties.put(SELLER_ID, amazonConfig.getMerchantId());
-			properties.put(REGION, amazonConfig.getAmazonConfigCountry().getCode());
-			properties.put(CURRENCY, "EUR");
-			properties.put(ENVIRONMENT, "");
-	
-			if (amazonConfig.isSandboxMode())
-			{
-				properties.put(APPLICATION_NAME, "KPFamily Sandbox");
-				properties.put(ENVIRONMENT, "SANDBOX");
-				properties.put(PLACE_ORDER_URL, "http://localhost:9001/");
-			}
-			else
-			{
-				properties.put(ENVIRONMENT, "LIVE");
-				properties.put(PLACE_ORDER_URL, "http://www.babyartikel.de/");
-			}
-			properties.put(CERT_CN, "sns.amazonaws.com");
+			properties.put(REGION, getCountryCode(amazonConfig));
+			properties.put(CURRENCY, getCurrencyByRegion(amazonConfig));
+			properties.put(APPLICATION_NAME, StringUtils.defaultString(amazonConfig.getApplicationName()));
+			properties.put(APPLICATION_VERSION, StringUtils.defaultString(amazonConfig.getApplicationVersion()));
+			properties.put(ENVIRONMENT, getEnvironment(amazonConfig.isSandboxMode()));
+			properties.put(CERT_CN, AMAZONWS);
 		}
 		return properties;
 	}
@@ -202,6 +200,22 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 			return null;
 	}
 	
+	@Override
+	public boolean isExcludePackstationDelivery() {
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isExcludePackstationDelivery();
+		else
+			return false;
+	}
+	
+	@Override
+	public String getOrderStatusOnSuccessfullShipping() {
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getOrderStatusOnSuccessfullShipping();
+		else
+			return null;
+	}
+	
 	protected BaseStoreService getBaseStoreService() {
 		return baseStoreService;
 	}
@@ -209,5 +223,54 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	@Required
 	public void setBaseStoreService(BaseStoreService baseStoreService) {
 		this.baseStoreService = baseStoreService;
+	}
+	
+	/**
+	 * @param amazonConfig
+	 * @return currency code
+	 */
+	private String getCurrencyByRegion(final AmazonConfigModel amazonConfig)
+	{
+		if ("Other".equals(amazonConfig.getAmazonConfigCountry().getCode()))
+		{
+			return amazonConfig.getOtherCountryCurrency();
+		}
+
+		String countryCode = getCountryCode(amazonConfig);
+		try
+		{
+			if ("uk".equalsIgnoreCase(countryCode))
+			{
+				countryCode = "gb";
+			}
+			final Locale locale = new Locale("", countryCode);
+			final Currency currency = Currency.getInstance(locale);
+			return currency.getCurrencyCode();
+		}
+		catch (final Exception e)
+		{
+			LOG.error("Currency could not found for region", e);
+		}
+		return null;
+	}
+	
+	/**
+	 * Get the country code from amazon configuration
+	 * 
+	 * @param amazonConfig
+	 * @return country code
+	 */
+	private String getCountryCode(final AmazonConfigModel amazonConfig)
+	{
+		if ("Other".equalsIgnoreCase(amazonConfig.getAmazonConfigCountry().getCode()))
+		{
+			return amazonConfig.getOtherCountry();
+		}
+		return amazonConfig.getAmazonConfigCountry().getCode();
+	}
+
+	private String getEnvironment(final Boolean sandbox)
+	{
+		return sandbox != null && sandbox.booleanValue() ? SANDBOX : LIVE;
 	}
 }
