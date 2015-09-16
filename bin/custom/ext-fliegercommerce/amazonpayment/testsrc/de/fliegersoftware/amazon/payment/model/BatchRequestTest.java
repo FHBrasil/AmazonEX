@@ -167,6 +167,6 @@ public class BatchRequestTest {
 		assertThat(r.getConnection().getVersion(), is("2013-01-01"));
 		assertThat(r.getRequests().getElements().size(), is(3));
 		assertThat(r.getRequests().getElements().get(0).getSellerRequestId(), is("8"));
-//		assertThat(r.getRequests().getElements().get(0).getRequestData(), is(CaptureRequest.class));
+		assertTrue(r.getRequests().getElements().get(0).getRequestData() instanceof CaptureRequest);
 	}
 }

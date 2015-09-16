@@ -15,7 +15,7 @@
 # you can put key/value pairs here.
 # Use Config.getParameter(..) to retrieve the values during runtime.
 
-amazonpaymentaddon.javascript.paths.desktop=/desktop/common/js/amazonpaymentaddon.js;/desktop/common/js/amazonCheckout.js
+amazonpaymentaddon.javascript.paths.desktop=/desktop/common/js/amazonpaymentaddon.js
 amazonpaymentaddon.css.paths.desktop=/desktop/common/css/amazonpaymentaddon.css;/desktop/common/css/amazonCheckout.css
 
 

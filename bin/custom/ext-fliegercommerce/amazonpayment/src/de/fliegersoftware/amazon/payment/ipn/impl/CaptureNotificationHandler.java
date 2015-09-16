@@ -11,6 +11,8 @@ import com.amazonservices.mws.offamazonpaymentsipn.model.CaptureNotification;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.ipn.AmazonNotificationHandler;
+import de.hybris.platform.core.enums.OrderStatus;
+import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
@@ -67,6 +69,17 @@ public class CaptureNotificationHandler extends BaseAmazonNotificationHandler<Ca
 			paymentInfo.setAmazonCaptureStatus(details.getCaptureStatus().getState());
 
 			getModelService().save(paymentInfo);
+
+			if(transaction.getOrder() != null
+				&& transaction.getOrder() instanceof OrderModel) {
+				OrderModel order = (OrderModel) transaction.getOrder();
+				if(OrderStatus.PAYMENT_AMOUNT_RESERVED.equals(order.getStatus())
+					&& AmazonTransactionStatus.Completed.name().equals(details.getCaptureStatus().getState())) {
+					// update order status
+					order.setStatus(OrderStatus.PAYMENT_CAPTURED);
+					getModelService().save(order);
+				}
+			}
 		}
 	}
 }

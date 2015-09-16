@@ -114,6 +114,7 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 								url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
 								type: 'post',
 								data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
+									, access_token: getUrlParam('access_token')
 									, CSRFToken: ACC.config.CSRFToken },
 								success: function(response){
 									if(response && response.showMessage) {
@@ -197,3 +198,98 @@ ACC.amazon.showToaster = function(msg) {
 	toaster.addClass("active");
 	ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 4000);
 };
+
+/*! Sends payment form */
+$('.confirm-purchaseAmazon').click(function() {
+	$('form#amazonPlaceOrderForm').submit();
+});
+
+function changeQuantityOrRemove(entryNumber, remove){
+	var $form = $("form#updateCartForm" + entryNumber);
+	var $inputNumber = $("#updateCartForm" + entryNumber + " input[type='number']");
+	if(remove){
+		$inputNumber.val(0);
+	}
+	var qtyActual = $inputNumber.val();
+	$.ajax({
+		url : $form.attr("action"),
+		dataType : 'json',
+		type : 'post',
+		data : $form.serialize(),
+		success : function(data){
+			var messageReturn = $('<div id="updateMessageReturnSuccess"> <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert">×</a>'+ data.message +'</div> </div>');
+			var typeMessage = "updateMessageReturnSuccess";
+			var cartData = data.cartData;
+			
+			//Change quantity of the item			
+			if(qtyActual > 0){			
+				var entryTotalPrice;
+				var entryQty;				
+				
+				for(var count = 0; count < cartData.entries.length; count++){
+					if(cartData.entries[count].entryNumber == entryNumber){
+						entryQty = cartData.entries[count].quantity;
+						entryTotalPrice = cartData.entries[count].totalPrice.formattedValue;
+					}
+				}
+				
+				//If condition is true, item update success
+				if(qtyActual == entryQty){
+					$inputNumber.val(entryQty);
+					$("#entryTotalPrice" + entryNumber).fadeOut();
+					$("#deliveryCost").fadeOut();
+					$("#subTotal").fadeOut();
+					$("#totalPrice").fadeOut();
+					setTimeout(function(){
+						$("#entryTotalPrice" + entryNumber).html(entryTotalPrice);
+						$('#deliveryCost').html(cartData.deliveryCost.formattedValue);
+						$('#subTotal').html(cartData.subTotal.formattedValue);
+						$('#totalPrice').html(cartData.totalPrice.formattedValue);
+					}, 500);
+					$("#entryTotalPrice" + entryNumber).fadeIn();
+					$("#deliveryCost").fadeIn();
+					$('#subTotal').fadeIn();
+					$('#totalPrice').fadeIn();
+				}
+				else{
+					//Else item not update
+					$inputNumber.val(entryQty);
+					messageReturn = $('<div id="updateMessageReturnFail"> <div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert">×</a>'+ data.message +'</div> </div>');
+					typeMessage = "updateMessageReturnFail";
+				}
+			}
+			else{
+				//Removed item of the cart
+				if(cartData.totalItems > 0){
+					$('ol.list150608 li#' + entryNumber).fadeOut();
+					$("#deliveryCost").fadeOut();
+					$("#subTotal").fadeOut();
+					$("#totalPrice").fadeOut();
+					setTimeout(function(){
+						$('ol.list150608 li#' + entryNumber).remove();
+						$('#deliveryCost').html(cartData.deliveryCost.formattedValue);
+						$('#subTotal').html(cartData.subTotal.formattedValue);
+						$('#totalPrice').html(cartData.totalPrice.formattedValue);
+					}, 800);
+					$("#deliveryCost").fadeIn();
+					$('#subTotal').fadeIn();
+					$('#totalPrice').fadeIn();
+				}
+				else{
+					location.reload();
+				}
+			}
+			
+			$('#globalMessages').append(messageReturn);
+			$('body,html').animate({scrollTop: 0}, 800);
+			setTimeout(function(){
+				$('#' + typeMessage).slideUp(250, function(){
+					$(this.remove());
+				});
+			}, 5000);
+		},
+		error : function(data){
+			//
+		}
+	});
+}

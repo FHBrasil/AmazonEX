@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.amazonservices.mws.offamazonpayments.model.Address;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
@@ -55,9 +54,7 @@ import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
-import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
-import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.jalo.c2l.C2LManager;
 import de.hybris.platform.order.CartService;
@@ -111,11 +108,6 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource
     private Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter;
-	
-	@Resource
-    private Converter<Address, AddressData> amazonAddressConverter;
-	
-	private Populator<AddressData, AddressModel> addressReversePopulator;
 	
 	
 	/**
@@ -263,24 +255,6 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return i18NFacade;
 	}
 
-	public Converter<Address, AddressData> getAmazonAddressConverter() {
-		return amazonAddressConverter;
-	}
-
-	public void setAmazonAddressConverter(
-			Converter<Address, AddressData> amazonAddressConverter) {
-		this.amazonAddressConverter = amazonAddressConverter;
-	}
-
-	public Populator<AddressData, AddressModel> getAddressReversePopulator() {
-		return addressReversePopulator;
-	}
-
-	public void setAddressReversePopulator(
-			Populator<AddressData, AddressModel> addressReversePopulator) {
-		this.addressReversePopulator = addressReversePopulator;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -348,14 +322,6 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
 			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
-//			AddressData addressData = amazonAddressConverter.convert(details.getAuthorizationBillingAddress());
-//			
-//			final AddressModel addressModel = getModelService().create(AddressModel.class);
-//			getAddressReversePopulator().populate(addressData, addressModel);
-//			
-//			getModelService().save(addressModel);
-//			
-//			paymentInfo.setBillingAddress(addressModel);
 			getModelService().save(paymentInfo);
 
 			return entry;

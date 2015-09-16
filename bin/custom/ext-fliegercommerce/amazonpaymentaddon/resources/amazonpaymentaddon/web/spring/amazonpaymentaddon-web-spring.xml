@@ -58,6 +58,10 @@
 	<bean id="IpnController" class="de.fliegersoftware.amazon.payment.addon.controllers.IpnController">
 		<property name="handlers">
 		<map key-type="com.amazonservices.mws.offamazonpaymentsipn.notifications.NotificationType">
+			<entry key="OrderReferenceNotification">
+				<bean class="de.fliegersoftware.amazon.payment.ipn.impl.OrderReferenceNotificationHandler"
+					parent="baseAmazonNotificationHandler"/>
+			</entry>
 			<entry key="AuthorizationNotification">
 				<bean class="de.fliegersoftware.amazon.payment.ipn.impl.AuthorizationNotificationHandler"
 					parent="baseAmazonNotificationHandler"/>

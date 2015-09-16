@@ -129,8 +129,6 @@
 		<property name="amazonAuthorizationDetailsConverter" ref="amazonAuthorizationDetailsConverter"/>
 		<property name="amazonRefundDetailsConverter" ref="amazonRefundDetailsConverter"/>
 		<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
-		<property name="amazonAddressConverter" ref="amazonAddressConverter"/>
-		<property name="addressReversePopulator" ref="addressReversePopulator"/>
 	</bean>
 
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
@@ -278,11 +276,12 @@
 	<alias alias="createOrderFromCartStrategy" name="amazonCreateOrderFromCartStrategy"/>
 	<bean name="amazonCreateOrderFromCartStrategy" parent="defaultCreateOrderFromCartStrategy"
 		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCreateOrderFromCartStrategy">
-	</bean>
+    </bean>
 	
 	<alias alias="commerceDeliveryAddressStrategy" name="amazonCommerceDeliveryAddressStrategy"/>
 	<bean name="amazonCommerceDeliveryAddressStrategy" parent="defaultCommerceDeliveryAddressStrategy"
 		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCommerceDeliveryAddressStrategy">
+		<property name="amazonConfigService" ref="amazonConfigService" />
 	</bean>
 
 	<bean name="amazonSandboxSimulationFacade" class="de.fliegersoftware.amazon.payment.facades.impl.AmazonSandboxSimulationFacadeImpl">

@@ -36,13 +36,13 @@
 				</attribute>
 			</attributes>
 		</itemtype>
-		<itemtype code="AmazonPaymentCaptureCronJob" autocreate="true"
+		<itemtype code="AmazonBaseCronJob" autocreate="true"
 			generate="true" extends="CronJob"
-			jaloclass="de.fliegersoftware.amazon.payment.jalo.AmazonPaymentCaptureCronJob">
+			jaloclass="de.fliegersoftware.amazon.payment.jalo.AmazonBaseCronJob">
 			<attributes>
 				<attribute type="BaseSite" qualifier="site">
-					<description>Session's Site to consider when capturing payments</description>
-					<modifiers read="true" write="true" search="true" optional="true"/>
+					<description>Session's Site to consider for configuration</description>
+					<modifiers read="true" write="true" search="true" optional="false"/>
 					<persistence type="property"/>
 				</attribute>
 			</attributes>

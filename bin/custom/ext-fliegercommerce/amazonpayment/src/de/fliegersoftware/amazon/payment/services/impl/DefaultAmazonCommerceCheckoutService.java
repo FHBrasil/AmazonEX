@@ -19,8 +19,10 @@ import java.util.Currency;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Required;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
@@ -92,10 +94,6 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 		return transactionEntryModel;
 	}
 
-	protected boolean isValidDeliveryAddress(CartModel cartModel, AddressModel addressModel) {
-		return true;
-	}
-
 	@Override
 	protected AmazonPaymentService getPaymentService()
 	{
@@ -106,5 +104,4 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 	{
 		return this.generateMerchantTransactionCodeStrategy;
 	}
-
 }

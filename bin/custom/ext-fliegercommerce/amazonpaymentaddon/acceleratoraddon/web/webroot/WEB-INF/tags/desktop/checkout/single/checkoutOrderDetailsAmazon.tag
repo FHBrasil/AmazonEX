@@ -17,11 +17,6 @@
 <h2>
 	<spring:theme code="checkout.single.details.title" />
 </h2>
-<p class="underlinelinks150212">
-		<spring:theme code="checkout.single.pleaseReferOur"/>&nbsp;<a href="#"><spring:theme code="checkout.single.termsAndConditions"/></a>
-		<spring:theme code="checkout.single.youHaveA"/>&nbsp;<a href="#"><spring:theme code="checkout.single.daysReturnPolicy"/></a>
-		<spring:theme code="checkout.single.hereYouWillFind"/>&nbsp;<a href="#"><spring:theme code="checkout.single.privacyPolicy"/></a>
-</p>
 <single-checkout-amazon:deliveryCartItemsAmazon cartData="${cartData}" />
 
 <div class="row">
@@ -29,40 +24,40 @@
 		<spring:theme code="checkout.single.details.subtotal" /> 
 	</div>
 	<div class="col-xs-5 text-right charge150127">
-		<format:price priceData="${cartData.subTotal}" />
-	</div>
-	<div class="col-xs-7 text-right charge150127">
-		<spring:theme code="basket.page.totals.savings" />
-	</div>
-	<div class="col-xs-5 text-right charge150127">
-		<ycommerce:testId code="Order_Totals_Savings">
-	      	<format:price priceData="${cartData.totalDiscounts}" />
-	    </ycommerce:testId>
+		<div id="subTotal">
+			<format:price priceData="${cartData.subTotal}" />
+		</div>
 	</div>
 	<c:if test="${not empty cartData.deliveryCost}">
 		<div class="col-xs-7 text-right charge150127">
 			<spring:theme code="basket.page.totals.delivery" />
 		</div>
 		<div class="col-xs-5 text-right charge150127">
-			<c:choose>
-		      	<c:when test="${isVoucherFreeShipping}">
-		           	<spring:theme code="order.free" text="FREE" />
-		        </c:when>
-		        <c:otherwise>
-		           	<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
-		        </c:otherwise>
-		    </c:choose>
+			<div id="deliveryCost">
+				<c:choose>
+			      	<c:when test="${isVoucherFreeShipping}">
+			           	<spring:theme code="order.free" text="FREE" />
+			        </c:when>
+			        <c:otherwise>
+			           	<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
+			        </c:otherwise>
+			    </c:choose>
+		    </div>
 		</div>
 	</c:if>
 	<div class="col-xs-7 text-right charge150127 h3">
 		<b><spring:theme code="checkout.single.details.orderTotal" /></b>
 	</div>
 	<div class="col-xs-5 text-right charge150127 h3">
-		<b><format:price priceData="${cartData.totalPrice}" /></b>	
+		<b>
+			<div id="totalPrice">
+				<format:price priceData="${cartData.totalPrice}" />	
+			</div>
+		</b>	
 	</div>
 </div>
 <div class="text-right" style="margin-bottom:30px;">
-	<button type="button" class="btn btn-primary btn-lg btn-checkout confirm-purchaseAmazon" disabled style="background-color: #54AB56;border-color: #54AB56;">
+	<button type="button" class="btn btn-primary btn-lg btn-checkout confirm-purchaseAmazon" disabled>
 	  	<spring:theme code="checkout.single.button.purchase" />
 	</button>
 	<div class="btn waiting-order-confirm" style="display: none;">

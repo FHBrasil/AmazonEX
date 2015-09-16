@@ -58,9 +58,9 @@ public class IpnController {
 		INotification notification = getIpnParser().parseRawMessage(request);
 		LOG.info("Received notification of type " + notification.getNotificationType());
 		switch (notification.getNotificationType()) {
+		case OrderReferenceNotification:
 		case AuthorizationNotification:
 		case CaptureNotification:
-		case OrderReferenceNotification:
 		case RefundNotification:
 		case BillingAgreementNotification:
 		case ProviderCreditNotification:

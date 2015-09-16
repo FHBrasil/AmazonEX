@@ -47,7 +47,7 @@
 		                <input type="hidden" name="initialQuantity_${entry.entryNumber}" id="initialQuantity_${entry.entryNumber}" value="${entry.quantity}" />
 		               	<ycommerce:testId code="cart_product_quantity">
 		                	<form:input disabled="${not entry.updateable}" type="number" size="1" id="quantity${entry.entryNumber}" class="form-control qty" path="quantity"
-		                    	min="1" maxlength="3" required="required" step="1" />
+		                    	min="1" maxlength="3" required="required" step="1" onchange="changeQuantityOrRemove('${entry.entryNumber}', false);"/>
 		                </ycommerce:testId>
 		           	</form:form>
 		        </div> 
@@ -56,29 +56,20 @@
 	                    <format:price priceData="${entry.basePrice}" displayFreeForZero="true" />
 	                </small>
                 </div>
-                <div class="col-xs-4 text-right">	                		
-	            	<format:price priceData="${entry.totalPrice}" displayFreeForZero="true" />
+                <div class="col-xs-4 text-right">
+                	<div id="entryTotalPrice${entry.entryNumber}">	                		
+	            		<format:price priceData="${entry.totalPrice}" displayFreeForZero="true" />
+	            	</div>
                 </div>                                           	 
 			</div>	
 			<c:if test="${entry.updateable}">
            		<ycommerce:testId code="cart_product_removeProduct">
-                	<a href="#" class="delete150618 btn-excluir-produto"
+                	<a href="javascript:void(0)" class="delete150618 btn-excluir-produto"
                     	id="RemoveProduct_${entry.entryNumber}" class="submitRemoveProduct"
                         title="Remover"
-                        onClick="hering.cart.removeProduct('${entry.entryNumber}');"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                        onClick="changeQuantityOrRemove('${entry.entryNumber}', true);"><span class="glyphicon glyphicon-remove-sign"></span></a>
                 </ycommerce:testId>
             </c:if>		
 		</li>
-		<%-- Item Express Shipping? --%>
-		<li id="toggleDelivery" class="delivery150618 collapse out">
-			<small><span class="stock150619 onstock big"><b><spring:theme code="checkout.single.expressShipping"/></b> Lieferung Morgen, 17.08.2015</span></small>
-		</li>
 	</c:forEach>
-	<li class="delivery150618">
-		<small><span class="stock150619 nostock big">Lieferung am Freitag, 17.08.2015</span></small>
-	</li>
 </ol>
-<%-- If has items express shipping --%>
-<div class="checkbox" style="margin-top:-15px;margin-left:-5px;">
-	<label><input type="checkbox" data-toggle="collapse" data-target="#toggleDelivery,.itemdelivery160608"><spring:theme code="checkout.single.sendPositionsImmediately"/>&nbsp;(<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />)</label>
-</div>

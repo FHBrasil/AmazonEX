@@ -1,8 +1,9 @@
 package de.fliegersoftware.amazon.payment.jobs;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,17 +11,18 @@ import org.apache.log4j.Logger;
 
 import com.amazonaws.mws.model.FeedSubmissionInfo;
 import com.amazonaws.mws.model.SubmitFeedResponse;
-import com.amazonaws.mws.model.SubmitFeedResult;
 import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
 import com.amazonservices.mws.offamazonpayments.model.Price;
 
+import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
-import de.fliegersoftware.amazon.payment.model.AmazonPaymentCaptureCronJobModel;
+import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
+import de.fliegersoftware.amazon.payment.model.AmazonBaseCronJobModel;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonFeedsService;
+import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.cronjob.enums.CronJobResult;
 import de.hybris.platform.cronjob.enums.CronJobStatus;
-import de.hybris.platform.cronjob.model.CronJobModel;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
@@ -28,10 +30,9 @@ import de.hybris.platform.servicelayer.cronjob.AbstractJobPerformable;
 import de.hybris.platform.servicelayer.cronjob.PerformResult;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
-import de.hybris.platform.store.services.BaseStoreService;
 
 public class AmazonPaymentCapturingJobPerformable extends
-		AbstractJobPerformable<AmazonPaymentCaptureCronJobModel> {
+		AbstractJobPerformable<AmazonBaseCronJobModel> {
 
 	private static final Logger LOG = Logger
 			.getLogger(AmazonPaymentCapturingJobPerformable.class);
@@ -40,49 +41,49 @@ public class AmazonPaymentCapturingJobPerformable extends
 	private MWSAmazonFeedsService mwsAmazonFeedsService;
 
 	@Resource
-	private BaseStoreService baseStoreService;
+	private AmazonConfigService amazonConfigService;
 
 	@Override
-	public PerformResult perform(AmazonPaymentCaptureCronJobModel cronjob) {
+	public PerformResult perform(AmazonBaseCronJobModel cronjob) {
 		LOG.info("Perform amazon capture process");
 
 		sessionService.setAttribute("currentSite", cronjob.getSite());
 
+		if(!CaptureModeEnum.SHIPMENT.equals(amazonConfigService.getCaptureMode())) {
+			LOG.warn("This job can only run if CaptureMode is SHIPMENT");
+			return new PerformResult(CronJobResult.SUCCESS, CronJobStatus.FINISHED);
+		}
+		String statusId = amazonConfigService.getOrderStatusOnSuccessfullShipping();
+		OrderStatus status = null;
+		try {
+			status = OrderStatus.valueOf(statusId);
+		} catch (IllegalArgumentException e) {
+			LOG.error("Invalid order status: " + statusId);
+			return new PerformResult(CronJobResult.ERROR, CronJobStatus.FINISHED);
+		}
+
 		final StringBuilder query = new StringBuilder();
-		query.append("select {pk} from {order} where {status} in ") //
-				.append("({{") //
-				.append("select {pk} from {orderstatus} where {code} in ('PAYMENT_AMOUNT_RESERVED')") //
-				.append("}})") //
-				.append("and {paymentinfo} in ({{") //
-				.append("select {pk} from {AmazonPaymentInfo}") //
-				.append("}})");
-		final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query.toString());
+		query.append("select {o.pk} from {Order as o ") //
+				.append("join AmazonPaymentInfo as info on {info.pk} = {o.paymentInfo} ") //
+				.append("} where {o.store} = ?store ") //
+				.append("and {o.status} = ?orderstatus ") //
+				;
+		Map<String, Object> params = new HashMap<>();
+		params.put("orderstatus", status);
+		params.put("store", cronjob.getSite().getStores().get(0));
+		final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query.toString(), params);
 		final SearchResult<OrderModel> result = flexibleSearchService.search(searchQuery);
 
-		LOG.info("Found " + result.getCount() + " order(s) with status: PAYMENT_AMOUNT_RESERVED");
+		LOG.info("Found " + result.getCount() + " order(s) with status: " + statusId);
 
 		List<CaptureRequest> requestList = new ArrayList<>();
 		for (OrderModel order : result.getResult()) {
 
 			for (final PaymentTransactionModel txn : order.getPaymentTransactions()) {
-//				final PaymentTransactionEntryModel txnEntry = amazonPaymentService.capture(txn);
-//
-//				if(txnEntry != null
-//					&& TransactionStatus.ACCEPTED.name().equals(txnEntry.getTransactionStatus())) {
-//					if (LOG.isDebugEnabled()) {
-//						LOG.debug("The payment transaction has been captured. Order: "
-//								+ order.getCode() + ". Txn: " + txn.getCode());
-//					}
-//					order.setStatus(OrderStatus.PAYMENT_CAPTURED);
-//					modelService.save(order);
-//				} else {
-//					LOG.error("The payment transaction capture has failed. Order: "
-//							+ order.getCode() + ". Txn: " + txn.getCode());
-//					order.setStatus(OrderStatus.PAYMENT_NOT_CAPTURED);
-//					modelService.save(order);
-//				}
 				for (PaymentTransactionEntryModel auth : txn.getEntries()) {
-					if (PaymentTransactionType.AUTHORIZATION.equals(auth.getType())) {
+					if (PaymentTransactionType.AUTHORIZATION.equals(auth.getType())
+						&& AmazonTransactionStatus.Open.name().equals(auth.getTransactionStatusDetails())) {
+
 						CaptureRequest captureRequest = new CaptureRequest();
 						captureRequest.setAmazonAuthorizationId(auth.getRequestToken());
 						captureRequest.setCaptureReferenceId(String.valueOf(System.currentTimeMillis()));
