@@ -49,7 +49,7 @@
 		   	showShipDeliveryEntries="true" showTax="false" showPickupDeliveryEntries="true" />            
 		</div>
 		<c:if test="${sendGuestInformation}">
-                <form:form id="amazonGuestInformation" action="/login/checkout/amazon/guest" method="POST">
+                <form:form id="amazonGuestInformation" action="${request.contextPath}/login/checkout/amazon/guest" method="POST">
                         <input type="hidden" name="amazonOrderReferenceId"/>
                         <input type="hidden" name="amazonGuestId"/>
                         <input type="hidden" name="amazonGuestName"/>

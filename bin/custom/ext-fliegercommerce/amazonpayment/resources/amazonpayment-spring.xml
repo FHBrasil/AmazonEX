@@ -120,8 +120,8 @@
 		</property>
 	</bean>
 
-	<alias name="defaultAmazonPaymentService" alias="amazonPaymentService"/>
-	<bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
+	<alias name="defaultPaymentService" alias="amazonPaymentService"/>
+	<bean id="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
 		<property name="sessionService" ref="sessionService"/>
 		<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
 		<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
@@ -143,7 +143,7 @@
 
     <bean name="defaultAmazonCommerceCheckoutService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonCommerceCheckoutService"
     	parent="defaultCommerceCheckoutService">
-    	<property name="paymentService" ref="defaultAmazonPaymentService"/>
+    	<property name="paymentService" ref="defaultPaymentService"/>
     </bean>
     
     <bean id="amazonOrderReferenceDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceDetailsPopulator">

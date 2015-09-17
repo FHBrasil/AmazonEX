@@ -21,9 +21,6 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	private static final Logger LOG = Logger.getLogger(DefaultAmazonConfigService.class);
 	
 	protected BaseStoreService baseStoreService;
-	private static final String AMAZONWS = "sns.amazonaws.com";
-	private static final String SANDBOX = "SANDBOX";
-	private static final String LIVE = "LIVE";
 	
 	@Override
 	public boolean hasAmazonConfig() {

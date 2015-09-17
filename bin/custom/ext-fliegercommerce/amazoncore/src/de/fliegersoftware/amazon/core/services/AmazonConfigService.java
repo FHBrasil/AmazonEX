@@ -19,6 +19,9 @@ public interface AmazonConfigService {
 	public static final String REGION = "region";
 	public static final String PLACE_ORDER_URL = "placeOrderUrl";
 	public static final String CERT_CN = "certCN";
+	public static final String AMAZONWS = "sns.amazonaws.com";
+	public static final String SANDBOX = "SANDBOX";
+	public static final String LIVE = "LIVE";
 
 	boolean hasAmazonConfig();
 	Properties getAmazonProperties();
