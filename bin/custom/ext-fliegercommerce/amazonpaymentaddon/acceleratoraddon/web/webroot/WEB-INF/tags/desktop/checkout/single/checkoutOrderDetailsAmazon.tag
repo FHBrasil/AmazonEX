@@ -8,8 +8,6 @@
 <%@ taglib prefix="cart" tagdir="/WEB-INF/tags/desktop/cart"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
-<%@ taglib prefix="single-checkout-hering"
-    tagdir="/WEB-INF/tags/addons/heringcheckoutaddon/desktop/checkout/single"%>
 <%@ taglib prefix="single-checkout-amazon"
     tagdir="/WEB-INF/tags/addons/amazonpaymentaddon/desktop/checkout/single"%>
 <%@ taglib prefix="format" tagdir="/WEB-INF/tags/shared/format"%>
@@ -18,6 +16,7 @@
 	<spring:theme code="checkout.single.details.title" />
 </h2>
 <single-checkout-amazon:deliveryCartItemsAmazon cartData="${cartData}" />
+<single-checkout-amazon:deliveryMethodSelector deliveryMethods="${deliveryMethods}"/>
 
 <div class="row">
 	<div class="col-xs-7 text-right charge150127">
