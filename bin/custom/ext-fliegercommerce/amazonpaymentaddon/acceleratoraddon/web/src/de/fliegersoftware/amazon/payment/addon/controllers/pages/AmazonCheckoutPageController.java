@@ -1,6 +1,5 @@
 package de.fliegersoftware.amazon.payment.addon.controllers.pages;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
@@ -39,7 +38,6 @@ import de.fliegersoftware.amazon.payment.addon.forms.AmazonAjaxResponse;
 import de.fliegersoftware.amazon.payment.addon.forms.AmazonPlaceOrderForm;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
-import de.hybris.platform.acceleratorservices.controllers.page.PageType;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
@@ -49,9 +47,9 @@ import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.CartModificationData;
+import de.hybris.platform.commercefacades.order.data.DeliveryOrderEntryGroupData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
-import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.order.InvalidCartException;
 
@@ -122,8 +120,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 	@RequestMapping(value = "/select-delivery-address", method = RequestMethod.POST
 			, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AmazonAjaxResponse doSelectDeliveryAddress(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId
-			, @RequestParam("access_token") String accessToken, final RedirectAttributes model) {
+	public String doSelectDeliveryAddress(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId
+			, @RequestParam("access_token") String accessToken, final Model model) {
 		LOG.info("AmazonCheckout - doSelectDeliveryAddress");
 		AmazonAjaxResponse response = new AmazonAjaxResponse();
 		if (!hasValidCart()) {
@@ -135,21 +133,62 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
 			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, accessToken);
 			
-			if(details.getAddressData() == null) {
-				response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
-			} else if(!getCheckoutFacade().isDeliveryCountrySupported(details.getAddressData().getCountry())) {
-				response.setShowMessage(getLocalizedMessage("amazon.address.country.invalid"));
-			} else if(!getCheckoutFacade().setDeliveryAddress(details.getAddressData())) {
-				response.setShowMessage(getLocalizedMessage("amazon.address.packstation.invalid"));
-			} else if(!getCheckoutFacade().setDeliveryModeIfAvailable()) {
-				response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
-			} else {
-				// successful! silent response
-				// response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
+			response.setSuccess(false);
+			
+			if(details != null)
+			{
+				if(details.getAddressData() == null) {
+					response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
+				} else if(!getCheckoutFacade().isDeliveryCountrySupported(details.getAddressData().getCountry())) {
+					response.setShowMessage(getLocalizedMessage("amazon.address.country.invalid"));
+				} else if(!getCheckoutFacade().setDeliveryAddress(details.getAddressData())) {
+					response.setShowMessage(getLocalizedMessage("amazon.address.packstation.invalid"));
+				} else if(!getCheckoutFacade().setDeliveryModeIfAvailable()) {
+					response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
+				} else {
+					// successful! silent response
+					response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
+					model.addAttribute("deliveryMethods", getCheckoutFacade().getSupportedDeliveryModes());
+					CartData cartData = getCheckoutFacade().getCheckoutCart();
+					model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
+					response.setSuccess(true);
+				}
 			}
+			else{
+				response.setShowMessage(getLocalizedMessage("amazon.address.country.invalid"));
+			}
+			model.addAttribute("cartData", getCheckoutFacade().getCheckoutCart());
 		}
-		return response;
+		model.addAttribute("amazonAjaxResponse", response);
+		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.Fragments.AmazonCheckoutOrderDetails;
 	}
+	
+	/**
+     * @param model
+     * @param selectedDeliveryMethod
+     * @return
+     */
+    // @Override
+    @RequestMapping(value = "/select-delivery-method", method = RequestMethod.POST, 
+    				produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequireHardLogIn
+    public String doSelectDeliveryMode(@RequestParam("selectedDeliveryMethod") final String selectedDeliveryMethod, final Model model) {
+    	
+    	AmazonAjaxResponse response = new AmazonAjaxResponse();
+    	if (!hasValidCart()) {
+			response.setRedirect(REDIRECT_URL_CART);
+		}
+		if (!getCheckoutFacade().hasShippingItems()) {
+			response.setRedirect(REDIRECT_URL_CART);
+		}
+        if (StringUtils.isNotEmpty(selectedDeliveryMethod)) {
+            getCheckoutFacade().setDeliveryMode(selectedDeliveryMethod);
+            model.addAttribute("cartData", getCheckoutFacade().getCheckoutCart());
+            response.setSuccess(true);
+        }
+        model.addAttribute("amazonAjaxResponse", response);
+        return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.Fragments.AmazonCheckoutOrderDetails;
+    }
 
 	@RequestMapping(value = "/select-payment-method", method = RequestMethod.POST)
 	public @ResponseBody AmazonAjaxResponse doSelectPaymentMethod(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
@@ -236,7 +275,6 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
                 LOG.warn("Couldn't update product with the entry number: " + entryNumber + ".", ex);
             }
         }
-        //prepareDataForPage(model);
         return new ResponseEntity(results, HttpStatus.OK);
     }
 	
@@ -254,16 +292,6 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
             }
         }
     }
-	
-	protected void prepareDataForPage(final Model model) throws CMSItemNotFoundException
-	{
-		model.addAttribute("isOmsEnabled", Boolean.valueOf(getSiteConfigService().getBoolean("oms.enabled", false)));
-		model.addAttribute("supportedCountries", getCheckoutFacade().getDeliveryCountries());
-		model.addAttribute("expressCheckoutAllowed", Boolean.valueOf(getCheckoutFacade().isExpressCheckoutAllowedForCart()));
-		model.addAttribute("taxEstimationEnabled", Boolean.valueOf(getCheckoutFacade().isTaxEstimationEnabledForCart()));
-
-		model.addAttribute("regions", getI18NFacade().getRegionsForCountryIso("DE"));
-	}
 
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
 	@RequireHardLogIn

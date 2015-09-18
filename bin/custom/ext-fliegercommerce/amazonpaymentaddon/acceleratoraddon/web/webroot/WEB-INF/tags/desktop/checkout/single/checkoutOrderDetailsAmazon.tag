@@ -16,7 +16,7 @@
 	<spring:theme code="checkout.single.details.title" />
 </h2>
 <single-checkout-amazon:deliveryCartItemsAmazon cartData="${cartData}" />
-<single-checkout-amazon:deliveryMethodSelector deliveryMethods="${deliveryMethods}"/>
+<single-checkout-amazon:deliveryMethodSelector deliveryMethods="${deliveryMethods}" selectedDeliveryMethodId="${cartData.deliveryMode.code}"/>
 
 <div class="row">
 	<div class="col-xs-7 text-right charge150127">

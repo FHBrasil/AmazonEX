@@ -20,21 +20,11 @@
     	<li id="${entry.entryNumber}" class="item150608">
 			<div class="row">
 				<div class="col-xxs-4 col-xs-12 col-md-4 text-right">
-                	<a href="${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
+                	<a href="${request.contextPath}${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
                 </div>
                 <div class="col-xxs-8 col-xs-12 col-md-8">
-                	<a href="${entry.product.url}">${entry.product.name}</a>
+                	<a href="${request.contextPath}${entry.product.url}">${entry.product.name}</a>
                 	<br /><small>${sharp}${entry.product.code}</small><br />
-                	<small><span class="stock150619 onstock">sofort lieferbar</span></small>             	
-	                <%-- 
-	                <c:if test="${not empty entry.product.size}">
-	                    <div class="tamanho"><spring:theme code="text.fliegercommerce.texto51"/>: ${entry.product.size}</div>
-	                </c:if>                   
-	                <c:if test="${not empty entry.product.color}">
-	                    <spring:theme code="checkout.single.details.cartItems.color" />:
-	                    <div class="${entry.product.color.RGB}" style="background-color:${entry.product.color.RGB};"></div>
-	                </c:if>   
-	                --%>         	               	
                 </div>
             </div>
             <div class="row itemdata150608">

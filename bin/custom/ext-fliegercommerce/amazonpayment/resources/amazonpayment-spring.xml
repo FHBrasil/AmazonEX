@@ -290,5 +290,6 @@
 	<!-- jobs -->
 
 	<bean id="amazonPaymentCapturingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPaymentCapturingJobPerformable" parent="abstractJobPerformable"/>
+	<bean id="amazonPollingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPollingJobPerformable" parent="abstractJobPerformable"/>
    
 </beans>

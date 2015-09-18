@@ -5,8 +5,7 @@ import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -53,15 +52,14 @@ import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
+import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.core.model.user.AddressModel;
-import de.hybris.platform.jalo.c2l.C2LManager;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.dto.BillingInfo;
 import de.hybris.platform.payment.dto.TransactionStatus;
-import de.hybris.platform.payment.dto.TransactionStatusDetails;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.impl.DefaultPaymentServiceImpl;
 import de.hybris.platform.payment.methods.CardPaymentService;
@@ -90,6 +88,9 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource(name = "i18NFacade")
 	private I18NFacade i18NFacade;
+	
+	@Resource
+	private CartFacade cartFacade;
 	
 	@Resource
 	private MWSAmazonPaymentService mwsAmazonPaymentService;
@@ -161,6 +162,16 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	public void setCartService(CartService cartService)
 	{
 		this.cartService = cartService;
+	}
+	
+	public CartFacade getCartFacade()
+	{
+		return cartFacade;
+	}
+	
+	public void setCartFacade(final CartFacade cartFacade)
+	{
+		this.cartFacade = cartFacade;
 	}
 
 	/* (non-Javadoc)
@@ -441,7 +452,18 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 
 		GetOrderReferenceDetailsResult result = mwsAmazonPaymentService.getOrderReferenceDetails(request);
 		OrderReferenceDetails details = result.getOrderReferenceDetails();
-		return amazonOrderReferenceDetailsConverter.convert(details);
+		
+		final CountryData countrySelected = new CountryData();
+		countrySelected.setIsocode(details.getDestination().getPhysicalDestination().getCountryCode());
+		
+		List<CountryData> deliveryCountriesSupported = getCartFacade().getDeliveryCountries();
+		for (final CountryData countryData : deliveryCountriesSupported) {
+			if (countryData.getIsocode().equalsIgnoreCase(countrySelected.getIsocode())) {
+				return amazonOrderReferenceDetailsConverter.convert(details);
+			}
+		}
+		
+		return null;
 	}
 
 	@Override

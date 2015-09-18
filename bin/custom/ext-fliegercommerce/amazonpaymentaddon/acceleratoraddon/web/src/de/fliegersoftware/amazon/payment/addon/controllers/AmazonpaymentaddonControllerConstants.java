@@ -42,6 +42,10 @@ public interface AmazonpaymentaddonControllerConstants
 				// addon pages
 				String AmazonCheckoutPage = ADDON_PREFIX +
 						"pages/checkout/amazonCheckout";
+				
+				interface Fragments {
+					String AmazonCheckoutOrderDetails = ADDON_PREFIX + "fragments/amazonCheckoutOrderDetailsFragment";
+				}
 			}
 		}
 	}

@@ -113,21 +113,39 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 							$.ajax({
 								url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
 								type: 'post',
+								dataType: 'json',
 								data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
 									, access_token: getUrlParam('access_token')
 									, CSRFToken: ACC.config.CSRFToken },
 								success: function(response){
-									if(response && response.showMessage) {
+									if(response.success === 'true') {
+										ACC.amazon.enablePlaceOrder.addressSelected = true;
+										checkEnableCheckout();
+										ACC.amazon.showToaster(response.showMessage);
+										
+										$("#deliveryCost").fadeOut();
+										$("#totalPrice").fadeOut();
+										setTimeout(function(){
+											$('#deliveryCost').html(response.deliveryCost);
+											$('#totalPrice').html(response.totalPrice);
+											$('#shipping-methods').html(response.deliveryMethodSelector);
+										}, 500);
+										$("#deliveryCost").fadeIn();
+										$('#totalPrice').fadeIn();
+									} 
+									else{
 										ACC.amazon.enablePlaceOrder.addressSelected = false;
 										checkEnableCheckout();
 										ACC.amazon.showToaster(response.showMessage);
-									} else {
-										ACC.amazon.enablePlaceOrder.addressSelected = true;
-										checkEnableCheckout();
 									}
+									
+									bindDeliveryMethod_onChange();
 								},
 								error: function (xht, textStatus, ex) {
 									// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
+									console.log(xht);
+									console.log(textStatus);
+									console.log(ex);
 								},
 								complete: function () {
 									// alert("complete");
@@ -204,6 +222,67 @@ $('.confirm-purchaseAmazon').click(function() {
 	$('form#amazonPlaceOrderForm').submit();
 });
 
+$('form#splitDelivery').find('.isSplitDelivery').click(function(){
+	var $formSplit = $('form#splitDelivery');
+	var $isSplit = $('.isSplitDelivery').is(':checked');
+	$.ajax({
+		url : $formSplit.attr('action'),
+		type : 'POST',
+		dataType: 'json',
+		data : { isSplit: $isSplit },
+		success : function(data){				
+			if($('.isSplitDelivery').is(':checked')){
+				$('#toggleDelivery').collapse("show");						
+			}
+			else{
+				$('#toggleDelivery').collapse("hide");						
+			}					
+			$("#deliveryCost").fadeOut();
+			$("#totalPrice").fadeOut();
+			setTimeout(function(){
+				$('#deliveryCost').html(data.deliveryCost.formattedValue);
+				$('#totalPrice').html(data.totalPrice.formattedValue);
+			}, 500);
+			$('#deliveryCost').fadeIn();
+			$('#totalPrice').fadeIn();
+		},
+		error : function(data){
+			//
+		}
+	});
+});
+
+function bindDeliveryMethod_onChange() {
+	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').change(function() {
+		var selectedDeliveryAddressCode = $(this).val();
+		var url = ACC.config.contextPath + '/checkout/amazon/select-delivery-method';
+		if(selectedDeliveryAddressCode) {
+			$.ajax({
+				async : true,
+				url : url,
+				type : 'POST',
+				dataType : 'json',
+				data : { selectedDeliveryMethod : selectedDeliveryAddressCode, 
+						 CSRFToken: ACC.config.CSRFToken },
+				success : function(data) {
+					if(data && data.success === 'true') {
+						$("#deliveryCost").stop(true).fadeOut();
+						$("#totalPrice").stop(true).fadeOut();
+						setTimeout(function(){
+							$('#deliveryCost').html(data.deliveryCost);
+							$('#totalPrice').html(data.totalPrice);
+						}, 500);
+						$('#deliveryCost').stop(true).fadeIn();
+						$('#totalPrice').stop(true).fadeIn();
+					}
+				}, complete : function() {
+					bindDeliveryMethod_onChange();
+				}
+			});
+		}
+	});
+}
+
 function changeQuantityOrRemove(entryNumber, remove){
 	var $form = $("form#updateCartForm" + entryNumber);
 	var $inputNumber = $("#updateCartForm" + entryNumber + " input[type='number']");
@@ -245,6 +324,7 @@ function changeQuantityOrRemove(entryNumber, remove){
 						$('#deliveryCost').html(cartData.deliveryCost.formattedValue);
 						$('#subTotal').html(cartData.subTotal.formattedValue);
 						$('#totalPrice').html(cartData.totalPrice.formattedValue);
+						$('#miniCartTotalItems').html(cartData.totalUnitCount);
 					}, 500);
 					$("#entryTotalPrice" + entryNumber).fadeIn();
 					$("#deliveryCost").fadeIn();
@@ -270,6 +350,7 @@ function changeQuantityOrRemove(entryNumber, remove){
 						$('#deliveryCost').html(cartData.deliveryCost.formattedValue);
 						$('#subTotal').html(cartData.subTotal.formattedValue);
 						$('#totalPrice').html(cartData.totalPrice.formattedValue);
+						$('#miniCartTotalItems').html(cartData.totalUnitCount);
 					}, 800);
 					$("#deliveryCost").fadeIn();
 					$('#subTotal').fadeIn();
@@ -287,6 +368,8 @@ function changeQuantityOrRemove(entryNumber, remove){
 					$(this.remove());
 				});
 			}, 5000);
+			
+			bindDeliveryMethod_onChange();
 		},
 		error : function(data){
 			//
