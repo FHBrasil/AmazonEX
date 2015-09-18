@@ -8,6 +8,9 @@ public interface AmazonLoginAddonConstants {
 		interface Pages {
 			String AmazonConfirmAccountPage = ADDON_PREFIX
 					+ "pages/amazonConfirmAccountPage";
+			
+			String AmazonManualAdditionFirstLoginPage = ADDON_PREFIX
+					+ "pages/amazonManualAdditionOnFirstLogin";
 		}
 	}
 

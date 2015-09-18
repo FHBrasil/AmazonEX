@@ -68,6 +68,7 @@ import de.hybris.platform.payment.model.PaymentTransactionModel;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
+import de.hybris.platform.servicelayer.session.SessionExecutionBody;
 import de.hybris.platform.servicelayer.session.SessionService;
 
 /**
@@ -341,7 +342,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	}
 	
 	@Override
-	public PaymentTransactionEntryModel capture(PaymentTransactionModel transaction) throws AdapterException {
+	public PaymentTransactionEntryModel capture(final PaymentTransactionModel transaction) throws AdapterException {
 		PaymentTransactionEntryModel auth = null;
 		for (PaymentTransactionEntryModel pte : transaction.getEntries()) {
 			if (!(pte.getType().equals(PaymentTransactionType.AUTHORIZATION)))
@@ -349,20 +350,31 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			auth = pte;
 			break;
 		}
+		for (PaymentTransactionEntryModel pte : transaction.getEntries()) {
+			if (!(pte.getType().equals(PaymentTransactionType.CAPTURE)))
+				continue;
+			return pte;
+		}
 
 		if (auth == null) {
 			throw new AdapterException(
 					"Could not capture without authorization");
 		}
+		
 		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.CAPTURE);
 		
-		CaptureRequest captureRequest = new CaptureRequest();
+		final CaptureRequest captureRequest = new CaptureRequest();
 		captureRequest.setAmazonAuthorizationId(auth.getRequestToken());
 		captureRequest.setCaptureReferenceId(String.valueOf(System.currentTimeMillis()));
 		
 		captureRequest.setCaptureAmount(getAmount(String.valueOf(auth.getAmount()), auth.getCurrency().getIsocode()));
-		
-		CaptureResult result = this.mwsAmazonPaymentService.capture(captureRequest);
+		CaptureResult result = getSessionService().executeInLocalView(new SessionExecutionBody() {
+			@Override
+			public CaptureResult execute() {
+				getSessionService().setAttribute("currentSite", transaction.getOrder().getSite());
+				return mwsAmazonPaymentService.capture(captureRequest);
+			}
+		});
 
 		if(result != null) {
 			PaymentTransactionEntryModel entry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);

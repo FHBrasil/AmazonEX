@@ -88,6 +88,7 @@
 		<property name="customerNameStrategy" ref="customerNameStrategy" />
 		<property name="customerAccountService" ref="customerAccountService" />
 		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
 	</bean>
 	
 	<context:component-scan base-package="de.fliegersoftware.amazon.core"/>

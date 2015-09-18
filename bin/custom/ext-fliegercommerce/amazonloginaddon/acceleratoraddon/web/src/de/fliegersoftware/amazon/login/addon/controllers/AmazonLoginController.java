@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +22,13 @@ import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.login.addon.constants.AmazonLoginAddonConstants;
 import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonLoginForm;
+import de.fliegersoftware.amazon.login.addon.forms.AmazonManualAdditionFirstLoginForm;
 import de.fliegersoftware.amazon.login.addon.security.AmazonAutoLoginStrategy;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.acceleratorstorefrontcommons.security.AutoLoginStrategy;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
+import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.core.model.user.CustomerModel;
@@ -42,8 +42,12 @@ public class AmazonLoginController extends AbstractPageController {
 	public static final String REDIRECT_PREFIX = "redirect:";
 	public static final String MY_ACCOUNT = "/my-account";
 	private static final String AMAZON_ACCOUNT_CONFIRMATION_PAGE = "amazonAccountConfirmation";
+	private static final String AMAZON_MANUAL_ADDITION_FIRST_LOGIN = "amazonManualAdditionOnFirstLogin";
 
 	private AmazonUserFacade amazonUserFacade;
+	
+	@Resource(name = "userFacade")
+	private UserFacade userFacade;
 
 	@Resource
 	private AmazonAutoLoginStrategy amazonAutoLoginStrategy;
@@ -88,6 +92,11 @@ public class AmazonLoginController extends AbstractPageController {
 			{				
 				getAmazonUserFacade().register(registerData);
 				amazonAutoLoginStrategy.login(email, customerId, request, response);
+				
+				if(amazonConfigService.isManualAdditionOnFirstLogin()) 
+				{
+					return prepareManualAdditionFirstLogin(model, email);
+				}
 				
 				return REDIRECT_PREFIX+MY_ACCOUNT;
 			} 
@@ -205,6 +214,40 @@ public class AmazonLoginController extends AbstractPageController {
 		}
 	}
 	
+	@RequestMapping(value = "/register/manual-addition", method = RequestMethod.POST)
+	public String manualAdditionFirstLogin(
+			final AmazonManualAdditionFirstLoginForm amazonManualAdditionFirstLoginForm,
+			final HttpServletRequest request,
+			final HttpServletResponse response,
+			final Model model) 
+	{	
+		final AmazonLoginRegisterData registerData = new AmazonLoginRegisterData();
+		registerData.setLogin(amazonManualAdditionFirstLoginForm.getEmail());
+		registerData.setTitleCode(amazonManualAdditionFirstLoginForm.getSalutation());
+		
+		getAmazonUserFacade().updateManualAddition(registerData);
+		
+		return REDIRECT_PREFIX+MY_ACCOUNT;		
+	}
+
+	private String prepareManualAdditionFirstLogin(Model model, String email)
+	{
+		AmazonManualAdditionFirstLoginForm amazonManualAdditionFirstLoginForm = new AmazonManualAdditionFirstLoginForm();
+		amazonManualAdditionFirstLoginForm.setEmail(email);
+		model.addAttribute("amazonManualAdditionFirstLoginForm", amazonManualAdditionFirstLoginForm);
+		model.addAttribute("titles", getUserFacade().getTitles());		
+				
+		try 
+		{
+			storeCmsPageInModel(model, getContentPageForLabelOrId(AMAZON_MANUAL_ADDITION_FIRST_LOGIN));
+		} 
+		catch (CMSItemNotFoundException e) 
+		{
+			LOG.warn(e.getMessage());
+		}
+		return AmazonLoginAddonConstants.Views.Pages.AmazonManualAdditionFirstLoginPage;
+	}
+	
 	private String prepareAssociateAccount(Model model, String name, String email, String customerId)
 	{
 		AmazonLoginForm amazonLoginForm = new AmazonLoginForm();
@@ -269,4 +312,13 @@ public class AmazonLoginController extends AbstractPageController {
 	public void setAutoLoginStrategy(AutoLoginStrategy autoLoginStrategy) {
 		this.autoLoginStrategy = autoLoginStrategy;
 	}
+
+	public UserFacade getUserFacade() {
+		return userFacade;
+	}
+
+	public void setUserFacade(UserFacade userFacade) {
+		this.userFacade = userFacade;
+	}
+	
 }

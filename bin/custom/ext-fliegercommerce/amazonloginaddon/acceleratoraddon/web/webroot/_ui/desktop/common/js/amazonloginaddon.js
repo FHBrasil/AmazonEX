@@ -60,14 +60,14 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 					}
 				}
 				
-				if($('a[href="/logout"]').length) {
-					$('a[href="/logout"]').click(function() {
+				if($('a[href$="/logout"]').length) {
+					$('a[href$="/logout"]').click(function() {
 						amazon.Login.logout();
 					});
 				}
 				
-				if($('a[href="/unmerge-amazon-account"]').length) {
-					$('a[href="/unmerge-amazon-account"]').click(function() {
+				if($('a[href$="/unmerge-amazon-account"]').length) {
+					$('a[href$="/unmerge-amazon-account"]').click(function() {
 						amazon.Login.logout();
 					});
 				}

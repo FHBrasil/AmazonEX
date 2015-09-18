@@ -46,4 +46,5 @@ public interface AmazonConfigService {
 	AccountMatchingStrategyEnum getAccountMatchingStrategy();
 	boolean isExcludePackstationDelivery();
 	String getOrderStatusOnSuccessfullShipping();
+	boolean isManualAdditionOnFirstLogin();
 }

@@ -206,6 +206,14 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	}
 	
 	@Override
+	public boolean isManualAdditionOnFirstLogin() {
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isManualAddOnFirstLogin();
+		else
+			return false;
+	}
+	
+	@Override
 	public String getOrderStatusOnSuccessfullShipping() {
 		if(hasAmazonConfig())
 			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getOrderStatusOnSuccessfullShipping();

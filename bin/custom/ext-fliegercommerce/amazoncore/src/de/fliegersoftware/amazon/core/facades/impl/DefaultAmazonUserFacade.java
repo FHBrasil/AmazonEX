@@ -5,6 +5,7 @@ import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParamete
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
 import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
@@ -15,10 +16,12 @@ import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
+import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.core.model.user.TitleModel;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
-import de.hybris.platform.servicelayer.user.UserService;
+import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
 public class DefaultAmazonUserFacade implements AmazonUserFacade {
 	
@@ -33,6 +36,8 @@ public class DefaultAmazonUserFacade implements AmazonUserFacade {
 	private CustomerAccountService customerAccountService;
 	
 	private CommonI18NService commonI18NService;
+	
+	private FlexibleSearchService flexibleSearchService;
 
 	@Override
 	public CustomerModel getAmazonCustomer(String customerId) 
@@ -121,6 +126,17 @@ public class DefaultAmazonUserFacade implements AmazonUserFacade {
 		}
 		return false;
 	}
+	
+	@Override
+	public void updateManualAddition(final AmazonLoginRegisterData registerData) {
+		CustomerModel customer = userService.getUserForUID(registerData.getLogin(), CustomerModel.class);
+		
+		TitleModel title = new TitleModel();
+		title.setCode(registerData.getTitleCode());
+		customer.setTitle((TitleModel) getFlexibleSearchService().getModelByExample(title));
+
+		getModelService().save(customer);
+	}
 
 	/**
 	 * Initializes a customer with given registerData
@@ -178,4 +194,15 @@ public class DefaultAmazonUserFacade implements AmazonUserFacade {
 	public void setAmazonUserService(AmazonUserService amazonUserService) {
 		this.amazonUserService = amazonUserService;
 	}
+	
+	protected FlexibleSearchService getFlexibleSearchService()
+	 {
+	   return this.flexibleSearchService;
+	 }
+	
+	 @Required
+	 public void setFlexibleSearchService(FlexibleSearchService flexibleSearchService)
+	 {
+	   this.flexibleSearchService = flexibleSearchService;
+	 }
 }
