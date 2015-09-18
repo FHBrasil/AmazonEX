@@ -56,6 +56,9 @@
                         <input type="hidden" name="amazonGuestEmail"/>
                 </form:form>
         </c:if>
+        
+        <div id="AmazonPayButton" style="display: none;"></div>
+       	<button id="change-account" type="button">Change account</button>
         <%-- 
         <div class="col-sm-4">
                 <div id="addressBookWidgetDiv" class="totalOrder">

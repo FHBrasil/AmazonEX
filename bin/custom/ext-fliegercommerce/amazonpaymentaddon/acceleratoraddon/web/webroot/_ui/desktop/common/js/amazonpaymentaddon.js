@@ -222,6 +222,11 @@ $('.confirm-purchaseAmazon').click(function() {
 	$('form#amazonPlaceOrderForm').submit();
 });
 
+$('#change-account').click(function() {
+	amazon.Login.logout();
+	$('#AmazonPayButton img').click();
+});
+
 $('form#splitDelivery').find('.isSplitDelivery').click(function(){
 	var $formSplit = $('form#splitDelivery');
 	var $isSplit = $('.isSplitDelivery').is(':checked');
@@ -253,7 +258,8 @@ $('form#splitDelivery').find('.isSplitDelivery').click(function(){
 });
 
 function bindDeliveryMethod_onChange() {
-	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').change(function() {
+	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').change(function(event) {
+		event.preventDefault();
 		var selectedDeliveryAddressCode = $(this).val();
 		var url = ACC.config.contextPath + '/checkout/amazon/select-delivery-method';
 		if(selectedDeliveryAddressCode) {
@@ -266,17 +272,16 @@ function bindDeliveryMethod_onChange() {
 						 CSRFToken: ACC.config.CSRFToken },
 				success : function(data) {
 					if(data && data.success === 'true') {
-						$("#deliveryCost").stop(true).fadeOut();
-						$("#totalPrice").stop(true).fadeOut();
+						$("#deliveryCost").fadeOut();
+						$("#totalPrice").fadeOut();
 						setTimeout(function(){
 							$('#deliveryCost').html(data.deliveryCost);
 							$('#totalPrice').html(data.totalPrice);
 						}, 500);
-						$('#deliveryCost').stop(true).fadeIn();
-						$('#totalPrice').stop(true).fadeIn();
+						$('#deliveryCost').fadeIn();
+						$('#totalPrice').fadeIn();
 					}
 				}, complete : function() {
-					bindDeliveryMethod_onChange();
 				}
 			});
 		}
