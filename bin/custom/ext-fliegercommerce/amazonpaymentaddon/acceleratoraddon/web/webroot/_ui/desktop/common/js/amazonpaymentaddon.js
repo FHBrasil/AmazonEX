@@ -138,8 +138,6 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 										checkEnableCheckout();
 										ACC.amazon.showToaster(response.showMessage);
 									}
-									
-									bindDeliveryMethod_onChange();
 								},
 								error: function (xht, textStatus, ex) {
 									// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
@@ -202,6 +200,7 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 			.fail(function( jqxhr, settings, exception ) {
 				alert( "Triggered ajaxError handler." );
 			});
+		bindDeliveryMethodOnChange();
 	}	
 }
 ACC.amazon.toasterActive = undefined;
@@ -227,39 +226,8 @@ $('#change-account').click(function() {
 	$('#AmazonPayButton img').click();
 });
 
-$('form#splitDelivery').find('.isSplitDelivery').click(function(){
-	var $formSplit = $('form#splitDelivery');
-	var $isSplit = $('.isSplitDelivery').is(':checked');
-	$.ajax({
-		url : $formSplit.attr('action'),
-		type : 'POST',
-		dataType: 'json',
-		data : { isSplit: $isSplit },
-		success : function(data){				
-			if($('.isSplitDelivery').is(':checked')){
-				$('#toggleDelivery').collapse("show");						
-			}
-			else{
-				$('#toggleDelivery').collapse("hide");						
-			}					
-			$("#deliveryCost").fadeOut();
-			$("#totalPrice").fadeOut();
-			setTimeout(function(){
-				$('#deliveryCost').html(data.deliveryCost.formattedValue);
-				$('#totalPrice').html(data.totalPrice.formattedValue);
-			}, 500);
-			$('#deliveryCost').fadeIn();
-			$('#totalPrice').fadeIn();
-		},
-		error : function(data){
-			//
-		}
-	});
-});
-
-function bindDeliveryMethod_onChange() {
-	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').change(function(event) {
-		event.preventDefault();
+function bindDeliveryMethodOnChange() {
+	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').click(function() {
 		var selectedDeliveryAddressCode = $(this).val();
 		var url = ACC.config.contextPath + '/checkout/amazon/select-delivery-method';
 		if(selectedDeliveryAddressCode) {
@@ -272,16 +240,18 @@ function bindDeliveryMethod_onChange() {
 						 CSRFToken: ACC.config.CSRFToken },
 				success : function(data) {
 					if(data && data.success === 'true') {
-						$("#deliveryCost").fadeOut();
-						$("#totalPrice").fadeOut();
+						$("#deliveryCost,#totalPrice").fadeOut();
 						setTimeout(function(){
 							$('#deliveryCost').html(data.deliveryCost);
 							$('#totalPrice').html(data.totalPrice);
 						}, 500);
-						$('#deliveryCost').fadeIn();
-						$('#totalPrice').fadeIn();
+						$('#deliveryCost,#totalPrice').fadeIn();
 					}
+					console.log('success');
 				}, complete : function() {
+					console.log('complete');
+				}, error : function(error) {
+					console.error(error.responseText);
 				}
 			});
 		}
@@ -374,10 +344,11 @@ function changeQuantityOrRemove(entryNumber, remove){
 				});
 			}, 5000);
 			
-			bindDeliveryMethod_onChange();
 		},
 		error : function(data){
 			//
 		}
 	});
+	
+	bindDeliveryMethodOnChange();
 }

@@ -27,23 +27,21 @@
 			<format:price priceData="${cartData.subTotal}" />
 		</div>
 	</div>
-	<c:if test="${not empty cartData.deliveryCost}">
-		<div class="col-xs-7 text-right charge150127">
-			<spring:theme code="basket.page.totals.delivery" />
+	<div class="col-xs-7 text-right charge150127">
+		<spring:theme code="basket.page.totals.delivery" />
+	</div>
+	<div class="col-xs-5 text-right charge150127">
+		<div id="deliveryCost">
+			<c:choose>
+		      	<c:when test="${isVoucherFreeShipping}">
+		           	<spring:theme code="order.free" text="FREE" />
+		        </c:when>
+		        <c:otherwise>
+		           	<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
+		        </c:otherwise>			    
+		    </c:choose>
 		</div>
-		<div class="col-xs-5 text-right charge150127">
-			<div id="deliveryCost">
-				<c:choose>
-			      	<c:when test="${isVoucherFreeShipping}">
-			           	<spring:theme code="order.free" text="FREE" />
-			        </c:when>
-			        <c:otherwise>
-			           	<format:price priceData="${cartData.deliveryCost}" displayFreeForZero="TRUE" />
-			        </c:otherwise>
-			    </c:choose>
-		    </div>
-		</div>
-	</c:if>
+	</div>
 	<div class="col-xs-7 text-right charge150127 h3">
 		<b><spring:theme code="checkout.single.details.orderTotal" /></b>
 	</div>
