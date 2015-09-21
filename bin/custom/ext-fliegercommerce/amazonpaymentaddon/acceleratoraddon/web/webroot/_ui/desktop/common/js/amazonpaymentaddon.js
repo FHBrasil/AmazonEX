@@ -72,8 +72,7 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 		});
 		
 		// loads amazon scripts
-		$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl)
-			.done(function(script, textStatus){
+		$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl).done(function(script, textStatus){
 				if($('#AmazonPayButton').length) {
 					var authRequest;
 					var returnUrl = ACC.config.contextPath + '/checkout/amazon';
@@ -123,15 +122,16 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 										checkEnableCheckout();
 										ACC.amazon.showToaster(response.showMessage);
 										
-										$("#deliveryCost").fadeOut();
-										$("#totalPrice").fadeOut();
+										$("#deliveryCost", "#totalPrice").fadeOut();
+										
 										setTimeout(function(){
 											$('#deliveryCost').html(response.deliveryCost);
 											$('#totalPrice').html(response.totalPrice);
 											$('#shipping-methods').html(response.deliveryMethodSelector);
+											bindDeliveryMethodOnChange();
 										}, 500);
-										$("#deliveryCost").fadeIn();
-										$('#totalPrice').fadeIn();
+										
+										$("#deliveryCost", "#totalPrice").fadeIn();
 									} 
 									else{
 										ACC.amazon.enablePlaceOrder.addressSelected = false;
@@ -200,7 +200,6 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 			.fail(function( jqxhr, settings, exception ) {
 				alert( "Triggered ajaxError handler." );
 			});
-		bindDeliveryMethodOnChange();
 	}	
 }
 ACC.amazon.toasterActive = undefined;
@@ -227,7 +226,8 @@ $('#change-account').click(function() {
 });
 
 function bindDeliveryMethodOnChange() {
-	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').click(function() {
+	unbindDeliveryMethodOnChange();
+	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').change(function() {
 		var selectedDeliveryAddressCode = $(this).val();
 		var url = ACC.config.contextPath + '/checkout/amazon/select-delivery-method';
 		if(selectedDeliveryAddressCode) {
@@ -256,6 +256,10 @@ function bindDeliveryMethodOnChange() {
 			});
 		}
 	});
+}
+
+function unbindDeliveryMethodOnChange() {
+	$('section#shipping-methods').find('input[type=radio][name=delivery_method]').unbind('change');
 }
 
 function changeQuantityOrRemove(entryNumber, remove){
