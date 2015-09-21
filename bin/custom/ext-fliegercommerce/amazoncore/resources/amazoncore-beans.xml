@@ -37,6 +37,7 @@
 		<property name="amazonAuthorizationId" type="String"/>
 		<property name="authorizationReferenceId" type="String"/>
 		<property name="addressData" type="de.hybris.platform.commercefacades.user.data.AddressData" />
+		<property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData" />
 		<property name="sellerAuthorizationNote" type="String"/>
 		<property name="authorizationAmount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
 		<property name="authorizationFee" type="de.hybris.platform.commercefacades.product.data.PriceData" />

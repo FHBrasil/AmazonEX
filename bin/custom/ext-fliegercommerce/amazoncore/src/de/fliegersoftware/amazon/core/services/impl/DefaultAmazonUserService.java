@@ -27,4 +27,9 @@ public class DefaultAmazonUserService implements AmazonUserService {
 		return amazonUserDAO.isAmazonCustomerExisting(customerId);
 	}
 
+	@Override
+	public boolean isAmazonCustomer(String email) {
+		return amazonUserDAO.isAmazonCustomer(email);
+	}
+
 }

@@ -137,6 +137,17 @@ public class DefaultAmazonUserFacade implements AmazonUserFacade {
 
 		getModelService().save(customer);
 	}
+	
+	@Override
+	public boolean isAmazonCustomer(String email) 
+	{
+		if(amazonUserService.isAmazonCustomer(email))
+		{
+			return true;
+		}
+		return false;
+	}
+
 
 	/**
 	 * Initializes a customer with given registerData

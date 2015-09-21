@@ -5,4 +5,5 @@ import de.hybris.platform.core.model.user.CustomerModel;
 public interface AmazonUserService {	
 	CustomerModel getAmazonCustomer(String customerId);	
 	boolean isAmazonCustomerExisting(String customerId);
+	boolean isAmazonCustomer(String email);
 }

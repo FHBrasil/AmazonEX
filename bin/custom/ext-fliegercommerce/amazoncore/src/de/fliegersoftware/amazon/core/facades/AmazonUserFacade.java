@@ -14,4 +14,5 @@ public interface AmazonUserFacade {
 	boolean isAmazonCustomerExisting(String customerId);
 	void registerGuestUser(final AmazonLoginRegisterData registerData) throws DuplicateUidException;
 	void updateManualAddition(final AmazonLoginRegisterData registerData);
+	boolean isAmazonCustomer(String email);
 }

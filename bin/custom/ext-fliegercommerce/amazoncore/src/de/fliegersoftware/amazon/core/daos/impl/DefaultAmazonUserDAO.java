@@ -62,4 +62,27 @@ public class DefaultAmazonUserDAO implements AmazonUserDao
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean isAmazonCustomer(String email) 
+	{
+		List<CustomerModel> result = new ArrayList<CustomerModel>();
+        String query = " SELECT {p:" + CustomerModel.PK + "} "
+                + " FROM {" + CustomerModel._TYPECODE + " AS p } "
+                + " WHERE {p:"+ CustomerModel.UID + "} = ?email "
+                + " AND {p:"+ CustomerModel.AMAZONCUSTOMERID + "} IS NOT NULL "
+                + " AND ({p:" + CustomerModel.TYPE + "} IS NULL OR {p:" + CustomerModel.TYPE + "} <> ?guest)";
+        
+        FlexibleSearchQuery flexSearch = new FlexibleSearchQuery(query);
+        flexSearch.addQueryParameter("email", email);
+        flexSearch.addQueryParameter("guest", CustomerType.GUEST);
+        flexSearch.setResultClassList(Collections.singletonList(CustomerModel.class));
+        result = flexibleSearchService.<CustomerModel> search(flexSearch).getResult();
+
+		if (result.size() > 0)
+		{
+			return true;
+		}
+		return false;
+	}
 }
