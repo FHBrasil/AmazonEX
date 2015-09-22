@@ -1,9 +1,8 @@
-package de.fliegersoftware.amazon.payment.addon.facades.customer.impl;
+package de.fliegersoftware.amazon.login.addon.facades.customer.impl;
 
 import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
-
 import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
-import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
+import de.fliegersoftware.amazon.login.addon.facades.customer.AmazonCustomerFacade;
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.core.model.user.CustomerModel;

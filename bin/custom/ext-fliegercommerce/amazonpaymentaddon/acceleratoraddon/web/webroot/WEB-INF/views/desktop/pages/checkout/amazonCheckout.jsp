@@ -34,6 +34,8 @@
 					<spring:theme code="checkout.single.address.title" />
 				</h2>
                 <cms:component component="${component}"/>
+                <div id="AmazonPayButton" style="display: none;"></div>
+       			<button id="change-account" type="button">Change account</button>
         </cms:pageSlot>
         <cms:pageSlot position="Section2B" var="component" element="div" class="col-sm-4">
 	        	<h2>
@@ -49,16 +51,22 @@
 		   	showShipDeliveryEntries="true" showTax="false" showPickupDeliveryEntries="true" />            
 		</div>
 		<c:if test="${sendGuestInformation}">
-                <form:form id="amazonGuestInformation" action="${request.contextPath}/login/checkout/amazon/guest" method="POST">
-                        <input type="hidden" name="amazonOrderReferenceId"/>
-                        <input type="hidden" name="amazonGuestId"/>
-                        <input type="hidden" name="amazonGuestName"/>
-                        <input type="hidden" name="amazonGuestEmail"/>
-                </form:form>
-        </c:if>
+				<form:form id="amazonGuestInformation" action="${request.contextPath}/login/checkout/amazon/guest" method="POST">
+					<input type="hidden" name="amazonOrderReferenceId"/>
+					<input type="hidden" name="amazonGuestId"/>
+					<input type="hidden" name="amazonGuestName"/>
+					<input type="hidden" name="amazonGuestEmail"/>
+				</form:form>
+		</c:if>
+		<c:if test="${sendLoginInformation}">
+				<form:form id="amazonGuestInformation" action="${request.contextPath}/login/checkout/amazon/user" method="POST">
+					<input type="hidden" name="amazonOrderReferenceId"/>
+					<input type="hidden" name="amazonGuestId"/>
+					<input type="hidden" name="amazonGuestName"/>
+					<input type="hidden" name="amazonGuestEmail"/>
+				</form:form>
+		</c:if>
         
-        <div id="AmazonPayButton" style="display: none;"></div>
-       	<button id="change-account" type="button">Change account</button>
         <%-- 
         <div class="col-sm-4">
                 <div id="addressBookWidgetDiv" class="totalOrder">

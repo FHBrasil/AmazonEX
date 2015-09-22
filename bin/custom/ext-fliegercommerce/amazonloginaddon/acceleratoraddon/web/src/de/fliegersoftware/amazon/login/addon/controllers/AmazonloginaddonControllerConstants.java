@@ -34,6 +34,11 @@ public interface AmazonloginaddonControllerConstants
 		interface Pages {
 			String AmazonConfirmAccountPage = ADDON_PREFIX
 					+ "pages/amazonConfirmAccountPage";
+
+			interface Checkout {
+				// standard pages
+				String CheckoutLoginPage =  "pages/checkout/checkoutLoginPage";
+			}
 		}
 	}
 }

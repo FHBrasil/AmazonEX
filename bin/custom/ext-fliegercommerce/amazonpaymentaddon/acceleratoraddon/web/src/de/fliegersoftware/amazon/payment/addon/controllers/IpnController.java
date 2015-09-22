@@ -68,7 +68,9 @@ public class IpnController {
 		case SolutionProviderMerchantNotification:
 			if(handlers != null && handlers.containsKey(notification.getNotificationType())) {
 				try {
-					handlers.get(notification.getNotificationType()).handle(notification);
+					AmazonNotificationHandler h = handlers.get(notification.getNotificationType());
+					h.log(notification);
+					h.handle(notification);
 				} catch (Exception e) {
 					throw new NotificationsException("Error processing notification", e);
 				}

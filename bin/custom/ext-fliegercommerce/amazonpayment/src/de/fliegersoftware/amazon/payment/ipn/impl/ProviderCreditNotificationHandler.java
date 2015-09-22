@@ -5,6 +5,11 @@ import com.amazonservices.mws.offamazonpaymentsipn.model.ProviderCreditNotificat
 public class ProviderCreditNotificationHandler extends BaseAmazonNotificationHandler<ProviderCreditNotification> {
 
 	@Override
+	public void log(ProviderCreditNotification notification) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
 	public void handle(ProviderCreditNotification notification) {
 		// TODO Auto-generated method stub
 	}

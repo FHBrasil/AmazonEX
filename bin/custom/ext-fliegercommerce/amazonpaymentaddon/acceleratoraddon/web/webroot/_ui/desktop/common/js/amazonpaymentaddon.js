@@ -141,9 +141,6 @@ if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 								},
 								error: function (xht, textStatus, ex) {
 									// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
-									console.log(xht);
-									console.log(textStatus);
-									console.log(ex);
 								},
 								complete: function () {
 									// alert("complete");
@@ -275,7 +272,7 @@ function changeQuantityOrRemove(entryNumber, remove){
 		type : 'post',
 		data : $form.serialize(),
 		success : function(data){
-			var messageReturn = $('<div id="updateMessageReturnSuccess"> <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert">×</a>'+ data.message +'</div> </div>');
+			var messageReturn = $('<div id="updateMessageReturnSuccess"> <div class="alert positive"> <a href="#" class="close" data-dismiss="alert">×</a>'+ data.message +'</div> </div>');
 			var typeMessage = "updateMessageReturnSuccess";
 			var cartData = data.cartData;
 			
@@ -303,7 +300,6 @@ function changeQuantityOrRemove(entryNumber, remove){
 						$('#deliveryCost').html(cartData.deliveryCost.formattedValue);
 						$('#subTotal').html(cartData.subTotal.formattedValue);
 						$('#totalPrice').html(cartData.totalPrice.formattedValue);
-						$('#miniCartTotalItems').html(cartData.totalUnitCount);
 					}, 500);
 					$("#entryTotalPrice" + entryNumber).fadeIn();
 					$("#deliveryCost").fadeIn();
@@ -313,7 +309,7 @@ function changeQuantityOrRemove(entryNumber, remove){
 				else{
 					//Else item not update
 					$inputNumber.val(entryQty);
-					messageReturn = $('<div id="updateMessageReturnFail"> <div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert">×</a>'+ data.message +'</div> </div>');
+					messageReturn = $('<div id="updateMessageReturnFail"> <div class="alert negative"> <a href="#" class="close" data-dismiss="alert">×</a>'+ data.message +'</div> </div>');
 					typeMessage = "updateMessageReturnFail";
 				}
 			}
@@ -329,7 +325,6 @@ function changeQuantityOrRemove(entryNumber, remove){
 						$('#deliveryCost').html(cartData.deliveryCost.formattedValue);
 						$('#subTotal').html(cartData.subTotal.formattedValue);
 						$('#totalPrice').html(cartData.totalPrice.formattedValue);
-						$('#miniCartTotalItems').html(cartData.totalUnitCount);
 					}, 800);
 					$("#deliveryCost").fadeIn();
 					$('#subTotal').fadeIn();
@@ -340,7 +335,7 @@ function changeQuantityOrRemove(entryNumber, remove){
 				}
 			}
 			
-			$('#globalMessages').append(messageReturn);
+			$('#globalMessages').html(messageReturn);
 			$('body,html').animate({scrollTop: 0}, 800);
 			setTimeout(function(){
 				$('#' + typeMessage).slideUp(250, function(){

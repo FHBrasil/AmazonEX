@@ -88,9 +88,4 @@
 		<property name="orderService" ref="orderService"/>
 		<property name="paymentModeService" ref="paymentModeService"/>
 	</bean>
-
-	<bean id="amazonCustomerFacade" class="de.fliegersoftware.amazon.payment.addon.facades.customer.impl.DefaultAmazonCustomerFacade"
-		parent="defaultCustomerFacade">
-		<property name="amazonUserFacade" ref="amazonUserFacade"/>
-	</bean>
 </beans>

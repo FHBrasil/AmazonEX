@@ -5,6 +5,9 @@ import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import com.amazonservices.mws.offamazonpaymentsipn.model.ProviderCreditReversalSummary;
 import com.amazonservices.mws.offamazonpaymentsipn.model.RefundDetails;
 import com.amazonservices.mws.offamazonpaymentsipn.model.RefundNotification;
 
@@ -17,6 +20,29 @@ import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
 
 public class RefundNotificationHandler extends BaseAmazonNotificationHandler<RefundNotification> {
+
+	private static final Logger LOG = Logger.getLogger(RefundNotificationHandler.class);
+
+	@Override
+	public void log(RefundNotification notification) {
+		RefundDetails details = notification.getRefundDetails();
+		logInfo(LOG, "Amazon Refund Id", details.getAmazonRefundId());
+		logTimestamp(LOG, "Creation Timestamp", details.getCreationTimestamp());
+		logPrice(LOG, "Fee Refunded", details.getFeeRefunded());
+		if(details.getProviderCreditReversalSummaryList() != null && details.getProviderCreditReversalSummaryList().isSetProviderCreditReversalSummary()) {
+			for(ProviderCreditReversalSummary summary : details.getProviderCreditReversalSummaryList().getProviderCreditReversalSummary()) {
+				logInfo(LOG, "Provider Credit Reversal Summary: Provider Credit Reversal Id", summary.getProviderCreditReversalId());
+				logInfo(LOG, "Provider Credit Reversal Summary: Provider Seller Id", summary.getProviderSellerId());
+			}
+		} else {
+			logNull(LOG, "Provider Credit Reversal Summary");
+		}
+		logPrice(LOG, "Refunded Amount", details.getRefundAmount());
+		logInfo(LOG, "Refund Reference Id", details.getRefundReferenceId());
+		logStatus(LOG, "Refund Status", details.getRefundStatus());
+		logInfo(LOG, "Refund Type", details.getRefundType());
+		logInfo(LOG, "Soft Descriptor", details.getSoftDescriptor());
+	}
 
 	@Override
 	public void handle(RefundNotification notification) {

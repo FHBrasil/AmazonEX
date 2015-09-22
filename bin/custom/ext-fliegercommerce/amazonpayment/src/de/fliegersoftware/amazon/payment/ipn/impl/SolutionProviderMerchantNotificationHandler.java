@@ -5,6 +5,11 @@ import com.amazonservices.mws.offamazonpaymentsipn.model.SolutionProviderMerchan
 public class SolutionProviderMerchantNotificationHandler extends BaseAmazonNotificationHandler<SolutionProviderMerchantNotification> {
 
 	@Override
+	public void log(SolutionProviderMerchantNotification notification) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
 	public void handle(SolutionProviderMerchantNotification notification) {
 		// TODO Auto-generated method stub
 	}

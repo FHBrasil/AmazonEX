@@ -35,8 +35,11 @@
 			<property name="renderer" ref="amazonLoginComponentRenderer" />
 		</bean>
 		
-		<context:component-scan base-package="de.fliegersoftware.amazon.login.addon.controller"/>
-		
+		<context:component-scan base-package="de.fliegersoftware.amazon.login.addon.controllers"
+			scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
+		<context:component-scan base-package="de.fliegersoftware.amazon.login.addon.forms"
+			scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
+
 		<alias name="amazonLoginController" alias="amazonLoginController" />
 
 		<bean id="amazonLoginController" class="de.fliegersoftware.amazon.login.addon.controllers.AmazonLoginController">

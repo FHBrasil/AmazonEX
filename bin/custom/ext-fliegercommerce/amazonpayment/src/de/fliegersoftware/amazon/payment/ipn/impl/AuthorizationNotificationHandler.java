@@ -3,18 +3,51 @@ package de.fliegersoftware.amazon.payment.ipn.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.log4j.Logger;
+
 import com.amazonservices.mws.offamazonpaymentsipn.model.AuthorizationDetails;
 import com.amazonservices.mws.offamazonpaymentsipn.model.AuthorizationNotification;
+import com.amazonservices.mws.offamazonpaymentsipn.model.IdList;
+import com.amazonservices.mws.offamazonpaymentsipn.model.OrderItemCategories;
+import com.amazonservices.mws.offamazonpaymentsipn.model.Price;
+import com.amazonservices.mws.offamazonpaymentsipn.model.Status;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
-
 import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil.setPaymentTransactionEntryStatus;
 
 public class AuthorizationNotificationHandler extends BaseAmazonNotificationHandler<AuthorizationNotification> {
+
+	private static final Logger LOG = Logger.getLogger(AuthorizationNotificationHandler.class);
+
+	@Override
+	public void log(AuthorizationNotification notification) {
+		AuthorizationDetails details = notification.getAuthorizationDetails();
+		logInfo(LOG, "Address Verification Code", details.getAddressVerificationCode());
+		logInfo(LOG, "Amazon Authorization Id", details.getAmazonAuthorizationId());
+		logPrice(LOG, "Authorization Amount", details.getAuthorizationAmount());
+		logPrice(LOG, "Authorization Fee", details.getAuthorizationFee());
+		logInfo(LOG, "Authorization Reference Id", details.getAuthorizationReferenceId());
+		logStatus(LOG, "Authorization Status", details.getAuthorizationStatus());
+		logPrice(LOG, "Captured Amount", details.getCapturedAmount());
+		logTimestamp(LOG, "Creation Timestamp", details.getCreationTimestamp());
+		logTimestamp(LOG, "Expiration Timestamp", details.getExpirationTimestamp());
+		logIdList(LOG, details.getIdList());
+		if(details.isSetOrderItemCategories()) {
+			for(String cat : details.getOrderItemCategories().getOrderItemCategory()) {
+				logInfo(LOG, "Order Item Category", cat);
+			}
+		} else {
+			logNull(LOG, "Order Item Categories");
+		}
+		logInfo(LOG, "Soft Descriptor", details.getSoftDescriptor());
+		logInfo(LOG, "Capture Now", details.isCaptureNow());
+	}
 
 	@Override
 	public void handle(AuthorizationNotification notification) {

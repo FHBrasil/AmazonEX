@@ -82,6 +82,8 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 				if (TransactionStatus.ACCEPTED.name().equals(transactionEntryModel.getTransactionStatus())) {
 					paymentTransaction.setOrder(cartModel);
 					paymentTransaction.setInfo(amazonPaymentInfo);
+					if(amazonPaymentInfo.getBillingAddress() == null)
+						amazonPaymentInfo.setBillingAddress(cartModel.getDeliveryAddress());
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });
 				} else {

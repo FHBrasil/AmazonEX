@@ -1,4 +1,4 @@
-package de.fliegersoftware.amazon.payment.addon.facades.customer;
+package de.fliegersoftware.amazon.login.addon.facades.customer;
 
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;

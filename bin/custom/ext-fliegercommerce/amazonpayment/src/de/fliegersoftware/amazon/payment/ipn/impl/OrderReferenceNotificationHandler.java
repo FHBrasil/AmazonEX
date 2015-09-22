@@ -1,15 +1,43 @@
 package de.fliegersoftware.amazon.payment.ipn.impl;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
 
 import com.amazonservices.mws.offamazonpaymentsipn.model.OrderReference;
 import com.amazonservices.mws.offamazonpaymentsipn.model.OrderReferenceNotification;
 import com.amazonservices.mws.offamazonpaymentsipn.model.OrderTotal;
+import com.amazonservices.mws.offamazonpaymentsipn.model.SellerOrderAttributes;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
 
 public class OrderReferenceNotificationHandler extends BaseAmazonNotificationHandler<OrderReferenceNotification> {
+
+	private static final Logger LOG = Logger.getLogger(OrderReferenceNotificationHandler.class);
+
+	@Override
+	public void log(OrderReferenceNotification notification) {
+		OrderReference details = notification.getOrderReference();
+		logInfo(LOG, "Amazon Order Reference Id", details.getAmazonOrderReferenceId());
+		logTimestamp(LOG, "Creation Timestamp", details.getCreationTimestamp());
+		logTimestamp(LOG, "Expiration Timestamp", details.getExpirationTimestamp());
+		logStatus(LOG, "", details.getOrderReferenceStatus());
+		logPrice(LOG, "Order Total", details.getOrderTotal());
+		if(details.getSellerOrderAttributes() != null) {
+			SellerOrderAttributes attribs = details.getSellerOrderAttributes();
+			logInfo(LOG, "Seller Order Attributes: Seller Id", attribs.getSellerId());
+			logInfo(LOG, "Seller Order Attributes: Seller Order Id", attribs.getSellerOrderId());
+			if(attribs.getOrderItemCategories() != null && attribs.getOrderItemCategories().isSetOrderItemCategory()) {
+				for(String attr : attribs.getOrderItemCategories().getOrderItemCategory()) {
+					logInfo(LOG, "Seller Order Attributes: Order Item Categories", attr);
+				}
+			} else {
+				logNull(LOG, "Seller Order Attributes: Order Item Categories");
+			}
+		} else {
+			logNull(LOG, "Seller Order Attributes");
+		}
+	}
 
 	@Override
 	public void handle(OrderReferenceNotification notification) {

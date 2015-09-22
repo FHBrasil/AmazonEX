@@ -82,6 +82,8 @@
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
 	  -->
 	
-			
-			
+	<bean id="amazonCustomerFacade" class="de.fliegersoftware.amazon.login.addon.facades.customer.impl.DefaultAmazonCustomerFacade"
+		parent="defaultCustomerFacade">
+		<property name="amazonUserFacade" ref="amazonUserFacade"/>
+	</bean>
 </beans>

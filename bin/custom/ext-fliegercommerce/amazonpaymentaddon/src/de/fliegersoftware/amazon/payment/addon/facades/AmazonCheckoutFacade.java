@@ -4,20 +4,23 @@ import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParamete
 
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import de.fliegersoftware.amazon.core.constants.AmazoncoreConstants;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
-import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
-import de.hybris.platform.commercefacades.order.data.OrderData;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
+import de.hybris.platform.commerceservices.enums.CustomerType;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.order.payment.PaymentModeModel;
+import de.hybris.platform.core.model.user.AddressModel;
+import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.order.OrderService;
 import de.hybris.platform.order.PaymentModeService;
@@ -104,6 +107,55 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 			}
 		}
 		return false;
+	}
+
+	@Override
+	protected void afterPlaceOrder(CartModel cartModel, OrderModel orderModel) {
+		super.afterPlaceOrder(cartModel, orderModel);
+		if (cartModel.getUser() instanceof CustomerModel) {
+			CustomerModel customer = (CustomerModel) cartModel.getUser();
+			if(!CustomerType.GUEST.equals(customer.getType())) {
+				saveDeliveryAddressIfNew(customer, orderModel.getDeliveryAddress());
+				saveBillingAddressIfNew(customer, orderModel.getPaymentInfo().getBillingAddress());
+			}
+		}
+	}
+
+	private void saveDeliveryAddressIfNew(CustomerModel customer, AddressModel address) {
+		saveAddressIfNew(customer, address, false);
+	}
+	private void saveBillingAddressIfNew(CustomerModel customer, AddressModel address) {
+		saveAddressIfNew(customer, address, true);
+	}
+	private void saveAddressIfNew(CustomerModel customer, AddressModel address, boolean isBillingAddress) {
+		if(address == null)
+			return;
+
+		boolean isNew = true;
+		for(AddressModel existingAddress : getCustomerAccountService().getAddressBookEntries(customer)) {
+			if(StringUtils.equalsIgnoreCase(address.getLine1(), existingAddress.getLine1())
+				&& StringUtils.equalsIgnoreCase(address.getLine2(), existingAddress.getLine2())
+				&& StringUtils.equalsIgnoreCase(address.getFirstname(), existingAddress.getFirstname())
+				&& StringUtils.equalsIgnoreCase(address.getTown(), existingAddress.getTown())
+				&& StringUtils.equalsIgnoreCase(address.getDistrict(), existingAddress.getDistrict())
+				&& StringUtils.equalsIgnoreCase(address.getCompany(), existingAddress.getCompany())
+				&& ((address.getCountry() == null && existingAddress.getCountry() == null)
+					|| (address.getCountry() != null && existingAddress.getCountry() != null && ObjectUtils.equals(address.getCountry().getPk(), existingAddress.getCountry().getPk()))
+					)
+				&& StringUtils.equalsIgnoreCase(address.getPostalcode(), existingAddress.getPostalcode())
+				&& StringUtils.equalsIgnoreCase(address.getPhone1(), existingAddress.getPhone1())) {
+				isNew = false;
+				break;
+			}
+		}
+		if(isNew) {
+			AddressData addressData = getAddressConverter().convert(address);
+			addressData.setBillingAddress(isBillingAddress);
+			AddressModel addressModel = getModelService().create(AddressModel.class);
+			getAddressReversePopulator().populate(addressData, addressModel);
+			addressModel.setVisibleInAddressBook(true);
+			getCustomerAccountService().saveAddressEntry(customer, addressModel);
+		}
 	}
 
 	protected AmazonCommerceCheckoutService getCommerceCheckoutService()

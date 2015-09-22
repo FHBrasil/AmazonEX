@@ -54,12 +54,15 @@ import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
+import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.core.model.user.AddressModel;
+import de.hybris.platform.jalo.c2l.C2LManager;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.dto.BillingInfo;
 import de.hybris.platform.payment.dto.TransactionStatus;
+import de.hybris.platform.payment.dto.TransactionStatusDetails;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.impl.DefaultPaymentServiceImpl;
 import de.hybris.platform.payment.methods.CardPaymentService;
@@ -111,6 +114,8 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	@Resource
     private Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter;
 	
+	@Resource
+	private Converter<AddressData, AddressModel> addressReverseConverter;
 	
 	/**
 	 * @return the modelService
@@ -331,6 +336,9 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			getModelService().save(entry);
 			getModelService().refresh(transaction);
 
+			AddressModel billingAddress = createBillingAddress(details);
+			paymentInfo.setBillingAddress(billingAddress);
+			billingAddress.setOwner(paymentInfo);
 			paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
 			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
@@ -609,4 +617,13 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return sellerOrderAttributes;
 	}
 	
+	private AddressModel createBillingAddress(AuthorizationDetails details) {
+		AddressData billingAddress = getAmazonAuthorizationDetailsConverter().convert(details).getBillingAddress();
+		if(billingAddress != null) {
+			AddressModel billingAddressModel = getModelService().create(AddressModel.class);
+			return addressReverseConverter.convert(billingAddress, billingAddressModel);
+		} else {
+			return null;
+		}
+	}
 }

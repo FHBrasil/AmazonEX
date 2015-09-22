@@ -1,4 +1,4 @@
-package de.fliegersoftware.amazon.payment.addon.forms;
+package de.fliegersoftware.amazon.login.addon.forms;
 
 public class AmazonGuestForm {
 

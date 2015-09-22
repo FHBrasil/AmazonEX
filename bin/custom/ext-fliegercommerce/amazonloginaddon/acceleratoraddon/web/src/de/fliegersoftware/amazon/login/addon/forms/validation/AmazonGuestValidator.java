@@ -1,4 +1,4 @@
-package de.fliegersoftware.amazon.payment.addon.forms.validation;
+package de.fliegersoftware.amazon.login.addon.forms.validation;
 
 import java.util.regex.Pattern;
 
@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import de.fliegersoftware.amazon.payment.addon.forms.AmazonGuestForm;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.GuestForm;
+import de.fliegersoftware.amazon.login.addon.forms.AmazonGuestForm;
 
 @Component("amazonGuestValidator")
 public class AmazonGuestValidator implements Validator {

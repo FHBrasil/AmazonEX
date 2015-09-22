@@ -1,11 +1,10 @@
-package de.fliegersoftware.amazon.payment.addon.controllers.pages;
+package de.fliegersoftware.amazon.login.addon.controllers;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
-import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
-import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
-import de.fliegersoftware.amazon.payment.addon.forms.AmazonGuestForm;
-import de.fliegersoftware.amazon.payment.addon.forms.validation.AmazonGuestValidator;
+import de.fliegersoftware.amazon.login.addon.facades.customer.AmazonCustomerFacade;
+import de.fliegersoftware.amazon.login.addon.forms.AmazonGuestForm;
+import de.fliegersoftware.amazon.login.addon.forms.validation.AmazonGuestValidator;
+import de.fliegersoftware.amazon.login.addon.security.AmazonAutoLoginStrategy;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractLoginPageController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
@@ -28,12 +26,13 @@ import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
+import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 
 @Controller
 @Scope("tenant")
 @RequestMapping(value = "/login/checkout/amazon")
-public class AmazonGuestLoginController extends AbstractLoginPageController {
+public class AmazonCheckoutLoginController extends AbstractLoginPageController {
 
 	@Resource(name = "amazonGuestValidator")
 	private AmazonGuestValidator amazonGuestValidator;
@@ -43,9 +42,10 @@ public class AmazonGuestLoginController extends AbstractLoginPageController {
 
 	@Resource(name = "amazonCustomerFacade")
 	private AmazonCustomerFacade amazonCustomerFacade;
-	
-	private AmazonUserFacade amazonUserFacade;
 
+	@Resource
+	private AmazonAutoLoginStrategy amazonAutoLoginStrategy;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String doCheckoutLogin(@RequestParam(value = "error", defaultValue = "false") final boolean loginError,
 			final HttpSession session, final Model model, final HttpServletRequest request) throws CMSItemNotFoundException
@@ -66,6 +66,22 @@ public class AmazonGuestLoginController extends AbstractLoginPageController {
 	{
 		getGuestValidator().validate(form, bindingResult);
 		return processAnonymousCheckoutUserRequest(form, bindingResult, model, request, response);
+	}
+
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	public String doCheckoutLogin(final AmazonGuestForm form, final BindingResult bindingResult, final Model model,
+			final HttpServletRequest request, final HttpServletResponse response) throws CMSItemNotFoundException
+	{
+		getGuestValidator().validate(form, bindingResult);
+		return processCheckoutLogin(form, bindingResult, model, request, response);
+	}
+
+	protected String processCheckoutLogin(AmazonGuestForm form,
+			BindingResult bindingResult, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
+		CustomerData customer = getCustomerFacade().getCurrentCustomer();
+		amazonAutoLoginStrategy.login(customer.getUid(), form.getAmazonGuestId(), request, response);
+		return REDIRECT_PREFIX + getSuccessRedirect(request, response);
 	}
 
 	protected String processAnonymousCheckoutUserRequest(AmazonGuestForm form,
@@ -131,7 +147,7 @@ public class AmazonGuestLoginController extends AbstractLoginPageController {
 
 	@Override
 	protected String getView() {
-		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.CheckoutLoginPage;
+		return AmazonloginaddonControllerConstants.Views.Pages.Checkout.CheckoutLoginPage;
 	}
 
 	protected AmazonGuestValidator getGuestValidator() {

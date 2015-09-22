@@ -26,6 +26,7 @@
 	<bean id="addressData" class="de.hybris.platform.commercefacades.user.data.AddressData" scope="prototype"/>
 	<bean id="priceData" class="de.hybris.platform.commercefacades.product.data.PriceData" scope="prototype"/>
 	<bean id="amazonOrderReferenceDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData" scope="prototype"/>
+	<bean id="amazonAuthorizationDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonAuthorizationDetailsData" scope="prototype"/>
 	<bean id="amazonCaptureDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData" scope="prototype"/>
 	<bean id="amazonRefundDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData" scope="prototype"/>
 	<bean id="orderTotal" class="com.amazonservices.mws.offamazonpayments.model.OrderTotal" scope="prototype"/>
@@ -176,6 +177,7 @@
     
     <bean id="amazonAuthorizationDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAuthorizationDetailsPopulator">
         <property name="amazonPriceConverter" ref="amazonPriceConverter" />
+        <property name="amazonAddressConverter" ref="amazonAddressConverter" />
     </bean>
     
     <alias name="defaultAmazonAuthorizationDetailsConverter" alias="amazonAuthorizationDetailsConverter" />

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.CookieGenerator;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
@@ -33,7 +35,6 @@ import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.addon.controllers.AmazonpaymentaddonControllerConstants;
 import de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade;
-import de.fliegersoftware.amazon.payment.addon.facades.customer.AmazonCustomerFacade;
 import de.fliegersoftware.amazon.payment.addon.forms.AmazonAjaxResponse;
 import de.fliegersoftware.amazon.payment.addon.forms.AmazonPlaceOrderForm;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
@@ -50,6 +51,8 @@ import de.hybris.platform.commercefacades.order.data.CartModificationData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
+import de.hybris.platform.commerceservices.order.CommerceCartService;
+import de.hybris.platform.order.CartService;
 import de.hybris.platform.order.InvalidCartException;
 
 @Controller
@@ -57,6 +60,8 @@ import de.hybris.platform.order.InvalidCartException;
 public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 	private static final Logger LOG = Logger.getLogger(AmazonCheckoutPageController.class);
+	public static final String REQUEST_MODEL_ATTRIBUTE_NAME = "request";
+	public static final String SECURE_GUID_SESSION_KEY = "acceleratorSecureGUID";
 	private static final String AMAZON_CHECKOUT_CMS_PAGE_LABEL = "amazonCheckout";
 	private static final String REDIRECT_URL_AMAZON_CHECKOUT = REDIRECT_PREFIX + "/checkout/amazon";
 	private static final String REDIRECT_URL_CART = REDIRECT_PREFIX + "/cart";
@@ -71,13 +76,19 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	private AmazonCheckoutFacade amazonCheckoutFacade;
 
 	@Resource
-	private AmazonCustomerFacade amazonCustomerFacade;
-	
-	@Resource
 	private CartFacade cartFacade;
 
 	@Resource(name="themeSource")
 	private MessageSource messageSource;
+	
+    @Resource
+    private CommerceCartService commerceCartService;
+    
+    @Resource(name = "cartService")
+	private CartService cartService;
+
+	@Resource(name = "guidCookieGenerator")
+	private CookieGenerator cookieGenerator;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
@@ -87,9 +98,13 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		}
 		LOG.info("AmazonCheckout - checkoutPage");
 
-		if(getCheckoutCustomerStrategy().isAnonymousCheckout()
-				&& !Boolean.TRUE.equals(getSessionService().getAttribute(WebConstants.ANONYMOUS_CHECKOUT))) {
-			model.addAttribute("sendGuestInformation", Boolean.TRUE);
+		if(getCheckoutCustomerStrategy().isAnonymousCheckout()) {
+			if(!Boolean.TRUE.equals(getSessionService().getAttribute(WebConstants.ANONYMOUS_CHECKOUT)))
+				model.addAttribute("sendGuestInformation", Boolean.TRUE);
+		} else {
+			if(!isHardLogin(model)) {
+				model.addAttribute("sendLoginInformation", Boolean.TRUE);
+			}
 		}
 
 		// sets checkout data
@@ -248,7 +263,12 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
                                     form.getQuantity(),
                                     request.getRequestURL().append(
                                             cartModification.getEntry().getProduct().getUrl()) });
-                    results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.lowStock", null, getI18nService().getCurrentLocale()));
+                    results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.lowStock", new Object[] {
+                            cartModification.getEntry().getProduct().getName(),
+                            cartModification.getQuantity(),
+                            form.getQuantity(),
+                            request.getRequestURL().append(
+                                    cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
                 } else {
                     // No more stock available
                     GlobalMessages.addFlashMessage(
@@ -259,7 +279,10 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
                                     cartModification.getEntry().getProduct().getName(),
                                     request.getRequestURL().append(
                                             cartModification.getEntry().getProduct().getUrl()) });
-                    results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.noStock", null, getI18nService().getCurrentLocale()));
+                    results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.noStock", new Object[] {
+                            cartModification.getEntry().getProduct().getName(),
+                            request.getRequestURL().append(
+                                    cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
                 }
                 // Redirect to the cart page on update success so that the browser doesn't re-post
                 // again
@@ -353,14 +376,35 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		return "amazon.authorization.error.no.description";
 	}
 
-	@Override
-	protected AmazonCheckoutFacade getCheckoutFacade() {
-		return amazonCheckoutFacade;
+	protected boolean isHardLogin(final Model model) {
+		HttpServletRequest request = (HttpServletRequest) model.asMap().get(REQUEST_MODEL_ATTRIBUTE_NAME);
+		final String guid = (String)request.getSession().getAttribute(SECURE_GUID_SESSION_KEY);
+		if (checkForGUIDCookie(request, guid)) {
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean checkForGUIDCookie(final HttpServletRequest request,
+			final String guid) {
+		if (guid != null && request.getCookies() != null) {
+			final String guidCookieName = cookieGenerator.getCookieName();
+			if (guidCookieName != null) {
+				for (final Cookie cookie : request.getCookies()) {
+					if (guidCookieName.equals(cookie.getName())) {
+						if (guid.equals(cookie.getValue())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
-	protected AmazonCustomerFacade getCustomerFacade() {
-		return (AmazonCustomerFacade) super.getCustomerFacade();
+	protected AmazonCheckoutFacade getCheckoutFacade() {
+		return amazonCheckoutFacade;
 	}
 	
 	/**

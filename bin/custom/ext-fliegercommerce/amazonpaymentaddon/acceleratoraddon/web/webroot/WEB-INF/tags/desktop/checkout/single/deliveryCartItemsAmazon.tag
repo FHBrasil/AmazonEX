@@ -30,7 +30,7 @@
             <div class="row itemdata150608">
                 <div class="col-xs-4">
                 	<c:url value="/checkout/amazon/update" var="cartUpdateFormAction" />
-		            <form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" method="post" commandName="updateQuantityForm${entry.entryNumber}">
+		            <form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" method="post" commandName="updateQuantityForm${entry.entryNumber}" onkeypress="if(event.keyCode==13) return false">
 		            	<input type="hidden" name="entryNumber" value="${entry.entryNumber}" />
 		                <input type="hidden" name="productCode" value="${entry.product.code}" />
 		                <input type="hidden" name="initialQuantity" value="${entry.quantity}" />
