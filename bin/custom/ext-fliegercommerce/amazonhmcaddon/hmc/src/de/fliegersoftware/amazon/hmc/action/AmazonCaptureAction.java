@@ -19,8 +19,8 @@ import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResponse;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
 
@@ -52,7 +52,7 @@ public class AmazonCaptureAction extends ItemAction
 
 		try
 		{
-			final String id = (String) paymentInfo.getAttribute(AmazonPaymentInfoModel.AMAZONLASTAUTHORIZATIONID);
+			final String id = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.AMAZONLASTAUTHORIZATIONID);
 			final GetAuthorizationDetailsResponse authorizationDetails = service
 					.getAuthorizationDetails(getAuthorizationDetailsRequest(credentials, id));
 			populateRequest(credentials, authorizationDetails.getGetAuthorizationDetailsResult().getAuthorizationDetails(), request);
@@ -80,9 +80,9 @@ public class AmazonCaptureAction extends ItemAction
 	{
 		try
 		{
-			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentInfoModel.AMAZONORDERREFERENCEID);
+			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.AMAZONORDERREFERENCEID);
 			credentials.populatePaymentInfo(orderReferenceId, paymentInfo);
-			HMCAmazonButtonsManager.getInstance((AmazonPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
+			HMCAmazonButtonsManager.getInstance((AmazonPaymentPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
 		}
 		catch (final Exception e)
 		{

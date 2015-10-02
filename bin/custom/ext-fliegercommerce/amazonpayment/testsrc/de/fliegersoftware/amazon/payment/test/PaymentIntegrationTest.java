@@ -58,7 +58,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
  
@@ -152,7 +152,7 @@ public class PaymentIntegrationTest extends ServicelayerTest
 		deliveryAddress.setCountry(commonI18NService.getCountry("DE"));
 		modelService.save(deliveryAddress);
 
-		final AmazonPaymentInfoModel paymentInfo = new AmazonPaymentInfoModel();
+		final AmazonPaymentPaymentInfoModel paymentInfo = new AmazonPaymentPaymentInfoModel();
 		paymentInfo.setOwner(cart);
 		paymentInfo.setUser(user);
 		paymentInfo.setCode("testPaymentInfo1");

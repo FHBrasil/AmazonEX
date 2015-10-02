@@ -25,8 +25,8 @@ import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
 import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
 import com.amazonservices.mws.offamazonpayments.model.Price;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
 
@@ -57,7 +57,7 @@ public class AmazonAuthorizeAction extends ItemAction
 
 		try
 		{
-			final String id = (String) paymentInfo.getAttribute(AmazonPaymentInfoModel.AMAZONORDERREFERENCEID);
+			final String id = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.AMAZONORDERREFERENCEID);
 			final GetOrderReferenceDetailsResponse orderReferenceDetails = service
 					.getOrderReferenceDetails(getOrderReferenceDetailsRequest(credentials, id));
 			populateRequest(credentials, orderReferenceDetails.getGetOrderReferenceDetailsResult().getOrderReferenceDetails(),
@@ -99,9 +99,9 @@ public class AmazonAuthorizeAction extends ItemAction
 	{
 		try
 		{
-			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentInfoModel.AMAZONORDERREFERENCEID);
+			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.AMAZONORDERREFERENCEID);
 			credentials.populatePaymentInfo(orderReferenceId, paymentInfo);
-			HMCAmazonButtonsManager.getInstance((AmazonPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
+			HMCAmazonButtonsManager.getInstance((AmazonPaymentPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
 		}
 		catch (final Exception e)
 		{
@@ -117,10 +117,10 @@ public class AmazonAuthorizeAction extends ItemAction
 	private void populatePaymentInfo(final PaymentInfo paymentInfo, final AuthorizationDetails authorizationDetails)
 			throws JaloInvalidParameterException, JaloSecurityException, Exception
 	{
-		paymentInfo.setAttribute(AmazonPaymentInfoModel.AMAZONLASTAUTHORIZATIONID, authorizationDetails.getAmazonAuthorizationId());
-		paymentInfo.setAttribute(AmazonPaymentInfoModel.AMAZONAUTHORIZATIONSTATUS, authorizationDetails.getAuthorizationStatus()
+		paymentInfo.setAttribute(AmazonPaymentPaymentInfoModel.AMAZONLASTAUTHORIZATIONID, authorizationDetails.getAmazonAuthorizationId());
+		paymentInfo.setAttribute(AmazonPaymentPaymentInfoModel.AMAZONAUTHORIZATIONSTATUS, authorizationDetails.getAuthorizationStatus()
 				.getState());
-		paymentInfo.setAttribute(AmazonPaymentInfoModel.AMAZONAUTHORIZATIONREASONCODE, authorizationDetails
+		paymentInfo.setAttribute(AmazonPaymentPaymentInfoModel.AMAZONAUTHORIZATIONREASONCODE, authorizationDetails
 				.getAuthorizationStatus().getReasonCode());
 	}
 

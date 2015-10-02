@@ -14,7 +14,7 @@ import com.amazonservices.mws.offamazonpaymentsipn.model.OrderItemCategories;
 import com.amazonservices.mws.offamazonpaymentsipn.model.Price;
 import com.amazonservices.mws.offamazonpaymentsipn.model.Status;
 
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -52,7 +52,7 @@ public class AuthorizationNotificationHandler extends BaseAmazonNotificationHand
 	@Override
 	public void handle(AuthorizationNotification notification) {
 		AuthorizationDetails details = notification.getAuthorizationDetails();
-		AmazonPaymentInfoModel paymentInfo = null;
+		AmazonPaymentPaymentInfoModel paymentInfo = null;
 		PaymentTransactionModel transaction = null;
 		PaymentTransactionEntryModel aEntry = null;
 		PaymentTransactionEntryModel cEntry = null;
@@ -68,14 +68,14 @@ public class AuthorizationNotificationHandler extends BaseAmazonNotificationHand
 			code = code.substring(0, code.lastIndexOf('-'));
 			transaction = getAmazonPaymentNotificationService().getPaymentTransactionForCode(code);
 			if(transaction != null) {
-				paymentInfo = (AmazonPaymentInfoModel) transaction.getInfo();
+				paymentInfo = (AmazonPaymentPaymentInfoModel) transaction.getInfo();
 				aEntry = getModelService().create(PaymentTransactionEntryModel.class);
 				aEntry.setPaymentTransaction(transaction);
 				aEntry.setCode(getNewEntryCode(transaction));
 			}
 		} else {
 			transaction = aEntry.getPaymentTransaction();
-			paymentInfo = (AmazonPaymentInfoModel) transaction.getInfo();
+			paymentInfo = (AmazonPaymentPaymentInfoModel) transaction.getInfo();
 		}
 
 		if(aEntry != null) {

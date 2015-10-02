@@ -41,7 +41,7 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
 import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
@@ -130,14 +130,14 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 			{
 				createLogMedia((AmazonConfig) genericChip.getItem());
 			}
-			if ("AmazonPaymentInfo".equals(genericChip.getItemType().getCode()))
+			if ("AmazonPaymentPaymentInfo".equals(genericChip.getItemType().getCode()))
 			{
-				paymentInfo = (AmazonPaymentInfo) genericChip.getItem();
+				paymentInfo = (AmazonPaymentPaymentInfo) genericChip.getItem();
 				try
 				{
 					if (paymentInfo != null)
 					{
-						final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentInfo.AMAZONORDERREFERENCEID);
+						final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfo.AMAZONORDERREFERENCEID);
 						final String localizedString = Localization.getLocalizedString("tab.payment.amazon.properties");
 						final AbstractEditorMenuChip editor = genericChip.getEditor();
 						amazonTab = editor.getTabByName(localizedString);
@@ -145,7 +145,7 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 						try
 						{
 							AmazonCredentials.getInstance().populatePaymentInfo(orderReferenceId, paymentInfo);
-							HMCAmazonButtonsManager.getInstance((AmazonPaymentInfo) paymentInfo, amazonTab).rebuildButtons();
+							HMCAmazonButtonsManager.getInstance((AmazonPaymentPaymentInfo) paymentInfo, amazonTab).rebuildButtons();
 						}
 						catch (final Exception e)
 						{
@@ -203,9 +203,9 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 			if (amazonTab != null && amazonTab.isValid())
 			{
 				paymentInfo = (PaymentInfo) item;
-				final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentInfo.AMAZONORDERREFERENCEID);
+				final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfo.AMAZONORDERREFERENCEID);
 				AmazonCredentials.getInstance().populatePaymentInfo(orderReferenceId, paymentInfo);
-				HMCAmazonButtonsManager.getInstance((AmazonPaymentInfo) paymentInfo, amazonTab).rebuildButtons();
+				HMCAmazonButtonsManager.getInstance((AmazonPaymentPaymentInfo) paymentInfo, amazonTab).rebuildButtons();
 			}
 		}
 		catch (final Exception e)

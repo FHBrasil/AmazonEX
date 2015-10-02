@@ -36,7 +36,7 @@ import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
 import com.amazonservices.mws.offamazonpayments.model.Price;
 import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
 import de.fliegersoftware.amazon.core.jalo.AmazonRefund;
 import de.fliegersoftware.amazon.core.jalo.AmazoncoreManager;
 import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
@@ -210,11 +210,11 @@ public class AmazonCredentials
 
 				final GetOrderReferenceDetailsResponse orderRefDetails = service.getOrderReferenceDetails(request);
 				final OrderReferenceDetails details = orderRefDetails.getGetOrderReferenceDetailsResult().getOrderReferenceDetails();
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONORDERREFERENCEID, details.getAmazonOrderReferenceId());
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONORDERSTATUS, details.getOrderReferenceStatus().getState());
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONORDERREASONCODE, details.getOrderReferenceStatus().getReasonCode());
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONORDERAMOUNT, getDoubleValue(details.getOrderTotal()));
-				paymentInfo.setAttribute(AmazonPaymentInfo.CURRENCYREFUNDREQUESTAMOUNT, details.getOrderTotal().getCurrencyCode());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONORDERREFERENCEID, details.getAmazonOrderReferenceId());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONORDERSTATUS, details.getOrderReferenceStatus().getState());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONORDERREASONCODE, details.getOrderReferenceStatus().getReasonCode());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONORDERAMOUNT, getDoubleValue(details.getOrderTotal()));
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.CURRENCYREFUNDREQUESTAMOUNT, details.getOrderTotal().getCurrencyCode());
 				return details;
 			}
 			catch (final OffAmazonPaymentsServiceException e)
@@ -230,10 +230,10 @@ public class AmazonCredentials
 		{
 			try
 			{
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONORDERSTATUS, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONORDERREASONCODE, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONORDERAMOUNT, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.CURRENCYREFUNDREQUESTAMOUNT, 0);
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONORDERSTATUS, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONORDERREASONCODE, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONORDERAMOUNT, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.CURRENCYREFUNDREQUESTAMOUNT, 0);
 			}
 			catch (final Exception e)
 			{
@@ -272,10 +272,10 @@ public class AmazonCredentials
 				final AuthorizationDetails authDetails = authorizationDetails.getGetAuthorizationDetailsResult()
 						.getAuthorizationDetails();
 
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONLASTAUTHORIZATIONID, authDetails.getAmazonAuthorizationId());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONLASTAUTHORIZATIONID, authDetails.getAmazonAuthorizationId());
 				paymentInfo
-						.setAttribute(AmazonPaymentInfo.AMAZONAUTHORIZATIONSTATUS, authDetails.getAuthorizationStatus().getState());
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONAUTHORIZATIONREASONCODE, authDetails.getAuthorizationStatus()
+						.setAttribute(AmazonPaymentPaymentInfo.AMAZONAUTHORIZATIONSTATUS, authDetails.getAuthorizationStatus().getState());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONAUTHORIZATIONREASONCODE, authDetails.getAuthorizationStatus()
 						.getReasonCode());
 
 				return authDetails;
@@ -294,9 +294,9 @@ public class AmazonCredentials
 		{
 			try
 			{
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONLASTAUTHORIZATIONID, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONAUTHORIZATIONSTATUS, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONAUTHORIZATIONREASONCODE, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONLASTAUTHORIZATIONID, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONAUTHORIZATIONSTATUS, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONAUTHORIZATIONREASONCODE, "");
 			}
 			catch (final Exception e)
 			{
@@ -331,11 +331,11 @@ public class AmazonCredentials
 			{
 				final CaptureDetails captureDetails = service.getCaptureDetails(request).getGetCaptureDetailsResult()
 						.getCaptureDetails();
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREID, captureDetails.getAmazonCaptureId());
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTURESTATUS, captureDetails.getCaptureStatus().getState());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTUREID, captureDetails.getAmazonCaptureId());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTURESTATUS, captureDetails.getCaptureStatus().getState());
 				paymentInfo
-						.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREREASONCODE, captureDetails.getCaptureStatus().getReasonCode());
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREREFUNDEDAMOUNT,
+						.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTUREREASONCODE, captureDetails.getCaptureStatus().getReasonCode());
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTUREREFUNDEDAMOUNT,
 						getDoubleValue(captureDetails.getRefundedAmount()));
 				return captureDetails;
 			}
@@ -352,10 +352,10 @@ public class AmazonCredentials
 		{
 			try
 			{
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREID, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTURESTATUS, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREREASONCODE, "");
-				paymentInfo.setAttribute(AmazonPaymentInfo.AMAZONCAPTUREREFUNDEDAMOUNT, 0d);
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTUREID, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTURESTATUS, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTUREREASONCODE, "");
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.AMAZONCAPTUREREFUNDEDAMOUNT, 0d);
 			}
 			catch (final Exception e)
 			{
@@ -384,8 +384,8 @@ public class AmazonCredentials
 			//empty refunds
 			try
 			{
-				final List<AmazonRefund> refunds = (List<AmazonRefund>) paymentInfo.getAttribute(AmazonPaymentInfo.REFUND);
-				paymentInfo.setAttribute(AmazonPaymentInfo.REFUND, null);
+				final List<AmazonRefund> refunds = (List<AmazonRefund>) paymentInfo.getAttribute(AmazonPaymentPaymentInfo.REFUND);
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.REFUND, null);
 				for (final AmazonRefund amazonRefund : refunds)
 				{
 					amazonRefund.remove();
@@ -425,7 +425,7 @@ public class AmazonCredentials
 			}
 			try
 			{
-				paymentInfo.setAttribute(AmazonPaymentInfo.REFUND, amazonRefundList);
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.REFUND, amazonRefundList);
 			}
 			catch (final Exception e)
 			{
@@ -436,7 +436,7 @@ public class AmazonCredentials
 		{
 			try
 			{
-				paymentInfo.setAttribute(AmazonPaymentInfo.REFUND, null);
+				paymentInfo.setAttribute(AmazonPaymentPaymentInfo.REFUND, null);
 			}
 			catch (final Exception e)
 			{

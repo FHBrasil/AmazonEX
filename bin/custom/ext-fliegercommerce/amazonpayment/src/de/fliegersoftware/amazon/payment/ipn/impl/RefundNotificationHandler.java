@@ -11,7 +11,7 @@ import com.amazonservices.mws.offamazonpaymentsipn.model.ProviderCreditReversalS
 import com.amazonservices.mws.offamazonpaymentsipn.model.RefundDetails;
 import com.amazonservices.mws.offamazonpaymentsipn.model.RefundNotification;
 
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.core.model.AmazonRefundModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.ipn.AmazonNotificationHandler;
@@ -47,7 +47,7 @@ public class RefundNotificationHandler extends BaseAmazonNotificationHandler<Ref
 	@Override
 	public void handle(RefundNotification notification) {
 		RefundDetails details = notification.getRefundDetails();
-		AmazonPaymentInfoModel paymentInfo = null;
+		AmazonPaymentPaymentInfoModel paymentInfo = null;
 		PaymentTransactionModel transaction = null;
 		PaymentTransactionEntryModel entry = null;
 		for(PaymentTransactionEntryModel e : getAmazonPaymentNotificationService().getPaymentTransactionEntriesForReferenceId(details.getRefundReferenceId())) {
@@ -62,14 +62,14 @@ public class RefundNotificationHandler extends BaseAmazonNotificationHandler<Ref
 			code = code.substring(0, code.lastIndexOf('-'));
 			transaction = getAmazonPaymentNotificationService().getPaymentTransactionForCode(code);
 			if(transaction != null) {
-				paymentInfo = (AmazonPaymentInfoModel) transaction.getInfo();
+				paymentInfo = (AmazonPaymentPaymentInfoModel) transaction.getInfo();
 				entry = getModelService().create(PaymentTransactionEntryModel.class);
 				entry.setPaymentTransaction(transaction);
 				entry.setCode(getNewEntryCode(transaction));
 			}
 		} else {
 			transaction = entry.getPaymentTransaction();
-			paymentInfo = (AmazonPaymentInfoModel) transaction.getInfo();
+			paymentInfo = (AmazonPaymentPaymentInfoModel) transaction.getInfo();
 		}
 
 		if(entry != null) {
@@ -97,7 +97,7 @@ public class RefundNotificationHandler extends BaseAmazonNotificationHandler<Ref
 			}
 			if(refund == null) {
 				refund = getModelService().create(AmazonRefundModel.class);
-				refund.setAmazonPaymentInfo(paymentInfo);
+				refund.setAmazonPaymentPaymentInfo(paymentInfo);
 			}
 			refund.setAmazonRefundId(details.getAmazonRefundId());
 			refund.setRefundStatus(details.getRefundStatus().getState());

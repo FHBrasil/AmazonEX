@@ -91,14 +91,14 @@
 	
 	<relations>
 		<relation code="Refund2AmazonPaymentRelation" autocreate="true" generate="true" localized="false">
-			<sourceElement type="AmazonPaymentInfo" qualifier="amazonPaymentInfo" cardinality="one" />
+			<sourceElement type="AmazonPaymentPaymentInfo" qualifier="amazonPaymentPaymentInfo" cardinality="one" />
 			<targetElement type="AmazonRefund" qualifier="refund" collectiontype="list" cardinality="many"/>
 		</relation>
 	</relations>
 	
 	<itemtypes>
 	
-		<itemtype code="AmazonPaymentInfo" extends="PaymentInfo" autocreate="true" generate="true">
+		<itemtype code="AmazonPaymentPaymentInfo" extends="PaymentInfo" autocreate="true" generate="true">
 			<attributes>
 				<!-- Token and transactionId are duplicated in case it will be more convenient
 					to store them here -->

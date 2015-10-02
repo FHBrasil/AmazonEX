@@ -47,7 +47,7 @@ import de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
@@ -280,7 +280,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	 * java.lang.String)
 	 */
 	@Override
-	public PaymentTransactionEntryModel authorize(final AmazonPaymentInfoModel paymentInfo
+	public PaymentTransactionEntryModel authorize(final AmazonPaymentPaymentInfoModel paymentInfo
 			, final String merchantTransactionCode 
 			, final BigDecimal amount
 			, Currency currency
@@ -292,7 +292,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		return authorizeInternal(paymentInfo, transaction, amount, currency, paymentProvider);
 	}
 
-	private PaymentTransactionEntryModel authorizeInternal(final AmazonPaymentInfoModel paymentInfo
+	private PaymentTransactionEntryModel authorizeInternal(final AmazonPaymentPaymentInfoModel paymentInfo
 			, PaymentTransactionModel transaction
 			, BigDecimal amount
 			, Currency currency

@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
 import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
 
@@ -64,7 +64,7 @@ public class AmazonCloseOrderAction extends ItemAction
 		final CloseOrderReferenceRequest request = new CloseOrderReferenceRequest();
 		try
 		{
-			request.setAmazonOrderReferenceId((String) data.getAttribute(AmazonPaymentInfo.AMAZONORDERREFERENCEID));
+			request.setAmazonOrderReferenceId((String) data.getAttribute(AmazonPaymentPaymentInfo.AMAZONORDERREFERENCEID));
 		}
 		catch (JaloInvalidParameterException | JaloSecurityException e)
 		{
@@ -85,9 +85,9 @@ public class AmazonCloseOrderAction extends ItemAction
 	{
 		try
 		{
-			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentInfoModel.AMAZONORDERREFERENCEID);
+			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.AMAZONORDERREFERENCEID);
 			credentials.populatePaymentInfo(orderReferenceId, paymentInfo);
-			HMCAmazonButtonsManager.getInstance((AmazonPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
+			HMCAmazonButtonsManager.getInstance((AmazonPaymentPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
 		}
 		catch (final Exception e)
 		{

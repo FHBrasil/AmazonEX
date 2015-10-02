@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import de.fliegersoftware.amazon.core.constants.AmazoncoreConstants;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
@@ -50,8 +50,8 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		final CartModel cartModel = getCart();
 		if (checkIfCurrentUserIsTheCartUser())
 		{
-			if(cartModel.getPaymentInfo() instanceof AmazonPaymentInfoModel
-					&& StringUtils.isNotBlank(((AmazonPaymentInfoModel)cartModel.getPaymentInfo()).getAmazonOrderReferenceId())) {
+			if(cartModel.getPaymentInfo() instanceof AmazonPaymentPaymentInfoModel
+					&& StringUtils.isNotBlank(((AmazonPaymentPaymentInfoModel)cartModel.getPaymentInfo()).getAmazonOrderReferenceId())) {
 					final PaymentTransactionEntryModel paymentTransactionEntryModel = getCommerceCheckoutService().authorizeAmazonPayment(cartModel, AmazoncoreConstants.PAYMENT_PROVIDER_NAME);
 	
 					return paymentTransactionEntryModel != null
@@ -71,13 +71,13 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		{
 			if (StringUtils.isNotBlank(paymentInfoId))
 			{
-				final AmazonPaymentInfoModel amazonPaymentInfoModel = new AmazonPaymentInfoModel();
-				amazonPaymentInfoModel.setAmazonOrderReferenceId(paymentInfoId);
-				amazonPaymentInfoModel.setCode(paymentInfoId);
-				amazonPaymentInfoModel.setUser(getCurrentUserForCheckout());
+				final AmazonPaymentPaymentInfoModel amazonPaymentPaymentInfoModel = new AmazonPaymentPaymentInfoModel();
+				amazonPaymentPaymentInfoModel.setAmazonOrderReferenceId(paymentInfoId);
+				amazonPaymentPaymentInfoModel.setCode(paymentInfoId);
+				amazonPaymentPaymentInfoModel.setUser(getCurrentUserForCheckout());
 				PaymentModeModel paymentMode = getPaymentModeService().getPaymentModeForCode("amazon");
 				cartModel.setPaymentMode(paymentMode);
-				return getCommerceCheckoutService().setPaymentInfo(cartModel, amazonPaymentInfoModel);
+				return getCommerceCheckoutService().setPaymentInfo(cartModel, amazonPaymentPaymentInfoModel);
 			}
 		}
 

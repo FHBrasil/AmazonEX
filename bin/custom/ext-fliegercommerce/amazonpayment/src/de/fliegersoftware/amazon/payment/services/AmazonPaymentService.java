@@ -8,7 +8,7 @@ import de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.PaymentService;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
@@ -49,7 +49,7 @@ import com.amazonservices.mws.offamazonpayments.model.SetOrderReferenceDetailsRe
  */
 public interface AmazonPaymentService extends PaymentService
 {
-	PaymentTransactionEntryModel authorize(AmazonPaymentInfoModel paymentInfo
+	PaymentTransactionEntryModel authorize(AmazonPaymentPaymentInfoModel paymentInfo
 			, final String merchantTransactionCode 
 			, final BigDecimal amount
 			, final Currency currency

@@ -14,11 +14,11 @@
 	<explorertree>
 		<group name="amazonhmcaddongroup">
 			<typeref description="typeref.amazonconfig.description" type="AmazonConfig" />
-			<typeref description="typeref.amazonconfig.description" type="AmazonPaymentInfo" />
+			<typeref description="typeref.amazonconfig.description" type="AmazonPaymentPaymentInfo" />
 		</group>
 	</explorertree>
 	
-	<type mode="append" name="AmazonPaymentInfo">
+	<type mode="append" name="AmazonPaymentPaymentInfo">
 		<organizer>
 			<search mode="replace" autoperform="true">
 				<condition attribute="amazonOrderReferenceId" operator="contains"/>
@@ -194,7 +194,7 @@
 	</type>
 	
 
-	<type mode="append" name="AmazonPaymentInfo">
+	<type mode="append" name="AmazonPaymentPaymentInfo">
 		<organizer>
 			<editor>
 				<tab name="tab.payment.amazon.properties" position="2">
@@ -259,7 +259,7 @@
 							</row>
 							<row>
 								<inlineshortcut type="AmazonRefund" maxcount="10">
-									<preset sourceattribute="pk" targetattribute="amazonPaymentInfo"/>
+									<preset sourceattribute="pk" targetattribute="amazonPaymentPaymentInfo"/>
 									<itemlayout mode="append">
 										<attribute name="amazonRefundId" width="200"/>
 										<attribute name="refundReferenceId" width="200"/>

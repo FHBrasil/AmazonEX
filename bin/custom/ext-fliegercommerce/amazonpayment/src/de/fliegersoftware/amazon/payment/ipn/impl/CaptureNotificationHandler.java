@@ -11,7 +11,7 @@ import com.amazonservices.mws.offamazonpaymentsipn.model.CaptureDetails;
 import com.amazonservices.mws.offamazonpaymentsipn.model.CaptureNotification;
 import com.amazonservices.mws.offamazonpaymentsipn.model.ProviderCreditSummary;
 
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
@@ -48,7 +48,7 @@ public class CaptureNotificationHandler extends BaseAmazonNotificationHandler<Ca
 	@Override
 	public void handle(CaptureNotification notification) {
 		CaptureDetails details = notification.getCaptureDetails();
-		AmazonPaymentInfoModel paymentInfo = null;
+		AmazonPaymentPaymentInfoModel paymentInfo = null;
 		PaymentTransactionModel transaction = null;
 		PaymentTransactionEntryModel entry = null;
 		for(PaymentTransactionEntryModel e : getAmazonPaymentNotificationService().getPaymentTransactionEntriesForReferenceId(details.getCaptureReferenceId())) {
@@ -63,14 +63,14 @@ public class CaptureNotificationHandler extends BaseAmazonNotificationHandler<Ca
 			code = code.substring(0, code.lastIndexOf('-'));
 			transaction = getAmazonPaymentNotificationService().getPaymentTransactionForCode(code);
 			if(transaction != null) {
-				paymentInfo = (AmazonPaymentInfoModel) transaction.getInfo();
+				paymentInfo = (AmazonPaymentPaymentInfoModel) transaction.getInfo();
 				entry = getModelService().create(PaymentTransactionEntryModel.class);
 				entry.setPaymentTransaction(transaction);
 				entry.setCode(getNewEntryCode(transaction));
 			}
 		} else {
 			transaction = entry.getPaymentTransaction();
-			paymentInfo = (AmazonPaymentInfoModel) transaction.getInfo();
+			paymentInfo = (AmazonPaymentPaymentInfoModel) transaction.getInfo();
 		}
 
 		if(entry != null) {

@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Required;
 
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
@@ -68,12 +68,12 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 			final BigDecimal amount) {
 		PaymentTransactionEntryModel transactionEntryModel = null;
 		PaymentInfoModel paymentInfo = cartModel.getPaymentInfo();
-		if ((paymentInfo instanceof AmazonPaymentInfoModel) && (StringUtils.isNotBlank(((AmazonPaymentInfoModel) paymentInfo).getAmazonOrderReferenceId()))) {
-			AmazonPaymentInfoModel amazonPaymentInfo = (AmazonPaymentInfoModel) paymentInfo;
+		if ((paymentInfo instanceof AmazonPaymentPaymentInfoModel) && (StringUtils.isNotBlank(((AmazonPaymentPaymentInfoModel) paymentInfo).getAmazonOrderReferenceId()))) {
+			AmazonPaymentPaymentInfoModel amazonPaymentPaymentInfo = (AmazonPaymentPaymentInfoModel) paymentInfo;
 			Currency currency = getI18nService().getBestMatchingJavaCurrency(cartModel.getCurrency().getIsocode());
 			String merchantTransactionCode = getGenerateMerchantTransactionCodeStrategy().generateCode(cartModel);
 			
-			transactionEntryModel = getPaymentService().authorize(amazonPaymentInfo, merchantTransactionCode, amount, currency, 
+			transactionEntryModel = getPaymentService().authorize(amazonPaymentPaymentInfo, merchantTransactionCode, amount, currency, 
 					paymentProvider);
 			if (transactionEntryModel != null) {
 				PaymentTransactionModel paymentTransaction = transactionEntryModel
@@ -81,9 +81,9 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 
 				if (TransactionStatus.ACCEPTED.name().equals(transactionEntryModel.getTransactionStatus())) {
 					paymentTransaction.setOrder(cartModel);
-					paymentTransaction.setInfo(amazonPaymentInfo);
-					if(amazonPaymentInfo.getBillingAddress() == null)
-						amazonPaymentInfo.setBillingAddress(cartModel.getDeliveryAddress());
+					paymentTransaction.setInfo(amazonPaymentPaymentInfo);
+					if(amazonPaymentPaymentInfo.getBillingAddress() == null)
+						amazonPaymentPaymentInfo.setBillingAddress(cartModel.getDeliveryAddress());
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });
 				} else {

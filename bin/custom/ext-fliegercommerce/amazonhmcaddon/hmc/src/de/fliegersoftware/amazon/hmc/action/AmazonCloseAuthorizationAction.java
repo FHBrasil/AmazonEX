@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
 import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
 
@@ -64,7 +64,7 @@ public class AmazonCloseAuthorizationAction extends ItemAction
 		final CloseAuthorizationRequest request = new CloseAuthorizationRequest();
 		try
 		{
-			request.setAmazonAuthorizationId((String) data.getAttribute(AmazonPaymentInfo.AMAZONLASTAUTHORIZATIONID));
+			request.setAmazonAuthorizationId((String) data.getAttribute(AmazonPaymentPaymentInfo.AMAZONLASTAUTHORIZATIONID));
 		}
 		catch (JaloInvalidParameterException | JaloSecurityException e)
 		{
@@ -85,9 +85,9 @@ public class AmazonCloseAuthorizationAction extends ItemAction
 	{
 		try
 		{
-			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentInfoModel.AMAZONORDERREFERENCEID);
+			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.AMAZONORDERREFERENCEID);
 			credentials.populatePaymentInfo(orderReferenceId, paymentInfo);
-			HMCAmazonButtonsManager.getInstance((AmazonPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
+			HMCAmazonButtonsManager.getInstance((AmazonPaymentPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
 		}
 		catch (final Exception e)
 		{

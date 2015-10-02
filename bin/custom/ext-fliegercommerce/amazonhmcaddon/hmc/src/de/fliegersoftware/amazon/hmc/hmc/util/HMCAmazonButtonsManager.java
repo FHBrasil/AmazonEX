@@ -25,11 +25,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
 
 
 /**
- * Class that will manage all the buttons of the 'amazon' tab from AmazonPaymentInfo It's resolves which buttons will
+ * Class that will manage all the buttons of the 'amazon' tab from AmazonPaymentPaymentInfo It's resolves which buttons will
  * show or hide, and will be responsible too for some validation, as the refund count, etc.
  * 
  * @author douglas.canalli
@@ -40,14 +40,14 @@ public class HMCAmazonButtonsManager
 
 	private static final String HMCAMAZONBUTTONSMANAGERSESSION = "HMCAmazonButtonsManager";
 
-	private AmazonPaymentInfo paymentInfo;
+	private AmazonPaymentPaymentInfo paymentInfo;
 
 	private EditorTabChip amazonTab;
 
 	/**
 	 * private constructor for the singleton HMCAmazonButtonsManager
 	 */
-	private HMCAmazonButtonsManager(final AmazonPaymentInfo paymentInfo, final EditorTabChip amazonTab)
+	private HMCAmazonButtonsManager(final AmazonPaymentPaymentInfo paymentInfo, final EditorTabChip amazonTab)
 	{
 		this.paymentInfo = paymentInfo;
 		this.amazonTab = amazonTab;
@@ -60,7 +60,7 @@ public class HMCAmazonButtonsManager
 	 * @param amazonTab
 	 * @return HMCAmazonButtonsManager
 	 */
-	public static HMCAmazonButtonsManager getInstance(final AmazonPaymentInfo paymentInfo, final EditorTabChip amazonTab)
+	public static HMCAmazonButtonsManager getInstance(final AmazonPaymentPaymentInfo paymentInfo, final EditorTabChip amazonTab)
 	{
 		HMCAmazonButtonsManager manager = (HMCAmazonButtonsManager) JaloSession.getCurrentSession().getAttribute(
 				HMCAMAZONBUTTONSMANAGERSESSION);
@@ -84,7 +84,7 @@ public class HMCAmazonButtonsManager
 	 * @param genericItemChip
 	 * @return HMCAmazonButtonsManager
 	 */
-	public static HMCAmazonButtonsManager getInstance(final AmazonPaymentInfo paymentInfo, final GenericItemChip genericItemChip)
+	public static HMCAmazonButtonsManager getInstance(final AmazonPaymentPaymentInfo paymentInfo, final GenericItemChip genericItemChip)
 	{
 		final String localizedString = Localization.getLocalizedString("tab.payment.amazon.properties");
 		final EditorTabChip amazonTab = genericItemChip.getEditor().getTabByName(localizedString);

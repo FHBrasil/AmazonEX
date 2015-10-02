@@ -64,7 +64,7 @@ public class AmazonPaymentCapturingJobPerformable extends
 
 		final StringBuilder query = new StringBuilder();
 		query.append("select {o.pk} from {Order as o ") //
-				.append("join AmazonPaymentInfo as info on {info.pk} = {o.paymentInfo} ") //
+				.append("join AmazonPaymentPaymentInfo as info on {info.pk} = {o.paymentInfo} ") //
 				.append("} where {o.store} = ?store ") //
 				.append("and {o.status} = ?orderstatus ") //
 				;

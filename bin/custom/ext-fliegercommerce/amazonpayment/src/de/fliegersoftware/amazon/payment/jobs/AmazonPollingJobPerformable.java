@@ -30,7 +30,7 @@ import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
 import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
 import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
 
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.core.model.AmazonRefundModel;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.model.AmazonBaseCronJobModel;
@@ -71,7 +71,7 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		sessionService.setAttribute("currentSite", cronjob.getSite());
 
 		final StringBuilder query = new StringBuilder();
-		query.append("select {info.pk} from {AmazonPaymentInfo as info ") //
+		query.append("select {info.pk} from {AmazonPaymentPaymentInfo as info ") //
 			.append("join Order as o on {o.paymentInfo} = {info.pk} ") //
 			.append("} where {o.store} = ?store ") //
 			.append("and  ({info.AmazonOrderStatus} is null ") //
@@ -84,10 +84,10 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		Map<String, Object> params = new HashMap<>();
 		params.put("store", cronjob.getSite().getStores().get(0));
 		final FlexibleSearchQuery searchQuery = new FlexibleSearchQuery(query.toString(), params);
-		final SearchResult<AmazonPaymentInfoModel> result = flexibleSearchService.search(searchQuery);
+		final SearchResult<AmazonPaymentPaymentInfoModel> result = flexibleSearchService.search(searchQuery);
 
 		long lastRequestTime = 0;
-		for (AmazonPaymentInfoModel info : result.getResult()) {
+		for (AmazonPaymentPaymentInfoModel info : result.getResult()) {
 			ItemModel owner = info.getOwner();
 			if(owner instanceof OrderModel) {
 				OrderModel order = (OrderModel)owner;
@@ -147,7 +147,7 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		return new PerformResult(CronJobResult.SUCCESS, CronJobStatus.FINISHED);
 	}
 
-	private long updateOrder(long lastRequestTime, OrderModel order, AmazonPaymentInfoModel paymentInfo) {
+	private long updateOrder(long lastRequestTime, OrderModel order, AmazonPaymentPaymentInfoModel paymentInfo) {
 		cooldown(lastRequestTime);
 		GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
 		request.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
@@ -168,7 +168,7 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		return lastRequestTime;
 	}
 
-	private long updateAuthorization(long lastRequestTime, OrderModel order, AmazonPaymentInfoModel paymentInfo, PaymentTransactionModel transaction, PaymentTransactionEntryModel entry) {
+	private long updateAuthorization(long lastRequestTime, OrderModel order, AmazonPaymentPaymentInfoModel paymentInfo, PaymentTransactionModel transaction, PaymentTransactionEntryModel entry) {
 		cooldown(lastRequestTime);
 		GetAuthorizationDetailsRequest request = new GetAuthorizationDetailsRequest();
 		request.setAmazonAuthorizationId(entry.getRequestId());
@@ -205,7 +205,7 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		return lastRequestTime;
 	}
 
-	private long updateCapture(long lastRequestTime, OrderModel order, AmazonPaymentInfoModel paymentInfo, PaymentTransactionModel transaction, PaymentTransactionEntryModel entry) {
+	private long updateCapture(long lastRequestTime, OrderModel order, AmazonPaymentPaymentInfoModel paymentInfo, PaymentTransactionModel transaction, PaymentTransactionEntryModel entry) {
 		cooldown(lastRequestTime);
 		GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
 		request.setAmazonCaptureId(entry.getRequestId());
@@ -246,7 +246,7 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		return lastRequestTime;
 	}
 
-	private long updateRefund(long lastRequestTime, OrderModel order, AmazonPaymentInfoModel paymentInfo, PaymentTransactionModel transaction, PaymentTransactionEntryModel entry) {
+	private long updateRefund(long lastRequestTime, OrderModel order, AmazonPaymentPaymentInfoModel paymentInfo, PaymentTransactionModel transaction, PaymentTransactionEntryModel entry) {
 		cooldown(lastRequestTime);
 		GetRefundDetailsRequest request = new GetRefundDetailsRequest();
 		request.setAmazonRefundId(entry.getRequestId());
@@ -279,7 +279,7 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		}
 		if(refund == null) {
 			refund = getModelService().create(AmazonRefundModel.class);
-			refund.setAmazonPaymentInfo(paymentInfo);
+			refund.setAmazonPaymentPaymentInfo(paymentInfo);
 		}
 		refund.setAmazonRefundId(details.getAmazonRefundId());
 		refund.setRefundStatus(details.getRefundStatus().getState());

@@ -6,10 +6,10 @@ import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.type.ComposedType;
 import org.apache.log4j.Logger;
 
-public class AmazonPaymentInfo extends GeneratedAmazonPaymentInfo
+public class AmazonPaymentPaymentInfo extends GeneratedAmazonPaymentPaymentInfo
 {
 	@SuppressWarnings("unused")
-	private final static Logger LOG = Logger.getLogger( AmazonPaymentInfo.class.getName() );
+	private final static Logger LOG = Logger.getLogger( AmazonPaymentPaymentInfo.class.getName() );
 	
 	@Override
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException

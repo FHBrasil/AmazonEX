@@ -23,10 +23,10 @@ import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
 import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
 import com.amazonservices.mws.offamazonpayments.model.RefundResponse;
 
-import de.fliegersoftware.amazon.core.jalo.AmazonPaymentInfo;
+import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
 import de.fliegersoftware.amazon.core.jalo.AmazonRefund;
 import de.fliegersoftware.amazon.core.jalo.AmazoncoreManager;
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.core.model.AmazonRefundModel;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
@@ -76,10 +76,10 @@ public class AmazonRefundAction extends ItemAction
 			final AmazonRefund createAmazonRefund = AmazoncoreManager.getInstance().createAmazonRefund(attributeValues);
 
 			final List<AmazonRefund> attribute = new ArrayList<AmazonRefund>(
-					(List<AmazonRefund>) paymentInfo.getAttribute(AmazonPaymentInfoModel.REFUND));
+					(List<AmazonRefund>) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.REFUND));
 			attribute.add(createAmazonRefund);
 
-			paymentInfo.setAttribute(AmazonPaymentInfoModel.REFUND, attribute);
+			paymentInfo.setAttribute(AmazonPaymentPaymentInfoModel.REFUND, attribute);
 
 			updateInfos(credentials, paymentInfo, (GenericItemChip) paramActionEvent.getSource());
 
@@ -104,9 +104,9 @@ public class AmazonRefundAction extends ItemAction
 	{
 		try
 		{
-			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentInfoModel.AMAZONORDERREFERENCEID);
+			final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfoModel.AMAZONORDERREFERENCEID);
 			credentials.populatePaymentInfo(orderReferenceId, paymentInfo);
-			HMCAmazonButtonsManager.getInstance((AmazonPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
+			HMCAmazonButtonsManager.getInstance((AmazonPaymentPaymentInfo) paymentInfo, genericItemChip).rebuildButtons();
 		}
 		catch (final Exception e)
 		{

@@ -8,7 +8,7 @@ import com.amazonservices.mws.offamazonpaymentsipn.model.OrderReferenceNotificat
 import com.amazonservices.mws.offamazonpaymentsipn.model.OrderTotal;
 import com.amazonservices.mws.offamazonpaymentsipn.model.SellerOrderAttributes;
 
-import de.fliegersoftware.amazon.core.model.AmazonPaymentInfoModel;
+import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
 
 public class OrderReferenceNotificationHandler extends BaseAmazonNotificationHandler<OrderReferenceNotification> {
@@ -45,7 +45,7 @@ public class OrderReferenceNotificationHandler extends BaseAmazonNotificationHan
 		
 		PaymentTransactionModel transaction = getAmazonPaymentNotificationService().getPaymentTransactionForCode(details.getAmazonOrderReferenceId());
 		if(transaction != null && transaction.getInfo() != null) {
-			AmazonPaymentInfoModel paymentInfo = (AmazonPaymentInfoModel) transaction.getInfo();
+			AmazonPaymentPaymentInfoModel paymentInfo = (AmazonPaymentPaymentInfoModel) transaction.getInfo();
 			paymentInfo.setAmazonOrderReferenceId(details.getAmazonOrderReferenceId());
 			paymentInfo.setAmazonOrderStatus(details.getOrderReferenceStatus().getState());
 			paymentInfo.setAmazonOrderReasonCode(details.getOrderReferenceStatus().getReasonCode());
