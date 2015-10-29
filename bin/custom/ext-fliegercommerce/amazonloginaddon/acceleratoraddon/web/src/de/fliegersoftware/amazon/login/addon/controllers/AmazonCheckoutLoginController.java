@@ -1,6 +1,9 @@
 package de.fliegersoftware.amazon.login.addon.controllers;
 
+import java.util.UUID;
+
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,13 +15,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.CookieGenerator;
 
-import de.fliegersoftware.amazon.login.addon.facades.customer.AmazonCustomerFacade;
+import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
+import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonGuestForm;
 import de.fliegersoftware.amazon.login.addon.forms.validation.AmazonGuestValidator;
-import de.fliegersoftware.amazon.login.addon.security.AmazonAutoLoginStrategy;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractLoginPageController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.LoginForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.RegisterForm;
@@ -28,24 +31,29 @@ import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
+import de.hybris.platform.commerceservices.strategies.CheckoutCustomerStrategy;
+import de.hybris.platform.core.model.user.CustomerModel;
 
 @Controller
 @Scope("tenant")
 @RequestMapping(value = "/login/checkout/amazon")
-public class AmazonCheckoutLoginController extends AbstractLoginPageController {
-
+public class AmazonCheckoutLoginController extends AbstractAmazonLoginController {
+	
+	public static final String REQUEST_MODEL_ATTRIBUTE_NAME = "request";
+	public static final String SECURE_GUID_SESSION_KEY = "acceleratorSecureGUID";
+	
 	@Resource(name = "amazonGuestValidator")
 	private AmazonGuestValidator amazonGuestValidator;
 
 	@Resource
 	private CheckoutFacade checkoutFacade;
 
-	@Resource(name = "amazonCustomerFacade")
-	private AmazonCustomerFacade amazonCustomerFacade;
-
-	@Resource
-	private AmazonAutoLoginStrategy amazonAutoLoginStrategy;
+	@Resource(name = "guidCookieGenerator")
+	private CookieGenerator cookieGenerator;
 	
+	@Resource(name = "checkoutCustomerStrategy")
+	private CheckoutCustomerStrategy checkoutCustomerStrategy;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String doCheckoutLogin(@RequestParam(value = "error", defaultValue = "false") final boolean loginError,
 			final HttpSession session, final Model model, final HttpServletRequest request) throws CMSItemNotFoundException
@@ -65,7 +73,18 @@ public class AmazonCheckoutLoginController extends AbstractLoginPageController {
 			final HttpServletRequest request, final HttpServletResponse response) throws CMSItemNotFoundException
 	{
 		getGuestValidator().validate(form, bindingResult);
-		return processAnonymousCheckoutUserRequest(form, bindingResult, model, request, response);
+		if(getCheckoutCustomerStrategy().isAnonymousCheckout()) {
+			if(!Boolean.TRUE.equals(getSessionService().getAttribute(WebConstants.ANONYMOUS_CHECKOUT))) {
+				if (amazonConfigService.allowGuestCheckout()) {
+					return processAnonymousCheckoutUserRequest(form, bindingResult, model, request, response);
+				} else {
+					return processLoginWithAmazon(form, bindingResult, model, request, response);
+				}
+			}
+		} else if (!isHardLogin(model)) {
+			return processLoginWithAmazon(form, bindingResult, model, request, response);
+		}
+		return REDIRECT_PREFIX + getSuccessRedirect(request, response);
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -79,11 +98,10 @@ public class AmazonCheckoutLoginController extends AbstractLoginPageController {
 	protected String processCheckoutLogin(AmazonGuestForm form,
 			BindingResult bindingResult, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
-		CustomerData customer = getCustomerFacade().getCurrentCustomer();
-		amazonAutoLoginStrategy.login(customer.getUid(), form.getAmazonGuestId(), request, response);
+		amazonAutoLoginStrategy.login(form.getAmazonGuestId(), request, response);
 		return REDIRECT_PREFIX + getSuccessRedirect(request, response);
 	}
-
+	
 	protected String processAnonymousCheckoutUserRequest(AmazonGuestForm form,
 			BindingResult bindingResult, Model model,
 			HttpServletRequest request, HttpServletResponse response)
@@ -111,7 +129,92 @@ public class AmazonCheckoutLoginController extends AbstractLoginPageController {
 
 		return REDIRECT_PREFIX + getSuccessRedirect(request, response);
 	}
+	
+	protected String processLoginWithAmazon(AmazonGuestForm form,
+			BindingResult bindingResult, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		final AmazonLoginRegisterData registerData = new AmazonLoginRegisterData();
+		registerData.setFirstName(getFirstNameByName(form.getAmazonGuestName()));
+		registerData.setLastName(getLastNameByName(form.getAmazonGuestName()));
+		registerData.setLogin(form.getAmazonGuestEmail());
+		final String randomPass = UUID.randomUUID().toString();
+		registerData.setPassword(randomPass);
+		registerData.setAmazonCustomerId(form.getAmazonGuestId());
+		
+		if(getUserFacade().isAmazonCustomerExisting(form.getAmazonGuestId()))
+		{	
+			amazonAutoLoginStrategy.login(form.getAmazonGuestId(), request, response);
+			return REDIRECT_PREFIX + getSuccessRedirect(request, response);
+		}
+		
+		if(!getUserFacade().isUserExisting(form.getAmazonGuestEmail()))
+		{			
+			try 
+			{				
+				getUserFacade().register(registerData);
+				amazonAutoLoginStrategy.login(form.getAmazonGuestId(), request, response);
+				
+				return REDIRECT_PREFIX + getSuccessRedirect(request, response);
+			} 
+			catch (DuplicateUidException e) 
+			{
+				LOG.warn("DuplicateUidException for email " + form.getAmazonGuestEmail());
+				e.printStackTrace();
+			}	
+		} else 
+		{			
+			if (AccountMatchingStrategyEnum.EMAILADDRESSBASED.equals(amazonConfigService.getAccountMatchingStrategy())) {
+				
+				return prepareAssociateAccount(model, form.getAmazonGuestName(), form.getAmazonGuestEmail(), form.getAmazonGuestId());
+			
+			} else if (AccountMatchingStrategyEnum.NOMATCHING.equals(amazonConfigService.getAccountMatchingStrategy())) 
+			{
+				try 
+				{				
+					getUserFacade().registerGuestUser(registerData);
+					
+					amazonAutoLoginStrategy.login(form.getAmazonGuestId(), request, response);
 
+					return REDIRECT_PREFIX + getSuccessRedirect(request, response);
+				} 
+				catch (DuplicateUidException e) 
+				{
+					LOG.warn("DuplicateUidException for email " + form.getAmazonGuestEmail());
+					e.printStackTrace();
+				}	
+			}
+		}
+		
+		return REDIRECT_PREFIX + getSuccessRedirect(request, response);
+	}
+	
+	protected boolean isHardLogin(final Model model) {
+		HttpServletRequest request = (HttpServletRequest) model.asMap().get(REQUEST_MODEL_ATTRIBUTE_NAME);
+		final String guid = (String)request.getSession().getAttribute(SECURE_GUID_SESSION_KEY);
+		if (checkForGUIDCookie(request, guid)) {
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean checkForGUIDCookie(final HttpServletRequest request,
+			final String guid) {
+		if (guid != null && request.getCookies() != null) {
+			final String guidCookieName = cookieGenerator.getCookieName();
+			if (guidCookieName != null) {
+				for (final Cookie cookie : request.getCookies()) {
+					if (guidCookieName.equals(cookie.getName())) {
+						if (guid.equals(cookie.getValue())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	protected AbstractPageModel getCmsPage() throws CMSItemNotFoundException {
 		return getContentPageForLabelOrId("checkout-login");
@@ -158,8 +261,11 @@ public class AmazonCheckoutLoginController extends AbstractLoginPageController {
 		return checkoutFacade;
 	}
 
-	@Override
-	protected AmazonCustomerFacade getCustomerFacade() {
-		return (AmazonCustomerFacade) amazonCustomerFacade;
+	public CheckoutCustomerStrategy getCheckoutCustomerStrategy() {
+		return checkoutCustomerStrategy;
+	}
+
+	public void setCheckoutCustomerStrategy(CheckoutCustomerStrategy checkoutCustomerStrategy) {
+		this.checkoutCustomerStrategy = checkoutCustomerStrategy;
 	}
 }

@@ -48,6 +48,15 @@
 			</value>
 		</enumtype>
 		
+		<enumtype code="GuestCheckoutStrategyEnum">
+			<value code="AllowGuestCheckout">
+				<description>AllowGuestCheckout</description>
+			</value>
+			<value code="ForceAccountCreation">
+				<description>Force account creation/Login on checkout</description>
+			</value>
+		</enumtype>
+		
 		<enumtype code="AuthorizationModeEnum">
 			<value code="AutomaticSynchronous">
 				<description>automatic synchronous authorization in frontend</description>
@@ -293,6 +302,16 @@
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
+				<attribute qualifier="sandboxSimulate" type="boolean">
+					<description>switch for enabling / disabling Amazon Sandbox Simulation</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="guestCheckoutStrategy" type="GuestCheckoutStrategyEnum">
+					<description>switch for Allow Guest Checkout / Force account creation/Login on checkout</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
 				<attribute qualifier="hiddenButtonsMode" type="boolean">
 					<description>switch for hide / show Amazon payment button</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
@@ -385,9 +404,20 @@
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
-				<attribute qualifier="log" type="Media">
+				
+				<attribute qualifier="apiLog" type="AmazonLog">
 					<description>log file</description>
-					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="ipnLog" type="AmazonLog">
+					<description>log file</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="amazonLog" type="AmazonLog">
+					<description>log file</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
 					<persistence type="property"/>
 				</attribute>
 
@@ -426,6 +456,12 @@
 				</attribute>
 			</attributes>
 		</itemtype>
-	
+		
+		<itemtype code="AmazonLog" extends="Media"
+			jaloclass="de.fliegersoftware.amazon.core.jalo.media.AmazonLog" autocreate="true" generate="true">
+			<description>Amazon configuration</description>
+			<deployment table="amazonLog" typecode="17502" />
+		</itemtype>
+		
 	</itemtypes>
 </items>

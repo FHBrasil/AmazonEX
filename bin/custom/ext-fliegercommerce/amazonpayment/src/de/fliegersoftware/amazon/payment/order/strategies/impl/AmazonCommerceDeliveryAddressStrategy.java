@@ -14,7 +14,8 @@ public class AmazonCommerceDeliveryAddressStrategy extends DefaultCommerceDelive
 	
 	@Override
 	protected boolean isValidDeliveryAddress(CartModel cartModel, AddressModel addressModel) {
-		if(getAmazonConfigService().isExcludePackstationDelivery() //
+		if(addressModel != null
+			&& getAmazonConfigService().isExcludePackstationDelivery()
 			&& StringUtils.containsIgnoreCase(addressModel.getFirstname(), "packstation"))
 			return false;
 		return true;

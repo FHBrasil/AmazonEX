@@ -19,7 +19,7 @@
 <c:url value="/checkout/amazon/update" var="cartUpdateFormAction" />
 <c:if test="${not empty orderEntryGroupData}">	
 	<c:forEach items="${orderEntryGroupData.entries}" var="entry" varStatus="status">
-	    	<li id="${entry.entryNumber}" class="item150608">
+	    	<li id="${entry.product.code}" class="item150608">
 				<div class="row">
 					<div class="col-xxs-4 col-xs-12 col-md-4 text-right">
 	                	<a href="${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
@@ -32,14 +32,13 @@
 	            </div>
 	            <div class="row itemdata150608">
 	                <div class="col-xs-4">
-			            <form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" commandName="updateQuantityForm${entry.entryNumber}" onkeypress="if(event.keyCode==13) return false">
-			            	<input type="hidden" name="entryNumber" value="${entry.entryNumber}" />
+			            <form:form id="updateCartForm${entry.product.code}" action="${cartUpdateFormAction}" commandName="updateQuantityForm${entry.product.code}" onkeypress="if(event.keyCode==13) return false">
 			                <input type="hidden" name="productCode" value="${entry.product.code}" />
 			                <input type="hidden" name="initialQuantity" value="${entry.quantity}" />
-			                <input type="hidden" name="initialQuantity_${entry.entryNumber}" id="initialQuantity_${entry.entryNumber}" value="${entry.quantity}" />
+			                <input type="hidden" name="initialQuantity_${entry.product.code}" id="initialQuantity_${entry.product.code}" value="${entry.quantity}" />
 			               	<ycommerce:testId code="cart_product_quantity">
-			                	<form:input disabled="${not entry.updateable}" type="number" size="1" id="quantity${entry.entryNumber}" class="form-control qty" path="quantity"
-			                    	min="1" maxlength="3" required="required" step="1" onchange="changeQuantityOrRemove('${entry.entryNumber}', false);"/>
+			                	<form:input disabled="${not entry.updateable}" type="number" size="1" id="quantity${entry.product.code}" class="form-control qty" path="quantity"
+			                    	min="1" maxlength="3" required="required" step="1" onchange="changeQuantityOrRemove('${entry.product.code}', false);"/>
 			                </ycommerce:testId>
 			           	</form:form>
 			        </div> 
@@ -49,7 +48,7 @@
 		           		</small>
 	                </div>
 	                <div class="col-xs-4 text-right">	                		
-		            	<div id="entryTotalPrice${entry.entryNumber}">	                		
+		            	<div id="entryTotalPrice${entry.product.code}">	                		
 		            		<format:price priceData="${entry.totalPrice}" displayFreeForZero="true" />
 		            	</div>
 	                </div>                                           	 
@@ -57,9 +56,9 @@
 				<c:if test="${entry.updateable}">
 	           		<ycommerce:testId code="cart_product_removeProduct">
 	                	<a href="javascript:void(0)" class="delete150618 btn-excluir-produto"
-	                    	id="RemoveProduct_${entry.entryNumber}" class="submitRemoveProduct"
+	                    	id="RemoveProduct_${entry.product.code}" class="submitRemoveProduct"
 	                        title="Remover"
-	                        onClick="changeQuantityOrRemove('${entry.entryNumber}', true);"><span class="glyphicon glyphicon-remove-sign"></span></a>
+	                        onClick="changeQuantityOrRemove('${entry.product.code}', true);"><span class="glyphicon glyphicon-remove-sign"></span></a>
 	                </ycommerce:testId>
 	            </c:if>		
 			</li>
@@ -70,7 +69,7 @@
 </c:if>
 <c:if test="${empty orderEntryGroupData && not empty cartData}">
 	<c:forEach items="${cartData.entries}" var="entry" varStatus="status">
-	   	<li id="${entry.entryNumber}" class="item150608">
+	   	<li id="${entry.product.code}" class="item150608">
 			<div class="row">
 				<div class="col-xxs-4 col-xs-12 col-md-4 text-right">
 	               	<a href="${entry.product.url}" class="image150608"><product:productPrimaryImage product="${entry.product}" format="cartIcon" /></a>
@@ -83,14 +82,13 @@
 	         </div>
 	         <div class="row itemdata150608">
 	         	<div class="col-xs-4">
-			        <form:form id="updateCartForm${entry.entryNumber}" action="${cartUpdateFormAction}" commandName="updateQuantityForm${entry.entryNumber}" onkeypress="if(event.keyCode==13) return false">
-		            	<input type="hidden" name="entryNumber" value="${entry.entryNumber}" />
+			        <form:form id="updateCartForm${entry.product.code}" action="${cartUpdateFormAction}" commandName="updateQuantityForm${entry.product.code}" onkeypress="if(event.keyCode==13) return false">
 		                <input type="hidden" name="productCode" value="${entry.product.code}" />
 		                <input type="hidden" name="initialQuantity" value="${entry.quantity}" />
-		                <input type="hidden" name="initialQuantity_${entry.entryNumber}" id="initialQuantity_${entry.entryNumber}" value="${entry.quantity}" />
+		                <input type="hidden" name="initialQuantity_${entry.product.code}" id="initialQuantity_${entry.product.code}" value="${entry.quantity}" />
 		               	<ycommerce:testId code="cart_product_quantity">
-		                	<form:input disabled="${not entry.updateable}" type="number" size="1" id="quantity${entry.entryNumber}" class="form-control qty" path="quantity"
-		                    	min="1" maxlength="3" required="required" step="1" onchange="changeQuantityOrRemove('${entry.entryNumber}', false);"/>
+		                	<form:input disabled="${not entry.updateable}" type="number" size="1" id="quantity${entry.product.code}" class="form-control qty" path="quantity"
+		                    	min="1" maxlength="3" required="required" step="1" onchange="changeQuantityOrRemove('${entry.product.code}', false);"/>
 		                </ycommerce:testId>
 		           	</form:form>
 			    </div> 
@@ -100,7 +98,7 @@
 		            </small>
 	             </div>
 	             <div class="col-xs-4 text-right">	                		
-		           	<div id="entryTotalPrice${entry.entryNumber}">	                		
+		           	<div id="entryTotalPrice${entry.product.code}">	                		
 	            		<format:price priceData="${entry.totalPrice}" displayFreeForZero="true" />
 	            	</div>
 	             </div>                                           	 
@@ -108,9 +106,9 @@
 			<c:if test="${entry.updateable}">
 	        	<ycommerce:testId code="cart_product_removeProduct">
 	              	<a href="javascript:void(0)" class="delete150618 btn-excluir-produto"
-                    	id="RemoveProduct_${entry.entryNumber}" class="submitRemoveProduct"
+                    	id="RemoveProduct_${entry.product.code}" class="submitRemoveProduct"
                         title="Remover"
-                        onClick="changeQuantityOrRemove('${entry.entryNumber}', true);"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                        onClick="changeQuantityOrRemove('${entry.product.code}', true);"><span class="glyphicon glyphicon-remove-sign"></span></a>
 	            </ycommerce:testId>
 	        </c:if>		
 		</li>		

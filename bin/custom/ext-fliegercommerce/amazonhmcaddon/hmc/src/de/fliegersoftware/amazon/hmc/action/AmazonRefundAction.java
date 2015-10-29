@@ -58,11 +58,8 @@ public class AmazonRefundAction extends ItemAction
 			refundRequestVal = (Double) paymentInfo.getAttribute("refundRequestAmount");
 			paymentInfo.setAttribute("refundRequestAmount", null);
 
-			final RefundRequest request = new RefundRequest();
-			request.setAmazonCaptureId((String) paymentInfo.getAttribute("amazonCaptureId"));
-			request.setRefundAmount(fillPrice(refundRequestVal, (String) paymentInfo.getAttribute("currencyRefundRequestAmount")));
-			request.setRefundReferenceId(String.valueOf(System.currentTimeMillis()));
-			request.setSellerId(credentials.getAmazonConfig().getMerchantId());
+			final RefundRequest request = credentials.getRefundRequest((String) paymentInfo.getAttribute("amazonCaptureId"),
+					refundRequestVal, (String) paymentInfo.getAttribute("currencyRefundRequestAmount"));
 
 			final RefundResponse refund = credentials.getService().refund(request);
 			final RefundDetails refundDetails = refund.getRefundResult().getRefundDetails();

@@ -1,9 +1,13 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
+import java.io.StringWriter;
 import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsService;
@@ -11,7 +15,6 @@ import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceClient;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
 
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
-import de.fliegersoftware.amazon.core.services.impl.DefaultAmazonConfigService;
 
 /**
  * @author taylor.savegnago
@@ -37,6 +40,18 @@ public class AbstractCommandImpl {
 		service = new OffAmazonPaymentsServiceClient(config);
 		
 		return service;
+	}
+
+	protected void logXml(Logger LOG, Object obj) {
+		try {
+			StringWriter writer = new StringWriter();
+			JAXBContext context = JAXBContext.newInstance(obj.getClass());
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.marshal(obj, writer);
+			LOG.info(writer.toString());
+		} catch (Exception e) {
+			// silent catch
+		}
 	}
 
 	protected AmazonConfigService getAmazonConfigService() {

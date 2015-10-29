@@ -25,14 +25,14 @@ import de.hybris.platform.hmc.util.action.ActionResult;
 import de.hybris.platform.hmc.webchips.Chip;
 import de.hybris.platform.hmc.webchips.DisplayState;
 import de.hybris.platform.jalo.Item;
-import de.hybris.platform.jalo.media.Media;
-import de.hybris.platform.jalo.media.MediaManager;
+import de.hybris.platform.jalo.JaloBusinessException;
 import de.hybris.platform.jalo.order.payment.PaymentInfo;
 import de.hybris.platform.jalo.type.ComposedType;
 import de.hybris.platform.util.Config;
 import de.hybris.platform.util.localization.Localization;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,7 +42,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
+import de.fliegersoftware.amazon.core.jalo.AmazoncoreManager;
 import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
+import de.fliegersoftware.amazon.core.jalo.media.AmazonLog;
 import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 import de.fliegersoftware.amazon.hmc.hmc.util.HMCAmazonButtonsManager;
 
@@ -126,6 +128,7 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 		if (parent.getParent() instanceof GenericItemChip)
 		{
 			final GenericItemChip genericChip = (GenericItemChip) parent.getParent();
+
 			if ("AmazonConfig".equals(genericChip.getItemType().getCode()))
 			{
 				createLogMedia((AmazonConfig) genericChip.getItem());
@@ -193,10 +196,16 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 				final AmazonConfig config = (AmazonConfig) item;
 				if (Boolean.valueOf(config.isEnableLog()))
 				{
+					Logger.getLogger("de.fliegersoftware.amazon.payment.ipn").setLevel(Level.INFO);
+					Logger.getLogger("de.fliegersoftware.amazon.payment").setLevel(Level.INFO);
+					Logger.getLogger("de.fliegersoftware.amazon.payment.addon.controllers.IpnController").setLevel(Level.INFO);
 					Logger.getLogger("de.fliegersoftware.amazon").setLevel(Level.INFO);
 				}
 				else
 				{
+					Logger.getLogger("de.fliegersoftware.amazon.payment.ipn").setLevel(Level.OFF);
+					Logger.getLogger("de.fliegersoftware.amazon.payment").setLevel(Level.OFF);
+					Logger.getLogger("de.fliegersoftware.amazon.payment.addon.controllers.IpnController").setLevel(Level.OFF);
 					Logger.getLogger("de.fliegersoftware.amazon").setLevel(Level.OFF);
 				}
 			}
@@ -223,23 +232,70 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 			{
 				break mediaUpdate;
 			}
-			Media media = amazonConfig.getLog();
-			if (media == null)
-			{
-				media = MediaManager.getInstance().createMedia("logAmazon");
-			}
-			media.setRealFileName(Config.getParameter("amazon.fileName"));
-			//			media.setFile(new File(Config.getParameter("log4j.appender.AMAZON.File")));
-			media.setInternalURL(Config.getParameter("log4j.appender.AMAZON.File"));
-			media.setURL("/amazonhmc/log/amazon");
-			media.setURL2("/amazonhmc/log/amazon");
-			media.setMime("text/plain");
-			amazonConfig.setLog(media);
+			fillAmazonApitLog(amazonConfig, "/amazonhmc/log/amazonapi.log", "1", "log4j.appender.AMAZONPAYMENT.File");
+			fillAmazonIpnLog(amazonConfig, "/amazonhmc/log/amazonipn.log", "2", "log4j.appender.AMAZONIPN.File");
+			fillAmazonLog(amazonConfig, "/amazonhmc/log/amazonlog.log", "3", "log4j.appender.AMAZONLOG.File");
 		}
 		catch (final Exception e)
 		{
 			LOG.error("Error while trying to create the amazon log media", e);
 		}
+	}
+
+	private void fillAmazonApitLog(final AmazonConfig config, final String url, final String number, final String file)
+	{
+		AmazonLog apiLog = config.getApiLog();
+		if (apiLog == null)
+		{
+			final Map<String, Object> attributeValues = new HashMap<>();
+			attributeValues.put(AmazonLog.CODE, "amazonApiLog");
+			apiLog = AmazoncoreManager.getInstance().createAmazonLog(attributeValues);
+		}
+		apiLog = buildMedia(apiLog, url, number, file);
+		config.setApiLog(apiLog);
+	}
+
+	private void fillAmazonIpnLog(final AmazonConfig config, final String url, final String number, final String file)
+	{
+		AmazonLog ipnLog = config.getIpnLog();
+		if (ipnLog == null)
+		{
+			final Map<String, Object> attributeValues = new HashMap<>();
+			attributeValues.put(AmazonLog.CODE, "amazonIpnLog");
+			ipnLog = AmazoncoreManager.getInstance().createAmazonLog(attributeValues);
+		}
+		ipnLog = buildMedia(ipnLog, url, number, file);
+		config.setIpnLog(ipnLog);
+	}
+
+	private void fillAmazonLog(final AmazonConfig config, final String url, final String number, final String file)
+	{
+		AmazonLog amazonLog = config.getAmazonLog();
+		if (amazonLog == null)
+		{
+			final Map<String, Object> attributeValues = new HashMap<>();
+			attributeValues.put(AmazonLog.CODE, "amazonLog");
+			amazonLog = AmazoncoreManager.getInstance().createAmazonLog(attributeValues);
+		}
+		amazonLog = buildMedia(amazonLog, url, number, file);
+		config.setAmazonLog(amazonLog);
+	}
+
+	private AmazonLog buildMedia(final AmazonLog media, final String url, final String number, final String file)
+	{
+		try
+		{
+			media.setRealFileName(Config.getParameter("amazon.fileName." + number));
+			media.setInternalURL(Config.getParameter(file));
+			media.setURL(url);
+			media.setURL2(url);
+			media.setMime("application/octet-stream");
+		}
+		catch (final JaloBusinessException e)
+		{
+			LOG.error("Error while setting infos to media object", e);
+		}
+		return media;
 	}
 
 	@Override

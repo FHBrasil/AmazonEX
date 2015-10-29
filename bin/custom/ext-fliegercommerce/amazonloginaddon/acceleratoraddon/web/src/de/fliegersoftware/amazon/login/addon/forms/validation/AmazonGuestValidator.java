@@ -22,12 +22,12 @@ public class AmazonGuestValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		final AmazonGuestForm guestForm = (AmazonGuestForm) target;
-		final String amazonOrderReferenceId = guestForm.getAmazonOrderReferenceId();
+		final String amazonGuestId = guestForm.getAmazonGuestId();
 		final String email = guestForm.getAmazonGuestEmail();
 
-		if (StringUtils.isEmpty(amazonOrderReferenceId))
+		if (StringUtils.isEmpty(amazonGuestId))
 		{
-			errors.rejectValue("amazonOrderReferenceId", "amazon.profile.orderreferenceid.invalid");
+			errors.rejectValue("amazonGuestId", "amazon.profile.amazonid.invalid");
 		}
 		if (StringUtils.isEmpty(email))
 		{

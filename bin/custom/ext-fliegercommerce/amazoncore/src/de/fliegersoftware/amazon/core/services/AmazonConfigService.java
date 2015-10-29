@@ -47,4 +47,6 @@ public interface AmazonConfigService {
 	boolean isExcludePackstationDelivery();
 	String getOrderStatusOnSuccessfullShipping();
 	boolean isManualAdditionOnFirstLogin();
+	boolean isSandboxSimulate();
+	boolean allowGuestCheckout();
 }

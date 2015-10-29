@@ -13,6 +13,7 @@ import de.fliegersoftware.amazon.core.services.AmazonUserService;
 import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
+import de.hybris.platform.commercefacades.user.impl.DefaultUserFacade;
 import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
@@ -23,7 +24,7 @@ import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
-public class DefaultAmazonUserFacade implements AmazonUserFacade {
+public class DefaultAmazonUserFacade extends DefaultUserFacade implements AmazonUserFacade {
 	
 	private AmazonUserService amazonUserService;
 	

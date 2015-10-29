@@ -16,7 +16,6 @@
 		<auth-method>BASIC</auth-method>
 	</login-config>
 
-
 	<filter>
    	<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -57,6 +56,27 @@
 	- The RequestContextListener is needed for exposing the 'request' scope to the context.
 	  Furthermore it is needed when overriding the 'jalosession' bean for your web application.
  -->
+ 
+ 	<servlet>
+		<servlet-name>AmazonLogDownloadServlet</servlet-name>
+		<servlet-class>de.fliegersoftware.amazon.hmc.servlet.AmazonLogDownloadServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AmazonLogDownloadServlet</servlet-name>
+		<url-pattern>/AmazonLogDownloadServlet</url-pattern>
+	</servlet-mapping>
+	
+ 	<servlet>
+		<servlet-name>AmazonSandboxSimulationServlet</servlet-name>
+		<servlet-class>de.fliegersoftware.amazon.hmc.servlet.AmazonSandboxSimulationServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AmazonSandboxSimulationServlet</servlet-name>
+		<url-pattern>/AmazonSandboxSimulationServlet</url-pattern>
+	</servlet-mapping>
+ 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>WEB-INF/amazonhmcaddon-web-spring.xml</param-value>

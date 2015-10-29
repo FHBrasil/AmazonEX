@@ -110,6 +110,26 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	}
 
 	@Override
+	public boolean setDeliveryAddress(AddressData addressData) {
+		// if address isn't in the address book, it doesn't validate
+		CustomerModel currentCustomer = getCheckoutCustomerStrategy().getCurrentUserForCheckout();
+		if(!getCheckoutCustomerStrategy().isAnonymousCheckout()
+				|| !getUserService().getAnonymousUser().equals(currentCustomer)) {
+			// Create the new address model
+			AddressModel address = getModelService().create(AddressModel.class);
+			getAddressReversePopulator().populate(addressData, address);
+
+			// Store the address against the user
+			address = saveDeliveryAddressIfNew(currentCustomer, address);
+
+			// Update the address ID in the newly created address
+			if(address.getPk() != null)
+				addressData.setId(address.getPk().toString());
+		}
+		return super.setDeliveryAddress(addressData);
+	}
+
+	@Override
 	protected void afterPlaceOrder(CartModel cartModel, OrderModel orderModel) {
 		super.afterPlaceOrder(cartModel, orderModel);
 		if (cartModel.getUser() instanceof CustomerModel) {
@@ -121,17 +141,16 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		}
 	}
 
-	private void saveDeliveryAddressIfNew(CustomerModel customer, AddressModel address) {
-		saveAddressIfNew(customer, address, false);
+	private AddressModel saveDeliveryAddressIfNew(CustomerModel customer, AddressModel address) {
+		return saveAddressIfNew(customer, address, false);
 	}
-	private void saveBillingAddressIfNew(CustomerModel customer, AddressModel address) {
-		saveAddressIfNew(customer, address, true);
+	private AddressModel saveBillingAddressIfNew(CustomerModel customer, AddressModel address) {
+		return saveAddressIfNew(customer, address, true);
 	}
-	private void saveAddressIfNew(CustomerModel customer, AddressModel address, boolean isBillingAddress) {
+	private AddressModel saveAddressIfNew(CustomerModel customer, AddressModel address, boolean isBillingAddress) {
 		if(address == null)
-			return;
+			return null;
 
-		boolean isNew = true;
 		for(AddressModel existingAddress : getCustomerAccountService().getAddressBookEntries(customer)) {
 			if(StringUtils.equalsIgnoreCase(address.getLine1(), existingAddress.getLine1())
 				&& StringUtils.equalsIgnoreCase(address.getLine2(), existingAddress.getLine2())
@@ -143,19 +162,20 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 					|| (address.getCountry() != null && existingAddress.getCountry() != null && ObjectUtils.equals(address.getCountry().getPk(), existingAddress.getCountry().getPk()))
 					)
 				&& StringUtils.equalsIgnoreCase(address.getPostalcode(), existingAddress.getPostalcode())
-				&& StringUtils.equalsIgnoreCase(address.getPhone1(), existingAddress.getPhone1())) {
-				isNew = false;
-				break;
+				&& StringUtils.equalsIgnoreCase(address.getPhone1(), existingAddress.getPhone1())
+				&& customer.equals(existingAddress.getOwner())) {
+				return existingAddress;
 			}
 		}
-		if(isNew) {
-			AddressData addressData = getAddressConverter().convert(address);
-			addressData.setBillingAddress(isBillingAddress);
-			AddressModel addressModel = getModelService().create(AddressModel.class);
-			getAddressReversePopulator().populate(addressData, addressModel);
-			addressModel.setVisibleInAddressBook(true);
-			getCustomerAccountService().saveAddressEntry(customer, addressModel);
-		}
+
+		AddressData addressData = getAddressConverter().convert(address);
+		addressData.setBillingAddress(isBillingAddress);
+		AddressModel addressModel = getModelService().create(AddressModel.class);
+		getAddressReversePopulator().populate(addressData, addressModel);
+		addressModel.setVisibleInAddressBook(true);
+		addressModel.setOwner(customer);
+		getCustomerAccountService().saveAddressEntry(customer, addressModel);
+		return addressModel;
 	}
 
 	protected AmazonCommerceCheckoutService getCommerceCheckoutService()

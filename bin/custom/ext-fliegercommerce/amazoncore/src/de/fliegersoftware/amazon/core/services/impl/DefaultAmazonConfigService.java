@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Required;
 import de.fliegersoftware.amazon.core.enums.AuthorizationModeEnum;
 import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
+import de.fliegersoftware.amazon.core.enums.CheckoutStrategyEnum;
+import de.fliegersoftware.amazon.core.enums.GuestCheckoutStrategyEnum;
 import de.fliegersoftware.amazon.core.enums.OperationModeEnum;
 import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.fliegersoftware.amazon.core.model.config.AmazonConfigModel;
@@ -89,6 +91,15 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 	public boolean isSandboxMode() {
 		if(hasAmazonConfig())
 			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isSandboxMode();
+		else
+			return false;
+	}
+	
+	@Override
+	public boolean isSandboxSimulate() {
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isSandboxMode() && 
+					getBaseStoreService().getCurrentBaseStore().getAmazonConfig().isSandboxSimulate();
 		else
 			return false;
 	}
@@ -219,6 +230,21 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getOrderStatusOnSuccessfullShipping();
 		else
 			return null;
+	}
+
+	@Override
+	public boolean allowGuestCheckout() {
+		if(hasAmazonConfig()) {
+			if (getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getGuestCheckoutStrategy() != null) {
+				if (getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getGuestCheckoutStrategy().equals(GuestCheckoutStrategyEnum.ALLOWGUESTCHECKOUT)) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		
+		return true;
 	}
 	
 	protected BaseStoreService getBaseStoreService() {

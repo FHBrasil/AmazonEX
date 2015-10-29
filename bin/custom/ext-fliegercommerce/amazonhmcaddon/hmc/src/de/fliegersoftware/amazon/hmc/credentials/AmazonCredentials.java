@@ -24,7 +24,10 @@ import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceClient;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
+import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.CaptureDetails;
+import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
+import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResponse;
 import com.amazonservices.mws.offamazonpayments.model.GetCaptureDetailsRequest;
@@ -35,6 +38,7 @@ import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
 import com.amazonservices.mws.offamazonpayments.model.OrderTotal;
 import com.amazonservices.mws.offamazonpayments.model.Price;
 import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
+import com.amazonservices.mws.offamazonpayments.model.RefundRequest;
 
 import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
 import de.fliegersoftware.amazon.core.jalo.AmazonRefund;
@@ -202,9 +206,7 @@ public class AmazonCredentials
 	{
 		populate: if (StringUtils.isNotBlank(orderReferenceId))
 		{
-			final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
-			request.setAmazonOrderReferenceId(orderReferenceId);
-			request.setSellerId(next.getMerchantId());
+			final GetOrderReferenceDetailsRequest request = getOrderDetailsRequest(orderReferenceId, next.getMerchantId());
 			try
 			{
 
@@ -259,10 +261,8 @@ public class AmazonCredentials
 		populate: if (orderDetails != null && orderDetails.getIdList() != null
 				&& CollectionUtils.isNotEmpty(orderDetails.getIdList().getMember()))
 		{
-			final GetAuthorizationDetailsRequest request = new GetAuthorizationDetailsRequest();
-
-			request.setAmazonAuthorizationId(orderDetails.getIdList().getMember().get(0));
-			request.setSellerId(next.getMerchantId());
+			final GetAuthorizationDetailsRequest request = getAuthorizationDetailsRequest(orderDetails.getIdList().getMember()
+					.get(0), next.getMerchantId());
 
 			GetAuthorizationDetailsResponse authorizationDetails = null;
 			try
@@ -306,7 +306,6 @@ public class AmazonCredentials
 		return null;
 	}
 
-
 	/**
 	 * fills capture information via amazon client service
 	 * 
@@ -322,10 +321,8 @@ public class AmazonCredentials
 		populate: if (authDetails != null && authDetails.getIdList() != null
 				&& CollectionUtils.isNotEmpty(authDetails.getIdList().getMember()))
 		{
-			final GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
-
-			request.setAmazonCaptureId(authDetails.getIdList().getMember().get(0));
-			request.setSellerId(next.getMerchantId());
+			final GetCaptureDetailsRequest request = getCaptureDetailsRequest(authDetails.getIdList().getMember().get(0),
+					next.getMerchantId());
 
 			try
 			{
@@ -398,9 +395,7 @@ public class AmazonCredentials
 
 			populate: for (final String id : captureDetails.getIdList().getMember())
 			{
-				final GetRefundDetailsRequest request = new GetRefundDetailsRequest();
-				request.setAmazonRefundId(id);
-				request.setSellerId(next.getMerchantId());
+				final GetRefundDetailsRequest request = getRefundDetailsRequest(id, next.getMerchantId());
 				try
 				{
 					final RefundDetails refundDetails = service.getRefundDetails(request).getGetRefundDetailsResult()
@@ -443,6 +438,58 @@ public class AmazonCredentials
 				LOG.error("Error while removing refund objects in the payment info", e);
 			}
 		}
+	}
+
+	/**
+	 * @param orderReferenceId
+	 * @param merchantId
+	 * @return orderRequest
+	 */
+	public GetOrderReferenceDetailsRequest getOrderDetailsRequest(final String orderReferenceId, final String merchantId)
+	{
+		final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
+		request.setAmazonOrderReferenceId(orderReferenceId);
+		request.setSellerId(merchantId);
+		return request;
+	}
+
+	/**
+	 * @param authorizationId
+	 * @param merchantId
+	 * @return authorizationRequest
+	 */
+	public GetAuthorizationDetailsRequest getAuthorizationDetailsRequest(final String authorizationId, final String merchantId)
+	{
+		final GetAuthorizationDetailsRequest request = new GetAuthorizationDetailsRequest();
+		request.setAmazonAuthorizationId(authorizationId);
+		request.setSellerId(merchantId);
+		return request;
+	}
+
+	/**
+	 * @param captureId
+	 * @param merchantId
+	 * @return captureRequest
+	 */
+	public GetCaptureDetailsRequest getCaptureDetailsRequest(final String captureId, final String merchantId)
+	{
+		final GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
+		request.setAmazonCaptureId(captureId);
+		request.setSellerId(merchantId);
+		return request;
+	}
+
+	/**
+	 * @param amazonRefundId
+	 * @param merchantId
+	 * @return refundRequest
+	 */
+	public GetRefundDetailsRequest getRefundDetailsRequest(final String amazonRefundId, final String merchantId)
+	{
+		final GetRefundDetailsRequest request = new GetRefundDetailsRequest();
+		request.setAmazonRefundId(amazonRefundId);
+		request.setSellerId(merchantId);
+		return request;
 	}
 
 	/**
@@ -527,5 +574,79 @@ public class AmazonCredentials
 	{
 		return service;
 	}
+
+	/**
+	 * @param captureId
+	 * @param value
+	 * @param currency
+	 * @return refundRequest
+	 * @throws Exception
+	 */
+	public RefundRequest getRefundRequest(final String captureId, final Double value, final String currency) throws Exception
+	{
+		final RefundRequest request = new RefundRequest();
+		request.setAmazonCaptureId(captureId);
+		request.setRefundAmount(fillPrice(value, currency));
+		request.setRefundReferenceId(String.valueOf(System.currentTimeMillis()));
+		request.setSellerId(getAmazonConfig().getMerchantId());
+		return request;
+	}
+
+	/**
+	 * @param authorizationId
+	 * @param authorizationAmount
+	 * @return captureRequest
+	 */
+	public CaptureRequest getCaptureRequest(final String authorizationId, final Price authorizationAmount)
+	{
+		final CaptureRequest request = new CaptureRequest();
+		request.setSellerId(getAmazonConfig().getMerchantId());
+		request.setAmazonAuthorizationId(authorizationId);
+		request.setCaptureAmount(authorizationAmount);
+		request.setCaptureReferenceId(String.valueOf(System.currentTimeMillis()));
+		return request;
+	}
+
+
+	/**
+	 * @return AuthorizeRequest
+	 */
+	public AuthorizeRequest getAuthorizeRequest(final String orderReferenceId, final Price amount)
+	{
+		final AuthorizeRequest request = new AuthorizeRequest();
+		request.setAuthorizationAmount(amount);
+		request.setAmazonOrderReferenceId(orderReferenceId);
+		request.setAuthorizationReferenceId(String.valueOf(System.currentTimeMillis()));
+		request.setSellerId(getAmazonConfig().getMerchantId());
+		return request;
+	}
+
+	/**
+	 * @return AuthorizeRequest
+	 */
+	public CloseOrderReferenceRequest getCloseOrderReferenceRequest(final String orderReferenceId)
+	{
+		final CloseOrderReferenceRequest request = new CloseOrderReferenceRequest();
+		request.setAmazonOrderReferenceId(orderReferenceId);
+		request.setSellerId(getAmazonConfig().getMerchantId());
+		return request;
+	}
+
+	/**
+	 * create and fill a new price object
+	 * 
+	 * @param refundRequestVal
+	 * @param currency
+	 * @return amount : Price
+	 * @throws Exception
+	 */
+	private Price fillPrice(final Double refundRequestVal, final String currency) throws Exception
+	{
+		final Price price = new Price();
+		price.setAmount(String.valueOf(refundRequestVal));
+		price.setCurrencyCode(currency);
+		return price;
+	}
+
 
 }

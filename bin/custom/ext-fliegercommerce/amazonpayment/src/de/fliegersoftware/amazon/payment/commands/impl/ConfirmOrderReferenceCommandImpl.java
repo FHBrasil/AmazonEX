@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
 import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceResponse;
 
 import de.fliegersoftware.amazon.payment.commands.ConfirmOrderReferenceCommand;
 import de.hybris.platform.payment.commands.result.AbstractResult;
@@ -27,16 +28,18 @@ public class ConfirmOrderReferenceCommandImpl extends AbstractCommandImpl implem
 			LOG.info("-----------------------------------------------------");
 			
 			req.setSellerId(getSellerId());
-			getOffAmazonPaymentsService().confirmOrderReference(req);
+			logXml(LOG, req);
+			ConfirmOrderReferenceResponse response = getOffAmazonPaymentsService().confirmOrderReference(req);
+			logXml(LOG, response);
 			
 		} catch (OffAmazonPaymentsServiceException ex) {
-			System.out.println("Caught Exception: " + ex.getMessage());
-			System.out.println("Response Status Code: " + ex.getStatusCode());
-			System.out.println("Error Code: " + ex.getErrorCode());
-			System.out.println("Error Type: " + ex.getErrorType());
-			System.out.println("Request ID: " + ex.getRequestId());
-			System.out.println("XML: " + ex.getXML());
-			System.out.println("ResponseHeaderMetadata: " + ex.getResponseHeaderMetadata());
+			LOG.error("Caught Exception: " + ex.getMessage());
+			LOG.error("Response Status Code: " + ex.getStatusCode());
+			LOG.error("Error Code: " + ex.getErrorCode());
+			LOG.error("Error Type: " + ex.getErrorType());
+			LOG.error("Request ID: " + ex.getRequestId());
+			LOG.error("XML: " + ex.getXML());
+			LOG.error("ResponseHeaderMetadata: " + ex.getResponseHeaderMetadata());
 		}
 		
 		return null;

@@ -26,6 +26,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.fliegersoftware.amazon.core.jalo.AmazonPaymentPaymentInfo;
+import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
+import de.fliegersoftware.amazon.hmc.AmazonSandboxSimulationChip;
+import de.fliegersoftware.amazon.hmc.credentials.AmazonCredentials;
 
 
 /**
@@ -142,11 +145,25 @@ public class HMCAmazonButtonsManager
 	{
 		for (final ItemActionChip refundButton : refundButtons)
 		{
-			if (refundButton.getName().contains("refund"))
+			if (refundButton.getName().contains("simulate") && refundButton.getName().contains("refund"))
+			{
+				checkButtonAvailability(refundButton, simulationButtonRules(refundButton));
+			}
+			else if (refundButton.getName().contains("refund"))
 			{
 				checkButtonAvailability(refundButton, refundRefundButtonRules(refundButton));
 			}
 		}
+	}
+
+	/**
+	 * @param simulationButton
+	 * @return simulation availability
+	 */
+	private boolean simulationButtonRules(final ItemActionChip simulationButton)
+	{
+		final AmazonConfig amazonConfig = AmazonCredentials.getInstance().getAmazonConfig();
+		return amazonConfig.isSandboxMode() && amazonConfig.isSandboxSimulate();
 	}
 
 	/**
@@ -156,7 +173,11 @@ public class HMCAmazonButtonsManager
 	{
 		for (final ItemActionChip captureButton : captureButtons)
 		{
-			if (captureButton.getName().contains("capture"))
+			if (captureButton.getName().contains("simulate") && captureButton.getName().contains("capture"))
+			{
+				checkButtonAvailability(captureButton, simulationButtonRules(captureButton));
+			}
+			else if (captureButton.getName().contains("capture"))
 			{
 				checkButtonAvailability(captureButton, captureCaptureButtonRules(captureButton));
 			}
@@ -172,13 +193,20 @@ public class HMCAmazonButtonsManager
 	{
 		for (final ItemActionChip authorizationButton : authorizationButtons)
 		{
-			if (authorizationButton.getName().contains("close"))
+			if (authorizationButton.getName().contains("simulate") && authorizationButton.getName().contains("authorize"))
 			{
-				checkButtonAvailability(authorizationButton, authorizationCloseButtonRules(authorizationButton));
+				checkButtonAvailability(authorizationButton, simulationButtonRules(authorizationButton));
 			}
-			if (authorizationButton.getName().contains("authorize"))
+			else
 			{
-				checkButtonAvailability(authorizationButton, authorizationAuthorizeButtonRules(authorizationButton));
+				if (authorizationButton.getName().contains("close"))
+				{
+					checkButtonAvailability(authorizationButton, authorizationCloseButtonRules(authorizationButton));
+				}
+				if (authorizationButton.getName().contains("authorize"))
+				{
+					checkButtonAvailability(authorizationButton, authorizationAuthorizeButtonRules(authorizationButton));
+				}
 			}
 		}
 	}
@@ -192,13 +220,20 @@ public class HMCAmazonButtonsManager
 	{
 		for (final ItemActionChip orderButton : orderButtons)
 		{
-			if (orderButton.getName().contains("cancel"))
+			if (orderButton.getName().contains("simulate") && orderButton.getName().contains("order"))
 			{
-				checkButtonAvailability(orderButton, orderCancelButtonRules(orderButton));
+				checkButtonAvailability(orderButton, simulationButtonRules(orderButton));
 			}
-			if (orderButton.getName().contains("close"))
+			else
 			{
-				checkButtonAvailability(orderButton, orderCloseButtonRules(orderButton));
+				if (orderButton.getName().contains("cancel"))
+				{
+					checkButtonAvailability(orderButton, orderCancelButtonRules(orderButton));
+				}
+				if (orderButton.getName().contains("close"))
+				{
+					checkButtonAvailability(orderButton, orderCloseButtonRules(orderButton));
+				}
 			}
 		}
 	}
@@ -369,7 +404,8 @@ public class HMCAmazonButtonsManager
 		{
 			return Collections.singletonList((ItemActionChip) chipObject);
 		}
-		else if (chipObject instanceof AttributeChip || chipObject instanceof InlineShortcutChip)
+		else if (chipObject instanceof AttributeChip || chipObject instanceof InlineShortcutChip
+				|| chipObject instanceof AmazonSandboxSimulationChip)
 		{
 			return Collections.EMPTY_LIST;
 		}

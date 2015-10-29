@@ -2,20 +2,11 @@ package de.fliegersoftware.amazon.login.addon.forms;
 
 public class AmazonGuestForm {
 
-	private String amazonOrderReferenceId;
 	private String amazonGuestId;
 	private String amazonGuestName;
 	private String amazonGuestEmail;
 
 	public AmazonGuestForm() {
-	}
-
-	public String getAmazonOrderReferenceId() {
-		return amazonOrderReferenceId;
-	}
-
-	public void setAmazonOrderReferenceId(String amazonOrderReferenceId) {
-		this.amazonOrderReferenceId = amazonOrderReferenceId;
 	}
 
 	public String getAmazonGuestId() {

@@ -81,7 +81,7 @@
 	  -->
   	<alias name="amazonUserFacade" alias="amazonUserFacade" />
 	
-	<bean id="amazonUserFacade" class="de.fliegersoftware.amazon.core.facades.impl.DefaultAmazonUserFacade">
+	<bean id="amazonUserFacade" class="de.fliegersoftware.amazon.core.facades.impl.DefaultAmazonUserFacade" parent="defaultUserFacade">
 		<property name="amazonUserService" ref="amazonUserService" />
 		<property name="userService" ref="userService" />
 		<property name="modelService" ref="modelService" />
@@ -102,5 +102,13 @@
     <bean id="defaultAmazonConfigService" class="de.fliegersoftware.amazon.core.services.impl.DefaultAmazonConfigService">
         <property name="baseStoreService" ref="baseStoreService" />
     </bean>
+    
+    <alias alias="customerEmailResolutionService" name="defaultCustomerEmailResolutionService"/>
+	<bean id="defaultCustomerEmailResolutionService" class="de.fliegersoftware.amazon.core.services.impl.DefaultAmazonCustomerEmailResolutionService">
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
 	
+	<bean id="amazonCustomerFacade" class="de.fliegersoftware.amazon.core.facades.impl.DefaultAmazonCustomerFacade" parent="defaultCustomerFacade">
+		<property name="amazonUserFacade" ref="amazonUserFacade"/>
+	</bean>
 </beans>

@@ -9,15 +9,15 @@ public class AmazonLoginToken implements LoginToken {
 	
 	private User user;
 	
-	public AmazonLoginToken(String email)
+	public AmazonLoginToken(String uid)
 	{
 		super();
-		init(email);
+		init(uid);
 	}
 	
-	private void init(String email)
+	private void init(String uid)
 	{
-		user = UserManager.getInstance().getUserByLogin(email);
+		user = UserManager.getInstance().getUserByLogin(uid);
 	}
 
 	@Override

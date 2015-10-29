@@ -21,12 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.CookieGenerator;
 
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
@@ -50,6 +51,7 @@ import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.CartModificationData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
+import de.hybris.platform.commerceservices.enums.CustomerType;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.commerceservices.order.CommerceCartService;
 import de.hybris.platform.order.CartService;
@@ -60,8 +62,6 @@ import de.hybris.platform.order.InvalidCartException;
 public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 	private static final Logger LOG = Logger.getLogger(AmazonCheckoutPageController.class);
-	public static final String REQUEST_MODEL_ATTRIBUTE_NAME = "request";
-	public static final String SECURE_GUID_SESSION_KEY = "acceleratorSecureGUID";
 	private static final String AMAZON_CHECKOUT_CMS_PAGE_LABEL = "amazonCheckout";
 	private static final String REDIRECT_URL_AMAZON_CHECKOUT = REDIRECT_PREFIX + "/checkout/amazon";
 	private static final String REDIRECT_URL_CART = REDIRECT_PREFIX + "/cart";
@@ -80,17 +80,15 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 
 	@Resource(name="themeSource")
 	private MessageSource messageSource;
-	
-    @Resource
-    private CommerceCartService commerceCartService;
-    
-    @Resource(name = "cartService")
+
+	@Resource
+	private CommerceCartService commerceCartService;
+
+	@Resource(name = "cartService")
 	private CartService cartService;
 
-	@Resource(name = "guidCookieGenerator")
-	private CookieGenerator cookieGenerator;
-
 	@RequestMapping(method = RequestMethod.GET)
+	@RequireHardLogIn
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
 		// redirects to cart if not ready for checkout
 		if (!hasValidCart() && !getCheckoutFacade().hasShippingItems()) {
@@ -98,26 +96,19 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		}
 		LOG.info("AmazonCheckout - checkoutPage");
 
-		if(getCheckoutCustomerStrategy().isAnonymousCheckout()) {
-			if(!Boolean.TRUE.equals(getSessionService().getAttribute(WebConstants.ANONYMOUS_CHECKOUT)))
-				model.addAttribute("sendGuestInformation", Boolean.TRUE);
-		} else {
-			if(!isHardLogin(model)) {
-				model.addAttribute("sendLoginInformation", Boolean.TRUE);
-			}
-		}
+		getCheckoutFacade().setDeliveryModeIfAvailable();
 
 		// sets checkout data
 		CartData cartData = getCheckoutFacade().getCheckoutCart();
 		model.addAttribute("cartData", cartData);
 		model.addAttribute("deliveryMethods", getCheckoutFacade().getSupportedDeliveryModes());
 		model.addAttribute("amazonPlaceOrderForm", new AmazonPlaceOrderForm());
-		
+
 		//sets form for update cart
 		createProductList(model);
 
 		// renders extra controls based on configuration
-		model.addAttribute("sandboxMode", Boolean.valueOf(amazonConfigService.isSandboxMode()));
+		model.addAttribute("sandboxSimulate", Boolean.valueOf(amazonConfigService.isSandboxSimulate()));
 		model.addAttribute("chargeOnOrder", Boolean.valueOf(CaptureModeEnum.IMMEDIATE.equals(amazonConfigService.getCaptureMode())));
 
 		// sets cms data and pagetype
@@ -138,26 +129,32 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			, @RequestParam("access_token") String accessToken, final Model model) {
 		LOG.info("AmazonCheckout - doSelectDeliveryAddress");
 		AmazonAjaxResponse response = new AmazonAjaxResponse();
+		response.setSuccess(false);
 		if (!hasValidCart()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if (!getCheckoutFacade().hasShippingItems()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
+		if (StringUtils.isEmpty(accessToken)) {
+			response.setRedirect(REDIRECT_URL_CART);
+		}
+
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
 			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonOrderReferenceId, accessToken);
-			
-			response.setSuccess(false);
-			
-			if(details != null)
-			{
-				if(details.getAddressData() == null) {
+
+			if (details != null) {
+				if (details.getAddressData() == null) {
+					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
-				} else if(!getCheckoutFacade().isDeliveryCountrySupported(details.getAddressData().getCountry())) {
+				} else if (!getCheckoutFacade().isDeliveryCountrySupported(details.getAddressData().getCountry())) {
+					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.country.invalid"));
-				} else if(!getCheckoutFacade().setDeliveryAddress(details.getAddressData())) {
+				} else if (!getCheckoutFacade().setDeliveryAddress(details.getAddressData())) {
+					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.packstation.invalid"));
-				} else if(!getCheckoutFacade().setDeliveryModeIfAvailable()) {
+				} else if (!getCheckoutFacade().setDeliveryModeIfAvailable()) {
+					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
 				} else {
 					// successful! silent response
@@ -168,41 +165,43 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 					response.setSuccess(true);
 				}
 			}
-			else{
-				response.setShowMessage(getLocalizedMessage("amazon.address.country.invalid"));
-			}
+			else
+			{
+				getCheckoutFacade().removeDeliveryAddress();
+				response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
+			}			
 			model.addAttribute("cartData", getCheckoutFacade().getCheckoutCart());
 		}
 		model.addAttribute("amazonAjaxResponse", response);
 		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.Fragments.AmazonCheckoutOrderDetails;
 	}
-	
+
 	/**
-     * @param model
-     * @param selectedDeliveryMethod
-     * @return
-     */
-    // @Override
-    @RequestMapping(value = "/select-delivery-method", method = RequestMethod.POST, 
-    				produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequireHardLogIn
-    public String doSelectDeliveryMode(@RequestParam("selectedDeliveryMethod") final String selectedDeliveryMethod, final Model model) {
-    	
-    	AmazonAjaxResponse response = new AmazonAjaxResponse();
-    	if (!hasValidCart()) {
+	 * @param model
+	 * @param selectedDeliveryMethod
+	 * @return
+	 */
+	// @Override
+	@RequestMapping(value = "/select-delivery-method", method = RequestMethod.POST, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequireHardLogIn
+	public String doSelectDeliveryMode(@RequestParam("selectedDeliveryMethod") final String selectedDeliveryMethod, final Model model) {
+
+		AmazonAjaxResponse response = new AmazonAjaxResponse();
+		if (!hasValidCart()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if (!getCheckoutFacade().hasShippingItems()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
-        if (StringUtils.isNotEmpty(selectedDeliveryMethod)) {
-            getCheckoutFacade().setDeliveryMode(selectedDeliveryMethod);
-            model.addAttribute("cartData", getCheckoutFacade().getCheckoutCart());
-            response.setSuccess(true);
-        }
-        model.addAttribute("amazonAjaxResponse", response);
-        return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.Fragments.AmazonCheckoutOrderDetails;
-    }
+		if (StringUtils.isNotEmpty(selectedDeliveryMethod)) {
+			getCheckoutFacade().setDeliveryMode(selectedDeliveryMethod);
+			model.addAttribute("cartData", getCheckoutFacade().getCheckoutCart());
+			response.setSuccess(true);
+		}
+		model.addAttribute("amazonAjaxResponse", response);
+		return AmazonpaymentaddonControllerConstants.Views.Pages.Checkout.Fragments.AmazonCheckoutOrderDetails;
+	}
 
 	@RequestMapping(value = "/select-payment-method", method = RequestMethod.POST)
 	public @ResponseBody AmazonAjaxResponse doSelectPaymentMethod(@RequestParam("amazonOrderReferenceId") String amazonOrderReferenceId, final RedirectAttributes model) {
@@ -215,113 +214,150 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {
-			
+
 		}
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody ResponseEntity<Map<String, CartData>> updateCartQuantities(@RequestParam("entryNumber") final long entryNumber,
-            final Model model, @Valid final UpdateQuantityForm form,
-            final BindingResult bindingResult, final HttpServletRequest request,
-            final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
+	public @ResponseBody ResponseEntity<Map<String, CartData>> updateCartQuantities(@RequestParam("productCode") final String productCode,
+			final Model model, @Valid final UpdateQuantityForm form,
+			final BindingResult bindingResult, final HttpServletRequest request,
+			final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
 		Map results = new HashMap();
-        if (bindingResult.hasErrors()) {
-            for (final ObjectError error : bindingResult.getAllErrors()) {
-                if (error.getCode().equals("typeMismatch")) {
-                    GlobalMessages.addErrorMessage(model, "basket.error.quantity.invalid");
-                } else {
-                    GlobalMessages.addErrorMessage(model, error.getDefaultMessage());
-                }
-            }
-        } else if (cartFacade.getSessionCart().getEntries() != null) {
-            try {
-                final CartModificationData cartModification =
-                        cartFacade.updateCartEntry(entryNumber, form.getQuantity().longValue());
-                if (cartModification.getQuantity() == form.getQuantity().longValue()) {
-                    // Success
-                    if (cartModification.getQuantity() == 0) {
-                        // Success in removing entry
-                        GlobalMessages.addFlashMessage(redirectModel,
-                                GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.remove");
-                        results.put("message", getMessageSource().getMessage("basket.page.message.remove", null, getI18nService().getCurrentLocale()));
-                    } else {
-                        // Success in update quantity
-                        GlobalMessages.addFlashMessage(redirectModel,
-                                GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.update");
-                        results.put("message", getMessageSource().getMessage("basket.page.message.update", null, getI18nService().getCurrentLocale()));
-                    }
-                } else if (cartModification.getQuantity() > 0) {
-                    // Less than successful
-                    GlobalMessages.addFlashMessage(
-                            redirectModel,
-                            GlobalMessages.ERROR_MESSAGES_HOLDER,
-                            "basket.page.message.update.reducedNumberOfItemsAdded.lowStock",
-                            new Object[] {
-                                    cartModification.getEntry().getProduct().getName(),
-                                    cartModification.getQuantity(),
-                                    form.getQuantity(),
-                                    request.getRequestURL().append(
-                                            cartModification.getEntry().getProduct().getUrl()) });
-                    results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.lowStock", new Object[] {
-                            cartModification.getEntry().getProduct().getName(),
-                            cartModification.getQuantity(),
-                            form.getQuantity(),
-                            request.getRequestURL().append(
-                                    cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
-                } else {
-                    // No more stock available
-                    GlobalMessages.addFlashMessage(
-                            redirectModel,
-                            GlobalMessages.ERROR_MESSAGES_HOLDER,
-                            "basket.page.message.update.reducedNumberOfItemsAdded.noStock",
-                            new Object[] {
-                                    cartModification.getEntry().getProduct().getName(),
-                                    request.getRequestURL().append(
-                                            cartModification.getEntry().getProduct().getUrl()) });
-                    results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.noStock", new Object[] {
-                            cartModification.getEntry().getProduct().getName(),
-                            request.getRequestURL().append(
-                                    cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
-                }
-                // Redirect to the cart page on update success so that the browser doesn't re-post
-                // again
-                final CartData cartData = getCheckoutFacade().getCheckoutCart();
-                results.put("cartData", cartData);
-                final String referer = request.getHeader("Referer");
-                if (StringUtils.isNotBlank(referer)) {
-                	return new ResponseEntity(results, HttpStatus.OK);
-                }
-                return new ResponseEntity(results, HttpStatus.OK);
-            } catch (final CommerceCartModificationException ex) {
-                LOG.warn("Couldn't update product with the entry number: " + entryNumber + ".", ex);
-            }
-        }
-        return new ResponseEntity(results, HttpStatus.OK);
-    }
-	
+		long entryNumber = 0;
+		if(!productCode.isEmpty())
+		{
+			for(final OrderEntryData entry : getCheckoutFacade().getCheckoutCart().getEntries())
+			{
+				if(entry.getProduct().getCode().equals(productCode))
+				{
+					entryNumber = entry.getEntryNumber();
+				}
+			}
+		}
+		if (bindingResult.hasErrors()) {
+			for (final ObjectError error : bindingResult.getAllErrors()) {
+				if (error.getCode().equals("typeMismatch")) {
+					GlobalMessages.addErrorMessage(model, "basket.error.quantity.invalid");
+				} else {
+					GlobalMessages.addErrorMessage(model, error.getDefaultMessage());
+				}
+			}
+		} else if (cartFacade.getSessionCart().getEntries() != null) {
+			try {
+				final CartModificationData cartModification =
+						cartFacade.updateCartEntry(entryNumber, form.getQuantity().longValue());
+				if (cartModification.getQuantity() == form.getQuantity().longValue()) {
+					// Success
+					if (cartModification.getQuantity() == 0) {
+						// Success in removing entry
+						GlobalMessages.addFlashMessage(redirectModel,
+								GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.remove");
+						results.put("message", getMessageSource().getMessage("basket.page.message.remove", null, getI18nService().getCurrentLocale()));
+					} else {
+						// Success in update quantity
+						GlobalMessages.addFlashMessage(redirectModel,
+								GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.update");
+						results.put("message", getMessageSource().getMessage("basket.page.message.update", null, getI18nService().getCurrentLocale()));
+					}
+				} else if (cartModification.getQuantity() > 0) {
+					// Less than successful
+					GlobalMessages.addFlashMessage(
+							redirectModel,
+							GlobalMessages.ERROR_MESSAGES_HOLDER,
+							"basket.page.message.update.reducedNumberOfItemsAdded.lowStock",
+							new Object[] {
+									cartModification.getEntry().getProduct().getName(),
+									cartModification.getQuantity(),
+									form.getQuantity(),
+									request.getRequestURL().append(
+											cartModification.getEntry().getProduct().getUrl()) });
+					results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.lowStock", new Object[] {
+							cartModification.getEntry().getProduct().getName(),
+							cartModification.getQuantity(),
+							form.getQuantity(),
+							request.getRequestURL().append(
+									cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
+				} else {
+					// No more stock available
+					GlobalMessages.addFlashMessage(
+							redirectModel,
+							GlobalMessages.ERROR_MESSAGES_HOLDER,
+							"basket.page.message.update.reducedNumberOfItemsAdded.noStock",
+							new Object[] {
+									cartModification.getEntry().getProduct().getName(),
+									request.getRequestURL().append(
+											cartModification.getEntry().getProduct().getUrl()) });
+					results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.noStock", new Object[] {
+							cartModification.getEntry().getProduct().getName(),
+							request.getRequestURL().append(
+									cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
+				}
+				// Redirect to the cart page on update success so that the browser doesn't re-post
+				// again
+				final CartData cartData = getCheckoutFacade().getCheckoutCart();
+				results.put("cartData", cartData);
+				final String referer = request.getHeader("Referer");
+				if (StringUtils.isNotBlank(referer)) {
+					return new ResponseEntity(results, HttpStatus.OK);
+				}
+				return new ResponseEntity(results, HttpStatus.OK);
+			} catch (final CommerceCartModificationException ex) {
+				LOG.warn("Couldn't update product with the entry number: " + entryNumber + ".", ex);
+			}
+		}
+		return new ResponseEntity(results, HttpStatus.OK);
+	}
+
 	protected void createProductList(final Model model) {
-        final CartData cartData = getCheckoutFacade().getCheckoutCart();
-        boolean hasPickUpCartEntries = false;
-        if (cartData.getEntries() != null && !cartData.getEntries().isEmpty()) {
-            for (final OrderEntryData entry : cartData.getEntries()) {
-                if (!hasPickUpCartEntries && entry.getDeliveryPointOfService() != null) {
-                    hasPickUpCartEntries = true;
-                }
-                final UpdateQuantityForm uqf = new UpdateQuantityForm();
-                uqf.setQuantity(entry.getQuantity());
-                model.addAttribute("updateQuantityForm" + entry.getEntryNumber(), uqf);
-            }
-        }
-    }
+		final CartData cartData = getCheckoutFacade().getCheckoutCart();
+		boolean hasPickUpCartEntries = false;
+		if (cartData.getEntries() != null && !cartData.getEntries().isEmpty()) {
+			for (final OrderEntryData entry : cartData.getEntries()) {
+				if (!hasPickUpCartEntries && entry.getDeliveryPointOfService() != null) {
+					hasPickUpCartEntries = true;
+				}
+				final UpdateQuantityForm uqf = new UpdateQuantityForm();
+				uqf.setQuantity(entry.getQuantity());
+				model.addAttribute("updateQuantityForm" + entry.getProduct().getCode(), uqf);
+			}
+		}
+	}
 
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
 	@RequireHardLogIn
-	public String placeOrder(final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm
+	public String placeOrder(@RequestHeader(value = "referer", required = false) final String referer
+			, final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm
 			, final RedirectAttributes redirectModel) {
 		LOG.info("AmazonCheckout - placeOrder");
+		if(getCheckoutCustomerStrategy().isAnonymousCheckout()
+				&& !CustomerType.GUEST.equals(getCheckoutCustomerStrategy().getCurrentUserForCheckout().getType())) {
+			// XXX: temporary set user type as guest
+			CustomerType userType = getCheckoutCustomerStrategy().getCurrentUserForCheckout().getType();
+			try {
+				getCheckoutCustomerStrategy().getCurrentUserForCheckout().setType(CustomerType.GUEST);
+				if (validateCart(redirectModel)) {
+					return REDIRECT_URL_CART;
+				}
+			} finally {
+				getCheckoutCustomerStrategy().getCurrentUserForCheckout().setType(userType);
+			}
+		} else {
+			if (validateCart(redirectModel)) {
+				return REDIRECT_URL_CART;
+			}
+		}
+		CartData cartData = getCheckoutFacade().getCheckoutCart();
+		if (cartData.getDeliveryAddress() == null) {
+			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, "amazon.address.select.failed");
+			if(StringUtils.isBlank(referer))
+				return REDIRECT_URL_CART;
+			else
+				return REDIRECT_PREFIX + referer;
+		}
+
 		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
-			CartData cartData = getCheckoutFacade().getCheckoutCart();
 			String orderCode = getCheckoutFacade().createOrderCodeFromCart();
 			AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
 			orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
@@ -374,32 +410,6 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 				return amazonErrorCode;
 		}
 		return "amazon.authorization.error.no.description";
-	}
-
-	protected boolean isHardLogin(final Model model) {
-		HttpServletRequest request = (HttpServletRequest) model.asMap().get(REQUEST_MODEL_ATTRIBUTE_NAME);
-		final String guid = (String)request.getSession().getAttribute(SECURE_GUID_SESSION_KEY);
-		if (checkForGUIDCookie(request, guid)) {
-			return true;
-		}
-		return false;
-	}
-
-	protected boolean checkForGUIDCookie(final HttpServletRequest request,
-			final String guid) {
-		if (guid != null && request.getCookies() != null) {
-			final String guidCookieName = cookieGenerator.getCookieName();
-			if (guidCookieName != null) {
-				for (final Cookie cookie : request.getCookies()) {
-					if (guidCookieName.equals(cookie.getName())) {
-						if (guid.equals(cookie.getValue())) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	@Override

@@ -5,7 +5,9 @@ import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -52,10 +54,10 @@ import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
-import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
+import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.jalo.c2l.C2LManager;
 import de.hybris.platform.order.CartService;
@@ -337,8 +339,10 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			getModelService().refresh(transaction);
 
 			AddressModel billingAddress = createBillingAddress(details);
-			paymentInfo.setBillingAddress(billingAddress);
-			billingAddress.setOwner(paymentInfo);
+			if (billingAddress != null) {	
+				paymentInfo.setBillingAddress(billingAddress);
+				billingAddress.setOwner(paymentInfo);
+			}
 			paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
 			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
@@ -471,16 +475,16 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		}
 
 		GetOrderReferenceDetailsResult result = mwsAmazonPaymentService.getOrderReferenceDetails(request);
-		OrderReferenceDetails details = result.getOrderReferenceDetails();
-		
-		final CountryData countrySelected = new CountryData();
-		countrySelected.setIsocode(details.getDestination().getPhysicalDestination().getCountryCode());
-		
-		List<CountryData> deliveryCountriesSupported = getCartFacade().getDeliveryCountries();
-		for (final CountryData countryData : deliveryCountriesSupported) {
-			if (countryData.getIsocode().equalsIgnoreCase(countrySelected.getIsocode())) {
-				return amazonOrderReferenceDetailsConverter.convert(details);
-			}
+		if(result != null) {
+			OrderReferenceDetails details = result.getOrderReferenceDetails();
+
+//			final List<CountryData> deliveryCountriesSupported = cartFacade.getDeliveryCountries();
+//			for (final CountryData countryData : deliveryCountriesSupported) {
+//				if (countryData.getIsocode().equalsIgnoreCase(details.getDestination().getPhysicalDestination().getCountryCode())) {
+//					return amazonOrderReferenceDetailsConverter.convert(details);
+//				}
+//			}
+			return amazonOrderReferenceDetailsConverter.convert(details);
 		}
 		
 		return null;

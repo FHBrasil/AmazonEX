@@ -8,6 +8,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationConfig;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationFacade;
 import de.fliegersoftware.amazon.payment.facades.SimulateAuthorizeError;
@@ -22,6 +23,7 @@ public class AmazonSandboxModeHandlerInterceptor extends HandlerInterceptorAdapt
 	private static final String SANDBOXFORM_SIMULATECAPTUREERROR_PARAM = "simulateCaptureError";
 	private static final String SANDBOXFORM_SIMULATEREFUNDERROR_PARAM = "simulateRefundError";
 
+	private AmazonConfigService amazonConfigService;
 	private AmazonSandboxSimulationFacade amazonSandboxSimulationFacade;
 
 	@Override
@@ -37,15 +39,13 @@ public class AmazonSandboxModeHandlerInterceptor extends HandlerInterceptorAdapt
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		if(getAmazonSandboxSimulationFacade().isSimulation()) {
-			getAmazonSandboxSimulationFacade().clearSimulationConfig();
-		}
+		getAmazonSandboxSimulationFacade().clearSimulationConfig();
 	}
 
 	private boolean shouldConfigSandboxMode(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) {
 		return ("POST").equalsIgnoreCase(request.getMethod())
 				&& handler.getBeanType() == AmazonCheckoutPageController.class
-				&& getAmazonSandboxSimulationFacade().isSimulation();
+				&& getAmazonConfigService().isSandboxSimulate();
 	}
 
 	private AmazonSandboxSimulationConfig getConfigFromRequest(HttpServletRequest request) {
@@ -79,5 +79,14 @@ public class AmazonSandboxModeHandlerInterceptor extends HandlerInterceptorAdapt
 	@Required
 	public void setAmazonSandboxSimulationFacade(AmazonSandboxSimulationFacade amazonSandboxSimulationFacade) {
 		this.amazonSandboxSimulationFacade = amazonSandboxSimulationFacade;
+	}
+
+	protected AmazonConfigService getAmazonConfigService() {
+		return amazonConfigService;
+	}
+
+	@Required
+	public void setAmazonConfigService(AmazonConfigService amazonConfigService) {
+		this.amazonConfigService = amazonConfigService;
 	}
 }

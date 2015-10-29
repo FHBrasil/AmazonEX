@@ -40,16 +40,11 @@
 		<context:component-scan base-package="de.fliegersoftware.amazon.login.addon.forms"
 			scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
 
-		<alias name="amazonLoginController" alias="amazonLoginController" />
-
-		<bean id="amazonLoginController" class="de.fliegersoftware.amazon.login.addon.controllers.AmazonLoginController">
-			<property name="amazonUserFacade" ref="amazonUserFacade"/>		
-		</bean>
-
 		<alias name="defaultAmazonAutoLoginStrategy" alias="amazonAutoLoginStrategy"/>
 		<bean id="defaultAmazonAutoLoginStrategy" class="de.fliegersoftware.amazon.login.addon.security.impl.DefaultAmazonAutoLoginStrategy">
 			<property name="authenticationManager" ref="authenticationManager"/>
 			<property name="customerFacade" ref="customerFacade"/>
+			<property name="amazonUserService" ref="amazonUserService"/>
 			<property name="guidCookieStrategy" ref="guidCookieStrategy"/>
 			<property name="rememberMeServices" ref="rememberMeServices"/>
 			<property name="sessionService" ref="sessionService"/>

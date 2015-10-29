@@ -5,5 +5,5 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface AmazonAutoLoginStrategy {
 	
-	void login(final String username, String customerId, final HttpServletRequest request, final HttpServletResponse response);
+	void login(String customerId, final HttpServletRequest request, final HttpServletResponse response);
 }

@@ -12,10 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
+import de.fliegersoftware.amazon.core.services.AmazonUserService;
 import de.fliegersoftware.amazon.login.addon.security.AmazonAutoLoginStrategy;
 import de.fliegersoftware.amazon.login.addon.token.AmazonLoginToken;
 import de.hybris.platform.acceleratorstorefrontcommons.security.GUIDCookieStrategy;
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
+import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.servicelayer.session.SessionService;
 
 
@@ -29,6 +31,9 @@ public class DefaultAmazonAutoLoginStrategy implements AmazonAutoLoginStrategy
 	private CustomerFacade customerFacade;
 	
 	@Resource
+	private AmazonUserService amazonUserService;
+	
+	@Resource
 	private GUIDCookieStrategy guidCookieStrategy;
 	
 	@Resource
@@ -37,19 +42,19 @@ public class DefaultAmazonAutoLoginStrategy implements AmazonAutoLoginStrategy
 	private SessionService sessionService;
 	
 	@Override
-	public void login(final String username, String customerId, final HttpServletRequest request, final HttpServletResponse response)
+	public void login(String customerId, final HttpServletRequest request, final HttpServletResponse response)
 	{		
-		
-		final String uid = username;
-		final AmazonLoginToken credentials = new AmazonLoginToken(uid);
-
-		final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(uid, credentials);
-		token.setDetails(new WebAuthenticationDetails(request));
-		
-		getSessionService().setAttribute("customerId", customerId);
-		
 		try
-		{
+		{	
+			CustomerModel amazonCustomer = amazonUserService.getAmazonCustomer(customerId);
+			
+			final AmazonLoginToken credentials = new AmazonLoginToken(amazonCustomer.getUid());
+	
+			final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(amazonCustomer.getUid(), credentials);
+			token.setDetails(new WebAuthenticationDetails(request));
+			
+			getSessionService().setAttribute("customerId", customerId);
+		
 			final Authentication authentication = authenticationManager.authenticate(token);
 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -78,6 +83,14 @@ public class DefaultAmazonAutoLoginStrategy implements AmazonAutoLoginStrategy
 
 	public void setCustomerFacade(CustomerFacade customerFacade) {
 		this.customerFacade = customerFacade;
+	}
+
+	public AmazonUserService getAmazonUserService() {
+		return amazonUserService;
+	}
+
+	public void setAmazonUserService(AmazonUserService amazonUserService) {
+		this.amazonUserService = amazonUserService;
 	}
 
 	public GUIDCookieStrategy getGuidCookieStrategy() {

@@ -58,7 +58,9 @@ public class AuthorizeCommandImpl extends AbstractCommandImpl implements Authori
 				amazonSandboxSimulationFacade.decorate(req);
 			}
 
+			logXml(LOG, req);
 			AuthorizeResponse authorize = getOffAmazonPaymentsService().authorize(req);
+			logXml(LOG, authorize);
 			final AuthorizeResult result = authorize.getAuthorizeResult();
 
 			return result;

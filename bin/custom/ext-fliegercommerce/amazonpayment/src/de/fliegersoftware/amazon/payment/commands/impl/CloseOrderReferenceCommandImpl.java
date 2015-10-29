@@ -29,19 +29,21 @@ public class CloseOrderReferenceCommandImpl extends AbstractCommandImpl implemen
 			LOG.info("-----------------------------------------------------");
 
 			req.setSellerId(getSellerId());
+			logXml(LOG, req);
 			CloseOrderReferenceResponse closeOrderReference = getOffAmazonPaymentsService().closeOrderReference(req);
+			logXml(LOG, closeOrderReference);
 			final CloseOrderReferenceResult result = closeOrderReference.getCloseOrderReferenceResult();
 
 			return result;
 
 		} catch (OffAmazonPaymentsServiceException ex) {
-			System.out.println("Caught Exception: " + ex.getMessage());
-			System.out.println("Response Status Code: " + ex.getStatusCode());
-			System.out.println("Error Code: " + ex.getErrorCode());
-			System.out.println("Error Type: " + ex.getErrorType());
-			System.out.println("Request ID: " + ex.getRequestId());
-			System.out.println("XML: " + ex.getXML());
-			System.out.println("ResponseHeaderMetadata: " + ex.getResponseHeaderMetadata());
+			LOG.error("Caught Exception: " + ex.getMessage());
+			LOG.error("Response Status Code: " + ex.getStatusCode());
+			LOG.error("Error Code: " + ex.getErrorCode());
+			LOG.error("Error Type: " + ex.getErrorType());
+			LOG.error("Request ID: " + ex.getRequestId());
+			LOG.error("XML: " + ex.getXML());
+			LOG.error("ResponseHeaderMetadata: " + ex.getResponseHeaderMetadata());
 			return null;
 		}
 	}

@@ -36,6 +36,7 @@ import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.model.AmazonBaseCronJobModel;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.core.enums.OrderStatus;
+import de.hybris.platform.core.enums.PaymentStatus;
 import de.hybris.platform.core.model.ItemModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.cronjob.enums.CronJobResult;
@@ -240,6 +241,7 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 				&& AmazonTransactionStatus.Completed.name().equals(details.getCaptureStatus().getState())) {
 			// update order status
 			order.setStatus(OrderStatus.PAYMENT_CAPTURED);
+			order.setPaymentStatus(PaymentStatus.PAID);
 			getModelService().save(order);
 		}
 

@@ -82,6 +82,7 @@
 	<bean id="amazonSandboxModeHandlerInterceptor"
 		class="de.fliegersoftware.amazon.payment.addon.controllers.pages.AmazonSandboxModeHandlerInterceptor">
 		<property name="amazonSandboxSimulationFacade" ref="amazonSandboxSimulationFacade"/>
+		<property name="amazonConfigService" ref="amazonConfigService"/>
 	</bean>
 
 	<mvc:interceptors>

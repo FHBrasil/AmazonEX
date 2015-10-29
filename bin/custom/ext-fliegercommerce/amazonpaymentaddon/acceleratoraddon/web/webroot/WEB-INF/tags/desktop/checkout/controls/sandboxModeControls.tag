@@ -12,14 +12,14 @@
 
 <div class="col-sm-12">
 <c:if test="${showCloseOrderErrors}">
-	<div class="col-sm-3">
+	<div class="col-sm-12">
 		<label>Simulate Close Order Error</label><br>
 		<label><input type="radio" name="simulateCloseOrderError" value="0" checked>None</label><br>
 		<label><input type="radio" name="simulateCloseOrderError" value="1">Amazon Closed</label><br>
 	</div>
 </c:if>
 <c:if test="${showAuthorizeError}">
-	<div class="col-sm-3">
+	<div class="col-sm-12">
 		<label>Simulate Authorize Error</label><br>
 		<label><input type="radio" name="simulateAuthorizeError" value="0" checked>None</label><br>
 		<label><input type="radio" name="simulateAuthorizeError" value="1">Invalid Payment Method</label><br>
@@ -30,7 +30,7 @@
 	</div>
 </c:if>
 <c:if test="${showCaptureErrors}">
-	<div class="col-sm-3">
+	<div class="col-sm-12">
 		<label>Simulate Capture Error</label><br>
 		<label><input type="radio" name="simulateCaptureError" value="0" checked>None</label><br>
 		<label><input type="radio" name="simulateCaptureError" value="1">Capture Pending</label><br>
@@ -39,7 +39,7 @@
 	</div>
 </c:if>
 <c:if test="${showRefundErrors}">
-	<div class="col-sm-3">
+	<div class="col-sm-12">
 		<label>Simulate Refund Error</label><br>
 		<label><input type="radio" name="simulateRefundError" value="0" checked>None</label><br>
 		<label><input type="radio" name="simulateRefundError" value="1">Amazon Rejected</label><br>
