@@ -26,6 +26,7 @@ import de.hybris.platform.order.OrderService;
 import de.hybris.platform.order.PaymentModeService;
 import de.hybris.platform.payment.dto.TransactionStatus;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
+import de.hybris.platform.servicelayer.model.ModelService;
 
 
 /**
@@ -38,6 +39,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 
 	private OrderService orderService;
 	private PaymentModeService paymentModeService;
+	private ModelService modelService;
 
 	/*
 	 * (non-Javadoc)
@@ -71,7 +73,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		{
 			if (StringUtils.isNotBlank(paymentInfoId))
 			{
-				final AmazonPaymentPaymentInfoModel amazonPaymentPaymentInfoModel = new AmazonPaymentPaymentInfoModel();
+				final AmazonPaymentPaymentInfoModel amazonPaymentPaymentInfoModel = getModelService().create(AmazonPaymentPaymentInfoModel.class);
 				amazonPaymentPaymentInfoModel.setAmazonOrderReferenceId(paymentInfoId);
 				amazonPaymentPaymentInfoModel.setCode(paymentInfoId);
 				amazonPaymentPaymentInfoModel.setUser(getCurrentUserForCheckout());
@@ -200,4 +202,14 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	public void setPaymentModeService(PaymentModeService paymentModeService) {
 		this.paymentModeService = paymentModeService;
 	}
+
+	protected ModelService getModelService() {
+		return modelService;
+	}
+
+	@Required
+	public void setModelService(ModelService modelService) {
+		this.modelService = modelService;
+	}
+	
 }

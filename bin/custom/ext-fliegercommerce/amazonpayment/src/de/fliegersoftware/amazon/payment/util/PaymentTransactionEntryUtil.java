@@ -31,12 +31,12 @@ public final class PaymentTransactionEntryUtil {
 	private static void handleAuthorization(PaymentTransactionEntryModel entry,
 			AmazonTransactionStatus status, String reasonCode) {
 		switch (status) {
+		case Open:
 		case Pending: {
 			entry.setTransactionStatus(TransactionStatus.ACCEPTED.name());
 			entry.setTransactionStatusDetails(status.name());
 			break;
 		}
-		case Open:
 		case Closed: {
 			entry.setTransactionStatus(TransactionStatus.ACCEPTED.name());
 			entry.setTransactionStatusDetails(TransactionStatusDetails.SUCCESFULL.name());

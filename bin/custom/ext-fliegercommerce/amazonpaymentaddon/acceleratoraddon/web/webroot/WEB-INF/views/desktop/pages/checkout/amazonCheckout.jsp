@@ -37,14 +37,14 @@
                 <div id="AmazonPayButton" style="display: none;"></div>
        			<button id="change-account" type="button">Change account</button>
        			<form:form action="${request.contextPath}/checkout/amazon/placeOrder" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
-        	 		<input type="hidden" name="amazonOrderReferenceId"/>
-        
+        	 		<input type="hidden" name="amazonOrderReferenceId" value="${amazonOrderReferenceId}" />
+	       			
 	       			<c:if test="${sandboxSimulate}">
 		       			<c:url value="${request.contextPath}/checkout/amazon/placeOrder" var="placeOrderUrl" />
-							<amazon-controls:sandboxModeControls showAuthorizeError="true" />
-							<c:if test="${chargeOnOrder}">
-								<amazon-controls:confirmChargeOnOrderControls />
-							</c:if>
+						<amazon-controls:sandboxModeControls showAuthorizeError="true" />
+					</c:if>
+					<c:if test="${chargeOnOrder}">
+						<amazon-controls:confirmChargeOnOrderControls />
 					</c:if>
 				</form:form>
         </cms:pageSlot>

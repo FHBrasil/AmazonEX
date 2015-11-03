@@ -60,9 +60,10 @@ public class AmazonAuthenticationProvider extends CoreAuthenticationProvider {
 		} 
 		catch (UnknownIdentifierException e) 
 		{
-				LOG.warn(e.getMessage());
+			LOG.warn(e.getMessage());
+			throw new BadCredentialsException(messages.getMessage("this customer has not amazonId", "Bad credentials"));
 		}
-		throw new BadCredentialsException(messages.getMessage("this customer has not amazonId", "Bad credentials"));	
+		return null;
 	}
 	
 	  protected final UserDetails retrieveCustomer(String username) throws AuthenticationException

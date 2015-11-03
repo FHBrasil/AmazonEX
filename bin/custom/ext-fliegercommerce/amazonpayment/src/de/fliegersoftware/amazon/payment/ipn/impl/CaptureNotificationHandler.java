@@ -96,6 +96,7 @@ public class CaptureNotificationHandler extends BaseAmazonNotificationHandler<Ca
 			paymentInfo.setAmazonCaptureStatus(details.getCaptureStatus().getState());
 
 			getModelService().save(paymentInfo);
+			getModelService().refresh(paymentInfo);
 
 			if(transaction.getOrder() != null
 				&& transaction.getOrder() instanceof OrderModel) {

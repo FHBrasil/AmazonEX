@@ -41,7 +41,7 @@
 		return deferred.promise();
 	}
 	
-		if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
+	if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 		if (ACC.addons.amazonaddon.isAmazonPayEnabled == 'true') {
 			
 			// prevent amazon scripts from overwriting current jquery version
@@ -97,70 +97,87 @@
 					}
 					if($('#addressBookWidgetDiv').length) {
 						ACC.amazon.enablePlaceOrder.addressSelected = false;
-						new OffAmazonPayments.Widgets.AddressBook({
-							sellerId: ACC.addons.amazonaddon.sellerId,
-							onOrderReferenceCreate: function(orderReference) {
-								ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
-								$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId())
-							},
-							onAddressSelect: function(orderReference) {
-								getAccessToken().done(function(accessToken) {
-									$.ajax({
-										url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
-										type: 'post',
-                                                                                dataType: 'json',
-										data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
-											, access_token: accessToken
-											, CSRFToken: ACC.config.CSRFToken },
-										success: function(response){
-		
-											if(response.success) {
-												ACC.amazon.enablePlaceOrder.addressSelected = true;
-												checkEnableCheckout();
-												ACC.amazon.showToaster(response.showMessage);
-												
-												$("#deliveryCost", "#totalPrice").fadeOut();
-																								setTimeout(function(){
-													$('#deliveryCost').html(response.deliveryCost);
-                                            $('#totalPrice').html(response.totalPrice);
-                                            $('#shipping-methods').html(response.deliveryMethodSelector);
-                                            bindDeliveryMethodOnChange();											
-												}, 500);
-												$("#deliveryCost", "#totalPrice").fadeIn();
-								
-											} 
-											else{
-												$("#deliveryCost").fadeOut();
-												setTimeout(function(){
-													$('#deliveryCost').html("-");
-												}, 500);
-												$("#deliveryCost").fadeIn();
+						if ($('input[name=amazonOrderReferenceId]').val().length > 0) {
+							ACC.amazon.amazonOrderReferenceId = $('input[name=amazonOrderReferenceId]').val();
+							checkEnableCheckout();
+							new OffAmazonPayments.Widgets.AddressBook({
+								sellerId: ACC.addons.amazonaddon.sellerId,
+								amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId,
+								displayMode: "Read",								
+								design: {
+									designMode: 'responsive'
+								},
+								onError: function(error) {
+									// your error handling code
+								}
+							}).bind("addressBookWidgetDiv");
+						} else {
+							new OffAmazonPayments.Widgets.AddressBook({
+								sellerId: ACC.addons.amazonaddon.sellerId,
+								onOrderReferenceCreate: function(orderReference) {
+									ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
+									$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId());
+								},
+								onAddressSelect: function(orderReference) {
+									getAccessToken().done(function(accessToken) {
+										$.ajax({
+											url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
+											type: 'post',
+											data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
+												, access_token: accessToken
+												, CSRFToken: ACC.config.CSRFToken },
+											success: function(response){
+			
+												if(response.success) {
+													ACC.amazon.enablePlaceOrder.addressSelected = true;
+													checkEnableCheckout();
+													ACC.amazon.showToaster(response.showMessage);
+													
+													$("#deliveryCost", "#totalPrice").fadeOut();
+													setTimeout(function(){
+														$('#deliveryCost').html(response.deliveryCost);
+														$('#totalPrice').html(response.totalPrice);
+														$('#shipping-methods').html(response.deliveryMethodSelector);
+                                                        bindDeliveryMethodOnChange();											
+												    }, 500);
+												    $("#deliveryCost", "#totalPrice").fadeIn();
+												} 
+												else{
+													$("#deliveryCost").fadeOut();
+													setTimeout(function(){
+														$('#deliveryCost').html("-");
+													}, 500);
+													$("#deliveryCost").fadeIn();
+													ACC.amazon.enablePlaceOrder.addressSelected = false;
+													checkEnableCheckout();
+													ACC.amazon.showToaster(response.showMessage);
+												}
+											},
+											error: function (xht, textStatus, ex) {
+												// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
 												ACC.amazon.enablePlaceOrder.addressSelected = false;
 												checkEnableCheckout();
-												ACC.amazon.showToaster(response.showMessage);
+											},
+											complete: function () {
+												// alert("complete");
 											}
-										},
-										error: function (xht, textStatus, ex) {
-											// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
-										},
-										complete: function () {
-											// alert("complete");
-										}
-									});
-								});	
-							},
-							design: {
-								designMode: 'responsive'
-							},
-							onError: function(error) {
-								// your error handling code
-							}
-						}).bind("addressBookWidgetDiv");
+										});
+									});	
+								},
+								design: {
+									designMode: 'responsive'
+								},
+								onError: function(error) {
+									// your error handling code
+								}
+							}).bind("addressBookWidgetDiv");
+						}	
 					}
 					if($('#walletWidgetDiv').length) {
 						ACC.amazon.enablePlaceOrder.paymentSelected = false;
 						new OffAmazonPayments.Widgets.Wallet({
 							sellerId: ACC.addons.amazonaddon.sellerId,
+							amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId,
 							onPaymentSelect: function(orderReference) {
 								$.ajax({
 									url: ACC.config.contextPath + '/checkout/amazon/select-payment-method',
@@ -363,7 +380,7 @@ function changeQuantityOrRemove(productCode, remove){
 	
 	bindDeliveryMethodOnChange();
 }
-	
+
 function redirect(url, values, method) {
     method = (method && method.toUpperCase() === 'GET') ? 'GET' : 'POST';
 

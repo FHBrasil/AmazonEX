@@ -3,10 +3,9 @@ package de.fliegersoftware.amazon.payment.jobs;
 import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil.setPaymentTransactionEntryStatus;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -32,6 +31,7 @@ import com.amazonservices.mws.offamazonpayments.model.RefundDetails;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.core.model.AmazonRefundModel;
+import de.fliegersoftware.amazon.core.services.AmazonEmailService;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.model.AmazonBaseCronJobModel;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
@@ -58,6 +58,9 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 
 	@Resource
 	private MWSAmazonPaymentService mwsAmazonPaymentService;
+	
+	@Resource 
+	private AmazonEmailService amazonEmailService;
 
 //	@Resource
 //	private AmazonPaymentService amazonPaymentService;
@@ -200,6 +203,25 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 		paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
 		paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 		paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
+		
+		if (details.getAuthorizationStatus().getReasonCode() != null && (details.getAuthorizationStatus().getReasonCode().equals("AmazonRejected") || 
+				details.getAuthorizationStatus().getReasonCode().equals("InvalidPaymentMethod"))) {
+			final GetOrderReferenceDetailsRequest orderReferenceDetailsRequest = new GetOrderReferenceDetailsRequest();
+			orderReferenceDetailsRequest.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
+			orderReferenceDetailsRequest.setAddressConsentToken(null);
+
+			GetOrderReferenceDetailsResult orderReferenceDetailsResult = mwsAmazonPaymentService.getOrderReferenceDetails(orderReferenceDetailsRequest);
+			if(orderReferenceDetailsResult != null) {
+				OrderReferenceDetails orderReferenceDetails = orderReferenceDetailsResult.getOrderReferenceDetails();
+				orderReferenceDetails.getSellerOrderAttributes().getStoreName();
+				try {
+					amazonEmailService.sendEmailDeclined(orderReferenceDetails.getBuyer().getEmail(), details.getAuthorizationStatus().getReasonCode());
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
 
 		getModelService().save(paymentInfo);
 
@@ -324,5 +346,13 @@ public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBa
 
 	protected CommonI18NService getCommonI18NService() {
 		return commonI18NService;
+	}
+
+	public AmazonEmailService getAmazonEmailService() {
+		return amazonEmailService;
+	}
+
+	public void setAmazonEmailService(AmazonEmailService amazonEmailService) {
+		this.amazonEmailService = amazonEmailService;
 	}
 }

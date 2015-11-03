@@ -315,6 +315,7 @@
 										<attribute name="amazonRefundId" width="200"/>
 										<attribute name="refundReferenceId" width="200"/>
 										<attribute name="refundAmount" width="200"/>
+										<attribute name="refundStatus" width="200"/>
 									</itemlayout>
 								</inlineshortcut>
 							</row>

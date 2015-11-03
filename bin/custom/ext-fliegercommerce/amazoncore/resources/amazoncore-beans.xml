@@ -19,6 +19,7 @@
 
 	<bean class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData">
 		<property name="amazonOrderReferenceId" type="String"/>
+		<property name="amazonOrderReferenceStatus" type="String"/>
 		<property name="addressData" type="de.hybris.platform.commercefacades.user.data.AddressData" />
 	</bean>
 	

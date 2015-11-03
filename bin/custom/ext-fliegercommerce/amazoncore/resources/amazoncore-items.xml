@@ -84,8 +84,8 @@
 		</enumtype>
 		
 		<enumtype code="ButtonSizeEnum">
-			<value code="Small"></value>
 			<value code="Medium"></value>
+			<value code="Small"></value>
 			<value code="Large"></value>
 			<value code="Big"></value>
 		</enumtype>

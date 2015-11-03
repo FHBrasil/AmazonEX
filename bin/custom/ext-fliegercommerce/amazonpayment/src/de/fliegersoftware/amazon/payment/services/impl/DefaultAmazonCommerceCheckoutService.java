@@ -2,6 +2,8 @@ package de.fliegersoftware.amazon.payment.services.impl;
 
 import de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService;
 import de.hybris.platform.commerceservices.strategies.GenerateMerchantTransactionCodeStrategy;
+import de.hybris.platform.core.enums.OrderStatus;
+import de.hybris.platform.core.enums.PaymentStatus;
 import de.hybris.platform.core.model.ItemModel;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
@@ -80,6 +82,15 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 						.getPaymentTransaction();
 
 				if (TransactionStatus.ACCEPTED.name().equals(transactionEntryModel.getTransactionStatus())) {
+
+					if(amazonPaymentPaymentInfo.getAmazonCaptureStatus() != null
+							&& AmazonTransactionStatus.Completed.name().equals(amazonPaymentPaymentInfo.getAmazonCaptureStatus())) {
+						// update order status
+						cartModel.setStatus(OrderStatus.PAYMENT_CAPTURED);
+						cartModel.setPaymentStatus(PaymentStatus.PAID);
+					} else {
+						cartModel.setStatus(OrderStatus.PAYMENT_AUTHORIZED);
+					}
 					paymentTransaction.setOrder(cartModel);
 					paymentTransaction.setInfo(amazonPaymentPaymentInfo);
 					if(amazonPaymentPaymentInfo.getBillingAddress() == null)

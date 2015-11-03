@@ -3,14 +3,13 @@ package de.fliegersoftware.amazon.payment.services.impl;
 import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil.setPaymentTransactionEntryStatus;
 
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.util.Currency;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
@@ -50,21 +49,19 @@ import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
+import de.fliegersoftware.amazon.core.services.AmazonEmailService;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
+import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
-import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.core.model.user.AddressModel;
-import de.hybris.platform.jalo.c2l.C2LManager;
-import de.hybris.platform.order.CartService;
 import de.hybris.platform.payment.AdapterException;
 import de.hybris.platform.payment.dto.BillingInfo;
 import de.hybris.platform.payment.dto.TransactionStatus;
-import de.hybris.platform.payment.dto.TransactionStatusDetails;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.impl.DefaultPaymentServiceImpl;
 import de.hybris.platform.payment.methods.CardPaymentService;
@@ -89,14 +86,13 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource
 	private CommonI18NService commonI18NService;
-	private CartService cartService;
 	private SessionService sessionService;
 	
 	@Resource(name = "i18NFacade")
 	private I18NFacade i18NFacade;
 	
-	@Resource
-	private CartFacade cartFacade;
+	@Resource 
+	private AmazonEmailService amazonEmailService;
 	
 	@Resource
 	private MWSAmazonPaymentService mwsAmazonPaymentService;
@@ -118,6 +114,9 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource
 	private Converter<AddressData, AddressModel> addressReverseConverter;
+	
+	@Resource
+	private CartFacade cartFacade;
 	
 	/**
 	 * @return the modelService
@@ -153,33 +152,6 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	public void setCommonI18NService(CommonI18NService commonI18NService)
 	{
 		this.commonI18NService = commonI18NService;
-	}
-
-	/**
-	 * @return the cartService
-	 */
-	public CartService getCartService()
-	{
-		return cartService;
-	}
-
-	/**
-	 * @param cartService
-	 *           the cartService to set
-	 */
-	public void setCartService(CartService cartService)
-	{
-		this.cartService = cartService;
-	}
-	
-	public CartFacade getCartFacade()
-	{
-		return cartFacade;
-	}
-	
-	public void setCartFacade(final CartFacade cartFacade)
-	{
-		this.cartFacade = cartFacade;
 	}
 
 	/* (non-Javadoc)
@@ -273,6 +245,14 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	protected I18NFacade getI18NFacade() {
 		return i18NFacade;
 	}
+	
+	public AmazonEmailService getAmazonEmailService() {
+		return amazonEmailService;
+	}
+
+	public void setAmazonEmailService(AmazonEmailService amazonEmailService) {
+		this.amazonEmailService = amazonEmailService;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -332,8 +312,26 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 
 			setPaymentTransactionEntryStatus(entry, AmazonTransactionStatus.valueOf(details.getAuthorizationStatus().getState()), details.getAuthorizationStatus().getReasonCode());
 
-			if (!TransactionStatus.ACCEPTED.name().equals(entry)) {
+			if (!TransactionStatus.ACCEPTED.name().equals(entry.getTransactionStatus())) {
 				getSessionService().setAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE, details.getAuthorizationStatus().getReasonCode());
+				if (details.getAuthorizationStatus().getReasonCode() != null && (details.getAuthorizationStatus().getReasonCode().equals("AmazonRejected") || 
+						details.getAuthorizationStatus().getReasonCode().equals("InvalidPaymentMethod"))) {
+					final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
+					request.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
+					request.setAddressConsentToken(null);
+
+					GetOrderReferenceDetailsResult orderReferenceDetailsResult = mwsAmazonPaymentService.getOrderReferenceDetails(request);
+					if(orderReferenceDetailsResult != null) {
+						OrderReferenceDetails orderReferenceDetails = orderReferenceDetailsResult.getOrderReferenceDetails();
+						orderReferenceDetails.getSellerOrderAttributes().getStoreName();
+						try {
+							amazonEmailService.sendEmailDeclined(orderReferenceDetails.getBuyer().getEmail(), details.getAuthorizationStatus().getReasonCode());
+						} catch (MalformedURLException e) {
+							e.printStackTrace();
+						}
+						
+					}
+				}
 			}
 			getModelService().save(entry);
 			getModelService().refresh(transaction);
@@ -346,6 +344,39 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
 			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
+			
+			if(details.isCaptureNow() && details.getIdList() != null && CollectionUtils.isNotEmpty(details.getIdList().getMember())) {
+				
+				PaymentTransactionEntryModel cEntry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
+				cEntry.setPaymentTransaction(transaction);
+				cEntry.setCode(getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.CAPTURE));
+				
+				GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
+				request.setAmazonCaptureId(details.getIdList().getMember().get(0));
+				GetCaptureDetailsResult captureResult = mwsAmazonPaymentService.getCaptureDetails(request);
+
+				CaptureDetails captureDetails = captureResult.getCaptureDetails();
+				cEntry.setAmount(BigDecimal.valueOf(Double.parseDouble(captureDetails.getCaptureAmount().getAmount())));
+				if (captureDetails.getCaptureAmount() != null) {
+					cEntry.setCurrency(getCommonI18NService().getCurrency(captureDetails.getCaptureAmount().getCurrencyCode()));
+				}
+				cEntry.setType(PaymentTransactionType.CAPTURE);
+				cEntry.setTime((captureDetails.getCaptureStatus().getLastUpdateTimestamp() == null) ? new Date()
+						: captureDetails.getCaptureStatus().getLastUpdateTimestamp().toGregorianCalendar().getTime());
+				cEntry.setRequestId(captureDetails.getCaptureReferenceId());
+				cEntry.setRequestToken(captureDetails.getAmazonCaptureId());
+
+				setPaymentTransactionEntryStatus(cEntry, AmazonTransactionStatus.valueOf(captureDetails.getCaptureStatus().getState()), captureDetails.getCaptureStatus().getReasonCode());
+
+				getModelService().save(cEntry);
+				getModelService().refresh(transaction);
+
+				paymentInfo.setAmazonCaptureId(captureDetails.getAmazonCaptureId());
+				paymentInfo.setAmazonCaptureReasonCode(captureDetails.getCaptureStatus().getReasonCode());
+				paymentInfo.setAmazonCaptureRefundedAmount(Double.parseDouble(captureDetails.getRefundedAmount().getAmount()));
+				paymentInfo.setAmazonCaptureStatus(captureDetails.getCaptureStatus().getState());
+
+			}
 			getModelService().save(paymentInfo);
 
 			return entry;

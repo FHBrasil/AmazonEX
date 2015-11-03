@@ -87,5 +87,6 @@
 		<property name="commerceCheckoutService" ref="defaultAmazonCommerceCheckoutService" />
 		<property name="orderService" ref="orderService"/>
 		<property name="paymentModeService" ref="paymentModeService"/>
+		<property name="modelService" ref="modelService"/>
 	</bean>
 </beans>

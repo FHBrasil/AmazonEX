@@ -23,6 +23,7 @@
 <!--     <alias name="defaultPaymentService" alias="paymentService"/> -->
 <!-- 	<bean name="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService" scope="tenant"> -->
 <!-- 	</bean> -->
+	<bean id="ccPaymentInfoData" class="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData" />
 	<bean id="addressData" class="de.hybris.platform.commercefacades.user.data.AddressData" scope="prototype"/>
 	<bean id="priceData" class="de.hybris.platform.commercefacades.product.data.PriceData" scope="prototype"/>
 	<bean id="amazonOrderReferenceDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData" scope="prototype"/>
@@ -32,7 +33,8 @@
 	<bean id="orderTotal" class="com.amazonservices.mws.offamazonpayments.model.OrderTotal" scope="prototype"/>
 	<bean id="orderReferenceAttributes" class="com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes" scope="prototype"/>
 	<bean id="sellerOrderAttributes" class="com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes" scope="prototype"/>
-	
+
+
 	<bean name="amazonCommandFactory" 
 		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
 		scope="tenant">
@@ -125,6 +127,7 @@
 	<bean id="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
 		<property name="sessionService" ref="sessionService"/>
 		<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
+		<property name="amazonEmailService" ref="amazonEmailService"/>
 		<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
 		<property name="amazonCaptureDetailsConverter" ref="amazonCaptureDetailsConverter"/>
 		<property name="amazonAuthorizationDetailsConverter" ref="amazonAuthorizationDetailsConverter"/>
@@ -273,6 +276,29 @@
                 <ref bean="amazonSellerOrderAttributesReversePopulator" />
             </list>
         </property>
+    </bean>
+    
+    <alias name="amazonOrderPopulator" alias="orderPopulator" />
+    <bean id="amazonOrderPopulator"
+        class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderPopulator"
+        parent="defaultOrderPopulator">
+        <property name="amazonPaymentPaymentInfoConverter" ref="amazonPaymentPaymentInfoConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonPaymentPaymentInfoConverter" alias="amazonPaymentPaymentInfoConverter" />
+    <bean id="defaultAmazonPaymentPaymentInfoConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="ccPaymentInfoData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonPaymentPaymentInfoPopulator" />
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultAmazonPaymentPaymentInfoPopulator" alias="amazonPaymentPaymentInfoPopulator" />
+    <bean id="defaultAmazonPaymentPaymentInfoPopulator"
+        class="de.fliegersoftware.amazon.payment.populators.impl.AmazonPaymentPaymentInfoPopulator">
+        <property name="addressConverter" ref="addressConverter" />
     </bean>
 
 	<alias alias="createOrderFromCartStrategy" name="amazonCreateOrderFromCartStrategy"/>

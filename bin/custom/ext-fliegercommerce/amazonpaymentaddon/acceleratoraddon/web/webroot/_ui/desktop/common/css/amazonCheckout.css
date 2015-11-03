@@ -16,7 +16,7 @@
 .stock150619.onstock {background-image: url('/_ui/desktop/theme-babyartikel/assets/images/onstock.svg')}
 .stock150619.nostock {background-image: url('/_ui/desktop/theme-babyartikel/assets/images/nostock.svg')}
 .stock150619.onstock.big {background-size:17px 17px;height:17px;margin-left:-23px;padding-left:23px;display:inline-block;margin-bottom:30px;}
-.stock150619.nostock.big {background-size:17px 17px;height:17px;margin-left:-8px;padding-left:23px;display:inline-block;margin-bottom:30px;}
+.stock150619.nostock.big {background-size:17px 17px;height:17px;margin-left:-23px;padding-left:23px;display:inline-block;margin-bottom:30px;}
 .delete150618 {position: absolute; top:0px; right:0px;color:#d5d5d5;}
 .col-xxs-4, .col-xxs-8 {float:right !important;padding:0 !important;}
 @media (min-width:1200px){.item150608 div.col-md-8 {padding-left:0px;}}

@@ -248,51 +248,50 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			try {
 				final CartModificationData cartModification =
 						cartFacade.updateCartEntry(entryNumber, form.getQuantity().longValue());
+				String msgKey = "";
 				if (cartModification.getQuantity() == form.getQuantity().longValue()) {
 					// Success
 					if (cartModification.getQuantity() == 0) {
 						// Success in removing entry
+						msgKey = "basket.page.message.remove";
 						GlobalMessages.addFlashMessage(redirectModel,
-								GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.remove");
-						results.put("message", getMessageSource().getMessage("basket.page.message.remove", null, getI18nService().getCurrentLocale()));
+								GlobalMessages.CONF_MESSAGES_HOLDER, msgKey);
+						results.put("message", getMessageSource().getMessage(msgKey, null, getI18nService().getCurrentLocale()));
 					} else {
 						// Success in update quantity
+						msgKey = "basket.page.message.update";
 						GlobalMessages.addFlashMessage(redirectModel,
-								GlobalMessages.CONF_MESSAGES_HOLDER, "basket.page.message.update");
-						results.put("message", getMessageSource().getMessage("basket.page.message.update", null, getI18nService().getCurrentLocale()));
+								GlobalMessages.CONF_MESSAGES_HOLDER, msgKey);
+						results.put("message", getMessageSource().getMessage(msgKey, null, getI18nService().getCurrentLocale()));
 					}
 				} else if (cartModification.getQuantity() > 0) {
 					// Less than successful
-					GlobalMessages.addFlashMessage(
-							redirectModel,
-							GlobalMessages.ERROR_MESSAGES_HOLDER,
-							"basket.page.message.update.reducedNumberOfItemsAdded.lowStock",
-							new Object[] {
-									cartModification.getEntry().getProduct().getName(),
-									cartModification.getQuantity(),
-									form.getQuantity(),
-									request.getRequestURL().append(
-											cartModification.getEntry().getProduct().getUrl()) });
-					results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.lowStock", new Object[] {
+					Object[] params = new Object[] {
 							cartModification.getEntry().getProduct().getName(),
 							cartModification.getQuantity(),
 							form.getQuantity(),
 							request.getRequestURL().append(
-									cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
-				} else {
-					// No more stock available
+									cartModification.getEntry().getProduct().getUrl()) };
+					msgKey = "basket.page.message.update.reducedNumberOfItemsAdded.lowStock";
 					GlobalMessages.addFlashMessage(
 							redirectModel,
 							GlobalMessages.ERROR_MESSAGES_HOLDER,
-							"basket.page.message.update.reducedNumberOfItemsAdded.noStock",
-							new Object[] {
-									cartModification.getEntry().getProduct().getName(),
-									request.getRequestURL().append(
-											cartModification.getEntry().getProduct().getUrl()) });
-					results.put("message", getMessageSource().getMessage("basket.page.message.update.reducedNumberOfItemsAdded.noStock", new Object[] {
+							msgKey,
+							params);
+					results.put("message", getMessageSource().getMessage(msgKey, params, getI18nService().getCurrentLocale()));
+				} else {
+					// No more stock available
+					Object[] params = new Object[] {
 							cartModification.getEntry().getProduct().getName(),
 							request.getRequestURL().append(
-									cartModification.getEntry().getProduct().getUrl()) }, getI18nService().getCurrentLocale()));
+									cartModification.getEntry().getProduct().getUrl()) };
+					msgKey = "basket.page.message.update.reducedNumberOfItemsAdded.noStock";
+					GlobalMessages.addFlashMessage(
+							redirectModel,
+							GlobalMessages.ERROR_MESSAGES_HOLDER,
+							msgKey,
+							params);
+					results.put("message", getMessageSource().getMessage(msgKey, params, getI18nService().getCurrentLocale()));
 				}
 				// Redirect to the cart page on update success so that the browser doesn't re-post
 				// again
@@ -329,14 +328,16 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	@RequireHardLogIn
 	public String placeOrder(@RequestHeader(value = "referer", required = false) final String referer
 			, final Model model, final AmazonPlaceOrderForm amazonPlaceOrderForm
-			, final RedirectAttributes redirectModel) {
+			, final RedirectAttributes redirectModel) throws CMSItemNotFoundException {
 		LOG.info("AmazonCheckout - placeOrder");
+		CartData cartData = null;
 		if(getCheckoutCustomerStrategy().isAnonymousCheckout()
 				&& !CustomerType.GUEST.equals(getCheckoutCustomerStrategy().getCurrentUserForCheckout().getType())) {
 			// XXX: temporary set user type as guest
 			CustomerType userType = getCheckoutCustomerStrategy().getCurrentUserForCheckout().getType();
 			try {
 				getCheckoutCustomerStrategy().getCurrentUserForCheckout().setType(CustomerType.GUEST);
+				cartData = getCheckoutFacade().getCheckoutCart();
 				if (validateCart(redirectModel)) {
 					return REDIRECT_URL_CART;
 				}
@@ -348,7 +349,9 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 				return REDIRECT_URL_CART;
 			}
 		}
-		CartData cartData = getCheckoutFacade().getCheckoutCart();
+		if (cartData == null) {
+			cartData = getCheckoutFacade().getCheckoutCart();
+		}
 		if (cartData.getDeliveryAddress() == null) {
 			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, "amazon.address.select.failed");
 			if(StringUtils.isBlank(referer))
@@ -364,7 +367,11 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
 			sellerOrderAttributes.setSellerOrderId(orderCode);
 			orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
-			amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
+			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), null);
+
+			if (details.getAmazonOrderReferenceStatus() != null && details.getAmazonOrderReferenceStatus().equalsIgnoreCase("Draft")) {
+				amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
+			}
 			amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
 			if(getCheckoutFacade().authorizePayment(null)) {
 				LOG.info("AmazonCheckout - payment ok");
@@ -379,9 +386,14 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 			} else {
 				LOG.info("AmazonCheckout - payment failed");
 				GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, getAmazonErrorMessage());
+				if (getSessionService().getAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE).equals("AmazonRejected") || 
+						getSessionService().getAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE).equals("TransactionTimedOut")) {
+					return REDIRECT_URL_CART;
+				}
 			}
 		}
-		return REDIRECT_URL_AMAZON_CHECKOUT;
+		model.addAttribute("amazonOrderReferenceId", amazonPlaceOrderForm.getAmazonOrderReferenceId());
+		return checkoutPage(model);
 	}
 	
 	protected String redirectToOrderConfirmationPage(final OrderData orderData)

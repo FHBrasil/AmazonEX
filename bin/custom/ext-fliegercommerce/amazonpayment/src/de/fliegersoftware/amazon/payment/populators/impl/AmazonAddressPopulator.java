@@ -5,9 +5,11 @@
 package de.fliegersoftware.amazon.payment.populators.impl;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
 
 import com.amazonservices.mws.offamazonpayments.model.Address;
@@ -32,18 +34,42 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 		Assert.notNull(source, "Parameter source cannot be null.");
 		Assert.notNull(target, "Parameter target cannot be null.");
 		
-		String line1 = source.getAddressLine1();
-		String line2 = source.getAddressLine2();
-		String line3 = source.getAddressLine3();
-		boolean l2Empty = StringUtils.isEmpty(line2);
-		boolean l3Empty = StringUtils.isEmpty(line3);
+		final StringBuilder streetFull = new StringBuilder();
+		if(source.getAddressLine1() != null && !source.getAddressLine1().isEmpty())
+		{
+			streetFull.append(source.getAddressLine1()).append(" ");
+		}
+		if(source.getAddressLine2() != null && !source.getAddressLine2().isEmpty())
+		{
+			streetFull.append(source.getAddressLine2()).append(" ");
+		}
+		if(source.getAddressLine3() != null && !source.getAddressLine3().isEmpty())
+		{
+			streetFull.append(source.getAddressLine3()).append(" ");
+		}
 		
-		target.setLine1(line1);
-		target.setLine2(
-				(l2Empty ? "" : line2)
-				+ (l2Empty || l3Empty ? "" : " ")
-				+ (l3Empty ? "" : line3));
-		target.setFirstName(source.getName());
+		final String patternStr = "[0-9]+";
+	    final Pattern pattern = Pattern.compile(patternStr);
+	    final String streetFullStr = streetFull.toString();
+	    
+	    if(streetFullStr != null && !streetFullStr.toString().isEmpty())
+	    {
+	    	final Matcher matcher = pattern.matcher(streetFullStr);
+		    if(matcher.find())
+		    {
+		    	final int index = matcher.start();
+		    	target.setLine1(streetFullStr.substring(0, index));
+		    	target.setLine2(streetFullStr.substring(index, matcher.end()));
+		    }
+	    }
+	    
+		final String nameFull = source.getName();
+		if(nameFull != null && !nameFull.isEmpty())
+		{
+			target.setFirstName(nameFull.substring(0, nameFull.indexOf(' ')));
+			target.setLastName(nameFull.substring(nameFull.indexOf(' ') + 1));
+		}
+		
 		target.setTown(source.getCity());
 //		target.setDistrict(source.getDistrict());
 		target.setCompanyName(source.getName());

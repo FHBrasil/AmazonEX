@@ -1,29 +1,38 @@
 package de.fliegersoftware.amazon.payment.ipn.impl;
 
+import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil.setPaymentTransactionEntryStatus;
+
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.util.Date;
 
-import javax.xml.datatype.XMLGregorianCalendar;
+import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResult;
+import com.amazonservices.mws.offamazonpayments.model.OrderReferenceDetails;
 import com.amazonservices.mws.offamazonpaymentsipn.model.AuthorizationDetails;
 import com.amazonservices.mws.offamazonpaymentsipn.model.AuthorizationNotification;
-import com.amazonservices.mws.offamazonpaymentsipn.model.IdList;
-import com.amazonservices.mws.offamazonpaymentsipn.model.OrderItemCategories;
-import com.amazonservices.mws.offamazonpaymentsipn.model.Price;
-import com.amazonservices.mws.offamazonpaymentsipn.model.Status;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
+import de.fliegersoftware.amazon.core.services.AmazonEmailService;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
+import de.fliegersoftware.amazon.payment.services.MWSAmazonPaymentService;
 import de.hybris.platform.payment.enums.PaymentTransactionType;
 import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
 import de.hybris.platform.payment.model.PaymentTransactionModel;
-import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil.setPaymentTransactionEntryStatus;
 
 public class AuthorizationNotificationHandler extends BaseAmazonNotificationHandler<AuthorizationNotification> {
 
 	private static final Logger LOG = Logger.getLogger(AuthorizationNotificationHandler.class);
+	
+	@Resource 
+	private AmazonEmailService amazonEmailService;
+	
+	@Resource
+	private MWSAmazonPaymentService mwsAmazonPaymentService;
 
 	@Override
 	public void log(AuthorizationNotification notification) {
@@ -97,8 +106,28 @@ public class AuthorizationNotificationHandler extends BaseAmazonNotificationHand
 			paymentInfo.setAmazonLastAuthorizationId(details.getAuthorizationReferenceId());
 			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
+			
+			if (details.getAuthorizationStatus().getReasonCode() != null && (details.getAuthorizationStatus().getReasonCode().equals("AmazonRejected") || 
+					details.getAuthorizationStatus().getReasonCode().equals("InvalidPaymentMethod"))) {
+				final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
+				request.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
+				request.setAddressConsentToken(null);
+
+				GetOrderReferenceDetailsResult orderReferenceDetailsResult = mwsAmazonPaymentService.getOrderReferenceDetails(request);
+				if(orderReferenceDetailsResult != null) {
+					OrderReferenceDetails orderReferenceDetails = orderReferenceDetailsResult.getOrderReferenceDetails();
+					orderReferenceDetails.getSellerOrderAttributes().getStoreName();
+					try {
+						amazonEmailService.sendEmailDeclined(orderReferenceDetails.getBuyer().getEmail(), details.getAuthorizationStatus().getReasonCode());
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			}
 
 			getModelService().save(paymentInfo);
+			getModelService().refresh(paymentInfo);
 		}
 
 		if(details.isCaptureNow()) {
@@ -126,7 +155,19 @@ public class AuthorizationNotificationHandler extends BaseAmazonNotificationHand
 				paymentInfo.setAmazonCaptureId(details.getAmazonAuthorizationId());
 				paymentInfo.setAmazonCaptureReasonCode(details.getAuthorizationStatus().getReasonCode());
 				paymentInfo.setAmazonCaptureStatus(details.getAuthorizationStatus().getState());
+				
+				getModelService().save(paymentInfo);
+				getModelService().refresh(paymentInfo);
 			}
 		}
 	}
+
+	public AmazonEmailService getAmazonEmailService() {
+		return amazonEmailService;
+	}
+
+	public void setAmazonEmailService(AmazonEmailService amazonEmailService) {
+		this.amazonEmailService = amazonEmailService;
+	}
+	
 }

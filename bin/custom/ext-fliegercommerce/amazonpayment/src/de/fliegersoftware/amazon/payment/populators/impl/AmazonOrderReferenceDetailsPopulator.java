@@ -32,6 +32,10 @@ public class AmazonOrderReferenceDetailsPopulator implements Populator<OrderRefe
 		
 		target.setAmazonOrderReferenceId(source.getAmazonOrderReferenceId());
 		
+		if (source.getOrderReferenceStatus() != null) {
+			target.setAmazonOrderReferenceStatus(source.getOrderReferenceStatus().getState());
+		}
+		
 		if (source.getDestination() != null)
 		{
 			Address address = source.getDestination().getPhysicalDestination();

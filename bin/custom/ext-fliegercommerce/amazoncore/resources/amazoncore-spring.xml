@@ -111,4 +111,8 @@
 	<bean id="amazonCustomerFacade" class="de.fliegersoftware.amazon.core.facades.impl.DefaultAmazonCustomerFacade" parent="defaultCustomerFacade">
 		<property name="amazonUserFacade" ref="amazonUserFacade"/>
 	</bean>
+	
+	<alias alias="amazonEmailService" name="defaultAmazonEmailService"/>
+	<bean id="defaultAmazonEmailService" class="de.fliegersoftware.amazon.core.services.impl.DefaultAmazonEmailService">
+	</bean>
 </beans>
