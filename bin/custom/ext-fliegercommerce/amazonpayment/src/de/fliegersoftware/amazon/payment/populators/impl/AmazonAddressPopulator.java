@@ -10,14 +10,17 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
 import com.amazonservices.mws.offamazonpayments.model.Address;
 
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
+import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
+import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 
 /**
  *
@@ -25,6 +28,8 @@ import de.hybris.platform.servicelayer.dto.converter.ConversionException;
  */
 public class AmazonAddressPopulator implements Populator<Address, AddressData>
 {
+	private static final Logger LOG = Logger.getLogger(AmazonAddressPopulator.class);
+	
 	@Resource(name = "i18NFacade")
 	private I18NFacade i18NFacade;
 
@@ -76,7 +81,15 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 		
 		//RegionData region = new RegionData();
 		//region.setName(source.getStateOrRegion());
-		target.setCountry(getI18NFacade().getCountryForIsocode(source.getCountryCode()));
+		try
+		{
+			final CountryData countryData = getI18NFacade().getCountryForIsocode(source.getCountryCode());
+			target.setCountry(countryData);
+		}
+		catch (final UnknownIdentifierException e)
+		{
+			LOG.warn("Country model with isocode, " + source.getCountryCode() + " not found!");
+		}
 		//target.setRegion(region);
 		target.setPostalCode(source.getPostalCode());
 		target.setPhone(source.getPhone());

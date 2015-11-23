@@ -99,6 +99,7 @@
 						ACC.amazon.enablePlaceOrder.addressSelected = false;
 						if ($('input[name=amazonOrderReferenceId]').val().length > 0) {
 							ACC.amazon.amazonOrderReferenceId = $('input[name=amazonOrderReferenceId]').val();
+							ACC.amazon.enablePlaceOrder.addressSelected = true;
 							checkEnableCheckout();
 							new OffAmazonPayments.Widgets.AddressBook({
 								sellerId: ACC.addons.amazonaddon.sellerId,
@@ -169,6 +170,8 @@
 								},
 								onError: function(error) {
 									// your error handling code
+									ACC.amazon.enablePlaceOrder.addressSelected = false;
+									checkEnableCheckout();
 								}
 							}).bind("addressBookWidgetDiv");
 						}	
@@ -207,6 +210,7 @@
 					}
 					if($('#confirmChargeOnOrder').length) {
 						ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = $('#confirmChargeOnOrder')[0].checked;
+						checkEnableCheckout();
 						$('#confirmChargeOnOrder').change(function() {
 							ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = this.checked;
 							checkEnableCheckout();

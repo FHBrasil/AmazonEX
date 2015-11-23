@@ -361,16 +361,18 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		}
 
 		if(getCheckoutFacade().setPaymentDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId())) {
-			String orderCode = getCheckoutFacade().createOrderCodeFromCart();
-			AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
-			orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
-			AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
-			sellerOrderAttributes.setSellerOrderId(orderCode);
-			orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
 			AmazonOrderReferenceDetailsData details = amazonPaymentService.getOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), null);
-
-			if (details.getAmazonOrderReferenceStatus() != null && details.getAmazonOrderReferenceStatus().equalsIgnoreCase("Draft")) {
+			if (StringUtils.equalsIgnoreCase(details.getAmazonOrderReferenceStatus(), "Draft")) {
+				String orderCode = getCheckoutFacade().createOrderCodeFromCart();
+				AmazonOrderReferenceAttributesData orderReferenceAttributesData = new AmazonOrderReferenceAttributesData();
+				orderReferenceAttributesData.setOrderTotal(cartData.getTotalPrice());
+				AmazonSellerOrderAttributesData sellerOrderAttributes = new AmazonSellerOrderAttributesData();
+				sellerOrderAttributes.setSellerOrderId(orderCode);
+				orderReferenceAttributesData.setSellerOrderAttributes(sellerOrderAttributes);
+			
 				amazonPaymentService.setOrderReferenceDetails(amazonPlaceOrderForm.getAmazonOrderReferenceId(), orderReferenceAttributesData);
+			} else {
+				getCheckoutFacade().setSellerOrderId(details.getSellerOrderId());
 			}
 			amazonPaymentService.confirmOrderReference(amazonPlaceOrderForm.getAmazonOrderReferenceId());
 			if(getCheckoutFacade().authorizePayment(null)) {

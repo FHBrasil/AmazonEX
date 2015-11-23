@@ -98,6 +98,12 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		}
 		return null;
 	}
+
+	public void setSellerOrderId(String orderId) {
+		CartModel cartModel = getCart();
+		cartModel.setPreCreatedOrderCode(orderId);
+		getModelService().save(cartModel);
+	}
 	
 	public boolean isDeliveryCountrySupported(CountryData deliveryCountry) {
 		if (deliveryCountry != null) {

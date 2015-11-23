@@ -9,6 +9,16 @@ getUrlParam = function(name){
 
 if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
 	if (ACC.addons.amazonaddon.isAmazonLoginEnabled == 'true') {
+		// prevent amazon scripts from overwriting current jquery version
+		ACC.addons.amazonaddon.$ = $;
+		$.ajaxSetup({
+			complete: function() {
+				if (window.$ !== ACC.addons.amazonaddon.$) {
+					window.$ = window.jquery = window.jQuery = ACC.addons.amazonaddon.$;
+				}
+			}
+		});
+		
 		$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl)
 			.done(function(script, textStatus){
 				if(window.onAmazonLoginReady) {
