@@ -16,7 +16,7 @@
 <%@ taglib prefix="amazon-controls" tagdir="/WEB-INF/tags/addons/amazonpaymentaddon/desktop/checkout/controls" %>
 
 <spring:url value="/checkout/amazon/placeOrder" var="placeOrderUrl" />
-<template:page pageTitle="${pageTitle}" hideHeaderLinks="true">
+<template:page pageTitle="${pageTitle}">
         <div id="globalMessages">
                 <common:globalMessages />
         </div>

@@ -21,10 +21,6 @@ import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonGuestForm;
 import de.fliegersoftware.amazon.login.addon.forms.validation.AmazonGuestValidator;
-import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.LoginForm;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.RegisterForm;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 import de.hybris.platform.commercefacades.order.CheckoutFacade;
@@ -33,6 +29,10 @@ import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.commerceservices.strategies.CheckoutCustomerStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.yacceleratorstorefront.constants.WebConstants;
+import de.hybris.platform.yacceleratorstorefront.controllers.util.GlobalMessages;
+import de.hybris.platform.yacceleratorstorefront.forms.LoginForm;
+import de.hybris.platform.yacceleratorstorefront.forms.RegisterForm;
 
 @Controller
 @Scope("tenant")

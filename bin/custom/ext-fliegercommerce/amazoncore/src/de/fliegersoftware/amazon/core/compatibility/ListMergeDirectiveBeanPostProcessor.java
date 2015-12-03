@@ -1,49 +1,43 @@
 /*
  * [y] hybris Platform
  *
- * Copyright (c) 2000-2013 hybris AG
+ * Copyright (c) 2000-2014 hybris AG
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of hybris
  * ("Confidential Information"). You shall not disclose such Confidential
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
- * 
- * 
+ *
+ *  
  */
 package de.fliegersoftware.amazon.core.compatibility;
 
-import java.lang.reflect.Field;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Stopwatch;
+import com.google.common.base.Ticker;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.*;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.util.ReflectionUtils;
-
-import com.google.common.base.Preconditions;
-import com.google.common.base.Stopwatch;
-import com.google.common.base.Ticker;
-
 
 /**
- * Processes all List Merge Directives in the visible application context. This bean is a bean post processor to ensure it is initialised
- * by the container prior to bean 
+ * Processes all List Merge Directives in the visible application context. This bean is a bean post processor to ensure
+ * it is initialised by the container prior to bean
  * 
  */
-public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, ApplicationContextAware, BeanFactoryAware, BeanPostProcessor
+public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, ApplicationContextAware, BeanFactoryAware,
+		BeanPostProcessor
 {
 	private static final Logger LOG = Logger.getLogger(ListMergeDirectiveBeanPostProcessor.class.getName());
 
@@ -60,7 +54,9 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 	{
 		if (!(beanFactory instanceof ConfigurableListableBeanFactory))
 		{
-			throw new IllegalStateException("ListMergeDirectiveBeanPostProcessor doesn't work with a BeanFactory which does not implement ConfigurableListableBeanFactory: " + beanFactory.getClass());
+			throw new IllegalStateException(
+					"ListMergeDirectiveBeanPostProcessor doesn't work with a BeanFactory which does not implement ConfigurableListableBeanFactory: "
+							+ beanFactory.getClass());
 		}
 		this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
 	}
@@ -75,68 +71,75 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 	{
 		this.applicationContext = applicationContext;
 	}
-	
+
 	protected void processAll(final Map<String, ListMergeDirective> beans)
 	{
 		// pass 1 - add
-		process(beans, new ListMergeDirectiveProcessor() {
+		process(beans, new ListMergeDirectiveProcessor()
+		{
 			public String getName()
 			{
 				return "Add";
 			}
+
 			@Override
-			public void processDirective(ListMergeDirective directive,
-					List<Object> listBean, String directiveBeanName, String listBeanName) {
-				listBean.add(directive.getAdd());	
+			public void processDirective(final ListMergeDirective directive, final List<Object> listBean,
+					final String directiveBeanName, final String listBeanName)
+			{
+				listBean.add(directive.getAdd());
 			}
-		}
-		);
-		
+		});
+
 		// pass 2 - sort 
-		process(beans, new ListMergeDirectiveProcessor() {
+		process(beans, new ListMergeDirectiveProcessor()
+		{
 			public String getName()
 			{
 				return "Sort";
 			}
-			protected boolean requiresSorting(ListMergeDirective directive)
+
+			protected boolean requiresSorting(final ListMergeDirective directive)
 			{
 				return hasAfterDirectives(directive) || hasBeforeDirectives(directive);
 			}
-			
-			protected boolean hasAfterDirectives(ListMergeDirective directive)
+
+			protected boolean hasAfterDirectives(final ListMergeDirective directive)
 			{
-				return directive.getAfterBeanNames() != null || directive.getAfterClasses() != null || directive.getAfterValues() != null;
+				return directive.getAfterBeanNames() != null || directive.getAfterClasses() != null
+						|| directive.getAfterValues() != null;
 			}
-			
-			protected boolean hasBeforeDirectives(ListMergeDirective directive)
+
+			protected boolean hasBeforeDirectives(final ListMergeDirective directive)
 			{
-				return directive.getBeforeBeanNames() != null || directive.getBeforeClasses() != null || directive.getBeforeValues() != null;
+				return directive.getBeforeBeanNames() != null || directive.getBeforeClasses() != null
+						|| directive.getBeforeValues() != null;
 			}
-			
-			protected void  processAfterDirectives(ListMergeDirective directive,
-					List<Object> listBean, String directiveBeanName, String listBeanName, final int index)
+
+			protected void processAfterDirectives(final ListMergeDirective directive, final List<Object> listBean,
+					final String directiveBeanName, final String listBeanName, final int index)
 			{
 				if (hasAfterDirectives(directive))
 				{
 					int highestIndex = -1;
-					
+
 					if (directive.getAfterBeanNames() != null)
 					{
-						for (String beanName : directive.getAfterBeanNames())
+						for (final String beanName : directive.getAfterBeanNames())
 						{
 							try
 							{
 								final Object bean = getApplicationContext().getBean(beanName);
-								int listBeanIndex = listBean.indexOf(bean);
+								final int listBeanIndex = listBean.indexOf(bean);
 								if (listBeanIndex > highestIndex)
 								{
 									highestIndex = listBeanIndex;
 
 								}
 							}
-							catch (NoSuchBeanDefinitionException e)
+							catch (final NoSuchBeanDefinitionException e)
 							{
-								LOG.warn("list merge directive[" + directiveBeanName + "] afterBeanName [" + beanName + "] does not exist");
+								LOG.warn("list merge directive[" + directiveBeanName + "] afterBeanName [" + beanName
+										+ "] does not exist");
 							}
 						}
 					}
@@ -145,10 +148,10 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 						for (int i = (listBean.size() - 1); i >= 0 || i >= index; i--)
 						{
 							boolean done = false;
-							for (Class clazz : directive.getAfterClasses())
+							for (final Class clazz : directive.getAfterClasses())
 							{
 								final Object element = listBean.get(i);
-			
+
 								if (element != null && clazz.isAssignableFrom(element.getClass()))
 								{
 									highestIndex = i;
@@ -156,8 +159,8 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 									break;
 								}
 							}
-							
-							
+
+
 							if (done)
 							{
 								break;
@@ -166,17 +169,17 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 					}
 					if (directive.getAfterValues() != null)
 					{
-						for (Object value : directive.getAfterValues())
+						for (final Object value : directive.getAfterValues())
 						{
-							int listBeanIndex = listBean.indexOf(value);
+							final int listBeanIndex = listBean.indexOf(value);
 							if (listBeanIndex > highestIndex)
 							{
 								highestIndex = listBeanIndex;
 
-							}	
+							}
 						}
 					}
-				
+
 					if (highestIndex > index)
 					{
 						final int newIndex = highestIndex + 1;
@@ -193,9 +196,9 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 					}
 				}
 			}
-			
-			protected void processBeforeDirectives(ListMergeDirective directive,
-					List<Object> listBean, String directiveBeanName, String listBeanName, final int index)
+
+			protected void processBeforeDirectives(final ListMergeDirective directive, final List<Object> listBean,
+					final String directiveBeanName, final String listBeanName, final int index)
 			{
 				if (hasBeforeDirectives(directive))
 				{
@@ -203,36 +206,37 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 
 					if (directive.getBeforeBeanNames() != null)
 					{
-						for (String beanName : directive.getBeforeBeanNames())
+						for (final String beanName : directive.getBeforeBeanNames())
 						{
 							try
 							{
-								Object bean = getApplicationContext().getBean(beanName);
-								int listBeanIndex = listBean.indexOf(bean);
+								final Object bean = getApplicationContext().getBean(beanName);
+								final int listBeanIndex = listBean.indexOf(bean);
 								if (listBeanIndex >= 0)
 								{
 									if (lowestIndex == -1 || listBeanIndex < lowestIndex)
 									{
 										lowestIndex = listBeanIndex;
-									}	
+									}
 								}
 							}
-							catch (NoSuchBeanDefinitionException e)
+							catch (final NoSuchBeanDefinitionException e)
 							{
-								LOG.warn("list merge directive[" + directiveBeanName + "] beforeBeanName [" + beanName + "] does not exist");
+								LOG.warn("list merge directive[" + directiveBeanName + "] beforeBeanName [" + beanName
+										+ "] does not exist");
 							}
 						}
 					}
-					
+
 					if (directive.getBeforeClasses() != null)
 					{
 						for (int i = 0; i < listBean.size() || index < i || (lowestIndex >= 0 && i > lowestIndex); i++)
 						{
 							boolean done = false;
-							for (Class clazz : directive.getBeforeClasses())
+							for (final Class clazz : directive.getBeforeClasses())
 							{
 								final Object element = listBean.get(i);
-			
+
 								if (element != null && clazz.isAssignableFrom(element.getClass()))
 								{
 									lowestIndex = i;
@@ -240,38 +244,36 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 									break;
 								}
 							}
-							
-							
+
+
 							if (done)
 							{
 								break;
 							}
 						}
 					}
-					
+
 					if (directive.getBeforeValues() != null)
 					{
-						for (Object value : directive.getBeforeValues())
+						for (final Object value : directive.getBeforeValues())
 						{
-							
-							int listBeanIndex = listBean.indexOf(value);
+
+							final int listBeanIndex = listBean.indexOf(value);
 							if (listBeanIndex >= 0)
 							{
 								if (lowestIndex == -1 || listBeanIndex < lowestIndex)
 								{
 									lowestIndex = listBeanIndex;
-								}	
+								}
 							}
 						}
 					}
-				
+
 					if (lowestIndex < index)
 					{
 						final int newIndex = lowestIndex - 1;
-						Preconditions.checkArgument(
-							listBean.remove(index) == directive.getAdd(), 
-							"Software Error Directive [" + directiveBeanName + "]. Tried to remove wrong bean "
-						);
+						Preconditions.checkArgument(listBean.remove(index) == directive.getAdd(), "Software Error Directive ["
+								+ directiveBeanName + "]. Tried to remove wrong bean ");
 						if (newIndex < 0)
 						{
 							listBean.add(0, directive.getAdd());
@@ -282,55 +284,60 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 						}
 					}
 				}
-			
+
 			}
-			
-			
+
+
 			@Override
-			public void processDirective(ListMergeDirective directive,
-					List<Object> listBean, String directiveBeanName, String listBeanName) {
-				
+			public void processDirective(final ListMergeDirective directive, final List<Object> listBean,
+					final String directiveBeanName, final String listBeanName)
+			{
+
 				if (requiresSorting(directive))
 				{
 					final int index = listBean.indexOf(directive.getAdd());
 					if (index != -1)
 					{
 						processAfterDirectives(directive, listBean, directiveBeanName, listBeanName, index);
-						processBeforeDirectives(directive, listBean, directiveBeanName, listBeanName, index);		
-					}	
+						processBeforeDirectives(directive, listBean, directiveBeanName, listBeanName, index);
+					}
 				}
-				
+
 			}
 		});
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
-		
+	public void afterPropertiesSet() throws Exception
+	{
+
 		final Map<String, ListMergeDirective> beans = getApplicationContext().getBeansOfType(ListMergeDirective.class);
 		final Stopwatch stopWatch = new Stopwatch(Ticker.systemTicker());
 		stopWatch.start();
 		try
 		{
 			processAll(beans);
-		}	
+		}
 		finally
 		{
 			stopWatch.stop();
-			LOG.info("[" + this.applicationContext.getDisplayName() + "] " + this + " Finished Processing [" + beans.size() + "] directives in " + stopWatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+			LOG.info("[" + this.applicationContext.getDisplayName() + "] " + this + " Finished Processing [" + beans.size()
+					+ "] directives in " + stopWatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
 		}
-		
+
 	}
-	
+
 	protected static interface ListMergeDirectiveProcessor
 	{
 		String getName();
-		void processDirective(ListMergeDirective directive, final List<Object> listBean, final String directiveBeanName, final String listBeanName);	
+
+		void processDirective(ListMergeDirective directive, final List<Object> listBean, final String directiveBeanName,
+							  final String listBeanName);
 	}
-	
-	protected void process(final Map<String, ListMergeDirective> beans, ListMergeDirectiveProcessor processor )
+
+	protected void process(final Map<String, ListMergeDirective> beans, final ListMergeDirectiveProcessor processor)
 	{
-		
+
 		for (final String directiveBeanName : beans.keySet())
 		{
 			final ListMergeDirective lmd = beans.get(directiveBeanName);
@@ -340,120 +347,77 @@ public class ListMergeDirectiveBeanPostProcessor implements InitializingBean, Ap
 				LOG.error("invalid list merge directive [" + directiveBeanName + "], missing depends-on");
 				continue;
 			}
-			for (String dependency : dependentBeans)
+			for (final String dependency : dependentBeans)
 			{
 				if (LOG.isInfoEnabled())
 				{
-					LOG.info(processor.getName() + " Post Processing ListMergeDirective [" + directiveBeanName +"] on Bean [" + dependency + "]");
+					LOG.info(processor.getName() + " Post Processing ListMergeDirective [" + directiveBeanName + "] on Bean ["
+							+ dependency + "]");
 				}
 				final List<Object> listBean = resolveListBean(lmd, directiveBeanName, dependency);
 				if (listBean != null)
 				{
 					processor.processDirective(lmd, listBean, directiveBeanName, dependency);
 				}
-			}	
+			}
 		}
-		
+
 	}
-	
+
 	protected List<Object> resolveListBean(final ListMergeDirective lmd, final String directiveBeanName, final String dependency)
 	{
-		if (lmd.getListPropertyDescriptor() == null && lmd.getFieldName() == null)
+		if (lmd.getListPropertyDescriptor() == null)
 		{
 			try
 			{
 				return getApplicationContext().getBean(dependency, List.class);
 			}
-			catch (  BeanNotOfRequiredTypeException e ) {
-				LOG.error("invalid list merge directive[" + directiveBeanName + "], depends-on [" +  dependency + "] is not of type java.util.List");
+			catch (final BeanNotOfRequiredTypeException e)
+			{
+				LOG.error("invalid list merge directive[" + directiveBeanName + "], depends-on [" + dependency
+						+ "] is not of type java.util.List");
 				return null;
 			}
 
 		}
-		else 
+		else
 		{
 			final Object bean = getApplicationContext().getBean(dependency);
-		
-			if (lmd.getListPropertyDescriptor() != null)
+			try
 			{
-				return getListByPropertyDescriptor(bean, lmd.getListPropertyDescriptor(), directiveBeanName, dependency);
+				final Object list = PropertyUtils.getProperty(bean, lmd.getListPropertyDescriptor());
+				if (list == null)
+				{
+					LOG.error("invalid list merge directive[" + directiveBeanName + "], depends-on [" + dependency
+							+ "] propertyDescriptor [" + lmd.getListPropertyDescriptor() + "] list is null");
+					return null;
+				}
+				else if (!(list instanceof List))
+				{
+					LOG.error("invalid list merge directive[" + directiveBeanName + "], depends-on [" + dependency
+							+ "] propertyDescriptor [" + lmd.getListPropertyDescriptor() + "] is not of type java.util.List");
+					return null;
+				}
+				return (List<Object>) list;
 			}
-			else 
+			catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e)
 			{
-				return getListByReflection(bean, lmd.getFieldName(), directiveBeanName, dependency);
-			}	
+				LOG.error("invalid list merge directive[" + directiveBeanName + "], depends-on [" + dependency
+						+ "] propertyDescriptor [" + lmd.getListPropertyDescriptor() + "] did not resolve a property");
+				return null;
+			}
 		}
 	}
-	
-	protected List<Object> getListByPropertyDescriptor(final Object bean, final String propertyDescriptor, final String directiveBeanName, final String dependency)
-	{
-		try
-		{
-			final Object list =  PropertyUtils.getProperty(bean, propertyDescriptor);
-			if (list == null)
-			{
-				LOG.error("invalid ListMergeDirective [" + directiveBeanName + "], depends-on [" +  dependency + "] propertyDescriptor [" + propertyDescriptor + "] list is null");
-				return null;
-			}
-			else if (!(list instanceof List))
-			{
-				LOG.error("invalid ListMergeDirective [" + directiveBeanName + "], depends-on [" +  dependency + "] propertyDescriptor [" + propertyDescriptor + "] is not of type java.util.List");
-				return null;
-			}
-			return (List<Object>)list;
-
-		}
-		catch (NoSuchMethodException| InvocationTargetException|IllegalAccessException e)
-		{
-			LOG.error("invalid ListMergeDirective [" + directiveBeanName + "], depends-on [" +  dependency + "] propertyDescriptor [" + propertyDescriptor + "] did not resolve a property");
-			return null;
-		}
-	}
-	
-	protected List<Object> getListByReflection(final Object bean, final String fieldName, final String directiveBeanName, final String dependency)
-	{
-		try
-		{
-			Field field = ReflectionUtils.findField(bean.getClass(),fieldName);
-			if (field == null)
-			{
-				LOG.error("invalid ListMergeDirective [" + directiveBeanName + "], depends-on [" +  dependency + "] fieldName [" + fieldName + "] did not resolve a field");
-				return null;
-			}
-			field.setAccessible(true);
-			final Object list =  field.get(bean);
-			if (list == null)
-			{
-				LOG.error("invalid ListMergeDirective [" + directiveBeanName + "], depends-on [" +  dependency + "] fieldName [" + fieldName + "] list is null");
-				return null;
-			}
-			else if (!(list instanceof List))
-			{
-				LOG.error("invalid ListMergeDirective [" + directiveBeanName + "], depends-on [" +  dependency + "] fieldName [" + fieldName + "] is not of type java.util.List");
-				return null;
-			}
-			return (List<Object>)list;
-		}
-		catch (SecurityException | IllegalAccessException e)
-		{
-			LOG.error("invalid ListMergeDirective [" + directiveBeanName + "], depends-on [" +  dependency + "] fieldName [" + fieldName + "] did not resolve a field");
-			return null;
-		}
-
-	}
-	
 
 	@Override
-	public Object postProcessBeforeInitialization(Object bean, String beanName)
-			throws BeansException {
-		// TODO Auto-generated method stub
+	public Object postProcessBeforeInitialization(final Object bean, final String beanName) throws BeansException
+	{
 		return bean;
 	}
 
 	@Override
-	public Object postProcessAfterInitialization(Object bean, String beanName)
-			throws BeansException {
-		// TODO Add sorting for post processed list beans
+	public Object postProcessAfterInitialization(final Object bean, final String beanName) throws BeansException
+	{
 		return bean;
 	}
 

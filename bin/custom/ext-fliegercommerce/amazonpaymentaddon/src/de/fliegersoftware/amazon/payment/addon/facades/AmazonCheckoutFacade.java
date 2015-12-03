@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Required;
 import de.fliegersoftware.amazon.core.constants.AmazoncoreConstants;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
-import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
+import de.hybris.platform.acceleratorfacades.order.impl.AcceleratorCheckoutFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commerceservices.enums.CustomerType;
@@ -33,7 +33,7 @@ import de.hybris.platform.servicelayer.model.ModelService;
  * @author taylor.savegnago
  *
  */
-public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
+public class AmazonCheckoutFacade extends AcceleratorCheckoutFacade
 {
 	private static final Logger LOG = Logger.getLogger(AmazonCheckoutFacade.class);
 
@@ -184,6 +184,16 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		addressModel.setOwner(customer);
 		getCustomerAccountService().saveAddressEntry(customer, addressModel);
 		return addressModel;
+	}
+
+	protected boolean checkIfCurrentUserIsTheCartUser()
+	{
+		final CartModel cartModel = getCart();
+		if (cartModel != null)
+		{
+			return cartModel.getUser().equals(getCurrentUserForCheckout());
+		}
+		return false;
 	}
 
 	protected AmazonCommerceCheckoutService getCommerceCheckoutService()

@@ -15,10 +15,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import de.fliegersoftware.amazon.core.services.AmazonUserService;
 import de.fliegersoftware.amazon.login.addon.security.AmazonAutoLoginStrategy;
 import de.fliegersoftware.amazon.login.addon.token.AmazonLoginToken;
-import de.hybris.platform.acceleratorstorefrontcommons.security.GUIDCookieStrategy;
 import de.hybris.platform.commercefacades.customer.CustomerFacade;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.servicelayer.session.SessionService;
+import de.hybris.platform.yacceleratorstorefront.security.GUIDCookieStrategy;
 
 
 public class DefaultAmazonAutoLoginStrategy implements AmazonAutoLoginStrategy

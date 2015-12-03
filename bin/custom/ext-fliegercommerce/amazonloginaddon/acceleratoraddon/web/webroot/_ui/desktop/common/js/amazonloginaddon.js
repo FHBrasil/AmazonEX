@@ -7,90 +7,92 @@ getUrlParam = function(name){
 	}
 }
 
-if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
-	if (ACC.addons.amazonaddon.isAmazonLoginEnabled == 'true') {
-		// prevent amazon scripts from overwriting current jquery version
-		ACC.addons.amazonaddon.$ = $;
-		$.ajaxSetup({
-			complete: function() {
-				if (window.$ !== ACC.addons.amazonaddon.$) {
-					window.$ = window.jquery = window.jQuery = ACC.addons.amazonaddon.$;
-				}
-			}
-		});
-		
-		$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl)
-			.done(function(script, textStatus){
-				if(window.onAmazonLoginReady) {
-					var parent = window.onAmazonLoginReady;
-					window.onAmazonLoginReady = function() {
-						parent();
-						authenticationLoginReadyHandler();
-					}
-				} else {
-					window.onAmazonLoginReady = authenticationLoginReadyHandler;
-				}
-				function authenticationLoginReadyHandler() {
-					amazon.Login.setClientId(ACC.addons.amazonaddon.clientId);
-				};
-				if($('#LoginWithAmazon').length) {
-					var authRequest;
-					var returnUrl = ACC.config.contextPath + '/register/login-with-amazon';
-					OffAmazonPayments.Button("LoginWithAmazon", ACC.addons.amazonaddon.sellerId, {
-						type:  "LwA",
-						color: ACC.addons.amazonaddon.loginButtonColor,
-						size:  ACC.addons.amazonaddon.loginButtonSize,
-		
-						authorization: function() {
-							loginOptions =
-								{scope: "profile payments:widget payments:shipping_address payments:billing_address", popup: "true"};
-							// authRequest = amazon.Login.authorize (loginOptions, returnUrl);
-							amazon.Login.authorize(loginOptions, function(response){
-								if(response.error){
-									alert('oauth error'+response.error);
-									return;
-								}
-								amazon.Login.retrieveProfile(response.access_token, function(response){
-									
-									redirect(returnUrl, 
-											{name: response.profile.Name,
-								   			primaryEmail: response.profile.PrimaryEmail,
-								   			customerId: response.profile.CustomerId,
-								   			CSRFToken: ACC.config.CSRFToken },
-								   			'POST');
-								});
-							});
-						},
-						onError: function(error) {
-							// your error handling code
-						}
-					});
-					if (ACC.addons.amazonaddon.isHiddenButtonsMode == 'true') {
-						$("#LoginWithAmazon").hide();
+if (ACC && ACC.addons && ACC.addons.amazonaddon) {
+	if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
+		if (ACC.addons.amazonaddon.isAmazonLoginEnabled == 'true') {
+			// prevent amazon scripts from overwriting current jquery version
+			ACC.addons.amazonaddon.$ = $;
+			$.ajaxSetup({
+				complete: function() {
+					if (window.$ !== ACC.addons.amazonaddon.$) {
+						window.$ = window.jquery = window.jQuery = ACC.addons.amazonaddon.$;
 					}
 				}
-				
-				if($('a[href$="/logout"]').length) {
-					$('a[href$="/logout"]').click(function() {
-						amazon.Login.logout();
-					});
-				}
-				
-				if($('a[href$="/unmerge-amazon-account"]').length) {
-					$('a[href$="/unmerge-amazon-account"]').click(function() {
-						amazon.Login.logout();
-					});
-				}
-				
-				if (getUrlParam('amazonLogout') == 'true') {
-					amazon.Login.logout();
-				}
-			})
-			.fail(function( jqxhr, settings, exception ) {
-				alert( "Triggered ajaxError handler." );
 			});
-	}	
-}
+			
+			$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl)
+				.done(function(script, textStatus){
+					if(window.onAmazonLoginReady) {
+						var parent = window.onAmazonLoginReady;
+						window.onAmazonLoginReady = function() {
+							parent();
+							authenticationLoginReadyHandler();
+						}
+					} else {
+						window.onAmazonLoginReady = authenticationLoginReadyHandler;
+					}
+					function authenticationLoginReadyHandler() {
+						amazon.Login.setClientId(ACC.addons.amazonaddon.clientId);
+					};
+					if($('#LoginWithAmazon').length) {
+						var authRequest;
+						var returnUrl = ACC.config.contextPath + '/register/login-with-amazon';
+						OffAmazonPayments.Button("LoginWithAmazon", ACC.addons.amazonaddon.sellerId, {
+							type:  "LwA",
+							color: ACC.addons.amazonaddon.loginButtonColor,
+							size:  ACC.addons.amazonaddon.loginButtonSize,
+			
+							authorization: function() {
+								loginOptions =
+									{scope: "profile payments:widget payments:shipping_address payments:billing_address", popup: "true"};
+								// authRequest = amazon.Login.authorize (loginOptions, returnUrl);
+								amazon.Login.authorize(loginOptions, function(response){
+									if(response.error){
+										alert('oauth error'+response.error);
+										return;
+									}
+									amazon.Login.retrieveProfile(response.access_token, function(response){
+										
+										redirect(returnUrl, 
+												{name: response.profile.Name,
+									   			primaryEmail: response.profile.PrimaryEmail,
+									   			customerId: response.profile.CustomerId,
+									   			CSRFToken: ACC.config.CSRFToken },
+									   			'POST');
+									});
+								});
+							},
+							onError: function(error) {
+								// your error handling code
+							}
+						});
+						if (ACC.addons.amazonaddon.isHiddenButtonsMode == 'true') {
+							$("#LoginWithAmazon").hide();
+						}
+					}
+					
+					if($('a[href$="/logout"]').length) {
+						$('a[href$="/logout"]').click(function() {
+							amazon.Login.logout();
+						});
+					}
+					
+					if($('a[href$="/unmerge-amazon-account"]').length) {
+						$('a[href$="/unmerge-amazon-account"]').click(function() {
+							amazon.Login.logout();
+						});
+					}
+					
+					if (getUrlParam('amazonLogout') == 'true') {
+						amazon.Login.logout();
+					}
+				})
+				.fail(function( jqxhr, settings, exception ) {
+					alert( "Triggered ajaxError handler." );
+				});
+		}	
+	}
+}	
 var amazonForm = $("#amazonForm");
 if($("#matchAmazonAccount").length) {
 	$("#matchAmazonAccount").click(function() {

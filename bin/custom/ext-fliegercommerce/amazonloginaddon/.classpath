@@ -10,7 +10,7 @@
 	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
 	<classpathentry kind="src" path="acceleratoraddon/web/src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/amazoncore"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorstorefrontcommons"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/addonsupport"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/yacceleratorstorefront"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

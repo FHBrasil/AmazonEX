@@ -24,9 +24,9 @@ import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.login.addon.constants.AmazonLoginAddonConstants;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonLoginForm;
 import de.fliegersoftware.amazon.login.addon.security.AmazonAutoLoginStrategy;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractLoginPageController;
-import de.hybris.platform.acceleratorstorefrontcommons.security.AutoLoginStrategy;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.yacceleratorstorefront.controllers.pages.AbstractLoginPageController;
+import de.hybris.platform.yacceleratorstorefront.security.AutoLoginStrategy;
 
 @Controller
 public abstract class AbstractAmazonLoginController extends AbstractLoginPageController

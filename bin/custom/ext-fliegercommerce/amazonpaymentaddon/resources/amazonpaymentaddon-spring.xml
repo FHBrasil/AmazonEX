@@ -83,7 +83,7 @@
 	  -->
 	
 	<bean id="amazonCheckoutFacade" class="de.fliegersoftware.amazon.payment.addon.facades.AmazonCheckoutFacade"
-		parent="defaultAcceleratorCheckoutFacade">
+		parent="acceleratorCheckoutFacade">
 		<property name="commerceCheckoutService" ref="defaultAmazonCommerceCheckoutService" />
 		<property name="orderService" ref="orderService"/>
 		<property name="paymentModeService" ref="paymentModeService"/>

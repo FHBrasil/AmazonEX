@@ -18,6 +18,7 @@
 		<requires-extension name="cms2"/>
 		<requires-extension name="addonsupport"/>
 		<requires-extension name="amazonpayment"/>
+		<requires-extension name="amazoncore"/>
 
 		<coremodule generated="true" manager="de.fliegersoftware.amazon.payment.addon.jalo.AmazonpaymentaddonManager" packageroot="de.fliegersoftware.amazon.payment.addon"/>
 

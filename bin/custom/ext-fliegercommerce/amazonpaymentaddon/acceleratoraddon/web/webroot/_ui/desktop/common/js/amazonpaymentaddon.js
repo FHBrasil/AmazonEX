@@ -41,210 +41,211 @@
 		return deferred.promise();
 	}
 	
-	if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
-		if (ACC.addons.amazonaddon.isAmazonPayEnabled == 'true') {
-			
-			// prevent amazon scripts from overwriting current jquery version
-			ACC.addons.amazonaddon.$ = $;
-			$.ajaxSetup({
-				complete: function() {
-					if (window.$ !== ACC.addons.amazonaddon.$) {
-						window.$ = window.jquery = window.jQuery = ACC.addons.amazonaddon.$;
+	if (ACC && ACC.addons && ACC.addons.amazonaddon) {
+		if (ACC.addons.amazonaddon.isAmazonEnabled == 'true') {
+			if (ACC.addons.amazonaddon.isAmazonPayEnabled == 'true') {
+				
+				// prevent amazon scripts from overwriting current jquery version
+				ACC.addons.amazonaddon.$ = $;
+				$.ajaxSetup({
+					complete: function() {
+						if (window.$ !== ACC.addons.amazonaddon.$) {
+							window.$ = window.jquery = window.jQuery = ACC.addons.amazonaddon.$;
+						}
 					}
-				}
-			});
-			
-			// loads amazon scripts
-			$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl).done(function(script, textStatus){
-					if($('#AmazonPayButton').length) {
-						var authRequest;
-						var returnUrl = ACC.config.contextPath + '/login/checkout/amazon/guest';
-						var buttonColor = ACC.addons.amazonaddon.payButtonColor;
-						if(!buttonColor) buttonColor = "Gold";
-						var buttonSize = ACC.addons.amazonaddon.payButtonSize;
-						if(!buttonSize) buttonSize = "medium";
-						OffAmazonPayments.Button("AmazonPayButton", ACC.addons.amazonaddon.sellerId, {
-							type:  "PwA",
-							color: buttonColor,
-							size:  buttonSize,
-			
-							authorization: function() {
-								loginOptions =
-									{scope: "profile payments:widget payments:shipping_address payments:billing_address", popup: "true"};
-								amazon.Login.authorize(loginOptions, function(response){
-									if(response.error){
-										alert('oauth error'+response.error);
-										return;
-									}
-									amazon.Login.retrieveProfile(response.access_token, function(response){
-										
-										redirect(returnUrl, 
-												{amazonGuestName: response.profile.Name,
-												amazonGuestEmail: response.profile.PrimaryEmail,
-									   			amazonGuestId: response.profile.CustomerId,
-									   			CSRFToken: ACC.config.CSRFToken },
-									   			'POST');
+				});
+				
+				// loads amazon scripts
+				$.getScript(ACC.addons.amazonaddon.amazonWidgetsUrl).done(function(script, textStatus){
+						if($('#AmazonPayButton').length) {
+							var authRequest;
+							var returnUrl = ACC.config.contextPath + '/login/checkout/amazon/guest';
+							var buttonColor = ACC.addons.amazonaddon.payButtonColor;
+							if(!buttonColor) buttonColor = "Gold";
+							var buttonSize = ACC.addons.amazonaddon.payButtonSize;
+							if(!buttonSize) buttonSize = "medium";
+							OffAmazonPayments.Button("AmazonPayButton", ACC.addons.amazonaddon.sellerId, {
+								type:  "PwA",
+								color: buttonColor,
+								size:  buttonSize,
+				
+								authorization: function() {
+									loginOptions =
+										{scope: "profile payments:widget payments:shipping_address payments:billing_address", popup: "true"};
+									amazon.Login.authorize(loginOptions, function(response){
+										if(response.error){
+											alert('oauth error'+response.error);
+											return;
+										}
+										amazon.Login.retrieveProfile(response.access_token, function(response){
+											
+											redirect(returnUrl, 
+													{amazonGuestName: response.profile.Name,
+													amazonGuestEmail: response.profile.PrimaryEmail,
+										   			amazonGuestId: response.profile.CustomerId,
+										   			CSRFToken: ACC.config.CSRFToken },
+										   			'POST');
+										});
 									});
-								});
-							},
-							onError: function(error) {
-								// your error handling code
-							}
-						});
-					}
-					if (ACC.addons.amazonaddon.isHiddenButtonsMode == 'true') {
-						$("#AmazonPayButton").hide();
-					}
-					if($('#addressBookWidgetDiv').length) {
-						ACC.amazon.enablePlaceOrder.addressSelected = false;
-						if ($('input[name=amazonOrderReferenceId]').val().length > 0) {
-							ACC.amazon.amazonOrderReferenceId = $('input[name=amazonOrderReferenceId]').val();
-							ACC.amazon.enablePlaceOrder.addressSelected = true;
-							checkEnableCheckout();
-							new OffAmazonPayments.Widgets.AddressBook({
-								sellerId: ACC.addons.amazonaddon.sellerId,
-								amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId,
-								displayMode: "Read",								
-								design: {
-									designMode: 'responsive'
 								},
 								onError: function(error) {
 									// your error handling code
 								}
-							}).bind("addressBookWidgetDiv");
-						} else {
-							new OffAmazonPayments.Widgets.AddressBook({
-								sellerId: ACC.addons.amazonaddon.sellerId,
-								onOrderReferenceCreate: function(orderReference) {
-									ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
-									$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId());
-								},
-								onAddressSelect: function(orderReference) {
-									getAccessToken().done(function(accessToken) {
-										$.ajax({
-											url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
-											type: 'post',
-											data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
-												, access_token: accessToken
-												, CSRFToken: ACC.config.CSRFToken },
-											success: function(response){
-			
-												if(response.success) {
-													ACC.amazon.enablePlaceOrder.addressSelected = true;
-													checkEnableCheckout();
-													ACC.amazon.showToaster(response.showMessage);
-													
-													$("#deliveryCost", "#totalPrice").fadeOut();
-													setTimeout(function(){
-														$('#deliveryCost').html(response.deliveryCost);
-														$('#totalPrice').html(response.totalPrice);
-														$('#shipping-methods').html(response.deliveryMethodSelector);
-                                                        bindDeliveryMethodOnChange();											
-												    }, 500);
-												    $("#deliveryCost", "#totalPrice").fadeIn();
-												} 
-												else{
-													$("#deliveryCost").fadeOut();
-													setTimeout(function(){
-														$('#deliveryCost').html("-");
-													}, 500);
-													$("#deliveryCost").fadeIn();
+							});
+						}
+						if (ACC.addons.amazonaddon.isHiddenButtonsMode == 'true') {
+							$("#AmazonPayButton").hide();
+						}
+						if($('#addressBookWidgetDiv').length) {
+							ACC.amazon.enablePlaceOrder.addressSelected = false;
+							if ($('input[name=amazonOrderReferenceId]').val().length > 0) {
+								ACC.amazon.amazonOrderReferenceId = $('input[name=amazonOrderReferenceId]').val();
+								ACC.amazon.enablePlaceOrder.addressSelected = true;
+								checkEnableCheckout();
+								new OffAmazonPayments.Widgets.AddressBook({
+									sellerId: ACC.addons.amazonaddon.sellerId,
+									amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId,
+									displayMode: "Read",								
+									design: {
+										designMode: 'responsive'
+									},
+									onError: function(error) {
+										// your error handling code
+									}
+								}).bind("addressBookWidgetDiv");
+							} else {
+								new OffAmazonPayments.Widgets.AddressBook({
+									sellerId: ACC.addons.amazonaddon.sellerId,
+									onOrderReferenceCreate: function(orderReference) {
+										ACC.amazon.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
+										$('input[name=amazonOrderReferenceId]').val(orderReference.getAmazonOrderReferenceId());
+									},
+									onAddressSelect: function(orderReference) {
+										getAccessToken().done(function(accessToken) {
+											$.ajax({
+												url: ACC.config.contextPath + '/checkout/amazon/select-delivery-address',
+												type: 'post',
+												data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
+													, access_token: accessToken
+													, CSRFToken: ACC.config.CSRFToken },
+												success: function(response){
+				
+													if(response.success == 'true') {
+														ACC.amazon.enablePlaceOrder.addressSelected = true;
+														checkEnableCheckout();
+														ACC.amazon.showToaster(response.showMessage);
+														
+														$("#deliveryCost", "#totalPrice").fadeOut();
+														setTimeout(function(){
+															$('#deliveryCost').html(response.deliveryCost);
+															$('#totalPrice').html(response.totalPrice);
+															$('#shipping-methods').html(response.deliveryMethodSelector);
+	                                                        bindDeliveryMethodOnChange();											
+													    }, 500);
+													    $("#deliveryCost", "#totalPrice").fadeIn();
+													} 
+													else{
+														$("#deliveryCost").fadeOut();
+														setTimeout(function(){
+															$('#deliveryCost').html("-");
+														}, 500);
+														$("#deliveryCost").fadeIn();
+														ACC.amazon.enablePlaceOrder.addressSelected = false;
+														checkEnableCheckout();
+														ACC.amazon.showToaster(response.showMessage);
+													}
+												},
+												error: function (xht, textStatus, ex) {
+													// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
 													ACC.amazon.enablePlaceOrder.addressSelected = false;
 													checkEnableCheckout();
-													ACC.amazon.showToaster(response.showMessage);
+												},
+												complete: function () {
+													// alert("complete");
 												}
-											},
-											error: function (xht, textStatus, ex) {
-												// alert("Ajax call failed while trying to set delivery mode. Error details [" + xht + ", " + textStatus + ", " + ex + "]");
-												ACC.amazon.enablePlaceOrder.addressSelected = false;
-												checkEnableCheckout();
-											},
-											complete: function () {
-												// alert("complete");
+											});
+										});	
+									},
+									design: {
+										designMode: 'responsive'
+									},
+									onError: function(error) {
+										// your error handling code
+										ACC.amazon.enablePlaceOrder.addressSelected = false;
+										checkEnableCheckout();
+									}
+								}).bind("addressBookWidgetDiv");
+							}	
+						}
+						if($('#walletWidgetDiv').length) {
+							ACC.amazon.enablePlaceOrder.paymentSelected = false;
+							new OffAmazonPayments.Widgets.Wallet({
+								sellerId: ACC.addons.amazonaddon.sellerId,
+								amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId,
+								onPaymentSelect: function(orderReference) {
+									$.ajax({
+										url: ACC.config.contextPath + '/checkout/amazon/select-payment-method',
+										type: 'post',
+										data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
+											, CSRFToken: ACC.config.CSRFToken },
+										success: function(response){
+											if(response && response.showMessage) {
+												ACC.amazon.showToaster(response.showMessage);
 											}
-										});
-									});	
+										},
+										error: function (xht, textStatus, ex) {
+										},
+										complete: function () {
+										}
+									});
+									ACC.amazon.enablePlaceOrder.paymentSelected = true;
+									checkEnableCheckout();
 								},
 								design: {
 									designMode: 'responsive'
 								},
 								onError: function(error) {
 									// your error handling code
-									ACC.amazon.enablePlaceOrder.addressSelected = false;
-									checkEnableCheckout();
 								}
-							}).bind("addressBookWidgetDiv");
-						}	
-					}
-					if($('#walletWidgetDiv').length) {
-						ACC.amazon.enablePlaceOrder.paymentSelected = false;
-						new OffAmazonPayments.Widgets.Wallet({
-							sellerId: ACC.addons.amazonaddon.sellerId,
-							amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId,
-							onPaymentSelect: function(orderReference) {
-								$.ajax({
-									url: ACC.config.contextPath + '/checkout/amazon/select-payment-method',
-									type: 'post',
-									data: { amazonOrderReferenceId: ACC.amazon.amazonOrderReferenceId
-										, CSRFToken: ACC.config.CSRFToken },
-									success: function(response){
-										if(response && response.showMessage) {
-											ACC.amazon.showToaster(response.showMessage);
-										}
-									},
-									error: function (xht, textStatus, ex) {
-									},
-									complete: function () {
-									}
-								});
-								ACC.amazon.enablePlaceOrder.paymentSelected = true;
-								checkEnableCheckout();
-							},
-							design: {
-								designMode: 'responsive'
-							},
-							onError: function(error) {
-								// your error handling code
-							}
-						}).bind("walletWidgetDiv");
-					}
-					if($('#confirmChargeOnOrder').length) {
-						ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = $('#confirmChargeOnOrder')[0].checked;
-						checkEnableCheckout();
-						$('#confirmChargeOnOrder').change(function() {
-							ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = this.checked;
+							}).bind("walletWidgetDiv");
+						}
+						if($('#confirmChargeOnOrder').length) {
+							ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = $('#confirmChargeOnOrder')[0].checked;
 							checkEnableCheckout();
-						});
-					}
-				})
-				.fail(function( jqxhr, settings, exception ) {
-					alert( "Triggered ajaxError handler." );
-				});
-		}	
-	}
-	ACC.amazon.toasterActive = undefined;
-	ACC.amazon.showToaster = function(msg) {
-		var toaster = $("#toaster");
-		if(!toaster[0]) {
-			$("body").prepend('<div id="toaster"><div class="content"></div></div>');
-			toaster = $("#toaster");
+							$('#confirmChargeOnOrder').change(function() {
+								ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = this.checked;
+								checkEnableCheckout();
+							});
+						}
+					})
+					.fail(function( jqxhr, settings, exception ) {
+						alert( "Triggered ajaxError handler." );
+					});
+			}	
 		}
-		clearTimeout(ACC.amazon.toasterActive);
-		toaster.find(".content").text(msg);
-		toaster.addClass("active");
-		ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 4000);
-	};
-	
-	/*! Sends payment form */
-	$('.confirm-purchaseAmazon').click(function() {
-		$('form#amazonPlaceOrderForm').submit();
-	});
-	
-	$('#change-account').click(function() {
-		amazon.Login.logout();
-		$('#AmazonPayButton img').click();
-	});
-	
+		ACC.amazon.toasterActive = undefined;
+		ACC.amazon.showToaster = function(msg) {
+			var toaster = $("#toaster");
+			if(!toaster[0]) {
+				$("body").prepend('<div id="toaster"><div class="content"></div></div>');
+				toaster = $("#toaster");
+			}
+			clearTimeout(ACC.amazon.toasterActive);
+			toaster.find(".content").text(msg);
+			toaster.addClass("active");
+			ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 4000);
+		};
+		
+		/*! Sends payment form */
+		$('.confirm-purchaseAmazon').click(function() {
+			$('form#amazonPlaceOrderForm').submit();
+		});
+		
+		$('#change-account').click(function() {
+			amazon.Login.logout();
+			$('#AmazonPayButton img').click();
+		});
+	}
 }(jQuery));
 
 function bindDeliveryMethodOnChange() {

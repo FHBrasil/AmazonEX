@@ -40,11 +40,6 @@ import de.fliegersoftware.amazon.payment.addon.forms.AmazonAjaxResponse;
 import de.fliegersoftware.amazon.payment.addon.forms.AmazonPlaceOrderForm;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
-import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
-import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCheckoutController;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
-import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateQuantityForm;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
@@ -56,6 +51,10 @@ import de.hybris.platform.commerceservices.order.CommerceCartModificationExcepti
 import de.hybris.platform.commerceservices.order.CommerceCartService;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.order.InvalidCartException;
+import de.hybris.platform.yacceleratorstorefront.annotations.RequireHardLogIn;
+import de.hybris.platform.yacceleratorstorefront.controllers.pages.checkout.AbstractCheckoutController;
+import de.hybris.platform.yacceleratorstorefront.controllers.util.GlobalMessages;
+import de.hybris.platform.yacceleratorstorefront.forms.UpdateQuantityForm;
 
 @Controller
 @RequestMapping("/checkout/amazon")
@@ -91,7 +90,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 	@RequireHardLogIn
 	public String checkoutPage(final Model model) throws CMSItemNotFoundException {
 		// redirects to cart if not ready for checkout
-		if (!hasValidCart() && !getCheckoutFacade().hasShippingItems()) {
+		if (!hasValidCart() && !hasShippingItems()) {
 			return REDIRECT_URL_CART;
 		}
 		LOG.info("AmazonCheckout - checkoutPage");
@@ -133,7 +132,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		if (!hasValidCart()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
-		if (!getCheckoutFacade().hasShippingItems()) {
+		if (!hasShippingItems()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if (StringUtils.isEmpty(accessToken)) {
@@ -191,7 +190,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		if (!hasValidCart()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
-		if (!getCheckoutFacade().hasShippingItems()) {
+		if (!hasShippingItems()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if (StringUtils.isNotEmpty(selectedDeliveryMethod)) {
@@ -210,7 +209,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 		if (!hasValidCart()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
-		if (!getCheckoutFacade().hasShippingItems()) {
+		if (!hasShippingItems()) {
 			response.setRedirect(REDIRECT_URL_CART);
 		}
 		if(!StringUtils.isBlank(amazonOrderReferenceId)) {

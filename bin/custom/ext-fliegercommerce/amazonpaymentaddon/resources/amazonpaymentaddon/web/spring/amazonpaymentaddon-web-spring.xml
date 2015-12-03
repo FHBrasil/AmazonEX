@@ -35,7 +35,7 @@
 			ref="defaultAmazonPaymentaddonJavaScriptMessageResourceAccessor" />
 	</bean>
 
-	<bean id="beforeViewHandlerAdapter" abstract="true" class="de.hybris.platform.addonsupport.interceptors.BeforeViewHandlerAdapter">
+	<bean id="beforeViewHandlerAdapter" abstract="true" class="de.fliegersoftware.amazon.core.compatibility.BeforeViewHandlerAdapter">
 		<property name="proxyInterfaceName" value="de.hybris.platform.yacceleratorstorefront.interceptors.BeforeViewHandler"/>
 	</bean>
 	

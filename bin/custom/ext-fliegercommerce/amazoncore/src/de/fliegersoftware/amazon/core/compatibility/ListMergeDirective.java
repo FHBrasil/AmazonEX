@@ -1,39 +1,39 @@
 /*
  * [y] hybris Platform
  *
- * Copyright (c) 2000-2013 hybris AG
+ * Copyright (c) 2000-2014 hybris AG
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of hybris
  * ("Confidential Information"). You shall not disclose such Confidential
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
- * 
- * 
+ *
+ *  
  */
 package de.fliegersoftware.amazon.core.compatibility;
-
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
+import java.util.List;
+
 
 /**
- * List Merge Directives allow an AddOn to merge additional elements into spring-bean lists AND list properties on Spring Beans. The 
- * minimal property to set is the add. This will append to the end of the list and is preferable to using the list merge feature of spring
- * since you are not required to extend and re-alias the original list bean meaning the AddOns changes are more isolated from othe AddOns. 
- * However, the directive also supports the ability to insert the bean before or after a specified list element bean definition or bean class.
- * List Merge Directive bean definitions must also include a depends-on qualifier which should be the list-bean or the bean enclosing the list 
+ * List Merge Directives allow an AddOn to merge additional elements into spring-bean lists AND list properties on
+ * Spring Beans. The minimal property to set is the add. This will append to the end of the list and is preferable to
+ * using the list merge feature of spring since you are not required to extend and re-alias the original list bean
+ * meaning the AddOns changes are more isolated from othe AddOns. However, the directive also supports the ability to
+ * insert the bean before or after a specified list element bean definition or bean class. List Merge Directive bean
+ * definitions must also include a depends-on qualifier which should be the list-bean or the bean enclosing the list
  * property.
  */
-public class ListMergeDirective 
+public class ListMergeDirective
 {
 	private static final Logger LOG = Logger.getLogger(ListMergeDirective.class);
-	
+
 	private Object add;
-	private String listPropertyDescriptor; 
-	private String fieldName;
+	private String listPropertyDescriptor;
 	private List<String> afterBeanNames;
 	private List<String> beforeBeanNames;
 	private List<Object> afterValues;
@@ -50,7 +50,8 @@ public class ListMergeDirective
 	}
 
 	/**
-	 * @param add The Bean or Element to Add
+	 * @param add
+	 *           The Bean or Element to Add
 	 */
 	@Required
 	public void setAdd(final Object add)
@@ -61,109 +62,121 @@ public class ListMergeDirective
 	/**
 	 * @return the after
 	 */
-	public List<String> getAfterBeanNames() {
+	public List<String> getAfterBeanNames()
+	{
 		return afterBeanNames;
 	}
 
 	/**
 	 * Add the element after the specified bean names (if the target list is a list of beans)
-	 * @param after the after to set
+	 * 
+	 * @param after
+	 *           the after to set
 	 */
-	public void setAfterBeanNames(List<String> after) {
+	public void setAfterBeanNames(final List<String> after)
+	{
 		this.afterBeanNames = after;
 	}
 
 	/**
 	 * @return the beforeBeanNames
 	 */
-	public List<String> getBeforeBeanNames() {
+	public List<String> getBeforeBeanNames()
+	{
 		return beforeBeanNames;
 	}
 
 	/**
 	 * Insert the element before the specified bean names (if the target list is a list of beans)
-	 * @param beforeBeanNames the beforeBeanNames to set
+	 * 
+	 * @param beforeBeanNames
+	 *           the beforeBeanNames to set
 	 */
-	public void setBeforeBeanNames(List<String> beforeBeanNames) {
+	public void setBeforeBeanNames(final List<String> beforeBeanNames)
+	{
 		this.beforeBeanNames = beforeBeanNames;
 	}
 
 	/**
 	 * Add the element after all the elements which are assignable from the specified classes.
+	 * 
 	 * @return the afterClasses
 	 */
-	public List<Class> getAfterClasses() {
+	public List<Class> getAfterClasses()
+	{
 		return afterClasses;
 	}
 
 	/**
-	 * @param afterClasses the afterClasses to set
+	 * @param afterClasses
+	 *           the afterClasses to set
 	 */
-	public void setAfterClasses(List<Class> afterClasses) {
+	public void setAfterClasses(final List<Class> afterClasses)
+	{
 		this.afterClasses = afterClasses;
 	}
+
 	/**
 	 * @return the beforeClasses
 	 */
-	public List<Class> getBeforeClasses() {
+	public List<Class> getBeforeClasses()
+	{
 		return beforeClasses;
 	}
 
 	/**
 	 * Insert the element before all the elements which are assignable from the specified classes.
-	 * @param beforeClasses the afterClasses to set
+	 * 
+	 * @param beforeClasses
+	 *           the afterClasses to set
 	 */
-	public void setBeforeClasses(List<Class> beforeClasses) {
+	public void setBeforeClasses(final List<Class> beforeClasses)
+	{
 		this.beforeClasses = beforeClasses;
 	}
 
-	public String getListPropertyDescriptor() {
+	public String getListPropertyDescriptor()
+	{
 		return listPropertyDescriptor;
 	}
-	
+
 	/**
-	 * If the dependency bean is not the actual list, then use the property descriptor to identify the list property.
-	 * The Property descriptor uses Apache Commons BeanUtils syntax.
+	 * If the dependency bean is not the actual list, then use the property descriptor to identify the list property. The
+	 * Property descriptor uses Apache Commons BeanUtils syntax.
 	 */
-	public void setListPropertyDescriptor(String listPropertyDescriptor) {
+	public void setListPropertyDescriptor(final String listPropertyDescriptor)
+	{
 		this.listPropertyDescriptor = listPropertyDescriptor;
 	}
 
-	public List<Object> getAfterValues() {
+	public List<Object> getAfterValues()
+	{
 		return afterValues;
 	}
 
 	/**
 	 * Adds the element after the specified values (useful for merging into lists of atomic types)
+	 * 
 	 * @param afterValues
 	 */
-	public void setAfterValues(List<Object> afterValues) {
+	public void setAfterValues(final List<Object> afterValues)
+	{
 		this.afterValues = afterValues;
 	}
 
-	public List<Object> getBeforeValues() {
+	public List<Object> getBeforeValues()
+	{
 		return beforeValues;
 	}
 
 	/**
 	 * Inserts the element before the specified values (useful for merging into lists of atomic types)
+	 * 
 	 * @param beforeValues
 	 */
-	public void setBeforeValues(List<Object> beforeValues) {
+	public void setBeforeValues(final List<Object> beforeValues)
+	{
 		this.beforeValues = beforeValues;
 	}
 
-	public String getFieldName() {
-		return fieldName;
-	}
-
-	
-	/**
-	 * field name of list / map - for use with reflection
-	 * @param fieldName
-	 */
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
-	
 }

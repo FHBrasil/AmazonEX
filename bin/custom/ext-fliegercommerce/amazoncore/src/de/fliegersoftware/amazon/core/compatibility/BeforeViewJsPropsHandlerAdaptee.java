@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.ui.ModelMap;
 
 import de.hybris.platform.acceleratorservices.storefront.data.JavaScriptVariableData;
-import de.hybris.platform.addonsupport.interceptors.BeforeViewHandlerAdaptee;
 import de.hybris.platform.servicelayer.i18n.I18NService;
 
 /**

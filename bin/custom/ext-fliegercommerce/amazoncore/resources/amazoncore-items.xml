@@ -461,6 +461,21 @@
 			jaloclass="de.fliegersoftware.amazon.core.jalo.media.AmazonLog" autocreate="true" generate="true">
 			<description>Amazon configuration</description>
 			<deployment table="amazonLog" typecode="17502" />
+			<attributes>	
+				<attribute qualifier="internalURL" type="java.lang.String">
+                    <custom-properties>
+                        <property name="hiddenForUI">
+                            <value>Boolean.TRUE</value>
+                        </property>
+                    </custom-properties>
+                    <modifiers read="true" write="true" search="false" optional="true"/>
+                    <persistence type="property">
+                        <columntype>
+                            <value>HYBRIS.LONG_STRING</value>
+                        </columntype>
+                    </persistence>
+                </attribute>
+           </attributes>     
 		</itemtype>
 		
 	</itemtypes>
