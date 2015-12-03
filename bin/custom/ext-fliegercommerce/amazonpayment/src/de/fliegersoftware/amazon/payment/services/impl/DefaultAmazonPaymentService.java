@@ -280,7 +280,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			, Currency currency
 			, String paymentProvider)
 			throws AdapterException {
-		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.AUTHORIZATION);
+		String newEntryCode = getNewEntryCode(transaction);
 		
 		AuthorizeRequest authorizeRequest = new AuthorizeRequest();
 		authorizeRequest.setAuthorizationAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
@@ -349,7 +349,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 				
 				PaymentTransactionEntryModel cEntry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
 				cEntry.setPaymentTransaction(transaction);
-				cEntry.setCode(getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.CAPTURE));
+				cEntry.setCode(getNewEntryCode(transaction));
 				
 				GetCaptureDetailsRequest request = new GetCaptureDetailsRequest();
 				request.setAmazonCaptureId(details.getIdList().getMember().get(0));
@@ -404,7 +404,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 					"Could not capture without authorization");
 		}
 		
-		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.CAPTURE);
+		String newEntryCode = getNewEntryCode(transaction);
 		
 		final CaptureRequest captureRequest = new CaptureRequest();
 		captureRequest.setAmazonAuthorizationId(auth.getRequestToken());
@@ -459,7 +459,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			throw new AdapterException(
 					"Could not refund without capture");
 		}
-		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.REFUND);
+		String newEntryCode = getNewEntryCode(transaction);
 
 		RefundRequest request = new RefundRequest();
 		request.setAmazonCaptureId(capture.getRequestToken());

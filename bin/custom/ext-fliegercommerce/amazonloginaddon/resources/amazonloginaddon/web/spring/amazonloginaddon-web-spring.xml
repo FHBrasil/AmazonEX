@@ -27,7 +27,29 @@
            http://www.springframework.org/schema/context/spring-context-3.1.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+           
+        <bean id="abstractJavaScriptMessageResourceAccessor" abstract="true" class="de.fliegersoftware.amazon.core.compatibility.DefaultJavaScriptMessageResourcesAccessor">
+			<property name="cacheSeconds" value="#{configurationService.configuration.getProperty('storefront.resourceBundle.cacheSeconds')}"/>
+			<property name="resourceLoader">
+				<bean class="org.springframework.core.io.FileSystemResourceLoader"/>
+			</property>
+			<property name="fallbackToSystemLocale" value="false"/>
+		</bean>
 
+		<bean id="abstractBeforeViewJsPropsHandlerAdaptee" abstract="true"
+			class="de.fliegersoftware.amazon.core.compatibility.BeforeViewJsPropsHandlerAdaptee">
+			<property name="i18NService" ref="i18NService" />
+		</bean>
+		
+		<bean id="addOnJspIncludeCMSComponentRenderer" class="de.hybris.platform.addonsupport.renderer.impl.DefaultAddOnCMSComponentRenderer">
+			<property name="typeService" ref="typeService" />
+			<property name="uiExperienceService" ref="uiExperienceService" />
+		</bean>
+			
+		<bean id="addonCmsComponentRendererMapping" 
+			class="de.fliegersoftware.amazon.core.compatibility.AddOnCMSComponentRendererMapping"
+			abstract="true" />		
+		
 		<bean id="amazonLoginComponentRenderer" parent="addOnJspIncludeCMSComponentRenderer" />
 		
 		<bean id="amazonLoginComponentRendererMapping" parent="addonCmsComponentRendererMapping">
@@ -59,19 +81,18 @@
 
 
 
-	<bean id="defaultAmazonLoginaddonJavaScriptMessageResourceAccessor"
-		class="de.fliegersoftware.amazon.payment.addon.config.bundlesources.AmazonConfigJavaScriptMessageResourceAccessor">
+	<bean id="defaultAmazonLoginaddonJavaScriptMessageResourceAccessor" class="de.fliegersoftware.amazon.payment.addon.config.bundlesources.AmazonConfigJavaScriptMessageResourceAccessor">
 		<property name="addOnName" value="amazonaddon" />
 		<property name="amazonConfigService" ref="amazonConfigService" />
 	</bean>
 
 	<bean id="defaultAmazonLoginaddonBeforeViewJsPropsHandlerAdaptee"
 		parent="abstractBeforeViewJsPropsHandlerAdaptee"
-		class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		class="de.fliegersoftware.amazon.core.compatibility.ExportJsPropertiesBeforeViewHandler">
 		<property name="messageSource"
 			ref="defaultAmazonLoginaddonJavaScriptMessageResourceAccessor" />
 	</bean>
-
+	
 	<bean id="getAmazonLoginaddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
 		<property name="adaptee">
 			<ref bean="defaultAmazonLoginaddonBeforeViewJsPropsHandlerAdaptee" />

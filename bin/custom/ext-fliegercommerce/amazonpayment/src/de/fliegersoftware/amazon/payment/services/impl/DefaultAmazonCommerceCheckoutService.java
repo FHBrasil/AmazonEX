@@ -35,8 +35,7 @@ import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
  */
 public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckoutService implements AmazonCommerceCheckoutService
 {
-	@Resource
-	private GenerateMerchantTransactionCodeStrategy generateMerchantTransactionCodeStrategy;
+	private AmazonConfigService amazonConfigService;
 
 	@Override
 	public PaymentTransactionEntryModel authorizeAmazonPayment(CartModel cartModel, 
@@ -108,13 +107,26 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 	}
 
 	@Override
+	protected boolean isValidDeliveryAddress(CartModel cartModel, AddressModel addressModel) {
+		if(addressModel != null //
+			&& getAmazonConfigService().isExcludePackstationDelivery() //
+			&& StringUtils.containsIgnoreCase(addressModel.getFirstname(), "packstation"))
+			return false;
+		return true;
+	}
+
+	@Override
 	protected AmazonPaymentService getPaymentService()
 	{
 		return (AmazonPaymentService)super.getPaymentService();
 	}
 
-	public GenerateMerchantTransactionCodeStrategy getGenerateMerchantTransactionCodeStrategy()
-	{
-		return this.generateMerchantTransactionCodeStrategy;
+	protected AmazonConfigService getAmazonConfigService() {
+		return amazonConfigService;
+	}
+
+	@Required
+	public void setAmazonConfigService(AmazonConfigService amazonConfigService) {
+		this.amazonConfigService = amazonConfigService;
 	}
 }

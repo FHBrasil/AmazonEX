@@ -10,5 +10,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/basecommerce"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commerceservices"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/acceleratorcms"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/addonsupport"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

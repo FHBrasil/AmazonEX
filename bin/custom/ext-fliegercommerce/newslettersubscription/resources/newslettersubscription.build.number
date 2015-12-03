@@ -1,8 +1,0 @@
-#Ant properties
-#Fri Feb 13 12:04:02 CET 2015
-builddate=20150213 1203
-description=newslettersubscription
-name=newslettersubscription
-vendor=hybris
-version=5.4.0.1
-version.api=5.4.0

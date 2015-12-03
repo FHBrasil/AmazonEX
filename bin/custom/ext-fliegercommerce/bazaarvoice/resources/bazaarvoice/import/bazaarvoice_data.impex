@@ -1,8 +1,0 @@
-########################################
-## Impex data for bazaarvoice goes here
-########################################
-
-INSERT_UPDATE CMSSite; uid[unique=true]; bvLocale[lang=en];
-; electronics; en_US;
-; apparel-uk; en_US;
-; apparel-de; de_DE;

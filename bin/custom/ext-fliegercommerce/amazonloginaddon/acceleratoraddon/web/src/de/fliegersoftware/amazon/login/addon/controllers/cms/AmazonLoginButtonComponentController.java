@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import de.fliegersoftware.amazon.login.addon.controllers.AmazonloginaddonControllerConstants;
 import de.fliegersoftware.amazon.login.addon.model.AmazonLoginComponentModel;
 
-@Controller("AmazonLoginButtonComponentController")
+@Controller("AmazonLoginComponentController")
 @Scope("tenant")
 @RequestMapping(value = AmazonloginaddonControllerConstants.Actions.Cms.AmazonLoginComponent)
 public class AmazonLoginButtonComponentController extends AbstractAmazonCmsComponentController<AmazonLoginComponentModel>{

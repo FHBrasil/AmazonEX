@@ -20,6 +20,8 @@
       <requires-extension name="basecommerce"/>
       <requires-extension name="commerceservices"/>
       <requires-extension name="commercefacades"/>
+      <requires-extension name="acceleratorcms"/>
+      <requires-extension name="addonsupport"/>
 
       <coremodule generated="true" manager="de.fliegersoftware.amazon.core.jalo.AmazoncoreManager" packageroot="de.fliegersoftware.amazon.core"/>
 

@@ -148,6 +148,7 @@
     <bean name="defaultAmazonCommerceCheckoutService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonCommerceCheckoutService"
     	parent="defaultCommerceCheckoutService">
     	<property name="paymentService" ref="defaultPaymentService"/>
+    	<property name="amazonConfigService" ref="amazonConfigService" />
     </bean>
     
     <bean id="amazonOrderReferenceDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceDetailsPopulator">
@@ -305,12 +306,6 @@
 	<bean name="amazonCreateOrderFromCartStrategy" parent="defaultCreateOrderFromCartStrategy"
 		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCreateOrderFromCartStrategy">
     </bean>
-	
-	<alias alias="commerceDeliveryAddressStrategy" name="amazonCommerceDeliveryAddressStrategy"/>
-	<bean name="amazonCommerceDeliveryAddressStrategy" parent="defaultCommerceDeliveryAddressStrategy"
-		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCommerceDeliveryAddressStrategy">
-		<property name="amazonConfigService" ref="amazonConfigService" />
-	</bean>
 
 	<bean name="amazonSandboxSimulationFacade" class="de.fliegersoftware.amazon.payment.facades.impl.AmazonSandboxSimulationFacadeImpl">
 	</bean>

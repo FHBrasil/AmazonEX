@@ -7,10 +7,10 @@ import java.util.Map.Entry;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
 
+import de.fliegersoftware.amazon.core.compatibility.JavaScriptMessageResourcesAccessor;
 import de.fliegersoftware.amazon.core.enums.OperationModeEnum;
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.core.services.impl.DefaultAmazonConfigService;
-import de.hybris.platform.addonsupport.config.bundlesources.JavaScriptMessageResourcesAccessor;
 
 public class AmazonConfigJavaScriptMessageResourceAccessor implements JavaScriptMessageResourcesAccessor {
 
