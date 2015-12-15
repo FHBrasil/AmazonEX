@@ -113,7 +113,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
     private Converter<AmazonOrderReferenceAttributesData, OrderReferenceAttributes> amazonOrderReferenceAttributesReverseConverter;
 	
 	@Resource
-	private Converter<AddressData, AddressModel> addressReverseConverter;
+	private Converter<AddressData, AddressModel> amazonAddressReverseConverter;
 	
 	@Resource
 	private CartFacade cartFacade;
@@ -252,6 +252,15 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 
 	public void setAmazonEmailService(AmazonEmailService amazonEmailService) {
 		this.amazonEmailService = amazonEmailService;
+	}
+	
+	public Converter<AddressData, AddressModel> getAmazonAddressReverseConverter() {
+		return amazonAddressReverseConverter;
+	}
+
+	public void setAmazonAddressReverseConverter(
+			Converter<AddressData, AddressModel> amazonAddressReverseConverter) {
+		this.amazonAddressReverseConverter = amazonAddressReverseConverter;
 	}
 
 	/*
@@ -656,7 +665,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		AddressData billingAddress = getAmazonAuthorizationDetailsConverter().convert(details).getBillingAddress();
 		if(billingAddress != null) {
 			AddressModel billingAddressModel = getModelService().create(AddressModel.class);
-			return addressReverseConverter.convert(billingAddress, billingAddressModel);
+			return amazonAddressReverseConverter.convert(billingAddress, billingAddressModel);
 		} else {
 			return null;
 		}

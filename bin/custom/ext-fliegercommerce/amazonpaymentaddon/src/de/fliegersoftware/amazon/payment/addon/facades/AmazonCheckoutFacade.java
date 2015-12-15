@@ -4,6 +4,8 @@ import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParamete
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -16,6 +18,7 @@ import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorChecko
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commerceservices.enums.CustomerType;
+import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.order.payment.PaymentModeModel;
@@ -40,6 +43,9 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	private OrderService orderService;
 	private PaymentModeService paymentModeService;
 	private ModelService modelService;
+	
+	@Resource
+	private Populator<AddressData, AddressModel> amazonAddressReversePopulator;
 
 	/*
 	 * (non-Javadoc)
@@ -125,7 +131,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 				|| !getUserService().getAnonymousUser().equals(currentCustomer)) {
 			// Create the new address model
 			AddressModel address = getModelService().create(AddressModel.class);
-			getAddressReversePopulator().populate(addressData, address);
+			getAmazonAddressReversePopulator().populate(addressData, address);
 
 			// Store the address against the user
 			address = saveDeliveryAddressIfNew(currentCustomer, address);
@@ -166,6 +172,7 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 				&& StringUtils.equalsIgnoreCase(address.getTown(), existingAddress.getTown())
 				&& StringUtils.equalsIgnoreCase(address.getDistrict(), existingAddress.getDistrict())
 				&& StringUtils.equalsIgnoreCase(address.getCompany(), existingAddress.getCompany())
+				&& StringUtils.equalsIgnoreCase(address.getPobox(), existingAddress.getPobox())
 				&& ((address.getCountry() == null && existingAddress.getCountry() == null)
 					|| (address.getCountry() != null && existingAddress.getCountry() != null && ObjectUtils.equals(address.getCountry().getPk(), existingAddress.getCountry().getPk()))
 					)
@@ -178,8 +185,9 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 
 		AddressData addressData = getAddressConverter().convert(address);
 		addressData.setBillingAddress(isBillingAddress);
+		addressData.setPobox(address.getPobox());
 		AddressModel addressModel = getModelService().create(AddressModel.class);
-		getAddressReversePopulator().populate(addressData, addressModel);
+		getAmazonAddressReversePopulator().populate(addressData, addressModel);
 		addressModel.setVisibleInAddressBook(true);
 		addressModel.setOwner(customer);
 		getCustomerAccountService().saveAddressEntry(customer, addressModel);
@@ -217,5 +225,15 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	public void setModelService(ModelService modelService) {
 		this.modelService = modelService;
 	}
+
+	public Populator<AddressData, AddressModel> getAmazonAddressReversePopulator() {
+		return amazonAddressReversePopulator;
+	}
+
+	public void setAmazonAddressReversePopulator(
+			Populator<AddressData, AddressModel> amazonAddressReversePopulator) {
+		this.amazonAddressReversePopulator = amazonAddressReversePopulator;
+	}
+
 	
 }

@@ -215,6 +215,14 @@ public class DefaultAmazonConfigService implements AmazonConfigService {
 		else
 			return false;
 	}
+
+	@Override
+	public String getPackstationIdentifier() {
+		if(hasAmazonConfig())
+			return getBaseStoreService().getCurrentBaseStore().getAmazonConfig().getPackstationIdentifier();
+		else
+			return "";
+	}
 	
 	@Override
 	public boolean isManualAdditionOnFirstLogin() {

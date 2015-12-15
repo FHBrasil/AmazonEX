@@ -339,6 +339,11 @@
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
+				<attribute qualifier="packstationIdentifier" type="java.lang.String">
+					<description>identify if an address is packstation</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
 				<attribute qualifier="accountMatchingStrategy" type="AccountMatchingStrategyEnum">
 					<description>selector to account matching strategy</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
@@ -381,11 +386,6 @@
 					<description>if ipn is supported enable or disable ipn reception, else status updates are retrieved using polling via cronjob</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<defaultvalue>false</defaultvalue>
-					<persistence type="property"/>
-				</attribute>
-				<attribute qualifier="pollingFrequency" type="java.lang.String">
-					<description>only if ipn is disabled</description>
-					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="orderStatusOnSuccessfullAuthorization" type="java.lang.String">

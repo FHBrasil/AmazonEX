@@ -34,9 +34,7 @@
 					<spring:theme code="checkout.single.address.title" />
 				</h2>
                 <cms:component component="${component}"/>
-                <div id="AmazonPayButton" style="display: none;"></div>
-       			<button id="change-account" type="button">Change account</button>
-       			<form:form action="${request.contextPath}/checkout/amazon/placeOrder" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
+                <form:form action="${request.contextPath}/checkout/amazon/placeOrder" id="amazonPlaceOrderForm" commandName="amazonPlaceOrderForm">
         	 		<input type="hidden" name="amazonOrderReferenceId" value="${amazonOrderReferenceId}" />
 	       			
 	       			<c:if test="${sandboxSimulate}">

@@ -88,5 +88,6 @@
 		<property name="orderService" ref="orderService"/>
 		<property name="paymentModeService" ref="paymentModeService"/>
 		<property name="modelService" ref="modelService"/>
+		<property name="amazonAddressReversePopulator" ref="amazonAddressReversePopulator"/>
 	</bean>
 </beans>

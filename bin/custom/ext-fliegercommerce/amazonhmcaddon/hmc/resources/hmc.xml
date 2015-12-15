@@ -98,6 +98,8 @@
 								width="300" />
 							<attribute labelwidth="200" name="excludePackstationDelivery"
 								width="300" />
+							<attribute labelwidth="200" name="packstationIdentifier"
+								width="300" />
 							<attribute labelwidth="200" name="accountMatchingStrategy"
 								width="300" />
 							<attribute labelwidth="200" name="manualAddOnFirstLogin"
@@ -118,8 +120,6 @@
 							<attribute labelwidth="200" name="captureMode" width="300" />
 							<attribute labelwidth="200" name="enableERPMode" width="300" />
 							<attribute labelwidth="200" name="ipnReception" width="300" />
-							<attribute labelwidth="200" name="pollingFrequency"
-								width="300" />
 							<attribute labelwidth="200"
 								name="orderStatusOnSuccessfullAuthorization" width="300" />
 							<attribute labelwidth="200"
