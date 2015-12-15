@@ -45,6 +45,7 @@ public interface AmazonConfigService {
 	OperationModeEnum getOperationMode();
 	AccountMatchingStrategyEnum getAccountMatchingStrategy();
 	boolean isExcludePackstationDelivery();
+	String getPackstationIdentifier();
 	String getOrderStatusOnSuccessfullShipping();
 	boolean isManualAdditionOnFirstLogin();
 	boolean isSandboxSimulate();

@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 
 import com.amazonservices.mws.offamazonpayments.model.Address;
 
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.hybris.platform.commercefacades.i18n.I18NFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
@@ -32,6 +33,9 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 	
 	@Resource(name = "i18NFacade")
 	private I18NFacade i18NFacade;
+	
+	@Resource
+	private AmazonConfigService amazonConfigService;
 
 	@Override
 	public void populate(Address source, AddressData target) throws ConversionException
@@ -40,17 +44,55 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 		Assert.notNull(target, "Parameter target cannot be null.");
 		
 		final StringBuilder streetFull = new StringBuilder();
-		if(source.getAddressLine1() != null && !source.getAddressLine1().isEmpty())
-		{
-			streetFull.append(source.getAddressLine1()).append(" ");
-		}
-		if(source.getAddressLine2() != null && !source.getAddressLine2().isEmpty())
-		{
-			streetFull.append(source.getAddressLine2()).append(" ");
-		}
-		if(source.getAddressLine3() != null && !source.getAddressLine3().isEmpty())
-		{
-			streetFull.append(source.getAddressLine3()).append(" ");
+		boolean isPackstation = Boolean.FALSE;
+		if (getAmazonConfigService().getPackstationIdentifier() != null) {
+
+			String[] strPackstationIdentifierList = getAmazonConfigService().getPackstationIdentifier().split(";");
+
+			if(source.getAddressLine2() != null && !source.getAddressLine2().isEmpty())
+			{
+				for (int i = 0; i < strPackstationIdentifierList.length; i++) {
+
+					if(source.getAddressLine2().toLowerCase().contains(strPackstationIdentifierList[i].toLowerCase()))
+					{
+						isPackstation = Boolean.TRUE;
+					}
+				}
+
+			}
+
+		} 
+
+		if (isPackstation) {
+
+			if(source.getAddressLine1() != null && !source.getAddressLine1().isEmpty())
+			{
+				target.setPobox(source.getAddressLine1());
+			}
+			if(source.getAddressLine2() != null && !source.getAddressLine2().isEmpty())
+			{
+				streetFull.append(source.getAddressLine2()).append(" ");
+			}
+			if(source.getAddressLine3() != null && !source.getAddressLine3().isEmpty())
+			{
+				streetFull.append(source.getAddressLine3()).append(" ");
+			}
+
+		} else {
+
+			if(source.getAddressLine1() != null && !source.getAddressLine1().isEmpty())
+			{
+				streetFull.append(source.getAddressLine1()).append(" ");
+			}
+			if(source.getAddressLine2() != null && !source.getAddressLine2().isEmpty())
+			{
+				streetFull.append(source.getAddressLine2()).append(" ");
+			}
+			if(source.getAddressLine3() != null && !source.getAddressLine3().isEmpty())
+			{
+				streetFull.append(source.getAddressLine3()).append(" ");
+			}
+
 		}
 		
 		final String patternStr = "[0-9]+";
@@ -97,5 +139,9 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 
 	protected I18NFacade getI18NFacade() {
 		return i18NFacade;
+	}
+	
+	public AmazonConfigService getAmazonConfigService() {
+		return amazonConfigService;
 	}
 }

@@ -22,9 +22,6 @@
 		<!-- ext-commerce -->
 		<extension name="btg" />
 		<extension name="btgcockpit" />
-		<extension name="commercesearch" />
-		<extension name="commercesearchbackoffice" />
-		<extension name="commercesearchhmc" />
 		<extension name="commerceservices" />
 		<extension name="basecommerce" />
 		<extension name="payment" />
@@ -43,9 +40,8 @@
 
 										
 		<!-- ext-data -->
-		<extension name="commercesearchsampledata" />
-		<extension name="apparelstore" />
-		<extension name="electronicsstore" />
+<!-- 		<extension name="apparelstore" /> -->
+<!-- 		<extension name="electronicsstore" /> -->
 		<extension name="b2bacceleratorsampledata" />
 		<extension name="instoresampledata" />
 
@@ -71,7 +67,7 @@
 										
 		<!-- ext-addon -->
 		<extension name="addonsupport" />
-		<extension name="b2ccheckoutaddon" />
+<!-- 		<extension name="b2ccheckoutaddon" /> -->
 
 										
 		<!-- ext-print -->
@@ -82,8 +78,8 @@
 										
 		<!-- ext-template -->
 		<extension name="ycommercewebservices" />
-		<extension name="ycommercewebserviceshmc" />
-		<extension name="ycommercewebservicestest" />
+<!-- 		<extension name="ycommercewebserviceshmc" /> -->
+<!-- 		<extension name="ycommercewebservicestest" /> -->
 		<extension name="yacceleratorfulfilmentprocess" />
 		<extension name="yaddon" />
 		<extension name="yacceleratortest" />
@@ -102,7 +98,7 @@
 		<extension name="acceleratorservices" />
 		<extension name="acceleratorfacades" />
 		<extension name="acceleratorcms" />
-		<extension name="acceleratorstorefrontcommons" />
+<!-- 		<extension name="acceleratorstorefrontcommons" /> -->
 		<extension name="b2bacceleratorfacades" />
 		<extension name="b2bacceleratorservices" />
 		

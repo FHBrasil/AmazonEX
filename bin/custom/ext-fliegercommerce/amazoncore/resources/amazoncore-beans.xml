@@ -69,6 +69,10 @@
 		<property name="refundStatus" type="String"/>
 		<property name="softDescriptor" type="String"/>
 	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.AddressData">
+		<property name="pobox" type="String"></property>
+	</bean>
 
 	<bean class="de.fliegersoftware.amazon.core.data.job.CheckAmazonOrderJob" />
 	

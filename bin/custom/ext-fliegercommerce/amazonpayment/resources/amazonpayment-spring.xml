@@ -133,6 +133,7 @@
 		<property name="amazonAuthorizationDetailsConverter" ref="amazonAuthorizationDetailsConverter"/>
 		<property name="amazonRefundDetailsConverter" ref="amazonRefundDetailsConverter"/>
 		<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
+		<property name="amazonAddressReverseConverter" ref="amazonAddressReverseConverter"/>
 	</bean>
 
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
@@ -190,6 +191,20 @@
         <property name="populators">
             <list>
                 <ref bean="amazonAuthorizationDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias alias="amazonAddressReversePopulator" name="defaultAmazonAddressReversePopulator" />
+    <bean id="defaultAmazonAddressReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAddressReversePopulator"
+        parent="defaultAddressReversePopulator" />
+     
+    <alias name="defaultAmazonAddressReverseConverter" alias="amazonAddressReverseConverter" />
+    <bean id="defaultAmazonAddressReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="addressData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonAddressReversePopulator" />
             </list>
         </property>
     </bean>
