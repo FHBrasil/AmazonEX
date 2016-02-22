@@ -20,9 +20,6 @@
            http://www.springframework.org/schema/aop/spring-aop.xsd">
            
     
-<!--     <alias name="defaultPaymentService" alias="paymentService"/> -->
-<!-- 	<bean name="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService" scope="tenant"> -->
-<!-- 	</bean> -->
 	<bean id="ccPaymentInfoData" class="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData" />
 	<bean id="addressData" class="de.hybris.platform.commercefacades.user.data.AddressData" scope="prototype"/>
 	<bean id="priceData" class="de.hybris.platform.commercefacades.product.data.PriceData" scope="prototype"/>
@@ -123,8 +120,9 @@
 		</property>
 	</bean>
 
-	<alias name="defaultPaymentService" alias="amazonPaymentService"/>
-	<bean id="defaultPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService">
+	<alias name="defaultAmazonPaymentService" alias="paymentService" />
+	<alias name="defaultAmazonPaymentService" alias="amazonPaymentService"/>
+	<bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService" parent="defaultPaymentService">
 		<property name="sessionService" ref="sessionService"/>
 		<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
 		<property name="amazonEmailService" ref="amazonEmailService"/>
@@ -135,7 +133,7 @@
 		<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
 		<property name="amazonAddressReverseConverter" ref="amazonAddressReverseConverter"/>
 	</bean>
-
+	
     <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
     <bean id="defaultMwsAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonPaymentService">
     	<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />
@@ -148,7 +146,7 @@
 
     <bean name="defaultAmazonCommerceCheckoutService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonCommerceCheckoutService"
     	parent="defaultCommerceCheckoutService">
-    	<property name="paymentService" ref="defaultPaymentService"/>
+    	<property name="paymentService" ref="amazonPaymentService"/>
     </bean>
     
     <bean id="amazonOrderReferenceDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceDetailsPopulator">

@@ -209,7 +209,8 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 					Logger.getLogger("de.fliegersoftware.amazon").setLevel(Level.OFF);
 				}
 			}
-			if (amazonTab != null && amazonTab.isValid())
+			if (amazonTab != null && amazonTab.isValid() 
+			        && (paymentInfo instanceof PaymentInfo && item instanceof PaymentInfo))
 			{
 				paymentInfo = (PaymentInfo) item;
 				final String orderReferenceId = (String) paymentInfo.getAttribute(AmazonPaymentPaymentInfo.AMAZONORDERREFERENCEID);

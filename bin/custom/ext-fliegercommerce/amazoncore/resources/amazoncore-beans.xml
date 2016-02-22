@@ -77,4 +77,9 @@
 	<bean class="de.fliegersoftware.amazon.core.data.job.CheckAmazonOrderJob" />
 	
 	<bean class="de.fliegersoftware.amazon.core.data.job.CancelAmazonOrderJob" />
+	
+	<bean class="de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData" 
+	extends="de.hybris.platform.commercefacades.user.data.RegisterData">
+		<property name="amazonCustomerId" type="String"/>
+	</bean>
 </beans>
