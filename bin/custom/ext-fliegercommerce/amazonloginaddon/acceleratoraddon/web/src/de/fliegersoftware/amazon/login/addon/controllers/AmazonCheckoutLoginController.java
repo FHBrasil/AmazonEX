@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.CookieGenerator;
 
 import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
-import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
+import de.fliegersoftware.amazon.core.data.AmazonLoginRegisterData;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonGuestForm;
 import de.fliegersoftware.amazon.login.addon.forms.validation.AmazonGuestValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;

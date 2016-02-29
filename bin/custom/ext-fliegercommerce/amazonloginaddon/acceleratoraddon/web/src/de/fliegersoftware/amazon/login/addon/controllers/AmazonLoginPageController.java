@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import de.fliegersoftware.amazon.core.enums.AccountMatchingStrategyEnum;
 import de.fliegersoftware.amazon.login.addon.constants.AmazonLoginAddonConstants;
-import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
+import de.fliegersoftware.amazon.core.data.AmazonLoginRegisterData;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonLoginForm;
 import de.fliegersoftware.amazon.login.addon.forms.AmazonManualAdditionFirstLoginForm;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;

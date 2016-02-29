@@ -10,7 +10,7 @@ import org.springframework.util.Assert;
 
 import de.fliegersoftware.amazon.core.facades.AmazonUserFacade;
 import de.fliegersoftware.amazon.core.services.AmazonUserService;
-import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
+import de.fliegersoftware.amazon.core.data.AmazonLoginRegisterData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commercefacades.user.impl.DefaultUserFacade;

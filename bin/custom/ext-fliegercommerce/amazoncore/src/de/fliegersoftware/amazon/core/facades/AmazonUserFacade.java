@@ -1,6 +1,6 @@
 package de.fliegersoftware.amazon.core.facades;
 
-import de.fliegersoftware.amazon.login.addon.data.AmazonLoginRegisterData;
+import de.fliegersoftware.amazon.core.data.AmazonLoginRegisterData;
 import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
