@@ -19,7 +19,6 @@
       <!-- <requires-extension name="cms"/> -->         
       
 	  <requires-extension name="payment"/>
-      <requires-extension name="acceleratorfacades"/>
       <requires-extension name="commercefacades"/>
       <requires-extension name="amazoncore"/>
       <coremodule generated="true" manager="de.fliegersoftware.amazon.payment.jalo.AmazonpaymentManager" packageroot="de.fliegersoftware.amazon.payment"/>
