@@ -1,5 +1,0 @@
-INSERT_UPDATE ComponentTypeGroups2ComponentType;source(code)[unique=true];target(code)[unique=true]
-;wide;IFrameComponent
-;narrow;IFrameComponent
-;wide;VideoComponent
-;narrow;VideoComponent

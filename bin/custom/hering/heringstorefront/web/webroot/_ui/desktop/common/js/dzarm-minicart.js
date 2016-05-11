@@ -1,1 +1,0 @@
-$(function(){var o=$("#miniCartLayer");o.length>0&&$.ajax({url:o.data("rolloverpopupurl"),type:"GET",dataType:"html"}).done(function(t){o.html(t);var n=o.find(".empty-popup-cart").length;0==n&&o.mouseenter(function(){$(".miniCartPopup").show()})}).fail(function(){console.log("error to load minicart.")})});

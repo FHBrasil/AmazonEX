@@ -1,1 +1,0 @@
-$(function(){var e=$("#instafeed");if(e.length>0){var a=new Instafeed({get:"user",userId:185216157,accessToken:"185216157.467ede5.adbb3267b59e4f9291f314652a7b3994",template:'<li><a href="{{link}}" target="_blank"><img src="{{image}}" /></a></li>',limit:5});a.run()}});

@@ -1,8 +1,0 @@
-$storeUid=babyartikel
-$defaultCurrency=EUR
-$defaultLanguage=de
-$productCatalog=babyartikelProductCatalog
-$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
-
-INSERT_UPDATE ExportStoreFeedJob;code[unique=true];$catalogVersion;job(code);sessionLanguage(isocode);sessionCurrency(isocode);sessionUser(uid);
-;babyartikelExportStoreFeed;;exportStoreFeedJobPerformable;$defaultLanguage;$defaultCurrency;admin;

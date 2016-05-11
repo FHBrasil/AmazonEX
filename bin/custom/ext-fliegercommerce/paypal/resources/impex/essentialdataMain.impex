@@ -1,9 +1,0 @@
-# Additional Payment Mode
-INSERT_UPDATE StandardPaymentMode;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];active;paymentinfotype(code)
-;paypal;PayPal;PayPal;Bezahlung per PayPal;payment with PayPal;true;PaypalPaymentInfo
-
-INSERT_UPDATE StandardPaymentModeValue;paymentmode(code)[unique=true];currency(isoCode)[unique=true];value;;;;
-;paypal;EUR;0;;;;
-;paypal;USD;0;;;;
-;paypal;GBP;0;;;;
-
