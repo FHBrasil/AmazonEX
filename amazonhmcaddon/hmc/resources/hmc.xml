@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2014 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<configuration xmlns="hybris.de/schemas/hmc/generic"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hybris.de/schemas/hmc/generic hmc.xsd">
+
+
+	<!-- Configuration for extension amazonhmcaddon -->
+
+	<explorertree>
+		<group name="amazonhmcaddongroup">
+			<typeref description="typeref.amazonconfig.description" type="AmazonConfig" />
+			<typeref description="typeref.amazonconfig.description" type="AmazonPaymentPaymentInfo" />
+		</group>
+	</explorertree>
+	
+	<type mode="append" name="AmazonConfig">
+		<organizer>
+			<search mode="replace" autoperform="true">
+				<condition attribute="merchantId" operator="contains"/>
+				<condition attribute="mwsAccessKey" operator="contains"/>
+				<condition attribute="sandboxMode" operator="yes"/>
+			</search>
+			<result>
+				<listview>
+					<itemlayout mode="replace">
+						<attribute name="merchantId" width="170"/>
+						<attribute name="mwsAccessKey" width="200"/>
+						<attribute name="sandboxMode" width="150"/>
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<tab name="tab.amazonconfig.basic.properties" position="1">
+					<section name="section.amazonconfig.credentials.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="merchantId" width="300" />
+							<attribute labelwidth="200" name="mwsAccessKey" width="300" />
+							<attribute labelwidth="200" name="mwsSecretKey" width="300" />
+						</listlayout>
+					</section>
+					<section name="section.amazonconfig.country.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="amazonConfigCountry"
+								width="300" />
+							<attribute labelwidth="200" name="otherCountry" width="300" />
+							<attribute labelwidth="200" name="otherCountryCurrency" width="300" />
+						</listlayout>
+					</section>
+					<section name="section.amazonconfig.application.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="applicationName" width="300" />
+							<attribute labelwidth="200" name="applicationVersion" width="300" />
+						</listlayout>
+					</section>
+					<section name="section.amazonconfig.connetiontestbutton.properties">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="200" name="testOrderReferenceId" width="300" />
+							</row>
+							<row>
+								<action name="btn.amazonconfig.connection.test" classname="de.fliegersoftware.amazon.hmc.action.AmazonConnectionTestAction" type="item"></action>
+							</row>
+						</columnlayout>
+					</section>
+					<section name="section.amazonconfig.login.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="clientId" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.general.properties" position="2">
+					<section name="section.amazonconfig.general.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="enabled" width="300" />
+							<attribute labelwidth="200" name="operationMode" width="300" />
+							<attribute labelwidth="200" name="sandboxMode" width="300" />
+							<attribute labelwidth="200" name="sandboxSimulate" width="300" />
+							<attribute labelwidth="200" name="guestCheckoutStrategy" width="300" />
+							<attribute labelwidth="200" name="hiddenButtonsMode"
+								width="300" />
+							<attribute labelwidth="200" name="ipWhitelisting"
+								width="300" />
+							<attribute labelwidth="200" name="IPN" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.login.properties" position="3">
+					<section name="section.amazonconfig.login.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="requestCompleteDeliveryAddress"
+								width="300" />
+							<attribute labelwidth="200" name="excludePackstationDelivery"
+								width="300" />
+							<attribute labelwidth="200" name="packstationIdentifier"
+								width="300" />
+							<attribute labelwidth="200" name="accountMatchingStrategy"
+								width="300" />
+							<attribute labelwidth="200" name="manualAddOnFirstLogin"
+								width="300" />
+							<attribute labelwidth="200" name="checkoutStrategy"
+								width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.advanced.properties" position="4">
+					<section name="section.amazonconfig.advanced.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="normalCheckout"
+								width="300" />
+							<attribute labelwidth="200" name="authorizationMode"
+								width="300" />
+							<attribute labelwidth="200" name="captureMode" width="300" />
+							<attribute labelwidth="200" name="enableERPMode" width="300" />
+							<attribute labelwidth="200" name="ipnReception" width="300" />
+							<attribute labelwidth="200"
+								name="orderStatusOnSuccessfullAuthorization" width="300" />
+							<attribute labelwidth="200"
+								name="orderStatusOnSuccessfullShipping" width="300" />
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.log.properties" position="5">
+					<section name="section.amazonconfig.log.properties">
+						<listlayout>
+							<attribute labelwidth="200" name="enableLog" width="300" />
+							<attribute name="apiLog" editable="false">
+								<customeditor
+			                        classname="de.fliegersoftware.amazon.hmc.AmazonDownloadMediaEditorChip">
+			                     </customeditor>
+							</attribute>
+							<attribute name="ipnLog" editable="false">
+								<customeditor
+			                        classname="de.fliegersoftware.amazon.hmc.AmazonDownloadMediaEditorChip">
+			                     </customeditor>
+							</attribute>
+							<attribute name="amazonLog" editable="false">
+								<customeditor
+			                        classname="de.fliegersoftware.amazon.hmc.AmazonDownloadMediaEditorChip">
+			                     </customeditor>
+							</attribute>
+						</listlayout>
+					</section>
+				</tab>
+
+				<tab name="tab.amazonconfig.appearance.properties" position="6">
+					<section name="section.amazonconfig.appearance.properties">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="200" name="payButtonSize"
+									width="100" />
+								<attribute labelwidth="200" name="loginButtonSize"
+									width="100" />
+							</row>
+							<row>
+								<attribute labelwidth="200" name="payButtonColor"
+									width="100" />
+								<attribute labelwidth="200" name="loginButtonColor"
+									width="100" />
+							</row>
+							<row>
+								<attribute labelwidth="200" name="addressWidgetHeight"
+									width="100" />
+								<attribute labelwidth="200" name="paymentWidgetHeight"
+									width="100" />
+							</row>
+							<row>
+								<attribute labelwidth="200" name="addressWidgetWidth"
+									width="100" />
+								<attribute labelwidth="200" name="paymentWidgetWidth"
+									width="100" />
+							</row>
+						</columnlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+	
+	<type mode="append" name="AmazonPaymentPaymentInfo">
+		<organizer>
+			<search mode="replace" autoperform="true">
+				<condition attribute="amazonOrderReferenceId" operator="contains"/>
+				<condition attribute="amazonOrderAmount" operator="contains"/>
+				<condition attribute="user" operator="in"/>
+				<condition attribute="owner" operator="is not null"/>
+			</search>
+			<result mode="append" defaultview="list">
+				<listview>
+					<itemlayout mode="append">
+						<attribute name="amazonOrderReferenceId"></attribute>
+						<attribute name="amazonOrderAmount"></attribute>
+						<attribute name="user"></attribute>
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<tab name="tab.payment.amazon.properties" position="2">
+					<section name="section.payment.amazon.order">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="100" width="200" name="amazonOrderReferenceId" editable="true" />
+								<attribute labelwidth="100" width="200" name="amazonOrderStatus" editable="false" />
+							</row>
+							<row>
+								<attribute labelwidth="100" width="200" name="amazonOrderReasonCode" editable="false" />
+								<attribute labelwidth="100" width="200" name="amazonOrderAmount" editable="false" />
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.cancel" classname="de.fliegersoftware.amazon.hmc.action.AmazonCancelAction"     type="item"></action>
+								<action align="right" name="btn.amazonconfig.close"  classname="de.fliegersoftware.amazon.hmc.action.AmazonCloseOrderAction" type="item"></action>
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.simulate.amazon.order.closed" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction"     type="item">
+									<parameter key="simulateCloseOrderError" value="1"/>
+								</action>
+							</row>
+						</columnlayout>
+					</section>
+					
+					<section name="section.payment.amazon.authorization">
+						<columnlayout>
+							<row>
+								<action align="right" name="btn.amazonconfig.authorize" classname="de.fliegersoftware.amazon.hmc.action.AmazonAuthorizeAction" type="item"></action>
+							</row>
+							<row>
+								<attribute labelwidth="200" width="100" name="amazonLastAuthorizationId" editable="false" />
+							</row>
+							<row>
+								<attribute labelwidth="200" width="100" name="amazonAuthorizationStatus" editable="false" />
+								<attribute labelwidth="200" width="100" name="amazonAuthorizationReasonCode" editable="false" />
+							</row>
+							<row>
+								<action align="right" name="btn.amazonconfig.close" classname="de.fliegersoftware.amazon.hmc.action.AmazonCloseAuthorizationAction" type="item"></action>
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.simulate.amazon.authorize.invalid.payment.method" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction"     type="item">
+									<parameter key="simulateAuthorizeError" value="1"/>
+								</action>
+								<action align="right"  name="btn.amazonconfig.simulate.amazon.authorize.rejected" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction"     type="item">
+									<parameter key="simulateAuthorizeError" value="2"/>
+								</action>
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.simulate.amazon.authorize.transaction.timed.out" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction"     type="item">
+									<parameter key="simulateAuthorizeError" value="3"/>
+								</action>
+								<action align="right"  name="btn.amazonconfig.simulate.amazon.authorize.expired.unused" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction"     type="item">
+									<parameter key="simulateAuthorizeError" value="4"/>
+								</action>
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.simulate.amazon.authorize.closed" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction"     type="item">
+									<parameter key="simulateAuthorizeError" value="5"/>
+								</action>
+							</row>
+							
+						</columnlayout>
+					</section>
+					<section name="section.payment.amazon.capture">
+						<columnlayout>
+							<row>
+								<action align="right" name="btn.amazonconfig.capture" classname="de.fliegersoftware.amazon.hmc.action.AmazonCaptureAction" type="item"></action>
+							</row>
+							<row>
+								<attribute labelwidth="200" width="100" name="amazonCaptureId" editable="false" />
+								<attribute labelwidth="200" width="100" name="amazonCaptureRefundedAmount" editable="false" />
+							</row>
+							<row>
+								<attribute labelwidth="200" width="100" name="amazonCaptureStatus" editable="false" />
+								<attribute labelwidth="200" width="100" name="amazonCaptureReasonCode" editable="false" />
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.simulate.amazon.capture.pending" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction" type="item">
+									<parameter key="simulateCaptureError" value="1"/>
+								</action>
+								<action align="right"  name="btn.amazonconfig.simulate.amazon.capture.rejected" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction" type="item">
+									<parameter key="simulateCaptureError" value="2"/>
+								</action>
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.simulate.amazon.capture.closed" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction" type="item">
+									<parameter key="simulateCaptureError" value="3"/>
+								</action>
+							</row>
+						</columnlayout>
+					</section>
+					
+					<section name="section.payment.amazon.refund">
+						<columnlayout>
+							<row>
+								<attribute labelwidth="200" width="100" name="refundRequestAmount" editable="true" />
+								<attribute labelwidth="200" width="100" name="currencyRefundRequestAmount" editable="false" />
+							</row>
+							<row>
+								<action align="right" name="btn.amazonconfig.refund" classname="de.fliegersoftware.amazon.hmc.action.AmazonRefundAction" type="item"></action>
+							</row>
+							<row>
+								<action align="left"  name="btn.amazonconfig.simulate.amazon.refund.rejected" classname="de.fliegersoftware.amazon.hmc.action.AmazonSimulationAction" type="item">
+									<parameter key="simulateRefundError" value="1"/>
+								</action>
+							</row>
+							<row>
+								<inlineshortcut type="AmazonRefund" maxcount="10">
+									<preset sourceattribute="pk" targetattribute="amazonPaymentPaymentInfo"/>
+									<itemlayout mode="append">
+										<attribute name="amazonRefundId" width="200"/>
+										<attribute name="refundReferenceId" width="200"/>
+										<attribute name="refundAmount" width="200"/>
+										<attribute name="refundStatus" width="200"/>
+									</itemlayout>
+								</inlineshortcut>
+							</row>
+						</columnlayout>
+					</section>
+					
+<!-- 					<section name="section.payment.amazon.sandbox.simulation"> -->
+<!-- 						<listlayout> -->
+<!-- 							<customchip  -->
+<!-- 								jsp="/ext/amazonhmcaddon/amazonSandboxSimulationChip.jsp"  -->
+<!-- 								classname="de.fliegersoftware.amazon.hmc.AmazonSandboxSimulationChip"> -->
+<!-- 							</customchip> -->
+<!-- 						</listlayout> -->
+<!-- 					</section> -->
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+	
+	<type mode="replace" name="AmazonLog">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="code" operator="contains"/>
+				<condition attribute="mime"/>
+				<condition attribute="folder"/>
+			</search>
+	         <result>
+	            <listview mode="replace">
+	               <itemlayout>
+	                  <attribute name="url" title="title.image" width="50">
+	                     <display classname="de.hybris.platform.hmc.attribute.UrlAsImageDisplayChip">
+	                        <parameter key="height" value="30"/>
+	                     </display>
+	                  </attribute>
+	                  <attribute name="code" width="200"/>
+	                  <attribute name="mime" width="100"/>   
+	                  <attribute name="url2" title="title.download" width="50">
+	                     <display classname="de.hybris.platform.hmc.attribute.MediaDownloadUrlChip"/>
+	                  </attribute>
+	                  <attribute name="folder" width="100"/>
+	               </itemlayout>
+	            </listview>
+	            <editview mode="replace">
+	               <itemlayout>
+	                  <attribute name="code" width="200"/>
+	                  <attribute name="mime"/>
+	               </itemlayout>
+	            </editview>
+	            <treeview mode="replace">
+	               <itemlayout>
+	                  <attribute name="code"/>
+	               </itemlayout>
+	            </treeview>
+	         </result>
+			<editor>
+	            <essentials>
+	               <listlayout>
+	                  <attribute name="code"/>
+	               </listlayout>
+	            </essentials>
+	            <tab name="tab.common" position="0">
+	               <section name="properties">
+	                  <listlayout>
+	              		<attribute name="mime" editable="false" />
+	              		<attribute name="url2" editable="false" />
+	                  </listlayout>
+	               </section>
+	            </tab>
+         	</editor>
+		</organizer>
+	</type>
+	
+</configuration>

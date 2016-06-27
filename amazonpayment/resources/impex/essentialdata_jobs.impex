@@ -1,0 +1,21 @@
+$siteUid=
+
+INSERT_UPDATE ServicelayerJob;code[unique=true];springId[unique=true]
+;amazonPaymentCapturingJobPerformable;amazonPaymentCapturingJobPerformable
+
+INSERT_UPDATE AmazonBaseCronJob;code[unique=true];job(code);singleExecutable;sessionLanguage(isocode);site(uid)[default=$siteUid]
+;amazonPaymentCapturingJobPerformable;amazonPaymentCapturingJobPerformable;false;de
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+#% afterEach: impex.getLastImportedItem().setActivationTime(new Date());
+;amazonPaymentCapturingJobPerformable; 0 0 0 * * ?
+
+INSERT_UPDATE ServicelayerJob;code[unique=true];springId[unique=true]
+;amazonPollingJobPerformable;amazonPollingJobPerformable
+
+INSERT_UPDATE AmazonBaseCronJob;code[unique=true];job(code);singleExecutable;sessionLanguage(isocode);site(uid)[default=$siteUid]
+;amazonPollingJobPerformable;amazonPollingJobPerformable;false;de
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+#% afterEach: impex.getLastImportedItem().setActivationTime(new Date());
+;amazonPollingJobPerformable; 0 0 0 * * ?

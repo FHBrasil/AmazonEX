@@ -1,0 +1,1 @@
+<div id="addressBookWidgetDiv" style="height:${addressWidgetHeight}px;"></div>

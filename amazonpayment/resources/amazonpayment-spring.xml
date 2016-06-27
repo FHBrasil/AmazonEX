@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+    
+	<bean id="ccPaymentInfoData" class="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData" />
+	<bean id="addressData" class="de.hybris.platform.commercefacades.user.data.AddressData" scope="prototype"/>
+	<bean id="priceData" class="de.hybris.platform.commercefacades.product.data.PriceData" scope="prototype"/>
+	<bean id="amazonOrderReferenceDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData" scope="prototype"/>
+	<bean id="amazonAuthorizationDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonAuthorizationDetailsData" scope="prototype"/>
+	<bean id="amazonCaptureDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData" scope="prototype"/>
+	<bean id="amazonRefundDetailsData" class="de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData" scope="prototype"/>
+	<bean id="orderTotal" class="com.amazonservices.mws.offamazonpayments.model.OrderTotal" scope="prototype"/>
+	<bean id="orderReferenceAttributes" class="com.amazonservices.mws.offamazonpayments.model.OrderReferenceAttributes" scope="prototype"/>
+	<bean id="sellerOrderAttributes" class="com.amazonservices.mws.offamazonpayments.model.SellerOrderAttributes" scope="prototype"/>
+
+
+	<bean name="amazonCommandFactory" 
+		class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl"
+		scope="tenant">
+		<property name="paymentProvider" value="Amazon" />
+		<property name="commands">
+			<map>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.AuthorizeCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.AuthorizeCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CancelCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CancelCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CancelOrderReferenceCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CancelOrderReferenceCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CaptureCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CaptureCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CloseAuthorizationCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CloseAuthorizationCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.CloseOrderReferenceCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.CloseOrderReferenceCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.ConfirmOrderReferenceCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.ConfirmOrderReferenceCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetAuthorizationDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetAuthorizationDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetCaptureDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetCaptureDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetOrderReferenceDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetOrderReferenceDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.GetRefundDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.GetRefundDetailsCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.RefundCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.RefundCommandImpl" />
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">de.fliegersoftware.amazon.payment.commands.SetOrderReferenceDetailsCommand</value>
+					</key>
+					<bean class="de.fliegersoftware.amazon.payment.commands.impl.SetOrderReferenceDetailsCommandImpl" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="defaultAmazonPaymentService" alias="paymentService" />
+	<alias name="defaultAmazonPaymentService" alias="amazonPaymentService"/>
+	<bean id="defaultAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonPaymentService" parent="defaultPaymentService">
+		<property name="sessionService" ref="sessionService"/>
+		<property name="mwsAmazonPaymentService" ref="mwsAmazonPaymentService"/>
+		<property name="amazonEmailService" ref="amazonEmailService"/>
+		<property name="amazonOrderReferenceDetailsConverter" ref="amazonOrderReferenceDetailsConverter"/>
+		<property name="amazonCaptureDetailsConverter" ref="amazonCaptureDetailsConverter"/>
+		<property name="amazonAuthorizationDetailsConverter" ref="amazonAuthorizationDetailsConverter"/>
+		<property name="amazonRefundDetailsConverter" ref="amazonRefundDetailsConverter"/>
+		<property name="amazonOrderReferenceAttributesReverseConverter" ref="amazonOrderReferenceAttributesReverseConverter"/>
+		<property name="amazonAddressReverseConverter" ref="amazonAddressReverseConverter"/>
+	</bean>
+	
+    <alias name="defaultMwsAmazonPaymentService" alias="mwsAmazonPaymentService"/>
+    <bean id="defaultMwsAmazonPaymentService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonPaymentService">
+    	<property name="commandFactoryRegistry" ref="commandFactoryRegistry" />
+    </bean>
+
+	<alias name="defaultMwsAmazonFeedsService" alias="mwsAmazonFeedsService"/>
+	<bean id="defaultMwsAmazonFeedsService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultMWSAmazonFeedsService">
+		<property name="amazonConfigService" ref="amazonConfigService"/>
+	</bean>
+
+    <bean name="defaultAmazonCommerceCheckoutService" class="de.fliegersoftware.amazon.payment.services.impl.DefaultAmazonCommerceCheckoutService"
+    	parent="defaultCommerceCheckoutService">
+    	<property name="paymentService" ref="amazonPaymentService"/>
+    </bean>
+    
+    <bean id="amazonOrderReferenceDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceDetailsPopulator">
+        <property name="amazonAddressConverter" ref="amazonAddressConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonOrderReferenceDetailsConverter" alias="amazonOrderReferenceDetailsConverter" />
+    <bean id="defaultAmazonOrderReferenceDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonOrderReferenceDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonOrderReferenceDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="amazonCaptureDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonCaptureDetailsPopulator">
+        <property name="amazonPriceConverter" ref="amazonPriceConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonCaptureDetailsConverter" alias="amazonCaptureDetailsConverter" />
+    <bean id="defaultAmazonCaptureDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonCaptureDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonCaptureDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="amazonAuthorizationDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAuthorizationDetailsPopulator">
+        <property name="amazonPriceConverter" ref="amazonPriceConverter" />
+        <property name="amazonAddressConverter" ref="amazonAddressConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonAuthorizationDetailsConverter" alias="amazonAuthorizationDetailsConverter" />
+    <bean id="defaultAmazonAuthorizationDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonAuthorizationDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonAuthorizationDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias alias="amazonAddressReversePopulator" name="defaultAmazonAddressReversePopulator" />
+    <bean id="defaultAmazonAddressReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAddressReversePopulator"
+        parent="defaultAddressReversePopulator" />
+     
+    <alias name="defaultAmazonAddressReverseConverter" alias="amazonAddressReverseConverter" />
+    <bean id="defaultAmazonAddressReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="addressData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonAddressReversePopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultAmazonAddressPopulator" alias="amazonAddressPopulator"/>
+	<bean id="defaultAmazonAddressPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonAddressPopulator">
+	</bean>
+    
+    <alias name="defaultAmazonAddressConverter" alias="amazonAddressConverter" />
+    <bean id="defaultAmazonAddressConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="addressData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonAddressPopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultAmazonPricePopulator" alias="amazonPricePopulator"/>
+	<bean id="defaultAmazonPricePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonPricePopulator">
+	</bean>
+    
+    <alias name="defaultAmazonPriceConverter" alias="amazonPriceConverter" />
+    <bean id="defaultAmazonPriceConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="priceData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonPricePopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultAmazonOrderTotalReversePopulator" alias="amazonOrderTotalReversePopulator"/>
+	<bean id="defaultAmazonOrderTotalReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderTotalReversePopulator">
+	</bean>
+	
+	<alias name="defaultAmazonOrderTotalReverseConverter" alias="amazonOrderTotalReverseConverter" />
+    <bean id="defaultAmazonOrderTotalReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="orderTotal" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonOrderTotalReversePopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultAmazonOrderReferenceAttributesReverseConverter" alias="amazonOrderReferenceAttributesReverseConverter" />
+    <bean id="defaultAmazonOrderReferenceAttributesReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="orderReferenceAttributes" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonOrderReferenceAttributesReversePopulator" />
+            </list>
+        </property>
+    </bean>
+	
+	<bean id="amazonOrderReferenceAttributesReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderReferenceAttributesReversePopulator">
+        <property name="amazonOrderTotalReverseConverter" ref="amazonOrderTotalReverseConverter" />
+        <property name="amazonSellerOrderAttributesReverseConverter" ref="amazonSellerOrderAttributesReverseConverter" />
+    </bean>
+	
+    <bean id="amazonRefundDetailsPopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonRefundDetailsPopulator">
+        <property name="amazonPriceConverter" ref="amazonPriceConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonRefundDetailsConverter" alias="amazonRefundDetailsConverter" />
+    <bean id="defaultAmazonRefundDetailsConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="amazonRefundDetailsData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonRefundDetailsPopulator" />
+            </list>
+        </property>
+    </bean>
+     
+    <alias name="defaultAmazonSellerOrderAttributesReversePopulator" alias="amazonSellerOrderAttributesReversePopulator"/>
+	<bean id="defaultAmazonSellerOrderAttributesReversePopulator" class="de.fliegersoftware.amazon.payment.populators.impl.AmazonSellerOrderAttributesReversePopulator">
+	</bean>
+	
+	<alias name="defaultAmazonSellerOrderAttributesReverseConverter" alias="amazonSellerOrderAttributesReverseConverter" />
+    <bean id="defaultAmazonSellerOrderAttributesReverseConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="sellerOrderAttributes" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonSellerOrderAttributesReversePopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="amazonOrderPopulator" alias="orderPopulator" />
+    <bean id="amazonOrderPopulator"
+        class="de.fliegersoftware.amazon.payment.populators.impl.AmazonOrderPopulator"
+        parent="defaultOrderPopulator">
+        <property name="amazonPaymentPaymentInfoConverter" ref="amazonPaymentPaymentInfoConverter" />
+    </bean>
+    
+    <alias name="defaultAmazonPaymentPaymentInfoConverter" alias="amazonPaymentPaymentInfoConverter" />
+    <bean id="defaultAmazonPaymentPaymentInfoConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="ccPaymentInfoData" />
+        <property name="populators">
+            <list>
+                <ref bean="amazonPaymentPaymentInfoPopulator" />
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultAmazonPaymentPaymentInfoPopulator" alias="amazonPaymentPaymentInfoPopulator" />
+    <bean id="defaultAmazonPaymentPaymentInfoPopulator"
+        class="de.fliegersoftware.amazon.payment.populators.impl.AmazonPaymentPaymentInfoPopulator">
+        <property name="addressConverter" ref="addressConverter" />
+    </bean>
+
+	<alias alias="createOrderFromCartStrategy" name="amazonCreateOrderFromCartStrategy"/>
+	<bean name="amazonCreateOrderFromCartStrategy" parent="defaultCreateOrderFromCartStrategy"
+		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCreateOrderFromCartStrategy">
+    </bean>
+	
+	<alias alias="commerceDeliveryAddressStrategy" name="amazonCommerceDeliveryAddressStrategy"/>
+	<bean name="amazonCommerceDeliveryAddressStrategy" parent="defaultCommerceDeliveryAddressStrategy"
+		class="de.fliegersoftware.amazon.payment.order.strategies.impl.AmazonCommerceDeliveryAddressStrategy">
+		<property name="amazonConfigService" ref="amazonConfigService" />
+	</bean>
+
+	<bean name="amazonSandboxSimulationFacade" class="de.fliegersoftware.amazon.payment.facades.impl.AmazonSandboxSimulationFacadeImpl">
+	</bean>
+
+	<!-- jobs -->
+
+	<bean id="amazonPaymentCapturingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPaymentCapturingJobPerformable" parent="abstractJobPerformable"/>
+	<bean id="amazonPollingJobPerformable" class="de.fliegersoftware.amazon.payment.jobs.AmazonPollingJobPerformable" parent="abstractJobPerformable"/>
+   
+</beans>
