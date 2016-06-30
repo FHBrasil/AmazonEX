@@ -15,7 +15,8 @@
 # you can put key/value pairs here.
 # Use Config.getParameter(..) to retrieve the values during runtime.
 
-amazonloginaddon.javascript.paths.desktop=/responsive/common/js/amazonloginaddon.js
+amazonloginaddon.javascript.paths.desktop=/desktop/common/js/amazonloginaddon.js
+amazonloginaddon.javascript.paths.responsive=/responsive/common/js/amazonloginaddon.js
 
 # Specifies the location of the spring context file putted automatically to the global platform application context.
 amazonloginaddon.application-context=amazonloginaddon-spring.xml
