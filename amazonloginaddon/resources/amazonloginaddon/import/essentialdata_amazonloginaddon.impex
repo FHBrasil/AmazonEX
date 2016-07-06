@@ -5,7 +5,7 @@
 # ============================================ #
 # Set contentCatalog before running this impex #
 # ============================================ #
-$contentCatalog=
+$contentCatalog=apparel-deContentCatalog
 
 #
 # Import the CMS content
