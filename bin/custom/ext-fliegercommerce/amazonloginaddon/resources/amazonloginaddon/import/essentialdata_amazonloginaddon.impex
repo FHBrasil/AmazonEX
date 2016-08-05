@@ -1,0 +1,20 @@
+# **************** #
+# ** Important! ** #
+# **************** #
+
+# ============================================ #
+# Set contentCatalog before running this impex #
+# ============================================ #
+$contentCatalog=apparel-deContentCatalog
+
+#
+# Import the CMS content
+#
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+#
+# Create page
+#
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;amazonAccountConfirmation;Amazon Confirm Account Page;ContentPage1Template;amazonAccountConfirmation
+;;amazonManualAdditionOnFirstLogin;Amazon Manual Addition First Login;ContentPage1Template;amazonManualAdditionOnFirstLogin

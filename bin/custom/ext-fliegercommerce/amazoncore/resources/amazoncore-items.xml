@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+	
+	
+	<enumtypes>
+		<enumtype code="AmazonConfigCountryEnum">
+			<value code="DE"></value>
+			<value code="UK"></value>
+			<value code="US"></value>
+			<value code="Other"></value>
+		</enumtype>
+		
+		<enumtype code="OperationModeEnum">
+			<value code="LoginAndPay"></value>
+			<value code="PayOnly"></value>
+			<value code="LoginOnly"></value>
+		</enumtype>
+		
+		<enumtype code="AccountMatchingStrategyEnum">
+			<value code="NoMatching"></value>
+			<value code="EmailAddressBased"></value>
+		</enumtype>
+		
+		<enumtype code="CheckoutStrategyEnum">
+			<value code="Normal">
+				<description>Normal checkout and amazon checkout (both buttons on cart page, amazon button does not trigger popup)</description>
+			</value>
+			<value code="AmazonOnly">
+				<description>Only amazon checkout (normal checkout buttons leads to amazon checkout)</description>
+			</value>
+		</enumtype>
+		
+		<enumtype code="GuestCheckoutStrategyEnum">
+			<value code="AllowGuestCheckout">
+				<description>AllowGuestCheckout</description>
+			</value>
+			<value code="ForceAccountCreation">
+				<description>Force account creation/Login on checkout</description>
+			</value>
+		</enumtype>
+		
+		<enumtype code="AuthorizationModeEnum">
+			<value code="AutomaticSynchronous">
+				<description>automatic synchronous authorization in frontend</description>
+			</value>
+			<value code="AutomaticNonSynchronous">
+				<description>authomatic non-synchronous authorization after order is placed (Default)</description>
+			</value>
+			<value code="ManualNonSynchronous">
+				<description>manual non-synchronous authorization through functino in order management</description>
+			</value>
+		</enumtype>
+		
+		<enumtype code="CaptureModeEnum">
+			<value code="Immediate">
+				<description>immediate capture on successful authorization</description>
+			</value>
+			<value code="Shipment">
+				<description>capture on shipment (default)</description>
+			</value>
+			<value code="ManualCapture">
+				<description>
+					manual capture through function in order management
+				</description>
+			</value>
+		</enumtype>
+		
+		<enumtype code="ButtonSizeEnum">
+			<value code="Medium"></value>
+			<value code="Small"></value>
+			<value code="Large"></value>
+			<value code="Big"></value>
+		</enumtype>
+		
+		<enumtype code="ButtonColorEnum">
+			<value code="Gold"></value>
+			<value code="Gray"></value>
+			<value code="LightGray"></value>
+			<value code="Ink"></value>
+		</enumtype>
+	</enumtypes>
+	
+	<relations>
+		<relation code="Refund2AmazonPaymentRelation" autocreate="true" generate="true" localized="false">
+			<sourceElement type="AmazonPaymentPaymentInfo" qualifier="amazonPaymentPaymentInfo" cardinality="one" />
+			<targetElement type="AmazonRefund" qualifier="refund" collectiontype="list" cardinality="many"/>
+		</relation>
+	</relations>
+	
+	<itemtypes>
+	
+		<itemtype code="AmazonPaymentPaymentInfo" extends="PaymentInfo" autocreate="true" generate="true">
+			<attributes>
+				<!-- Token and transactionId are duplicated in case it will be more convenient
+					to store them here -->
+				<attribute qualifier="amazonOrderReferenceId" type="java.lang.String" generate="true">
+					<description>Order Reference Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="amazonOrderStatus" type="java.lang.String" generate="true">
+					<description>Order Status for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonOrderReasonCode" type="java.lang.String" generate="true">
+					<description>Order Reason Code for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonOrderAmount" type="java.lang.Double" generate="true">
+					<description>Order Amount for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonLastAuthorizationId" type="java.lang.String" generate="true">
+					<description>Last Authorization Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonAuthorizationStatus" type="java.lang.String" generate="true">
+					<description>Authorization Reference Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonAuthorizationReasonCode" type="java.lang.String" generate="true">
+					<description>Authorization Reason Code</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureId" type="java.lang.String" generate="true">
+					<description>Capture Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureStatus" type="java.lang.String" generate="true">
+					<description>Capture Status for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureReasonCode" type="java.lang.String" generate="true">
+					<description>Capture Status for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="amazonCaptureRefundedAmount" type="java.lang.Double" generate="true">
+					<description>Refunded amount</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="refundRequestAmount" type="java.lang.Double" generate="true">
+					<description>Refund Amount operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+				<attribute qualifier="currencyRefundRequestAmount" type="java.lang.String" generate="true">
+					<description>currency to amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="AmazonRefund" extends="GenericItem" autocreate="true" generate="true">
+			<deployment table="AmazonRefund" typecode="20165" />
+			<attributes>
+				<!-- Token and transactionId are duplicated in case it will be more convenient
+					to store them here -->
+				<attribute qualifier="amazonRefundId" type="java.lang.String" generate="true">
+					<description>Order Reference Id for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="refundReferenceId" type="java.lang.String" generate="true">
+					<description>refundReferenceId for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="refundAmount" type="java.lang.Double" generate="true">
+					<description>refundAmount for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="refundStatus" type="java.lang.String" generate="true">
+					<description>refundStatus for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="false"/>
+				</attribute>
+				<attribute qualifier="refundReasonCode" type="java.lang.String" generate="true">
+					<description>refundReasonCode for Amazon operations</description>
+					<persistence type="property"/>
+					<modifiers read="true" write="true" optional="true"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="Customer" autocreate="false" generate="false">
+			<attributes>
+				<attribute type="java.lang.String" qualifier="amazonCustomerId">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="BaseStore" autocreate="false" generate="false">
+        	<description>Extending BaseStore type with amazon attribute.</description>
+            <attributes>
+            	<attribute type="AmazonConfig" qualifier="amazonConfig">
+                	<persistence type="property" />
+                </attribute>
+            </attributes>    
+        </itemtype>
+        
+        <itemtype code="AmazonConfig" extends="GenericItem"
+			jaloclass="de.fliegersoftware.amazon.core.jalo.config.AmazonConfig" autocreate="true" generate="true">
+			<description>Amazon configuration</description>
+			<deployment table="amazonConfig" typecode="17500" />
+			<attributes>
+				<!-- basic configuration -->
+				<attribute qualifier="merchantId" type="java.lang.String">
+					<description>Merchant ID or Store ID</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="mwsAccessKey" type="java.lang.String">
+					<description>Merchant WebServices Access Key</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="mwsSecretKey" type="java.lang.String">
+					<description>Merchant WebServices Secret Key</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="applicationName" type="java.lang.String">
+					<description>Application Name</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="applicationVersion" type="java.lang.String">
+					<description>Application Version</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="amazonConfigCountry" type="AmazonConfigCountryEnum">
+					<description>Other Country</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="testOrderReferenceId" type="java.lang.String">
+					<description>Order Reference Id for test credentials</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="otherCountry" type="java.lang.String">
+					<description>Other Country</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="otherCountryCurrency" type="java.lang.String">
+					<description>Other Country</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="clientId" type="java.lang.String">
+					<description>Other Country</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				
+				<!-- general configuration -->
+				<attribute qualifier="enabled" type="boolean">
+					<description>switch for enabling / disabling Amazon Payments in general</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="operationMode" type="OperationModeEnum">
+					<description>switch for choosing operation mode</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="sandboxMode" type="boolean">
+					<description>switch for enabling / disabling Amazon Sandbox</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="sandboxSimulate" type="boolean">
+					<description>switch for enabling / disabling Amazon Sandbox Simulation</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="guestCheckoutStrategy" type="GuestCheckoutStrategyEnum">
+					<description>switch for Allow Guest Checkout / Force account creation/Login on checkout</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="hiddenButtonsMode" type="boolean">
+					<description>switch for hide / show Amazon payment button</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="ipWhitelisting" type="java.lang.String">
+					<description>switch for hide / show Amazon payment button</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="IPN" type="java.lang.String">
+					<description>switch for hide / show Amazon payment button</description>
+					<modifiers initial="false" write="false" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				
+				<!-- login settings -->
+				<attribute qualifier="requestCompleteDeliveryAddress" type="boolean">
+					<description>request complete delivery address already during checkout (Login and Pay mode required)</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="excludePackstationDelivery" type="boolean">
+					<description>exclude packstation delivery for DE-centered integrations, Login and Pay mode required</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="packstationIdentifier" type="java.lang.String">
+					<description>identify if an address is packstation</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="accountMatchingStrategy" type="AccountMatchingStrategyEnum">
+					<description>selector to account matching strategy</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="manualAddOnFirstLogin" type="boolean">
+					<description>Activate manual addition of user information on first login, all mandatory fields that are not provided by amazon should be manually filled by buyer</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="checkoutStrategy" type="CheckoutStrategyEnum">
+					<description>switch for hide / show Amazon payment button</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				
+				<!-- advanced settings -->
+				<attribute qualifier="normalCheckout" type="boolean">
+					<description>switch for enabling / disabling amazon payments as a payment method in the normal checkout process, in addition to being a separate checkout process</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="authorizationMode" type="AuthorizationModeEnum">
+					<description>chooses the authorization mode</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="captureMode" type="CaptureModeEnum">
+					<description>choose the capture mode, warning message that whitelisting with amazon payments is required for immediate</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="enableERPMode" type="boolean">
+					<description>erp mode turns off all automated authorization and capture functionality as well as ipn reception and/or polling, and disables any admin ui functionality that may trigger authorizations or captures</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<defaultvalue>false</defaultvalue>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="ipnReception" type="boolean">
+					<description>if ipn is supported enable or disable ipn reception, else status updates are retrieved using polling via cronjob</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<defaultvalue>false</defaultvalue>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="orderStatusOnSuccessfullAuthorization" type="java.lang.String">
+					<description>allows the user to selecte or enter a status for a successfully authorized order</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="orderStatusOnSuccessfullShipping" type="java.lang.String">
+					<description>allows the user to select or enter a status for a shipped order. this status triggers the capture event if capture on shipment is selected</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<!-- Log settings -->
+				<attribute qualifier="enableLog" type="boolean">
+					<description>switch for enabling / disabling logging, exceptions should always be logged</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				
+				<attribute qualifier="apiLog" type="AmazonLog">
+					<description>log file</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="ipnLog" type="AmazonLog">
+					<description>log file</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="amazonLog" type="AmazonLog">
+					<description>log file</description>
+					<modifiers initial="false" write="true" read="true" unique="false" optional="true" search="true" />
+					<persistence type="property"/>
+				</attribute>
+
+				<!-- Appearance settings -->
+				<attribute qualifier="payButtonSize" type="ButtonSizeEnum">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="payButtonColor" type="ButtonColorEnum">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="loginButtonSize" type="ButtonSizeEnum">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="loginButtonColor" type="ButtonColorEnum">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="addressWidgetHeight" type="int">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="addressWidgetWidth" type="int">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="paymentWidgetHeight" type="int">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="paymentWidgetWidth" type="int">
+					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="AmazonLog" extends="Media"
+			jaloclass="de.fliegersoftware.amazon.core.jalo.media.AmazonLog" autocreate="true" generate="true">
+			<description>Amazon configuration</description>
+			<deployment table="amazonLog" typecode="17502" />
+		</itemtype>
+		
+	</itemtypes>
+</items>

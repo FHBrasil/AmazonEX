@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://www.zeroturnaround.com">
+  <classpath>
+    <dir name="/HYBRIS/amazon_v3/amazonhmcaddon/hmc/classes" />
+  </classpath>
+</application>

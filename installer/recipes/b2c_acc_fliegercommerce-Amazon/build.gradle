@@ -1,0 +1,157 @@
+def config = {
+    localProperties {
+        '# place your custom properties into this file instead of modifying the project.properties'
+        '# all properties in this file have higher priority and will overwrite the platform/project.properties settings.'
+
+        property 'mykey', 'myvalue'
+        property '#hac.webroot', '/hac'
+
+        '# using higher memory settings (4G heap and 512 permgen) to prevent out of memory issues on tcserver'
+         property 'tomcat.generaloptions', '${dynatrace.jvm-opts} -Xmx4096M -XX:-UseLoopPredicate -XX:MaxPermSize=512M -XX:+HeapDumpOnOutOfMemoryError -ea -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dorg.tanukisoftware.wrapper.WrapperManager.mbean=true -Djava.endorsed.dirs="%CATALINA_HOME%/lib/endorsed" -Dcatalina.base=%CATALINA_BASE% -Dcatalina.home=%CATALINA_HOME% -Dfile.encoding=UTF-8 -Dlog4j.configuration=log4j_init_tomcat.properties -Djava.util.logging.config.file=jdk_logging.properties -Djava.io.tmpdir="${HYBRIS_TEMP_DIR}"'
+
+        property 'dynatrace.agentlib','${HYBRIS_BIN_DIR}/platform/resources/dynatrace/agent/lib64/libdtagent.so'
+        property 'dynatrace.name','hybris-flieger-commerce-app'
+        property 'dynatrace.server','172.16.0.76:9998'
+        property 'dynatrace.jvm-opts','-agentpath:${dynatrace.agentlib}=name=${dynatrace.name},server=${dynatrace.server},wait=45'
+        property 'standalone.javaoptions', '-Xmx2040M -XX:MaxPermSize=512M -XX:+HeapDumpOnOutOfMemoryError -ea -XX:-UseLoopPredicate'
+   
+        property 'classloader.monitor.enabled', 'true'
+
+	property 'website.electronics.http', 'http://electronics.local:9001/yacceleratorstorefront'
+	property 'website.electronics.https', 'https://electronics-fliegercommerce-dev.fh.com.br/yacceleratorstorefront'
+	property 'website.apparel-de.http', 'http://apparel-de.local:9001/yacceleratorstorefront'
+	property 'website.apparel-de.https', 'https://apparel-de-fliegercommerce-dev.fh.com.br/yacceleratorstorefront'
+	property 'website.apparel-uk.http', 'http://apparel-uk.local:9001/yacceleratorstorefront'
+	property 'website.apparel-uk.https', 'https://apparel-uk-fliegercommerce-dev.fh.com.br/yacceleratorstorefront'
+	property 'website.powertools.http', 'http://powertools.local:9001/yb2bacceleratorstorefront'
+	property 'website.powertools.https', 'https://powertools-fliegercommerce-dev.fh.com.br/yb2bacceleratorstorefront'
+ 
+	property 'db.url', 'jdbc:mysql://localhost/hybrisdb?useConfigs=maxPerformance&characterEncoding=utf8'
+	property 'db.driver', 'com.mysql.jdbc.Driver'
+	property 'db.username', 'hybris'
+	property 'db.password', 'FH*2016'
+	property 'db.tableprefix', ''
+	property 'mysql.optional.tabledefs', 'CHARSET=utf8 COLLATE=utf8_bin'
+	property 'mysql.tabletype', 'InnoDB'
+	property 'mysql.allow.fractional.seconds', 'false'
+	property 'googleApiKey', ''
+
+	property 'mail.from', 'amazon@fliegersoftware.de'
+	property 'mail.replyto', 'amazon@fliegersoftware.de'
+	property 'mail.smtp.server', 'smtp.gmail.com'
+	property 'mail.smtp.port', '465'
+	property 'mail.smtp.auth', 'true'
+	property 'mail.smtp.debug', 'true'
+	property 'mail.smtp.user', 'amazon@fliegersoftware.de'
+	property 'mail.smtp.password', 'flieger2015$$'
+	property 'mail.use.tls', 'true'
+	property 'mail.smtp.starttls.enable', 'true'
+
+	property 'sonar.language', 'java'
+	property 'sonar.host.url', 'http://172.16.0.76:9000'
+	property 'sonar.java.source', '1.8'
+	property 'sonar.projectName', 'hybris-flieger-commerce-app'
+	property 'sonar.projectKey', 'hybris-flieger-commerce-app'
+	property 'sonar.projectVersion', '1.0'
+	property 'sonar.exclusions', 'file:**/gensrc/**, **/ws/axis/*'
+	property 'sonar.excludedExtensions','acceleratorcms,acceleratorfacades,acceleratorservices,acceleratorstorefrontcommons,addonsupport,captchaaddon,commercefacades,platformservices,acceleratorwebservicesaddon,apparelstore,commerceservices,commercewebservicescommons,electronicsstore,groovynature,platformwebservices,promotionenginesamplesaddon,yacceleratorcockpits,yacceleratorcore,yacceleratorfacades,yacceleratorfulfilmentprocess,yacceleratorinitialdata,yacceleratorstorefront,yaddon,ycommercewebservices,ycommercewebserviceshmc'
+	property 'sonar.issuesReport.html.enable', 'true'
+	property 'sonar.issuesReport.console.enable', 'true'
+	property 'sonar.core.codeCoveragePlugin', 'jacoco'
+	property 'sonar.analysis.mode', 'publish'
+	property 'sonar.scm.disabled', 'true'
+
+	property 'mediaimportation.mediacontainer.contentcatalog', 'electronicsContentCatalog'
+	property 'mediaimportation.mediacontainer.productcatalog', 'electronicsProductCatalog'
+
+
+
+    }
+
+		extensions {
+			extName 'mcc'
+			extName 'backoffice'
+			extName 'commercesearchbackoffice'
+			extName 'commerceservicesbackoffice'
+			extName 'solrfacetsearchbackoffice'
+			extName 'solrserver'
+			extName 'yacceleratorcockpits'
+			extName 'yacceleratorinitialdata'
+			extName 'yacceleratorfulfilmentprocess'
+			extName 'yacceleratorstorefront'
+			extName 'yaddon'
+			extName 'ycommercewebservices'
+	
+			extName 'electronicsstore'
+			extName 'apparelstore'
+			
+			extName 'liveeditaddon'
+			extName 'acceleratorwebservicesaddon'
+			
+			extName 'customersupportbackoffice'
+
+			extName 'rulebuilderbackoffice'
+			extName 'promotionenginebackoffice'
+			extName 'droolsruleengineservices'
+			extName 'promotionenginesamplesaddon'
+
+			extName 'btgcockpit'
+			extName 'mediaconversion'
+			extName 'mediaconversionbackoffice'
+		
+        	extName 'webservicescommonsbackoffice'
+        	extName 'fcrestflexiblesearch' 
+
+        	extName 'amazoncore'
+       		extName 'amazonpayment'
+        	extName 'amazonloginaddon'
+        	extName 'amazonpaymentaddon'
+        	extName 'amazonhmc'
+        	extName 'amazonhmcaddon' 
+
+        	extName 'platformwebservices'
+
+		}
+}
+
+task setup << {
+		apply plugin: 'installer-platform-plugin'
+		apply plugin: 'installer-addon-plugin'
+		def pl = platform(config)
+		pl.setup()
+
+		pl.project.addons {
+				names "liveeditaddon,promotionenginesamplesaddon"
+				template "yacceleratorstorefront"
+				storeFronts "yacceleratorstorefront"
+				platform pl
+		}
+
+		pl.project.addons {
+				names "acceleratorwebservicesaddon"
+				template "ycommercewebservices"
+				storeFronts "ycommercewebservices"
+				platform pl
+		}
+		
+	    pl.project.addons {
+			    names "amazonloginaddon,amazonpaymentaddon"
+				template "yacceleratorstorefront"
+				storeFronts "yacceleratorstorefront"
+				platform pl
+		}
+}
+
+task initialize << {
+		apply plugin: 'installer-platform-plugin'
+		def pl = platform(config)
+		pl.build()
+		pl.initialize()
+}
+
+
+task start << {
+		apply plugin: 'installer-platform-plugin'
+		def pl = platform(config)
+		pl.start()
+}

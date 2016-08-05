@@ -1,0 +1,27 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform 
+# 
+# Copyright (c) 2000-2014 hybris AG
+# All rights reserved.
+#  
+# This software is the confidential and proprietary information of hybris 
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with hybris.
+#
+#  
+# -----------------------------------------------------------------------
+
+# you can put key/value pairs here.
+# Use Config.getParameter(..) to retrieve the values during runtime.
+
+amazonpaymentaddon.javascript.paths.desktop=/desktop/common/js/amazonpaymentaddon.js
+amazonpaymentaddon.javascript.paths.responsive=/responsive/common/js/amazonpaymentaddon.js
+
+amazonpaymentaddon.css.paths.desktop=desktop/common/css/amazonpaymentaddon.css;/desktop/common/css/amazonCheckout.css
+amazonpaymentaddon.css.paths.responsive=/responsive/common/css/amazonpaymentaddon.css;/responsive/common/css/amazonCheckout.css
+
+# Specifies the location of the spring context file putted automatically to the global platform application context.
+amazonpaymentaddon.application-context=amazonpaymentaddon-spring.xml
+
+yacceleratorstorefront.additionalWebSpringConfigs.amazonpaymentaddon=classpath:/amazonpaymentaddon/web/spring/amazonpaymentaddon-web-spring.xml
