@@ -129,7 +129,7 @@
 												, CSRFToken: ACC.config.CSRFToken },
 											success: function(response){
 			
-												if(response.success) {
+												if(response.success=='true') {
 													ACC.amazon.enablePlaceOrder.addressSelected = true;
 													checkEnableCheckout();
 													ACC.amazon.showToaster(response.showMessage);
@@ -232,7 +232,7 @@
 		clearTimeout(ACC.amazon.toasterActive);
 		toaster.find(".content").text(msg);
 		toaster.addClass("active");
-		ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 4000);
+		ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 10000);
 	};
 	
 	/*! Sends payment form */
