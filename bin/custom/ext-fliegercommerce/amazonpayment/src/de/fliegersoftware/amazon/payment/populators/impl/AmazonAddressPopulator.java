@@ -113,7 +113,8 @@ public class AmazonAddressPopulator implements Populator<Address, AddressData>
 		if(nameFull != null && !nameFull.isEmpty())
 		{
 			target.setFirstName(nameFull.substring(0, nameFull.indexOf(' ')));
-			target.setLastName(nameFull.substring(nameFull.indexOf(' ') + 1));
+			if (nameFull.trim().indexOf(' ') != -1)
+				target.setLastName(nameFull.substring(nameFull.indexOf(' ') + 1));
 		}
 
 		target.setTown(source.getCity());

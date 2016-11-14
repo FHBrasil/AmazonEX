@@ -129,10 +129,10 @@
 												, CSRFToken: ACC.config.CSRFToken },
 											success: function(response){
 			
-												if(response.success) {
+												if(response.success=='true') {
 													ACC.amazon.enablePlaceOrder.addressSelected = true;
 													checkEnableCheckout();
-													ACC.amazon.showToaster(response.showMessage);
+													ACC.amazon.showToaster(response.showMessage,'true');
 													
 													$("#deliveryCost", "#totalPrice").fadeOut();
 													setTimeout(function(){
@@ -151,7 +151,7 @@
 													$("#deliveryCost").fadeIn();
 													ACC.amazon.enablePlaceOrder.addressSelected = false;
 													checkEnableCheckout();
-													ACC.amazon.showToaster(response.showMessage);
+													ACC.amazon.showToaster(response.showMessage,'false');
 												}
 											},
 											error: function (xht, textStatus, ex) {
@@ -189,7 +189,7 @@
 										, CSRFToken: ACC.config.CSRFToken },
 									success: function(response){
 										if(response && response.showMessage) {
-											ACC.amazon.showToaster(response.showMessage);
+											ACC.amazon.showToaster(response.showMessage,'true');
 										}
 									},
 									error: function (xht, textStatus, ex) {
@@ -223,7 +223,7 @@
 		}	
 	}
 	ACC.amazon.toasterActive = undefined;
-	ACC.amazon.showToaster = function(msg) {
+	ACC.amazon.showToaster = function(msg,withTimeoutMsg) {
 		var toaster = $("#toaster");
 		if(!toaster[0]) {
 			$("body").prepend('<div id="toaster"><div class="content"></div></div>');
@@ -232,7 +232,9 @@
 		clearTimeout(ACC.amazon.toasterActive);
 		toaster.find(".content").text(msg);
 		toaster.addClass("active");
-		ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 4000);
+		if (withTimeoutMsg == 'true') {
+		  ACC.amazon.toasterActive = setTimeout(function() { toaster.removeClass("active") }, 10000);
+		}
 	};
 	
 	/*! Sends payment form */
