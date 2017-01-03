@@ -87,6 +87,7 @@
 							<attribute labelwidth="200" name="ipWhitelisting"
 								width="300" />
 							<attribute labelwidth="200" name="IPN" width="300" />
+							<attribute labelwidth="200" name="ipnReception" width="300" />
 						</listlayout>
 					</section>
 				</tab>
@@ -119,7 +120,6 @@
 								width="300" />
 							<attribute labelwidth="200" name="captureMode" width="300" />
 							<attribute labelwidth="200" name="enableERPMode" width="300" />
-							<attribute labelwidth="200" name="ipnReception" width="300" />
 							<attribute labelwidth="200"
 								name="orderStatusOnSuccessfullAuthorization" width="300" />
 							<attribute labelwidth="200"
