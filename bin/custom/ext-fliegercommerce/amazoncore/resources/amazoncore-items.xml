@@ -84,10 +84,10 @@
 		</enumtype>
 		
 		<enumtype code="ButtonSizeEnum">
-			<value code="Medium"></value>
-			<value code="Small"></value>
-			<value code="Large"></value>
-			<value code="Big"></value>
+			<value code="medium"></value>
+			<value code="small"></value>
+			<value code="large"></value>
+			<value code="big"></value>
 		</enumtype>
 		
 		<enumtype code="ButtonColorEnum">
