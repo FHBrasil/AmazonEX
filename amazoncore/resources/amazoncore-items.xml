@@ -288,7 +288,7 @@
 				
 				<!-- general configuration -->
 				<attribute qualifier="enabled" type="boolean">
-					<description>switch for enabling / disabling Amazon Payments in general</description>
+					<description>switch for enabling / disabling Amazon Pay in general</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
@@ -313,17 +313,17 @@
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="hiddenButtonsMode" type="boolean">
-					<description>switch for hide / show Amazon payment button</description>
+					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="ipWhitelisting" type="java.lang.String">
-					<description>switch for hide / show Amazon payment button</description>
+					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="IPN" type="java.lang.String">
-					<description>switch for hide / show Amazon payment button</description>
+					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="false" write="false" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
@@ -355,14 +355,14 @@
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="checkoutStrategy" type="CheckoutStrategyEnum">
-					<description>switch for hide / show Amazon payment button</description>
+					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
 				
 				<!-- advanced settings -->
 				<attribute qualifier="normalCheckout" type="boolean">
-					<description>switch for enabling / disabling amazon payments as a payment method in the normal checkout process, in addition to being a separate checkout process</description>
+					<description>switch for enabling / disabling Amazon Pay as a payment method in the normal checkout process, in addition to being a separate checkout process</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
@@ -372,7 +372,7 @@
 					<persistence type="property"/>
 				</attribute>
 				<attribute qualifier="captureMode" type="CaptureModeEnum">
-					<description>choose the capture mode, warning message that whitelisting with amazon payments is required for immediate</description>
+					<description>choose the capture mode, warning message that whitelisting with Amazon Pay is required for immediate</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>

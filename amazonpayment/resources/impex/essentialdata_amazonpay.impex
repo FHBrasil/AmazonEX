@@ -1,4 +1,4 @@
 
 
 INSERT_UPDATE StandardPaymentMode;code[unique=true];name[lang=en];description[lang=en];paymentinfotype(code);active
-;amazon;Amazon Payment;payment with amazon;AmazonPaymentPaymentInfo;true
+;amazon;Amazon Pay;Amazon Pay;AmazonPaymentPaymentInfo;true

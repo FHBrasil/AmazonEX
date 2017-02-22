@@ -39,7 +39,7 @@ public enum ClosedReasonCodes {
 	AMAZONREJECTED,
 	/**
 	 * There were problems with the payment method. You should contact your buyer and have them update their payment
-	 * method using the Amazon Payments web site.
+	 * method using the Amazon Pay web site.
 	 */
 	INVALIDPAYMENTMETHOD;
 	public static ClosedReasonCodes getValue(String reasonCode) {

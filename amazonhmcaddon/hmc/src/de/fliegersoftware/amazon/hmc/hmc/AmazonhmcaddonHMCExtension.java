@@ -117,7 +117,7 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 	}
 
 	/**
-	 * Check if is a amazon payment, if it is, then it build the amazon tab in payment info view.
+	 * Check if is a Amazon Pay, if it is, then it build the amazon tab in payment info view.
 	 * 
 	 * @see HMCExtension#getToolbarActionChips(de.hybris.platform.hmc.webchips.DisplayState,
 	 *      de.hybris.platform.hmc.webchips.Chip)
