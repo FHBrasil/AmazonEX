@@ -390,6 +390,8 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 				GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, getAmazonErrorMessage());
 				if (getSessionService().getAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE).equals("AmazonRejected") || 
 						getSessionService().getAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE).equals("TransactionTimedOut")) {
+					//quando retornar este erro fazer o logout da amazon
+					model.addAttribute("AmazonRejected",true);
 					return REDIRECT_URL_CART;
 				}
 			}

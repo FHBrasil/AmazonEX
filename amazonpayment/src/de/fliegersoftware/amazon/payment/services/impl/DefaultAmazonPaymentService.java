@@ -599,7 +599,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		mwsAmazonPaymentService.closeAuthorization(request);
 	}
 	
-	private BillingInfo createBillingInfo(AddressModel address) {
+	protected BillingInfo createBillingInfo(AddressModel address) {
 		if (address == null) {
 			return null;
 		}

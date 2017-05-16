@@ -84,8 +84,8 @@
 							<attribute labelwidth="200" name="guestCheckoutStrategy" width="300" />
 							<attribute labelwidth="200" name="hiddenButtonsMode"
 								width="300" />
-							<attribute labelwidth="200" name="ipWhitelisting"
-								width="300" />
+						<!-- 	<attribute labelwidth="200" name="ipWhitelisting"
+								width="300" /> -->
 							<attribute labelwidth="200" name="IPN" width="300" />
 							<attribute labelwidth="200" name="ipnReception" width="300" />
 						</listlayout>
@@ -188,7 +188,6 @@
 	<type mode="append" name="AmazonPaymentPaymentInfo">
 		<organizer>
 			<search mode="replace" autoperform="true">
-				<condition attribute="amazonOrderReferenceId" operator="contains"/>
 				<condition attribute="amazonOrderAmount" operator="contains"/>
 				<condition attribute="user" operator="in"/>
 				<condition attribute="owner" operator="is not null"/>
@@ -196,9 +195,12 @@
 			<result mode="append" defaultview="list">
 				<listview>
 					<itemlayout mode="append">
-						<attribute name="amazonOrderReferenceId"></attribute>
-						<attribute name="amazonOrderAmount"></attribute>
-						<attribute name="user"></attribute>
+						<attribute name="creationtime" width="150"></attribute>
+						<attribute name="amazonOrderStatus" width="150"></attribute>
+<!-- 					<attribute name="amazonOrderReferenceId" width="150" ></attribute>
+ -->					<attribute name="amazonOrderAmount" width="150" ></attribute>
+ 						<attribute name="code" width="200"></attribute>
+						<attribute name="user" width="150"  ></attribute>
 					</itemlayout>
 				</listview>
 			</result>

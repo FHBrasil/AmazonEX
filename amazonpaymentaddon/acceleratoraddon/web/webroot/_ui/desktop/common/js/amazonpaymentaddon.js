@@ -208,14 +208,6 @@
 							}
 						}).bind("walletWidgetDiv");
 					}
-					if($('#confirmChargeOnOrder').length) {
-						ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = $('#confirmChargeOnOrder')[0].checked;
-						checkEnableCheckout();
-						$('#confirmChargeOnOrder').change(function() {
-							ACC.amazon.enablePlaceOrder.confirmChargeOnOrder = this.checked;
-							checkEnableCheckout();
-						});
-					}
 				})
 				.fail(function( jqxhr, settings, exception ) {
 					alert( "Triggered ajaxError handler." );

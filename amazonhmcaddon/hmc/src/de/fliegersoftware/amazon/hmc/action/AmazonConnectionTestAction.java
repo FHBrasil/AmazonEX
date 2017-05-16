@@ -3,6 +3,32 @@
  */
 package de.fliegersoftware.amazon.hmc.action;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
+import org.json.JSONObject;
+import org.json.XML;
+
+import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
+
+import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 import de.hybris.platform.hmc.generic.AbstractActionChip;
 import de.hybris.platform.hmc.util.action.AbstractActionDialogChip;
 import de.hybris.platform.hmc.util.action.ActionEvent;
@@ -12,20 +38,7 @@ import de.hybris.platform.hmc.webchips.Chip;
 import de.hybris.platform.jalo.JaloBusinessException;
 import de.hybris.platform.util.localization.Localization;
 
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceClient;
-import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
-import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
-import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
-import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResponse;
-
-import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
 
 
 /**
@@ -35,21 +48,28 @@ import de.fliegersoftware.amazon.core.jalo.config.AmazonConfig;
  */
 public class AmazonConnectionTestAction extends ItemAction
 {
-	private GetOrderReferenceDetailsResponse orderReferenceDetails;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final String USER_AGENT = "Mozilla/5.0";
 
-	private static final String ACCESS_KEY_ID = "accessKeyId";
-	private static final String CURRENCY = "currency";
-	private static final String SECRET_ACCESS_KEY = "secretAccessKey";
-	private static final String APPLICATION_NAME = "applicationName";
-	private static final String APPLICATION_VERSION = "applicationVersion";
-	private static final String SELLER_ID = "sellerId";
-	private static final String ENVIRONMENT = "environment";
-	private static final String REGION = "region";
-	private static final String CERT_CN = "certCN";
-	private static final String CLIENT_ID = "clientId";
-	private static final String AMAZONWS = "sns.amazonaws.com";
-	private static final String SANDBOX = "SANDBOX";
-	private static final String LIVE = "LIVE";
+	private GetOrderReferenceDetailsResponse orderReferenceDetails;
+	
+	private static final String ISO_8601 = "yyyy-MM-dd'T'HH:mm:ssZ";
+	private static final String API_VERSION = "2009-01-01";
+	private static final String VERSION_SIGNATURE_VALUE = "2";
+	private static final String HASH_ALGORITHM = "HmacSHA256";
+	private static final String AMAZONWS = "https://mws.amazonservices.com";
+	private static final String ACCESS_KEY_ID = "AWSAccessKeyId";
+	private static final String ACTION = "Action";
+	private static final String SELLER_ID = "SellerId";
+	private static final String SIGNATURE_METHOD = "SignatureMethod";
+	private static final String SIGNATURE_VERSION = "SignatureVersion";
+	private static final String TIMESTAMP = "Timestamp";
+	private static final String VERSION = "Version";
+	private static final String SIGNATURE = "Signature";
+	private static final String SERVICE_STATUS = "GetServiceStatus";
 
 	private String errorMessage;
 
@@ -109,46 +129,71 @@ public class AmazonConnectionTestAction extends ItemAction
 	@Override
 	public ActionResult perform(final ActionEvent actionEvent) throws JaloBusinessException
 	{
-		if (StringUtils.isNotBlank(errorMessage))
-		{
-			errorMessage = null;
-		}
+	
 
 		final AmazonConfig amazonConfig = (AmazonConfig) actionEvent.getData();
 
-		LOG.info("CallingGetOrderReferenceDetails");
-		final GetOrderReferenceDetailsRequest request = createGetOrderReferenceDetailsRequest(amazonConfig);
-		final OffAmazonPaymentsServiceClient service = createOffAmazonPaymentService(amazonConfig);
-		callOrderReferenceDetails(service, request);
-
-		if (StringUtils.isNotBlank(errorMessage))
+		LOG.info("CallingGetAmazonStatus");
+		String amazonStatus = null;
+		try {
+			amazonStatus = sendPost(amazonConfig);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOG.error("Get amazon status", e);
+		}
+		
+		final String[] messageStatus =  new String[]{ amazonStatus };
+		if (!"GREEN".equalsIgnoreCase(amazonStatus))
 		{
 			LOG.info(errorMessage);
-			return new ActionResult(ActionResult.FAILED, errorMessage, false);
+			return new ActionResult(ActionResult.FAILED, Localization.getLocalizedString("msg.connection.test.error", messageStatus ), false);
 		}
-		final String successMessage = Localization.getLocalizedString("msg.connection.test.success");
-		LOG.info(successMessage);
+		final String successMessage = Localization.getLocalizedString("msg.connection.test.success", messageStatus);
 
 		return new ActionResult(ActionResult.OK, successMessage, false);
 	}
+	
+	private String sendPost(final AmazonConfig amazonConfig) throws Exception {
 
-	/**
-	 * @param service
-	 * @param request
-	 */
-	private void callOrderReferenceDetails(final OffAmazonPaymentsServiceClient service,
-			final GetOrderReferenceDetailsRequest request)
-	{
-		try
-		{
-			orderReferenceDetails = service.getOrderReferenceDetails(request);
+		final String url = AMAZONWS;
+
+		HttpClient client = HttpClientBuilder.create().build();
+		final HttpPost post = new HttpPost(url);
+		
+		// add header
+		post.setHeader("User-Agent", USER_AGENT);
+		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		urlParameters.add(new BasicNameValuePair(ACCESS_KEY_ID, amazonConfig.getMwsAccessKey()));
+		urlParameters.add(new BasicNameValuePair(ACTION, SERVICE_STATUS));
+		urlParameters.add(new BasicNameValuePair(SELLER_ID, amazonConfig.getMerchantId()));
+		urlParameters.add(new BasicNameValuePair(SIGNATURE_METHOD, HASH_ALGORITHM));
+		urlParameters.add(new BasicNameValuePair(SIGNATURE_VERSION, VERSION_SIGNATURE_VALUE));
+		urlParameters.add(new BasicNameValuePair(TIMESTAMP, getTimeStamp()));
+		urlParameters.add(new BasicNameValuePair(VERSION, API_VERSION));
+		urlParameters.add(new BasicNameValuePair(SIGNATURE,  amazonConfig.getMwsSecretKey()));
+
+		post.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+		HttpResponse response = client.execute(post);
+		
+		LOG.info("\nSending 'POST' request to URL : " + url);
+		LOG.info("Post parameters : " + post.getEntity());
+		LOG.info("Response Code : " +
+                                    response.getStatusLine().getStatusCode());
+		
+		if( response.getStatusLine().getStatusCode() == 200){
+			
+			final String json = EntityUtils.toString(response.getEntity());
+			final JSONObject jsonObj = XML.toJSONObject(json);
+			final String statusAmazon = jsonObj.getJSONObject("GetServiceStatusResponse").getJSONObject("GetServiceStatusResult").getString("Status");
+			LOG.info("Amazon Status = " +statusAmazon);
+			
+			return statusAmazon;
+			
 		}
-		catch (final OffAmazonPaymentsServiceException e)
-		{
-			errorMessage = e.getLocalizedMessage();
-			LOG.error("Error while trying to get the order reference details response.", e);
-		}
+		return "";
 	}
+
 
 	/**
 	 * Get the country code from amazon configuration
@@ -165,72 +210,12 @@ public class AmazonConnectionTestAction extends ItemAction
 		}
 		return amazonConfig.getAmazonConfigCountry().getCode();
 	}
-
-	/**
-	 * @param amazonConfig
-	 * @return currency code
-	 */
-	private String getCurrencyByRegion(final AmazonConfig amazonConfig)
-	{
-		if ("Other".equalsIgnoreCase(amazonConfig.getAmazonConfigCountry().getCode()))
-		{
-			return amazonConfig.getOtherCountryCurrency();
-		}
-
-		String countryCode = getCountryCode(amazonConfig);
-		try
-		{
-			if ("uk".equalsIgnoreCase(countryCode))
-			{
-				countryCode = "gb";
-			}
-			final Locale locale = new Locale("", countryCode);
-			final Currency currency = Currency.getInstance(locale);
-			return currency.getCurrencyCode();
-		}
-		catch (final Exception e)
-		{
-			LOG.error("Currency could not found for region", e);
-		}
-		return null;
-	}
-
-	/**
-	 * @param amazonConfig
-	 */
-	@SuppressWarnings("deprecation")
-	private OffAmazonPaymentsServiceClient createOffAmazonPaymentService(final AmazonConfig amazonConfig)
-	{
-		final Properties properties = new Properties();
-		properties.put(AmazonConnectionTestAction.ACCESS_KEY_ID, amazonConfig.getMwsAccessKey());
-		properties.put(AmazonConnectionTestAction.SECRET_ACCESS_KEY, amazonConfig.getMwsSecretKey());
-		properties.put(AmazonConnectionTestAction.SELLER_ID, amazonConfig.getMerchantId());
-		properties.put(AmazonConnectionTestAction.REGION, getCountryCode(amazonConfig));
-		properties.put(AmazonConnectionTestAction.CURRENCY, getCurrencyByRegion(amazonConfig));
-		properties.put(AmazonConnectionTestAction.APPLICATION_NAME, amazonConfig.getApplicationName());
-		properties.put(AmazonConnectionTestAction.APPLICATION_VERSION, amazonConfig.getApplicationVersion());
-		properties.put(AmazonConnectionTestAction.CLIENT_ID, amazonConfig.getClientId());
-		properties.put(AmazonConnectionTestAction.ENVIRONMENT, getEnvironment(amazonConfig.isSandboxMode()));
-		properties.put(AmazonConnectionTestAction.CERT_CN, AMAZONWS);
-
-		final OffAmazonPaymentsServiceConfig config = new OffAmazonPaymentsServiceConfig(properties);
-		return new OffAmazonPaymentsServiceClient(config);
-	}
-
-	private String getEnvironment(final Boolean sandbox)
-	{
-		return sandbox != null && sandbox.booleanValue() ? SANDBOX : LIVE;
-	}
-
-	/**
-	 * @param amazonConfig
-	 */
-	private GetOrderReferenceDetailsRequest createGetOrderReferenceDetailsRequest(final AmazonConfig amazonConfig)
-	{
-		final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
-		request.setSellerId(amazonConfig.getMerchantId());
-		//XXX: check why this amazon order reference id doesn't work
-		request.setAmazonOrderReferenceId(amazonConfig.getTestOrderReferenceId());
-		return request;
-	}
+	
+	private static String getTimeStamp() {
+		
+		final Calendar calendar = GregorianCalendar.getInstance();
+        Date date = calendar.getTime();
+        String formatted = new SimpleDateFormat(ISO_8601).format(date);
+        return formatted.substring(0, 22) + ":" + formatted.substring(22);
+    }
 }

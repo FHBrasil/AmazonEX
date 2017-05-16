@@ -94,7 +94,7 @@ public class DefaultAmazonEmailService implements AmazonEmailService {
     			+ "<body>"
     			+ "<div>"
     			+ text
-    			+ "<img src=\"cid:"+cidLogo+"\" width='222' height='63' />"
+    		/*	+ "<img src=\"cid:"+cidLogo+"\" width='222' height='63' />"*/
     			+ "</div>"
     			+ "</body>"
     			+ "</html>";

@@ -317,11 +317,11 @@
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
 				</attribute>
-				<attribute qualifier="ipWhitelisting" type="java.lang.String">
+				<!-- <attribute qualifier="ipWhitelisting" type="java.lang.String">
 					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="false" write="true" read="true" unique="false" optional="false" search="true" />
 					<persistence type="property"/>
-				</attribute>
+				</attribute> -->
 				<attribute qualifier="IPN" type="java.lang.String">
 					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="false" write="false" read="true" unique="false" optional="false" search="true" />

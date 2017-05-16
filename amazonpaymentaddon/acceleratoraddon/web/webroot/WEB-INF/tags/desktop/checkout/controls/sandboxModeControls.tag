@@ -23,7 +23,7 @@
 		<label>Simulate Authorize Error</label><br>
 		<label><input type="radio" name="simulateAuthorizeError" value="0" checked>None</label><br>
 		<label><input type="radio" name="simulateAuthorizeError" value="1">Invalid Payment Method</label><br>
-		<label><input type="radio" name="simulateAuthorizeError" value="2">Amazon Rejected</label><br>
+		<label><input type="radio" name="simulateAuthorizeError" value="2">Payment was not successful, please chose another payment method</label><br>
 		<label><input type="radio" name="simulateAuthorizeError" value="3">Transaction TimedOut</label><br>
 		<label><input type="radio" name="simulateAuthorizeError" value="4">Expired Unused</label><br>
 		<label><input type="radio" name="simulateAuthorizeError" value="5">Amazon Closed</label><br>
@@ -34,7 +34,7 @@
 		<label>Simulate Capture Error</label><br>
 		<label><input type="radio" name="simulateCaptureError" value="0" checked>None</label><br>
 		<label><input type="radio" name="simulateCaptureError" value="1">Capture Pending</label><br>
-		<label><input type="radio" name="simulateCaptureError" value="2">Amazon Rejected</label><br>
+		<label><input type="radio" name="simulateCaptureError" value="2">Payment was not successful, please chose another payment method</label><br>
 		<label><input type="radio" name="simulateCaptureError" value="3">Amazon Closed</label><br>
 	</div>
 </c:if>
@@ -42,7 +42,7 @@
 	<div class="col-sm-12">
 		<label>Simulate Refund Error</label><br>
 		<label><input type="radio" name="simulateRefundError" value="0" checked>None</label><br>
-		<label><input type="radio" name="simulateRefundError" value="1">Amazon Rejected</label><br>
+		<label><input type="radio" name="simulateRefundError" value="1">Payment was not successful, please chose another payment method</label><br>
 	</div>
 </c:if>
 </div>

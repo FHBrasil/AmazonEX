@@ -54,7 +54,7 @@
 	</div>
 </div>
 <div class="text-right" style="margin-bottom:30px;">
-	<button type="button" class="btn btn-primary btn-lg btn-checkout confirm-purchaseAmazon" disabled>
+	<button type="button" class="btn btn-primary btn-lg btn-checkout confirm-purchaseAmazon">
 	  	<spring:theme code="checkout.single.button.purchase" />
 	</button>
 	<div class="btn waiting-order-confirm" style="display: none;">
