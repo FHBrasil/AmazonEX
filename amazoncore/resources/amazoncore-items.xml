@@ -326,7 +326,7 @@
 					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="false"  write="false"  read="true" unique="false" optional="false" search="true" />
 					<persistence type="property" />
-					<defaultvalue>https://store/amazon/ipnhandler</defaultvalue>
+					<defaultvalue>new java.lang.String("https://store/amazon/ipnhandler")</defaultvalue>
 				</attribute>
 				
 				<!-- login settings -->
