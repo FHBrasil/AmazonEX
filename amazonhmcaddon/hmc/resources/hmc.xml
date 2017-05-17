@@ -59,9 +59,9 @@
 					</section>
 					<section name="section.amazonconfig.connetiontestbutton.properties">
 						<columnlayout>
-							<row>
+							<!-- <row>
 								<attribute labelwidth="200" name="testOrderReferenceId" width="300" />
-							</row>
+							</row> -->
 							<row>
 								<action name="btn.amazonconfig.connection.test" classname="de.fliegersoftware.amazon.hmc.action.AmazonConnectionTestAction" type="item"></action>
 							</row>
