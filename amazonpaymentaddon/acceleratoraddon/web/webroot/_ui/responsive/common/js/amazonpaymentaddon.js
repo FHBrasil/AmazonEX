@@ -6,6 +6,7 @@
 	
 	ACC.amazon.enablePlaceOrder = {};
 	
+	
 	if(window.onAmazonLoginReady) {
 		var parent = window.onAmazonLoginReady;
 		window.onAmazonLoginReady = function() {
@@ -247,6 +248,8 @@
 		$('#AmazonPayButton img').click();
 	});
 	
+	
+	
 }(jQuery));
 
 function bindDeliveryMethodOnChange() {
@@ -469,3 +472,11 @@ var iterateValues = function (values, parent, form, array) {
         }
     }
 };
+
+function amazonLogout() {
+	var errorMsg = 'Payment was not successful, please chose another payment method';
+	if ($("div.global-alerts .alert-dismissable").text().indexOf(errorMsg) >= 0) {
+		amazon.Login.logout();
+	}
+}
+window.onload = amazonLogout;
