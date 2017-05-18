@@ -58,14 +58,11 @@
 		</enumtype>
 		
 		<enumtype code="AuthorizationModeEnum">
-			<value code="AutomaticSynchronous">
-				<description>automatic synchronous authorization in frontend</description>
-			</value>
 			<value code="AutomaticNonSynchronous">
 				<description>authomatic non-synchronous authorization after order is placed (Default)</description>
 			</value>
-			<value code="ManualNonSynchronous">
-				<description>manual non-synchronous authorization through functino in order management</description>
+			<value code="OmnichronousAsynchronous">
+				<description>authomatic asynchronous authorization after order is placed </description>
 			</value>
 		</enumtype>
 		
@@ -324,9 +321,9 @@
 				</attribute> -->
 				<attribute qualifier="IPN" type="java.lang.String" >
 					<description>switch for hide / show Amazon Pay button</description>
-					<modifiers initial="false"  write="false"  read="true" unique="false" optional="false" search="true" />
+					<modifiers initial="true"  write="true"  read="true" unique="false" optional="false"  search="true" />
 					<persistence type="property" />
-					<defaultvalue>new java.lang.String("https://store/amazon/ipnhandler")</defaultvalue>
+					<defaultvalue>"https://store/amazon/ipnhandler"</defaultvalue>
 				</attribute>
 				
 				<!-- login settings -->

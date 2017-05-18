@@ -87,7 +87,7 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 	@Override
 	public List<AbstractExplorerMenuTreeNodeChip> getTreeNodeChips(final DisplayState displayState, final Chip parent)
 	{
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 	@Override
 	public List<MenuEntrySlotEntry> getMenuEntrySlotEntries(final DisplayState displayState, final Chip parent)
 	{
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	/**
@@ -107,13 +107,13 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 	@Override
 	public List<ClipChip> getSectionChips(final DisplayState displayState, final ClipChip parent)
 	{
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public List<EditorTabChip> getEditorTabChips(final DisplayState displayState, final AbstractEditorMenuChip parent)
 	{
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	/**
@@ -131,7 +131,9 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 
 			if ("AmazonConfig".equals(genericChip.getItemType().getCode()))
 			{
-				createLogMedia((AmazonConfig) genericChip.getItem());
+				final AmazonConfig config = (AmazonConfig) genericChip.getItem();
+				createLogMedia(config);
+				setIpnURL(config);
 			}
 			if ("AmazonPaymentPaymentInfo".equals(genericChip.getItemType().getCode()))
 			{
@@ -176,7 +178,15 @@ public class AmazonhmcaddonHMCExtension extends HMCExtension
 				}
 			}
 		}
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
+	}
+
+	private void setIpnURL(final AmazonConfig config) {
+
+		if (config != null) {
+			config.setIPN(Config.getParameter("amazon.url.ipn"));
+		}
+
 	}
 
 	/*

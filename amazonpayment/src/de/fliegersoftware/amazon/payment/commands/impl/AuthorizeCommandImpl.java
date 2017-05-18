@@ -48,9 +48,9 @@ public class AuthorizeCommandImpl extends AbstractCommandImpl implements Authori
 //			if(Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false)) {
 //				req.setCaptureNow(true);
 //			}
-			if(AuthorizationModeEnum.AUTOMATICSYNCHRONOUS.equals(amazonConfigService.getAuthorizationMode())) {
+		/*	if(AuthorizationModeEnum.AUTOMATICSYNCHRONOUS.equals(amazonConfigService.getAuthorizationMode())) {
 				req.setTransactionTimeout(Integer.valueOf(0));
-			}
+			}*/
 			if(CaptureModeEnum.IMMEDIATE.equals(amazonConfigService.getCaptureMode())) {
 				req.setCaptureNow(true);
 			}
