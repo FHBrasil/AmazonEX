@@ -70,6 +70,7 @@ public class AmazonConnectionTestAction extends ItemAction
 	private static final String VERSION = "Version";
 	private static final String SIGNATURE = "Signature";
 	private static final String SERVICE_STATUS = "GetServiceStatus";
+	private static final String GREEN_STATUS = "GREEN";
 
 	private String errorMessage;
 
@@ -143,7 +144,7 @@ public class AmazonConnectionTestAction extends ItemAction
 		}
 		
 		final String[] messageStatus =  new String[]{ amazonStatus };
-		if (!"GREEN".equalsIgnoreCase(amazonStatus))
+		if (!GREEN_STATUS.equalsIgnoreCase(amazonStatus))
 		{
 			LOG.info(errorMessage);
 			return new ActionResult(ActionResult.FAILED, Localization.getLocalizedString("msg.connection.test.error", messageStatus ), false);

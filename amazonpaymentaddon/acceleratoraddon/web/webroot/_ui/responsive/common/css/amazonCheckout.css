@@ -1,4 +1,14 @@
 /* CODE BA */
+
+.footer__top .footer__nav--container .footer__nav--links a {
+  color: #153a59;
+  font-size: 14px;
+}
+
+footer {
+  background: #ffffff;
+  color: #153a59;
+}
 .productitem150529 {float:left;margin-bottom:10px;}
 .productimage150529 {padding-right:0;}
 .delete150605 {font-size: 12px;position: absolute;top: 10px;right: 0px;background-color: #FFF;}
