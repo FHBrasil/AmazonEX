@@ -11,7 +11,7 @@ import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
  */
 public class AmazonAddressReversePopulator extends AddressReversePopulator
 {
-	private static final Logger LOG = Logger.getLogger(AmazonAddressReversePopulator.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonAddressReversePopulator.class);
 
 	@Override
 	public void populate(final AddressData addressData, final AddressModel addressModel) throws ConversionException

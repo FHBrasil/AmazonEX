@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +25,7 @@ import de.fliegersoftware.amazon.payment.ipn.impl.CustomNotificationParserFactor
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class IpnController {
 
-	private static final Logger LOG = Logger.getLogger(IpnController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(IpnController.class);
 
 	@Resource
 	private AmazonConfigService amazonConfigService;
@@ -53,34 +53,24 @@ public class IpnController {
 	}
 
 	@RequestMapping(value = "/amazon/ipnhandler", method = RequestMethod.POST)
-	public void servlet(HttpServletRequest request, HttpServletResponse response)
-			throws NotificationsException {
-		INotification notification = getIpnParser().parseRawMessage(request);
+	public void servlet(HttpServletRequest request, HttpServletResponse response) throws NotificationsException {
+		final INotification notification = getIpnParser().parseRawMessage(request);
 		LOG.info("Received notification of type " + notification.getNotificationType());
-		switch (notification.getNotificationType()) {
-		case OrderReferenceNotification:
-		case AuthorizationNotification:
-		case CaptureNotification:
-		case RefundNotification:
-		case BillingAgreementNotification:
-		case ProviderCreditNotification:
-		case ProviderCreditReversalNotification:
-		case SolutionProviderMerchantNotification:
-			if(handlers != null && handlers.containsKey(notification.getNotificationType())) {
-				try {
-					AmazonNotificationHandler h = handlers.get(notification.getNotificationType());
-					h.log(notification);
-					h.handle(notification);
-				} catch (Exception e) {
-					throw new NotificationsException("Error processing notification", e);
-				}
+
+		if (handlers != null && handlers.containsKey(notification.getNotificationType())) {
+			try {
+				AmazonNotificationHandler h = handlers.get(notification.getNotificationType());
+				h.log(notification);
+				h.handle(notification);
+			} catch (Exception e) {
+				throw new NotificationsException("Error processing notification", e);
 			}
-			break;
-		default:
+		} else {
 			String msg = "Unknown IPN Type: " + notification.getNotificationType();
 			LOG.error(msg);
 			throw new NotificationsException(msg);
 		}
+
 	}
 
 	protected Map<NotificationType, AmazonNotificationHandler> getHandlers() {

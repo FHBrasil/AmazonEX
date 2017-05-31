@@ -8,7 +8,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetOrderReferenceDetailsResult;
@@ -26,7 +26,7 @@ import de.hybris.platform.payment.model.PaymentTransactionModel;
 
 public class AuthorizationNotificationHandler extends BaseAmazonNotificationHandler<AuthorizationNotification> {
 
-	private static final Logger LOG = Logger.getLogger(AuthorizationNotificationHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AuthorizationNotificationHandler.class);
 	
 	@Resource 
 	private AmazonEmailService amazonEmailService;

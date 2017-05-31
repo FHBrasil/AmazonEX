@@ -1,7 +1,7 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -18,7 +18,7 @@ import de.fliegersoftware.amazon.payment.commands.CancelCommand;
 @Component("cancelCommand")
 public class CancelCommandImpl extends AbstractCommandImpl implements CancelCommand {
 
-	private final static Logger LOG = Logger.getLogger(CancelCommandImpl.class);
+	private final static Logger LOG = LoggerFactory.getLogger(CancelCommandImpl.class);
 
 
 	@Override

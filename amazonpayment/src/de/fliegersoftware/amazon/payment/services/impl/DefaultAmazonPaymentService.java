@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
@@ -79,7 +79,7 @@ import de.hybris.platform.servicelayer.session.SessionService;
 public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl implements AmazonPaymentService
 {	
 	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(DefaultAmazonPaymentService.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultAmazonPaymentService.class.getName());
 	
 	@Resource
 	private ModelService modelService;

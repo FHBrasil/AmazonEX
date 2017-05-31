@@ -1,7 +1,7 @@
 package de.fliegersoftware.amazon.payment.exception;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
 
@@ -13,7 +13,7 @@ public class AmazonException extends Throwable {
 
 	private static final long serialVersionUID = -4637476427587637183L;
 
-	private static final Logger log = Logger.getLogger(AmazonException.class);
+	private static final Logger log = LoggerFactory.getLogger(AmazonException.class);
 	
 	private OffAmazonPaymentsServiceException error;
 	

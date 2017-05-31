@@ -1,7 +1,7 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -18,7 +18,7 @@ import de.fliegersoftware.amazon.payment.commands.CaptureCommand;
 @Component("captureCommand")
 public class CaptureCommandImpl extends AbstractCommandImpl implements CaptureCommand {
 
-	private final static Logger LOG = Logger.getLogger(CaptureCommandImpl.class);
+	private final static Logger LOG = LoggerFactory.getLogger(CaptureCommandImpl.class);
 
 
 	@Override

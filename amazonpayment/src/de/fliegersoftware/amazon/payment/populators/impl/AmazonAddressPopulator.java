@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.amazonservices.mws.offamazonpayments.model.Address;
@@ -29,7 +29,7 @@ import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
  */
 public class AmazonAddressPopulator implements Populator<Address, AddressData>
 {
-	private static final Logger LOG = Logger.getLogger(AmazonAddressPopulator.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonAddressPopulator.class);
 
 	@Resource(name = "i18NFacade")
 	private I18NFacade i18NFacade;

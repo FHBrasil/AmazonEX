@@ -5,7 +5,7 @@ import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.amazonservices.mws.offamazonpaymentsipn.model.CaptureDetails;
 import com.amazonservices.mws.offamazonpaymentsipn.model.CaptureNotification;
@@ -22,7 +22,7 @@ import de.hybris.platform.payment.model.PaymentTransactionModel;
 
 public class CaptureNotificationHandler extends BaseAmazonNotificationHandler<CaptureNotification> {
 
-	private static final Logger LOG = Logger.getLogger(CaptureNotificationHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(CaptureNotificationHandler.class);
 
 	@Override
 	public void log(CaptureNotification notification) {

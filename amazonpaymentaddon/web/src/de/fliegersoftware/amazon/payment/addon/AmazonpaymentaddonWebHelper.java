@@ -13,7 +13,7 @@
  */
 package de.fliegersoftware.amazon.payment.addon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 
 /**
@@ -23,7 +23,7 @@ public class AmazonpaymentaddonWebHelper
 {
 	/** Edit the local|project.properties to change logging behavior (properties log4j.*). */
 	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(AmazonpaymentaddonWebHelper.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonpaymentaddonWebHelper.class.getName());
 
 	public static final String getTestOutput()
 	{

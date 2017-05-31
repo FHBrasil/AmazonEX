@@ -18,7 +18,7 @@ import de.hybris.platform.util.JspContext;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import de.fliegersoftware.amazon.payment.addon.constants.AmazonpaymentaddonConstants;
 
@@ -30,7 +30,7 @@ import de.fliegersoftware.amazon.payment.addon.constants.AmazonpaymentaddonConst
 public class AmazonpaymentaddonManager extends GeneratedAmazonpaymentaddonManager
 {
 	/** Edit the local|project.properties to change logging behavior (properties 'log4j.*'). */
-	private static final Logger LOG = Logger.getLogger(AmazonpaymentaddonManager.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonpaymentaddonManager.class.getName());
 
 	/*
 	 * Some important tips for development:

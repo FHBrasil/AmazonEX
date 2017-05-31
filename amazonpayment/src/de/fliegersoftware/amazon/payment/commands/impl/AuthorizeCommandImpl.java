@@ -6,7 +6,7 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -29,7 +29,7 @@ import de.hybris.platform.util.Config;
 @Component("authorizationCommand")
 public class AuthorizeCommandImpl extends AbstractCommandImpl implements AuthorizeCommand {
 
-	private final static Logger LOG = Logger.getLogger(AuthorizeCommandImpl.class);
+	private final static Logger LOG = LoggerFactory.getLogger(AuthorizeCommandImpl.class);
 
 	@Resource
 	private AmazonSandboxSimulationFacade amazonSandboxSimulationFacade;

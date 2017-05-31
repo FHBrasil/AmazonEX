@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import de.fliegersoftware.amazon.core.constants.AmazoncoreConstants;
@@ -38,7 +38,7 @@ import de.hybris.platform.servicelayer.model.ModelService;
  */
 public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 {
-	private static final Logger LOG = Logger.getLogger(AmazonCheckoutFacade.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonCheckoutFacade.class);
 
 	private OrderService orderService;
 	private PaymentModeService paymentModeService;

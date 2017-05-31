@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 
 /**
@@ -41,7 +41,7 @@ public class AmazonpaymentaddonHMCExtension extends HMCExtension
 {
 	/** Edit the local|project.properties to change logging behavior (properties log4j.*). */
 	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(AmazonpaymentaddonHMCExtension.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonpaymentaddonHMCExtension.class.getName());
 
 	/** Path to the resource bundles. */
 	public final static String RESOURCE_PATH = "de.fliegersoftware.amazon.payment.addon.hmc.locales";

@@ -4,7 +4,7 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -21,7 +21,7 @@ import de.fliegersoftware.amazon.payment.commands.GetAuthorizationDetailsCommand
 @Component("getAuthorizationDetailsCommand")
 public class GetAuthorizationDetailsCommandImpl extends AbstractCommandImpl implements GetAuthorizationDetailsCommand {
 
-private final static Logger LOG = Logger.getLogger(GetAuthorizationDetailsCommandImpl.class);
+private final static Logger LOG = LoggerFactory.getLogger(GetAuthorizationDetailsCommandImpl.class);
 
 
 @Override

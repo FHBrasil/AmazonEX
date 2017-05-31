@@ -4,12 +4,12 @@ import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.JaloBusinessException;
 import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.type.ComposedType;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 public class AmazonBaseCronJob extends GeneratedAmazonBaseCronJob
 {
 	@SuppressWarnings("unused")
-	private final static Logger LOG = Logger.getLogger( AmazonBaseCronJob.class.getName() );
+	private final static Logger LOG = LoggerFactory.getLogger( AmazonBaseCronJob.class.getName() );
 	
 	@Override
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException

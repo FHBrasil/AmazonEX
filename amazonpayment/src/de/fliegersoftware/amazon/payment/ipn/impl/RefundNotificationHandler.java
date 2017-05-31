@@ -5,7 +5,7 @@ import static de.fliegersoftware.amazon.payment.util.PaymentTransactionEntryUtil
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.amazonservices.mws.offamazonpaymentsipn.model.ProviderCreditReversalSummary;
 import com.amazonservices.mws.offamazonpaymentsipn.model.RefundDetails;
@@ -21,7 +21,7 @@ import de.hybris.platform.payment.model.PaymentTransactionModel;
 
 public class RefundNotificationHandler extends BaseAmazonNotificationHandler<RefundNotification> {
 
-	private static final Logger LOG = Logger.getLogger(RefundNotificationHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RefundNotificationHandler.class);
 
 	@Override
 	public void log(RefundNotification notification) {

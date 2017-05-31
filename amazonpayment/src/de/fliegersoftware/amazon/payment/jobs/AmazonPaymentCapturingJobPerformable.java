@@ -7,7 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  
+import org.slf4j.LoggerFactory;
 
 import com.amazonaws.mws.model.FeedSubmissionInfo;
 import com.amazonaws.mws.model.SubmitFeedResponse;
@@ -34,8 +35,7 @@ import de.hybris.platform.servicelayer.search.SearchResult;
 public class AmazonPaymentCapturingJobPerformable extends
 		AbstractJobPerformable<AmazonBaseCronJobModel> {
 
-	private static final Logger LOG = Logger
-			.getLogger(AmazonPaymentCapturingJobPerformable.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonPaymentCapturingJobPerformable.class);
 
 	@Resource
 	private MWSAmazonFeedsService mwsAmazonFeedsService;

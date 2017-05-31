@@ -1,7 +1,7 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -18,7 +18,7 @@ import de.fliegersoftware.amazon.payment.commands.CloseOrderReferenceCommand;
 @Component("closeOrderReferenceCommand")
 public class CloseOrderReferenceCommandImpl extends AbstractCommandImpl implements CloseOrderReferenceCommand {
 
-	private final static Logger LOG = Logger.getLogger(CloseOrderReferenceCommandImpl.class);
+	private final static Logger LOG = LoggerFactory.getLogger(CloseOrderReferenceCommandImpl.class);
 
 
 	@Override

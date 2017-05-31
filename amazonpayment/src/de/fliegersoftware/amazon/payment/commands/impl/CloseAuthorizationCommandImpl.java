@@ -1,7 +1,7 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -18,7 +18,7 @@ import de.fliegersoftware.amazon.payment.commands.CloseAuthorizationCommand;
 @Component("closeAuthorizationCommand")
 public class CloseAuthorizationCommandImpl extends AbstractCommandImpl implements CloseAuthorizationCommand {
 
-	private final static Logger LOG = Logger.getLogger(CloseAuthorizationCommandImpl.class);
+	private final static Logger LOG = LoggerFactory.getLogger(CloseAuthorizationCommandImpl.class);
 
 
 	@Override

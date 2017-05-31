@@ -1,7 +1,7 @@
 package de.fliegersoftware.amazon.payment.ipn.impl;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.amazonservices.mws.offamazonpaymentsipn.model.OrderReference;
 import com.amazonservices.mws.offamazonpaymentsipn.model.OrderReferenceNotification;
@@ -13,7 +13,7 @@ import de.hybris.platform.payment.model.PaymentTransactionModel;
 
 public class OrderReferenceNotificationHandler extends BaseAmazonNotificationHandler<OrderReferenceNotification> {
 
-	private static final Logger LOG = Logger.getLogger(OrderReferenceNotificationHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(OrderReferenceNotificationHandler.class);
 
 	@Override
 	public void log(OrderReferenceNotification notification) {
@@ -53,6 +53,10 @@ public class OrderReferenceNotificationHandler extends BaseAmazonNotificationHan
 			paymentInfo.setCurrencyRefundRequestAmount(details.getOrderTotal().getCurrencyCode());
 
 			getModelService().save(paymentInfo);
+			logInfo(LOG, "Save Order Reference Id", details.getAmazonOrderReferenceId());
+		}else{
+			logInfo(LOG, "Amazon Order Reference Id Not Found", details.getAmazonOrderReferenceId());
+
 		}
 	}
 

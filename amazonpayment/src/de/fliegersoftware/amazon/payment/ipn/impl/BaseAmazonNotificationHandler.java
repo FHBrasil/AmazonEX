@@ -3,7 +3,7 @@ package de.fliegersoftware.amazon.payment.ipn.impl;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.amazonservices.mws.offamazonpaymentsipn.model.IdList;

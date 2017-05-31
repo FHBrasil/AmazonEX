@@ -1,7 +1,7 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -18,7 +18,7 @@ import de.hybris.platform.payment.commands.result.AbstractResult;
 @Component("confirmOrderReferenceCommand")
 public class ConfirmOrderReferenceCommandImpl extends AbstractCommandImpl implements ConfirmOrderReferenceCommand {
 
-	private final static Logger LOG = Logger.getLogger(ConfirmOrderReferenceCommandImpl.class);
+	private final static Logger LOG = LoggerFactory.getLogger(ConfirmOrderReferenceCommandImpl.class);
 
 
 	public AbstractResult perform(final ConfirmOrderReferenceRequest req) {

@@ -4,7 +4,7 @@
 package de.fliegersoftware.amazon.payment.commands.impl;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -21,7 +21,7 @@ import de.fliegersoftware.amazon.payment.commands.SetOrderReferenceDetailsComman
 @Component("setOrderReferenceDetailsCommand")
 public class SetOrderReferenceDetailsCommandImpl extends AbstractCommandImpl implements SetOrderReferenceDetailsCommand {
 
-private final static Logger LOG = Logger.getLogger(SetOrderReferenceDetailsCommandImpl.class);
+private final static Logger LOG = LoggerFactory.getLogger(SetOrderReferenceDetailsCommandImpl.class);
 
 
 @Override

@@ -51,7 +51,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.fest.assertions.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +66,7 @@ import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
 @IntegrationTest
 public class PaymentIntegrationTest extends ServicelayerTest
 {
-	private static final Logger LOG = Logger.getLogger(PaymentIntegrationTest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PaymentIntegrationTest.class);
 
 	@Resource
 	protected AmazonCommerceCheckoutService commerceCheckoutService;

@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
 import com.amazonservices.mws.offamazonpayments.model.CaptureDetails;
@@ -53,7 +53,7 @@ import de.hybris.platform.servicelayer.search.SearchResult;
 
 public class AmazonPollingJobPerformable extends AbstractJobPerformable<AmazonBaseCronJobModel> {
 
-	private static final Logger LOG = Logger.getLogger(AmazonPollingJobPerformable.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AmazonPollingJobPerformable.class);
 	private static final long REQUEST_PERIOD = 2000; // in milliseconds
 
 	@Resource
