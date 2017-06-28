@@ -58,11 +58,17 @@
 		</enumtype>
 		
 		<enumtype code="AuthorizationModeEnum">
-			<value code="AutomaticNonSynchronous">
-				<description>authomatic non-synchronous authorization after order is placed (Default)</description>
+			<value code="AutomaticSynchronous">
+				<description>automatic synchronous authorization in frontend</description>
 			</value>
-			<value code="OmnichronousAsynchronous">
+			<value code="AutomaticNonSynchronous">
+				<description>authomatic synchronous authorization before order is placed (Default)</description>
+			</value>
+			<value code="Optimal">
 				<description>authomatic asynchronous authorization after order is placed </description>
+			</value>
+			<value code="Manual">
+				<description>Manual authorization after order is placed </description>
 			</value>
 		</enumtype>
 		
