@@ -10,6 +10,7 @@ def config = {
         '# using higher memory settings (4G heap and 512 permgen) to prevent out of memory issues on tcserver'
          property 'tomcat.generaloptions', '-Xmx4096M -XX:-UseLoopPredicate -XX:MaxPermSize=512M -XX:+HeapDumpOnOutOfMemoryError -ea -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dorg.tanukisoftware.wrapper.WrapperManager.mbean=true -Djava.endorsed.dirs="%CATALINA_HOME%/lib/endorsed" -Dcatalina.base=%CATALINA_BASE% -Dcatalina.home=%CATALINA_HOME% -Dfile.encoding=UTF-8 -Dlog4j.configuration=log4j_init_tomcat.properties -Djava.util.logging.config.file=jdk_logging.properties -Djava.io.tmpdir="${HYBRIS_TEMP_DIR}"'
 		 property 'tomcat.javaoptions','-Duser.language=pt  -Duser.country=BR  -Duser.timezone=America/Sao_Paulo  -Djavax.net.ssl.trustStore="${HYBRIS_CONFIG_DIR}/trustStore/amazonTrustStore.jks"  -Djavax.net.ssl.trustStorePassword=amazon'
+		 property 'tomcat.javaoptions','-Duser.language=pt  -Duser.country=BR  -Duser.timezone=America/Sao_Paulo  -Djavax.net.ssl.trustStore="${HYBRIS_CONFIG_DIR}/trustStore/amazonTrustStore.jks"  -Djavax.net.ssl.trustStorePassword=amazon'
         property 'dynatrace.agentlib','${HYBRIS_BIN_DIR}/platform/resources/dynatrace/agent/lib64/libdtagent.so'
         property 'dynatrace.name','hybris-flieger-commerce-app'
         property 'dynatrace.server','172.16.0.76:9998'
