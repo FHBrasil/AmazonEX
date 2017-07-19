@@ -9,15 +9,30 @@ import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.core.model.user.AddressModel;
 
 public class AmazonCommerceDeliveryAddressStrategy extends DefaultCommerceDeliveryAddressStrategy {
-	
+
 	private AmazonConfigService amazonConfigService;
-	
+
 	@Override
 	protected boolean isValidDeliveryAddress(CartModel cartModel, AddressModel addressModel) {
-		if(addressModel != null
-			&& getAmazonConfigService().isExcludePackstationDelivery()
-			&& StringUtils.containsIgnoreCase(addressModel.getFirstname(), "packstation"))
-			return false;
+		if (addressModel != null && getAmazonConfigService().isExcludePackstationDelivery()) {
+			
+			if (StringUtils.containsIgnoreCase(addressModel.getFirstname(), "packstation")) {
+				return false;
+			}
+			
+			String[] packstationIdentifiers = {};
+			if (getAmazonConfigService().getPackstationIdentifier() != null) {
+				packstationIdentifiers = getAmazonConfigService().getPackstationIdentifier().split(";");
+			}
+
+			for (String packstationIdentifier : packstationIdentifiers) {
+				if (StringUtils.containsIgnoreCase(addressModel.getLine1(), packstationIdentifier)
+						|| StringUtils.containsIgnoreCase(addressModel.getLine2(), packstationIdentifier))
+					return false;
+			}
+
+		}
+
 		return true;
 	}
 
