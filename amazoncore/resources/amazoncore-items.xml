@@ -323,7 +323,7 @@
 					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="true"  write="true"  read="true" unique="false" optional="false"  search="true" />
 					<persistence type="property" />
-					<defaultvalue>"https://&lt;put-here-your-storefrontname&gt;/amazon/ipnhandler"</defaultvalue>
+					<defaultvalue>"https://apparel-de-fliegercommerce-dev.fh.com.br/yacceleratorstorefront/de/amazon/ipnhandler"</defaultvalue>
 				</attribute>
 				
 				<!-- login settings -->

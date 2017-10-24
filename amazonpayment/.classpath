@@ -20,5 +20,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/commercefacades"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/amazoncore"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commerceservices"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk15on-1.55.jar"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

@@ -5,6 +5,7 @@
 	<classpathentry exported="true" kind="src" path="/hmc"/>
 	<classpathentry exported="true" kind="lib" path="resources"/>
 	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
+	<classpathentry kind="src" path="gensrc"/>
 	<classpathentry kind="src" output="eclipsebin/hmc/classes" path="hmc/src"/>
 	<classpathentry kind="src" output="eclipsebin/web/classes" path="web/src"/>
 	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
