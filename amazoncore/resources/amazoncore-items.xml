@@ -64,6 +64,9 @@
 			<value code="Manual">
 				<description>Manual authorization after order is placed </description>
 			</value>
+			<value code="Omnichromous">
+				<description>Omnichromous</description>
+			</value>	
 		</enumtype>
 		
 		<enumtype code="CaptureModeEnum">

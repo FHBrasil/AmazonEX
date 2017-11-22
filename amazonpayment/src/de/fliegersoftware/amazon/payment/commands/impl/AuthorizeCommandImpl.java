@@ -6,7 +6,8 @@ package de.fliegersoftware.amazon.payment.commands.impl;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceException;
@@ -14,13 +15,9 @@ import com.amazonservices.mws.offamazonpayments.model.AuthorizeRequest;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResponse;
 import com.amazonservices.mws.offamazonpayments.model.AuthorizeResult;
 
-import de.fliegersoftware.amazon.core.enums.AuthorizationModeEnum;
 import de.fliegersoftware.amazon.core.enums.CaptureModeEnum;
-import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.commands.AuthorizeCommand;
-import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.facades.AmazonSandboxSimulationFacade;
-import de.hybris.platform.util.Config;
 
 /**
  * @author taylor.savegnago
@@ -48,9 +45,12 @@ public class AuthorizeCommandImpl extends AbstractCommandImpl implements Authori
 //			if(Config.getBoolean(AmazonpaymentConstants.CHARGE_ON_ORDER_CONFIG, false)) {
 //				req.setCaptureNow(true);
 //			}
-			if(AuthorizationModeEnum.AUTOMATICSYNCHRONOUS.equals(amazonConfigService.getAuthorizationMode())) {
+			//if(AuthorizationModeEnum.AUTOMATICSYNCHRONOUS.equals(amazonConfigService.getAuthorizationMode())) {
+			if (req.getTransactionTimeout() == null) {
 				req.setTransactionTimeout(Integer.valueOf(0));
 			}
+			//}
+			
 			if(CaptureModeEnum.IMMEDIATE.equals(amazonConfigService.getCaptureMode())) {
 				req.setCaptureNow(true);
 			}
@@ -77,5 +77,6 @@ public class AuthorizeCommandImpl extends AbstractCommandImpl implements Authori
 		}
 
 	}
+
 
 }

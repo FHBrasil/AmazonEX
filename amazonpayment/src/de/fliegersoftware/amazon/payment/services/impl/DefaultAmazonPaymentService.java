@@ -11,7 +11,8 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.amazonservices.mws.offamazonpayments.model.AuthorizationDetails;
@@ -23,6 +24,7 @@ import com.amazonservices.mws.offamazonpayments.model.CaptureRequest;
 import com.amazonservices.mws.offamazonpayments.model.CaptureResult;
 import com.amazonservices.mws.offamazonpayments.model.CloseAuthorizationRequest;
 import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceRequest;
+import com.amazonservices.mws.offamazonpayments.model.CloseOrderReferenceResult;
 import com.amazonservices.mws.offamazonpayments.model.ConfirmOrderReferenceRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsRequest;
 import com.amazonservices.mws.offamazonpayments.model.GetAuthorizationDetailsResult;
@@ -48,7 +50,9 @@ import de.fliegersoftware.amazon.core.data.AmazonCaptureDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceAttributesData;
 import de.fliegersoftware.amazon.core.data.AmazonOrderReferenceDetailsData;
 import de.fliegersoftware.amazon.core.data.AmazonRefundDetailsData;
+import de.fliegersoftware.amazon.core.enums.AuthorizationModeEnum;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
+import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.core.services.AmazonEmailService;
 import de.fliegersoftware.amazon.payment.constants.AmazonpaymentConstants;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
@@ -93,6 +97,9 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 	
 	@Resource 
 	private AmazonEmailService amazonEmailService;
+	
+	@Resource
+	protected AmazonConfigService amazonConfigService;
 	
 	@Resource
 	private MWSAmazonPaymentService mwsAmazonPaymentService;
@@ -280,14 +287,14 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		PaymentTransactionModel transaction = (PaymentTransactionModel) modelService.create(PaymentTransactionModel.class);
 		transaction.setCode(merchantTransactionCode);
 
-		return authorizeInternal(paymentInfo, transaction, amount, currency, paymentProvider);
+		return authorizeInternal(paymentInfo, transaction, amount, currency, paymentProvider,0);
 	}
 
 	private PaymentTransactionEntryModel authorizeInternal(final AmazonPaymentPaymentInfoModel paymentInfo
 			, PaymentTransactionModel transaction
 			, BigDecimal amount
 			, Currency currency
-			, String paymentProvider)
+			, String paymentProvider, int requesttimeout)
 			throws AdapterException {
 		String newEntryCode = getNewPaymentTransactionEntryCode(transaction, PaymentTransactionType.AUTHORIZATION);
 		
@@ -295,6 +302,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 		authorizeRequest.setAuthorizationAmount(getAmount(String.valueOf(amount), currency.getCurrencyCode()));
 		authorizeRequest.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
 		authorizeRequest.setAuthorizationReferenceId(String.valueOf(System.currentTimeMillis()));
+		authorizeRequest.setTransactionTimeout(Integer.valueOf(requesttimeout));
 		AuthorizeResult result = this.mwsAmazonPaymentService.authorize(authorizeRequest);
 		
 		if(result != null) {
@@ -316,14 +324,14 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			entry.setPaymentTransaction(transaction);
 			entry.setRequestId(details.getAuthorizationReferenceId());
 			entry.setRequestToken(details.getAmazonAuthorizationId());
-			entry.setTransactionStatusDetails(details.getAuthorizationStatus().getReasonDescription());
+			entry.setTransactionStatusDetails(details.getAuthorizationStatus().getReasonCode());
 			entry.setCode(newEntryCode);
 
 			setPaymentTransactionEntryStatus(entry, AmazonTransactionStatus.valueOf(details.getAuthorizationStatus().getState()), details.getAuthorizationStatus().getReasonCode());
 
 			if (!TransactionStatus.ACCEPTED.name().equals(entry.getTransactionStatus())) {
 				getSessionService().setAttribute(AmazonpaymentConstants.AMAZON_ERROR_CODE, details.getAuthorizationStatus().getReasonCode());
-				if (details.getAuthorizationStatus().getReasonCode() != null && (details.getAuthorizationStatus().getReasonCode().equals("AmazonRejected") || 
+				if (details.getAuthorizationStatus().getReasonCode() != null && (details.getAuthorizationStatus().getReasonCode().equals("Declined") || 
 						details.getAuthorizationStatus().getReasonCode().equals("InvalidPaymentMethod"))) {
 					final GetOrderReferenceDetailsRequest request = new GetOrderReferenceDetailsRequest();
 					request.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
@@ -336,9 +344,26 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 						try {
 							amazonEmailService.sendEmailDeclined(orderReferenceDetails.getBuyer().getEmail(), details.getAuthorizationStatus().getReasonCode());
 						} catch (MalformedURLException e) {
+							LOG.error("authorizeInternal", e);
 							e.printStackTrace();
 						}
 						
+					}
+				} else {
+					if ("TransactionTimedOut".equals(details.getAuthorizationStatus().getReasonCode()) &&
+							"REJECTED".equals(entry.getTransactionStatus())) {
+						LOG.info("TransactionTimedOut");
+						if(AuthorizationModeEnum.OMNICHROMOUS.equals(amazonConfigService.getAuthorizationMode())
+							|| AuthorizationModeEnum.MANUAL.equals(amazonConfigService.getAuthorizationMode())) {
+							if (requesttimeout==1440) {
+								LOG.info("OMNICHROMOUS is enable and ASSYNC Authorization already called");
+							} else {
+								LOG.info("OMNICHROMOUS is enable. calling ASSYNC Authorization");
+								return this.authorizeInternal(paymentInfo,transaction,amount,currency,paymentProvider,1440);
+							}
+						}	else {
+							LOG.info("OMNICHROMOUS is not enable. not calling ASSYNC Authorization");
+						}
 					}
 				}
 			}
@@ -354,7 +379,7 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			paymentInfo.setAmazonAuthorizationStatus(details.getAuthorizationStatus().getState());
 			paymentInfo.setAmazonAuthorizationReasonCode(details.getAuthorizationStatus().getReasonCode());
 			
-			if(details.isCaptureNow() && details.getIdList() != null && CollectionUtils.isNotEmpty(details.getIdList().getMember())) {
+			if("Closed".equals(details.getAuthorizationStatus().getState()) && details.isCaptureNow() && details.getIdList() != null && CollectionUtils.isNotEmpty(details.getIdList().getMember())) {
 				
 				PaymentTransactionEntryModel cEntry = (PaymentTransactionEntryModel) this.modelService.create(PaymentTransactionEntryModel.class);
 				cEntry.setPaymentTransaction(transaction);
@@ -385,6 +410,14 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 				paymentInfo.setAmazonCaptureRefundedAmount(Double.parseDouble(captureDetails.getRefundedAmount().getAmount()));
 				paymentInfo.setAmazonCaptureStatus(captureDetails.getCaptureStatus().getState());
 
+				if ( "Completed".equals(captureDetails.getCaptureStatus().getState()) &&  
+					 "MaxCapturesProcessed".equals(details.getAuthorizationStatus().getReasonCode())) {
+					CloseOrderReferenceRequest closeOrderReferenceRequest = new CloseOrderReferenceRequest();
+					closeOrderReferenceRequest.setAmazonOrderReferenceId(paymentInfo.getAmazonOrderReferenceId());
+					CloseOrderReferenceResult closeOrderReference = mwsAmazonPaymentService.closeOrderReference(closeOrderReferenceRequest);
+					paymentInfo.setAmazonOrderStatus("Closed");
+	
+				}
 			}
 			getModelService().save(paymentInfo);
 
@@ -670,4 +703,13 @@ public class DefaultAmazonPaymentService extends DefaultPaymentServiceImpl imple
 			return null;
 		}
 	}
+
+	public AmazonConfigService getAmazonConfigService() {
+		return amazonConfigService;
+	}
+
+	public void setAmazonConfigService(AmazonConfigService amazonConfigService) {
+		this.amazonConfigService = amazonConfigService;
+	}
+
 }
