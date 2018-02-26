@@ -28,10 +28,10 @@ def config = {
 	property 'website.powertools.http', 'http://powertools.local:9001/yb2bacceleratorstorefront'
 	property 'website.powertools.https', 'https://powertools-fliegercommerce-dev.fh.com.br/yb2bacceleratorstorefront'
  
-	property 'db.url', 'jdbc:mysql://localhost/hybrisdb?useConfigs=maxPerformance&characterEncoding=utf8'
+	property 'db.url', 'jdbc:mysql://localhost/hybris?useConfigs=maxPerformance&characterEncoding=utf8&useSSL=false'
 	property 'db.driver', 'com.mysql.jdbc.Driver'
 	property 'db.username', 'hybris'
-	property 'db.password', 'FH*2016'
+	property 'db.password', 'hybris@2017'
 	property 'db.tableprefix', ''
 	property 'mysql.optional.tabledefs', 'CHARSET=utf8 COLLATE=utf8_bin'
 	property 'mysql.tabletype', 'InnoDB'
