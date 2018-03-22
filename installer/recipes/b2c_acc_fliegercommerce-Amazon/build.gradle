@@ -28,7 +28,7 @@ def config = {
 		property 'website.powertools.http', 'http://powertools.local:9001/yb2bacceleratorstorefront'
 		property 'website.powertools.https', 'https://powertools-fliegercommerce-dev.fh.com.br/yb2bacceleratorstorefront'
 	 
-	 	property 'amazon.url.ipn', 'https://store/amazon/ipnhandler'
+	 	property 'amazon.url.ipn', 'https://apparel-de-fliegercommerce-dev.fh.com.br/amazon/ipnhandler'
 	 
 		property 'db.url', 'jdbc:mysql://localhost/hybris?useConfigs=maxPerformance&characterEncoding=utf8&useSSL=false'
 		property 'db.driver', 'com.mysql.jdbc.Driver'
