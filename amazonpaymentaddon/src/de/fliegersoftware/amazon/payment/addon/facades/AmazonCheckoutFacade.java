@@ -55,16 +55,23 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 		final CartModel cartModel = getCart();
 		if (cartModel != null)
 		{
+			LOG.info("Validate delivery mode if already exists");
 			// validate delivery mode if already exists
 			getCommerceCheckoutService().validateDeliveryMode(createCommerceCheckoutParameter(cartModel, true));
 
+			
 			if (cartModel.getDeliveryMode() == null)
 			{
+				LOG.info("Delivery Mode: null");
 				final List<? extends DeliveryModeData> availableDeliveryModes = getSupportedDeliveryModes();
 				if (!availableDeliveryModes.isEmpty())
 				{
+					LOG.info("Set Delivery Mode: "+availableDeliveryModes.get(0).getDescription());
 					return setDeliveryMode(availableDeliveryModes.get(0).getCode());
 				}
+			} else {
+				LOG.info("Delivery Mode: "+cartModel.getDeliveryMode().getDescription());
+				return true;
 			}
 		}
 		return false;

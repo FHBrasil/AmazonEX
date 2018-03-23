@@ -145,15 +145,19 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 				if (details.getAddressData() == null) {
 					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
+					LOG.info("doSelectDeliveryAddress EXCEPTION: amazon.address.select.failed");
 				} else if (!getCheckoutFacade().isDeliveryCountrySupported(details.getAddressData().getCountry())) {
 					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.country.invalid"));
+					LOG.info("doSelectDeliveryAddress EXCEPTION: amazon.address.country.invalid");
 				} else if (!getCheckoutFacade().setDeliveryAddress(details.getAddressData())) {
 					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.packstation.invalid"));
+					LOG.info("doSelectDeliveryAddress EXCEPTION: amazon.address.packstation.invalid");
 				} else if (!getCheckoutFacade().setDeliveryModeIfAvailable()) {
 					getCheckoutFacade().removeDeliveryAddress();
 					response.setShowMessage(getLocalizedMessage("amazon.address.select.failed"));
+					LOG.info("doSelectDeliveryAddress EXCEPTION: amazon.address.select.failed");
 				} else {
 					// successful! silent response
 					response.setShowMessage(getLocalizedMessage("amazon.address.select.success"));
@@ -161,6 +165,7 @@ public class AmazonCheckoutPageController extends AbstractCheckoutController {
 					CartData cartData = getCheckoutFacade().getCheckoutCart();
 					model.addAttribute("selectedDeliveryMethodId", cartData.getDeliveryMode().getCode());
 					response.setSuccess(true);
+					LOG.info("doSelectDeliveryAddress SUCCESS");
 				}
 			}
 			else
