@@ -1,5 +1,6 @@
 package de.fliegersoftware.amazon.payment.addon.controllers;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -7,9 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.amazonservices.mws.offamazonpayments.OffAmazonPaymentsServiceConfig;
 import com.amazonservices.mws.offamazonpaymentsipn.INotificationParser;
@@ -20,6 +24,7 @@ import com.amazonservices.mws.offamazonpaymentsipn.notifications.NotificationTyp
 import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.ipn.AmazonNotificationHandler;
 import de.fliegersoftware.amazon.payment.ipn.impl.CustomNotificationParserFactory;
+import de.hybris.platform.commercefacades.order.data.CartData;
 
 @Controller(value="IpnController")
 @SuppressWarnings({"unchecked", "rawtypes"})
@@ -71,6 +76,14 @@ public class IpnController {
 			throw new NotificationsException(msg);
 		}
 
+	}
+	
+	@RequestMapping(value = "/amazon/test", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Map<String, String>> test(HttpServletRequest request, HttpServletResponse response) throws NotificationsException {
+		LOG.info("/amazon/test ok");
+		Map results = new HashMap();
+		results.put("test", "ok");
+		return new ResponseEntity(results, HttpStatus.OK);
 	}
 
 	protected Map<NotificationType, AmazonNotificationHandler> getHandlers() {

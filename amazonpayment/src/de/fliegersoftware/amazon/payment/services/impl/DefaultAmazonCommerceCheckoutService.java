@@ -1,18 +1,5 @@
 package de.fliegersoftware.amazon.payment.services.impl;
 
-import de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService;
-import de.hybris.platform.commerceservices.strategies.GenerateMerchantTransactionCodeStrategy;
-import de.hybris.platform.core.enums.OrderStatus;
-import de.hybris.platform.core.enums.PaymentStatus;
-import de.hybris.platform.core.model.ItemModel;
-import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
-import de.hybris.platform.core.model.user.AddressModel;
-import de.hybris.platform.payment.dto.TransactionStatus;
-import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
-import de.hybris.platform.payment.model.PaymentTransactionModel;
-import de.hybris.platform.servicelayer.util.ServicesUtil;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -21,13 +8,24 @@ import java.util.Currency;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Required;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
-import de.fliegersoftware.amazon.core.services.AmazonConfigService;
 import de.fliegersoftware.amazon.payment.dto.AmazonTransactionStatus;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
+import de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService;
+import de.hybris.platform.commerceservices.strategies.GenerateMerchantTransactionCodeStrategy;
+import de.hybris.platform.core.enums.OrderStatus;
+import de.hybris.platform.core.enums.PaymentStatus;
+import de.hybris.platform.core.model.ItemModel;
+import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
+import de.hybris.platform.payment.dto.TransactionStatus;
+import de.hybris.platform.payment.model.PaymentTransactionEntryModel;
+import de.hybris.platform.payment.model.PaymentTransactionModel;
+import de.hybris.platform.servicelayer.util.ServicesUtil;
 
 /**
  * @author taylor.savegnago
@@ -35,6 +33,8 @@ import de.fliegersoftware.amazon.payment.services.AmazonPaymentService;
  */
 public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckoutService implements AmazonCommerceCheckoutService
 {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultAmazonCommerceCheckoutService.class.getName());
 	@Resource
 	private GenerateMerchantTransactionCodeStrategy generateMerchantTransactionCodeStrategy;
 
@@ -97,6 +97,9 @@ public class DefaultAmazonCommerceCheckoutService extends DefaultCommerceCheckou
 						amazonPaymentPaymentInfo.setBillingAddress(cartModel.getDeliveryAddress());
 					getModelService().saveAll(
 							new Object[] { cartModel, paymentTransaction });
+				} else if ("Declined".equals(transactionEntryModel.getTransactionStatus()) &&
+						"TransactionTimedOut".equals(transactionEntryModel.getTransactionStatusDetails())) {
+					LOG.info("if Ominichromous must call authorizePayment in Assync way");
 				} else {
 					getModelService().removeAll(
 							Arrays.asList(new ItemModel[] { paymentTransaction,

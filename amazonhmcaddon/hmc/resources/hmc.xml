@@ -95,8 +95,6 @@
 				<tab name="tab.amazonconfig.login.properties" position="3">
 					<section name="section.amazonconfig.login.properties">
 						<listlayout>
-							<attribute labelwidth="200" name="requestCompleteDeliveryAddress"
-								width="300" />
 							<attribute labelwidth="200" name="excludePackstationDelivery"
 								width="300" />
 							<attribute labelwidth="200" name="packstationIdentifier"
@@ -104,8 +102,6 @@
 							<attribute labelwidth="200" name="accountMatchingStrategy"
 								width="300" />
 							<attribute labelwidth="200" name="manualAddOnFirstLogin"
-								width="300" />
-							<attribute labelwidth="200" name="checkoutStrategy"
 								width="300" />
 						</listlayout>
 					</section>

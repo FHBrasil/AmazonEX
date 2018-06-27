@@ -15,6 +15,7 @@ import de.fliegersoftware.amazon.core.constants.AmazoncoreConstants;
 import de.fliegersoftware.amazon.core.model.AmazonPaymentPaymentInfoModel;
 import de.fliegersoftware.amazon.payment.services.AmazonCommerceCheckoutService;
 import de.hybris.platform.acceleratorfacades.order.impl.DefaultAcceleratorCheckoutFacade;
+import de.hybris.platform.commercefacades.order.data.DeliveryModeData;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commerceservices.enums.CustomerType;
@@ -47,6 +48,34 @@ public class AmazonCheckoutFacade extends DefaultAcceleratorCheckoutFacade
 	@Resource
 	private Populator<AddressData, AddressModel> amazonAddressReversePopulator;
 
+	
+	@Override
+	public boolean setDeliveryModeIfAvailable()
+	{
+		final CartModel cartModel = getCart();
+		if (cartModel != null)
+		{
+			LOG.info("Validate delivery mode if already exists");
+			// validate delivery mode if already exists
+			getCommerceCheckoutService().validateDeliveryMode(createCommerceCheckoutParameter(cartModel, true));
+
+			
+			if (cartModel.getDeliveryMode() == null)
+			{
+				LOG.info("Delivery Mode: null");
+				final List<? extends DeliveryModeData> availableDeliveryModes = getSupportedDeliveryModes();
+				if (!availableDeliveryModes.isEmpty())
+				{
+					LOG.info("Set Delivery Mode: "+availableDeliveryModes.get(0).getDescription());
+					return setDeliveryMode(availableDeliveryModes.get(0).getCode());
+				}
+			} else {
+				LOG.info("Delivery Mode: "+cartModel.getDeliveryMode().getDescription());
+				return true;
+			}
+		}
+		return false;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -27,7 +27,6 @@
 	<security:http pattern="/_ui/**" security="none" />
 	
 
-
 	<!--Security config for checkout - it has its own login page-->
 	<security:http pattern="/checkout/**">
         <security:anonymous username="anonymous" granted-authority="ROLE_ANONYMOUS" />
@@ -129,7 +128,6 @@
 	<security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider ref="amazonAuthenticationProvider" />
 		<security:authentication-provider ref="acceleratorAuthenticationProvider" />
-	
 	</security:authentication-manager>
 
 	<bean id="acceleratorAuthenticationProvider" parent="abstractAcceleratorAuthenticationProvider" 

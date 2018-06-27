@@ -61,15 +61,12 @@
 			<value code="AutomaticSynchronous">
 				<description>automatic synchronous authorization in frontend</description>
 			</value>
-			<value code="AutomaticNonSynchronous">
-				<description>authomatic synchronous authorization before order is placed (Default)</description>
-			</value>
-			<value code="Optimal">
-				<description>authomatic asynchronous authorization after order is placed </description>
-			</value>
 			<value code="Manual">
 				<description>Manual authorization after order is placed </description>
 			</value>
+			<value code="Omnichromous">
+				<description>Omnichromous</description>
+			</value>	
 		</enumtype>
 		
 		<enumtype code="CaptureModeEnum">
@@ -329,7 +326,7 @@
 					<description>switch for hide / show Amazon Pay button</description>
 					<modifiers initial="true"  write="true"  read="true" unique="false" optional="false"  search="true" />
 					<persistence type="property" />
-					<defaultvalue>"https://store/amazon/ipnhandler"</defaultvalue>
+					<defaultvalue>"https://apparel-de-fliegercommerce-dev.fh.com.br/yacceleratorstorefront/de/amazon/ipnhandler"</defaultvalue>
 				</attribute>
 				
 				<!-- login settings -->
